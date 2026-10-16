@@ -1,3 +1,5 @@
+import { QUALITY_TASK_SCHEMA_DIGEST, remotePlanDigest } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
+import { inspectPipelineV10QualityRegistryConfiguration } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -226,7 +228,9 @@ function providerCandidates(f:ReturnType<typeof capture>){
   binding.ownerSchemaDigest='sha256:'+createHash('sha256').update(f.capture.read('schemas/'+source.provenance.schemaPath.split('/schemas/')[1])).digest('hex');
   binding.packageVersion=source.manifest.packageVersion;binding.packageContentDigest=packages[t.packageId].contentDigest;
   const task='sha256:'+createHash('sha256').update(f.capture.read(path.posix.dirname(source.manifestPath)+'/'+declaration.configSchema)).digest('hex');
-  value.taskSchemaDigest=task;binding.taskSchemaDigest=task;
+  const quality=['kubeclaw.size-budget','kubeclaw.coverage-budget'].includes(t.packageId);
+  value.taskSchemaDigest=quality?QUALITY_TASK_SCHEMA_DIGEST:task;binding.taskSchemaDigest=value.taskSchemaDigest;
+  if(quality)binding.profileDigest=remotePlanDigest(selected);
   if(binding.runtimeRole!==undefined){const engine=root.bindings.find((b:any)=>b.role==='buster'&&b.owner==='buster-engine'&&b.instanceId===t.serviceInstanceId);binding.runtimeRole='buster';binding.componentInstanceId=engine.instanceId;binding.componentProfileId=engine.profileId;binding.componentOwnerDigest='sha256:'+createHash('sha256').update(f.capture.read('config/components/buster-engine.config.json')).digest('hex');}
   return value;
  });
@@ -237,7 +241,7 @@ function serviceCandidate(f:ReturnType<typeof capture>,family:'gateway'|'launche
 }
 test('ALL14 Test-Provider exact selected processing/declarations/raw schemas/packages/task identities from SAME448 capture',t=>{
  const f=capture(tree(t),replacements);t.after(f.capture.close);const values=providerCandidates(f);assert.equal(values.length,14);
- for(const value of values){const r=inspectPipelineV10SelectedSourceIdentity('provider',Buffer.from(JSON.stringify(value)),f.capture);assert.equal(r.selectedConfigurationVerified,true);assert.equal(r.profileDigestVerified,false);assert.equal(r.c3AuthorizationVerified,false);assert.equal(r.originalAuthorizationVerified,false);assert.equal(r.activationAllowed,false);}
+ for(const value of values){const r=inspectPipelineV10SelectedSourceIdentity('provider',Buffer.from(JSON.stringify(value)),f.capture);assert.equal(r.selectedConfigurationVerified,true);assert.equal(r.profileDigestVerified,['kubeclaw.size-budget@1','kubeclaw.coverage-budget@1'].includes(value.contractId));assert.equal(r.c3AuthorizationVerified,false);assert.equal(r.originalAuthorizationVerified,false);assert.equal(r.activationAllowed,false);}
 });
 test('Gateway selected role projections and BOTH distinct launcher receiver views join exact same original author',t=>{
  const f=capture(tree(t),replacements);t.after(f.capture.close);
@@ -724,4 +728,44 @@ test('physical Core mutation DURING multi-member inspection aborts complete snap
  fs.writeFileSync(file,before);const restored=capture(generation,replacements);t.after(restored.capture.close);
  assert.deepEqual(inspectCapturedCoreProjectCandidate(task,restored.capture).selectedCore.settings,coreCandidate(restored).settings);
  assert.equal(inspectCapturedCoreProjectCandidate(task,restored.capture).activationAllowed,false);
+});
+
+test('Quality same-file-set policies reach real registry resolver frozen; old v1 task digest/profile substitutions reject',t=>{
+ const root=tree(t),f=capture(root,replacements);t.after(f.capture.close);
+ const sourceRoot=path.join(root,'source-current/skills/buster/plugins');
+ const registry=buildRegistry(discoverPackages({installationRoots:[sourceRoot],trustPolicy:{trustedBuiltinRoots:[sourceRoot],allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'quality-original-generation'}}));
+ for(const value of providerCandidates(f).filter((v:any)=>['kubeclaw.size-budget@1','kubeclaw.coverage-budget@1'].includes(v.contractId))){
+  const run=(v:any)=>inspectPipelineV10QualityRegistryConfiguration(Buffer.from(JSON.stringify(v)),registry,f.capture);
+  const result=run(value);assert.equal(result.activationAllowed,false);assert.equal(result.registrySourceCoherent,true);
+  assert.equal(result.profileDigestVerified,true);assert.equal(result.configuration.schemaVersion,'provider-configuration.v2');assert.ok(Object.isFrozen((result.configuration as any).selectedPolicy.processing));
+  for(const key of ['profileDigest','packageContentDigest','taskSchemaDigest']){
+   const bad=structuredClone(value);bad.selectedPolicy.binding[key]='sha256:'+'0'.repeat(64);assert.throws(()=>run(bad));
+  }
+  const taskOverride=structuredClone(value);taskOverride.values={combine:true};assert.throws(()=>run(taskOverride));
+  const entry=registry.testProviderContracts.get(value.contractId)!;
+  const altered={...registry,testProviderContracts:new Map(registry.testProviderContracts)};
+  altered.testProviderContracts.set(value.contractId,{...entry,provenance:{...entry.provenance,registrationId:'wrong-original'}});
+  assert.throws(()=>inspectPipelineV10QualityRegistryConfiguration(Buffer.from(JSON.stringify(value)),altered,f.capture),/QUALITY_REGISTRY_PROVENANCE/);
+  assert.deepEqual(run(value).configuration,result.configuration);
+ }
+});
+
+test('Quality rejects invalid unselected original profiles without accepting a partial author',t=>{
+ for(const packageId of ['kubeclaw.coverage-budget','kubeclaw.size-budget']){
+  const root=tree(t),source=read(path.join(repository,'skills/common/plugin-runtime/foundation/config/pipeline-v10-plugin-schemas.json')).packages[packageId];
+  const name=`config/${source.ownerPath}`,file=path.join(root,name),original=fs.readFileSync(file),owner=JSON.parse(original.toString());
+  // Preserve selected A, break only a distinct unselected B profile.
+  assert.ok(owner.profiles.B);owner.profiles.B.declarations.evidenceDefaults.onError=[];
+  const changed=Buffer.from(JSON.stringify(owner));fs.writeFileSync(file,changed);
+  const members=compose(replacements).members.map(m=>m.relativePath===name?row(name,changed):m);
+  const input=capturePipelineInputSet(root,members);t.after(input.close);
+  // Deliberately re-described local source unit, NOT an approved composition or grant.
+  const value=providerCandidates({capture:input} as any).find((v:any)=>v.selectedPolicy.binding.packageId===packageId);
+  value.selectedPolicy.binding.ownerDigest='sha256:'+createHash('sha256').update(changed).digest('hex');
+  const sourceRoot=path.join(root,'source-current/skills/buster/plugins');
+  const registry=buildRegistry(discoverPackages({installationRoots:[sourceRoot],trustPolicy:{trustedBuiltinRoots:[sourceRoot],allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'quality-negative-unit'}}));
+  assert.throws(()=>inspectPipelineV10QualityRegistryConfiguration(Buffer.from(JSON.stringify(value)),registry,input),/evidenceDefaults\/onError must contain at least 1/);
+  input.close();fs.writeFileSync(file,original);
+  const restored=capture(root,replacements);restored.capture.assertCurrent();restored.capture.close();
+ }
 });

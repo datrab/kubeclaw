@@ -1,3 +1,5 @@
+import { QUALITY_TASK_SCHEMA_DIGEST, remotePlanDigest, validatePipelineTestGateContract, type ProviderConfigurationV2 } from '@kubeclaw/pipeline-test-gate-contract';
+import { resolveTestProviderConfiguration } from '../registry/configuration.ts';
 import { isDeepStrictEqual } from 'node:util';
 import { computePackageFileSetDigest } from '../registry/digest.ts';
 import fs from 'node:fs';
@@ -167,7 +169,11 @@ export function inspectPipelineV10SelectedSourceIdentity(family: 'provider' | 'g
     requireBinding(binding.ownerSchemaDigest === `sha256:${sha(inputs.read(`schemas/${schemaName}`))}`, 'OWNER_SCHEMA_IDENTITY');
     // Locator comes from the fixed reviewed declaration, not arbitrary output.
     const schemaPath = `${source.manifestPath.slice(0, source.manifestPath.lastIndexOf('/'))}/${declaration.configSchema}`;
-    const taskDigest = `sha256:${sha(inputs.read(schemaPath))}`;
+    // v1 package config schema remains immutable source. Quality v2 task values
+    // instead use the separately versioned closed-empty task ABI, not that v1 digest.
+    const quality = ['kubeclaw.size-budget', 'kubeclaw.coverage-budget'].includes(tuple.packageId);
+    inputs.read(schemaPath);
+    const taskDigest = quality ? QUALITY_TASK_SCHEMA_DIGEST : `sha256:${sha(inputs.read(schemaPath))}`;
     requireBinding(binding.taskSchemaDigest === taskDigest && document.taskSchemaDigest === taskDigest, 'TASK_SCHEMA_IDENTITY');
     const packages = JSON.parse(fs.readFileSync(new URL('./pipeline-v10-package-sources.json', import.meta.url), 'utf8'));
     const pkg = packages.packages[tuple.packageId]; requireBinding(pkg, 'PACKAGE_SOURCE');
@@ -177,6 +183,22 @@ export function inspectPipelineV10SelectedSourceIdentity(family: 'provider' | 'g
     const selected = tuple.packageId === 'kubeclaw.security-providers' ? profile.registrations[declaration.id] : profile;
     requireBinding(selected && isDeepStrictEqual(document.selectedPolicy.processing, selected.processing)
       && isDeepStrictEqual(document.selectedPolicy.declarations, selected.declarations), 'SELECTED_CONFIGURATION');
+    if (quality) {
+      // Validate the WHOLE original owner, including profiles not selected here.
+      // Frozen schema bytes and raw owner digest are already tied above to this
+      // same captured file-set; this is still not installed caller authorization.
+      const schemaBytes = inputs.read(`schemas/${schemaName}`);
+      const compiler = new Constructor({ strict: true, allErrors: true });
+      const validateOwner = compiler.compile(parse(schemaBytes));
+      requireBinding(validateOwner(owner), 'QUALITY_OWNER_SCHEMA');
+      for (const [profileId, profile] of Object.entries(owner.profiles) as [string, any][]) {
+        const configuration = { ...document, selectedPolicy: { ...document.selectedPolicy,
+          processing: profile.processing, declarations: profile.declarations,
+          binding: { ...binding, profileId, profileDigest: remotePlanDigest(profile) } } };
+        validatePipelineTestGateContract('providerConfiguration', configuration);
+      }
+      validatePipelineTestGateContract('providerConfiguration', document);
+    }
     const engine = exact(root.bindings, { role: 'buster', owner: 'buster-engine', instanceId: tuple.serviceInstanceId }, ['role','owner','instanceId'], 'PROVIDER_ENGINE_PEER');
     exact(root.bindings, { role: 'buster', owner: 'worker-core', instanceId: tuple.serviceInstanceId }, ['role','owner','instanceId'], 'PROVIDER_WORKER_PEER');
     if (binding.runtimeRole !== undefined) requireBinding(binding.runtimeRole === 'buster' && binding.componentInstanceId === engine.instanceId
@@ -215,7 +237,7 @@ export function inspectPipelineV10SelectedSourceIdentity(family: 'provider' | 'g
   }
   inputs.assertCurrent();
   return Object.freeze({ ...identity, selectedConfigurationVerified: true as const,
-    profileDigestVerified: false as const, originalAuthorizationVerified: false as const, c3AuthorizationVerified: false as const });
+    profileDigestVerified: family === 'provider' && ['kubeclaw.size-budget@1', 'kubeclaw.coverage-budget@1'].includes(document.contractId), originalAuthorizationVerified: false as const, c3AuthorizationVerified: false as const });
 }
 
 /** Existing controller/recovery sourceAssociations.selected business-profile
@@ -408,4 +430,46 @@ export function inspectPipelineV10CoreSourceClosure(
     observed:Object.freeze(observed), missing:Object.freeze(missing), localDependencies:Object.freeze(localDependencies),
     sourceClosureVerified:false as const, canonicalAuthorPathVerified:false as const,
     originalAuthorizationVerified:false as const, activationAllowed:false as const});
+}
+
+/** Local source-to-real-registry Quality bridge. The returned immutable v2
+ * configuration is the SAME ABI used by the resolver/runner, not a new policy
+ * author. This deliberately returns no caller grant or activated root. The
+ * production boot/original inputStore admission remains required before use.
+ */
+export function inspectPipelineV10QualityRegistryConfiguration(output: Uint8Array, registry: RegistrySnapshot,
+  inputs: Pick<ReturnType<typeof capturePipelineInputSet>, 'inputGenerationSha256' | 'read' | 'assertCurrent'>) {
+  const raw = Buffer.from(output), document = parse(raw) as ProviderConfigurationV2;
+  requireBinding(['kubeclaw.size-budget@1', 'kubeclaw.coverage-budget@1'].includes(document.contractId), 'QUALITY_CONTRACT');
+  const identity = inspectPipelineV10SelectedSourceIdentity('provider', raw, inputs);
+  const binding = document.selectedPolicy.binding;
+  const sources = JSON.parse(fs.readFileSync(new URL('./pipeline-v10-plugin-schemas.json', import.meta.url), 'utf8'));
+  const source = sources.packages[binding.packageId];
+  const manifest = parse(inputs.read(source.manifestPath));
+  const entry = registry.testProviderContracts.get(document.contractId);
+  requireBinding(entry && isDeepStrictEqual(entry.package.manifest, manifest), 'QUALITY_REGISTRY_MANIFEST');
+  const pkg = registry.packages.get(binding.packageId);
+  requireBinding(entry && pkg && pkg === entry.package
+    && pkg.provenance.package.pluginId === binding.packageId
+    && pkg.provenance.package.packageVersion === binding.packageVersion
+    && pkg.provenance.package.contentDigest === binding.packageContentDigest, 'QUALITY_REGISTRY_PACKAGE');
+  const declaration = manifest.testProviders.find((row: any) => row.contractId === document.contractId);
+  requireBinding(entry && isDeepStrictEqual(entry.declaration, declaration)
+    && entry.provenance.surface === 'test_provider'
+    && entry.provenance.registrationId === declaration.id
+    && isDeepStrictEqual(entry.provenance.package, pkg!.provenance), 'QUALITY_REGISTRY_PROVENANCE');
+
+  // The real resolver checks original package version/content/registration and
+  // immutable support. Apply it to every profile, not just the chosen one.
+  const owner = parse(inputs.read(`config/${source.ownerPath}`));
+  for (const [profileId, profile] of Object.entries(owner.profiles) as [string, any][]) {
+    resolveTestProviderConfiguration(registry, document.contractId, {}, {
+      ...document.selectedPolicy, processing: profile.processing, declarations: profile.declarations,
+      binding: { ...binding, profileId, profileDigest: remotePlanDigest(profile) },
+    });
+  }
+  const configuration = resolveTestProviderConfiguration(registry, document.contractId, document.values, document.selectedPolicy);
+  inputs.assertCurrent();
+  return Object.freeze({ ...identity, configuration, registrySourceCoherent: true as const,
+    installedSourceAuthorizationVerified: false as const, callerAuthorizationVerified: false as const });
 }

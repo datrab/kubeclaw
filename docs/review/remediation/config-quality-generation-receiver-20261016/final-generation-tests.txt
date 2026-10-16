@@ -1,0 +1,329 @@
+TAP version 13
+# Subtest: complete declared composition conserves all376 inherited identities and explicit before/after records
+ok 1 - complete declared composition conserves all376 inherited identities and explicit before/after records
+  ---
+  duration_ms: 34.162679
+  type: 'test'
+  ...
+# Subtest: root/schema descriptors are explicit, exact, nonduplicate and never mixed with legacy root names
+ok 2 - root/schema descriptors are explicit, exact, nonduplicate and never mixed with legacy root names
+  ---
+  duration_ms: 6.59809
+  type: 'test'
+  ...
+# Subtest: actual full declared physical capture retains all raw files, no v4 receipt or authorization returned
+ok 3 - actual full declared physical capture retains all raw files, no v4 receipt or authorization returned
+  ---
+  duration_ms: 409.738419
+  type: 'test'
+  ...
+# Subtest: missing inherited unselected schema never becomes partial seven-file or source-only capture
+ok 4 - missing inherited unselected schema never becomes partial seven-file or source-only capture
+  ---
+  duration_ms: 90.469417
+  type: 'test'
+  ...
+# Subtest: EXISTING real role materializer enumerates all v10 inputs before source denial and emits no legacy outputs
+ok 5 - EXISTING real role materializer enumerates all v10 inputs before source denial and emits no legacy outputs
+  ---
+  duration_ms: 10029.789994
+  type: 'test'
+  ...
+# Subtest: ALL8 Nova selected captured sources match real original registry entries without stage-instance authority
+ok 6 - ALL8 Nova selected captured sources match real original registry entries without stage-instance authority
+  ---
+  duration_ms: 876.161666
+  type: 'test'
+  ...
+# Subtest: registry/source join rejects missing, changed, foreign package/provenance and opposite surfaces then restores positive
+ok 7 - registry/source join rejects missing, changed, foreign package/provenance and opposite surfaces then restores positive
+  ---
+  duration_ms: 786.839489
+  type: 'test'
+  ...
+# Subtest: actual compiler membership has explicit uncovered stage owners and no registry-to-original-instance ABI
+ok 8 - actual compiler membership has explicit uncovered stage owners and no registry-to-original-instance ABI
+  ---
+  duration_ms: 598.674899
+  type: 'test'
+  ...
+# {"scope":"actual compiler-source observation,NOT instance or installed-authority acceptance","observed":[{"stageId":"source-preflight","stageType":"kubeclaw.validate.source-preflight","selectedRegistryHasOwner":false},{"stageId":"architecture-review","stageType":"kubeclaw.validate.architecture","selectedRegistryHasOwner":true},{"stageId":"architecture-approval","stageType":"kubeclaw.decision.architecture-approval","selectedRegistryHasOwner":false},{"stageId":"blueprint-sync","stageType":"kubeclaw.generate.blueprint-sync","selectedRegistryHasOwner":false},{"stageId":"implement-api","stageType":"kubeclaw.agent.implementation","selectedRegistryHasOwner":true},{"stageId":"lint-api","stageType":"kubeclaw.lint.full","selectedRegistryHasOwner":false},{"stageId":"review-api","stageType":"kubeclaw.decision.review","selectedRegistryHasOwner":false},{"stageId":"test-api","stageType":"kubeclaw.test.quality-evaluation","selectedRegistryHasOwner":false},{"stageId":"implement-ui","stageType":"kubeclaw.agent.implementation","selectedRegistryHasOwner":true},{"stageId":"lint-ui","stageType":"kubeclaw.lint.full","selectedRegistryHasOwner":false},{"stageId":"review-ui","stageType":"kubeclaw.decision.review","selectedRegistryHasOwner":false},{"stageId":"test-ui","stageType":"kubeclaw.test.quality-evaluation","selectedRegistryHasOwner":false},{"stageId":"final-lint","stageType":"kubeclaw.lint.full","selectedRegistryHasOwner":false},{"stageId":"final-review","stageType":"kubeclaw.decision.review","selectedRegistryHasOwner":false},{"stageId":"final-test","stageType":"kubeclaw.test.quality-evaluation","selectedRegistryHasOwner":false},{"stageId":"project-summary","stageType":"kubeclaw.report.project-summary","selectedRegistryHasOwner":true}],"missing":["kubeclaw.validate.source-preflight","kubeclaw.decision.architecture-approval","kubeclaw.generate.blueprint-sync","kubeclaw.lint.full","kubeclaw.decision.review","kubeclaw.test.quality-evaluation"]}
+# Subtest: ALL8 Nova selected tuple/owner/schema/manifest/package/config joins use SAME retained448 inputs, not grants
+ok 9 - ALL8 Nova selected tuple/owner/schema/manifest/package/config joins use SAME retained448 inputs, not grants
+  ---
+  duration_ms: 605.31076
+  type: 'test'
+  ...
+# Subtest: Nova wrong selected tuple/raw original identities and schema-valid diagnostic substitution reject, restored succeeds
+ok 10 - Nova wrong selected tuple/raw original identities and schema-valid diagnostic substitution reject, restored succeeds
+  ---
+  duration_ms: 885.452786
+  type: 'test'
+  ...
+# Subtest: ALL14 Test-Provider exact selected processing/declarations/raw schemas/packages/task identities from SAME448 capture
+ok 11 - ALL14 Test-Provider exact selected processing/declarations/raw schemas/packages/task identities from SAME448 capture
+  ---
+  duration_ms: 2511.429128
+  type: 'test'
+  ...
+# Subtest: Gateway selected role projections and BOTH distinct launcher receiver views join exact same original author
+ok 12 - Gateway selected role projections and BOTH distinct launcher receiver views join exact same original author
+  ---
+  duration_ms: 500.221486
+  type: 'test'
+  ...
+# Subtest: provider/source and service projection mutations reject; restored originals remain nonauthorizing
+ok 13 - provider/source and service projection mutations reject; restored originals remain nonauthorizing
+  ---
+  duration_ms: 1060.102698
+  type: 'test'
+  ...
+# Subtest: original controller/recovery selected business profiles join SAME448 capture without inventing transport wrappers
+ok 14 - original controller/recovery selected business profiles join SAME448 capture without inventing transport wrappers
+  ---
+  duration_ms: 1192.397351
+  type: 'test'
+  ...
+# Subtest: controller/recovery reject wrong/union scopes and substituted business profile, restore nonauthorizing positives
+ok 15 - controller/recovery reject wrong/union scopes and substituted business profile, restore nonauthorizing positives
+  ---
+  duration_ms: 2513.04331
+  type: 'test'
+  ...
+# Subtest: controller inspection verifies exact original component peer even with valid retained raw roster
+ok 16 - controller inspection verifies exact original component peer even with valid retained raw roster
+  ---
+  duration_ms: 502.420243
+  type: 'test'
+  ...
+# Subtest: network HTTP plain adapter processing joins exact selected owner/manifest/config/package from SAME448 capture
+ok 17 - network HTTP plain adapter processing joins exact selected owner/manifest/config/package from SAME448 capture
+  ---
+  duration_ms: 190.614302
+  type: 'test'
+  ...
+# Subtest: network adapter rejects provider/composite/foreign tuples, default omission, wrappers and config substitutions; restores plain config
+ok 18 - network adapter rejects provider/composite/foreign tuples, default omission, wrappers and config substitutions; restores plain config
+  ---
+  duration_ms: 279.11909
+  type: 'test'
+  ...
+# Subtest: changed actual network package bytes reject before config-validator cache admission; restored capture succeeds
+ok 19 - changed actual network package bytes reject before config-validator cache admission; restored capture succeeds
+  ---
+  duration_ms: 284.368545
+  type: 'test'
+  ...
+# Subtest: ALL4 Core profiles preserve separate platform/compiler/lock raw projections SAME448, no path resolution or effects
+ok 20 - ALL4 Core profiles preserve separate platform/compiler/lock raw projections SAME448, no path resolution or effects
+  ---
+  duration_ms: 5460.992506
+  type: 'test'
+  ...
+# Subtest: Core rejects foreign/composite selection, member confusion, inferred/defaulted leaves and wrappers; restores exact projections
+ok 21 - Core rejects foreign/composite selection, member confusion, inferred/defaulted leaves and wrappers; restores exact projections
+  ---
+  duration_ms: 5177.447533
+  type: 'test'
+  ...
+# Subtest: Core rejects missing selected profile even when root/input identity is internally consistent
+ok 22 - Core rejects missing selected profile even when root/input identity is internally consistent
+  ---
+  duration_ms: 477.344518
+  type: 'test'
+  ...
+# Subtest: selected Core Platform raw values reuse original schema/path mapper for ALL4profiles with explicit AUTHOR directory
+ok 23 - selected Core Platform raw values reuse original schema/path mapper for ALL4profiles with explicit AUTHOR directory
+  ---
+  duration_ms: 162.736986
+  type: 'test'
+  ...
+# Subtest: legacy realpath AUTHOR base remains distinct from symlink delivery directory; pure path mapping creates no directories
+ok 24 - legacy realpath AUTHOR base remains distinct from symlink delivery directory; pure path mapping creates no directories
+  ---
+  duration_ms: 135.192138
+  type: 'test'
+  ...
+# Subtest: pure Platform preparation rejects implicit/noncanonical base and missing source policies, restored original succeeds
+ok 25 - pure Platform preparation rejects implicit/noncanonical base and missing source policies, restored original succeeds
+  ---
+  duration_ms: 115.335036
+  type: 'test'
+  ...
+# Subtest: Core source closure reports exact captured raw subset and explicit7missing sources, never canonical/source authority
+ok 26 - Core source closure reports exact captured raw subset and explicit7missing sources, never canonical/source authority
+  ---
+  duration_ms: 613.744166
+  type: 'test'
+  ...
+# Subtest: partial real capture and locally appended Platform source cannot silently relabel original448 source closure
+ok 27 - partial real capture and locally appended Platform source cannot silently relabel original448 source closure
+  ---
+  duration_ms: 364.099765
+  type: 'test'
+  ...
+# Subtest: source closure does not turn changed admitted source bytes into a missing-source diagnostic, restored succeeds
+ok 28 - source closure does not turn changed admitted source bytes into a missing-source diagnostic, restored succeeds
+  ---
+  duration_ms: 264.75042
+  type: 'test'
+  ...
+# Subtest: WFINAL02 actual Source helper consumes captured explicit source timeout only and preserves original legacy graph
+ok 29 - WFINAL02 actual Source helper consumes captured explicit source timeout only and preserves original legacy graph
+  ---
+  duration_ms: 129.671326
+  type: 'test'
+  ...
+# Subtest: WFINAL02 rejects missing/foreign/inferred/unsafe helper policies before Source task parsing, restored selected groups succeed
+ok 30 - WFINAL02 rejects missing/foreign/inferred/unsafe helper policies before Source task parsing, restored selected groups succeed
+  ---
+  duration_ms: 124.597755
+  type: 'test'
+  ...
+# Subtest: WFINAL02 separates cumulative/demo changes from Source helper and does not change historical identity encoding
+ok 31 - WFINAL02 separates cumulative/demo changes from Source helper and does not change historical identity encoding
+  ---
+  duration_ms: 5.479161
+  type: 'test'
+  ...
+# Subtest: WFINAL02 Cumulative and Demo actual builders consume ONLY their explicit groups, historical graphs unchanged
+ok 32 - WFINAL02 Cumulative and Demo actual builders consume ONLY their explicit groups, historical graphs unchanged
+  ---
+  duration_ms: 491.750929
+  type: 'test'
+  ...
+# Subtest: WFINAL02 Cumulative and Demo require all explicit groups before graph validation, even absent Demo branch
+ok 33 - WFINAL02 Cumulative and Demo require all explicit groups before graph validation, even absent Demo branch
+  ---
+  duration_ms: 0.285497
+  type: 'test'
+  ...
+# Subtest: complete selected compiler policy matches EXACT approved schema and original derived execution for ALL4Core profiles
+ok 34 - complete selected compiler policy matches EXACT approved schema and original derived execution for ALL4Core profiles
+  ---
+  duration_ms: 126.060822
+  type: 'test'
+  ...
+# Subtest: compiler full policy rejects mixed review branch instead of silently inferring/unioning unused budgets
+ok 35 - compiler full policy rejects mixed review branch instead of silently inferring/unioning unused budgets
+  ---
+  duration_ms: 128.67024
+  type: 'test'
+  ...
+# Subtest: full compiler policy rejects old authors/missing groups/unsafe values, derives safe bounds and keeps module/helpers distinct
+ok 36 - full compiler policy rejects old authors/missing groups/unsafe values, derives safe bounds and keeps module/helpers distinct
+  ---
+  duration_ms: 131.544554
+  type: 'test'
+  ...
+# Subtest: actual policy module builder preserves original task/source/coverage/repair categories across review branches and changes ONLY execution
+ok 37 - actual policy module builder preserves original task/source/coverage/repair categories across review branches and changes ONLY execution
+  ---
+  duration_ms: 651.795896
+  type: 'test'
+  ...
+# Subtest: mixed-review module builder rejects wrong policy branch, old task author and foreign run plan without profile fallback
+ok 38 - mixed-review module builder rejects wrong policy branch, old task author and foreign run plan without profile fallback
+  ---
+  duration_ms: 657.071771
+  type: 'test'
+  ...
+# Subtest: whole-project explicit policy candidate reuses real original graph across uniform review branches/codecs and changes only execution
+ok 39 - whole-project explicit policy candidate reuses real original graph across uniform review branches/codecs and changes only execution
+  ---
+  duration_ms: 690.899101
+  type: 'test'
+  ...
+# Subtest: whole-project candidate retains dependency/ownership/task/plan checks and never defaults missing policy or unused helper groups
+ok 40 - whole-project candidate retains dependency/ownership/task/plan checks and never defaults missing policy or unused helper groups
+  ---
+  duration_ms: 664.333108
+  type: 'test'
+  ...
+# Subtest: mixed review project remains historical-supported but explicit single-policy candidate rejects both incompatible modes
+ok 41 - mixed review project remains historical-supported but explicit single-policy candidate rejects both incompatible modes
+  ---
+  duration_ms: 686.840156
+  type: 'test'
+  ...
+# Subtest: captured Core project candidate consumes ONLY exact selected policy from SAME448 across ALL4profiles/codecs
+ok 42 - captured Core project candidate consumes ONLY exact selected policy from SAME448 across ALL4profiles/codecs
+  ---
+  duration_ms: 11387.419325
+  type: 'test'
+  ...
+# Subtest: captured Core project never accepts task policy overrides or bypasses mixed-review contract gap; original compiler unchanged
+ok 43 - captured Core project never accepts task policy overrides or bypasses mixed-review contract gap; original compiler unchanged
+  ---
+  duration_ms: 6991.594556
+  type: 'test'
+  ...
+# Subtest: captured project candidate rejects changed physical Core owner despite equal policy, restore succeeds
+ok 44 - captured project candidate rejects changed physical Core owner despite equal policy, restore succeeds
+  ---
+  duration_ms: 2177.554201
+  type: 'test'
+  ...
+# Subtest: Core settings snapshot retains all three selected raw members deeply immutable, no path resolution or activation
+ok 45 - Core settings snapshot retains all three selected raw members deeply immutable, no path resolution or activation
+  ---
+  duration_ms: 2128.618662
+  type: 'test'
+  ...
+# Subtest: physical Core mutation DURING multi-member inspection aborts complete snapshot instead of mixing values, restore succeeds
+ok 46 - physical Core mutation DURING multi-member inspection aborts complete snapshot instead of mixing values, restore succeeds
+  ---
+  duration_ms: 4198.73882
+  type: 'test'
+  ...
+# Subtest: Quality same-file-set policies reach real registry resolver frozen; old v1 task digest/profile substitutions reject
+ok 47 - Quality same-file-set policies reach real registry resolver frozen; old v1 task digest/profile substitutions reject
+  ---
+  duration_ms: 1069.086279
+  type: 'test'
+  ...
+# Subtest: Quality rejects invalid unselected original profiles without accepting a partial author
+ok 48 - Quality rejects invalid unselected original profiles without accepting a partial author
+  ---
+  duration_ms: 870.84823
+  type: 'test'
+  ...
+# Subtest: v10 schemas are exact inherited/Quality compositions plus enumerated version edits, wire versions unchanged
+ok 49 - v10 schemas are exact inherited/Quality compositions plus enumerated version edits, wire versions unchanged
+  ---
+  duration_ms: 5.607894
+  type: 'test'
+  ...
+# Subtest: all inherited public output examples migrate closed version fields only and remain nonauthorizing
+ok 50 - all inherited public output examples migrate closed version fields only and remain nonauthorizing
+  ---
+  duration_ms: 752.716431
+  type: 'test'
+  ...
+# Subtest: both Quality receiver additions preserve selected exact owner processing/declarations, not fake installed grants
+ok 51 - both Quality receiver additions preserve selected exact owner processing/declarations, not fake installed grants
+  ---
+  duration_ms: 9.783652
+  type: 'test'
+  ...
+# Subtest: stale reader versions and wrong same-root/input identities reject before any activation
+ok 52 - stale reader versions and wrong same-root/input identities reject before any activation
+  ---
+  duration_ms: 34.683152
+  type: 'test'
+  ...
+# Subtest: raw output SHA is separate from root/input identity and malformed duplicate JSON never leaks values
+ok 53 - raw output SHA is separate from root/input identity and malformed duplicate JSON never leaks values
+  ---
+  duration_ms: 7.73635
+  type: 'test'
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 70482.123629
