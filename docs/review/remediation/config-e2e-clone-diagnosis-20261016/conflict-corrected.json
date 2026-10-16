@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-timeout=90000",
+    "--test-name-pattern=git merge conflict fixture preserves architecture branch in scenario origin",
+    "tests/verification/e2e/real-run-workspace.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 87.01507925987244
+}

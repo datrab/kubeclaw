@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "tests/verification/e2e/production-graph-validation.test.mts"
+  ],
+  "exitCode": 0,
+  "seconds": 27.772751331329346
+}

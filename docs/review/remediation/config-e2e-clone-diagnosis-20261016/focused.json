@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-timeout=50000",
+    "--test-name-pattern=materializes canonical swarm review instructions|run-scoped origin makes architecture branch fetchable",
+    "tests/verification/e2e/real-run-workspace.test.mjs"
+  ],
+  "exitCode": 124,
+  "seconds": 55.01140999794006
+}

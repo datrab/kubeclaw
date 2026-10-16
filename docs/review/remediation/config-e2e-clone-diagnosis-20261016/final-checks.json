@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/e2e/real-run-workspace.mjs"
+    ],
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/e2e/real-run-workspace.test.mjs"
+    ],
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "output": ""
+  }
+]

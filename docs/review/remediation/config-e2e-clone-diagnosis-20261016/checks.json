@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/e2e/real-run-workspace.mjs"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-e2e-clone-diagnosis-20261016/syntax-workspace.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/e2e/real-run-workspace.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-e2e-clone-diagnosis-20261016/syntax-original-tests.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-e2e-clone-diagnosis-20261016/diff.txt"
+  }
+]
