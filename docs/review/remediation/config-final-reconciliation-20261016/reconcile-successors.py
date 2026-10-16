@@ -118,6 +118,12 @@ boundary_exact = {r['id']: r for r in boundary_joins['rows'] if r['status'] == '
 boundary_open = {r['id']: r for r in boundary_joins['rows'] if r['status'] == 'LIVE_RUNNER_ROUTE_OWNER_JOIN_OPEN'}
 if len(boundary_exact) != 5 or len(boundary_open) != 1 or set(boundary_exact) & (set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
     raise ValueError('Prism boundary roster overlap/drift')
+engine_path = str((OUT / 'prism-engine-successors.json').relative_to(ROOT))
+engine_joins = read(engine_path)
+engine_exact = {r['id']: r for r in engine_joins['rows'] if r['status'] == 'EXACT_PRISM_ENGINE_SOURCE_JOIN'}
+engine_open = {r['id']: r for r in engine_joins['rows'] if r['status'] == 'PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN'}
+if len(engine_exact) != 5 or len(engine_open) != 8 or set(engine_exact) & (set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
+    raise ValueError('Prism engine roster overlap/drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -157,6 +163,15 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
     open_boundary = [boundary_open[i] for i in ids if i in boundary_open]
     if open_boundary:
         group['explicitBoundaryResiduals'] = open_boundary
+    engine = [engine_exact[i] for i in ids if i in engine_exact]
+    if engine:
+        group['exactPrismEngineMappings'] = engine
+        group['remainingFieldIds'] = [i for i in group['remainingFieldIds'] if i not in engine_exact]
+        group['prismEngineSupplementalJoin'] = pin(engine_path)
+        group['status'] = 'PARTIAL_EXACT_PRISM_ENGINE_SOURCE_JOIN' if group['remainingFieldIds'] else 'EXACT_PRISM_ENGINE_SOURCE_JOIN'
+    residual_engine = [engine_open[i] for i in ids if i in engine_open]
+    if residual_engine:
+        group['explicitEngineResiduals'] = residual_engine
     parts = old.split("/")
     if len(parts) > 2 and parts[1] == "plugins":
         plugin = parts[2].removeprefix("kubeclaw.")
@@ -183,7 +198,7 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
             anchor("skills/common/plugin-runtime/foundation/config/pipeline-generation.ts", "pipeline-entry.v3")]
         group["constraint"] = "Defined v2 task-only/selectedPolicy plus original inputStore/package/delivery closure must be implemented together. Current root/provider remain v3/v1. No denied v10 promotion/private root/current-value fill. Completed finite byte guards do not externalize these24 fields or accept168 cases."
         group["definition"] = pin("docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/RECEIVING-AND-ORACLES.md")
-    if group["candidateSuccessors"] and not exact and not scalar_exact and not delivery and not prism and not boundary:
+    if group["candidateSuccessors"] and not exact and not scalar_exact and not delivery and not prism and not boundary and not engine:
         group["status"] = "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN"
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
@@ -200,10 +215,14 @@ if set(prism_joined) != set(prism_exact) or len(prism_joined) != len(set(prism_j
 boundary_joined = [r['id'] for g in groups for r in g.get('exactPrismBoundaryMappings', [])]
 if set(boundary_joined) != set(boundary_exact) or len(boundary_joined) != len(set(boundary_joined)):
     raise ValueError('Prism boundary mappings not conserved across historical groups')
+engine_joined = [r['id'] for g in groups for r in g.get('exactPrismEngineMappings', [])]
+engine_residuals = [r['id'] for g in groups for r in g.get('explicitEngineResiduals', [])]
+if set(engine_joined) != set(engine_exact) or len(engine_joined) != len(set(engine_joined)) or set(engine_residuals) != set(engine_open) or len(engine_residuals) != len(set(engine_residuals)):
+    raise ValueError('Prism engine mappings/residuals not conserved across historical groups')
 result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
-              "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
+              "exactPrismEngineSourceJoins": len(engine_exact), "explicitPrismEngineReceivingResiduals": len(engine_open), "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
               "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
           "groups": groups, "fullAcceptance": "OPEN", "independentReviewOfThisJoin": "OPEN",

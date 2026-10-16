@@ -307,7 +307,24 @@
         ]
       },
       "rejectedAlias": "studioPublicUrl is Studio UI, not production verification agent runner egress18444; agentToolControlUrl is also a distinct route",
-      "constraint": "No exact selected live-runner deployment author/normal delivery projection identified. Preserve explicit required ENV and distinct runner route; implement coherent selected deployment receiving/delivery, not substitute Studio URL or modify production."
+      "coupledProxyListener": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "anchor": "port_value: 18444",
+        "lines": [
+          214
+        ]
+      },
+      "coupledProxyUpstream": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "anchor": "cluster: prism-agent-mtls",
+        "lines": [
+          61,
+          215
+        ]
+      },
+      "constraint": "No exact selected live-runner deployment author/normal delivery projection identified. Preserve explicit required ENV and distinct runner route; couple selected runner ENV with the18444 Envoy listener and authenticated prism-agent-mtls upstream in ONE generated delivery/capture. Do not independently change the URL, substitute Studio URL or modify production."
     },
     {
       "id": "AUTH-PRISM-CONTROL-HMAC-WINDOW",

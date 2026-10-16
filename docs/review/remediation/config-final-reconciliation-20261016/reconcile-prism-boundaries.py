@@ -56,7 +56,9 @@ def build(ledgers=None, owners=None):
                 actualConsumer=anchor('tests/verification/live/prism-nova-production-e2e.mjs', 'const agentEndpoint = required("PRISM_AGENT_URL")'),
                 actualDeliveryLiteral=anchor('scripts/deploy.sh', 'name: PRISM_AGENT_URL, value: "http://127.0.0.1:18444"'),
                 rejectedAlias='studioPublicUrl is Studio UI, not production verification agent runner egress18444; agentToolControlUrl is also a distinct route',
-                constraint='No exact selected live-runner deployment author/normal delivery projection identified. Preserve explicit required ENV and distinct runner route; implement coherent selected deployment receiving/delivery, not substitute Studio URL or modify production.')
+                coupledProxyListener=anchor('charts/prism/templates/configmap-worker-trust.yaml', 'port_value: 18444'),
+                coupledProxyUpstream=anchor('charts/prism/templates/configmap-worker-trust.yaml', 'cluster: prism-agent-mtls'),
+                constraint='No exact selected live-runner deployment author/normal delivery projection identified. Preserve explicit required ENV and distinct runner route; couple selected runner ENV with the18444 Envoy listener and authenticated prism-agent-mtls upstream in ONE generated delivery/capture. Do not independently change the URL, substitute Studio URL or modify production.')
         else:
             owner, leaf, oldfield, receiver, receive_text, effect, effect_text = SPECS[identity]
             if original['source']['field'] != oldfield: raise ValueError('Original source coordinate drift')
