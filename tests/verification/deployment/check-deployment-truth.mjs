@@ -300,9 +300,14 @@ assert.match(
 );
 assert.match(
   prismStudioDockerfile,
-  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts[\s\S]*source=skills\/prism\/tests\/fixtures\/studio-service\.mts,target=\/app\/prism\/skills\/prism\/tests\/fixtures\/studio-service\.mts[\s\S]*source=skills\/prism\/tests\/studio-canonical-image\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts[\s\S]*SWARM_CONFIG=\/tmp\/studio-authored\/swarm\.config\.json node --test --test-concurrency=1 \/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts \/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts/,
+  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts[\s\S]*source=skills\/prism\/tests\/fixtures\/studio-service\.mts,target=\/app\/prism\/skills\/prism\/tests\/fixtures\/studio-service\.mts[\s\S]*source=skills\/prism\/tests\/studio-canonical-image\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts[\s\S]*PRISM_STUDIO_IMAGE_PROOF=\/opt\/prism-studio-proof node --test --test-concurrency=1 \/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts \/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts/,
   'the final Studio image must run original HTTP cases and canonical profile as its runtime user',
 );
+assert.ok(isImageInput('scripts/build-studio-image-proof.mjs'), 'Studio proof-only source changes must rebuild the image');
+assert.match(prismStudioDockerfile, /node scripts\/build-studio-image-proof\.mjs \/build \/image/, 'Studio HTTP proof must use real build-published generations');
+assert.match(read('scripts/build-studio-image-proof.mjs'), /await materializePipelineGeneration\(/, 'Studio HTTP proof must use the genuine generation publisher');
+assert.match(read('scripts/check-built-runtime-image.sh'), /PRISM_STUDIO_IMAGE_PROOF=\/opt\/prism-studio-proof[\s\S]*"\$image" --test --test-concurrency=1[\s\S]*studio-service\.test\.mts[\s\S]*studio-canonical-image\.mts/, 'built Studio candidates must execute both original HTTP suites');
+
 
 assert.match(
   chart,

@@ -140,3 +140,5 @@ scripts/updates/*
 !scripts/buster-runtime-config-root.mjs
 
 !scripts/sync-review-owned-policy-schema.mjs
+
+!scripts/build-studio-image-proof.mjs

@@ -12,6 +12,7 @@ RUN sh docker/install-prism-build-tools.sh \
  && npm run plugin-system:sandbox:build \
  && npm run typecheck --prefix skills/prism \
  && node scripts/build-prism-image-bundle.mjs prism-studio /image "$KUBECLAW_BUILD_REVISION" \
+ && node scripts/build-studio-image-proof.mjs /build /image \
  && npm prune --omit=dev --ignore-scripts
 
 FROM ${NODE_BASE}
@@ -21,7 +22,14 @@ COPY --from=build /image/role /app/prism
 COPY --from=build /image/generation/system /etc/kubeclaw/config
 COPY --from=build /image/delivery /run/pipeline-delivery
 COPY --from=build /build/skills/prism/dist-studio /opt/prism-studio
+COPY --from=build /image/studio-proof /opt/prism-studio-proof
+# Only the original post-publication mutation input is writable; never receipts/code.
+RUN chown node:node /opt/prism-studio-proof/*/author/components/prism-studio.config.json
 USER node
 ENV NODE_ENV=production STUDIO_ROOT=/opt/prism-studio
+RUN --mount=type=bind,source=skills/prism/tests/studio-service.test.mts,target=/app/prism/skills/prism/tests/studio-service.test.mts \
+    --mount=type=bind,source=skills/prism/tests/fixtures/studio-service.mts,target=/app/prism/skills/prism/tests/fixtures/studio-service.mts \
+    --mount=type=bind,source=skills/prism/tests/studio-canonical-image.mts,target=/app/prism/skills/prism/tests/studio-canonical-image.mts \
+    PRISM_STUDIO_IMAGE_PROOF=/opt/prism-studio-proof node --test --test-concurrency=1 /app/prism/skills/prism/tests/studio-service.test.mts /app/prism/skills/prism/tests/studio-canonical-image.mts
 EXPOSE 8080
 CMD ["node","--experimental-strip-types","skills/packages/prism-engine/server/studio.ts"]

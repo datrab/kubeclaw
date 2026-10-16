@@ -48,6 +48,14 @@ PROFILE
     docker run --rm --network none --entrypoint node \
       -v "$PWD/tests/verification/deployment/prism-swarm-image.mjs:/swarm-proof.mjs:ro" \
       "$image" /swarm-proof.mjs "$role"
+    if [[ "$role" == prism-studio ]]; then
+      docker run --rm --network none --entrypoint node \
+        -e PRISM_STUDIO_IMAGE_PROOF=/opt/prism-studio-proof \
+        -v "$PWD/skills/prism/tests/studio-service.test.mts:/app/prism/skills/prism/tests/studio-service.test.mts:ro" \
+        -v "$PWD/skills/prism/tests/studio-canonical-image.mts:/app/prism/skills/prism/tests/studio-canonical-image.mts:ro" \
+        -v "$PWD/skills/prism/tests/fixtures/studio-service.mts:/app/prism/skills/prism/tests/fixtures/studio-service.mts:ro" \
+        "$image" --test --test-concurrency=1 /app/prism/skills/prism/tests/studio-service.test.mts /app/prism/skills/prism/tests/studio-canonical-image.mts
+    fi
     ;;
   namespace-controller|archviewer)
     # These Dockerfiles execute their acceptance gates during the build.
