@@ -1,0 +1,48 @@
+✔ CR01 both selected consumer snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (21.506424ms)
+✔ CR01 both selected consumer snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (8.339595ms)
+✔ CR01 both roles reject maximumResultBytes=undefined (5.013269ms)
+✔ CR01 both roles reject maximumResultBytes=null (4.992849ms)
+✔ CR01 both roles reject maximumResultBytes=5 (15.884879ms)
+✔ CR01 both roles reject maximumResultBytes=0 (5.08634ms)
+✔ CR01 both roles reject maximumResultBytes=-1 (4.604739ms)
+✔ CR01 both roles reject maximumResultBytes=1.5 (5.42484ms)
+✔ CR01 both roles reject maximumResultBytes=2147483648 (4.578078ms)
+✔ CR01 both roles reject dispatchTimeoutMs=undefined (2.781962ms)
+✔ CR01 both roles reject dispatchTimeoutMs=null (2.781901ms)
+✔ CR01 both roles reject dispatchTimeoutMs=5 (2.480444ms)
+✔ CR01 both roles reject dispatchTimeoutMs=0 (2.419572ms)
+✔ CR01 both roles reject dispatchTimeoutMs=-1 (2.434483ms)
+✔ CR01 both roles reject dispatchTimeoutMs=1.5 (2.474413ms)
+✔ CR01 both roles reject dispatchTimeoutMs=2147483648 (2.572626ms)
+✔ CR01 both roles reject missing or unsupported native section (3.756197ms)
+✔ CR01 both roles reject missing or unsupported native section (3.726736ms)
+✔ CR01 both roles reject missing or unsupported native section (4.190657ms)
+✔ CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES (2.118155ms)
+✔ CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS (1.699814ms)
+✔ CR03 original HTTP transport enforces 8 UTF-8 bytes (38.492591ms)
+✔ CR03 original HTTP transport enforces 9 UTF-8 bytes (15.841748ms)
+✔ CR04 real headers deadline follows short and long author budgets (391.768157ms)
+✔ CR04 real body deadline follows short and long author budgets (409.666757ms)
+✔ CR01 inactive control profile cannot replace selected transport; invalid inactive profile rejects (18.009513ms)
+✔ CR05 real journal consumes authored 2053 byte result limit (136.384381ms)
+✔ CR05 real journal consumes authored 2054 byte result limit (140.755544ms)
+✔ only the admitted owner can cancel a pending original render; callers without cancellation still coalesce (7.995426ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (70.32133ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (41.478838ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.180396ms)
+✔ native connection refusal retains its safe operator system code (10.605013ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.191045ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ current specialist renders through the original authenticated artifact service (87.834161ms)
+✔ original artifact service rejects actual full-log storage corruption (15.861909ms)
+✔ captured historical receipts and evidence retain their original validated digests (35.782852ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (24.568953ms)
+✔ historical real receipts remain readable and cannot be reinterpreted as native task receipts (39.916168ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (19.093911ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2684.498754
