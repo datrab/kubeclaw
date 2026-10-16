@@ -1,0 +1,45 @@
+{
+  "qualification": "Exact inspected source seams only, not complete repository acceptance; no original case outcomes rewritten.",
+  "rows": [
+    {
+      "source": "tests/verification/contracts/buster-settings-registry.test.mjs",
+      "classification": "MIGRATED_CURRENT_SELECTED_RUNTIME",
+      "scope": "preparation/admission/dependencyReadiness/execution/observation"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+      "classification": "MIGRATED_CURRENT_SELECTED_RUNTIME",
+      "scope": "actual runtime profile, allowedSecretReferences and retired Helm locator"
+    },
+    {
+      "source": "tests/verification/reliability/pipeline-boot.test.mjs:56",
+      "classification": "REMAINING_CURRENT_ENTRY_FIXTURE",
+      "reason": "Constructs current entry from old chart raw entry; not a historical restore test merely because file is old. Current components are already central; preserve original boot controls during future entry migration."
+    },
+    {
+      "source": "tests/verification/reliability/pipeline-role-readback.test.mjs:31",
+      "classification": "REMAINING_CURRENT_ENTRY_FIXTURE",
+      "reason": "Current role author fixture still starts from legacy entry then sets v3/bindings. Must migrate to central raw entry without authorizing new generation."
+    },
+    {
+      "source": "tests/verification/reliability/pipeline-v10-input-set.test.mts:79",
+      "classification": "RETAIN_NEGATIVE_CONTROL",
+      "reason": "Old root path is intentionally rejected as ROOT_SET; no actual author read."
+    },
+    {
+      "source": "tests/verification/reliability/fixtures/forge-runtime.mts:63",
+      "classification": "ACTIVE_SEPARATE_LINT_AUTHOR_NOT_COMPONENT_RESIDUAL",
+      "reason": "Reads lint-policy.json, not retired Swarm component. Need exact approved lint ownership before changing."
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts:124",
+      "classification": "ACTIVE_LINT_POLICY_PACK_AND_POLICY",
+      "reason": "Current lint policy/pack originals, not retired component defaults."
+    },
+    {
+      "source": "tests/verification/deployment/prism-central-chart.test.mjs:67",
+      "classification": "RETAIN_NEGATIVE_CONTROL",
+      "reason": "Asserts absence of retired Prism chart config directory."
+    }
+  ]
+}

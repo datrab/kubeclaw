@@ -1,0 +1,87 @@
+[
+  {
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 32.95,
+    "log": "cutover-verified.txt"
+  },
+  {
+    "command": [
+      "node_modules/.bin/tsc",
+      "-p",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-original-registry-cutover-20261016/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 2.93,
+    "log": "typecheck-final.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.12,
+    "log": "diff-final.txt"
+  },
+  {
+    "command": [
+      "git",
+      "add",
+      "--",
+      "tests/verification/contracts/buster-settings-registry.test.mjs",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+      "tests/verification/e2e/registry-test-contract.d.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 0.09,
+    "log": "stage-source.txt"
+  },
+  {
+    "command": [
+      "git",
+      "commit",
+      "-m",
+      "test(config): bind original registry and Kubernetes cutover to central runtime"
+    ],
+    "exitCode": 0,
+    "seconds": 0.19,
+    "log": "commit-source.txt"
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exitCode": 0,
+    "seconds": 0.0,
+    "log": "source-sha.txt"
+  },
+  {
+    "command": [
+      "git",
+      "push",
+      "origin",
+      "codex/config-c0-semantic-inventory-20261012"
+    ],
+    "exitCode": 0,
+    "seconds": 2.26,
+    "log": "push-source.txt"
+  },
+  {
+    "command": [
+      "git",
+      "ls-remote",
+      "origin",
+      "refs/heads/codex/config-c0-semantic-inventory-20261012"
+    ],
+    "exitCode": 0,
+    "seconds": 1.41,
+    "log": "source-remote.txt"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 0.97,
+    "log": "cutover-final.txt"
+  }
+]
