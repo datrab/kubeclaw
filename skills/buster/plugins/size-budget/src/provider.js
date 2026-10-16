@@ -1,3 +1,4 @@
+import { Readable } from 'node:stream';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -164,9 +165,25 @@ function checksum(block) {
   if (declared !== measured) throw new Error('SIZE_BUDGET_ARCHIVE_CHECKSUM_INVALID');
 }
 
-async function scanTar(file, compressed, signal) {
-  const source = fs.createReadStream('', { fd: file.fd, autoClose: false, start: 0, highWaterMark: 64 * 1024 });
-  const stream = compressed ? source.pipe(createGunzip()) : source;
+async function scanTar(file, compressed, signal, artifact) {
+  const hash = crypto.createHash('sha256');
+  let storedBytes = 0;
+  const observed = Readable.from((async function* () {
+    for (;;) {
+      cancelled(signal);
+      const buffer=Buffer.allocUnsafe(64*1024);
+      const {bytesRead}=await file.read(buffer,0,buffer.length,storedBytes);
+      cancelled(signal);
+      if (!bytesRead) break;
+      const chunk=buffer.subarray(0,bytesRead);
+      storedBytes += bytesRead;
+      if (storedBytes > artifact.sizeBytes) throw new Error('SIZE_BUDGET_INPUT_SIZE_MISMATCH:build-output');
+      hash.update(chunk);
+      yield chunk;
+    }
+  })(), {objectMode:false});
+  const stream = compressed ? observed.pipe(createGunzip()) : observed;
+  if (compressed) observed.on('error',error => stream.destroy(error));
   const files = [];
   const names = new Set();
   let pending = Buffer.alloc(0);
@@ -212,7 +229,10 @@ async function scanTar(file, compressed, signal) {
     }
   } finally {
     signal?.removeEventListener('abort', abort);
+    observed.destroy();
   }
+  if (storedBytes !== artifact.sizeBytes) throw new Error('SIZE_BUDGET_INPUT_SIZE_MISMATCH:build-output');
+  if (`sha256:${hash.digest('hex')}` !== artifact.contentDigest) throw new Error('SIZE_BUDGET_INPUT_DIGEST_MISMATCH:build-output');
   if (!ended || skip !== 0 || pending.some((byte) => byte !== 0)) throw new Error('SIZE_BUDGET_ARCHIVE_TRUNCATED');
   return files;
 }
@@ -227,12 +247,29 @@ function formatFor(config, artifact) {
   return config.format;
 }
 
+async function verifyMeasuredFile(file,artifact,signal) {
+  const hash=crypto.createHash('sha256'),buffer=Buffer.allocUnsafe(65536);
+  let position=0;
+  for (;;) {
+    cancelled(signal);
+    const {bytesRead}=await file.read(buffer,0,buffer.length,position);
+    cancelled(signal);
+    if (!bytesRead) break;
+    position+=bytesRead;
+    if (position>artifact.sizeBytes) throw new Error('SIZE_BUDGET_INPUT_SIZE_MISMATCH:build-output');
+    hash.update(buffer.subarray(0,bytesRead));
+  }
+  if(position!==artifact.sizeBytes)throw new Error('SIZE_BUDGET_INPUT_SIZE_MISMATCH:build-output');
+  if(`sha256:${hash.digest('hex')}`!==artifact.contentDigest)throw new Error('SIZE_BUDGET_INPUT_DIGEST_MISMATCH:build-output');
+}
+
 async function measurements(config, artifact, file, signal) {
   cancelled(signal);
   const format = formatFor(config, artifact);
+  if (format === 'file') await verifyMeasuredFile(file,artifact,signal);
   const files = format === 'file'
     ? [{ path: String(artifact.artifactId ?? 'build-output'), bytes: artifact.sizeBytes }]
-    : await scanTar(file, format === 'tar-gzip', signal);
+    : await scanTar(file, format === 'tar-gzip', signal, artifact);
   const totalBytes = files.reduce((sum, item) => {
     const next = sum + item.bytes;
     if (!Number.isSafeInteger(next) || next > MAXIMUM_EXPANDED_BYTES) throw new Error('SIZE_BUDGET_TOTAL_LIMIT');
@@ -258,6 +295,8 @@ async function baseline(artifact, signal) {
       if (bytesRead === 0) throw new Error('SIZE_BUDGET_BASELINE_INVALID');
       position += bytesRead;
     }
+    cancelled(signal);
+    if (`sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}` !== artifact.contentDigest) throw new Error('SIZE_BUDGET_INPUT_DIGEST_MISMATCH:baseline');
     try { value = JSON.parse(bytes.toString('utf8')); }
     catch { throw new Error('SIZE_BUDGET_BASELINE_INVALID'); }
   } finally { await source.close(); }
@@ -338,6 +377,7 @@ export function provider() {
         : `Growth is ${change.percent.toFixed(2)}%; maximum ${config.maximumGrowthPercent}%.` });
     const failures = checks.filter((check) => !check.passed);
     const passed = failures.length === 0;
+    cancelled(context.signal);
     const output = baselineEvidence(invocation, context, measured, artifact);
     context.log('stdout', `Measured ${measured.totalBytes} bytes in ${measured.files.length} files from ${artifact.contentDigest}.\n`);
     return {

@@ -1,0 +1,34 @@
+[
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "sha256": "1c5dd88d589198cedb6d56e4faae55655a1f91eb2265852ab03ca8580e5df84d"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "sha256": "268fa724ad8c144a7fb396a6469ec79df0908395d81880e017a2575a7f351712"
+  },
+  {
+    "path": "tests/verification/reliability/quality-input-snapshots.test.mts",
+    "sha256": "3502ece0a69b6fa6d975d16e174155fa473217faed0bdc7bbafd1caa1ecb6956"
+  },
+  {
+    "path": "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py",
+    "sha256": "3d612b0140552124743e987f05695293b795df24a8d3c18250abab0fd03a1878"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+    "sha256": "ff5791f1e5db1194bca1581627f145377ec405f884cfc0880a7451914542bdc7"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+    "sha256": "0db789a82964e2676582e0bee7afd31e046d6f4b6e9604ccaf63474f78207408"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/SOURCE-RECEIVING-CONTRACT.md",
+    "sha256": "024581c00429095f38050e9607284c0c91f7f32cc186e6716d36031ff8947ba3"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/RECEIVING-AND-ORACLES.md",
+    "sha256": "97718a2c7c93ac51e7bb99e5dab800d16dd3e72bf91b6595d94725d4780defe3"
+  }
+]

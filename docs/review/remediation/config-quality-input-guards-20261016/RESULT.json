@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-16T17:03:12.569986+00:00",
+  "status": "FINITE_INPUT_GUARDS_IMPLEMENTED_SOURCE_REVIEW_CLEAN_NOT_FULL_C4",
+  "changedActualConsumers": [
+    "skills/buster/plugins/coverage-budget/src/provider.js",
+    "skills/buster/plugins/size-budget/src/provider.js"
+  ],
+  "checks": {
+    "realFsRegressions": {
+      "passed": 9,
+      "failed": 0
+    },
+    "originalProviderScripts": "both passed unchanged assertions",
+    "independentSourceReview": "clean; exact source manifest, reviewer could not execute shell/tests",
+    "EOFAndCloseCancellationRegression": "two tests fail on exact pre-fix source; pass with final cancellation fences",
+    "supportedBusterRoleReadback": "1/1 on initial guard snapshot; full inert archive restore explicitly excluded after retained ENOSPC; NOT full suite/native PASS"
+  },
+  "qualifiedBoundary": "Coverage actual cap before read/buffer; cancellation during descriptor read and parsing/aggregation. Size tar/gzip exact consumed-byte hash, file-mode final descriptor pass and actual baseline snapshot digest; preserves valid descriptor path-replacement behavior. Cancellation checked after awaited reads and before output. No new authority, graph changes, provider, policy-root, byte-limit author or native-positive claim.",
+  "remainingQualityWork": [
+    "Versioned provider-configuration.v2 task/selectedPolicy transport and actual resolver/runner consumers",
+    "Selected sole package owner processing/declarations and coordinated physical generation/source/delivery/original binding",
+    "Actual producer/inputStore provenance, baseline/source association and native/history/budget acceptance"
+  ],
+  "caseAcceptance": "Original24 fields/168 case definition set is NOT declared fully passed by these9 source guard tests",
+  "deployment": false,
+  "paidEvals": false,
+  "fullC0C6Accepted": false,
+  "baseline": "53612bef2c6b68ef7fd9fc8a2cd2d55e917cea66"
+}

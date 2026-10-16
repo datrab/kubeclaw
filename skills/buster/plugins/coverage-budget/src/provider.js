@@ -1,3 +1,4 @@
+import { setImmediate as yieldTask } from 'node:timers/promises';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -5,13 +6,26 @@ import { fileURLToPath } from 'node:url';
 const MAXIMUM_LCOV_BYTES = 64 * 1024 * 1024;
 const MAXIMUM_LINES = 2_000_000;
 
-function parseLcov(bytes, id) {
+function* lcovLines(text) {
+  let start=0;
+  while(start<=text.length){
+    const newline=text.indexOf('\n',start),end=newline<0?text.length:newline;
+    const contentEnd=newline>=0&&end>start&&text[end-1]==='\r'?end-1:end;
+    yield text.slice(start,contentEnd);
+    start=end+1;
+  }
+}
+
+async function parseLcov(bytes, id, signal) {
+  signal?.throwIfAborted();
   if (bytes.byteLength > MAXIMUM_LCOV_BYTES) throw new Error(`COVERAGE_LCOV_TOO_LARGE:${id}`);
   const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   const files = new Map();
   let current = null;
   let records = 0;
-  for (const raw of text.split(/\r?\n/u)) {
+  let visited = 0;
+  for (const raw of lcovLines(text)) {
+    if ((++visited & 4095) === 0) {await yieldTask(); signal?.throwIfAborted();}
     if (!raw) continue;
     if (raw.startsWith('SF:')) {
       const file = raw.slice(3);
@@ -37,8 +51,43 @@ function parseLcov(bytes, id) {
   }
   if (files.size === 0 || records === 0) throw new Error(`COVERAGE_LCOV_EMPTY:${id}`);
   let total = 0; let covered = 0;
-  for (const lines of files.values()) for (const hits of lines.values()) { total += 1; if (hits > 0) covered += 1; }
+  for (const lines of files.values()) for (const hits of lines.values()) {
+    if ((++visited & 4095) === 0) {await yieldTask(); signal?.throwIfAborted();}
+    total += 1; if (hits > 0) covered += 1;
+  }
   return { id, files, total, covered, percent: total === 0 ? 0 : covered / total * 100 };
+}
+
+
+function sameSnapshot(a, b) {
+  return ['dev','ino','size','mtimeNs'].every(key => a[key] === b[key]);
+}
+
+/** Retain one bounded byte snapshot; do not read the whole file before its cap. */
+async function readLcov(artifact, id, signal) {
+  signal?.throwIfAborted();
+  const handle = await fs.promises.open(fileURLToPath(artifact.storageUrl), fs.constants.O_RDONLY | fs.constants.O_NONBLOCK);
+  try {
+    const before = await handle.stat({bigint:true});
+    signal?.throwIfAborted();
+    if (!before.isFile() || Number(before.size) !== artifact.sizeBytes) throw new Error(`COVERAGE_INPUT_SIZE_MISMATCH:${id}`);
+    if (before.size > BigInt(MAXIMUM_LCOV_BYTES)) throw new Error(`COVERAGE_LCOV_TOO_LARGE:${id}`);
+    const bytes = Buffer.alloc(Number(before.size));
+    let position = 0;
+    while (position < bytes.length) {
+      signal?.throwIfAborted();
+      const {bytesRead} = await handle.read(bytes, position, Math.min(65536,bytes.length-position),position);
+      if (!bytesRead) throw new Error(`COVERAGE_INPUT_SIZE_MISMATCH:${id}`);
+      position += bytesRead;
+    }
+    signal?.throwIfAborted();
+    const after = await handle.stat({bigint:true});
+    signal?.throwIfAborted();
+    if (!sameSnapshot(before,after)) throw new Error(`COVERAGE_INPUT_CHANGED:${id}`);
+    const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
+    if (digest !== artifact.contentDigest) throw new Error(`COVERAGE_INPUT_DIGEST_MISMATCH:${id}`);
+    return bytes;
+  } finally {await handle.close();}
 }
 
 function details(values) {
@@ -47,7 +96,8 @@ function details(values) {
 }
 
 export function provider() {
-  return { async execute(invocation) {
+  return { async execute(invocation, context = {}) {
+    context.signal?.throwIfAborted();
     const config = invocation.configuration.values;
     const minimum = config.minimumLinePercent;
     if (minimum !== undefined && (typeof minimum !== 'number' || !Number.isFinite(minimum) || minimum < 0 || minimum > 100)) {
@@ -56,28 +106,34 @@ export function provider() {
     const inputs = invocation.inputs.filter((input) => input.kind === 'artifact').sort((a, b) => a.name.localeCompare(b.name));
     if (inputs.length === 0) throw new Error('COVERAGE_INPUT_REQUIRED');
     const digests = new Set();
-    const parsed = inputs.map((input) => {
+    const parsed = [];
+    for (const input of inputs) {
       if (input.artifact.mediaType !== 'text/lcov' || !input.artifact.storageUrl.startsWith('file:')) {
         throw new Error(`COVERAGE_INPUT_INVALID:${input.name}`);
       }
       if (digests.has(input.artifact.contentDigest)) throw new Error(`COVERAGE_INPUT_DUPLICATE:${input.name}`);
       digests.add(input.artifact.contentDigest);
-      const bytes = fs.readFileSync(fileURLToPath(input.artifact.storageUrl));
-      if (bytes.byteLength !== input.artifact.sizeBytes) throw new Error(`COVERAGE_INPUT_SIZE_MISMATCH:${input.name}`);
-      const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
-      if (digest !== input.artifact.contentDigest) throw new Error(`COVERAGE_INPUT_DIGEST_MISMATCH:${input.name}`);
-      return parseLcov(bytes, input.name);
-    });
+      const bytes = await readLcov(input.artifact,input.name,context.signal);
+      parsed.push(await parseLcov(bytes,input.name,context.signal));
+    }
     const combinedFiles = new Map();
+    let visited = 0;
     for (const item of parsed) for (const [file, lines] of item.files) {
       const target = combinedFiles.get(file) ?? new Map(); combinedFiles.set(file, target);
-      for (const [line, hits] of lines) target.set(line, Math.max(target.get(line) ?? 0, hits));
+      for (const [line, hits] of lines) {
+        if ((++visited & 4095) === 0) {await yieldTask(); context.signal?.throwIfAborted();}
+        target.set(line, Math.max(target.get(line) ?? 0, hits));
+      }
     }
     let combinedTotal = 0; let combinedCovered = 0;
-    for (const lines of combinedFiles.values()) for (const hits of lines.values()) { combinedTotal += 1; if (hits > 0) combinedCovered += 1; }
+    for (const lines of combinedFiles.values()) for (const hits of lines.values()) {
+      if ((++visited & 4095) === 0) {await yieldTask(); context.signal?.throwIfAborted();}
+      combinedTotal += 1; if (hits > 0) combinedCovered += 1;
+    }
     const combinedPercent = combinedTotal === 0 ? 0 : combinedCovered / combinedTotal * 100;
     const useCombined = config.combine !== false;
     const measured = useCombined ? combinedPercent : Math.min(...parsed.map((item) => item.percent));
+    context.signal?.throwIfAborted();
     const passed = minimum === undefined || measured >= minimum;
     return {
       schemaVersion: 'provider-result.v1', outcome: passed ? 'passed' : 'failed',

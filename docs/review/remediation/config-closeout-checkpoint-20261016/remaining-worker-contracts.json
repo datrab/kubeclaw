@@ -825,5 +825,12 @@
       },
       "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. WORKER_LOG_UTF8_INVALID on invalid/incomplete stream; independent per stream decoding; no configurable suppression."
     }
-  ]
+  ],
+  "implementationCheckpoint": {
+    "sourceCommit": "980374793",
+    "evidence": "docs/review/remediation/config-worker-core-v3-20261016",
+    "sourceVerified": true,
+    "fullOriginalCasesAccepted": false,
+    "nextSourceWork": "Quality v2 receiving and exact remaining reconciliation; not repeated WorkerCore migration"
+  }
 }
