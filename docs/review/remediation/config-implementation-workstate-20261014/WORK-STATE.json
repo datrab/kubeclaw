@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T20:13:24.852286+00:00",
+  "updatedAt": "2026-10-16T20:27:17.991390+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "CONTROL_SESSION_ROLES_V4_SOURCE_WIRED_QB_R02_BOOT_OPEN",
+  "status": "PRISM_RENDER_COMPONENT_V3_SOURCE_WIRED_QB_R02_BOOT_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Complete genuine QB-R02 producer/source/build/baseline and original inputStore reservation/accounting/sealed snapshots/publication fence and coordinated sole-root/Nova receiving; other exact supported residuals. Control14 source joins are implemented, not original semantic acceptance. Keep Quality-v2 denied and all independent original/history/native/archive/fullC0-C6 gates OPEN.",
+  "nextAction": "Complete genuine QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed snapshots/publication and coordinated sole-root/Nova boot receiving. Continue exact supported residuals; separate legacy full-facade fixture migration remains NOT PASSED. Prism renderer7 source fields wired, engine12/13 source joins; original history/native/independent/fullC0-C6 acceptance OPEN. No unchanged green suite replay.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -23631,6 +23631,101 @@
       "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py": "b6f81f22b4d9cbab412ff235e3b18b4118ca0c00ccc99595ededfb70e10a365b",
       "docs/review/remediation/config-final-reconciliation-20261016/prism-control-successors.json": "d1e02acc22bda11c3fd41bae121fc14e834dfe7f5c2251e4d337a91cfd38a74f",
       "docs/review/remediation/config-final-reconciliation-20261016/semantic-successors.json": "097070000c28555e14382735820867236d3e5a9718f49d6857bb18d9cb746975"
+    }
+  },
+  "prismRenderPolicy20261016": {
+    "at": "2026-10-16T20:27:17.991390+00:00",
+    "sourceCommit": "2c7efaf664dc439d1b6d6a017f5feee05db398ec",
+    "sourceRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-prism-render-selection-20261016",
+    "implemented": "Seven coupled renderer fields required in selected component-v3/engine-policy-v2/render-policy-v1 -> actual boot/assigned child/PrismEngine/browser/metadata/baseline. Original engine and result schema identity preserved; selected result has explicit own arm. Actual PNG image dimensions distinct from viewport height. No current owner refill or task author.",
+    "checks": {
+      "focused": {
+        "passed": 17,
+        "total": 17,
+        "failed": 0,
+        "skipped": 0
+      },
+      "originalAuthenticatedWorkerHistoricalCacheAndJournal": {
+        "passed": 8,
+        "total": 8,
+        "failed": 0,
+        "skipped": 0
+      },
+      "originalContractPackage": "exit0; includes original baseline archive5/5",
+      "strictSourceAndRegressionTypecheck": true,
+      "normalPackagedRoleBootAndDeliveredEngineAB": {
+        "passed": 1,
+        "total": 1
+      },
+      "normalPrismAndBusterImageDelivery": {
+        "passed": 8,
+        "total": 8
+      },
+      "generatorsAndChecks": true,
+      "engineExactSourceJoins": {
+        "originalFields": 13,
+        "sourceJoins": 12,
+        "remainingSourceResiduals": 1
+      },
+      "matrixNegativeControlsRejected": 8,
+      "requiredRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "integrityFailures": 0
+      }
+    },
+    "initialFailuresRetained": [
+      "First engine/HTTP test startup inherited NODE_ENV=production and no required engine-content identity; unit tests pass with ordinary NODE_ENV=test. Not a native/image identity spoof.",
+      "Additionally invoked obsolete config-component-bundle suite remains NOT PASSED: SWARM_CONFIG_RETIRED_FULL_FACADE before original assertions. No production API restored or tests weakened; original fixture migration remains OPEN.",
+      "Selected generic-worker fixture expected old render result ID; changed only selected expectation to renderSelected and separately pinned actual original worker/result digest.",
+      "Generated new result validator declaration omitted; added maintained declaration and strict typecheck passed."
+    ],
+    "independentReview": "OPEN; no native spawn/reviewer exposed, no active CONFIG reviewer, no new output; known unchanged same-surface initialization EROFS not retried. Author checks not independent acceptance.",
+    "nativeBrowserAcceptance": "NOT VERIFIED; browser boundary explicitly modeled. Original native/ICU and module/attempt-history gates OPEN.",
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "qualitySealedInputStoreImplemented": false,
+    "qualityProductiveBootImplemented": false,
+    "remaining": [
+      "QB-R02 genuine producer/source/build/baseline association and original inputStore reservation/accounting/sealed snapshot/publication fence; Quality-v2 remains BUDGET_SOURCE_RECEIPT_REQUIRED.",
+      "Coordinated sole-root/all-profile/schema/file-set/actual Nova receiving and normal Quality boot/delivery without denied-v10 promotion.",
+      "Optional HTTP design-provider timeout and other exact supported source residuals.",
+      "Migrate original retired-facade config-component-bundle fixture through declared consumed-owner capture without changing its original obligations.",
+      "Independent complete-source review plus every original history/native/archive/fullC0-C6 obligation remain OPEN."
+    ],
+    "externalInfrastructure": "UNCHANGED owner Raven; isolated Linux/Docker/UID1000/delegated writable cgroup and sufficiently large genuinely root-trusted writable archive filesystem; resume when supplied.",
+    "writerLock": "Same nonblocking exclusive lock held through mutation/checks/source and evidence push; released at turn closeout.",
+    "sourceHashes": {
+      "config/components/prism-execution.config.json": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957",
+      "charts/prism/files/pipeline/prism-topology.json": "bdf633ac4ad664b0c88c1de3bd418f6ebf89fab2c5c1e7d21f15cab94bc6767e",
+      "charts/kubeclaw/files/pipeline/buster-topology.json": "b0c229e8092f5f1a6d75f36f1bb5b341c4663385d825e2b2544e5bc08ff6b28d",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts": "3d45a13396f299c56dde9e030b7635bd405751025cb19c887aa99be029d3d9c7",
+      "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "de23f2b21a94cdeef4e550961673e18b0aa0b43048464ca0f179e10d817563b4",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts": "392ff4b653a19ebacae31f6d20d0c90b762f35269dd3aaa43797a26df7aa2f14",
+      "skills/prism/config/engine-policy.ts": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+      "skills/prism/engine/index.ts": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+      "skills/prism/engine/render-operation.ts": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
+      "skills/prism/engine/render-dimensions.ts": "b7545367472da730cc8d5be0bb63aaf931de9405b07a579d0a2a0c1496607464",
+      "skills/prism/engine/worker-binding.ts": "967e49e3d62cafb8e2618c9b8c982168c2c32922969cdd64f3d8a5f7bc67b47d",
+      "skills/prism/control/worker-results.ts": "3fe28c6a6a370be6b0e70d1e5e5bd02ac75544b4f7c113dfb7b42c3c56bc2ef3",
+      "skills/prism/server/baseline-archive.ts": "df4fe972443a266426b0c3bab69b773bdf77301bf9b40647c30aa87d7e99de9d",
+      "skills/prism/tests/render-selected-policy.test.mts": "c91e3c98a8334fa8ee6069aa4e841af723e36db966a70242e44aaa5becb880d7",
+      "skills/prism/tests/engine.test.mts": "81086bed6c46744b29e7eaa047110abe864f4dc683d1d3631dfb9945758d3569",
+      "tests/verification/reliability/pipeline-role-readback.test.mjs": "e807eea3c3ba38ea8f8ad7c0c4ff89150bb6b5308c532f718cf41c68312c926c",
+      "contracts/prism/v1/schemas/engine-results.v1.json": "4e1c7d4c4e685fd1036d74bcbf84d80d92025744b943b362732c7da2307e3efb",
+      "contracts/prism/v1/scripts/generate-validators.mjs": "a89fe0bb80695a84580609b70ee3f6f92adcd730412818ab41a7dd375b1d84ce",
+      "contracts/prism/v1/src/index.ts": "7e2774d5aa8d78cdf0b1ec287513ca4b468ab2ea7dc6ad0388be2ef4b0a3a9ac",
+      "contracts/prism/v1/src/digest.ts": "aa9a1d1c9e0060e297ce752b87155e28c63959450300daa34c7dbf2f985de68e",
+      "contracts/prism/v1/src/validators.generated.mjs": "58892d862fec8ea6db2f3e5578c218ce59a6ee3b08f77197357f91f329eee7ce",
+      "contracts/prism/v1/src/validators.generated.d.mts": "88ea3beaf7a89be1894e15a4de446e508be1e4a750ccc27b3337971336511657",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-prism-engine.py": "9cd6241d9203355c0923295ae950fa944cc6095b2d5a21036390e6af7e11a6f0",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py": "8977603679055bc0b6cb43037b8ffc1339af4e9e5b3f7a31a6177ddc44c20d0c",
+      "docs/review/remediation/config-final-reconciliation-20261016/prism-engine-successors.json": "e619783e252e9a8d245c8aacb8f3d4b6a3f870864cbe81b38ab700d0c83585ef",
+      "docs/review/remediation/config-final-reconciliation-20261016/semantic-successors.json": "7c499d3f5549968cc91a8c279d7ebf486dc343b46f5cbe9a5f5ab13a86f0d2e7",
+      "docs/review/remediation/config-final-reconciliation-20261016/README.md": "3a2061f2b7617985af8adaf4d933ad07797a26109c09706ce9d59287b60a1aec"
     }
   }
 }

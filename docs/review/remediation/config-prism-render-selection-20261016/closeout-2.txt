@@ -1,0 +1,43 @@
+✔ engine generates, renders, evaluates and publishes idempotently (10.958551ms)
+✖ the generic worker carries an opaque Prism operation (2.500014ms)
+✔ the worker binding rejects unknown operations (0.233276ms)
+✔ concurrent retries share one provider execution (0.668037ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.38724ms)
+✔ an idempotency key cannot identify different requests (0.720219ms)
+✔ Prism creates a valid neutral worker envelope (25.29961ms)
+✔ whole selected/unselected render profiles are required and width relations checked before receiving (66.007475ms)
+✔ selected A survives author B and JSON-restored original assigned child without current-owner refill (20.372893ms)
+✔ actual browser-call receiving and full-page dimensions use selected values (modeled browser, NOT native proof) (6.798515ms)
+✔ closed original v2 engine reader retains original metadata with no selected current values (6.483217ms)
+✔ actual baseline publication records full-page PNG dimensions separately from selected viewport (1.55306ms)
+✔ CI03 original HTTP body boundary follows authored 64 bytes (69.160265ms)
+✔ CI03 original HTTP body boundary follows authored 128 bytes (17.16696ms)
+✔ CI04 production command and real host parser use assigned 64 bytes (1170.486499ms)
+✔ CI04 production command and real host parser use assigned 128 bytes (1175.091167ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 15
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4997.842056
+
+✖ failing tests:
+
+test at skills/prism/tests/engine.test.mts:56:1
+✖ the generic worker carries an opaque Prism operation (2.500014ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /engine-results\.v1\.json#\/\$defs\/render$/. Input:
+  
+  'https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/renderSelected'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/engine.test.mts:71:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/renderSelected',
+    expected: /engine-results\.v1\.json#\/\$defs\/render$/,
+    operator: 'match',
+    diff: 'simple'
+  }

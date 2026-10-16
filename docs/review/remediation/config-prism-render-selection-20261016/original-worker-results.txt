@@ -1,0 +1,16 @@
+✔ CR05 real journal consumes authored 2053 byte result limit (106.71812ms)
+✔ CR05 real journal consumes authored 2054 byte result limit (147.889328ms)
+✔ current specialist renders through the original authenticated artifact service (79.40753ms)
+✔ original artifact service rejects actual full-log storage corruption (15.079887ms)
+✔ captured historical receipts and evidence retain their original validated digests (36.133618ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (23.425791ms)
+✔ historical real receipts remain readable and cannot be reinterpreted as native task receipts (38.318264ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (19.826659ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2066.39599

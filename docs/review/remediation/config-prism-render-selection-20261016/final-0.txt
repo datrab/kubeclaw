@@ -1,0 +1,25 @@
+✔ engine generates, renders, evaluates and publishes idempotently (12.07731ms)
+✔ the generic worker carries an opaque Prism operation (3.049048ms)
+✔ the worker binding rejects unknown operations (0.328899ms)
+✔ concurrent retries share one provider execution (0.969435ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.545664ms)
+✔ an idempotency key cannot identify different requests (1.050707ms)
+✔ Prism creates a valid neutral worker envelope (37.690128ms)
+✔ whole selected/unselected render profiles are required and width relations checked before receiving (62.794003ms)
+✔ selected A survives author B and JSON-restored original assigned child without current-owner refill (18.648949ms)
+✔ actual browser-call receiving and full-page dimensions use selected values (modeled browser, NOT native proof) (6.482757ms)
+✔ closed original v2 engine reader retains original metadata with no selected current values (5.956503ms)
+✔ actual baseline publication records full-page PNG dimensions separately from selected viewport (1.474308ms)
+✔ actual neutral worker keeps original result identity and uses explicit selected result arm (8.126428ms)
+✔ CI03 original HTTP body boundary follows authored 64 bytes (70.787108ms)
+✔ CI03 original HTTP body boundary follows authored 128 bytes (19.256614ms)
+✔ CI04 production command and real host parser use assigned 64 bytes (1172.844444ms)
+✔ CI04 production command and real host parser use assigned 128 bytes (1205.562854ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5051.646955
