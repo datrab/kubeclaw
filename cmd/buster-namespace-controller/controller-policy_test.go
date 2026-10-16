@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"encoding/pem"
 	"net/http"
@@ -181,6 +182,12 @@ func TestControllerActualDeliveredPolicy(t *testing.T) {
 			t.Fatal("no refresh at selected boundary")
 		}
 	}
+	if selected := os.Getenv("CONTROLLER_TEST_DELETION_TIMEOUT_SECONDS"); selected != "" {
+		expected, err := strconv.ParseInt(selected, 10, 64)
+		if err != nil || policy.NamespaceDeletionTimeoutSeconds != expected {
+			t.Fatal("delivered deletion timeout mismatch", policy.NamespaceDeletionTimeoutSeconds, selected)
+		}
+	}
 	f := newReadyHTTPFixture(t, readyCredentials(t))
 	f.controller.policy = policy
 	status, result := f.call("/v1/demo-ready", "producer-token", f.request)
@@ -312,6 +319,70 @@ func TestControllerRefreshPolicyCapture(t *testing.T) {
 	snapshot := map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}
 	if !runtimeSecurityRefreshDue(snapshot, now, time.Duration(a.RuntimeSecurityRefreshSeconds)*time.Second) || runtimeSecurityRefreshDue(snapshot, now, time.Duration(b.RuntimeSecurityRefreshSeconds)*time.Second) {
 		t.Fatal("selected A/B refresh not retained")
+	}
+	if _, err := loadControllerPolicy(file); err == nil {
+		t.Fatal("missing owner accepted")
+	}
+}
+
+// Real API polling: identical deletion becomes visible after A's one-second
+// ceiling but before B's two-second ceiling. Both policies were captured before
+// the owner file disappeared; no current file or fallback is consulted.
+func TestControllerDeletionTimeoutCaptureAndActualPolling(t *testing.T) {
+	p := testControllerPolicy(t)
+	if p.NamespaceDeletionTimeoutSeconds != 120 {
+		t.Fatal("original timeout changed")
+	}
+	file := filepath.Join(t.TempDir(), "policy.json")
+	capture := func(seconds int64) controllerPolicy {
+		t.Helper()
+		p.NamespaceDeletionTimeoutSeconds = seconds
+		raw, _ := json.Marshal(p)
+		if err := os.WriteFile(file, raw, 0600); err != nil {
+			t.Fatal(err)
+		}
+		selected, err := loadControllerPolicy(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return selected
+	}
+	a, b := capture(1), capture(2)
+	if err := os.Remove(file); err != nil {
+		t.Fatal(err)
+	}
+	for _, scenario := range []struct {
+		name        string
+		policy      controllerPolicy
+		wantTimeout bool
+	}{{"A", a, true}, {"B", b, false}} {
+		t.Run(scenario.name, func(t *testing.T) {
+			started := time.Now()
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if r.Method != http.MethodGet || r.URL.Path != "/api/v1/namespaces/test-delete" {
+					t.Error("unexpected request", r.Method, r.URL.Path)
+					w.WriteHeader(500)
+					return
+				}
+				if time.Since(started) >= 1300*time.Millisecond {
+					w.WriteHeader(http.StatusNotFound)
+					return
+				}
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"metadata":{"name":"test-delete"}}`))
+			}))
+			defer server.Close()
+			c := testController(t)
+			c.policy, c.apiURL, c.httpClient, c.pollInterval = scenario.policy, server.URL, server.Client(), 10*time.Millisecond
+			err := c.waitForNamespaceDeleted(context.Background(), "test-delete")
+			if scenario.wantTimeout {
+				if err == nil || !strings.Contains(err.Error(), "cleanup timeout") {
+					t.Fatal("A ceiling ignored", err)
+				}
+			} else if err != nil {
+				t.Fatal("B ceiling ignored", err)
+			}
+		})
 	}
 	if _, err := loadControllerPolicy(file); err == nil {
 		t.Fatal("missing owner accepted")

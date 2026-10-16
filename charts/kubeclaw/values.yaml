@@ -405,6 +405,7 @@ busterNamespaceBroker:
   controller:
     # Sole author for controller runtime limits. Transported as JSON.
     policy:
+      namespaceDeletionTimeoutSeconds: 120
       httpClientTimeoutSeconds: 60
       runtimeSecurityRefreshSeconds: 5
       readyReadHeaderTimeoutSeconds: 5

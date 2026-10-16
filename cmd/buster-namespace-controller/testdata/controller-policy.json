@@ -13,5 +13,6 @@
   "productMaximumBodyBytes": 16384,
   "productDecisionMaximumValiditySeconds": 300,
   "httpClientTimeoutSeconds": 60,
-  "runtimeSecurityRefreshSeconds": 5
+  "runtimeSecurityRefreshSeconds": 5,
+  "namespaceDeletionTimeoutSeconds": 120
 }

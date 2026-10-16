@@ -1478,7 +1478,7 @@ func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, name
 }
 
 func (c *controller) waitForNamespaceDeleted(ctx context.Context, namespaceName string) error {
-	deadline := time.Now().Add(2 * time.Minute)
+	deadline := time.Now().Add(time.Duration(c.policy.NamespaceDeletionTimeoutSeconds) * time.Second)
 	for time.Now().Before(deadline) {
 		err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName, nil, "application/json", nil)
 		if err != nil {

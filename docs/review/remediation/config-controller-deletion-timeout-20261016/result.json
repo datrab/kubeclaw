@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-16T13:14:38.930274+00:00",
+  "fieldId": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+  "originalValue": 120,
+  "owner": "charts/kubeclaw/values.yaml#/busterNamespaceBroker/controller/policy/namespaceDeletionTimeoutSeconds",
+  "change": "Captured selected namespace deletion timeout feeds actual API polling; original120 seconds preserved; local two-minute default removed. Real A1 timeout/B2 deletion success with same1300ms deletion visibility, owner removed after capture; missing/invalid/overflow selection rejected. Real Helm A120/B240 values reach actual Go receiver.",
+  "verification": [
+    {
+      "command": [
+        "gofmt",
+        "-w",
+        "cmd/buster-namespace-controller/controller-policy.go",
+        "cmd/buster-namespace-controller/controller-policy_test.go",
+        "cmd/buster-namespace-controller/main.go"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-deletion-timeout-20261016/check-0.txt"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-json",
+        "./cmd/buster-namespace-controller"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-deletion-timeout-20261016/check-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/deployment/buster-central-delivery.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-deletion-timeout-20261016/check-2.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-deletion-timeout-20261016/check-3.txt"
+    }
+  ],
+  "tests": {
+    "goPassEvents": 123,
+    "deliveryPass": 5
+  },
+  "independentAcceptance": "OPEN; unchanged reviewer EROFS; not retried",
+  "writerLock": "same shared nonblocking; released on process exit",
+  "nextAction": "Independent controller review; remaining controller policy and ENV reconciliation, not whole repository completion."
+}
