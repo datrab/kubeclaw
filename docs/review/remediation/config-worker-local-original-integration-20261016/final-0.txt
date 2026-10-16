@@ -1,0 +1,19 @@
+{"ok":true,"profiles":[1,2],"jobsPerProfile":2,"runtime":"production-factory/default-runner/default-core","nativePreparation":"modeled"}
+✔ tests/verification/contracts/check-pipeline-worker-local-config.mts (5418.736245ms)
+✔ Core requires explicit valid drainTimeoutMs (11.668522ms)
+✔ Core requires explicit valid cancellationTimeoutMs (0.600366ms)
+✔ Core requires explicit valid replayLimit (0.462632ms)
+✔ real drain/cancellation 10/40 (73.305771ms)
+✔ real replay saturation/reclaim 1 (1.383636ms)
+✔ real drain/cancellation 40/10 (51.571307ms)
+✔ real replay saturation/reclaim 2 (1.325365ms)
+{"ok":true,"phase":"5.5-D","states":["starting","ready","draining","stopped","unhealthy"]}
+✔ tests/verification/contracts/check-pipeline-worker-local-runtime.mts (281.429826ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6045.909724

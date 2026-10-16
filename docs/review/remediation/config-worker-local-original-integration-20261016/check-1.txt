@@ -1,0 +1,2 @@
+tests/verification/contracts/check-pipeline-worker-local-config.mts(22,53): error TS7016: Could not find a declaration file for module '../../fixtures/config/pipeline-components.mjs'. '/home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/config/pipeline-components.mjs' implicitly has an 'any' type.
+tests/verification/contracts/check-pipeline-worker-local-config.mts(141,37): error TS2540: Cannot assign to 'replayLimit' because it is a read-only property.

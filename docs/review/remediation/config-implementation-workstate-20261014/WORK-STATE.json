@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T22:00:04.143832+00:00",
+  "updatedAt": "2026-10-16T22:05:27.367179+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_COMPONENT_GENERATION_AND_PRISM_CHART_SUITES_PASS_NOT_FULL_ACCEPTANCE",
+  "status": "ORIGINAL_WORKER_LOCAL_CONTRACT_AND_RUNTIME_GATES_PASS_NOT_FULL_ACCEPTANCE",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Genuine QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 activation. Required independent complete-source/original/history/native/fullC0-C6 gates OPEN. Original Buster admission CLI remains blocked by actual UID1000/setresuid; no subset full command PASS.",
+  "nextAction": "Genuine QB-R02 authenticated original source/build/baseline/store reservation+accounting+sealed bytes+publication receiver, coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving. Current runner has no inputStore-owned reservation/sealed-version API; no fabricated receipt authority. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Remaining original E2E platform consumer still calls removed facade; migrate through approved exact owners, not a synthesized full projection. Required independent complete-source/original/history/native/fullC0-C6 gates remain OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -24205,5 +24205,69 @@
     "writerLock": "same nonblocking repository lock; released at bounded command exit",
     "noHistoricalFollowup": true,
     "sourceSha256": "9b949ea73a0466ea6d6809c05f8def257939dfd8981bea5458defc1c2c8b0b9a"
+  },
+  "workerLocalOriginalIntegration20261016": {
+    "at": "2026-10-16T22:05:27.367179+00:00",
+    "status": "ORIGINAL_WORKER_LOCAL_CONTRACT_AND_RUNTIME_GATES_PASS_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "3ee230c28cf17bdb6d98e6e98f4c58a1b0de62e2",
+    "branch": "codex/config-c0-semantic-inventory-20261012",
+    "verifiedRemoteHead": "3ee230c28cf17bdb6d98e6e98f4c58a1b0de62e2",
+    "matches": true,
+    "evidence": "docs/review/remediation/config-worker-local-original-integration-20261016",
+    "productionSourceChanged": false,
+    "change": "Original worker-local contract now reads complete current central owner envelopes, validates whole profiles and selects actual buster-runtime caller with both consumed owners; preserves all constructor/pre-effect, replay/evidence, remote result and original imported execution graph assertions. Explicit authored replay1/2, two remote jobs each. Shared raw author fixture now has strict mutable document declarations. No policy default or synthetic boot receipt introduced.",
+    "checks": {
+      "originalIntegratedTests": {
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "total": 9
+      },
+      "remoteJobs": 4,
+      "realProviders": true,
+      "nativePreparation": "modeled; not native acceptance",
+      "strictTypecheck": true,
+      "diffCheck": true,
+      "originalRoster": {
+        "counts": {
+          "fields": 2409,
+          "cases": 6845,
+          "requirements": 50
+        },
+        "preserved": {
+          "fields": 2409,
+          "cases": 6845,
+          "requirements": 50
+        },
+        "integrityFailures": 0,
+        "unknownFieldIds": 0,
+        "unknownRequirementIds": 0,
+        "missingTargetLocatorCount": 45,
+        "fullAcceptance": "OPEN"
+      }
+    },
+    "mutationControls": [
+      "Authored replay2 for expected replay1 rejected by original selected-value oracle; final restored original profiles pass all actual remote provider/evidence/replay/import assertions"
+    ],
+    "retainedFailures": [
+      "before.txt: SWARM_CONFIG_RETIRED_FULL_FACADE",
+      "check-1.txt: missing raw fixture declaration and readonly author mutation typing; fixed, final-1.txt exit0"
+    ],
+    "sourceHashes": {
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts": "25fed07d985a1cac6281b773b316896ed0ceb2d634b6b7b5fd3544a7a0a560d6",
+      "tests/fixtures/config/pipeline-components.d.mts": "e9d32e233a4ad2d6a667d74940e4fccba9025d4c521240b2c7975dfc33bda018"
+    },
+    "independentReview": "OPEN: fresh native spawn/reviewer/collaboration discovery empty; CONFIG subagents0 and parent terminal; unchanged same-surface EROFS not retried. Author command execution not independent acceptance.",
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "writerLock": "same nonblocking repository lock; released at bounded command exit",
+    "noHistoricalFollowup": true,
+    "nextAction": "Genuine QB-R02 authenticated original source/build/baseline/store reservation+accounting+sealed bytes+publication receiver, coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving. Current runner has no inputStore-owned reservation/sealed-version API; no fabricated receipt authority. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Remaining original E2E platform consumer still calls removed facade; migrate through approved exact owners, not a synthesized full projection. Required independent complete-source/original/history/native/fullC0-C6 gates remain OPEN.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Actual isolated Linux Docker/UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL database; no trust/kernel/UID spoof or skipped gates."
   }
 }
