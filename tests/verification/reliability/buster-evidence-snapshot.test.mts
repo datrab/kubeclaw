@@ -103,3 +103,54 @@ test('staging total uses the original remaining-byte allowance; no second file o
   await assert.rejects(stageEvidenceFiles(f.source, f.staging, [declaration, second], 2, f.bytes.length * 2 - 1), /TEST_PROVIDER_ARTIFACT_BYTE_LIMIT/);
   assert.deepEqual(fs.readdirSync(f.staging), [declaration.file]);
 });
+
+for (const destination of ['store', 'staging'] as const) {
+  test(`${destination}: original declaration identity survives caller mutation during source read`, async t => {
+    const f = await fixture(t), selected = { ...declaration };
+    await observeSource(t, f.file, handle => {
+      const read = handle.read.bind(handle);
+      t.mock.method(handle, 'read', async (...args: any[]) => {
+        const result = await (read as any)(...args);
+        Object.assign(selected, { evidenceId: 'changed', type: 'log', mediaType: 'text/plain', file: 'changed.bin' });
+        return result;
+      });
+    });
+    if (destination === 'store') {
+      const result = await f.store.store('attempt', f.source, selected, 1024);
+      assert.deepEqual(result.declaration, declaration);
+      assert.equal(result.artifact.type, declaration.type);
+      assert.equal(result.artifact.mediaType, declaration.mediaType);
+      assert.equal(path.basename(new URL(result.artifact.storageUrl).pathname), 'report-report.bin');
+    } else {
+      await stageEvidenceFiles(f.source, f.staging, [selected], 1, 1024);
+      assert.deepEqual(fs.readdirSync(f.staging), ['report.bin']);
+      assert.deepEqual(fs.readFileSync(path.join(f.staging, 'report.bin')), f.bytes);
+    }
+  });
+}
+
+test('staging captures the whole original declaration set before asynchronous directory creation', async t => {
+  const f = await fixture(t), selected = [{ ...declaration }];
+  const mkdir = fs.promises.mkdir.bind(fs.promises);
+  t.mock.method(fs.promises, 'mkdir', async (...args: any[]) => {
+    const result = await (mkdir as any)(...args);
+    if (args[0] === f.staging) selected.splice(0);
+    return result;
+  });
+  assert.deepEqual(await stageEvidenceFiles(f.source, f.staging, selected, 1, 1024), { files: 1, bytes: f.bytes.length });
+  assert.deepEqual(fs.readFileSync(path.join(f.staging, 'report.bin')), f.bytes);
+});
+
+test('staging cancellation after actual final write cannot return completed retention', async t => {
+  const f = await fixture(t), controller = new AbortController();
+  const write = fs.promises.writeFile.bind(fs.promises);
+  t.mock.method(fs.promises, 'writeFile', async (...args: any[]) => {
+    const result = await (write as any)(...args);
+    controller.abort(new Error('ORIGINAL_CANCELLED_AFTER_WRITE'));
+    return result;
+  });
+  await assert.rejects(stageEvidenceFiles(f.source, f.staging, [declaration], 1, 1024, controller.signal), /ORIGINAL_CANCELLED_AFTER_WRITE/);
+  // Existing staged bytes are retained for original uncertain/error handling;
+  // cancellation is not permission to erase files or reset spent accounting.
+  assert.deepEqual(fs.readFileSync(path.join(f.staging, 'report.bin')), f.bytes);
+});

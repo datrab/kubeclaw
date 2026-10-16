@@ -21,6 +21,10 @@ interface StagedEvidenceUse {
 export async function stageEvidenceFiles(evidenceRoot: string, stagingRoot: string,
   declarations: readonly DeclaredEvidenceV1[], maximumFiles: number, maximumBytes: number,
   signal?: AbortSignal): Promise<StagedEvidenceUse> {
+  // Capture original producer declarations before any asynchronous filesystem work.
+  // Readonly types alone do not preserve their identity across caller mutation.
+  declarations = Object.freeze(declarations.map(declaration => Object.freeze({ ...declaration })));
+  signal?.throwIfAborted();
   if (declarations.length > maximumFiles) throw new Error('TEST_PROVIDER_ARTIFACT_FILE_LIMIT');
   await fs.promises.mkdir(stagingRoot, { recursive: true });
   const names = new Set<string>();
@@ -39,7 +43,9 @@ export async function stageEvidenceFiles(evidenceRoot: string, stagingRoot: stri
     }
     await fs.promises.mkdir(path.dirname(destination), { recursive: true });
     await fs.promises.writeFile(destination, content, { flag: 'wx', signal });
+    signal?.throwIfAborted();
   }
+  signal?.throwIfAborted();
   return { files: declarations.length, bytes: total };
 }
 
@@ -115,6 +121,7 @@ export class FileEvidenceStore implements EvidenceStore {
   }
 
   async store(attemptId: string, evidenceRoot: string, declaration: DeclaredEvidenceV1, maximumBytes: number, signal?: AbortSignal): Promise<StoredEvidence> {
+    declaration = Object.freeze({ ...declaration });
     const content = await readContainedFile(evidenceRoot, declaration.file, maximumBytes, signal);
     signal?.throwIfAborted();
     const digest = `sha256:${crypto.createHash('sha256').update(content).digest('hex')}`;
