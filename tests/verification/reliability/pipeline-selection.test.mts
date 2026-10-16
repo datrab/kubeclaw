@@ -14,8 +14,8 @@ function fixture(t: TestContext) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-selection-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   fs.mkdirSync(path.join(root, 'components'));
-  const source = new URL('../../../charts/kubeclaw/files/config/', import.meta.url);
-  const entry = JSON.parse(fs.readFileSync(new URL('swarm.config.json', source), 'utf8'));
+  const source = new URL('../../../config/', import.meta.url);
+  const entry = JSON.parse(fs.readFileSync(new URL('pipeline.config.json', source), 'utf8'));
   entry.schemaVersion = 'pipeline-entry.v3';
   entry.components = Object.fromEntries(owners.map(owner => [owner, `components/${owner}.config.json`]));
   entry.bindings = [{ role: 'prism', owner: 'prism-studio', instanceId: 'test.release/studio', profileId: 'standard' }];
@@ -23,10 +23,9 @@ function fixture(t: TestContext) {
   const writeEntry = () => fs.writeFileSync(file, JSON.stringify(entry));
   writeEntry();
   for (const owner of owners) {
-    const raw = JSON.parse(fs.readFileSync(new URL(`${owner}.config.json`, source), 'utf8'));
-    fs.writeFileSync(path.join(root, entry.components[owner]), JSON.stringify({
-      schemaVersion: 'pipeline-component.v2', owner, profiles: { standard: { settings: raw.settings } },
-    }));
+    // Copy each complete, versioned production author; never relabel current
+    // settings as component-v2 or reconstruct an obsolete full-facade document.
+    fs.copyFileSync(new URL(`components/${owner}.config.json`, source), path.join(root, entry.components[owner]));
   }
   const selection: SwarmSelection = { role: 'prism', serviceInstanceId: 'test.release/studio', callerId: 'prism-studio',
     bindings: [{ owner: 'prism-studio', instanceId: 'test.release/studio', profileId: 'standard' }] };

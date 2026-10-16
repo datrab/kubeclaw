@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-16T20:35:21.350379+00:00",
+  "status": "original-fixtures-migrated-author-verification-passed",
+  "evidence": "docs/review/remediation/config-component-fixture-current-20261016",
+  "change": "Original component bundle obligations now exercise explicit consumed-owner capture of complete real selected-generation authors; companion selection fixture copies actual versioned files rather than relabeling legacy settings component-v2. No production changes or facade restoration.",
+  "checks": {
+    "integrated": {
+      "passed": 30,
+      "total": 30,
+      "failed": 0,
+      "skipped": 0
+    },
+    "requiredLeafDeletions": 461,
+    "strictTypecheck": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0
+    }
+  },
+  "originalSymlinkObligation": "Original positive loader alias is superseded by physical image generation contract: entry alias denies, physical generation uses its own seven files and component escape denies. Genuine ConfigMap atomic-writer alias positive remains exercised through unchanged pipeline-boot.test.mjs (9/9) with real readonly package receipts. No test-only realpath resolver, fake boot receipt exemption or production trust change.",
+  "initialFailures": "Component suite10/10 passed immediately; companion selection suite8 original assertions failed before target behavior because its legacy prism-control fixture invalid under current schema. Corrected raw source only; all11 original selection assertions pass unchanged. Strict TS initially rejected unknown preparation; explicit existing BusterPreparationSettings type and non-vacuous object presence assertions now pass.",
+  "sourceHashes": {
+    "tests/verification/reliability/config-component-bundle.test.mts": "8008e7eeabc912b2e6ad45daff2108d5ec6b863fd3705e567a46aa65159cb919",
+    "tests/verification/reliability/pipeline-selection.test.mts": "612f16e2642fc4c41fcfbb35057fb44e0a01ee0c12461a4e9a175f337acb52e4"
+  },
+  "independentReview": "OPEN: no native spawn/review tool exposed, active/recent CONFIG subagents0, no fresh reviewer output. Existing unchanged same-surface helper EROFS not retried. Author verification is not independent acceptance.",
+  "qualitySealedInputStoreImplemented": false,
+  "qualityProductiveBootImplemented": false,
+  "qualityActivationAllowed": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "externalInfrastructure": "UNCHANGED owner Raven; required isolated Linux Docker/UID1000/delegated writable cgroup plus sufficient genuinely root-trusted writable archive storage. Resume required native/archive gates when supplied.",
+  "nextAction": "Genuine QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and coordinated sole-root/all-profile/schema/file-set/Nova receiving; optional design-provider timeout remains exact source residual. Independent full original/history/native/C0-C6 gates OPEN.",
+  "writerLock": "same nonblocking repository lock; released on command exit"
+}
