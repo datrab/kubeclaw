@@ -1,7 +1,7 @@
 {
   "schemaVersion": "pipeline-prism-chart-projection.v1",
   "generatedFrom": "config/pipeline.config.json",
-  "generationDigest": "sha256:409e992541d70587346c1795a285d66ea6915194a1e5bf01a0703613f78cfcdc",
+  "generationDigest": "sha256:b793c77ba24e12db8195c8c2c9932c8bf964fc3f71530d74646c562cbfcce3dd",
   "deployment": {
     "namespace": "kubeclaw",
     "releaseName": "prism"
@@ -110,7 +110,10 @@
           "candidateFloor": 100,
           "candidateMultiplier": 10,
           "rrfDamping": 60
-        }
+        },
+        "sessionDefaultRoles": [
+          "editor"
+        ]
       },
       "studio": {
         "port": 8080,

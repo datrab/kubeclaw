@@ -129,6 +129,8 @@ export interface PrismAgentBridgeSettings {
   readonly pollIntervalMs: number;
 }
 export interface PrismControlSettings {
+  /** Required in component-v4 only; older captures retain the original token writer. */
+  readonly sessionDefaultRoles?: readonly ['editor'];
   /** Absent only on the original component-v2 reader. V3 requires all leaves. */
   readonly corpusRanking?: import('./corpus-ranking.ts').CorpusRankingPolicy;
   readonly agentToolControlUrl: string;

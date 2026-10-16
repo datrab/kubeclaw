@@ -71,6 +71,7 @@ export function loadControlServerConfig(capture: PipelineBootCapture, environmen
     nativeAttemptEvidenceBytes: control.nativeAttemptEvidenceBytes,
     nativeAttemptEvidenceFiles: control.nativeAttemptEvidenceFiles,
     sessionLifetimeSeconds: control.sessionLifetimeSeconds,
+    ...(control.sessionDefaultRoles ? {sessionDefaultRoles: control.sessionDefaultRoles} : {}),
     ingestionAcquireTimeoutMs: control.ingestionAcquireTimeoutMs,
     ingestionCleanupTimeoutMs: control.ingestionCleanupTimeoutMs,
 

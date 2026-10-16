@@ -134,7 +134,7 @@ control_path = str((OUT / 'prism-control-successors.json').relative_to(ROOT))
 control_joins = read(control_path)
 control_exact = {r['id']: r for r in control_joins['rows'] if r['status'] == 'EXACT_PRISM_CONTROL_SOURCE_JOIN'}
 control_open = {r['id']: r for r in control_joins['rows'] if r['status'] == 'PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN'}
-if len(control_exact) != 13 or len(control_open) != 1 or set(control_exact) & (set(attempt_exact) | set(engine_exact) | set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
+if len(control_exact) != 14 or len(control_open) != 0 or set(control_exact) & (set(attempt_exact) | set(engine_exact) | set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
     raise ValueError('Prism control roster overlap/drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:

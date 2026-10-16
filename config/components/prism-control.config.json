@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "pipeline-component.v3",
+  "schemaVersion": "pipeline-component.v4",
   "owner": "prism-control",
   "profiles": {
     "standard": {
@@ -90,7 +90,10 @@
           "candidateFloor": 100,
           "candidateMultiplier": 10,
           "rrfDamping": 60
-        }
+        },
+        "sessionDefaultRoles": [
+          "editor"
+        ]
       }
     },
     "spiffe": {
@@ -181,7 +184,10 @@
           "candidateFloor": 100,
           "candidateMultiplier": 10,
           "rrfDamping": 60
-        }
+        },
+        "sessionDefaultRoles": [
+          "editor"
+        ]
       }
     }
   }

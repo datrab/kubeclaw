@@ -12,6 +12,7 @@ const entry = JSON.parse(fs.readFileSync(new URL('pipeline.config.json', root), 
 const selection = { role: 'prism' as const, callerId: 'prism-control' as const,
  serviceInstanceId: 'kubeclaw/prism/prism-control',
  bindings: entry.bindings.filter((b: any) => b.instanceId === 'kubeclaw/prism/prism-control').map(({role: _, ...b}: any) => b) };
+const selectedControlProfile = selection.bindings.find((b: any) => b.owner === 'prism-control').profileId;
 function request(text: string) { return Object.assign(Readable.from([Buffer.from(text)]), {headers: {'content-type': 'application/json'}}) as unknown as IncomingMessage; }
 test('central body limits preserve existing sizes', () => {
  const s = captureSwarmSettings(new URL('pipeline.config.json', root).pathname, selection).components['prism-control']!.settings;
@@ -22,7 +23,7 @@ test('central body limits preserve existing sizes', () => {
 test('alternate selected limits govern parsing; missing or invalid limits reject', async t => {
  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'control-http-config-')); t.after(() => fs.rmSync(dir, {recursive:true,force:true})); fs.cpSync(root, dir, {recursive:true});
  const file = path.join(dir, 'components/prism-control.config.json'); const author = JSON.parse(fs.readFileSync(file,'utf8'));
- const settings = author.profiles.standard.settings;
+ const settings = author.profiles[selectedControlProfile].settings;
  for (const key of ['maximumJsonBodyBytes','maximumArtifactUploadBodyBytes','maximumProductInputBytes','maximumProductControllerResponseBytes','maximumProductControllerTokenCharacters']) {
   const prior = settings[key]; settings[key] = 4; fs.writeFileSync(file,JSON.stringify(author));
   const selected = captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings[key] as number;
@@ -40,7 +41,7 @@ test('body helper cannot silently omit its limit', async () => {
 test('selected decoded artifact limit governs upload publication', async t => {
  const {corpusRoutes} = await import('../../../skills/prism/server/corpus-routes.ts');
  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'artifact-limit-')); t.after(() => fs.rmSync(dir,{recursive:true,force:true})); fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json'); const author=JSON.parse(fs.readFileSync(file,'utf8')); const settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json'); const author=JSON.parse(fs.readFileSync(file,'utf8')); const settings=author.profiles[selectedControlProfile].settings;
  settings.maximumArtifactBytes=3;fs.writeFileSync(file,JSON.stringify(author));
  const selected=captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings;
  let writes=0; const context={config:selected,artifacts:{put:async (bytes: Buffer)=>{writes++;return {size:bytes.length};}}} as any;
@@ -56,7 +57,7 @@ test('selected aggregate render budget controls engine and baseline before worke
  const {engineRoute} = await import('../../../skills/prism/server/engine-route.ts');
  const {baselineAssets} = await import('../../../skills/prism/server/baseline-archive.ts');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'render-budget-')); t.after(()=>fs.rmSync(dir,{recursive:true,force:true})); fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json'); const author=JSON.parse(fs.readFileSync(file,'utf8')); const settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json'); const author=JSON.parse(fs.readFileSync(file,'utf8')); const settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.maximumRenderAssetBytes,6000000); settings.maximumRenderAssetBytes=3; fs.writeFileSync(file,JSON.stringify(author));
  const selected=captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings;
  const document={assets:{a:{artifact:'a',mediaType:'image/png'},b:{artifact:'b',mediaType:'image/png'}}} as any;
@@ -74,7 +75,7 @@ test('selected aggregate render budget controls engine and baseline before worke
 test('selected dispatch body budget rejects before signature and database work', async t => {
  const {dispatchRoute}=await import('../../../skills/prism/server/dispatch-route.ts');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'dispatch-budget-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.maximumDispatchBodyBytes,2000000);settings.maximumDispatchBodyBytes=4;fs.writeFileSync(file,JSON.stringify(author));
  const selected=captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings;
  let queries=0;const context={config:{...selected,spiffeEnabled:false,dispatchSecret:'test'},pool:{query:()=>{queries++;throw Error('unexpected database');}}} as any;
@@ -106,7 +107,7 @@ test('Studio selected body limit rejects excess bytes before upstream fetch', as
 test('selected ingestion deadlines govern acquisition and cleanup, including failed publication', async t => {
  const {corpusRoutes}=await import('../../../skills/prism/server/corpus-routes.ts');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'ingestion-deadlines-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.ingestionAcquireTimeoutMs,30000);assert.equal(settings.ingestionCleanupTimeoutMs,10000);
  settings.ingestionAcquireTimeoutMs=123;settings.ingestionCleanupTimeoutMs=456;fs.writeFileSync(file,JSON.stringify(author));
  const selected=captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings;
@@ -124,7 +125,7 @@ test('selected internal evidence cap controls actual artifact route before stora
  const {handleInternalArtifact}=await import('../../../skills/prism/server/internal-artifacts.ts');
  const {createHash}=await import('node:crypto');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'internal-evidence-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.maximumInternalEvidenceBytes,134217728);settings.maximumInternalEvidenceBytes=3;fs.writeFileSync(file,JSON.stringify(author));
  const selected=captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings;
  let writes=0;const options={maximumInternalEvidenceBytes:selected.maximumInternalEvidenceBytes as number,artifacts:{put:async()=>{writes++;return {};}} as any,spiffeEnabled:false,workerSecret:'fixture',trustedWorkerSpiffeId:'',trustedControlSpiffeId:''};
@@ -140,7 +141,7 @@ test('selected session lifetime governs signed expiration and both cookie lifeti
  const {sessionRoutes}=await import('../../../skills/prism/server/session-routes.ts');
  const {verifySession,mintSession}=await import('../../../skills/prism/control/session.ts');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'session-lifetime-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.sessionLifetimeSeconds,900);settings.sessionLifetimeSeconds=7;fs.writeFileSync(file,JSON.stringify(author));
  const selected=captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings;
  const cookies:string[]=[];const before=Date.now();
@@ -158,7 +159,7 @@ test('selected session lifetime governs signed expiration and both cookie lifeti
 
 test('ingestion URL is required centrally and rejects non-HTTP or credential-bearing authors', t => {
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'ingestion-url-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.ingestionUrl,'http://prism-ingestion:8080');
  for(const value of [undefined,'','ftp://example.test','http://user:secret@example.test','http://example.test?query=1',42]){
   settings.ingestionUrl=value;fs.writeFileSync(file,JSON.stringify(author));assert.throws(()=>captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection),/SWARM_CONFIG_INVALID/);
@@ -167,8 +168,8 @@ test('ingestion URL is required centrally and rejects non-HTTP or credential-bea
 
 test('worker URL is required centrally and rejects non-HTTP or credential-bearing authors', t => {
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'worker-url-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles.standard.settings;
- assert.equal(settings.workerUrl,'http://prism-worker:8080');
+ const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles[selectedControlProfile].settings;
+ assert.equal(author.profiles.standard.settings.workerUrl,'http://prism-worker:8080');
  for(const value of [undefined,'','ftp://example.test','http://user:secret@example.test','http://example.test?query=1',42]){
   settings.workerUrl=value;fs.writeFileSync(file,JSON.stringify(author));assert.throws(()=>captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection),/SWARM_CONFIG_INVALID/);
  }
@@ -176,8 +177,8 @@ test('worker URL is required centrally and rejects non-HTTP or credential-bearin
 
 test('internal Control URL is required centrally and rejects non-HTTP or credential-bearing authors', t => {
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'internal-control-url-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles.standard.settings;
- assert.equal(settings.controlInternalUrl,'http://prism-control:8080');
+ const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles[selectedControlProfile].settings;
+ assert.equal(author.profiles.standard.settings.controlInternalUrl,'http://prism-control:8080');
  for(const value of [undefined,'','ftp://example.test','http://user:secret@example.test','http://example.test?query=1',42]){
   settings.controlInternalUrl=value;fs.writeFileSync(file,JSON.stringify(author));assert.throws(()=>captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection),/SWARM_CONFIG_INVALID/);
  }
@@ -185,7 +186,7 @@ test('internal Control URL is required centrally and rejects non-HTTP or credent
 
 test('controller timeout is required positive bounded central policy', t => {
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'product-timeout-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.productControllerTimeoutMs,15000);
  for(const value of [undefined,0,-1,1.5,2147483648,'50']) {settings.productControllerTimeoutMs=value;fs.writeFileSync(file,JSON.stringify(author));assert.throws(()=>captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection),/SWARM_CONFIG_INVALID/);}
  settings.productControllerTimeoutMs=50;fs.writeFileSync(file,JSON.stringify(author));assert.equal(captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings.productControllerTimeoutMs,50);
@@ -198,7 +199,7 @@ test('selected product history limit governs actual ordered SQL rows', async t =
  const {mintSession}=await import('../../../skills/prism/control/session.ts');
  const {handleProductDecisions}=await import('../../../skills/prism/server/product-decisions.ts');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'product-history-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json'), author=JSON.parse(fs.readFileSync(file,'utf8')), settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json'), author=JSON.parse(fs.readFileSync(file,'utf8')), settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.productDecisionHistoryLimit,100);
  const db=new PGlite();t.after(()=>db.close());
  await db.exec("CREATE SCHEMA prism; CREATE TABLE prism.product_decision(decision_id text,intent jsonb,created_at timestamptz,actor_id text); CREATE TABLE prism.product_decision_receipt(decision_id text,receipt jsonb);");
@@ -214,9 +215,9 @@ test('selected product history limit governs actual ordered SQL rows', async t =
 test('central product decision lifetime preserves default and rejects missing or invalid policy', t => {
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'product-lifetime-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
  const file=path.join(dir,'components/prism-control.config.json'), author=JSON.parse(fs.readFileSync(file,'utf8'));
- assert.equal(author.profiles.standard.settings.productDecisionLifetimeMs,300000);
+ assert.equal(author.profiles[selectedControlProfile].settings.productDecisionLifetimeMs,300000);
  for(const value of [120000,undefined,0,-1,1.5,'120000',2147483648]) {
-  author.profiles.standard.settings.productDecisionLifetimeMs=value;fs.writeFileSync(file,JSON.stringify(author));
+  author.profiles[selectedControlProfile].settings.productDecisionLifetimeMs=value;fs.writeFileSync(file,JSON.stringify(author));
   const capture=()=>captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection);
   if(value===120000) assert.equal(capture().components['prism-control']!.settings.productDecisionLifetimeMs,120000);
   else assert.throws(capture,/SWARM_CONFIG_INVALID/);
@@ -232,7 +233,7 @@ test('central native attempt lifetime controls original claim and queue deadline
  finally { if(priorIdentity===undefined) delete process.env.PRISM_ENGINE_CONTENT_DIGEST;else process.env.PRISM_ENGINE_CONTENT_DIGEST=priorIdentity; }
  const {workerAttemptSpecDigest} = await import('@kubeclaw/worker-core');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'attempt-lifetime-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const settings=author.profiles[selectedControlProfile].settings;
  assert.equal(settings.nativeAttemptLifetimeMs,600000);
  assert.equal(settings.nativeAttemptTimeoutMs,300000);
  assert.equal(settings.nativeAttemptCleanupTimeoutMs,10000);
@@ -268,7 +269,7 @@ test('native attempt log ceiling is required and rejects invalid central authors
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'attempt-log-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
  const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));
  for(const value of [undefined,0,-1,1.5,'1024',9007199254740992]) {
-  author.profiles.standard.settings.nativeAttemptLogBytes=value;fs.writeFileSync(file,JSON.stringify(author));
+  author.profiles[selectedControlProfile].settings.nativeAttemptLogBytes=value;fs.writeFileSync(file,JSON.stringify(author));
   assert.throws(()=>captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection),/SWARM_CONFIG_INVALID/);
  }
 });
@@ -282,7 +283,7 @@ test('selected native result and evidence ceilings reach signed envelopes withou
  finally { if(priorIdentity===undefined) delete process.env.PRISM_ENGINE_CONTENT_DIGEST; else process.env.PRISM_ENGINE_CONTENT_DIGEST=priorIdentity; }
  const {workerAttemptSpecDigest}=await import('@kubeclaw/worker-core');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'attempt-output-limits-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8')),settings=author.profiles[selectedControlProfile].settings;
  const artifact={artifactId:'artifact:sha256:'+'a'.repeat(64),type:'input',mediaType:'application/json',contentDigest:'sha256:'+'a'.repeat(64),sizeBytes:2,storageUrl:'http://prism-control/artifact'};
  const keys=['nativeAttemptResultBytes','nativeAttemptEvidenceBytes','nativeAttemptEvidenceFiles'] as const;
  assert.deepEqual(keys.map(k=>settings[k]),[16777216,134217728,64]);
@@ -308,7 +309,7 @@ test('central corpus search policy controls result slots and family diversity wi
  const {corpusRoutes}=await import('../../../skills/prism/server/corpus-routes.ts');
  const {search}=await import('../../../skills/prism/corpus/index.ts');
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'corpus-policy-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
- const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const policy=author.profiles.standard.settings;
+ const file=path.join(dir,'components/prism-control.config.json');const author=JSON.parse(fs.readFileSync(file,'utf8'));const policy=author.profiles[selectedControlProfile].settings;
  assert.deepEqual([policy.corpusSearchDefaultLimit,policy.corpusSearchMaximumLimit,policy.corpusSourceFamilyDefaultLimit,policy.corpusSourceFamilyMaximumLimit],[10,50,2,10]);
  Object.assign(policy,{corpusSearchDefaultLimit:3,corpusSearchMaximumLimit:4,corpusSourceFamilyDefaultLimit:1,corpusSourceFamilyMaximumLimit:2});fs.writeFileSync(file,JSON.stringify(author));
  const config=captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings;
@@ -330,7 +331,7 @@ test('central ingestion deadlines cancel actual HTTP acquisition and cleanup wit
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'ingestion-network-deadlines-'));
  t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.cpSync(root,dir,{recursive:true});
  const file=path.join(dir,'components/prism-control.config.json'),author=JSON.parse(fs.readFileSync(file,'utf8'));
- Object.assign(author.profiles.standard.settings,{ingestionAcquireTimeoutMs:70,ingestionCleanupTimeoutMs:90});fs.writeFileSync(file,JSON.stringify(author));
+ Object.assign(author.profiles[selectedControlProfile].settings,{ingestionAcquireTimeoutMs:70,ingestionCleanupTimeoutMs:90});fs.writeFileSync(file,JSON.stringify(author));
  const selected=captureSwarmSettings(path.join(dir,'pipeline.config.json'),selection).components['prism-control']!.settings;
  let mode='acquire',workerCalls=0,activations=0;const methods:string[]=[];
  const upstream=createServer((req,res)=>{

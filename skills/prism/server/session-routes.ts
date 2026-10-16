@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import { type IncomingMessage, type ServerResponse } from "node:http";
 import {
   exchangeTailscaleIdentity,
+  exchangeSelectedTailscaleIdentity,
   verifySession,
 } from "../control/session.ts";
 
@@ -34,12 +35,10 @@ async function createSession(
       Array.isArray(value) ? value[0] : value,
     ]),
   );
-  const token = exchangeTailscaleIdentity(
-    headers,
-    ingressSecret,
-    sessionSecret,
-    context.config.sessionLifetimeSeconds,
-  );
+  const token = context.config.sessionDefaultRoles === undefined
+    // Explicit original component-v2/v3 compatibility, never a current-owner read.
+    ? exchangeTailscaleIdentity(headers, ingressSecret, sessionSecret, context.config.sessionLifetimeSeconds)
+    : exchangeSelectedTailscaleIdentity(headers, ingressSecret, sessionSecret, context.config.sessionLifetimeSeconds, context.config.sessionDefaultRoles);
   const csrf = randomBytes(24).toString("base64url");
   response.setHeader("set-cookie", [
     `prism_session=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${context.config.sessionLifetimeSeconds}`,

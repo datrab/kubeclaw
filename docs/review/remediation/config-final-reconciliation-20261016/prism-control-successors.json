@@ -1,5 +1,5 @@
 {
-  "scope": "14 original Control fields;13 exact source joins including3 implemented versioned ranking leaves;1 explicit role residual, no original runtime passes",
+  "scope": "14 original Control fields;14 exact source joins including explicit fixed-domain session role receiving; no original runtime passes",
   "inputs": [
     {
       "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-FIELD-CASE-JOINS.json",
@@ -12,8 +12,8 @@
   ],
   "counts": {
     "originalFields": 14,
-    "exactSourceJoins": 13,
-    "remainingOriginalFields": 1
+    "exactSourceJoins": 14,
+    "remainingOriginalFields": 0
   },
   "rows": [
     {
@@ -38,7 +38,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/sessionLifetimeSeconds",
       "authoredProfileLeaves": [
@@ -55,7 +55,7 @@
       ],
       "actualReceivingEffect": {
         "path": "skills/prism/control/session.ts",
-        "sha256": "2835d7847e75430b784eb5a567670d68aac48c4134fe9b701d8d0ab623b88fc2",
+        "sha256": "95ea305a8e213c75a7130a05e2c37632f7f7b5987a6f0e0fdcf6a78a16b0e42f",
         "anchor": "expiresAt: now + lifetimeSeconds * 1000",
         "lines": [
           7
@@ -71,7 +71,7 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "sessionLifetimeSeconds: control.sessionLifetimeSeconds",
         "lines": [
           73
@@ -87,7 +87,7 @@
       },
       "actualCaller": {
         "path": "skills/prism/server/session-routes.ts",
-        "sha256": "9fbc464f6120174631358359ca9c73ecd7e0249a51dc5aff99f66a579479606d",
+        "sha256": "fcd1a12c0cc164abc779ec1c76f967a784fd02e7f2adcde724cac91ffaa0a659",
         "anchor": "context.config.sessionLifetimeSeconds,",
         "lines": [
           41
@@ -95,16 +95,16 @@
       },
       "cookieProjection": {
         "path": "skills/prism/server/session-routes.ts",
-        "sha256": "9fbc464f6120174631358359ca9c73ecd7e0249a51dc5aff99f66a579479606d",
+        "sha256": "fcd1a12c0cc164abc779ec1c76f967a784fd02e7f2adcde724cac91ffaa0a659",
         "anchor": "Max-Age=${context.config.sessionLifetimeSeconds}",
         "lines": [
-          45,
-          46
+          44,
+          45
         ]
       },
       "expiryVerifier": {
         "path": "skills/prism/control/session.ts",
-        "sha256": "2835d7847e75430b784eb5a567670d68aac48c4134fe9b701d8d0ab623b88fc2",
+        "sha256": "95ea305a8e213c75a7130a05e2c37632f7f7b5987a6f0e0fdcf6a78a16b0e42f",
         "anchor": "session.expiresAt <= now",
         "lines": [
           15
@@ -131,17 +131,65 @@
       "originalHistoryObligation": "Current mint default grants editor; roles array is verified but member types/allowed roles are not validated here. Target role-domain/security review remains open; changing default grants is not a harmless numeric profile change.",
       "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
       "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
-      "status": "PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN",
-      "selectedOwner": null,
-      "actualLiteral": {
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/sessionDefaultRoles",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/sessionDefaultRoles",
+          "valueSha256": "fd88b0443cf09392cecd3217ff2c243438a776db2833c0c37d648f86f02f97be"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/sessionDefaultRoles",
+          "valueSha256": "fd88b0443cf09392cecd3217ff2c243438a776db2833c0c37d648f86f02f97be"
+        }
+      ],
+      "actualReceivingEffect": {
         "path": "skills/prism/control/session.ts",
-        "sha256": "2835d7847e75430b784eb5a567670d68aac48c4134fe9b701d8d0ab623b88fc2",
-        "anchor": "roles=[\"editor\"]",
+        "sha256": "95ea305a8e213c75a7130a05e2c37632f7f7b5987a6f0e0fdcf6a78a16b0e42f",
+        "anchor": "return mintSession(user, sessionSecret, lifetimeSeconds, Date.now(), originalRoles)",
         "lines": [
-          5
+          31
         ]
       },
-      "constraint": "Default editor role remains literal; selected role domain and token/original semantics must be explicit. Do not change grants or add authentication authority hardening."
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
+        "anchor": "sessionDefaultRoles: control.sessionDefaultRoles",
+        "lines": [
+          74
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/server/session-routes.ts",
+        "sha256": "fcd1a12c0cc164abc779ec1c76f967a784fd02e7f2adcde724cac91ffaa0a659",
+        "anchor": "exchangeSelectedTailscaleIdentity(headers",
+        "lines": [
+          41
+        ]
+      },
+      "qualification": "Approved fixed [editor] domain explicitly selected in v4, not adjustable grants. Original v2/v3 token writer and signed-token reader unchanged; no durable session history acceptance inferred."
     },
     {
       "id": "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES",
@@ -165,7 +213,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/maximumJsonBodyBytes",
       "authoredProfileLeaves": [
@@ -198,10 +246,10 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "maximumJsonBodyBytes: control.maximumJsonBodyBytes",
         "lines": [
-          87
+          88
         ]
       },
       "roleProjection": {
@@ -242,7 +290,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/maximumArtifactUploadBodyBytes",
       "authoredProfileLeaves": [
@@ -275,10 +323,10 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "maximumArtifactUploadBodyBytes: control.maximumArtifactUploadBodyBytes",
         "lines": [
-          88
+          89
         ]
       },
       "roleProjection": {
@@ -311,7 +359,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/maximumArtifactBytes",
       "authoredProfileLeaves": [
@@ -344,10 +392,10 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "maximumArtifactBytes: control.maximumArtifactBytes",
         "lines": [
-          86
+          87
         ]
       },
       "roleProjection": {
@@ -380,7 +428,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusSearchDefaultLimit",
       "authoredProfileLeaves": [
@@ -413,7 +461,7 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "corpusSearchDefaultLimit: control.corpusSearchDefaultLimit",
         "lines": [
           61
@@ -458,7 +506,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusSearchMaximumLimit",
       "authoredProfileLeaves": [
@@ -491,7 +539,7 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "corpusSearchMaximumLimit: control.corpusSearchMaximumLimit",
         "lines": [
           62
@@ -536,7 +584,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusSourceFamilyDefaultLimit",
       "authoredProfileLeaves": [
@@ -569,7 +617,7 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "corpusSourceFamilyDefaultLimit: control.corpusSourceFamilyDefaultLimit",
         "lines": [
           63
@@ -614,7 +662,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusSourceFamilyMaximumLimit",
       "authoredProfileLeaves": [
@@ -647,7 +695,7 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "corpusSourceFamilyMaximumLimit: control.corpusSourceFamilyMaximumLimit",
         "lines": [
           64
@@ -692,7 +740,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusRanking/candidateFloor",
       "authoredProfileLeaves": [
@@ -725,7 +773,7 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "corpusRanking: control.corpusRanking",
         "lines": [
           60
@@ -786,7 +834,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusRanking/candidateMultiplier",
       "authoredProfileLeaves": [
@@ -819,7 +867,7 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "corpusRanking: control.corpusRanking",
         "lines": [
           60
@@ -880,7 +928,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusRanking/rrfDamping",
       "authoredProfileLeaves": [
@@ -913,7 +961,7 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "corpusRanking: control.corpusRanking",
         "lines": [
           60
@@ -974,7 +1022,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionAcquireTimeoutMs",
       "authoredProfileLeaves": [
@@ -1007,10 +1055,10 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "ingestionAcquireTimeoutMs: control.ingestionAcquireTimeoutMs",
         "lines": [
-          74
+          75
         ]
       },
       "roleProjection": {
@@ -1044,7 +1092,7 @@
       "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
       "selectedOwner": {
         "path": "config/components/prism-control.config.json",
-        "sha256": "00a172e29ec4bd706aef058d00faa2c7718fe773c5a65322c906ca85ee8b65d9"
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
       },
       "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionCleanupTimeoutMs",
       "authoredProfileLeaves": [
@@ -1077,10 +1125,10 @@
       },
       "composition": {
         "path": "skills/prism/server/control-config.ts",
-        "sha256": "be71fb98794d4796bc29d64077f1114f61f720a9e12e60de8b56c2dc3bf57eb7",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
         "anchor": "ingestionCleanupTimeoutMs: control.ingestionCleanupTimeoutMs",
         "lines": [
-          75
+          76
         ]
       },
       "roleProjection": {

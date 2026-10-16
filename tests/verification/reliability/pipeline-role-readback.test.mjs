@@ -558,6 +558,18 @@ test('real Prism role package readback drives all service caller compositions', 
   assert.equal(newControl.ingestionCleanupTimeoutMs, 1000);
   assert.equal(configs.control.loadControlServerConfig(controlB, credentials).nativeAttemptLifetimeMs, 123000);
   const retainedControl = configs.control.loadControlServerConfig(captures['prism-control'], credentials);
+  const {sessionRoutes: deliveredSessionRoutes} = await import(pathToFileURL(path.join(engine, 'session-routes.ts')).href);
+  const {verifySession: deliveredVerifySession} = await import(pathToFileURL(path.join(engine, '../control/session.ts')).href);
+  for (const selected of [retainedControl, newControl]) {
+    assert.deepEqual(selected.sessionDefaultRoles, ['editor']);
+    assert.ok(Object.isFrozen(selected.sessionDefaultRoles));
+    let cookies;
+    const handled = await deliveredSessionRoutes({config:selected}, {method:'POST',headers:{'tailscale-user-login':'operator','x-prism-ingress-secret':selected.ingressSecret}},
+      {setHeader(name,value){if(name==='set-cookie')cookies=value;},writeHead(status){assert.equal(status,201);},end(){}}, new URL('https://control/v1/session'));
+    assert.equal(handled,true);
+    const token=decodeURIComponent(cookies[0].split(';')[0].slice('prism_session='.length));
+    assert.deepEqual(deliveredVerifySession(token,selected.sessionSecret).roles,['editor']);
+  }
   // Verify delivered route and real selection with deterministic DB boundary rows.
   // This proves consumer wiring, not PostgreSQL ranking/native acceptance.
   const { corpusRoutes: deliveredCorpusRoutes } = await import(pathToFileURL(path.join(engine, 'corpus-routes.ts')).href);

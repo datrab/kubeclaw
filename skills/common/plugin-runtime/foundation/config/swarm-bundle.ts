@@ -99,12 +99,12 @@ const settingsValidators = new Map(settingsDefinitionNames.map(name => [name, aj
     ? '#/$defs/buster-cluster-invokers/properties/runtimeSecurity' : `#/$defs/${name}`,
 })]));
 interface Component {
-  readonly schemaVersion: 'pipeline-component.v2' | 'pipeline-component.v3';
+  readonly schemaVersion: 'pipeline-component.v2' | 'pipeline-component.v3' | 'pipeline-component.v4';
   readonly owner: Owner;
   readonly settings: Readonly<Record<string, unknown>>;
 }
 interface ComponentAuthor {
-  readonly schemaVersion: 'pipeline-component.v2' | 'pipeline-component.v3';
+  readonly schemaVersion: 'pipeline-component.v2' | 'pipeline-component.v3' | 'pipeline-component.v4';
   readonly owner: Owner;
   readonly profiles: Readonly<Record<string, Readonly<{ settings: Readonly<Record<string, unknown>> }>>>;
 }
@@ -383,7 +383,7 @@ export function readSwarmBundle(file: string | undefined, selection?: SwarmSelec
         ? validateWorkerCoreV3Author(value) : validateComponent(value)) || (value as ComponentAuthor).owner !== owner) {
         throw new Error(`SWARM_CONFIG_INVALID:component:${owner}`);
       }
-      if (owner === 'prism-control' && (value as ComponentAuthor).schemaVersion === 'pipeline-component.v3') {
+      if (owner === 'prism-control' && ['pipeline-component.v3', 'pipeline-component.v4'].includes((value as ComponentAuthor).schemaVersion)) {
         for (const profile of Object.values((value as ComponentAuthor).profiles)) {
           const ranking = captureCorpusRanking(profile.settings.corpusRanking as never);
           const candidateLimit = Number(profile.settings.corpusSearchMaximumLimit) * ranking.candidateMultiplier;

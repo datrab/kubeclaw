@@ -19,3 +19,14 @@ export function exchangeTailscaleIdentity(headers: Record<string, string | undef
   const user = headers["tailscale-user-login"]?.trim(); if (!user) throw new Error("missing Tailscale identity");
   return mintSession(user, sessionSecret, lifetimeSeconds);
 }
+
+/** Explicit selected writer. The approved role domain is fixed to editor, not a new grant authority.
+ * Original v2/v3 exchange and signed-token reader above remain unchanged.
+ */
+export function exchangeSelectedTailscaleIdentity(headers: Record<string, string | undefined>, ingressSecret: string, sessionSecret: string, lifetimeSeconds: number, roles: readonly ['editor']): string {
+  if (!Array.isArray(roles) || roles.length !== 1 || roles[0] !== 'editor') throw new Error("invalid selected session roles");
+  const originalRoles = [...roles];
+  if (!ingressSecret || headers["x-prism-ingress-secret"] !== ingressSecret) throw new Error("untrusted ingress");
+  const user = headers["tailscale-user-login"]?.trim(); if (!user) throw new Error("missing Tailscale identity");
+  return mintSession(user, sessionSecret, lifetimeSeconds, Date.now(), originalRoles);
+}
