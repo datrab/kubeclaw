@@ -29,7 +29,7 @@ npm notice run node --test test/*.test.mjs
 test at test/authentication.test.mjs:19:1
 ✖ backend refuses to listen with absent or weak authentication (198.007252ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /requires a bearer token/. Input:
-  
+
   'node:internal/modules/package_json_reader:331\n' +
     '  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n' +
     '        ^\n' +
@@ -49,7 +49,7 @@ test at test/authentication.test.mjs:19:1
     '}\n' +
     '\n' +
     'Node.js v24.21.0\n'
-  
+
       at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/test/authentication.test.mjs:26:12)
       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
       at async Test.run (node:internal/test_runner/test:1409:7)

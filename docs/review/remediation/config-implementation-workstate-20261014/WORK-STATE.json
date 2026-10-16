@@ -22704,6 +22704,18 @@
     },
     "review": "Codex final source review clean after one accepted output-bound finding and corrected stdin import",
     "allRepositoryAccepted": false,
-    "nativeAccepted": false
+    "nativeAccepted": false,
+    "sourceCommit": "d2d8fa5611d4d9473de0d0e314bfc09be5ebb8d0",
+    "remoteVerified": true
+  },
+  "opsDeploymentPolicy20261016": {
+    "status": "implemented-source-reviewed",
+    "evidence": "docs/review/remediation/config-ops-deployment-20261016",
+    "originalDeploymentRegressions": "8/8",
+    "newPolicyTests": "2/2",
+    "generatedProjections": "Prism/Buster --check passed after real drift corrected",
+    "independentReview": "Codex final clean, source-only",
+    "nativeAccepted": false,
+    "deployment": false
   }
 }

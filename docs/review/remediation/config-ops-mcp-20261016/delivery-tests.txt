@@ -17,9 +17,9 @@ test at tests/verification/deployment/ops-mcp-policy.test.mjs:6:1
 ✖ actual Ops Helm A/B delivers the sole captured MCP owner, ports, probes and restart identity (67.885757ms)
   Error: Command failed: /usr/local/bin/helm template ops charts/ops-pod --namespace test -f /tmp/ops-delivery-GJfMrS/values-8080.yaml
   Error: execution error at (kubeclaw-ops/templates/network.yaml:3:4): networkPolicy.apiServerCIDRs is required; use scripts/deploy-ops-pod.sh deploy to discover it
-  
+
   Use --debug flag to render out invalid YAML
-  
+
       at genericNodeError (node:internal/errors:986:15)
       at wrappedFn (node:internal/errors:540:14)
       at checkExecSyncError (node:child_process:942:11)

@@ -1,0 +1,386 @@
+file:///tmp/deployment-selection-uH1gHD/scripts/updates/release-configuration.mjs:82
+  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                ^
+
+Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-uH1gHD/scripts/updates/release-configuration.mjs:82:65)
+    at file:///tmp/deployment-selection-uH1gHD/scripts/updates/materialize-release.mjs:20:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-Er9FVW/scripts/updates/release-configuration.mjs:82
+  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                ^
+
+Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-Er9FVW/scripts/updates/release-configuration.mjs:82:65)
+    at file:///tmp/deployment-selection-Er9FVW/scripts/updates/materialize-release.mjs:20:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-WkIYj7/scripts/updates/release-configuration.mjs:82
+  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                ^
+
+Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-WkIYj7/scripts/updates/release-configuration.mjs:82:65)
+    at file:///tmp/deployment-selection-WkIYj7/scripts/updates/materialize-release.mjs:20:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-AVgUAi/scripts/updates/release-configuration.mjs:82
+  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                ^
+
+Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-AVgUAi/scripts/updates/release-configuration.mjs:82:65)
+    at file:///tmp/deployment-selection-AVgUAi/scripts/updates/materialize-release.mjs:20:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-7Y9bYG/scripts/updates/release-configuration.mjs:82
+  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                ^
+
+Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-7Y9bYG/scripts/updates/release-configuration.mjs:82:65)
+    at file:///tmp/deployment-selection-7Y9bYG/scripts/updates/materialize-release.mjs:20:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-Aq0TZv/scripts/updates/release-configuration.mjs:82
+  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                ^
+
+Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-Aq0TZv/scripts/updates/release-configuration.mjs:82:65)
+    at file:///tmp/deployment-selection-Aq0TZv/scripts/updates/materialize-release.mjs:20:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-r0NpZK/scripts/updates/release-configuration.mjs:82
+  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                ^
+
+Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-r0NpZK/scripts/updates/release-configuration.mjs:82:65)
+    at file:///tmp/deployment-selection-r0NpZK/scripts/updates/materialize-release.mjs:20:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-vCfIZJ/scripts/updates/release-configuration.mjs:82
+  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                ^
+
+Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-vCfIZJ/scripts/updates/release-configuration.mjs:82:65)
+    at file:///tmp/deployment-selection-vCfIZJ/scripts/updates/materialize-release.mjs:20:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (662.361963ms)
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (722.524007ms)
+✖ private operational overlays survive while replaced or removed runtime slots fail (720.741601ms)
+✖ Prism and Ops reject image overrides even when another value could conceal them (773.304678ms)
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (693.137498ms)
+✖ private bundle URL and authentication survive while the selected revision stays fixed (653.806532ms)
+✖ private extraEnv cannot shadow reserved runtime bundle controls (651.111723ms)
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (644.824621ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5607.556467
+
+✖ failing tests:
+
+test at tests/verification/deployment/deployment-release.test.mjs:60:1
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (662.361963ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-uH1gHD/scripts/updates/release-configuration.mjs:82
+    if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                  ^
+
+  Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-uH1gHD/scripts/updates/release-configuration.mjs:82:65)
+      at file:///tmp/deployment-selection-uH1gHD/scripts/updates/materialize-release.mjs:20:3
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:60:114)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-uH1gHD/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-uH1gHD/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-uH1gHD/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2066432,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-uH1gHD/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-uH1gHD/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-uH1gHD/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:83:1
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (722.524007ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-Er9FVW/scripts/updates/release-configuration.mjs:82
+    if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                  ^
+
+  Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-Er9FVW/scripts/updates/release-configuration.mjs:82:65)
+      at file:///tmp/deployment-selection-Er9FVW/scripts/updates/materialize-release.mjs:20:3
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:83:134)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-Er9FVW/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-Er9FVW/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-Er9FVW/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2066451,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-Er9FVW/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-Er9FVW/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-Er9FVW/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:95:1
+✖ private operational overlays survive while replaced or removed runtime slots fail (720.741601ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-WkIYj7/scripts/updates/release-configuration.mjs:82
+    if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                  ^
+
+  Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-WkIYj7/scripts/updates/release-configuration.mjs:82:65)
+      at file:///tmp/deployment-selection-WkIYj7/scripts/updates/materialize-release.mjs:20:3
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:95:97)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-WkIYj7/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-WkIYj7/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-WkIYj7/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2066582,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-WkIYj7/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-WkIYj7/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-WkIYj7/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:108:1
+✖ Prism and Ops reject image overrides even when another value could conceal them (773.304678ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-AVgUAi/scripts/updates/release-configuration.mjs:82
+    if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                  ^
+
+  Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-AVgUAi/scripts/updates/release-configuration.mjs:82:65)
+      at file:///tmp/deployment-selection-AVgUAi/scripts/updates/materialize-release.mjs:20:3
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:108:95)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-AVgUAi/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-AVgUAi/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-AVgUAi/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2066624,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-AVgUAi/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-AVgUAi/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-AVgUAi/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:126:1
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (693.137498ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-7Y9bYG/scripts/updates/release-configuration.mjs:82
+    if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                  ^
+
+  Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-7Y9bYG/scripts/updates/release-configuration.mjs:82:65)
+      at file:///tmp/deployment-selection-7Y9bYG/scripts/updates/materialize-release.mjs:20:3
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:126:107)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-7Y9bYG/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-7Y9bYG/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-7Y9bYG/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2066655,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-7Y9bYG/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-7Y9bYG/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-7Y9bYG/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:137:1
+✖ private bundle URL and authentication survive while the selected revision stays fixed (653.806532ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-Aq0TZv/scripts/updates/release-configuration.mjs:82
+    if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                  ^
+
+  Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-Aq0TZv/scripts/updates/release-configuration.mjs:82:65)
+      at file:///tmp/deployment-selection-Aq0TZv/scripts/updates/materialize-release.mjs:20:3
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:137:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-Aq0TZv/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-Aq0TZv/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-Aq0TZv/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2066679,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-Aq0TZv/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-Aq0TZv/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-Aq0TZv/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:148:1
+✖ private extraEnv cannot shadow reserved runtime bundle controls (651.111723ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-r0NpZK/scripts/updates/release-configuration.mjs:82
+    if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                  ^
+
+  Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-r0NpZK/scripts/updates/release-configuration.mjs:82:65)
+      at file:///tmp/deployment-selection-r0NpZK/scripts/updates/materialize-release.mjs:20:3
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:148:79)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-r0NpZK/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-r0NpZK/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-r0NpZK/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2066697,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-r0NpZK/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-r0NpZK/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-r0NpZK/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:163:1
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (644.824621ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-vCfIZJ/scripts/updates/release-configuration.mjs:82
+    if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');
+                                                                  ^
+
+  Error: RELEASE_CONFIGURATION_FILESET_CHANGED
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-vCfIZJ/scripts/updates/release-configuration.mjs:82:65)
+      at file:///tmp/deployment-selection-vCfIZJ/scripts/updates/materialize-release.mjs:20:3
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:163:93)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-vCfIZJ/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-vCfIZJ/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-vCfIZJ/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2066733,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-vCfIZJ/scripts/updates/release-configuration.mjs:82\n  if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error('RELEASE_CONFIGURATION_FILESET_CHANGED');\n                                                                ^\n\nError: RELEASE_CONFIGURATION_FILESET_CHANGED\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-vCfIZJ/scripts/updates/release-configuration.mjs:82:65)\n    at file:///tmp/deployment-selection-vCfIZJ/scripts/updates/materialize-release.mjs:20:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }

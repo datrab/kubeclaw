@@ -8,9 +8,16 @@ import secrets
 import subprocess
 import sys
 
+from deployment_policy import load_deployment_policy
+
+for legacy in ['OPS_NAMESPACE','OPS_RELEASE','OPS_READ_NAMESPACES','OPS_COPY_PULL_SECRET','OPS_PULL_SECRET_SOURCE_NAMESPACE']:
+    if legacy in os.environ:
+        raise ValueError('OPS_DEPLOYMENT_POLICY_COMPETING_AUTHOR:'+legacy)
+policy=load_deployment_policy(os.environ.get('OPS_DEPLOYMENT_POLICY_FILE', str(Path(__file__).resolve().parents[2]/'charts/ops-pod/deployment-policy.json')))
+
 context = os.environ['KUBE_CONTEXT']
-namespace = os.environ.get('OPS_NAMESPACE', 'kubeclaw-ops')
-base = ['kubectl', '--context', context, '--request-timeout=20s']
+namespace = policy['namespace']
+base = ['kubectl', '--context', context, f"--request-timeout={policy['kubectlRequestTimeoutSeconds']}s"]
 
 def kube(args, data=None):
     result = subprocess.run(base + args, input=data, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -42,7 +49,7 @@ def discover():
     if not cidrs or len(ports) != 1:
         raise SystemExit('Expected ready Kubernetes API addresses and one https endpoint port')
     namespaces = [namespace]
-    requested = os.environ.get('OPS_READ_NAMESPACES', 'kubeclaw,argocd,kube-system,cilium,tailscale,spire-server,spire-system').split(',')
+    requested = policy['readNamespaces']
     for name in requested:
         name = name.strip()
         if not name:
@@ -55,9 +62,9 @@ def discover():
 
 def setup_secrets():
     if not get('secret', 'codex-ops-bearer', namespace):
-        apply_secret('codex-ops-bearer', {'token': secrets.token_urlsafe(48)})
-    if os.environ.get('OPS_COPY_PULL_SECRET', '1') == '1' and not get('secret', 'ghcr-secret', namespace):
-        source = get('secret', 'ghcr-secret', os.environ.get('OPS_PULL_SECRET_SOURCE_NAMESPACE', 'kubeclaw'))
+        apply_secret('codex-ops-bearer', {'token': secrets.token_urlsafe(policy['bearerTokenEntropyBytes'])})
+    if policy['copyPullSecret'] and not get('secret', 'ghcr-secret', namespace):
+        source = get('secret', 'ghcr-secret', policy['pullSecretSourceNamespace'])
         if not source:
             raise SystemExit('Missing ghcr-secret. Create it in the Ops namespace or select a valid source namespace.')
         kube(['apply', '-f', '-'], json.dumps({'apiVersion': 'v1', 'kind': 'Secret',

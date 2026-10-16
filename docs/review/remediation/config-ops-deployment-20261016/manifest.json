@@ -1,0 +1,66 @@
+[
+  {
+    "path": "scripts/deploy.sh",
+    "sha256": "3d6d66560e74cb3c2a9b20457da616093e38b927e609f214e989ed83fe02cc35"
+  },
+  {
+    "path": "charts/prism/files/pipeline/prism-topology.json",
+    "sha256": "fb80f3a539192479464b8c871bd4e7094fc73666de3009ff0f85f5e229802b9f"
+  },
+  {
+    "path": "charts/kubeclaw/files/pipeline/buster-topology.json",
+    "sha256": "5cdcc1b40114d7251a7afceddcc00b3181e4ec7520a325ddbaa6a0fa33d792bb"
+  },
+  {
+    "path": "scripts/deploy-ops-pod.sh",
+    "sha256": "dfe4adcd0039a91e9832bbe209e2f92f707acfdaf2eae32f569ed0db6251dc48"
+  },
+  {
+    "path": "scripts/ops-deployment-policy.mjs",
+    "sha256": "e9409295a26530de6fcac638a6feb5de9abadade01b42c773ef6d0485dc097c6"
+  },
+  {
+    "path": "ops/pod/bootstrap.py",
+    "sha256": "7f12cd5b09ad6f739a4effae1ad3c995f1c99d44edd3c9e081c39613ceee5243"
+  },
+  {
+    "path": "ops/pod/deployment_policy.py",
+    "sha256": "3baed55b8f11c7589dd66bcb4269658fb2ab3122fd7e8714418089d3827fde74"
+  },
+  {
+    "path": "charts/ops-pod/deployment-policy.json",
+    "sha256": "ac167f75649ea9931424d4c0e0c76007e71dd0ef2672f1eb2479d89b117df1e2"
+  },
+  {
+    "path": "tests/verification/deployment/ops-deployment-policy.test.mjs",
+    "sha256": "d949c3e89350ffadf469b18fc5acd2b58395f892e67a745fb4acd99ba0870a5a"
+  },
+  {
+    "path": "tests/verification/deployment/deployment-release.test.mjs",
+    "sha256": "d4fab87c7162a80673028d520e875569560d1b104b5d6e63440fae5ed7070f6a"
+  },
+  {
+    "path": "scripts/updates/deployment-release.mjs",
+    "sha256": "b7c0d0f8ea9d1fc216817f5974b91b26b43578a59fc5e02aaeba04eaeb09ebc6"
+  },
+  {
+    "path": "scripts/updates/release-configuration.mjs",
+    "sha256": "36ad730d0c94361e1a07f854697e4d1491a09b1d0a38831cf6b075ccd7f39499"
+  },
+  {
+    "path": "tools/ops-mcp/src/config.mjs",
+    "sha256": "81dc05570a3e1b412eba0f148805d45885e6f0a70954202ba6c34e1baa51a650"
+  },
+  {
+    "path": "tools/ops-mcp/src/policy.mjs",
+    "sha256": "8c541b70dcdf7238c4a63d52ebbe8564a6a52ceb180ef484ff1efbb5b0a4c5f5"
+  },
+  {
+    "path": "scripts/generate-prism-chart-config.mjs",
+    "sha256": "42ab4d5ad6ad41ad98520fdcd378045cf0ccfafe3b00aba828078065d0aec1f0"
+  },
+  {
+    "path": "scripts/generate-buster-chart-config.mjs",
+    "sha256": "8619b6412514622e215c02d7203422fcee9bab3ace7d0cf8f01702c7aa4afdfd"
+  }
+]
