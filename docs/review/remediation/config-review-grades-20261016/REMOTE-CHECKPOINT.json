@@ -1,0 +1,9 @@
+{
+  "observedAt": "2026-10-16T12:40:24.001289+00:00",
+  "sourceCommit": "20d188fc90245a10578317c3e24b35c3efc830cc",
+  "remoteVerified": true,
+  "decisionSourceCommit": "09a33c0914c7a98e6fcc809498765a73728c3576",
+  "confirmedReviewRowsImplemented": 228,
+  "notAllRepositoryOrNativeAcceptance": true,
+  "next": "Inspect unchanged-source candidates against actual central authors/consumer reads, not stale thread ownership."
+}
