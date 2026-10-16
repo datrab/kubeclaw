@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T18:39:15.125573+00:00",
+  "updatedAt": "2026-10-16T18:47:07.320714+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "CONFIG_QUALITY_COMPLETE_SERVICE_MAP_SOURCE_DELIVERY_VERIFIED_BOOT_INPUTSTORE_REVIEW_OPEN",
+  "status": "SELECTED_QUALITY_NO_LEGACY_FALLBACK_SOURCE_VERIFIED_BOOT_INPUTSTORE_INDEPENDENT_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Independent complete-source generation/service-map review; authenticated productive sole-root boot/delivery and actual Nova selection receiving without v10 promotion; QB-R02 genuine original producer/result/source+existing inputStore reservations to sealed input receipt and publication fence. Full2409/6845/50 and independent/native/archive gates OPEN.",
+  "nextAction": "Fresh independent complete-source generation/service-map/resolver review on repaired runtime; authenticated productive sole-root boot and actual Nova selection receiving without v10 promotion; QB-R02 genuine original producer/result/source and existing inputStore sealed snapshot/publication fence. Full2409/6845/50 and required independent/native/archive gates OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -23136,5 +23136,54 @@
       "full original C0-C6 semantic/history/native/archive gates"
     ],
     "externalInfrastructure": "UNCHANGED: isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large root-trusted writable archive parent unavailable; owner Raven; resume on suitable environment"
+  },
+  "qualitySelectionNoFallback20261016": {
+    "at": "2026-10-16T18:47:07.320714+00:00",
+    "sourceCommit": "5b91addc3bfaf84d4804d23395ae2320c5229270",
+    "evidence": "docs/review/remediation/config-quality-selection-no-fallback-20261016",
+    "status": "SELECTED_QUALITY_NO_LEGACY_FALLBACK_SOURCE_VERIFIED",
+    "implemented": "Explicit selected-generation map missing a referenced Quality contract now rejects at real Nova resolver before legacy task-policy/schema/default admission; complete selected map v2 and original no-map v1 remain compatible.",
+    "checks": {
+      "qualityV2": {
+        "passed": 24,
+        "total": 24,
+        "failed": 0,
+        "skipped": 0
+      },
+      "generation": {
+        "passed": 51,
+        "total": 51,
+        "failed": 0,
+        "skipped": 0
+      },
+      "redBeforeFix": true,
+      "strictSourceTypecheck": true,
+      "novaRoleBuild": true,
+      "deliveredResolverBytesAndReceipt": {
+        "path": "skills/packages/nova-core/test-gates/resolver.ts",
+        "kind": "file",
+        "mode": 420,
+        "byteLength": 44187,
+        "digest": "sha256:dac5efd2eab0b45d6bea8c14b76715e8af84f8abc4b3fb68456db556ece4caa8"
+      },
+      "deliveredResolverImport": true
+    },
+    "independentReview": "OPEN: new complete-source generation review attempted with unchanged Codex engine/read-only sandbox, failed before model admission with EROFS; no report. Not a source finding or independent/native acceptance. Do not repeat unchanged.",
+    "productiveRootSuppliesSelection": false,
+    "activationAllowed": false,
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "requiredRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "allSemanticObligationsAccepted": false
+    },
+    "remaining": [
+      "independent complete-source review including this resolver correction",
+      "authenticated productive sole-root boot/delivery without v10 promotion",
+      "QB-R02 genuine original producer/build/source/inputStore sealed snapshot and publication fence",
+      "full C0-C6 original semantic/history/native/archive acceptance"
+    ]
   }
 }

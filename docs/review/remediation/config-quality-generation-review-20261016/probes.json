@@ -1,0 +1,14 @@
+[
+  {
+    "directory": "/home/node/.codex",
+    "error": "[Errno 2] No such file or directory: '/home/node/.codex/tmp3kwlum73'"
+  },
+  {
+    "directory": "/tmp",
+    "writable": true
+  },
+  {
+    "directory": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-quality-generation-review-20261016",
+    "writable": true
+  }
+]

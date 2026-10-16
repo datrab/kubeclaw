@@ -1,0 +1,72 @@
+✔ v2 separates task values, deeply freezes original policy and retains v1 exactly (20.684846ms)
+✔ coverage: equal task-policy override and partial/unknown selected processing reject (1.186401ms)
+✔ size: equal task-policy override and partial/unknown selected processing reject (0.945915ms)
+✔ binding mismatches cannot pass even with a syntactically valid v2 envelope (1.678633ms)
+✔ duplicate rule IDs reject instead of acquiring a second budget author (0.560144ms)
+✔ real resolver uses selected retry and evidence while retaining immutable manifest support (27.930654ms)
+✔ size mandatory evidence and no-limit blocking admission are enforced before execution (2.214158ms)
+✔ retained original A never refills from B/current owner; changed registry fails (0.804481ms)
+✔ loader rejects original binding before snapshot or process effects (0.707729ms)
+✔ real coverage A/B consume captured policy, not legacy task values or invented evidence (7.497154ms)
+✔ real size v2 omits inactive nulls, retains baseline on pass/fail and enforces A/B (3.257795ms)
+✔ actual child IPC preserves and freezes original v2 across initialize and execute (35.303156ms)
+✔ restored v2 size plan, invocation and direct runner boundary cannot drop mandatory error evidence (11.722574ms)
+✔ coverage direct v2 incomplete processing rejects before artifact access (0.512834ms)
+✔ size direct v2 incomplete processing rejects before artifact access (0.419041ms)
+✔ coverage onPass log eligibility is mandatory in selection, overrides and restored plans (3.155212ms)
+✔ coverage onFail log eligibility is mandatory in selection, overrides and restored plans (2.160736ms)
+✔ coverage onError log eligibility is mandatory in selection, overrides and restored plans (2.203217ms)
+✔ size onPass log eligibility is mandatory in selection, overrides and restored plans (2.30904ms)
+✔ size onFail log eligibility is mandatory in selection, overrides and restored plans (3.674346ms)
+✔ size onError log eligibility is mandatory in selection, overrides and restored plans (2.086794ms)
+✔ restored advisory-only Size policy cannot become blocking before repository/attempt effects (1.809707ms)
+✖ coverage: explicit selected map cannot fall back to legacy task policy when original selection is missing (2.465744ms)
+✖ size: explicit selected map cannot fall back to legacy task policy when original selection is missing (2.078365ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 22
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1202.757795
+
+✖ failing tests:
+
+test at tests/verification/reliability/quality-provider-v2.test.mts:152:39
+✖ coverage: explicit selected map cannot fall back to legacy task policy when original selection is missing (2.465744ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/quality-provider-v2.test.mts:159:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /TEST_PLAN_SELECTED_POLICY_MISSING/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/quality-provider-v2.test.mts:152:39
+✖ size: explicit selected map cannot fall back to legacy task policy when original selection is missing (2.078365ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/quality-provider-v2.test.mts:159:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /TEST_PLAN_SELECTED_POLICY_MISSING/,
+    operator: 'throws',
+    diff: 'simple'
+  }
