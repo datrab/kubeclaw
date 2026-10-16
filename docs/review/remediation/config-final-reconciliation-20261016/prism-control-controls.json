@@ -1,0 +1,46 @@
+{
+  "controls": [
+    {
+      "control": "id-drift",
+      "rejected": true,
+      "error": "Unknown/duplicate attempt field: FOREIGN"
+    },
+    {
+      "control": "original-drift",
+      "rejected": true,
+      "error": "Original identity/hash/cases drift"
+    },
+    {
+      "control": "originalObjectSha256-drift",
+      "rejected": true,
+      "error": "Original identity/hash/cases drift"
+    },
+    {
+      "control": "caseIds-drift",
+      "rejected": true,
+      "error": "Original identity/hash/cases drift"
+    },
+    {
+      "control": "class-drift",
+      "rejected": true,
+      "error": "Original object/class/owner drift"
+    },
+    {
+      "control": "owner-drift",
+      "rejected": true,
+      "error": "Original object/class/owner drift"
+    },
+    {
+      "control": "duplicate-id",
+      "rejected": true,
+      "error": "Unknown/duplicate attempt field: AUTH-PRISM-CONTROL-SESSION-TTL"
+    },
+    {
+      "control": "missing-selected-leaf",
+      "rejected": true,
+      "error": "'sessionLifetimeSeconds'"
+    }
+  ],
+  "restoredPositive": "PASS",
+  "qualification": "Matrix controls only; zero original runtime/native/history cases executed"
+}

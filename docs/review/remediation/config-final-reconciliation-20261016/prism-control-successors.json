@@ -1,0 +1,909 @@
+{
+  "scope": "14 original Control fields;10 exact existing source joins and4 explicit receiving residuals, no new settings or runtime passes",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-FIELD-CASE-JOINS.json",
+      "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9"
+    },
+    {
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json",
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e"
+    }
+  ],
+  "counts": {
+    "originalFields": 14,
+    "exactSourceJoins": 10,
+    "remainingOriginalFields": 4
+  },
+  "rows": [
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-TTL",
+      "original": "D228#/rows/2370",
+      "originalObjectSha256": "0c174e0456fceb412ecdfe4095836eb827a9d659fa166e442636dfe7f6929136",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SESSION-TTL-IMPLEMENTATION",
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+        "field": "mintSession expiresAt"
+      },
+      "originalHistoryObligation": "Token expiry now+TTL; verifier rejects expiresAt<=now. Cookie Max-Age=900 is separately hardcoded in session-routes twice, requiring one author and seconds projection, not three independent authors.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/sessionLifetimeSeconds",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/sessionLifetimeSeconds",
+          "valueSha256": "bdc5d8a48c23897906b09a9a3680bd2e9c8b3121edbda36f949800f0959c8d55"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/sessionLifetimeSeconds",
+          "valueSha256": "bdc5d8a48c23897906b09a9a3680bd2e9c8b3121edbda36f949800f0959c8d55"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "2835d7847e75430b784eb5a567670d68aac48c4134fe9b701d8d0ab623b88fc2",
+        "anchor": "expiresAt: now + lifetimeSeconds * 1000",
+        "lines": [
+          7
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "sessionLifetimeSeconds: control.sessionLifetimeSeconds",
+        "lines": [
+          72
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/server/session-routes.ts",
+        "sha256": "9fbc464f6120174631358359ca9c73ecd7e0249a51dc5aff99f66a579479606d",
+        "anchor": "context.config.sessionLifetimeSeconds,",
+        "lines": [
+          41
+        ]
+      },
+      "cookieProjection": {
+        "path": "skills/prism/server/session-routes.ts",
+        "sha256": "9fbc464f6120174631358359ca9c73ecd7e0249a51dc5aff99f66a579479606d",
+        "anchor": "Max-Age=${context.config.sessionLifetimeSeconds}",
+        "lines": [
+          45,
+          46
+        ]
+      },
+      "expiryVerifier": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "2835d7847e75430b784eb5a567670d68aac48c4134fe9b701d8d0ab623b88fc2",
+        "anchor": "session.expiresAt <= now",
+        "lines": [
+          15
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES",
+      "original": "D228#/rows/2371",
+      "originalObjectSha256": "4109882eddd86ba9f99450c62947bf6769983510f52cca8329ad1c7122a414f4",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER",
+        "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES-IMPLEMENTATION",
+        "AUTH-PRISM-CONTROL-C0-ROLE-METADATA"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+        "field": "mintSession roles default"
+      },
+      "originalHistoryObligation": "Current mint default grants editor; roles array is verified but member types/allowed roles are not validated here. Target role-domain/security review remains open; changing default grants is not a harmless numeric profile change.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN",
+      "selectedOwner": null,
+      "actualLiteral": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "2835d7847e75430b784eb5a567670d68aac48c4134fe9b701d8d0ab623b88fc2",
+        "anchor": "roles=[\"editor\"]",
+        "lines": [
+          5
+        ]
+      },
+      "constraint": "Default editor role remains literal; selected role domain and token/original semantics must be explicit. Do not change grants or add authentication authority hardening."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES",
+      "original": "D228#/rows/2372",
+      "originalObjectSha256": "3fb1a4ce43d44aebe33a324533fbe8a0bc046d28dbd3c7ae66a93e9d8e36f6fc",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER",
+        "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/control-http.ts",
+        "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1",
+        "field": "body maxBytes default"
+      },
+      "originalHistoryObligation": "Accumulator rejects size>maxBytes before JSON parse; explicit artifact call overrides to8500000. Content-type check uses startsWith(application/json), not exact parsed media-type equality.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/maximumJsonBodyBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/maximumJsonBodyBytes",
+          "valueSha256": "dd80d7a873341d491936c851964a9793195f37e646f6809dd546e2946f46d283"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/maximumJsonBodyBytes",
+          "valueSha256": "dd80d7a873341d491936c851964a9793195f37e646f6809dd546e2946f46d283"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/control-http.ts",
+        "sha256": "69295306d1e9550706a6ae53cfe339a4d01c0407f50afc5815f8eca36e43a2e3",
+        "anchor": "if (size > maxBytes)",
+        "lines": [
+          20
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "maximumJsonBodyBytes: control.maximumJsonBodyBytes",
+        "lines": [
+          86
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "body(request, context.config.maximumJsonBodyBytes)",
+        "lines": [
+          56
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES",
+      "original": "D228#/rows/2373",
+      "originalObjectSha256": "141ae5186a24553feb770fec6c7bdc277620c034eb75a020236a5f7ce8036fba",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "uploadArtifact body(request,8500000)"
+      },
+      "originalHistoryObligation": "JSON/base64 wire budget differs from decoded artifact budget. Required coupled-domain review must account for base64 expansion and JSON overhead; no arbitrary safe integer maximum asserted.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/maximumArtifactUploadBodyBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/maximumArtifactUploadBodyBytes",
+          "valueSha256": "468da79b4cd74917fe95e5f7e855aa970904f6ab505686ab1380aca762fd33a8"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/maximumArtifactUploadBodyBytes",
+          "valueSha256": "468da79b4cd74917fe95e5f7e855aa970904f6ab505686ab1380aca762fd33a8"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "body(request, context.config.maximumArtifactUploadBodyBytes)",
+        "lines": [
+          39
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "maximumArtifactUploadBodyBytes: control.maximumArtifactUploadBodyBytes",
+        "lines": [
+          87
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES",
+      "original": "D228#/rows/2374",
+      "originalObjectSha256": "e980b7e7dd21a16abbed52a8ade4932297298d3ba2428992d147bce141675cc0",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "uploadArtifact decoded.byteLength"
+      },
+      "originalHistoryObligation": "Reject decoded>6000000 or noncanonical base64 before artifacts.put. Other render/baseline/ingestion caps are separate readers, not implicitly proven aliases.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/maximumArtifactBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/maximumArtifactBytes",
+          "valueSha256": "515ea18bb057ce8c5e0ed73153cc95db567ce071db9ea38731704fc11f06e0f2"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/maximumArtifactBytes",
+          "valueSha256": "515ea18bb057ce8c5e0ed73153cc95db567ce071db9ea38731704fc11f06e0f2"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "decoded.byteLength > context.config.maximumArtifactBytes",
+        "lines": [
+          43
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "maximumArtifactBytes: control.maximumArtifactBytes",
+        "lines": [
+          85
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT",
+      "original": "D228#/rows/2375",
+      "originalObjectSha256": "27e68d49d59ec06507f595cc022491025915ed22adfd70108b837dfee755bbff",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus limit default; search limit default"
+      },
+      "originalHistoryObligation": "Request limit is task data; omitted default10 is policy duplicated in route and exported search. Actual route Number/Math clamp admits NaN/fractions to downstream rather than enforcing a supported safe-integer domain.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusSearchDefaultLimit",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/corpusSearchDefaultLimit",
+          "valueSha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/corpusSearchDefaultLimit",
+          "valueSha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "url.searchParams.get(\"limit\") ?? config.corpusSearchDefaultLimit",
+        "lines": [
+          93
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "corpusSearchDefaultLimit: control.corpusSearchDefaultLimit",
+        "lines": [
+          60
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "directSearchReceiving": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "3e5ddaaf467f74287943594f040d1c9a25622d04f9723f5a82a7c60b2a961819",
+        "anchor": "valid corpus search limits required",
+        "lines": [
+          162
+        ]
+      },
+      "qualification": "HTTP defaults/clamps are selected policy; exported direct search now requires explicit limits, not a duplicate default. Direct API is not silently given the HTTP maximum."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT",
+      "original": "D228#/rows/2376",
+      "originalObjectSha256": "cbe6ed504882a246abdfc6fd7f3184596367b72b92f3c7889da48a441d871868",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus Math.min(50,...)"
+      },
+      "originalHistoryObligation": "Route clamp1..50 is operator capacity policy; duplicate coverageGap clamp must use identical effective limit. Direct exported search has no same upper clamp.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusSearchMaximumLimit",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/corpusSearchMaximumLimit",
+          "valueSha256": "1a6562590ef19d1045d06c4055742d38288e9e6dcd71ccde5cee80f1d5a774eb"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/corpusSearchMaximumLimit",
+          "valueSha256": "1a6562590ef19d1045d06c4055742d38288e9e6dcd71ccde5cee80f1d5a774eb"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "Math.min(config.corpusSearchMaximumLimit",
+        "lines": [
+          93
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "corpusSearchMaximumLimit: control.corpusSearchMaximumLimit",
+        "lines": [
+          61
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "directSearchReceiving": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "3e5ddaaf467f74287943594f040d1c9a25622d04f9723f5a82a7c60b2a961819",
+        "anchor": "valid corpus search limits required",
+        "lines": [
+          162
+        ]
+      },
+      "qualification": "HTTP defaults/clamps are selected policy; exported direct search now requires explicit limits, not a duplicate default. Direct API is not silently given the HTTP maximum."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT",
+      "original": "D228#/rows/2377",
+      "originalObjectSha256": "1122b05e9d9ee59aa35b6957da589cd25e0bbdb50c2b4e36272477a69009b1dd",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus sourceFamilyLimit ??2; search options fallback"
+      },
+      "originalHistoryObligation": "Default2 duplicated in HTTP and corpus search. Task requested sourceFamilyLimit is distinct; fallback changes diversity. No current integer/type validator.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusSourceFamilyDefaultLimit",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/corpusSourceFamilyDefaultLimit",
+          "valueSha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/corpusSourceFamilyDefaultLimit",
+          "valueSha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "url.searchParams.get(\"sourceFamilyLimit\") ?? config.corpusSourceFamilyDefaultLimit",
+        "lines": [
+          122
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "corpusSourceFamilyDefaultLimit: control.corpusSourceFamilyDefaultLimit",
+        "lines": [
+          62
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "directSearchReceiving": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "3e5ddaaf467f74287943594f040d1c9a25622d04f9723f5a82a7c60b2a961819",
+        "anchor": "valid corpus search limits required",
+        "lines": [
+          162
+        ]
+      },
+      "qualification": "HTTP defaults/clamps are selected policy; exported direct search now requires explicit limits, not a duplicate default. Direct API is not silently given the HTTP maximum."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX",
+      "original": "D228#/rows/2378",
+      "originalObjectSha256": "fc19c4de94073dc2c936e0e9db564a1b4f1dd8028b71e3d6c80de1b9655b250e",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "sourceFamilyLimit Math.min(10,...)"
+      },
+      "originalHistoryObligation": "HTTP clamps1..10; direct corpus.search only Math.max(1,options.sourceFamilyLimit??2). These domains are not identical or interchangeable validators.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/corpusSourceFamilyMaximumLimit",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/corpusSourceFamilyMaximumLimit",
+          "valueSha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/corpusSourceFamilyMaximumLimit",
+          "valueSha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "config.corpusSourceFamilyMaximumLimit,",
+        "lines": [
+          121
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "corpusSourceFamilyMaximumLimit: control.corpusSourceFamilyMaximumLimit",
+        "lines": [
+          63
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "directSearchReceiving": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "3e5ddaaf467f74287943594f040d1c9a25622d04f9723f5a82a7c60b2a961819",
+        "anchor": "valid corpus search limits required",
+        "lines": [
+          162
+        ]
+      },
+      "qualification": "HTTP defaults/clamps are selected policy; exported direct search now requires explicit limits, not a duplicate default. Direct API is not silently given the HTTP maximum."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR",
+      "original": "D228#/rows/2379",
+      "originalObjectSha256": "0b7c674f588e44b5d8463d04aeb5555a143bd1ef7b08577cf1dd4362f95055c3",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "SQL LIMIT100 and Math.max(limit*10,100)"
+      },
+      "originalHistoryObligation": "Hybrid text_rank/vector_rank each cap100 while outer result floor100. Three real readers need one explicit justified policy or separate scope if domains differ; DB behavior not executed here.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN",
+      "selectedOwner": null,
+      "actualLiteral": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "3e5ddaaf467f74287943594f040d1c9a25622d04f9723f5a82a7c60b2a961819",
+        "anchor": "Math.max(limit * 10, 100)",
+        "lines": [
+          176,
+          185
+        ]
+      },
+      "constraint": "Two SQL inner LIMIT 100 and both outer candidate floors100 remain literals. Coupled selected receiving for actual HTTP/direct search and original query policy required; not the result limit."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER",
+      "original": "D228#/rows/2380",
+      "originalObjectSha256": "3533af7da208404cc8dc3bbdf9492ec72a9994d715994a03d15b9358ee937545",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "Math.max(limit*10,100)"
+      },
+      "originalHistoryObligation": "Both branches oversample result candidates; role of hybrid inner100 cap differs from outer multiplier. DB domain and cost witness remain open.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN",
+      "selectedOwner": null,
+      "actualLiteral": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "3e5ddaaf467f74287943594f040d1c9a25622d04f9723f5a82a7c60b2a961819",
+        "anchor": "Math.max(limit * 10, 100)",
+        "lines": [
+          176,
+          185
+        ]
+      },
+      "constraint": "Both SQL query branches retain oversampling multiplier10. Coherent candidate policy/receiving and original query binding required; no private policy root."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING",
+      "original": "D228#/rows/2381",
+      "originalObjectSha256": "4115e4cea9ef235ec21540add1e3647faef00daccb0bd1294e38c8261308e6d2",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "1.0/(60+rank)"
+      },
+      "originalHistoryObligation": "Ranking hyperparameter affects ordering/score, not protocol constant solely because output label hybrid-rrf-v1 is versioned. Version/profile compatibility requires explicit definition.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN",
+      "selectedOwner": null,
+      "actualLiteral": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "3e5ddaaf467f74287943594f040d1c9a25622d04f9723f5a82a7c60b2a961819",
+        "anchor": "1.0/(60+t.rank)",
+        "lines": [
+          173
+        ]
+      },
+      "constraint": "Both rank arms retain damping60. Explicit selected ranking compatibility and actual DB/original acceptance remain required; ranking label is not proof of a protocol constant."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT",
+      "original": "D228#/rows/2382",
+      "originalObjectSha256": "078b6339f69ea561dfc93e75d1c28c9dac8e1c500a25fa6e9fe747c5bd5c546b",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "acquireCorpus AbortSignal.timeout"
+      },
+      "originalHistoryObligation": "Current POST abort budget30s; no persisted config generation. Must preserve original accepted ingestion endpoint, secret reference and uncertain acquisition effects on retry.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionAcquireTimeoutMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/ingestionAcquireTimeoutMs",
+          "valueSha256": "891937cb335016e9c7074c3781dcb1364e0c660733a8889bbeae83e6aa759be6"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/ingestionAcquireTimeoutMs",
+          "valueSha256": "891937cb335016e9c7074c3781dcb1364e0c660733a8889bbeae83e6aa759be6"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "AbortSignal.timeout(config.ingestionAcquireTimeoutMs)",
+        "lines": [
+          157
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "ingestionAcquireTimeoutMs: control.ingestionAcquireTimeoutMs",
+        "lines": [
+          73
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "qualification": "Startup timeout source join only; no durable original acquisition endpoint/credential/uncertain effect reconstruction inferred."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT",
+      "original": "D228#/rows/2383",
+      "originalObjectSha256": "30cfe43421d05afa761cefc0c99c88bebe1ee8e7bac8a97c7c772a6b35f6a790",
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/services/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "cleanAcquisition AbortSignal.timeout"
+      },
+      "originalHistoryObligation": "DELETE must finish before exact stored revision activation; publication and cleanup errors retained together. Future cleanup timeout must not adopt Latest or reset claim/budget.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_CONTROL_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionCleanupTimeoutMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/ingestionCleanupTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/ingestionCleanupTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "AbortSignal.timeout(config.ingestionCleanupTimeoutMs)",
+        "lines": [
+          218
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "ingestionCleanupTimeoutMs: control.ingestionCleanupTimeoutMs",
+        "lines": [
+          74
+        ]
+      },
+      "roleProjection": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+        "lines": [
+          14
+        ]
+      },
+      "qualification": "Startup timeout source join only; no durable original acquisition endpoint/credential/uncertain effect reconstruction inferred."
+    }
+  ],
+  "independentReview": "OPEN; native spawn unavailable; unchanged direct reviewer EROFS not retried",
+  "fullAcceptance": "OPEN; all2409/6845/50/fullC0-C6 and original history/native/archive mandatory"
+}

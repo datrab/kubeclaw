@@ -130,6 +130,12 @@ attempt_exact = {r['id']: r for r in attempt_joins['rows'] if r['status'] == 'EX
 attempt_open = {r['id']: r for r in attempt_joins['rows'] if r['status'] == 'PRISM_ATTEMPT_RECEIVING_IMPLEMENTATION_OPEN'}
 if len(attempt_exact) != 17 or len(attempt_open) != 2 or set(attempt_exact) & (set(engine_exact) | set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
     raise ValueError('Prism attempt roster overlap/drift')
+control_path = str((OUT / 'prism-control-successors.json').relative_to(ROOT))
+control_joins = read(control_path)
+control_exact = {r['id']: r for r in control_joins['rows'] if r['status'] == 'EXACT_PRISM_CONTROL_SOURCE_JOIN'}
+control_open = {r['id']: r for r in control_joins['rows'] if r['status'] == 'PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN'}
+if len(control_exact) != 10 or len(control_open) != 4 or set(control_exact) & (set(attempt_exact) | set(engine_exact) | set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
+    raise ValueError('Prism control roster overlap/drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -187,6 +193,15 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
     residual_attempt = [attempt_open[i] for i in ids if i in attempt_open]
     if residual_attempt:
         group['explicitAttemptResiduals'] = residual_attempt
+    control = [control_exact[i] for i in ids if i in control_exact]
+    if control:
+        group['exactPrismControlMappings'] = control
+        group['remainingFieldIds'] = [i for i in group['remainingFieldIds'] if i not in control_exact]
+        group['prismControlSupplementalJoin'] = pin(control_path)
+        group['status'] = 'PARTIAL_EXACT_PRISM_CONTROL_SOURCE_JOIN' if group['remainingFieldIds'] else 'EXACT_PRISM_CONTROL_SOURCE_JOIN'
+    residual_control = [control_open[i] for i in ids if i in control_open]
+    if residual_control:
+        group['explicitControlResiduals'] = residual_control
     parts = old.split("/")
     if len(parts) > 2 and parts[1] == "plugins":
         plugin = parts[2].removeprefix("kubeclaw.")
@@ -213,7 +228,7 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
             anchor("skills/common/plugin-runtime/foundation/config/pipeline-generation.ts", "pipeline-entry.v3")]
         group["constraint"] = "Defined v2 task-only/selectedPolicy plus original inputStore/package/delivery closure must be implemented together. Current root/provider remain v3/v1. No denied v10 promotion/private root/current-value fill. Completed finite byte guards do not externalize these24 fields or accept168 cases."
         group["definition"] = pin("docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/RECEIVING-AND-ORACLES.md")
-    if group["candidateSuccessors"] and not exact and not scalar_exact and not delivery and not prism and not boundary and not engine and not attempt:
+    if group["candidateSuccessors"] and not exact and not scalar_exact and not delivery and not prism and not boundary and not engine and not attempt and not control:
         group["status"] = "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN"
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
@@ -238,6 +253,10 @@ attempt_joined = [r['id'] for g in groups for r in g.get('exactPrismAttemptMappi
 attempt_residuals = [r['id'] for g in groups for r in g.get('explicitAttemptResiduals', [])]
 if set(attempt_joined) != set(attempt_exact) or len(attempt_joined) != len(set(attempt_joined)) or set(attempt_residuals) != set(attempt_open) or len(attempt_residuals) != len(set(attempt_residuals)):
     raise ValueError('Prism attempt mappings/residuals not conserved across historical groups')
+control_joined = [r['id'] for g in groups for r in g.get('exactPrismControlMappings', [])]
+control_residuals = [r['id'] for g in groups for r in g.get('explicitControlResiduals', [])]
+if set(control_joined) != set(control_exact) or len(control_joined) != len(set(control_joined)) or set(control_residuals) != set(control_open) or len(control_residuals) != len(set(control_residuals)):
+    raise ValueError('Prism control mappings/residuals not conserved across historical groups')
 result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
