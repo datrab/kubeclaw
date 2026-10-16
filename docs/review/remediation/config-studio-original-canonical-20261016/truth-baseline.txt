@@ -1,0 +1,44 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the Prism control image must package its live verification assets
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/check-deployment-truth.mjs:291:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '# Version defaults are generated from versions.json; run npm run versions:sync.\n' +
+    'ARG NODE_BASE=node:24.15.0-bookworm-slim@sha256:4e6b70dd6cbfc88c8157ba19aa3d9f9cce6ba4703576d55459e45efcbc9c5f5d\n' +
+    'FROM ${NODE_BASE} AS build\n' +
+    'ARG DEBIAN_SNAPSHOT=20260901T000000Z\n' +
+    'ARG KUBECLAW_BUILD_REVISION\n' +
+    'USER root\n' +
+    'WORKDIR /build\n' +
+    'COPY . /build\n' +
+    'RUN sh docker/install-prism-build-tools.sh \\\n' +
+    ' && npm ci --include=dev --ignore-scripts --no-audit --no-fund \\\n' +
+    ' && npm run typecheck --prefix skills/prism \\\n' +
+    ' && npm run plugin-system:sandbox:build \\\n' +
+    ' && node scripts/build-prism-image-bundle.mjs prism-control /image "$KUBECLAW_BUILD_REVISION" \\\n' +
+    ' && npm prune --omit=dev --ignore-scripts\n' +
+    '\n' +
+    'FROM ${NODE_BASE}\n' +
+    'USER root\n' +
+    'WORKDIR /app/prism\n' +
+    'COPY --from=build /image/role /app/prism\n' +
+    'COPY --from=build /image/generation/system /etc/kubeclaw/config\n' +
+    'COPY --from=build /image/delivery /run/pipeline-delivery\n' +
+    'COPY --from=build /build/tests/verification/live /opt/kubeclaw-prism-live\n' +
+    'RUN install -d -o node -g node /var/lib/prism/artifacts\n' +
+    'USER node\n' +
+    'ENV NODE_ENV=production\n' +
+    'EXPOSE 8080\n' +
+    'CMD ["node","--experimental-strip-types","skills/packages/prism-engine/server/control.ts"]\n',
+  expected: /COPY --from=build \/build\/tests\/verification\/live \/app\/prism\/tests\/verification\/live/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

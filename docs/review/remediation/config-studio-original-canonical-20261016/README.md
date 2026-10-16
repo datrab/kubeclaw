@@ -1,0 +1,7 @@
+# Original Studio canonical receiving and deployment truth
+
+Original canonical Studio test now reads the sole central pipeline root and explicit receiving profile, then starts the genuine emitted authenticated HTTP handler. All original10 HTTP cases plus canonical case passed: **11/11**, no skips. Whole Prism strict typecheck, syntax, diff and full2409/6845/50 identity preservation audit passed. No new policy default or receiving authority.
+
+Deployment truth now follows the current central root, control live-asset path and Studio role/generation/receipt install paths. Initial failures and final failure are retained. **The deployment truth command still exits1:** the actual final Studio Dockerfile no longer executes the original HTTP/canonical suites as UID1000. Current external image check verifies configuration only. The root-owned publisher fixture cannot be copied unchanged into a non-root final-image gate. This is a concrete source/test receiving residual, not evidence of a missing author decision or a reason to delete the obligation. Restore actual installed-code original HTTP coverage and authenticated canonical-profile execution; local author tests do not prove it. No Docker execution was available.
+
+All required original independent/native/history/C0-C6 acceptance remains OPEN. No fields/cases promoted, no subset whole PASS. QB-R02 sealed inputStore and coordinated Quality boot/Nova remain unfinished. Existing excluded operations and unrelated WIP preserved.

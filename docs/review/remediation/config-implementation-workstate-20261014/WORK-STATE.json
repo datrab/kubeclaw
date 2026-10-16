@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T23:39:50.381117+00:00",
+  "updatedAt": "2026-10-16T23:45:41.204300+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_NATIVE_DEPLOYMENT_RECEIVING_MIGRATED_NOT_NATIVE_ACCEPTANCE",
+  "status": "ORIGINAL_STUDIO_CANONICAL_RECEIVING_PASS_FINAL_IMAGE_HTTP_GATE_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Genuine QB-R02 original producer/build/source/baseline/inputStore ownership/reservation/accounting/sealed snapshot/publication and authenticated sole-root/boot+Nova receiving; remaining original source/fixture residuals. No replay unchanged green native fixture or known archive ENOSPC.",
+  "nextAction": "Restore genuine final-image Studio original HTTP/canonical receiving gate; continue QB-R02 source/build/baseline/inputStore ownership/accounting/sealed-byte/publication and sole-root/boot+Nova receiving. Preserve remaining native/archive/history/independent gates.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -24915,5 +24915,63 @@
     "sourceHashes": {
       "tests/verification/deployment/prism-native-runtime.test.mjs": "70200315326c20543ccfa6a9573b69147c9c454d8c403463ff5db69b814be688"
     }
+  },
+  "originalStudioCanonical20261016": {
+    "at": "2026-10-16T23:45:41.204300+00:00",
+    "status": "ORIGINAL_STUDIO_CANONICAL_RECEIVING_PASS_FINAL_IMAGE_HTTP_GATE_OPEN",
+    "sourceCommit": "74af9ad342e87d1731c2aa60424fb4d7a431394f",
+    "sourceRemoteVerified": true,
+    "verifiedRemoteHead": "74af9ad342e87d1731c2aa60424fb4d7a431394f",
+    "evidence": "docs/review/remediation/config-studio-original-canonical-20261016",
+    "change": "Original canonical Studio test selects sole central root, explicit Studio receiving profile and real emitted authenticated HTTP handler. Removed retired chart/ENV author dependency. CI truth checks central root and actual control live-assets and Studio role/generation/delivery paths. Original final-image HTTP/canonical execution requirement remains unchanged and currently FAILS.",
+    "checks": {
+      "originalStudioHTTP": {
+        "passed": 11,
+        "total": 11,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0,
+        "log": "studio.txt"
+      },
+      "strictPrismTypecheck": {
+        "exitCode": 0,
+        "log": "typecheck.txt"
+      },
+      "deploymentTruth": {
+        "exitCode": 1,
+        "log": "truth-final.txt",
+        "failure": "the final Studio image must run original HTTP cases and canonical profile as its runtime user"
+      },
+      "syntax": true,
+      "diffCheck": true,
+      "originalRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "integrityFailures": 0,
+        "acceptance": "OPEN"
+      }
+    },
+    "newSourceResidual": {
+      "boundary": "docker/Dockerfile.prism-studio; scripts/check-built-runtime-image.sh; skills/prism/tests/fixtures/studio-service.mts",
+      "finding": "Current Dockerfile no longer executes original Studio HTTP/canonical suites in final runtime stage. Current external image check only loads authenticated configuration. Original HTTP fixture now builds/publishes a role and explicitly requires real UID0 trusted storage, so mounting it unchanged under final UID1000 cannot restore this obligation.",
+      "nextAction": "Implement supported authenticated image-user original HTTP/canonical test transport preserving all original HTTP assertions and actual installed code/profile; no UID spoof, synthetic receipt, root runtime or deletion of gate. Actual final-image execution separately needs Docker host.",
+      "classification": "Source/test receiving gap, not missing author decision, not only external infra. Gate kept failing; not silently waived."
+    },
+    "independentReview": "OPEN; native spawn/review tools absent; active/recent CONFIG subagents0; unchanged same-surface reviewer EROFS not retried. Author tests do not substitute independent/native acceptance.",
+    "sourceHashes": {
+      "skills/prism/tests/studio-canonical-image.mts": "49facf8caf83622e04c406da94de1512026e2decab0340d78f85f2698d5bdbe5",
+      "tests/verification/deployment/check-deployment-truth.mjs": "69cae956fa4e49360624d66ae13b89fec34aa0623d2c0086d0744de85716a226"
+    },
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "nextAction": "Restore genuine final-image Studio original HTTP/canonical receiving gate; continue QB-R02 source/build/baseline/inputStore ownership/accounting/sealed-byte/publication and sole-root/boot+Nova receiving. Preserve remaining native/archive/history/independent gates.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Isolated Linux Docker UID1000/GID1000 delegated writable cgroup; sufficient root-trusted archive storage and migrated isolated PostgreSQL.",
+    "writerLock": "SAME nonblocking repository lock held through commit/push; released on command exit",
+    "noHistoricalFollowup": true
   }
 }
