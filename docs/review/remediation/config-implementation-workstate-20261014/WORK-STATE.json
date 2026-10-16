@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T18:19:45.543325+00:00",
+  "updatedAt": "2026-10-16T18:20:47.294351+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "CONFIG_QUALITY_GENERATION_REGISTRY_BRIDGE_VERIFIED_BOOT_INPUTSTORE_REVIEW_OPEN",
@@ -23062,6 +23062,12 @@
     "independentReview": "OPEN: no fresh reviewer result on scheduled execution surface",
     "activationAllowed": false,
     "originalCasesAccepted": 0,
-    "fullC0C6Complete": false
+    "fullC0C6Complete": false,
+    "sourceCommit": "37854cff705e07a65fb5bff2f0459f23c6d8fe59",
+    "deliveredRolesVerified": [
+      "nova",
+      "buster"
+    ],
+    "deliveredImportsVerified": true
   }
 }

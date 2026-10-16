@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T18:19:31.227566+00:00",
+  "updatedAt": "2026-10-16T18:20:47.294351+00:00",
   "status": "LOCAL_GENERATION_REGISTRY_BRIDGE_VERIFIED_ACTIVATION_REVIEW_OPEN",
   "checks": {
     "finalGenerationReceiverTests": {
@@ -21,7 +21,28 @@
       "log": "typecheck.txt",
       "qualification": "Existing test-file fixture declarations and selection typing; not counted passed"
     },
-    "diffCheck": 0
+    "diffCheck": 0,
+    "rolePackages": [
+      {
+        "role": "nova",
+        "commit": "37854cff705e07a65fb5bff2f0459f23c6d8fe59",
+        "indexedFiles": 1832,
+        "receiverSha256": "b08d3eab92d160c7ee6a7288a37c961e07283381b9122e0e3b717482b2094f91",
+        "exactSourceBytes": true,
+        "actualDeliveredImport": true,
+        "nativeActivation": false
+      },
+      {
+        "role": "buster",
+        "commit": "37854cff705e07a65fb5bff2f0459f23c6d8fe59",
+        "indexedFiles": 14126,
+        "receiverSha256": "b08d3eab92d160c7ee6a7288a37c961e07283381b9122e0e3b717482b2094f91",
+        "exactSourceBytes": true,
+        "actualDeliveredImport": true,
+        "nativeActivation": false
+      }
+    ],
+    "rolePackageInitialFailure": "Both first invocations used short commit ID; strict receipt correctly rejected. Rebuilt successfully with exact full40-character source SHA in distinct output directories; initial logs retained."
   },
   "implementation": [
     "same retained v10 root/owner/schema/package selection to actual registry configuration resolver",
@@ -41,5 +62,6 @@
     "requirements": 50,
     "fullC0C6Complete": false
   },
-  "nextAction": "Independent review on supported original reviewer surface; productive authenticated boot/delivery and Nova resolver-map receiving, plus QB-R02 genuine original inputStore snapshots/receipts/accounting. No task/ENV/CLI/private root or v10 authority bypass."
+  "nextAction": "Independent review on supported original reviewer surface; productive authenticated boot/delivery and Nova resolver-map receiving, plus QB-R02 genuine original inputStore snapshots/receipts/accounting. No task/ENV/CLI/private root or v10 authority bypass.",
+  "sourceCommit": "37854cff705e07a65fb5bff2f0459f23c6d8fe59"
 }
