@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T17:30:32.521204+00:00",
+  "updatedAt": "2026-10-16T17:34:44.216965+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "CONFIG_WORKER_V3_AND_QUALITY_GUARDS_VERIFIED_PROVIDER_V2_MATRIX_NATIVE_OPEN",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Quality v2 actual registry/resolver/runner/original inputStore/package/delivery;12 remaining section-candidate groups,12 prior adapter root/admission and20 delivery target/root/secret residuals,13 unresolved owner groups; service history and independent/full C0-C6/native/archive remain OPEN.",
+  "nextAction": "Defined Quality v2 registry/resolver/runner/original inputStore/package/coordinated delivery;10 section-candidate groups and exact remaining field joins including distinct live agent runner18444; independent/history/full C0-C6/native/archive OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -22965,6 +22965,19 @@
     "qualification": "Existing selected component/startup/effect source navigation, not new source implementation or durable history acceptance",
     "independentReview": "OPEN; native spawn unavailable, unchanged direct-surface EROFS not retried",
     "fullAcceptance": "OPEN",
+    "writerLock": "same nonblocking; released at process exit"
+  },
+  "prismBoundarySourceReconciliation20261016": {
+    "at": "2026-10-16T17:34:44.216965+00:00",
+    "evidence": "docs/review/remediation/config-final-reconciliation-20261016",
+    "originalFields": 6,
+    "exactSourceJoins": 5,
+    "remainingOriginalFields": 1,
+    "newRuntimeCasesExecuted": 0,
+    "negativeControls": 8,
+    "correctedAlias": "Live verification runner18444 is NOT Studio UI studioPublicUrl; actual scripts/deploy.sh ENV route pinned",
+    "independentReview": "OPEN; native spawn unavailable; unchanged helper EROFS not retried",
+    "fullAcceptance": "OPEN; all2409/6845/50 and fullC0-C6/native/archive/original history mandatory",
     "writerLock": "same nonblocking; released at process exit"
   }
 }

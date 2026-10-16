@@ -1,0 +1,527 @@
+{
+  "scope": "Six original Prism route/nonce fields; five exact existing source joins and one explicitly unresolved distinct runner route",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-FIELD-CASE-JOINS.json",
+      "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9"
+    },
+    {
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json",
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e"
+    }
+  ],
+  "counts": {
+    "originalFields": 6,
+    "exactSourceJoins": 5,
+    "remainingOriginalFields": 1
+  },
+  "rows": [
+    {
+      "id": "AUTH-PRISM-ENDPOINT-WORKER",
+      "original": "D228#/rows/2365",
+      "originalObjectSha256": "d0064e47040bd1190462806938ce194934123b7f724ec05cfc608fce503c62ad",
+      "class": "operator-setting",
+      "owner": "prism-deployment",
+      "caseIds": [
+        "AUTH-PRISM-ENDPOINT-WORKER-DELIVERY",
+        "AUTH-PRISM-ENDPOINT-WORKER-BOUNDARY"
+      ],
+      "historicalLocator": "config/deployment/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+        "field": "PRISM_WORKER_URL",
+        "lines": [
+          59
+        ]
+      },
+      "originalHistoryObligation": "Real admitted native attempt reaches selected worker egress and selected compatible peer, receipt checked against original envelope. Repointing started attempt or changing trusted peer is forbidden.",
+      "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+      "historyAcceptance": "OPEN; startup capture is NOT durable original acquisition/attempt/nonce retention proof",
+      "status": "EXACT_PRISM_BOUNDARY_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/workerUrl",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/workerUrl",
+          "valueSha256": "effc52ac9597faa896ae0913164ddc1ed63629e6365e44d1f612caccc4b42551"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/workerUrl",
+          "valueSha256": "f39fbef57bf63e714f3de3b5b9419bf5249c2fdd787c048163682fa7c73bdb11"
+        }
+      ],
+      "receiver": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "workerUrl: new URL(control.workerUrl)",
+        "lines": [
+          96
+        ]
+      },
+      "actualEffect": {
+        "path": "skills/prism/control/worker-operation-transport.ts",
+        "sha256": "2f5c242748e518a53c17f25923ec602c8947c3447bf6492227ab888ebad6cc75",
+        "anchor": "new URL('/v1/attempts', config.workerUrl)",
+        "lines": [
+          10
+        ]
+      },
+      "composition": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "const { dispatchTimeoutMs, ...control }",
+        "lines": [
+          15
+        ]
+      },
+      "startupCapture": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "selection.digest !== expected.selectionDigest",
+          "lines": [
+            114
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "verifiedCaptures.add(result)",
+          "lines": [
+            143
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL",
+      "original": "D228#/rows/2366",
+      "originalObjectSha256": "4ba124b0f1d2e3fc774e48e149963736847dd0c1e1604b1d59473df667bf624f",
+      "class": "operator-setting",
+      "owner": "prism-deployment",
+      "caseIds": [
+        "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL-DELIVERY",
+        "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL-BOUNDARY"
+      ],
+      "historicalLocator": "config/deployment/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+        "field": "PRISM_CONTROL_INTERNAL_URL",
+        "lines": [
+          61
+        ]
+      },
+      "originalHistoryObligation": "Upload/download through real internal artifact boundary, same artifact digest and grant. Both producer URL and worker receipt location change together; no fallback to old service or Latest on recovery.",
+      "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+      "historyAcceptance": "OPEN; startup capture is NOT durable original acquisition/attempt/nonce retention proof",
+      "status": "EXACT_PRISM_BOUNDARY_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/controlInternalUrl",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/controlInternalUrl",
+          "valueSha256": "29822917a1824006ad5a928a8735e071fbb0fc46544ef30f9fcace49ec53a6cc"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/controlInternalUrl",
+          "valueSha256": "ce6ea82ba953b9809f43dba66a99eb60b485aaf74f73180fe0b5d78a12bb0f25"
+        }
+      ],
+      "receiver": {
+        "path": "skills/prism/server/worker-config.ts",
+        "sha256": "dbdaa47609004aa4300dd8efafdf60f6018a3f1d7e20bb50e521fe1510a829e4",
+        "anchor": "controlInternalUrl: new URL(snapshot.controlInternalUrl)",
+        "lines": [
+          21
+        ]
+      },
+      "actualEffect": {
+        "path": "skills/prism/server/native-worker-host.ts",
+        "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca",
+        "anchor": "new WorkerArtifactClient(config.controlInternalUrl",
+        "lines": [
+          24
+        ]
+      },
+      "composition": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "controlInternalUrl: control.controlInternalUrl",
+        "lines": [
+          25
+        ]
+      },
+      "startupCapture": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "selection.digest !== expected.selectionDigest",
+          "lines": [
+            114
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "verifiedCaptures.add(result)",
+          "lines": [
+            143
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-ENDPOINT-INGESTION",
+      "original": "D228#/rows/2367",
+      "originalObjectSha256": "29c7f597e40b3e30a2d84d388854eaa786731b1d12daad2cc680d2e62a9354a3",
+      "class": "operator-setting",
+      "owner": "prism-deployment",
+      "caseIds": [
+        "AUTH-PRISM-ENDPOINT-INGESTION-DELIVERY",
+        "AUTH-PRISM-ENDPOINT-INGESTION-BOUNDARY"
+      ],
+      "historicalLocator": "config/deployment/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+        "field": "PRISM_INGESTION_URL",
+        "lines": [
+          60
+        ]
+      },
+      "originalHistoryObligation": "Real controlled source acquisition and cleanup hit selected ingestion instance. Existing acquired quarantines retain original endpoint/identity for cleanup; no silent new endpoint recovery.",
+      "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+      "historyAcceptance": "OPEN; startup capture is NOT durable original acquisition/attempt/nonce retention proof",
+      "status": "EXACT_PRISM_BOUNDARY_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionUrl",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/ingestionUrl",
+          "valueSha256": "387bed5c1d58b94aab724443e113d296ef5241a0125140e574374215a8762e29"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/ingestionUrl",
+          "valueSha256": "387bed5c1d58b94aab724443e113d296ef5241a0125140e574374215a8762e29"
+        }
+      ],
+      "receiver": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "ingestionUrl: new URL(control.ingestionUrl)",
+        "lines": [
+          97
+        ]
+      },
+      "actualEffect": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "f5667a1339178fbafb22eda256d0c237ba26498d018445a69759dc4d4d390550",
+        "anchor": "ingestionUrl),",
+        "lines": [
+          150,
+          214
+        ]
+      },
+      "composition": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "const { dispatchTimeoutMs, ...control }",
+        "lines": [
+          15
+        ]
+      },
+      "startupCapture": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "selection.digest !== expected.selectionDigest",
+          "lines": [
+            114
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "verifiedCaptures.add(result)",
+          "lines": [
+            143
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-ENDPOINT-AGENT-LIVE-RUNNER",
+      "original": "D228#/rows/2368",
+      "originalObjectSha256": "d39e908efccdd7f28c2e3d0f1d735692c0eaf541030dc6df4b5b9900f4397a0e",
+      "class": "operator-setting",
+      "owner": "prism-deployment",
+      "caseIds": [
+        "AUTH-PRISM-ENDPOINT-AGENT-LIVE-RUNNER-DELIVERY",
+        "AUTH-PRISM-ENDPOINT-AGENT-LIVE-RUNNER-BOUNDARY"
+      ],
+      "historicalLocator": "config/deployment/prism.config.json",
+      "originalSource": {
+        "path": "tests/verification/live/prism-nova-production-e2e.mjs",
+        "sha256": "41cef571679f2b7b41981fa69f1e93de50f7b012a8465eca48bd89ae6f160919",
+        "field": "PRISM_AGENT_URL",
+        "lines": [
+          10
+        ]
+      },
+      "originalHistoryObligation": "Real live production verifier uses selected runner egress and trusted agent. Missing ENV fails verifier before dispatch. No paid/live run during C0; image-packaged test remains in productive delivery closure.",
+      "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+      "historyAcceptance": "OPEN; startup capture is NOT durable original acquisition/attempt/nonce retention proof",
+      "status": "LIVE_RUNNER_ROUTE_OWNER_JOIN_OPEN",
+      "selectedOwner": null,
+      "actualConsumer": {
+        "path": "tests/verification/live/prism-nova-production-e2e.mjs",
+        "sha256": "41cef571679f2b7b41981fa69f1e93de50f7b012a8465eca48bd89ae6f160919",
+        "anchor": "const agentEndpoint = required(\"PRISM_AGENT_URL\")",
+        "lines": [
+          10
+        ]
+      },
+      "actualDeliveryLiteral": {
+        "path": "scripts/deploy.sh",
+        "sha256": "3d6d66560e74cb3c2a9b20457da616093e38b927e609f214e989ed83fe02cc35",
+        "anchor": "name: PRISM_AGENT_URL, value: \"http://127.0.0.1:18444\"",
+        "lines": [
+          1964
+        ]
+      },
+      "rejectedAlias": "studioPublicUrl is Studio UI, not production verification agent runner egress18444; agentToolControlUrl is also a distinct route",
+      "constraint": "No exact selected live-runner deployment author/normal delivery projection identified. Preserve explicit required ENV and distinct runner route; implement coherent selected deployment receiving/delivery, not substitute Studio URL or modify production."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-HMAC-WINDOW",
+      "original": "D228#/rows/2384",
+      "originalObjectSha256": "91dcf7ffbbca0b81d50664109859b3658e568b1dfe3003e038ece90568c4041e",
+      "class": "operator-setting",
+      "owner": "prism-worker-auth",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-HMAC-WINDOW-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/workers/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+        "field": "WINDOW_MS verification and nonce expiresAt"
+      },
+      "originalHistoryObligation": "Absolute timestamp skew>window rejects; same window computes stored nonce expiry. Timestamp itself safe integer. Signature/nonce wire shapes are distinct protocol invariants. Replay DB behavior not executed here.",
+      "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+      "historyAcceptance": "OPEN; startup capture is NOT durable original acquisition/attempt/nonce retention proof",
+      "status": "EXACT_PRISM_BOUNDARY_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-worker.config.json",
+        "sha256": "cc7d215eecb36c009101ee8ba36de7d228dd48c55c22203ac538e88802203234"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nonceDatabase/authenticationWindowMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nonceDatabase/authenticationWindowMs",
+          "valueSha256": "6ce318969619d1c360b6144be09e3d3a22674897c7cbfe995716ed8b7ff7c4cf"
+        }
+      ],
+      "receiver": {
+        "path": "skills/prism/server/worker-readiness.ts",
+        "sha256": "1b352ce40ccac3e79551f9e525e20e8de403a0c5ab3feacd6edb7b19254f6bec",
+        "anchor": "this.authenticationWindowMs = settings.authenticationWindowMs",
+        "lines": [
+          53
+        ]
+      },
+      "actualEffect": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "f9dcfe83ba7562da63b3922f839cae4462c2c4160a65f4a8eeb68a6b19313b69",
+        "anchor": "Math.abs(now - timestamp) > authenticationWindowMs",
+        "lines": [
+          70
+        ]
+      },
+      "composition": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "nonceDatabase: worker.nonceDatabase",
+        "lines": [
+          25
+        ]
+      },
+      "startupCapture": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "selection.digest !== expected.selectionDigest",
+          "lines": [
+            114
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "verifiedCaptures.add(result)",
+          "lines": [
+            143
+          ]
+        }
+      ],
+      "actualCaller": {
+        "path": "skills/prism/server/worker.ts",
+        "sha256": "6e117c614cdb4daccad316f66a2f51ac74584c6cddaddd2d563cf8dc6e8196c3",
+        "anchor": "new WorkerNonceDatabase(config.databaseUrl, config.nonceDatabase)",
+        "lines": [
+          26
+        ]
+      },
+      "nonceReceiving": {
+        "path": "skills/prism/server/worker-config.ts",
+        "sha256": "dbdaa47609004aa4300dd8efafdf60f6018a3f1d7e20bb50e521fe1510a829e4",
+        "anchor": "nonceDatabase: snapshot.nonceDatabase",
+        "lines": [
+          22
+        ]
+      },
+      "effectCompanion": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "f9dcfe83ba7562da63b3922f839cae4462c2c4160a65f4a8eeb68a6b19313b69",
+        "anchor": "new Date(timestamp + authenticationWindowMs)",
+        "lines": [
+          87
+        ]
+      },
+      "databaseBridge": {
+        "path": "skills/prism/server/worker-readiness.ts",
+        "sha256": "1b352ce40ccac3e79551f9e525e20e8de403a0c5ab3feacd6edb7b19254f6bec",
+        "anchor": "this.authenticationWindowMs), signal)",
+        "lines": [
+          114
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH",
+      "original": "D228#/rows/2385",
+      "originalObjectSha256": "2353783d7835b43a2a81d1118f806b025a1c1be53c622713560ec49e81329179",
+      "class": "operator-setting",
+      "owner": "prism-worker-auth",
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH-IMPLEMENTATION"
+      ],
+      "historicalLocator": "config/workers/prism.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+        "field": "PostgresNonceStore.consume DELETE LIMIT1000"
+      },
+      "originalHistoryObligation": "Cleanup throughput policy; DELETE only already expired rows. Database semantics/concurrency proof and proposed domain unresolved, not protocol const.",
+      "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+      "historyAcceptance": "OPEN; startup capture is NOT durable original acquisition/attempt/nonce retention proof",
+      "status": "EXACT_PRISM_BOUNDARY_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-worker.config.json",
+        "sha256": "cc7d215eecb36c009101ee8ba36de7d228dd48c55c22203ac538e88802203234"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nonceDatabase/maximumCleanupRows",
+      "authoredProfileLeaves": [
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nonceDatabase/maximumCleanupRows",
+          "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+        }
+      ],
+      "receiver": {
+        "path": "skills/prism/server/worker-readiness.ts",
+        "sha256": "1b352ce40ccac3e79551f9e525e20e8de403a0c5ab3feacd6edb7b19254f6bec",
+        "anchor": "this.maximumCleanupRows = settings.maximumCleanupRows",
+        "lines": [
+          54
+        ]
+      },
+      "actualEffect": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "f9dcfe83ba7562da63b3922f839cae4462c2c4160a65f4a8eeb68a6b19313b69",
+        "anchor": "[this.maximumCleanupRows]",
+        "lines": [
+          44
+        ]
+      },
+      "composition": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "nonceDatabase: worker.nonceDatabase",
+        "lines": [
+          25
+        ]
+      },
+      "startupCapture": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "selection.digest !== expected.selectionDigest",
+          "lines": [
+            114
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+          "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+          "anchor": "verifiedCaptures.add(result)",
+          "lines": [
+            143
+          ]
+        }
+      ],
+      "actualCaller": {
+        "path": "skills/prism/server/worker.ts",
+        "sha256": "6e117c614cdb4daccad316f66a2f51ac74584c6cddaddd2d563cf8dc6e8196c3",
+        "anchor": "new WorkerNonceDatabase(config.databaseUrl, config.nonceDatabase)",
+        "lines": [
+          26
+        ]
+      },
+      "nonceReceiving": {
+        "path": "skills/prism/server/worker-config.ts",
+        "sha256": "dbdaa47609004aa4300dd8efafdf60f6018a3f1d7e20bb50e521fe1510a829e4",
+        "anchor": "nonceDatabase: snapshot.nonceDatabase",
+        "lines": [
+          22
+        ]
+      },
+      "effectCompanion": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "f9dcfe83ba7562da63b3922f839cae4462c2c4160a65f4a8eeb68a6b19313b69",
+        "anchor": "expires_at <= now() ORDER BY expires_at LIMIT $1",
+        "lines": [
+          43
+        ]
+      },
+      "databaseBridge": {
+        "path": "skills/prism/server/worker-readiness.ts",
+        "sha256": "1b352ce40ccac3e79551f9e525e20e8de403a0c5ab3feacd6edb7b19254f6bec",
+        "anchor": "new PostgresNonceStore({ query }, this.maximumCleanupRows)",
+        "lines": [
+          102
+        ]
+      }
+    }
+  ],
+  "independentReview": "OPEN; native spawn unavailable; unchanged known EROFS helper not retried",
+  "fullAcceptance": "OPEN; all2409/6845/50/fullC0-C6 and original history/native/archive gates mandatory"
+}
