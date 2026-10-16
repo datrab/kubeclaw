@@ -9,8 +9,8 @@ import test from 'node:test';
 import { buildRegistry, discoverPackages, createProductionNovaTestGate } from '@kubeclaw/nova-core';
 import { loadProductionBusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
 import { resolvedTestPlanDigest, stableTestIdentity } from '@kubeclaw/pipeline-test-gate-contract';
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
-import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { busterRuntimeSelection, canonicalPipelineEntry, readTestPipeline, writeTestPipeline } from '../../fixtures/config/pipeline-components.mjs';
 import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
 import { ModeledPreparation } from '../../fixtures/test-gate/modeled-preparation.mts';
 import { ownedClusterTest } from '../../fixtures/test-gate/cluster-test-ownership.mjs';
@@ -97,15 +97,15 @@ for (const profile of profiles) for (const capability of capabilities) {
       schemaVersion: 'forge-deliverables.v1', moduleId: 'module', substep: null, deliverables: ['README.md'] }) + '\n```\n');
     for (const args of [['init', '-q'], ['config', 'user.email', 'ci2@example.invalid'], ['config', 'user.name', 'CI2 Proof'],
       ['add', 'README.md', 'module/FORGE.md', 'checked.yaml'], ['commit', '-qm', 'source']]) execFileSync('git', ['-C', repository, ...args]);
-    const documents = readTestBundle(canonicalSwarmEntry);
-    const policy = documents['buster-engine'].settings.clusterInvokers;
+    const documents = readTestPipeline(canonicalPipelineEntry);
+    const policy = documents['buster-engine'].profiles.runtime.settings.clusterInvokers;
     Object.assign(policy.shared, { kubectlExecutable: api.executable, leaseApiGroup: profile.group, leaseApiVersion: profile.version });
     Object.assign(policy.kubernetesFixture, { allowedNamespacePrefixes: [profile.prefix], registryRepositoryPrefixes: [profile.registry.split('/')[1]],
       runnerServiceAccount: profile.account, credentialReaderServiceAccount: 'reader' });
     Object.assign(policy.tailscaleExposure, { allowedNamespacePrefixes: [profile.prefix], allowedHostSuffixes: [profile.suffix] });
     Object.assign(policy.runtimeSecurity, { allowedNamespacePrefixes: [profile.prefix], maximumOutputBytes: profile.runtimeOutputBytes });
-    const bundle = path.join(root, 'bundle/swarm.config.json'); writeTestBundle(bundle, documents);
-    const snapshot = loadSwarmSettings({ SWARM_CONFIG: bundle });
+    const bundle = path.join(root, 'bundle/pipeline.config.json'); writeTestPipeline(bundle, documents);
+    const snapshot = captureSwarmSettings(bundle, busterRuntimeSelection(documents));
     const keys = crypto.generateKeyPairSync('ed25519');
     const publicKey = keys.publicKey.export({ type: 'spki', format: 'pem' }).toString();
     const privateKey = keys.privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
@@ -127,8 +127,8 @@ for (const profile of profiles) for (const capability of capabilities) {
       let selectedSnapshot = snapshot;
       if (mode === 'policy-denied') {
         const deniedDocuments = structuredClone(documents);
-        deniedDocuments['buster-engine'].settings.clusterInvokers.runtimeSecurity.maximumOutputBytes = profile.runtimeDeniedBytes;
-        writeTestBundle(bundle, deniedDocuments); selectedSnapshot = loadSwarmSettings({ SWARM_CONFIG: bundle });
+        deniedDocuments['buster-engine'].profiles.runtime.settings.clusterInvokers.runtimeSecurity.maximumOutputBytes = profile.runtimeDeniedBytes;
+        writeTestPipeline(bundle, deniedDocuments); selectedSnapshot = captureSwarmSettings(bundle, busterRuntimeSelection(documents));
       }
       const configuration = { schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig, host: '127.0.0.1', port: 0,
         tokenEnvironmentVariable: 'CI2_TOKEN', sourceAttestationPublicKeyEnvironmentVariable: 'CI2_KEY', trustedSourceAuthority: 'nova:production',
@@ -148,7 +148,7 @@ for (const profile of profiles) for (const capability of capabilities) {
         maximumArchiveBytes: 4 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
         maximumResultStoreBytes: 64 * 1024 * 1024, trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey });
       preparation.configure({ tarExecutable: process.env.KUBECLAW_TEST_TAR ?? '/usr/bin/tar', maximumExtractedBytes: 16 * 1024 * 1024 });
-      const runtime = loadProductionBusterRemotePlanRuntime(config, preparation, selectedSnapshot.buster, selectedSnapshot.workerCore.localRuntime,
+      const runtime = loadProductionBusterRemotePlanRuntime(config, preparation, selectedSnapshot.components['buster-engine'].settings, selectedSnapshot.components['worker-core'].settings.localRuntime,
         { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), CI2_TOKEN: token, CI2_KEY: publicKey,
           CI2_REGISTRY_USER: 'ci2-local-test', CI2_REGISTRY_PASSWORD: 'ci2-local-fixture-only' });
       const lifetime = owner.runtime(runtime);
