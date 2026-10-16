@@ -46,7 +46,7 @@ core_sections = {
 }
 prism_candidates = {
     "config/engines/prism-agent.config.json": ("prism-control", ["agentLauncher"]),
-    "config/engines/prism-execution.config.json": ("prism-execution", ["resourcePolicy"]),
+    "config/engines/prism-execution.config.json": ("prism-control", ["nativeAttemptLifetimeMs", "nativeAttemptTimeoutMs", "nativeAttemptCleanupTimeoutMs", "nativeAttemptLogBytes", "nativeAttemptResultBytes", "nativeAttemptEvidenceBytes", "nativeAttemptEvidenceFiles"]),
     "config/engines/prism.config.json": ("prism-execution", ["enginePolicy"]),
     "config/services/prism-agent-bridge.config.json": ("prism-control", ["agentBridge", "agentToolControlUrl"]),
     "config/services/prism-database-bootstrap.config.json": ("prism-control", ["databaseBootstrap"]),
@@ -124,6 +124,12 @@ engine_exact = {r['id']: r for r in engine_joins['rows'] if r['status'] == 'EXAC
 engine_open = {r['id']: r for r in engine_joins['rows'] if r['status'] == 'PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN'}
 if len(engine_exact) != 5 or len(engine_open) != 8 or set(engine_exact) & (set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
     raise ValueError('Prism engine roster overlap/drift')
+attempt_path = str((OUT / 'prism-attempt-successors.json').relative_to(ROOT))
+attempt_joins = read(attempt_path)
+attempt_exact = {r['id']: r for r in attempt_joins['rows'] if r['status'] == 'EXACT_PRISM_ATTEMPT_SOURCE_JOIN'}
+attempt_open = {r['id']: r for r in attempt_joins['rows'] if r['status'] == 'PRISM_ATTEMPT_RECEIVING_IMPLEMENTATION_OPEN'}
+if len(attempt_exact) != 17 or len(attempt_open) != 2 or set(attempt_exact) & (set(engine_exact) | set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
+    raise ValueError('Prism attempt roster overlap/drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -172,6 +178,15 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
     residual_engine = [engine_open[i] for i in ids if i in engine_open]
     if residual_engine:
         group['explicitEngineResiduals'] = residual_engine
+    attempt = [attempt_exact[i] for i in ids if i in attempt_exact]
+    if attempt:
+        group['exactPrismAttemptMappings'] = attempt
+        group['remainingFieldIds'] = [i for i in group['remainingFieldIds'] if i not in attempt_exact]
+        group['prismAttemptSupplementalJoin'] = pin(attempt_path)
+        group['status'] = 'PARTIAL_EXACT_PRISM_ATTEMPT_SOURCE_JOIN' if group['remainingFieldIds'] else 'EXACT_PRISM_ATTEMPT_SOURCE_JOIN'
+    residual_attempt = [attempt_open[i] for i in ids if i in attempt_open]
+    if residual_attempt:
+        group['explicitAttemptResiduals'] = residual_attempt
     parts = old.split("/")
     if len(parts) > 2 and parts[1] == "plugins":
         plugin = parts[2].removeprefix("kubeclaw.")
@@ -198,7 +213,7 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
             anchor("skills/common/plugin-runtime/foundation/config/pipeline-generation.ts", "pipeline-entry.v3")]
         group["constraint"] = "Defined v2 task-only/selectedPolicy plus original inputStore/package/delivery closure must be implemented together. Current root/provider remain v3/v1. No denied v10 promotion/private root/current-value fill. Completed finite byte guards do not externalize these24 fields or accept168 cases."
         group["definition"] = pin("docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/RECEIVING-AND-ORACLES.md")
-    if group["candidateSuccessors"] and not exact and not scalar_exact and not delivery and not prism and not boundary and not engine:
+    if group["candidateSuccessors"] and not exact and not scalar_exact and not delivery and not prism and not boundary and not engine and not attempt:
         group["status"] = "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN"
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
@@ -219,10 +234,14 @@ engine_joined = [r['id'] for g in groups for r in g.get('exactPrismEngineMapping
 engine_residuals = [r['id'] for g in groups for r in g.get('explicitEngineResiduals', [])]
 if set(engine_joined) != set(engine_exact) or len(engine_joined) != len(set(engine_joined)) or set(engine_residuals) != set(engine_open) or len(engine_residuals) != len(set(engine_residuals)):
     raise ValueError('Prism engine mappings/residuals not conserved across historical groups')
+attempt_joined = [r['id'] for g in groups for r in g.get('exactPrismAttemptMappings', [])]
+attempt_residuals = [r['id'] for g in groups for r in g.get('explicitAttemptResiduals', [])]
+if set(attempt_joined) != set(attempt_exact) or len(attempt_joined) != len(set(attempt_joined)) or set(attempt_residuals) != set(attempt_open) or len(attempt_residuals) != len(set(attempt_residuals)):
+    raise ValueError('Prism attempt mappings/residuals not conserved across historical groups')
 result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
-              "exactPrismEngineSourceJoins": len(engine_exact), "explicitPrismEngineReceivingResiduals": len(engine_open), "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
+              "exactPrismAttemptSourceJoins": len(attempt_exact), "explicitPrismAttemptReceivingResiduals": len(attempt_open), "exactPrismEngineSourceJoins": len(engine_exact), "explicitPrismEngineReceivingResiduals": len(engine_open), "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
               "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
           "groups": groups, "fullAcceptance": "OPEN", "independentReviewOfThisJoin": "OPEN",

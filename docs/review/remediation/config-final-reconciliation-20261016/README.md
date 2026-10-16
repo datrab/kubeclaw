@@ -64,3 +64,12 @@ Eight receiving obligations are explicit, not implicitly covered by the adjacent
 The distinct live-runner route additionally pins its matching18444 Envoy listener and authenticated `prism-agent-mtls` upstream. Selected URL and proxy projection must move together under one delivery/capture; changing only scripts/deploy.sh is insufficient. No production change or live run performed.
 
 Fresh independent review of the new reconciliation tool remains OPEN: this surface exposes no native spawn/reviewer tool; the unchanged known EROFS helper was not retried. Full original history/native/archive/C0-C6 acceptance remains mandatory and OPEN.
+
+
+## Exact Prism native/agent attempt supplement
+
+`reconcile-prism-attempts.py` conserves all19 original native/agent limit, claim, launcher and completion-allowance fields.17 exact existing source mappings pin every authored profile leaf, actual Control/bridge projection, envelope or HTTP receiving effect and available original reservation/claim capture anchors. Eight negative matrix controls reject identity/hash/class/owner/case drift, duplication and missing selected leaf; restored positive output is deterministic. No original runtime cases executed, new settings implemented or native/history acceptance inferred.
+
+Corrected a misleading historical group candidate: native envelope timeout/cleanup/log/result/evidence limits and claim lifetime belong to selected **prism-control**, not adjacent prism-execution CPU/memory/tasks resourcePolicy. Claim/finish HTTP requests both receive the actual selected agentBridge controlRequestTimeoutMs; random runnerId is not the CLI agent target.
+
+Two exact implementation residuals remain: CLI target `main` and native completion cleanup-phase multiplier `8`. Neither is covered by adjacent selected launcher/cleanup policies. Coherent selected/versioned receiving, original launch/attempt binding and normal delivery remain required; no authority redesign or native deadline weakening. Semantic navigation now leaves7 section-candidate groups and two partial attempt groups, each retaining its residual. Full2409/6845/50 preservation is unchanged. Independent review of this new matrix tool and full original/history/native/archive/C0-C6 acceptance remain OPEN; native spawn unavailable and unchanged reviewer EROFS not retried.
