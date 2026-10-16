@@ -1,0 +1,176 @@
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (34.18486ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (3.1042ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (2.73682ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (2.333ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (2.148445ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (2.081984ms)
+✔ CC1 Control artifactRoot rejects undefined (2.049003ms)
+✔ CC1 Control artifactRoot rejects null (1.900799ms)
+✔ CC1 Control artifactRoot rejects "" (1.970421ms)
+✔ CC1 Control artifactRoot rejects "/" (1.95076ms)
+✔ CC1 Control artifactRoot rejects "relative" (1.835167ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (14.38858ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (5.292447ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (5.851111ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (2.020582ms)
+✔ CC1 Control artifactRoot rejects 1 (1.891438ms)
+✔ CC1 Control studioPublicUrl rejects undefined (1.94069ms)
+✔ CC1 Control studioPublicUrl rejects null (1.843137ms)
+✔ CC1 Control studioPublicUrl rejects "" (1.875988ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (1.96771ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (1.838557ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (1.93099ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (1.822647ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (1.800247ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (1.836388ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (1.816767ms)
+✔ CC1 Control studioPublicUrl rejects 1 (1.802706ms)
+✔ CC1 strict Control object (2.000771ms)
+✔ CC1 strict Control object (1.813347ms)
+✔ CC1 strict Control object (1.905719ms)
+✔ CC1 strict Control object (1.848078ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (1.602742ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (1.474808ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (1.384406ms)
+✔ CC2 authored Control snapshot survives file mutation (14.395321ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-input-limit.test.mts (584.72773ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-native-settings.test.mts (643.677988ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-resource-operation.test.mts (363.525473ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-resource-policy.test.mts (580.44533ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-result-journal.test.mts (607.212319ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-supervisor-config.test.mts (562.322853ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/swarm-supervisor-consumers.test.mts:14:34
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts (550.797136ms)
+✔ CB01 real probe reservation overflows and recovers while work remains active (60.419077ms)
+✔ CB02 actual TCP connection limit rejects the next socket and reopens after release (12.02366ms)
+✔ CB03 original Node body deadline sends 408 without shortening its checking interval (30008.25007ms)
+
+Interrupted while running:
+
+⚠ skills/prism/tests/swarm-worker-config.test.mts (skills/prism/tests/swarm-worker-config.test.mts:1:1)
+✖ skills/prism/tests/swarm-worker-config.test.mts (98318.198507ms)
+ℹ tests 46
+ℹ suites 0
+ℹ pass 38
+ℹ fail 7
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133443.152591
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-input-limit.test.mts:1:1
+✖ skills/prism/tests/swarm-input-limit.test.mts (584.72773ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-native-settings.test.mts:1:1
+✖ skills/prism/tests/swarm-native-settings.test.mts (643.677988ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-resource-operation.test.mts:1:1
+✖ skills/prism/tests/swarm-resource-operation.test.mts (363.525473ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-resource-policy.test.mts:1:1
+✖ skills/prism/tests/swarm-resource-policy.test.mts (580.44533ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-result-journal.test.mts:1:1
+✖ skills/prism/tests/swarm-result-journal.test.mts (607.212319ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-config.test.mts (562.322853ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts (550.797136ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-worker-config.test.mts:1:1
+✖ skills/prism/tests/swarm-worker-config.test.mts (98318.198507ms)
+  'Promise resolution is still pending but the event loop has already resolved'

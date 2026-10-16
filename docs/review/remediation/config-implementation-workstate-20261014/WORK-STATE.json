@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T21:19:59.225232+00:00",
+  "updatedAt": "2026-10-16T21:32:10.556535+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_PACKAGING_OBLIGATIONS_MIGRATED_AND_FOCUSED_VERIFIED",
+  "status": "ORIGINAL_CONSUMER_VERIFICATION_INCOMPLETE_NOT_ACCEPTED",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -24019,5 +24019,76 @@
     "nextAction": "Genuine QB-R02 original source/build/baseline producer association, existing input ownership/reservation/accounting, sealed original bytes and provider publication; coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving. Remaining original deployment fixture suites and full integrated command still require current-author migration/verification; never count subset9 as full gate. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 activation. Independent full original/history/native C0-C6 gates OPEN.",
     "externalInfrastructure": "UNCHANGED; owner Raven. Native Docker/UID1000/writable delegated cgroup, trusted sufficient archive storage and isolated migrated real PostgreSQL database remain external required gates.",
     "writerLock": "same shared nonblocking; released at command exit"
+  },
+  "originalConsumerVerification20261016": {
+    "at": "2026-10-16T21:32:10.556535+00:00",
+    "status": "ORIGINAL_CONSUMER_VERIFICATION_INCOMPLETE_NOT_ACCEPTED",
+    "sourceCommit": "8c4b51806fbbfd6e869ba03e9bd9a279dfabec61",
+    "productionSourceChanged": false,
+    "fixtureAttemptReverted": true,
+    "evidence": "docs/review/remediation/config-prism-original-consumers-current-20261016",
+    "busterEvidence": "docs/review/remediation/config-buster-admission-current-20261016",
+    "checks": {
+      "busterAdmission": {
+        "passed": 1,
+        "failed": 1,
+        "total": 2,
+        "skipped": 0,
+        "log": "docs/review/remediation/config-buster-admission-current-20261016/before.txt",
+        "detail": "Actual authored A/B chart generation/packaged boot/retired ENV rejection passed; original CLI test requires real UID/GID1000; current UID0 fails its explicit assertion."
+      },
+      "genuineUidAttempt": {
+        "status": "BLOCKED_NOT_VERIFIED",
+        "error": "setpriv: setresuid failed: Operation not permitted",
+        "log": "docs/review/remediation/config-buster-admission-current-20261016/real-uid-attempt.txt",
+        "changeRetained": false,
+        "qualification": "Attempted actual kernel identity change, no getuid/kernel/trust mocks, no production changes or skip. Unverified fixture launcher discarded."
+      },
+      "inheritedProductionMode": {
+        "exitCode": 1,
+        "passed": 38,
+        "failed": 7,
+        "cancelled": 1,
+        "status": "INTERRUPTED_NOT_PASS",
+        "detail": "Production image identity guard rejected before seven source modules imported. Stopped only owned process tree2528311/2528472/2529667. Source-test rerun explicitly NODE_ENV=test, not a fake production digest.",
+        "log": "docs/review/remediation/config-prism-original-consumers-current-20261016/before.txt"
+      },
+      "explicitSourceTestMode": {
+        "exitCode": 124,
+        "timeoutSeconds": 300,
+        "passed": 99,
+        "failed": 0,
+        "cancelled": 4,
+        "totalReported": 103,
+        "status": "INCOMPLETE_TIMEOUT_NOT_PASS",
+        "log": "docs/review/remediation/config-prism-original-consumers-current-20261016/source-test-mode.txt",
+        "filesIncomplete": [
+          "swarm-supervisor-config.test.mts",
+          "swarm-supervisor-consumers.test.mts",
+          "swarm-worker-behavior.test.mts",
+          "swarm-worker-config.test.mts"
+        ],
+        "detail": "All ten original swarm consumer files requested serially. Genuine role builds continued during supervisor-config; 99 visible pass events do NOT establish full group PASS. Owned session/process group2529758 stopped at bound; no shared processes killed."
+      },
+      "roster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "integrityFailures": 0,
+        "originalResultsChanged": false,
+        "log": "docs/review/remediation/config-prism-original-consumers-current-20261016/original-roster.txt"
+      }
+    },
+    "independentReview": "OPEN; no callable native spawn/reviewer/collaboration tool in fresh discovery, active/recent CONFIG subagents0. No independent command/native execution. Unchanged same-surface EROFS not retried.",
+    "newOriginalCasesAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "externalOwner": "Raven",
+    "resumeCondition": "Actual isolated Linux service UID1000/GID1000 supported by kernel, Docker and writable delegated cgroup, sufficiently large genuinely root-trusted archive filesystem, isolated migrated PostgreSQL test database. No UID/kernel/trust spoof or skipped native proof.",
+    "localNext": "Do not replay 99 unchanged green events as new progress. Remaining four original consumer suites need sufficient bounded runtime for their actual repeated role-build fixtures; retain exact files/case assertions, no early refactor. Continue genuine QB-R02 inputStore sealed original bytes/producer/build/source/baseline ownership accounting and coordinated physical generation/boot+Nova receiving; preserve BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10.",
+    "writerLock": "same nonblocking lock acquired for supported final verification and checkpoint; released at command exit",
+    "noHistoricalFollowup": true
   }
 }
