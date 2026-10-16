@@ -5,11 +5,11 @@ export const MAX_RAW_BYTES = 2 * 1024 * 1024;
 const MAX_OUTPUT_BYTES = 192 * 1024;
 let active = 0;
 
-export function queryWindow({ startTime, endTime }, now = Date.now()) {
+export function queryWindow({ startTime, endTime }, now = Date.now(), {defaultWindowMs=5*60_000,maxWindowMs=15*60_000}={}) {
   const end = endTime ? Date.parse(endTime) : now;
-  const start = startTime ? Date.parse(startTime) : end - 5 * 60_000;
-  if (!Number.isFinite(start) || !Number.isFinite(end) || start >= end || end - start > 15 * 60_000) {
-    throw new Error('Choose startTime < endTime with at most 15 minutes per query. Older absolute windows are allowed.');
+  const start = startTime ? Date.parse(startTime) : end - defaultWindowMs;
+  if (!Number.isFinite(start) || !Number.isFinite(end) || start >= end || end - start > maxWindowMs) {
+    throw new Error(`Choose startTime < endTime with at most ${maxWindowMs/60000} minutes per query. Older absolute windows are allowed.`);
   }
   return { startTime: new Date(start).toISOString(), endTime: new Date(end).toISOString() };
 }
@@ -25,10 +25,10 @@ export function classify(response) {
 export async function getHubbleFlows(args, summarize, {
   binary = process.env.HUBBLE_BIN ?? '/usr/local/bin/hubble',
   server = process.env.HUBBLE_SERVER ?? 'hubble-relay.cilium.svc.cluster.local:4245',
-  timeout = 12_000,
+  timeout = 12_000, maxConcurrentQueries=2,defaultWindowMs=5*60_000,maxWindowMs=15*60_000,maxRawBytes=MAX_RAW_BYTES,maxOutputBytes=MAX_OUTPUT_BYTES,maxSummaryBytes=8192,maxStderrBytes=4096,
 } = {}) {
-  if (active >= 2) throw new Error('Two Hubble queries are already active; retry after they finish.');
-  const window = queryWindow(args);
+  if (active >= maxConcurrentQueries) throw new Error(`${maxConcurrentQueries===2?'Two':maxConcurrentQueries} Hubble queries are already active; retry after they finish.`);
+  const window = queryWindow(args,Date.now(),{defaultWindowMs,maxWindowMs});
   const command = ['observe', '--server', server, '--output', 'json', '--last', String(args.limit + 1),
     '--since', window.startTime, '--until', window.endTime, '--namespace', args.namespace];
   if (args.pod) command.push('--pod', `${args.namespace}/${args.pod}`);
@@ -61,7 +61,7 @@ export async function getHubbleFlows(args, summarize, {
         matched++;
         const compact = summarize({ flow });
         if (typeof compact.summary === 'string') {
-          const bounded = boundedUtf8(compact.summary, 8192);
+          const bounded = boundedUtf8(compact.summary, maxSummaryBytes);
           compact.summary = bounded.text;
           compact.summaryTruncated = bounded.truncated;
           if (bounded.truncated) reasons.add('summary_byte_limit');
@@ -70,15 +70,15 @@ export async function getHubbleFlows(args, summarize, {
         flows.sort((a, b) => String(a.time).localeCompare(String(b.time)));
         if (flows.length > args.limit) { flows.shift(); reasons.add('flow_limit'); }
         outputBytes = Buffer.byteLength(JSON.stringify(flows));
-        while (outputBytes > MAX_OUTPUT_BYTES && flows.length) {
+        while (outputBytes > maxOutputBytes && flows.length) {
           flows.shift(); reasons.add('output_byte_limit'); outputBytes = Buffer.byteLength(JSON.stringify(flows));
         }
       };
       const consume = (chunk, isError) => {
-        const remaining = MAX_RAW_BYTES - rawBytes;
+        const remaining = maxRawBytes - rawBytes;
         rawBytes += Math.min(remaining, chunk.length);
         const accepted = chunk.subarray(0, Math.max(0, remaining));
-        if (isError) stderr = boundedUtf8(stderr + accepted.toString('utf8'), 4096).text;
+        if (isError) stderr = boundedUtf8(stderr + accepted.toString('utf8'), maxStderrBytes).text;
         else {
           pending = Buffer.concat([pending, accepted]);
           let newline;

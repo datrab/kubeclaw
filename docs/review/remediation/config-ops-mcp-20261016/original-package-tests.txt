@@ -1,0 +1,87 @@
+npm notice run @kubeclaw/ops-mcp@0.2.0 test
+npm notice run node --test test/*.test.mjs
+✖ backend refuses to listen with absent or weak authentication (198.007252ms)
+✖ real HTTP backend enforces authentication, atomic rotation and namespace boundaries (176.603331ms)
+✔ custom namespace migration applies only project policies (198.707399ms)
+✔ byte limit never splits UTF-8 or expands beyond the advertised budget (55.691712ms)
+✔ content is not redacted and unavailable history is never called complete (0.266947ms)
+✔ tail saturation remains visible without assuming a full history (0.149183ms)
+✖ malformed target returns 400 and leaves server and authorization intact (189.469332ms)
+✔ old windows are valid but each window is bounded (1.811217ms)
+✔ lost events and peer status are never fake flows (0.971145ms)
+✔ exact pod filtering, saturation and summaries preserve diagnostic meaning (108.309325ms)
+✔ stderr and nonzero exit are returned as incomplete observation (99.742575ms)
+✔ stdout/stderr share a raw byte ceiling (117.415089ms)
+✔ timeout is explicit and releases concurrency slot (69.385064ms)
+✔ HTTPS verifies CA/hostname, rotates credentials, bounds requests and refuses redirects (1492.4359ms)
+✖ local MCP lists tools while the Kubernetes credential is unavailable and reports failed reads honestly (181.124788ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 11
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2095.408436
+
+✖ failing tests:
+
+test at test/authentication.test.mjs:19:1
+✖ backend refuses to listen with absent or weak authentication (198.007252ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /requires a bearer token/. Input:
+  
+  'node:internal/modules/package_json_reader:331\n' +
+    '  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n' +
+    '        ^\n' +
+    '\n' +
+    "Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@modelcontextprotocol/server' imported from /home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/src/server.mjs\n" +
+    '    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:331:9)\n' +
+    '    at packageResolve (node:internal/modules/esm/resolve:784:25)\n' +
+    '    at moduleResolve (node:internal/modules/esm/resolve:873:18)\n' +
+    '    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n' +
+    '    at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)\n' +
+    '    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)\n' +
+    '    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)\n' +
+    '    at #resolve (node:internal/modules/esm/loader:687:17)\n' +
+    '    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)\n' +
+    '    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33) {\n' +
+    "  code: 'ERR_MODULE_NOT_FOUND'\n" +
+    '}\n' +
+    '\n' +
+    'Node.js v24.21.0\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/test/authentication.test.mjs:26:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "node:internal/modules/package_json_reader:331\n  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n        ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@modelcontextprotocol/server' imported from /home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/src/server.mjs\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:331:9)\n    at packageResolve (node:internal/modules/esm/resolve:784:25)\n    at moduleResolve (node:internal/modules/esm/resolve:873:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)\n    at #resolve (node:internal/modules/esm/loader:687:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v24.21.0\n",
+    expected: /requires a bearer token/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test/authentication.test.mjs:31:1
+✖ real HTTP backend enforces authentication, atomic rotation and namespace boundaries (176.603331ms)
+  Error: Backend exited 1
+      at ChildProcess.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/test/authentication.test.mjs:46:62)
+      at ChildProcess.wrapper (node:events:639:12)
+      at ChildProcess.emit (node:events:514:28)
+      at ChildProcess._handle.onexit (node:internal/child_process:295:12)
+
+test at test/http.test.mjs:7:1
+✖ malformed target returns 400 and leaves server and authorization intact (189.469332ms)
+  Error: startup exit 1
+      at ChildProcess.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/test/http.test.mjs:15:66)
+      at ChildProcess.wrapper (node:events:639:12)
+      at ChildProcess.emit (node:events:514:28)
+      at ChildProcess._handle.onexit (node:internal/child_process:295:12)
+
+test at test/local.test.mjs:10:1
+✖ local MCP lists tools while the Kubernetes credential is unavailable and reports failed reads honestly (181.124788ms)
+  Error: startup exit 1
+      at ChildProcess.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/test/local.test.mjs:23:62)
+      at ChildProcess.wrapper (node:events:639:12)
+      at ChildProcess.emit (node:events:514:28)
+      at ChildProcess._handle.onexit (node:internal/child_process:295:12)

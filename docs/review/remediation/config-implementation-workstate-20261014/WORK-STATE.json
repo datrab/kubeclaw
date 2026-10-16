@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Remaining-source reconciliation, including Ops MCP/ops pod and worker envelope policies; native full historical acceptance still open",
+  "nextAction": "Finish repository-wide actual-value reconciliation: remaining CLI deployment selectors/budgets, worker processing bounds and observer manifest/config authors. Native historic acceptance separate; never claim whole completion from Controller/Ops subsets.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -22690,5 +22690,20 @@
     "extraExistingSettings": "5-second clock skew selected; TTL/maxTTL/poll hidden fallback authors removed",
     "evidence": "docs/review/remediation/config-controller-closeout-20261016",
     "next": "Remaining-source reconciliation, including Ops MCP/ops pod and worker envelope policies; native full historical acceptance still open"
+  },
+  "opsRuntimePolicy20261016": {
+    "at": "2026-10-16T13:38:07.909222+00:00",
+    "status": "implemented-source-reviewed",
+    "evidence": "docs/review/remediation/config-ops-mcp-20261016",
+    "checks": {
+      "opsPackage": "19/19",
+      "selectedServerHubbleHelm": "4/4",
+      "finalHelmCrossLanguage": "1/1",
+      "supervisor": "2/2",
+      "PythonSyntax": "pass"
+    },
+    "review": "Codex final source review clean after one accepted output-bound finding and corrected stdin import",
+    "allRepositoryAccepted": false,
+    "nativeAccepted": false
   }
 }

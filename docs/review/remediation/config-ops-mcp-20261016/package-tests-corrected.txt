@@ -1,0 +1,29 @@
+npm notice run @kubeclaw/ops-mcp@0.2.0 test
+npm notice run node --test test/*.test.mjs
+✔ backend refuses to listen with absent or weak authentication (342.767964ms)
+✔ real HTTP backend enforces authentication, atomic rotation and namespace boundaries (387.97616ms)
+✔ custom namespace migration applies only project policies (69.82622ms)
+✔ byte limit never splits UTF-8 or expands beyond the advertised budget (2.014542ms)
+✔ content is not redacted and unavailable history is never called complete (0.274957ms)
+✔ tail saturation remains visible without assuming a full history (0.129983ms)
+✔ selected A/B byte budgets control actual log output and sentinel truncation evidence (0.943864ms)
+✔ malformed target returns 400 and leaves server and authorization intact (180.944783ms)
+✔ old windows are valid but each window is bounded (1.097698ms)
+✔ lost events and peer status are never fake flows (3.735886ms)
+✔ exact pod filtering, saturation and summaries preserve diagnostic meaning (67.772307ms)
+✔ stderr and nonzero exit are returned as incomplete observation (30.812924ms)
+✔ stdout/stderr share a raw byte ceiling (70.848916ms)
+✔ timeout is explicit and releases concurrency slot (58.162199ms)
+✔ HTTPS verifies CA/hostname, rotates credentials, bounds requests and refuses redirects (1253.000254ms)
+✔ local MCP lists tools while the Kubernetes credential is unavailable and reports failed reads honestly (388.671637ms)
+✔ selected complete owner freezes A/B, rejects partial owners and duplicate legacy authors, keeps original loader (5.169583ms)
+✔ real server captures selected file before listening; missing owner never falls back (202.056127ms)
+✔ real Hubble child uses selected raw/summary limits and query windows (90.502562ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1660.127947

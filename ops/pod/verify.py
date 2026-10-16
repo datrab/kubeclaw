@@ -2,13 +2,22 @@
 """Real in-pod MCP verification; no fixture responses or outage injection."""
 import json
 import os
+import sys
 from pathlib import Path
 import urllib.request
+
+if 'OPS_MCP_POLICY_FILE' in os.environ:
+    # This file is piped to `python3 -`; its source directory is not on sys.path.
+    sys.path.insert(0, '/opt/codex')
+    from runtime_policy import load_supervisor_policy
+    mcp_url, _ = load_supervisor_policy(os.environ['OPS_MCP_POLICY_FILE'])
+else:
+    mcp_url = 'http://127.0.0.1:8080/mcp'
 
 token = Path('/var/run/kubeclaw-ops/bearer/token').read_text().strip()
 
 def call(method, params):
-    request = urllib.request.Request('http://127.0.0.1:8080/mcp',
+    request = urllib.request.Request(mcp_url,
         data=json.dumps({'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': params}).encode(),
         headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/json, text/event-stream'})
     with urllib.request.urlopen(request, timeout=60) as response:

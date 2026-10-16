@@ -1,0 +1,29 @@
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/node_modules/zod/v4/locales/az.cjs'
+npm warn cleanup Failed to remove some directories [
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/node_modules/hono',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/node_modules/hono/dist/cjs/utils'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/node_modules/hono/dist/cjs/utils'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/node_modules',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/node_modules/zod'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/ops-mcp/node_modules/zod'
+npm warn cleanup     }
+npm warn cleanup   ]
+npm warn cleanup ]
+npm error code EROFS
+npm error syscall open
+npm error path /root/.npm/_cacache/tmp/***
+npm error errno -30
+npm error rofs EROFS: read-only file system, open '/root/.npm/_cacache/tmp/***'
+npm error rofs Often virtualized file systems, or other file systems that don't support symlinks, give this error.
+npm error Log files were not written due to an error writing to the directory: /root/.npm/_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal

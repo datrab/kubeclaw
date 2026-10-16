@@ -70,7 +70,7 @@ COPY --from=kubectl-build /out/kubectl /usr/local/bin/kubectl
 COPY --from=gh-build /out/gh /usr/local/bin/gh
 COPY --from=gh-build /src/LICENSE /usr/local/share/licenses/gh/LICENSE
 COPY kubectl-build/LICENSE /usr/local/share/licenses/kubectl/LICENSE
-COPY supervisor.py config.toml shell.sh /opt/codex/
+COPY supervisor.py policy-supervisor.py runtime_policy.py config.toml shell.sh /opt/codex/
 RUN mkdir -p /workspace /home/node/.codex && chown node:node /workspace /home/node/.codex
 ENV HOME=/home/node
 USER 1000:1000

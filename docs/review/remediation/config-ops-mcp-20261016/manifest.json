@@ -1,0 +1,86 @@
+[
+  {
+    "path": "charts/ops-pod/templates/mcp-policy.yaml",
+    "sha256": "669eb95f964e61edd88a7016878e6ccfff1900dfcb7ce7c47750e59de3bc7b15"
+  },
+  {
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07"
+  },
+  {
+    "path": "charts/ops-pod/values.yaml",
+    "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+  },
+  {
+    "path": "ops/pod/Dockerfile",
+    "sha256": "593fcc648609ed10763a06da4246bf9d6d9eb792da8b0ffdc007c510ad8e6759"
+  },
+  {
+    "path": "ops/pod/policy-supervisor.py",
+    "sha256": "f1a0a4d94f490a27dbef01ab56736010ad88ded156bcfe3a29e4c1dcc2b4c5d3"
+  },
+  {
+    "path": "ops/pod/runtime_policy.py",
+    "sha256": "dbfcab8bfa7489dc7a49fdd505a611b22ac248c18cee614a67e981eace522a8e"
+  },
+  {
+    "path": "ops/pod/supervisor.py",
+    "sha256": "b6e83f4dcea53dc3f1c99bf8200f64bb897f24818d067a12d2e4cca54d0bead9"
+  },
+  {
+    "path": "ops/pod/test_runtime_policy.py",
+    "sha256": "e2964adcc98092e06449bef5c93cc61eb36f8ecb2a53bbb9e0a3eacded56312e"
+  },
+  {
+    "path": "ops/pod/verify.py",
+    "sha256": "7a2b4be40cdc31d2bfafa4a2b2fb55cf4e78c7646cfd8e86d04afe80bd5fe2e8"
+  },
+  {
+    "path": "tests/verification/deployment/ops-mcp-policy.test.mjs",
+    "sha256": "6a7375b8747e5f7363dac3c0784cceb4eca3c78e799ac481d748838d990cce99"
+  },
+  {
+    "path": "tools/ops-mcp/Dockerfile",
+    "sha256": "34b7f8cc73ae80489c1c489a24476ff2b7a7546bf023f42857cddee775005a1a"
+  },
+  {
+    "path": "tools/ops-mcp/src/authentication.mjs",
+    "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+  },
+  {
+    "path": "tools/ops-mcp/src/config.mjs",
+    "sha256": "81dc05570a3e1b412eba0f148805d45885e6f0a70954202ba6c34e1baa51a650"
+  },
+  {
+    "path": "tools/ops-mcp/src/diagnostics.mjs",
+    "sha256": "b398d65f42a5add6bfccb4ce0cf26db30c33cba89ebe741fa23297fb33a8f62f"
+  },
+  {
+    "path": "tools/ops-mcp/src/hubble.mjs",
+    "sha256": "17a73ef1d50db958912c26cdbc2c532c493d77912a69281cea5751bbfdbc3118"
+  },
+  {
+    "path": "tools/ops-mcp/src/kubernetes.mjs",
+    "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+  },
+  {
+    "path": "tools/ops-mcp/src/policy-server.mjs",
+    "sha256": "8c6a4b56d7d9fe066602c7132ae6cc86837dec8f5d57176c5195cd4e6d4d838f"
+  },
+  {
+    "path": "tools/ops-mcp/src/policy.mjs",
+    "sha256": "8c541b70dcdf7238c4a63d52ebbe8564a6a52ceb180ef484ff1efbb5b0a4c5f5"
+  },
+  {
+    "path": "tools/ops-mcp/src/server.mjs",
+    "sha256": "40bd386bcb16b05f22cc63acd0c07db81152d602a3de8149d7007b5b0e06a4cb"
+  },
+  {
+    "path": "tools/ops-mcp/test/diagnostics.test.mjs",
+    "sha256": "f88c5a5684f086694a28456cc23e3ac597d616165f9fbd128f3f0e6d61cf9a68"
+  },
+  {
+    "path": "tools/ops-mcp/test/policy.test.mjs",
+    "sha256": "ca20ee41a8adaae39e55f4f508df3dd6920cf99d46053469c88732241bb70f5b"
+  }
+]

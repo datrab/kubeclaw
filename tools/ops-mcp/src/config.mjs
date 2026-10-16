@@ -1,3 +1,4 @@
+import {loadOpsMcpPolicy} from './policy.mjs';
 function allowedNamespaces(value, defaultNamespace, argoNamespace) {
   const namespaces = (value ?? defaultNamespace).split(',');
   const validNamespace = name => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(name);
@@ -8,6 +9,11 @@ function allowedNamespaces(value, defaultNamespace, argoNamespace) {
 }
 
 export function loadOpsMcpConfig(environment = process.env) {
+  if(Object.hasOwn(environment,'OPS_MCP_POLICY_FILE')){
+    for(const key of ['PORT','HOST','OPS_LOCAL_ONLY','OPS_DEFAULT_NAMESPACE','ARGOCD_NAMESPACE','OPS_ALLOWED_NAMESPACES','MCP_ALLOWED_ORIGINS','HUBBLE_BIN','HUBBLE_SERVER'])if(Object.hasOwn(environment,key))throw new Error(`OPS_MCP_POLICY_COMPETING_AUTHOR:${key}`);
+    const policy=loadOpsMcpPolicy(environment.OPS_MCP_POLICY_FILE);
+    return Object.freeze({...policy.server,namespaces:policy.server.namespaces,allowedOrigins:new Set(policy.server.allowedOrigins),selectedPolicy:policy,kubernetes:policy.kubernetes,hubble:policy.hubble,presentation:policy.presentation,bearer:{file:environment.OPS_MCP_BEARER_TOKEN_FILE,token:environment.OPS_MCP_BEARER_TOKEN}});
+  }
   const port = Number(environment.PORT ?? 8080);
   if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('Invalid Ops MCP listen port');
   const host = environment.HOST ?? '0.0.0.0';

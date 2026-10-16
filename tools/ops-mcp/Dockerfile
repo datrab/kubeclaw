@@ -35,10 +35,6 @@ RUN node --check src/server.mjs \
     && /usr/local/bin/hubble version >/dev/null
 
 ENV NODE_ENV=production \
-    PORT=8080 \
-    HOST=0.0.0.0 \
-    HUBBLE_BIN=/usr/local/bin/hubble \
-    HUBBLE_SERVER=hubble-relay.cilium.svc.cluster.local:4245 \
     NODE_EXTRA_CA_CERTS=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 
 USER 1000:1000
