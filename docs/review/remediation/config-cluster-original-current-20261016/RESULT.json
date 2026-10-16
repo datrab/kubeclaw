@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-16T23:14:04.638875+00:00",
+  "status": "ORIGINAL_CLUSTER_CONSUMERS_28_OF_28_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "cfbfc80d0d562ba47cdf33bf58934c0cbf42c160",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-cluster-original-current-20261016",
+  "change": "Three original polling/deadline/manifest suites now capture the selected Buster runtime owner from complete central pipeline/component authors instead of retired chart raw files. Original assertions, quotas, real child process ownership and negative/positive controls unchanged. Mutable test variants clone the actual immutable selected snapshot; no full-facade refill or boot authentication.",
+  "checks": {
+    "originalTests": {
+      "total": 28,
+      "passed": 28,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "baseline": "28/28 also passed on legacy chart authors; this is input-owner migration, not a repaired failure",
+    "syntax": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "fullAcceptance": "OPEN"
+    }
+  },
+  "independentReview": "OPEN: no native reviewer/spawn tool exposed; no CONFIG reviewer results; recorded unchanged same-surface EROFS not retried. Author checks are not independent acceptance.",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "nextAction": "Continue genuine QB-R02 and coordinated authenticated sole-root/boot+Nova receiving. Classify remaining historical-import/native-recovery/deployment legacy fixture reads at their actual original reader boundaries; do not rerun unchanged green suites.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped gates.",
+  "writerLock": "SAME nonblocking shared lock; released at subprocess exit",
+  "sourceHashes": {
+    "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs": "ccf8fe77f1839fbc8e2b41fb3eeee2d8174fd83bf87703871a28b2bafad765c0",
+    "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs": "9f83b45a7037233c9853c0b8917dbb0f0a7574c93c4111349f846d73d0d95bae",
+    "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs": "721d659a73d0b09de896d52ad1f47f5ec2ae5e6fd6f9b9dc9118d6b781a3087b"
+  }
+}
