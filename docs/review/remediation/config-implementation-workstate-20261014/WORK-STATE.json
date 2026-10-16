@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T23:34:48.912589+00:00",
+  "updatedAt": "2026-10-16T23:39:50.381117+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_BOOT_AUTHORS_MIGRATED_ARCHIVE_RESTORE_STILL_BLOCKED_NOT_FULL_ACCEPTANCE",
+  "status": "ORIGINAL_NATIVE_DEPLOYMENT_RECEIVING_MIGRATED_NOT_NATIVE_ACCEPTANCE",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Complete genuine QB-R02 source/build/baseline inputStore ownership/reservation/accounting/sealed-byte/publication and authenticated sole-root/boot+Nova receiving. Continue remaining exact supported source/fixture residuals. Do not replay unchanged green boot checks or known archive ENOSPC.",
+  "nextAction": "Genuine QB-R02 original producer/build/source/baseline/inputStore ownership/reservation/accounting/sealed snapshot/publication and authenticated sole-root/boot+Nova receiving; remaining original source/fixture residuals. No replay unchanged green native fixture or known archive ENOSPC.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -24874,5 +24874,46 @@
     "resumeCondition": "Isolated Linux Docker UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped required gates.",
     "writerLock": "SAME nonblocking shared repository lock; released on command exit",
     "noHistoricalFollowup": true
+  },
+  "originalNativeDeployment20261016": {
+    "at": "2026-10-16T23:39:50.381117+00:00",
+    "status": "ORIGINAL_NATIVE_DEPLOYMENT_RECEIVING_MIGRATED_NOT_NATIVE_ACCEPTANCE",
+    "sourceCommit": "c65c68dce59ba2349ceb3768ff4e21d481f6ab7b",
+    "sourceRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-native-deployment-current-20261016",
+    "cacheRepair": "Isolated GOMODCACHE; go mod download fetched pinned dependencies without modifying go.mod/go.sum. Actual builder retains go mod verify and readonly build.",
+    "change": "Production native preflight now requires actual packaged worker command; explicit retired command negative rejects. Original Prism native deployment test retains real Helm/NRI/pod/security/negative controls and static NRI executable; retired ConfigMap test projection replaced by actual image package build, authenticated readonly boot receipts and installed worker consumer. No production source/trust change.",
+    "checks": {
+      "originalTests": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "syntax": true,
+      "diffCheck": true,
+      "originalRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "acceptance": "OPEN"
+      }
+    },
+    "baseline": "Original Helm render failed on unbound native-review release; static NRI build failed on inherited cache missing ziphash. Binding actual selected release then exposed genuine productive preflight stale worker command. All raw failures retained.",
+    "qualification": "Actual local static NRI executable validation and Helm render, NOT installed native NRI/runtime/cgroup/Docker/browser acceptance. Render image digest is existing shape-only fixture, not a built image identity.",
+    "independentReview": "OPEN; native reviewer/spawn tool not exposed, CONFIG active/recent reviewers0; known unchanged same-surface EROFS not retried. Author checks not independent acceptance.",
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "nextAction": "Genuine QB-R02 original producer/build/source/baseline/inputStore ownership/reservation/accounting/sealed snapshot/publication and authenticated sole-root/boot+Nova receiving; remaining original source/fixture residuals. No replay unchanged green native fixture or known archive ENOSPC.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Isolated Linux Docker UID1000/GID1000 delegated writable cgroup plus sufficient genuinely root-trusted writable archive storage and migrated isolated PostgreSQL. No trust/UID/kernel spoof or skipped required gates.",
+    "writerLock": "SAME nonblocking repository lock; released on command exit",
+    "noHistoricalFollowup": true,
+    "sourceHashes": {
+      "tests/verification/deployment/prism-native-runtime.test.mjs": "70200315326c20543ccfa6a9573b69147c9c454d8c403463ff5db69b814be688"
+    }
   }
 }

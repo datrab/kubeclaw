@@ -1,0 +1,21 @@
+✖ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (152.597284ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 675.773164
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-native-runtime.test.mjs:17:1
+✖ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (152.597284ms)
+  Error: NATIVE_DEPLOYMENT_PROTOCOL_MISMATCH
+      at nativePrismDeploymentSelection (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/native-worker-deployment-preflight.mjs:18:11)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-native-runtime.test.mjs:26:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
