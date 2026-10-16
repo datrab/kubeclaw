@@ -28,3 +28,11 @@ Independent review of **this new join/tool** remains OPEN: no native spawn/revie
 The other12 original root/admission fields remain explicitly OPEN (artifact/state/wait/telemetry roots, HTTP origins/methods/headers with original item identities, agent hooks with item identity). They are not members of the adjacent scalar policies. Trace their actual platform/provider owner and retained closure separately; never invent pointers, silently merge them into Core or equate section presence with closure.
 
 Six negative controls reject original hash, case-join, owner, missing pointer, foreign ID and duplicate-ID changes; restored output is deterministic. Full2409/6845/50 identity preservation rerun with zero integrity errors. No unchanged runtime suites replayed, no new config author published. Independent review of this supplement and full applicable C0–C6/native/archive acceptance remain OPEN.
+
+## Exact delivery store and original selected-profile supplement
+
+`reconcile-delivery.py` conserves all26 original fields in two historical delivery adapter groups. Four store fields join exact Core delivery-record/byte pointers and actual durable-store consumers. Two original per-target `maxPayloadBytes` fields derive from the target-selected Core payload profile; all authored profile leaves are pinned without choosing a profile from value equality or assuming `standard`. Original target selection capture and restore, policy projection, closed target-author refusal and actual payload-size effects are pinned.
+
+The other20 original root/target/endpoint/secret/object fields stay explicitly OPEN. A child payload field does not close its containing target. `semantic-successors.json` incorporates these six source joins, leaving15 section-candidate groups, eight partially exact groups,13 unresolved owner groups, seven existing Review groups and two Quality v2 obligations. No new scalar implementation or runtime PASS is implied.
+
+Eight original-identity/missing-pointer/missing-profile-leaf negative controls reject; restored positive output is deterministic. Full2409/6845/50 integrity audit rerun. Fresh independent review of this tool remains OPEN (native reviewer/spawn unavailable; unchanged EROFS helper not retried). All applicable original/native/archive and integrated C0–C6 gates remain mandatory.

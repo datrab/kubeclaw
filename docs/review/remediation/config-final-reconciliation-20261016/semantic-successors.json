@@ -1,5 +1,5 @@
 {
-  "scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review and Core scalar joins reuse existing source, not new implementation or runtime replay",
+  "scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar and delivery joins reuse existing source, not new implementation or runtime replay",
   "inputs": [
     {
       "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json",
@@ -22,13 +22,16 @@
     "historicalLocatorGroups": 45,
     "exactExistingReviewFieldMappings": 228,
     "exactCurrentCoreScalarSourceJoins": 19,
+    "exactDeliveryStoreSourceJoins": 4,
+    "originalTargetSelectedProfileSourceJoins": 2,
     "staticReviewOwnerPointers": 222,
     "originalTargetDerivedFields": 6,
     "groupsByStatus": {
-      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 17,
+      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 15,
       "UNRESOLVED_SEMANTIC_OWNER_JOIN": 13,
       "PARTIAL_EXACT_CORE_SCALAR_SOURCE_JOIN": 6,
       "DEFINED_RECEIVING_IMPLEMENTATION_OPEN": 2,
+      "PARTIAL_EXACT_DELIVERY_SOURCE_JOIN": 2,
       "EXACT_EXISTING_SCOPED_MAPPING": 7
     }
   },
@@ -2466,8 +2469,6 @@
       "exactExistingMappings": [],
       "remainingFieldIds": [
         "RT-552bd4d0492fab1d",
-        "RT-36e57df09adb3bc3",
-        "RT-966513f360de46db",
         "RT-d7622cdd4244b3f1",
         "RT-dcd5ac9d37c243a6",
         "RT-83ccdc231deed9a9",
@@ -2475,7 +2476,6 @@
         "RT-2a83b3acac2068cb",
         "RT-772a8c40be07c07a",
         "RT-683826beb925aa1c",
-        "RT-94e60cdf237f52ef",
         "RT-05f1178492977f20",
         "RT-21d7512fb63f1a6d",
         "RT-3d54e3f064a0be9b",
@@ -2531,8 +2531,266 @@
           }
         }
       ],
-      "status": "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN",
+      "status": "PARTIAL_EXACT_DELIVERY_SOURCE_JOIN",
       "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "exactDeliverySourceMappings": [
+        {
+          "id": "RT-36e57df09adb3bc3",
+          "original": "D228#/rows/532",
+          "originalObjectSha256": "93c3cf7fd1f0a996fe93093cc3cd7acec47b2edd2a3e23878966f7a8066e54bd",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-36e57df09adb3bc3-CONTRACT",
+            "RT-36e57df09adb3bc3-ALTERNATE",
+            "RT-36e57df09adb3bc3-BINDING",
+            "RT-36e57df09adb3bc3-MUTANT"
+          ],
+          "originalField": "maximumDeliveryRecords",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.operator-messaging/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "registration": "kubeclaw.operator-messaging:operator",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.operatorMessagingStore",
+            "lines": [
+              211
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            }
+          ],
+          "qualification": "Source navigation only, not new implementation, executed original case, physical delivery, native proof or independent acceptance.",
+          "status": "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN",
+          "pointer": "/profiles/standard/settings/operatorMessagingStore/maximumDeliveryRecords",
+          "valueSha256": "3bb78535cc9555ff19fe3556aaa41c78a0a45c64d49ba2bc564507648a8e77a1",
+          "receivingEffect": {
+            "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+            "sha256": "0569244081582b61ac6d691be65869ac435fd1e924e948929d2bb179e307bd94",
+            "anchor": "maximumRecords: config.maximumDeliveryRecords",
+            "lines": [
+              66
+            ]
+          }
+        },
+        {
+          "id": "RT-966513f360de46db",
+          "original": "D228#/rows/533",
+          "originalObjectSha256": "0777594d20977c3f9a4a409756f0146ac22fc2dda6a2f688b79db361675eb153",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-966513f360de46db-CONTRACT",
+            "RT-966513f360de46db-ALTERNATE",
+            "RT-966513f360de46db-BINDING",
+            "RT-966513f360de46db-MUTANT"
+          ],
+          "originalField": "maximumDeliveryBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.operator-messaging/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "registration": "kubeclaw.operator-messaging:operator",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.operatorMessagingStore",
+            "lines": [
+              211
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            }
+          ],
+          "qualification": "Source navigation only, not new implementation, executed original case, physical delivery, native proof or independent acceptance.",
+          "status": "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN",
+          "pointer": "/profiles/standard/settings/operatorMessagingStore/maximumDeliveryBytes",
+          "valueSha256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "receivingEffect": {
+            "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+            "sha256": "0569244081582b61ac6d691be65869ac435fd1e924e948929d2bb179e307bd94",
+            "anchor": "maximumBytes: config.maximumDeliveryBytes",
+            "lines": [
+              67
+            ]
+          }
+        },
+        {
+          "id": "RT-94e60cdf237f52ef",
+          "original": "D228#/rows/541",
+          "originalObjectSha256": "b400ed8edd0c55db78e1ba49c2a5859b1ebc4c36dc39ede75c0e44d9761f2d94",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-94e60cdf237f52ef-CONTRACT",
+            "RT-94e60cdf237f52ef-ALTERNATE",
+            "RT-94e60cdf237f52ef-BINDING",
+            "RT-94e60cdf237f52ef-MUTANT"
+          ],
+          "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.maxPayloadBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.operator-messaging/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "registration": "kubeclaw.operator-messaging:operator",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.operatorMessagingPayload",
+            "lines": [
+              205
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            }
+          ],
+          "qualification": "Source navigation only, not new implementation, executed original case, physical delivery, native proof or independent acceptance.",
+          "status": "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN",
+          "profileOwnerPointer": "/profiles/standard/settings/operatorMessagingPayload/targetPayloadProfiles",
+          "profileValuePointers": {
+            "standard": {
+              "pointer": "/profiles/standard/settings/operatorMessagingPayload/targetPayloadProfiles/standard/maxPayloadBytes",
+              "valueSha256": "0f255ec16482c343fd099ba9668863778be40dc166a6856b1d470e0bc97cc6fd"
+            }
+          },
+          "selectedProfile": "DYNAMIC_FROM_ORIGINAL_TARGET_NOT_INFERRED",
+          "receivingDerivation": {
+            "path": "skills/common/plugins/operator-messaging/src/config.ts",
+            "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+            "anchor": "const maxPayloadBytes = profiles.get(raw.payloadProfile)!",
+            "lines": [
+              69
+            ]
+          },
+          "receivingEffect": {
+            "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+            "sha256": "0569244081582b61ac6d691be65869ac435fd1e924e948929d2bb179e307bd94",
+            "anchor": "parsePayload(request.payload, target.maxPayloadBytes, target.payloadStructure)",
+            "lines": [
+              33,
+              93
+            ]
+          },
+          "originalSelectionCapture": {
+            "path": "skills/nova/core/execution/engine-snapshots.ts",
+            "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+            "anchor": "Object.defineProperty(operatorSelections,id,{value:target.payloadProfile,enumerable:true})",
+            "lines": [
+              197
+            ]
+          },
+          "originalSelectionRestore": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "payloadProfile:retainedOperatorSelections[id]",
+            "lines": [
+              182
+            ]
+          },
+          "oldTargetAuthorRejection": {
+            "path": "skills/common/plugins/operator-messaging/src/config.ts",
+            "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+            "anchor": "exactKeys(raw, TARGET_KEYS",
+            "lines": [
+              65
+            ]
+          }
+        }
+      ],
+      "deliverySupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/delivery-successors.json",
+        "sha256": "eb3e35b4bd12117ecbdb2752d50ee8e63f5c6225035b32c84936dc88c302e02f"
+      },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
@@ -11619,13 +11877,10 @@
       "exactExistingMappings": [],
       "remainingFieldIds": [
         "RT-aa4b934140cba02d",
-        "RT-0280e5a337166d29",
-        "RT-239e331d0bc30cbe",
         "RT-dd3300dafba3cec4",
         "RT-91ddf4c78b4c536b",
         "RT-176ced91a5aa7a4c",
-        "RT-387dde0cfb3d039e",
-        "RT-6efb7f1f36399280"
+        "RT-387dde0cfb3d039e"
       ],
       "candidateSuccessors": [
         {
@@ -11689,8 +11944,265 @@
           }
         }
       ],
-      "status": "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN",
+      "status": "PARTIAL_EXACT_DELIVERY_SOURCE_JOIN",
       "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "exactDeliverySourceMappings": [
+        {
+          "id": "RT-0280e5a337166d29",
+          "original": "D228#/rows/614",
+          "originalObjectSha256": "24ea47e323fc96ed332c2b1c5613f65c7da9d3a849abc088c3b1fd614bfa9cd2",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-0280e5a337166d29-CONTRACT",
+            "RT-0280e5a337166d29-ALTERNATE",
+            "RT-0280e5a337166d29-BINDING",
+            "RT-0280e5a337166d29-MUTANT"
+          ],
+          "originalField": "maximumDeliveryRecords",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.transport-publisher/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "registration": "kubeclaw.transport-publisher:publisher",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.transportPublisherStore",
+            "lines": [
+              212
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            }
+          ],
+          "qualification": "Source navigation only, not new implementation, executed original case, physical delivery, native proof or independent acceptance.",
+          "status": "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN",
+          "pointer": "/profiles/standard/settings/transportPublisherStore/maximumDeliveryRecords",
+          "valueSha256": "3bb78535cc9555ff19fe3556aaa41c78a0a45c64d49ba2bc564507648a8e77a1",
+          "receivingEffect": {
+            "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+            "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+            "anchor": "maximumRecords: config.maximumDeliveryRecords",
+            "lines": [
+              211
+            ]
+          }
+        },
+        {
+          "id": "RT-239e331d0bc30cbe",
+          "original": "D228#/rows/615",
+          "originalObjectSha256": "665e740982e83e7faf7fa08ad72ee3326b6f509fc2c42bfce55850e43085432d",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-239e331d0bc30cbe-CONTRACT",
+            "RT-239e331d0bc30cbe-ALTERNATE",
+            "RT-239e331d0bc30cbe-BINDING",
+            "RT-239e331d0bc30cbe-MUTANT"
+          ],
+          "originalField": "maximumDeliveryBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.transport-publisher/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "registration": "kubeclaw.transport-publisher:publisher",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.transportPublisherStore",
+            "lines": [
+              212
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            }
+          ],
+          "qualification": "Source navigation only, not new implementation, executed original case, physical delivery, native proof or independent acceptance.",
+          "status": "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN",
+          "pointer": "/profiles/standard/settings/transportPublisherStore/maximumDeliveryBytes",
+          "valueSha256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "receivingEffect": {
+            "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+            "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+            "anchor": "maximumBytes: config.maximumDeliveryBytes",
+            "lines": [
+              212
+            ]
+          }
+        },
+        {
+          "id": "RT-6efb7f1f36399280",
+          "original": "D228#/rows/620",
+          "originalObjectSha256": "aef9c9e7e740164fa826c2bc4e7cdff0a0231c6efacffdbe4edc334c0b2e618a",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-6efb7f1f36399280-CONTRACT",
+            "RT-6efb7f1f36399280-ALTERNATE",
+            "RT-6efb7f1f36399280-BINDING",
+            "RT-6efb7f1f36399280-MUTANT"
+          ],
+          "originalField": "targets.{key}.maxPayloadBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.transport-publisher/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "registration": "kubeclaw.transport-publisher:publisher",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.transportPublisherPayload",
+            "lines": [
+              206
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            }
+          ],
+          "qualification": "Source navigation only, not new implementation, executed original case, physical delivery, native proof or independent acceptance.",
+          "status": "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN",
+          "profileOwnerPointer": "/profiles/standard/settings/transportPublisherPayload/targetPayloadProfiles",
+          "profileValuePointers": {
+            "standard": {
+              "pointer": "/profiles/standard/settings/transportPublisherPayload/targetPayloadProfiles/standard/maxPayloadBytes",
+              "valueSha256": "54faea9b3eeffce2a5ea906fdd1232a52a55d57d993e5406a572b9a9ea2827d8"
+            }
+          },
+          "selectedProfile": "DYNAMIC_FROM_ORIGINAL_TARGET_NOT_INFERRED",
+          "receivingDerivation": {
+            "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+            "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+            "anchor": "maxPayloadBytes: profiles.get(rawTarget.payloadProfile)!",
+            "lines": [
+              94
+            ]
+          },
+          "receivingEffect": {
+            "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+            "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+            "anchor": "publicationBody(request.payload, target.maxPayloadBytes, config.maxJsonDepth)",
+            "lines": [
+              232
+            ]
+          },
+          "originalSelectionCapture": {
+            "path": "skills/nova/core/execution/engine-snapshots.ts",
+            "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+            "anchor": "Object.defineProperty(publisherSelections,id,{value:target.payloadProfile,enumerable:true})",
+            "lines": [
+              188
+            ]
+          },
+          "originalSelectionRestore": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "payloadProfile:retainedPublisherSelections[id]",
+            "lines": [
+              172
+            ]
+          },
+          "oldTargetAuthorRejection": {
+            "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+            "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+            "anchor": "exactKeys(rawTarget, ['endpoint', 'signingSecret', 'payloadProfile']",
+            "lines": [
+              86
+            ]
+          }
+        }
+      ],
+      "deliverySupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/delivery-successors.json",
+        "sha256": "eb3e35b4bd12117ecbdb2752d50ee8e63f5c6225035b32c84936dc88c302e02f"
+      },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {

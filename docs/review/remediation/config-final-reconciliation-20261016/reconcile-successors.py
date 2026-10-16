@@ -102,6 +102,11 @@ adapter_exact = {r['id']: r for g in adapter_joins['groups'] for r in g['rows']
                  if r['status'] == 'EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN'}
 if len(adapter_exact) != 19 or set(adapter_exact) & set(mappings):
     raise ValueError('Adapter successor roster overlap/drift')
+delivery_path = str((OUT / 'delivery-successors.json').relative_to(ROOT))
+delivery_joins = read(delivery_path)
+delivery_exact = {r['id']: r for g in delivery_joins['groups'] for r in g['rows'] if r['status'] in {'EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN', 'ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN'}}
+if len(delivery_exact) != 6 or set(delivery_exact) & (set(adapter_exact) | set(mappings)):
+    raise ValueError('Delivery successor roster overlap/drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -120,6 +125,12 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
         group['remainingFieldIds'] = [i for i in remaining if i not in adapter_exact]
         group['supplementalJoin'] = pin(adapter_path)
         group['status'] = 'PARTIAL_EXACT_CORE_SCALAR_SOURCE_JOIN' if group['remainingFieldIds'] else 'EXACT_CORE_SCALAR_SOURCE_JOIN'
+    delivery = [delivery_exact[i] for i in ids if i in delivery_exact]
+    if delivery:
+        group['exactDeliverySourceMappings'] = delivery
+        group['remainingFieldIds'] = [i for i in group['remainingFieldIds'] if i not in delivery_exact]
+        group['deliverySupplementalJoin'] = pin(delivery_path)
+        group['status'] = 'PARTIAL_EXACT_DELIVERY_SOURCE_JOIN' if group['remainingFieldIds'] else 'EXACT_DELIVERY_SOURCE_JOIN'
     parts = old.split("/")
     if len(parts) > 2 and parts[1] == "plugins":
         plugin = parts[2].removeprefix("kubeclaw.")
@@ -146,7 +157,7 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
             anchor("skills/common/plugin-runtime/foundation/config/pipeline-generation.ts", "pipeline-entry.v3")]
         group["constraint"] = "Defined v2 task-only/selectedPolicy plus original inputStore/package/delivery closure must be implemented together. Current root/provider remain v3/v1. No denied v10 promotion/private root/current-value fill. Completed finite byte guards do not externalize these24 fields or accept168 cases."
         group["definition"] = pin("docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/RECEIVING-AND-ORACLES.md")
-    if group["candidateSuccessors"] and not exact and not scalar_exact:
+    if group["candidateSuccessors"] and not exact and not scalar_exact and not delivery:
         group["status"] = "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN"
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
@@ -154,9 +165,12 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
 joined = [entry["id"] for group in groups for entry in group["exactExistingMappings"]]
 if set(joined) != set(mappings) or len(joined) != len(set(joined)):
     raise ValueError("Scoped mappings not conserved across historical locator groups")
-result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review and Core scalar joins reuse existing source, not new implementation or runtime replay",
+delivery_joined = [r['id'] for g in groups for r in g.get('exactDeliverySourceMappings', [])]
+if set(delivery_joined) != set(delivery_exact) or len(delivery_joined) != len(set(delivery_joined)):
+    raise ValueError('Delivery source mappings not conserved across historical locator groups')
+result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar and delivery joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
-          "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact),
+          "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
               "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
               "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},

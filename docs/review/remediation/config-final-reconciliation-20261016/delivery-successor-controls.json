@@ -1,0 +1,47 @@
+{
+  "controls": [
+    {
+      "control": "original-hash",
+      "rejected": true,
+      "error": "Original hash drift: RT-36e57df09adb3bc3"
+    },
+    {
+      "control": "case-join",
+      "rejected": true,
+      "error": "Original case join drift: RT-36e57df09adb3bc3"
+    },
+    {
+      "control": "original-reference",
+      "rejected": true,
+      "error": "Original reference drift: RT-36e57df09adb3bc3"
+    },
+    {
+      "control": "owner",
+      "rejected": true,
+      "error": "Original classification/owner drift: RT-36e57df09adb3bc3"
+    },
+    {
+      "control": "foreign-id",
+      "rejected": true,
+      "error": "Duplicate/foreign field: FOREIGN-ID"
+    },
+    {
+      "control": "duplicate-id",
+      "rejected": true,
+      "error": "Duplicate/foreign field: RT-36e57df09adb3bc3"
+    },
+    {
+      "control": "missing-store-pointer",
+      "rejected": true,
+      "error": "'maximumDeliveryRecords'"
+    },
+    {
+      "control": "missing-profile-leaf",
+      "rejected": true,
+      "error": "'maxPayloadBytes'"
+    }
+  ],
+  "restoredPositive": "PASS",
+  "deterministicReplay": true,
+  "qualification": "Source/matrix controls only; no original runtime cases executed or independently accepted"
+}
