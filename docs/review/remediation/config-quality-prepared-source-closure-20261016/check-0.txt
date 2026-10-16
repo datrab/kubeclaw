@@ -1,0 +1,48 @@
+✔ actual prepared execution retains accepted source/header across asynchronous extraction (144.984861ms)
+✔ extracted source identity is captured before store attachment awaits (24.324751ms)
+✔ mismatched extracted source never reaches source attachment/execution (2.655448ms)
+✔ mismatched extracted header never reaches source attachment/execution (2.135074ms)
+✔ original producer attempt and receipt survive asynchronous terminal cleanup (24.764083ms)
+✔ artifact receiving uses final original producer result and copies exact metadata (1.489088ms)
+✔ final errored producer cannot resurrect previous attempt output (0.347839ms)
+✔ final cancelled producer cannot resurrect previous attempt output (0.110513ms)
+✔ final timed_out producer cannot resurrect previous attempt output (0.105313ms)
+✔ missing final output cannot be refilled from earlier successful producer (0.181144ms)
+✔ value inputs preserve original schema and clone original producer value (0.207545ms)
+✔ actual scheduler hands original attempt receipts to preparation, never side-channel output projection (0.77755ms)
+✔ v2 separates task values, deeply freezes original policy and retains v1 exactly (20.425661ms)
+✔ coverage: equal task-policy override and partial/unknown selected processing reject (1.226081ms)
+✔ size: equal task-policy override and partial/unknown selected processing reject (1.066627ms)
+✔ binding mismatches cannot pass even with a syntactically valid v2 envelope (2.134035ms)
+✔ duplicate rule IDs reject instead of acquiring a second budget author (0.587805ms)
+✔ real resolver uses selected retry and evidence while retaining immutable manifest support (32.461109ms)
+✔ size mandatory evidence and no-limit blocking admission are enforced before execution (3.438128ms)
+✔ retained original A never refills from B/current owner; changed registry fails (1.198341ms)
+✔ loader rejects original binding before snapshot or process effects (1.048507ms)
+✔ real coverage A/B consume captured policy, not legacy task values or invented evidence (13.476104ms)
+✔ real size v2 omits inactive nulls, retains baseline on pass/fail and enforces A/B (4.199287ms)
+✔ actual child IPC preserves and freezes original v2 across initialize and execute (38.701788ms)
+✔ restored v2 size plan, invocation and direct runner boundary cannot drop mandatory error evidence (12.395136ms)
+✔ coverage direct v2 incomplete processing rejects before artifact access (0.523353ms)
+✔ size direct v2 incomplete processing rejects before artifact access (0.430811ms)
+✔ coverage onPass log eligibility is mandatory in selection, overrides and restored plans (3.012947ms)
+✔ coverage onFail log eligibility is mandatory in selection, overrides and restored plans (2.488514ms)
+✔ coverage onError log eligibility is mandatory in selection, overrides and restored plans (2.282988ms)
+✔ size onPass log eligibility is mandatory in selection, overrides and restored plans (2.440643ms)
+✔ size onFail log eligibility is mandatory in selection, overrides and restored plans (2.381221ms)
+✔ size onError log eligibility is mandatory in selection, overrides and restored plans (2.395031ms)
+✔ restored advisory-only Size policy cannot become blocking before repository/attempt effects (1.878228ms)
+✔ coverage: explicit selected map cannot fall back to legacy task policy when original selection is missing (3.850379ms)
+✔ size: explicit selected map cannot fall back to legacy task policy when original selection is missing (4.265829ms)
+✔ coverage: selected v2 cannot execute before original sealed inputStore admission (1.869188ms)
+✔ size: selected v2 cannot execute before original sealed inputStore admission (1.54355ms)
+✔ coverage: original v1 preparation still reaches its own unchanged attempt boundary (1.060777ms)
+✔ size: original v1 preparation still reaches its own unchanged attempt boundary (0.870732ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3392.375054

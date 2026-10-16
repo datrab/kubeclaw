@@ -1,0 +1,58 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/prepared-source-closure.test.mjs",
+      "tests/verification/contracts/runner-original-producer-inputs.test.mjs",
+      "tests/verification/reliability/quality-provider-v2.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.43,
+    "log": "docs/review/remediation/config-quality-prepared-source-closure-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/buster/engine/test-gates/remote-prepared-execution.ts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.9,
+    "log": "docs/review/remediation/config-quality-prepared-source-closure-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 22.4,
+    "log": "docs/review/remediation/config-quality-prepared-source-closure-20261016/check-2.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.07,
+    "log": "docs/review/remediation/config-quality-prepared-source-closure-20261016/check-3.txt"
+  }
+]
