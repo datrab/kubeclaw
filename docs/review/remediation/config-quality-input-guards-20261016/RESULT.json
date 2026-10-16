@@ -13,7 +13,8 @@
     "originalProviderScripts": "both passed unchanged assertions",
     "independentSourceReview": "clean; exact source manifest, reviewer could not execute shell/tests",
     "EOFAndCloseCancellationRegression": "two tests fail on exact pre-fix source; pass with final cancellation fences",
-    "supportedBusterRoleReadback": "1/1 on initial guard snapshot; full inert archive restore explicitly excluded after retained ENOSPC; NOT full suite/native PASS"
+    "supportedBusterRoleReadback": "1/1 on initial guard snapshot; full inert archive restore explicitly excluded after retained ENOSPC; NOT full suite/native PASS",
+    "exactFinalRoleBundle": "buster;14125 indexed files/11 packages/24 plugins; both changed guard modules match final reviewed source and emitted digests"
   },
   "qualifiedBoundary": "Coverage actual cap before read/buffer; cancellation during descriptor read and parsing/aggregation. Size tar/gzip exact consumed-byte hash, file-mode final descriptor pass and actual baseline snapshot digest; preserves valid descriptor path-replacement behavior. Cancellation checked after awaited reads and before output. No new authority, graph changes, provider, policy-root, byte-limit author or native-positive claim.",
   "remainingQualityWork": [
@@ -25,5 +26,6 @@
   "deployment": false,
   "paidEvals": false,
   "fullC0C6Accepted": false,
-  "baseline": "53612bef2c6b68ef7fd9fc8a2cd2d55e917cea66"
+  "baseline": "53612bef2c6b68ef7fd9fc8a2cd2d55e917cea66",
+  "sourceCommit": "c6e7f5a953f3eba0dab4e070cdd64988631589c1"
 }

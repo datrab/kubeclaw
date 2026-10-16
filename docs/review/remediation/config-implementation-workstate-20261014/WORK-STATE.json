@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T17:03:12.569986+00:00",
+  "updatedAt": "2026-10-16T17:05:54.178293+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "CONFIG_WORKER_CORE_V3_SOURCE_VERIFIED_MATRIX_AND_NATIVE_OPEN",
+  "status": "CONFIG_WORKER_V3_AND_QUALITY_GUARDS_VERIFIED_PROVIDER_V2_MATRIX_NATIVE_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -499,7 +499,11 @@
   "activeWriter": {
     "owner": "interactive Raven continuation",
     "lockPid": 2199443,
-    "state": "held through source evidence commit/push; release before yield/end"
+    "state": "finishing evidence/remote verification; shared lock will be released before turn end",
+    "productiveSourceCheckpoints": [
+      "980374793",
+      "c6e7f5a95"
+    ]
   },
   "parentStartupIntegration20261014": {
     "at": "2026-10-14T20:24:52.629592+00:00",
@@ -22837,7 +22841,9 @@
     "deployment": false,
     "mainMerge": false,
     "evidenceDirectory": "docs/review/remediation/config-worker-core-v3-20261016",
-    "sourceCommit": "980374793af8b8fdfc3a8eac218382533e46daa3"
+    "sourceCommit": "980374793af8b8fdfc3a8eac218382533e46daa3",
+    "remoteVerified": true,
+    "remoteEvidenceCommit": "53612bef2c6b68ef7fd9fc8a2cd2d55e917cea66"
   },
   "qualityInputGuards20261016": {
     "at": "2026-10-16T17:03:12.569986+00:00",
@@ -22854,7 +22860,8 @@
       "originalProviderScripts": "both passed unchanged assertions",
       "independentSourceReview": "clean; exact source manifest, reviewer could not execute shell/tests",
       "EOFAndCloseCancellationRegression": "two tests fail on exact pre-fix source; pass with final cancellation fences",
-      "supportedBusterRoleReadback": "1/1 on initial guard snapshot; full inert archive restore explicitly excluded after retained ENOSPC; NOT full suite/native PASS"
+      "supportedBusterRoleReadback": "1/1 on initial guard snapshot; full inert archive restore explicitly excluded after retained ENOSPC; NOT full suite/native PASS",
+      "exactFinalRoleBundle": "buster;14125 indexed files/11 packages/24 plugins; both changed guard modules match final reviewed source and emitted digests"
     },
     "qualifiedBoundary": "Coverage actual cap before read/buffer; cancellation during descriptor read and parsing/aggregation. Size tar/gzip exact consumed-byte hash, file-mode final descriptor pass and actual baseline snapshot digest; preserves valid descriptor path-replacement behavior. Cancellation checked after awaited reads and before output. No new authority, graph changes, provider, policy-root, byte-limit author or native-positive claim.",
     "remainingQualityWork": [
@@ -22866,6 +22873,8 @@
     "deployment": false,
     "paidEvals": false,
     "fullC0C6Accepted": false,
+    "baseline": "53612bef2c6b68ef7fd9fc8a2cd2d55e917cea66",
+    "sourceCommit": "c6e7f5a953f3eba0dab4e070cdd64988631589c1",
     "evidence": "docs/review/remediation/config-quality-input-guards-20261016"
   },
   "exactOriginalReconciliation20261016": {
@@ -22878,5 +22887,14 @@
     "integrityFailures": 0,
     "missingLocatorObservations": 45,
     "runtimeAcceptanceInferred": false
+  },
+  "automationRepair20261016": {
+    "existingJobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
+    "sameJobPayloadUpdated": true,
+    "historicalParentDispatchForbidden": true,
+    "directWorkerAfterTerminalParentAndExclusiveLock": true,
+    "quietUnchangedBlockerChecks": true,
+    "executionVerifiedAfterPayloadRepair": false,
+    "observation": "Job API still already-running while current parent active; cron session stop reports no-active-run, active cron inventory empty. Could be pending canonical commit; exact job/runtime owner not proven. No raw ownership edit, reset/delete/recreation, shared process kill or Gateway restart performed."
   }
 }

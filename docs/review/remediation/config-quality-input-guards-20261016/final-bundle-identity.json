@@ -1,0 +1,24 @@
+{
+  "observedAt": "2026-10-16T17:05:54.170920+00:00",
+  "sourceCommit": "c6e7f5a953f3eba0dab4e070cdd64988631589c1",
+  "fixtureBuildTimestamp": "2026-10-16T17:00:00Z",
+  "role": "buster",
+  "indexedFiles": 14125,
+  "packages": 11,
+  "plugins": 24,
+  "verifiedGuardSources": [
+    {
+      "package": "coverage-budget",
+      "path": "skills/plugins/coverage-budget/src/provider.js",
+      "digest": "sha256:1c5dd88d589198cedb6d56e4faae55655a1f91eb2265852ab03ca8580e5df84d",
+      "sourceBytesIdentical": true
+    },
+    {
+      "package": "size-budget",
+      "path": "skills/plugins/size-budget/src/provider.js",
+      "digest": "sha256:268fa724ad8c144a7fb396a6469ec79df0908395d81880e017a2575a7f351712",
+      "sourceBytesIdentical": true
+    }
+  ],
+  "qualification": "Actual final role bundle construction/index/source-byte equality, not native launch or whole acceptance."
+}

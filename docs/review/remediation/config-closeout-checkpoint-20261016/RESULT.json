@@ -29,12 +29,31 @@
   },
   "taskComplete": false,
   "remaining": [
-    "WorkerCore defined v3 receiving/immutable-original bridge into actual named callers, without denied v10 candidate promotion",
-    "remaining original matrix/source reconciliation, not a new invented global setting count",
-    "full native/original-reader independent acceptance"
+    "Quality provider-configuration.v2/selectedPolicy task transport and actual resolver/runner/coordinated original/delivery binding remain defined source implementation work. Do not substitute a private root or promote still-denied v10.",
+    "Semantic reconciliation of historical target locators/current verified implementations and complete original applicability/effect/history cases, beyond hash preservation.",
+    "Full isolated native/archive and fresh integrated independent C6 acceptance; infrastructure owner Raven, suitable host requested."
   ],
   "requestedUserInput": "isolated supported Linux test system/Node and access route; no secrets in channel",
   "retainedUnrelatedWipPreserved": true,
   "deployment": false,
-  "mainMerge": false
+  "mainMerge": false,
+  "workerCoreV3Current": {
+    "sourceCommit": "980374793",
+    "remoteVerified": true,
+    "evidence": "docs/review/remediation/config-worker-core-v3-20261016"
+  },
+  "qualityInputGuardsCurrent": {
+    "sourceCommit": "c6e7f5a953f3eba0dab4e070cdd64988631589c1",
+    "evidence": "docs/review/remediation/config-quality-input-guards-20261016",
+    "sourceReview": "clean",
+    "fullC4Accepted": false
+  },
+  "originalIdentityPreservationCurrent": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "integrityFailures": 0,
+    "evidence": "docs/review/remediation/config-final-reconciliation-20261016",
+    "runtimeAcceptanceInferred": false
+  }
 }
