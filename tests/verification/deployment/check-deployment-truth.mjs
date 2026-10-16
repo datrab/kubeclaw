@@ -21,7 +21,7 @@ const exists = (relativePath) =>
 
 const chart = read('charts/kubeclaw/templates/deployment.yaml');
 const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
-const swarmConfig = read('charts/kubeclaw/files/config/swarm.config.json');
+const pipelineConfig = read('config/pipeline.config.json');
 const prismWorkloads = read('charts/prism/templates/workloads.yaml');
 const prismJobs = read('charts/prism/templates/jobs.yaml');
 const prismValues = read('charts/prism/values.yaml');
@@ -290,13 +290,13 @@ assert.match(
 );
 assert.match(
   prismControlDockerfile,
-  /COPY --from=build \/build\/tests\/verification\/live \/app\/prism\/tests\/verification\/live/,
+  /COPY --from=build \/build\/tests\/verification\/live \/opt\/kubeclaw-prism-live/,
   'the Prism control image must package its live verification assets',
 );
 assert.match(
   prismStudioDockerfile,
-  /COPY --from=build \/build\/skills\/prism\/server \/app\/prism\/skills\/prism\/server/,
-  'the Prism Studio image must package every imported server module',
+  /node scripts\/build-prism-image-bundle\.mjs prism-studio \/image "\$KUBECLAW_BUILD_REVISION"[\s\S]*COPY --from=build \/image\/role \/app\/prism[\s\S]*COPY --from=build \/image\/generation\/system \/etc\/kubeclaw\/config[\s\S]*COPY --from=build \/image\/delivery \/run\/pipeline-delivery[\s\S]*skills\/packages\/prism-engine\/server\/studio\.ts/,
+  'the Prism Studio image must package the role closure and authenticated configuration used by its actual server',
 );
 assert.match(
   prismStudioDockerfile,
@@ -596,9 +596,9 @@ assert.match(
   'the startup migration must remove retired Discord groupAllowFrom before Doctor validation',
 );
 assert.doesNotMatch(
-  swarmConfig,
+  pipelineConfig,
   /discord_webhook_url/,
-  'the persistent swarm config source must not contain a runtime webhook placeholder',
+  'the sole central pipeline author must not contain a runtime webhook placeholder',
 );
 assert.match(
   chart,
