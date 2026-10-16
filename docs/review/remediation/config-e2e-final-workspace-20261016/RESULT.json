@@ -1,0 +1,60 @@
+{
+  "startedAt": "2026-10-16T22:38:14.722737+00:00",
+  "wrapperPid": 2580123,
+  "command": [
+    "node",
+    "--test",
+    "--test-timeout=90000",
+    "tests/verification/e2e/real-run-workspace.test.mjs"
+  ],
+  "sourceCommit": "79b80a1d13477ebd2cf149773e3d24ead4acb839",
+  "sourceHashes": {
+    "tests/verification/e2e/real-run-workspace.mjs": "555faf4ce62db9731f3a2813cff031773c7fa2f3ddcf42f6de913202a601490d",
+    "tests/verification/e2e/real-run-workspace.test.mjs": "eb9245a823afd3800cb8a922fd034aa4286ac290cd17ae91f075a243759a552c"
+  },
+  "reason": "Final whole original command after corrected conflict-origin source; previous full predecessor timed out, no final-source whole exit was recorded. Same original90000ms per-case deadline.",
+  "independentAcceptance": false,
+  "nativeAcceptance": false,
+  "fullC0C6Complete": false,
+  "writerLock": "SAME nonblocking lock acquired for closeout, released at exit",
+  "childPid": 2580125,
+  "endedAt": "2026-10-16T22:53:06.978073+00:00",
+  "seconds": 892.2524090223014,
+  "exitCode": 0,
+  "at": "2026-10-16T22:58:43.811154+00:00",
+  "status": "FINAL_ORIGINAL_WORKSPACE_61_OF_61_PASS_NOT_FULL_ACCEPTANCE",
+  "completionSummary": {
+    "tests": 61,
+    "suites": 0,
+    "pass": 61,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "sourceHashesRechecked": true,
+  "logSha256": "a41b3fa5f30f82ab614c970def4daa445f49720e9d94dde6235778c78f0c8deb",
+  "evidence": "docs/review/remediation/config-e2e-final-workspace-20261016",
+  "qualification": "Whole original final-source workspace command completed exit0 at unchanged90000ms per-case deadline. Author execution, not independent review/native/full2409/6845 semantic acceptance. No tests replayed for evidence closeout.",
+  "parentStatus": "done",
+  "CONFIGSubagents": 0,
+  "productiveRepositoryProcesses": [],
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "originalResultsChanged": false,
+    "fullAcceptance": "OPEN"
+  },
+  "remaining": [
+    "Genuine QB-R02 original producer/source/build/baseline association plus inputStore-owned reservation/accounting/sealed snapshot/publication",
+    "Authenticated coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving, no denied-v10 promotion",
+    "Fresh independent complete-source/original/history/native/archive/full C0-C6 acceptance"
+  ],
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000 host with delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL; no trust/UID/kernel spoof or skipped acceptance.",
+  "noHistoricalFollowup": true
+}

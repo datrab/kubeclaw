@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T22:34:41.673548+00:00",
+  "updatedAt": "2026-10-16T22:58:43.811154+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_E2E_CLONE_RUNTIME_FIXED_TARGETED_PASS_FULL_COMMAND_OPEN",
+  "status": "FINAL_ORIGINAL_WORKSPACE_61_OF_61_PASS_NOT_FULL_ACCEPTANCE",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Genuine authenticated QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed-byte snapshot/publication and coordinated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. Preserve BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Final-source whole original workspace command and fresh independent complete-source/original/history/native/fullC0-C6 gates remain OPEN. Future long original command needs durable owned wrapper/exit capture outside600s transport lifetime; do not replay unchanged tests as new progress.",
+  "nextAction": "Complete genuine QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and authenticated sole-root/all-profile/schema/file-set/boot+Nova receiving. Preserve BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Final original workspace command61/61 exit0 is closed; independent complete-source/original/history/native/archive/full C0-C6 remain OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -24456,5 +24456,65 @@
       "tests/verification/e2e/real-run-workspace.mjs": "555faf4ce62db9731f3a2813cff031773c7fa2f3ddcf42f6de913202a601490d",
       "tests/verification/e2e/real-run-workspace.test.mjs": "eb9245a823afd3800cb8a922fd034aa4286ac290cd17ae91f075a243759a552c"
     }
+  },
+  "e2eFinalWorkspace20261016": {
+    "startedAt": "2026-10-16T22:38:14.722737+00:00",
+    "wrapperPid": 2580123,
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=90000",
+      "tests/verification/e2e/real-run-workspace.test.mjs"
+    ],
+    "sourceCommit": "79b80a1d13477ebd2cf149773e3d24ead4acb839",
+    "sourceHashes": {
+      "tests/verification/e2e/real-run-workspace.mjs": "555faf4ce62db9731f3a2813cff031773c7fa2f3ddcf42f6de913202a601490d",
+      "tests/verification/e2e/real-run-workspace.test.mjs": "eb9245a823afd3800cb8a922fd034aa4286ac290cd17ae91f075a243759a552c"
+    },
+    "reason": "Final whole original command after corrected conflict-origin source; previous full predecessor timed out, no final-source whole exit was recorded. Same original90000ms per-case deadline.",
+    "independentAcceptance": false,
+    "nativeAcceptance": false,
+    "fullC0C6Complete": false,
+    "writerLock": "SAME nonblocking lock acquired for closeout, released at exit",
+    "childPid": 2580125,
+    "endedAt": "2026-10-16T22:53:06.978073+00:00",
+    "seconds": 892.2524090223014,
+    "exitCode": 0,
+    "at": "2026-10-16T22:58:43.811154+00:00",
+    "status": "FINAL_ORIGINAL_WORKSPACE_61_OF_61_PASS_NOT_FULL_ACCEPTANCE",
+    "completionSummary": {
+      "tests": 61,
+      "suites": 0,
+      "pass": 61,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "sourceHashesRechecked": true,
+    "logSha256": "a41b3fa5f30f82ab614c970def4daa445f49720e9d94dde6235778c78f0c8deb",
+    "evidence": "docs/review/remediation/config-e2e-final-workspace-20261016",
+    "qualification": "Whole original final-source workspace command completed exit0 at unchanged90000ms per-case deadline. Author execution, not independent review/native/full2409/6845 semantic acceptance. No tests replayed for evidence closeout.",
+    "parentStatus": "done",
+    "CONFIGSubagents": 0,
+    "productiveRepositoryProcesses": [],
+    "requiredRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "originalResultsChanged": false,
+      "fullAcceptance": "OPEN"
+    },
+    "remaining": [
+      "Genuine QB-R02 original producer/source/build/baseline association plus inputStore-owned reservation/accounting/sealed snapshot/publication",
+      "Authenticated coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving, no denied-v10 promotion",
+      "Fresh independent complete-source/original/history/native/archive/full C0-C6 acceptance"
+    ],
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "externalOwner": "Raven",
+    "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000 host with delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL; no trust/UID/kernel spoof or skipped acceptance.",
+    "noHistoricalFollowup": true
   }
 }
