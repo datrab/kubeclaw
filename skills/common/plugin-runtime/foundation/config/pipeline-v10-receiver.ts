@@ -454,7 +454,9 @@ export function inspectPipelineV10QualityRegistryConfiguration(output: Uint8Arra
     && pkg.provenance.package.packageVersion === binding.packageVersion
     && pkg.provenance.package.contentDigest === binding.packageContentDigest, 'QUALITY_REGISTRY_PACKAGE');
   const declaration = manifest.testProviders.find((row: any) => row.contractId === document.contractId);
+  requireBinding(registry.apiVersion === manifest.apiVersion, 'QUALITY_REGISTRY_API_VERSION');
   requireBinding(entry && isDeepStrictEqual(entry.declaration, declaration)
+    && entry.provenance.schemaVersion === 'registration-provenance.v2'
     && entry.provenance.surface === 'test_provider'
     && entry.provenance.registrationId === declaration.id
     && isDeepStrictEqual(entry.provenance.package, pkg!.provenance), 'QUALITY_REGISTRY_PROVENANCE');

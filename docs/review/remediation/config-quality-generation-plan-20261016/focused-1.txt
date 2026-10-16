@@ -1,0 +1,44 @@
+✔ Quality same-file-set policies reach real registry resolver frozen; old v1 task digest/profile substitutions reject (1412.05107ms)
+✔ Quality rejects invalid unselected original profiles without accepting a partial author (745.387508ms)
+✖ Quality complete physical A/B generation reaches Nova plan and retained A without current B refill (376.748381ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3360.363915
+
+✖ failing tests:
+
+test at tests/verification/reliability/pipeline-v10-input-set.test.mts:777:1
+✖ Quality complete physical A/B generation reaches Nova plan and retained A without current B refill (376.748381ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TEST_PLAN_PROVIDER_CONFIG_INVALID/. Input:
+  
+  "TestPlanResolutionError: TEST_PLAN_CONFIGURATION_INVALID:size-budget/web-assets:Invalid pipeline test-gate providerConfiguration: / must have required property 'schemaDigest'; / must NOT have additional properties; / must NOT have additional properties; /schemaVersion must be equal to constant; /contractId must be equal to constant; /values must NOT have additional properties; /selectedPolicy/processing must have required property 'minimumLinePercent'; /selectedPolicy/processing must have required property 'combine'; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/declarations/evidenceDefaults/onPass/1 must be equal to one of the allowed values; /selectedPolicy/declarations/evidenceDefaults/onFail/1 must be equal to one of the allowed values; /values must NOT have additional properties; / must match exactly one schema in oneOf; / must match exactly one schema in oneOf"
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-v10-input-set.test.mts:817:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TestPlanResolutionError: TEST_PLAN_CONFIGURATION_INVALID:size-budget/web-assets:Invalid pipeline test-gate providerConfiguration: / must have required property 'schemaDigest'; / must NOT have additional properties; / must NOT have additional properties; /schemaVersion must be equal to constant; /contractId must be equal to constant; /values must NOT have additional properties; /selectedPolicy/processing must have required property 'minimumLinePercent'; /selectedPolicy/processing must have required property 'combine'; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/processing must NOT have additional properties; /selectedPolicy/declarations/evidenceDefaults/onPass/1 must be equal to one of the allowed values; /selectedPolicy/declarations/evidenceDefaults/onFail/1 must be equal to one of the allowed values; /values must NOT have additional properties; / must match exactly one schema in oneOf; / must match exactly one schema in oneOf
+        at fail (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/test-gates/resolver.ts:65:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/test-gates/resolver.ts:577:9
+        at Array.map (<anonymous>)
+        at expandNodes (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/test-gates/resolver.ts:559:30)
+        at resolveTestPlan (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/test-gates/resolver.ts:745:32)
+        at resolve (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-v10-input-set.test.mts:805:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-v10-input-set.test.mts:817:12)
+        at Test.runInAsyncScope (node:async_hooks:227:14),
+    expected: /TEST_PLAN_PROVIDER_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -1,3 +1,5 @@
+import { resolveTestPlan } from '../../../skills/nova/core/test-gates/resolver.ts';
+import { validatePipelineTestGateContract } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
 import { QUALITY_TASK_SCHEMA_DIGEST, remotePlanDigest } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
 import { inspectPipelineV10QualityRegistryConfiguration } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts';
 import assert from 'node:assert/strict';
@@ -224,7 +226,7 @@ function providerCandidates(f:ReturnType<typeof capture>){
   const ownerRaw=f.capture.read(`config/${source.ownerPath}`),owner=JSON.parse(ownerRaw.toString()),profile=owner.profiles[t.profileId];
   const selected=t.packageId==='kubeclaw.security-providers'?profile.registrations[declaration.id]:profile;
   value.selectedPolicy.processing=selected.processing;value.selectedPolicy.declarations=selected.declarations;
-  binding.rootDigest='sha256:'+replacements[0]!.sha256;binding.ownerDigest='sha256:'+createHash('sha256').update(ownerRaw).digest('hex');
+  binding.rootDigest='sha256:'+createHash('sha256').update(f.capture.read('config/pipeline.config.json')).digest('hex');binding.ownerDigest='sha256:'+createHash('sha256').update(ownerRaw).digest('hex');
   binding.ownerSchemaDigest='sha256:'+createHash('sha256').update(f.capture.read('schemas/'+source.provenance.schemaPath.split('/schemas/')[1])).digest('hex');
   binding.packageVersion=source.manifest.packageVersion;binding.packageContentDigest=packages[t.packageId].contentDigest;
   const task='sha256:'+createHash('sha256').update(f.capture.read(path.posix.dirname(source.manifestPath)+'/'+declaration.configSchema)).digest('hex');
@@ -768,4 +770,57 @@ test('Quality rejects invalid unselected original profiles without accepting a p
   input.close();fs.writeFileSync(file,original);
   const restored=capture(root,replacements);restored.capture.assertCurrent();restored.capture.close();
  }
+});
+
+// Full physical generation -> original registry -> actual Nova plan; still no
+// installed caller/issuer/native admission. Never use task values as policies.
+test('Quality complete physical A/B generation reaches Nova plan and retained A without current B refill',t=>{
+ const root=tree(t),file=path.join(root,'config/pipeline.config.json');
+ const suitesPath=path.join(repository,'contracts/pipeline-test-gate/v1/suites');
+ const suites=fs.readdirSync(suitesPath).filter(n=>n.endsWith('.json')).map(n=>read(path.join(suitesPath,n)));
+ const limits={cpuMillis:900000,memoryBytes:4294967296,logBytes:16777216,artifactBytes:268435456,artifactFiles:256,processes:64};
+ // The complete captured generation does not contain the task's unchanged
+ // direct-command/JUnit helper packages. Supply genuine package fixtures in a
+ // distinct registry root; do not pretend these are captured generation bytes.
+ const helpers=path.join(root,'task-helper-packages');fs.mkdirSync(helpers);
+ for(const name of ['direct-command','junit-report-adapter'])fs.cpSync(path.join(repository,'skills/buster/plugins',name),path.join(helpers,name),{recursive:true});
+ const retained=new Map<string,unknown>();
+ for(const profileId of ['A','B']){
+  const document=JSON.parse(rootBytes.toString());
+  for(const selection of document.pluginSelections)if(['kubeclaw.size-budget','kubeclaw.coverage-budget'].includes(selection.packageId))selection.profileId=profileId;
+  const bytes=Buffer.from(JSON.stringify(document,null,2)+'\n');fs.writeFileSync(file,bytes);
+  const f=capture(root,[row('config/pipeline.config.json',bytes),replacements[1]!]);
+  try{
+   const sourceRoot=path.join(root,'source-current/skills/buster/plugins');
+   const registry=buildRegistry(discoverPackages({installationRoots:[sourceRoot,helpers],trustPolicy:{trustedBuiltinRoots:[sourceRoot,helpers],allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'quality-physical-generation-plan'}}));
+   for(const value of providerCandidates(f).filter((v:any)=>['kubeclaw.size-budget@1','kubeclaw.coverage-budget@1'].includes(v.contractId))){
+    const inspected=inspectPipelineV10QualityRegistryConfiguration(Buffer.from(JSON.stringify(value)),registry,f.capture);
+    assert.equal(inspected.activationAllowed,false);
+    const configuration=inspected.configuration;
+    assert.equal(configuration.schemaVersion,'provider-configuration.v2');
+    if(configuration.schemaVersion!=='provider-configuration.v2')throw new Error('QUALITY_V2_REQUIRED');
+    const coverage=value.contractId==='kubeclaw.coverage-budget@1';
+    const declaration=read(path.join(repository,'contracts/pipeline-test-gate/v1/examples',coverage?'unit-suite-with-coverage.json':'size-budget-tar.json'));
+    const taskNode=coverage?declaration.suites.unit.add.coverage:declaration.suites['size-budget'].add['web-assets'];taskNode.config={};taskNode.mode='blocking';
+    const resolve=()=>resolveTestPlan({planId:'plan:physical-quality',runId:'run:physical-quality',project:'quality',scope:{moduleId:'module',gateId:null},createdAt:'2026-10-16T18:00:00Z',declaration,suiteTemplates:suites,registry,facts:{changedPaths:[],moduleType:null,pipelineStage:null},selectedProviderPolicies:new Map([[value.contractId,configuration.selectedPolicy]]),policy:{defaultTimeoutMs:30000,maximumTimeoutMs:900000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:3,maximumMatrixSize:16,maximumNodes:100,defaultConcurrencyLimit:4,maximumConcurrencyLimits:{unit:8,'size-budget':8}}});
+    const plan=resolve(),node=plan.nodes.find(n=>n.provider.contractId===value.contractId)!;
+    assert.deepEqual(node.configuration,configuration);assert.deepEqual(node.evidence,configuration.selectedPolicy.declarations.evidenceDefaults);
+    assert.equal(configuration.selectedPolicy.binding.profileId,profileId);
+    if(profileId==='A')retained.set(value.contractId,JSON.parse(JSON.stringify(plan)));
+    else{
+     const original=retained.get(value.contractId) as typeof plan;validatePipelineTestGateContract('resolvedTestPlan',original);
+     const old=original.nodes.find(n=>n.provider.contractId===value.contractId)!;
+     assert.notDeepEqual(old.configuration,node.configuration);
+     assert.equal((old.configuration as typeof configuration).selectedPolicy.binding.profileId,'A');
+    }
+    const [key,selectedValue]=Object.entries(configuration.selectedPolicy.processing)[0]!;taskNode.config={[key]:selectedValue};
+    assert.throws(resolve,/TEST_PLAN_CONFIGURATION_INVALID/);
+    assert.throws(()=>inspectPipelineV10QualityRegistryConfiguration(Buffer.from(JSON.stringify(value)),{...registry,apiVersion:'wrong'} as any,f.capture),/QUALITY_REGISTRY_API_VERSION/);
+    const entry=registry.testProviderContracts.get(value.contractId)!;
+    const changed={...entry,provenance:{...entry.provenance,schemaVersion:'registration-provenance.v1'}};
+    assert.throws(()=>inspectPipelineV10QualityRegistryConfiguration(Buffer.from(JSON.stringify(value)),{...registry,testProviderContracts:new Map([...registry.testProviderContracts].map(([id,e])=>[id,id===value.contractId?changed:e]))} as any,f.capture),/QUALITY_REGISTRY_PROVENANCE/);
+   }
+  }finally{f.capture.close();}
+ }
+ assert.equal(retained.size,2);
 });

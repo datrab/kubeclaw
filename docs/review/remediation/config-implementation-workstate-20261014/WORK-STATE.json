@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T18:20:47.294351+00:00",
+  "updatedAt": "2026-10-16T18:26:37.645594+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "CONFIG_QUALITY_GENERATION_REGISTRY_BRIDGE_VERIFIED_BOOT_INPUTSTORE_REVIEW_OPEN",
+  "status": "CONFIG_QUALITY_PHYSICAL_GENERATION_NOVA_PLAN_VERIFIED_BOOT_INPUTSTORE_REVIEW_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Review new Quality generation-to-registry bridge independently on supported original reviewer surface, then complete coordinated authenticated sole-root boot/delivery and actual Nova selectedProviderPolicies receiving; QB-R02 authentic original inputStore sealed bytes/producer/build/source/baseline receipts and original accounting/publication fences remain OPEN. No private root, task/ENV/CLI policy or denied v10 activation. Full 2409/6845/50 and native/archive gates remain mandatory.",
+  "nextAction": "Independent complete-source review of Quality generation/registry/plan bridge; authenticated sole-root productive boot/delivery and actual Nova selectedProviderPolicies receiving; QB-R02 original sealed inputStore producer/build/source/baseline receipts and accounting/publication fences. No v10 activation/private root/task overrides. Full2409/6845/50 and independent/native/archive gates remain OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -23069,5 +23069,17 @@
       "buster"
     ],
     "deliveredImportsVerified": true
+  },
+  "qualityGenerationPlan20261016": {
+    "at": "2026-10-16T18:26:37.645594+00:00",
+    "evidence": "docs/review/remediation/config-quality-generation-plan-20261016",
+    "fullGenerationTestsPassed": 49,
+    "fullGenerationTestsTotal": 49,
+    "sourceTypecheckPassed": true,
+    "independentReview": "OPEN_NO_NEW_RESULT",
+    "productiveRootSuppliesSelection": false,
+    "activationAllowed": false,
+    "originalCasesAccepted": 0,
+    "fullC0C6Complete": false
   }
 }
