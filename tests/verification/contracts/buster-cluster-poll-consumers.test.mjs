@@ -3,7 +3,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { readTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
+import { readTestPipeline, canonicalPipelineEntry, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
 import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
 import { request, localApi } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
@@ -12,7 +13,7 @@ for (const capability of ['kubernetes.fixture', 'kubernetes.exposure']) {
   for (const poll of [50, 200]) test(`actual ${capability} polling cadence ${poll}`, { timeout: 10000 }, async t => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-poll-'));
     t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-    const settings = readTestBundle(canonicalSwarmEntry)['buster-engine'].settings;
+    const settings = structuredClone(captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline())).components['buster-engine'].settings);
     const policy = settings.clusterInvokers; policy.shared.kubectlExecutable = process.execPath;
     policy.kubernetesFixture.registryRepositoryPrefixes = ['app'];
     policy.kubernetesFixture.pollIntervalMs = poll; policy.tailscaleExposure.pollIntervalMs = poll;
