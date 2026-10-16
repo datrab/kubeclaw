@@ -1,0 +1,25 @@
+✔ explicit reference resolves against author, pure preparation performs no policy I/O, all fields required and snapshots owned (26.285435ms)
+✔ real stage/observer startup A/B leases and retained A resume survive missing current policy B (2438.521176ms)
+✔ selected real mutation TTL/renewal and required journal deadline replace literals (298.618008ms)
+✔ selected audit UTF8 exact/over boundary and effect journal inline limit remain separate (61.579251ms)
+✔ actual resource provisional-lock lifetime is selected independently of mutation TTL (54.317105ms)
+✔ active recovery receiver uses selected metadata capacity and restores positive behavior (88.737779ms)
+✔ selected compiler preserves original graphs for absent, mixed and all review modules (420.755544ms)
+✔ A/B selection reaches real graph; retained original survives invalid current owner and rejects partial/unknown captures (607.460348ms)
+✔ real runner captures the explicit compiler discriminator and the exact frozen selected policy without live owner I/O (12915.452455ms)
+✔ actual Core grade receiving and actual target parser activation remain original after current owners and target change (2294.633252ms)
+✔ every selected grade preserves original values; runtime-owned tokenizer/output never become review authors (100.149932ms)
+✔ A/B quotas have one complete author, original capture survives current mutation and target owner drives output/tokenizer (6.62016ms)
+✔ retained activation restores original targets before timing projection; current target is never merged (3.243833ms)
+✔ sole selected review owner resolves relative to canonical Core author, captures A/B and rejects malformed siblings/duplicate and partial authors (21.096551ms)
+✔ actual Core executor receives selected profiles and original snapshot A resumes with both current authors deleted (1678.814219ms)
+✔ central standard profiles preserve every original policy value and legacy resolver behavior (0.889053ms)
+✔ normal image author layout resolves the same review-owned values without repository paths (4.696931ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15462.624121

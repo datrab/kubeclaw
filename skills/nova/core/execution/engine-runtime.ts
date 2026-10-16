@@ -1,3 +1,4 @@
+import type {ReviewRuntimeBinding} from './review-runtime-targets.ts';
 import { selectedStageConfiguration } from './stage-configuration.ts';
 import { captureCoreRuntimePolicy, loadCoreRuntimePolicy, type CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import { resolveRetainedCoreWait } from '../state/wait-projection-reader.ts';
@@ -27,6 +28,7 @@ export interface RuntimeConfigurationInspection {
   readonly corePolicy: CoreRuntimePolicy;
   readonly adapterConfigurations: PlatformConfig['adapters'];
   readonly observerConfigurations: PlatformConfig['observers'];
+  readonly reviewRuntimeBinding?:ReviewRuntimeBinding;
   readonly configuration: Readonly<Record<string, unknown>>;
   readonly snapshot: ReturnType<typeof buildRegistry>; readonly granted: ReturnType<typeof resolveCapabilityGrants>;
 }
@@ -40,9 +42,13 @@ export interface PreparedRuntime extends RuntimeConfigurationInspection {
  * NOT original-run discovery, a v10 source receipt, or permission to activate.
  * In particular, it does not authenticate canonical AUTHOR/task/R/caller inputs.
  */
-export function inspectRuntimeConfiguration(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>): RuntimeConfigurationInspection {
+export function inspectRuntimeConfiguration(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>, retainedReviewBinding?:ReviewRuntimeBinding): RuntimeConfigurationInspection {
   const corePolicy = retainedCorePolicy === undefined ? loadCoreRuntimePolicy(platform.corePolicySelection) : captureCoreRuntimePolicy(retainedCorePolicy);
-  const adapterConfigurations = selectedAdapterConfigurations(platform.adapters, corePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections);
+  const adapterConfigurations = selectedAdapterConfigurations(platform.adapters, corePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections, retainedReviewBinding);
+  if(retainedReviewBinding!==undefined) {
+    if(corePolicy.reviewPolicyCapture?.settings.schemaVersion!=='review-owned-decision-profiles.v2' || platform.providers['runtime.dispatch']!==retainedReviewBinding.provider || !platform.activeAdapters.includes(retainedReviewBinding.provider))throw new Error('RECOVERY_REVIEW_TARGET_PROVIDER_MISMATCH');
+
+  }
   const observerConfigurations = selectedObserverConfigurations(platform.observers, corePolicy);
   validateContractValue('pipelineDefinition', definition);
   const packages = discoverPackages({ installationRoots: platform.installationRoots, trustPolicy: {
@@ -52,14 +58,16 @@ export function inspectRuntimeConfiguration(platform: PlatformConfig, definition
   const snapshot = buildRegistry(packages); const enabled = enabledRegistrations(platform, definition, snapshot);
   const policy: CapabilityPolicy = { enabledRegistrations: enabled, grants: nestedMap(platform.grants), providers: new Map(Object.entries(platform.providers)) };
   const granted = resolveCapabilityGrants(snapshot, policy);
+  const provider=platform.providers['runtime.dispatch'];
+  const reviewRuntimeBinding=provider && platform.activeAdapters.includes(provider) ? {provider,configuration:adapterConfigurations[provider]!} : undefined;
   validateRuntimeRegistrationConfiguration(snapshot, granted.enabledRegistrations, {
-    stages: definition.stages.map((stage) => ({ type: stage.type, config: selectedStageConfiguration(stage.type, stage.config, corePolicy.humanApproval.defaultTimeoutMinutes, corePolicy.prismDesignBudgets, corePolicy.reviewPolicyCapture) })), observers: objectMap(observerConfigurations), adapters: objectMap(adapterConfigurations),
+    stages: definition.stages.map((stage) => ({ type: stage.type, config: selectedStageConfiguration(stage.type, stage.config, corePolicy.humanApproval.defaultTimeoutMinutes, corePolicy.prismDesignBudgets, corePolicy.reviewPolicyCapture, reviewRuntimeBinding) })), observers: objectMap(observerConfigurations), adapters: objectMap(adapterConfigurations),
   });
-  return { corePolicy, adapterConfigurations, observerConfigurations, configuration: { corePolicy, providers: platform.providers, grants: platform.grants, adapters: adapterConfigurations, activeAdapters: platform.activeAdapters, observers: observerConfigurations, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted };
+  return { reviewRuntimeBinding, corePolicy, adapterConfigurations, observerConfigurations, configuration: { corePolicy, providers: platform.providers, grants: platform.grants, adapters: adapterConfigurations, activeAdapters: platform.activeAdapters, observers: observerConfigurations, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted };
 }
 
-export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>): Promise<PreparedRuntime> {
-  const inspected = inspectRuntimeConfiguration(platform, definition, retainedCorePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections);
+export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>, retainedReviewBinding?:ReviewRuntimeBinding): Promise<PreparedRuntime> {
+  const inspected = inspectRuntimeConfiguration(platform, definition, retainedCorePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections, retainedReviewBinding);
   return { ...inspected, activated: await activateRegistry(inspected.snapshot, new Set(inspected.granted.grants.keys()), platform.isolation, inspected.corePolicy.isolationSession) };
 }
 
@@ -129,9 +137,13 @@ export function serializedObserverDrainer(platform: PlatformConfig, runRoot: str
 /** Central policy is projected before registry schema validation and retained in
  * the run configuration. Raw Platform adapter data is installation/target data;
  * equal-valued duplicate operator policies are still rejected. */
-export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters'], policy: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>): PlatformConfig['adapters'] {
+export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters'], policy: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>, retainedReviewBinding?:ReviewRuntimeBinding): PlatformConfig['adapters'] {
   const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);
   const openClawId = 'kubeclaw.runtime-dispatch:openclaw';
+  if(retainedReviewBinding!==undefined) {
+    if(retainedReviewBinding.provider!==openClawId || policy.reviewPolicyCapture?.settings.schemaVersion!=='review-owned-decision-profiles.v2')throw new Error('RECOVERY_REVIEW_TARGET_BINDING_INVALID');
+    selected[openClawId]={targets:structuredClone(retainedReviewBinding.configuration.targets)};
+  }
   if (retainedTimingSelections !== undefined && Object.hasOwn(selected,openClawId)) {
     const raw = selected[openClawId]!;
     if (!raw.targets || typeof raw.targets !== 'object' || Array.isArray(raw.targets)) throw new Error('RECOVERY_TARGET_TIMING_SELECTION_MISSING');

@@ -1,0 +1,11 @@
+✔ every selected grade preserves original values; runtime-owned tokenizer/output never become review authors (47.728535ms)
+✔ A/B quotas have one complete author, original capture survives current mutation and target owner drives output/tokenizer (4.444464ms)
+✔ retained activation restores original targets before timing projection; current target is never merged (2.326089ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 725.751664

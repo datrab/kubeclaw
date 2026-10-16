@@ -1,3 +1,4 @@
+import type {ReviewRuntimeBinding} from './review-runtime-targets.ts';
 import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import { selectedStageConfiguration } from './stage-configuration.ts';
 import crypto from 'node:crypto';
@@ -24,6 +25,7 @@ export interface PipelineRunResult {
 export interface PipelineRunnerOptions {
   readonly stageMemoryBytes: number;
   readonly approvalTimeoutMinutes?: number;
+  readonly reviewRuntimeBinding?:ReviewRuntimeBinding;
   readonly reviewPolicyCapture?: CoreRuntimePolicy['reviewPolicyCapture'];
   readonly prismDesignBudgets?: CoreRuntimePolicy['prismDesignBudgets'];
   readonly runtimeDispatchProfile?: RuntimeDispatchProfile | undefined;
@@ -43,11 +45,11 @@ function deepFreeze<T>(value: T): T {
   return Object.freeze(value);
 }
 
-export function validatePipelineDefinitionAgainstRegistry(definition: PipelineDefinition, registry: GrantedRegistry, approvalTimeoutMinutes?: number, prismDesignBudgets?: CoreRuntimePolicy['prismDesignBudgets'], reviewPolicyCapture?: CoreRuntimePolicy['reviewPolicyCapture']): void {
+export function validatePipelineDefinitionAgainstRegistry(definition: PipelineDefinition, registry: GrantedRegistry, approvalTimeoutMinutes?: number, prismDesignBudgets?: CoreRuntimePolicy['prismDesignBudgets'], reviewPolicyCapture?: CoreRuntimePolicy['reviewPolicyCapture'], reviewRuntimeBinding?:ReviewRuntimeBinding): void {
   ExecutionGraph.fromDefinition(definition);
   for (const stage of definition.stages) {
     const owner = registry.snapshot.stages.get(stage.type); if (!owner) throw new Error(`PIPELINE_STAGE_OWNER_MISSING:${stage.type}`);
-    validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.configSchema)), selectedStageConfiguration(stage.type, stage.config, approvalTimeoutMinutes, prismDesignBudgets, reviewPolicyCapture), registry.snapshot.schemas);
+    validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.configSchema)), selectedStageConfiguration(stage.type, stage.config, approvalTimeoutMinutes, prismDesignBudgets, reviewPolicyCapture, reviewRuntimeBinding), registry.snapshot.schemas);
     validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.inputSchema)), stage.input, registry.snapshot.schemas);
   }
 }
@@ -58,7 +60,7 @@ export class PipelineRunner {
     this.#options = {
       ...options, ...(options.runtimeDispatchProfile === undefined ? {} : {runtimeDispatchProfile: parseRuntimeDispatchProfile(options.runtimeDispatchProfile)}),
       ...(options.reviewCacheProfile === undefined ? {} : {reviewCacheProfile: parseReviewCacheProfile(options.reviewCacheProfile)}),
-    }; validatePipelineDefinitionAgainstRegistry(options.definition, options.registry, options.approvalTimeoutMinutes, options.prismDesignBudgets, options.reviewPolicyCapture);
+    }; validatePipelineDefinitionAgainstRegistry(options.definition, options.registry, options.approvalTimeoutMinutes, options.prismDesignBudgets, options.reviewPolicyCapture, options.reviewRuntimeBinding);
     this.#graph = ExecutionGraph.fromDefinition(options.definition); this.#snapshot = this.#graph.snapshot(options.definition.id, options.definition.maxConcurrency, options.graphSnapshotVersion);
     this.#now = options.now ?? (() => new Date());
   }
@@ -70,7 +72,7 @@ export class PipelineRunner {
         type, identity: eventIdentity, occurredAt: this.#now().toISOString(), causationId, payload })).entry;
     };
     const checkpoints = new ArtifactCheckpointRecorder(this.#options.journal, append);
-    const executor = new StageExecutor({ ...(this.#options.reviewPolicyCapture === undefined ? {} : {reviewPolicyCapture:this.#options.reviewPolicyCapture}), ...(this.#options.prismDesignBudgets === undefined ? {} : {prismDesignBudgets: this.#options.prismDesignBudgets}), ...(this.#options.approvalTimeoutMinutes === undefined ? {} : {approvalTimeoutMinutes: this.#options.approvalTimeoutMinutes}), stageMemoryBytes: this.#options.stageMemoryBytes, graph: this.#graph, registry: this.#options.registry, activated: this.#options.activated,
+    const executor = new StageExecutor({reviewRuntimeBinding:this.#options.reviewRuntimeBinding, ...(this.#options.reviewPolicyCapture === undefined ? {} : {reviewPolicyCapture:this.#options.reviewPolicyCapture}), ...(this.#options.prismDesignBudgets === undefined ? {} : {prismDesignBudgets: this.#options.prismDesignBudgets}), ...(this.#options.approvalTimeoutMinutes === undefined ? {} : {approvalTimeoutMinutes: this.#options.approvalTimeoutMinutes}), stageMemoryBytes: this.#options.stageMemoryBytes, graph: this.#graph, registry: this.#options.registry, activated: this.#options.activated,
       adapters: this.#options.adapters, journal: this.#options.journal, checkpoints,
       ...(this.#options.runtimeDispatchProfile ? { runtimeDispatchProfile: this.#options.runtimeDispatchProfile } : {}),
       ...(this.#options.reviewCacheProfile ? { reviewCacheProfile: this.#options.reviewCacheProfile } : {}),

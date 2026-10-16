@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
@@ -184,3 +185,8 @@ assert.equal(oversized.outcome, 'blocked');
 assert.match(oversized.reason.message, /relation count is too large/u);
 
 console.log(JSON.stringify({ ok: true, suite: 'repository-revalidation' }));
+
+const grades=JSON.parse(fs.readFileSync(new URL('../../../../../config/plugins/kubeclaw.review/profiles/standard.config.json',import.meta.url),'utf8')).profiles.standard.settings;
+const selectedContext={...context,contract:{...context.contract,config:{...context.contract.config,ownedPolicyProfiles:grades,repositoryRuntimeTarget:{tokenizerEncoding:'o200k_base',maxInputTokens:120000,maxOutputTokens:6000,maxContextTokens:128000,maxPromptBytes:900000}}}};
+const selectedResult=await executeRepositoryRevalidation({baselineReport:baselineRef,grade:'fast',scope:{kind:'path',prefixes:['src/']}},selectedContext);assert.equal(selectedResult.outcome,'passed');
+const duplicateResult=await executeRepositoryRevalidation({baselineReport:baselineRef,grade:'fast',overrides:{}},selectedContext);assert.equal(duplicateResult.outcome,'blocked');assert.match(duplicateResult.reason.message,/COMPETING_AUTHOR/);

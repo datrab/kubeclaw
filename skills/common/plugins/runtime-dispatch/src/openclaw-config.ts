@@ -1,3 +1,4 @@
+import {openClawTargetCapacity,openClawTargetIdentity} from '@kubeclaw/plugin-foundation/config/openclaw-target-capacity';
 import type { OpenClawTarget } from './openclaw.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
@@ -17,10 +18,6 @@ function controllerSessionKey(value: unknown, agentId: string): string | undefin
   if (value === undefined) return undefined;
   if (typeof value !== 'string' || value.length > 512 || !value.startsWith(`agent:${agentId}:`)) return '';
   return value;
-}
-function numberValue(value: unknown, fallback: number): number { return Number(value === undefined ? fallback : value); }
-function encodingValue(value: unknown): OpenClawTarget['tokenizerEncoding'] {
-  return (value === undefined ? 'o200k_base' : value) as OpenClawTarget['tokenizerEncoding'];
 }
 function prefixValue(value: unknown): string {
   if (typeof value !== 'string' || value.length === 0 || value.startsWith('/') || value.split('/').includes('..')) return '';
@@ -54,19 +51,17 @@ function parseTarget(id: string, raw: unknown, processing: Pick<OpenClawTarget,'
   if (typeof raw.timingProfile !== 'string' || !Object.hasOwn(profiles, raw.timingProfile)) throw new Error(`RUNTIME_CONFIG_INVALID:timingProfile:${id}`);
   const timing = profiles[raw.timingProfile]!;
   const endpoint = endpointValue(raw.endpoint);
+  let capacity:ReturnType<typeof openClawTargetCapacity>;
+  try{capacity=openClawTargetCapacity(raw);}catch{throw new Error(`RUNTIME_CONFIG_INVALID:openclaw:${id}`);}
   const target: OpenClawTarget = {
     ...processing, ...timing, timingProfile: raw.timingProfile,
     endpoint: endpoint?.href ?? '', tokenSecret: text(raw.tokenSecret),
-    runtime: raw.runtime as 'acp' | 'subagent',
-    agentId: idValue(raw.agentId, 'codex'), agentRole: idValue(raw.agentRole, id), model: text(raw.model),
-    thinking: text(raw.thinking, 'high'), cwd: absolute(raw.cwd), repositoryRoot: absolute(raw.repositoryRoot),
+    ...openClawTargetIdentity(raw), agentRole: idValue(raw.agentRole,id), cwd: absolute(raw.cwd), repositoryRoot: absolute(raw.repositoryRoot),
     ...(raw.workspaceRoot === undefined ? {} : { workspaceRoot: absolute(raw.workspaceRoot) }),
     resultPathPrefix: prefixValue(raw.resultPathPrefix), resultEndpoint: optionalUrl(raw.resultEndpoint),
     resultTokenSecret: optionalText(raw.resultTokenSecret),
     collectorMode: raw.collectorMode === true,
-    tokenizerEncoding: encodingValue(raw.tokenizerEncoding),
-    maxPromptBytes: numberValue(raw.maxPromptBytes, 900_000), maxInputTokens: numberValue(raw.maxInputTokens, 120_000),
-    maxOutputTokens: numberValue(raw.maxOutputTokens, 6_000), maxContextTokens: numberValue(raw.maxContextTokens, 128_000),
+    ...capacity,
   };
   const sessionKey = controllerSessionKey(raw.controllerSessionKey, target.agentId);
   if (sessionKey === '') throw new Error(`RUNTIME_CONFIG_INVALID:controllerSessionKey:${id}`);

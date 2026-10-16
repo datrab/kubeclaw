@@ -1,3 +1,4 @@
+import type {ReviewRuntimeBinding} from './review-runtime-targets.ts';
 import { captureCoreRuntimePolicy, type CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -153,10 +154,11 @@ export function retainedCoreRuntimePolicy(runRoot: string): CoreRuntimePolicy {
 
 
 /** Capture selected policy and timing references from ONE original run snapshot.
- * Only the new processing selector is restored; current installation/identity/
- * target data still undergoes the unchanged pinned configuration comparison. */
-export function retainedRuntimePolicies(runRoot: string): Readonly<{corePolicy: CoreRuntimePolicy; timingSelections: Readonly<Record<string,string>>; httpSelections: Readonly<Record<string,string>>; publisherSelections: Readonly<Record<string,string>>; operatorSelections: Readonly<Record<string,string>>}> {
-  const configuration = readRunSnapshot(runRoot).registry.configuration as {corePolicy?: unknown; adapters?: Record<string,{targets?: unknown}>} | undefined;
+ * Original v1 keeps the established selection-only behavior. Explicit review
+ * grades v2 restore the actual original OpenClaw targets for activation; no
+ * current target/model values are merged into the original run. */
+export function retainedRuntimePolicies(runRoot: string): Readonly<{reviewRuntimeBinding?:ReviewRuntimeBinding;corePolicy: CoreRuntimePolicy; timingSelections: Readonly<Record<string,string>>; httpSelections: Readonly<Record<string,string>>; publisherSelections: Readonly<Record<string,string>>; operatorSelections: Readonly<Record<string,string>>}> {
+  const configuration = readRunSnapshot(runRoot).registry.configuration as {corePolicy?: unknown; providers?:Record<string,string>;activeAdapters?:readonly string[];adapters?: Record<string,{targets?: unknown}>} | undefined;
   if (configuration?.corePolicy === undefined) throw new Error('RECOVERY_CORE_POLICY_MISSING:use original runtime; current-policy fallback is forbidden');
   const corePolicy = captureCoreRuntimePolicy(configuration.corePolicy);
   const targetConfig = configuration.adapters?.['kubeclaw.runtime-dispatch:openclaw'];
@@ -195,5 +197,8 @@ export function retainedRuntimePolicies(runRoot: string): Readonly<{corePolicy: 
       Object.defineProperty(operatorSelections,id,{value:target.payloadProfile,enumerable:true});
     }
   }
-  return Object.freeze({corePolicy,operatorSelections:Object.freeze(operatorSelections),publisherSelections:Object.freeze(publisherSelections),timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
+  const provider=configuration.providers?.['runtime.dispatch'];
+  const reviewRuntimeBinding=corePolicy.reviewPolicyCapture?.settings.schemaVersion==='review-owned-decision-profiles.v2' && provider==='kubeclaw.runtime-dispatch:openclaw' && configuration.activeAdapters?.includes(provider)
+    ? {provider,configuration:deepFreeze(structuredClone(configuration.adapters?.[provider] ?? {}))} : undefined;
+  return Object.freeze({reviewRuntimeBinding,corePolicy,operatorSelections:Object.freeze(operatorSelections),publisherSelections:Object.freeze(publisherSelections),timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
 }

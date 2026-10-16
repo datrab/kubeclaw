@@ -18,7 +18,7 @@ export type AdministrativeDecisionAuthenticator = (decision: AdministrativeReope
 
 export async function validatePipelineRuntimeV2(platform: PlatformConfig, definitionInput: PipelineDefinition, selectedCorePolicy?: CoreRuntimePolicy): Promise<Readonly<{ packageCount: number; stageCount: number; observerCount: number; adapterCount: number }>> {
   const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition, selectedCorePolicy);
-  validatePipelineDefinitionAgainstRegistry(definition, runtime.granted, runtime.corePolicy.humanApproval.defaultTimeoutMinutes, runtime.corePolicy.prismDesignBudgets, runtime.corePolicy.reviewPolicyCapture);
+  validatePipelineDefinitionAgainstRegistry(definition, runtime.granted, runtime.corePolicy.humanApproval.defaultTimeoutMinutes, runtime.corePolicy.prismDesignBudgets, runtime.corePolicy.reviewPolicyCapture, runtime.reviewRuntimeBinding);
   return Object.freeze({ packageCount: runtime.snapshot.packages.size, stageCount: runtime.activated.stages.size,
     observerCount: runtime.activated.observers.size, adapterCount: runtime.activated.adapters.size });
 }

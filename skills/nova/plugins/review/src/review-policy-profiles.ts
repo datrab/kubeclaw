@@ -9,9 +9,9 @@ export type {ReviewPolicyProfileId} from './legacy-review-policy-profiles.ts';
 export function getReviewPolicyProfile(profile: string, owned?: unknown): ReviewPolicy {
   if (owned === undefined) return legacyProfile(profile);
   if (!owned || typeof owned !== 'object' || Array.isArray(owned)
-    || Object.keys(owned).sort().join(',') !== 'profiles,schemaVersion') throw new Error('REVIEW_OWNED_POLICY_INVALID');
+    || !['profiles,schemaVersion','profiles,repositoryGrades,schemaVersion'].includes(Object.keys(owned).sort().join(','))) throw new Error('REVIEW_OWNED_POLICY_INVALID');
   const value=owned as Record<string,unknown>;
-  if(value.schemaVersion!=='review-owned-decision-profiles.v1' || !value.profiles || typeof value.profiles!=='object' || Array.isArray(value.profiles)
+  if(!['review-owned-decision-profiles.v1','review-owned-decision-profiles.v2'].includes(String(value.schemaVersion)) || !value.profiles || typeof value.profiles!=='object' || Array.isArray(value.profiles)
     || Object.keys(value.profiles).sort().join(',')!=='audit,gate,lean')throw new Error('REVIEW_OWNED_POLICY_INVALID');
   const profiles=value.profiles as Record<string,unknown>;
   const parsed=new Map<string,ReviewPolicy>();

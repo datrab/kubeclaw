@@ -19,7 +19,7 @@ import { reconcileNovaObservabilityOnRecovery } from '../observability/reconcile
 
 export interface ExecutionContext { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly leaseSignal: AbortSignal; readonly events: FileJournal<LifecycleEvent | PluginDomainEvent> }
 
-export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted' | 'runtimeDispatchProfile' | 'reviewCacheProfile' | 'stageMemoryBytes' | 'approvalTimeoutMinutes' | 'prismDesignBudgets' | 'reviewPolicyCapture'>): Promise<PipelineRunResult> {
+export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted' | 'runtimeDispatchProfile' | 'reviewCacheProfile' | 'stageMemoryBytes' | 'approvalTimeoutMinutes' | 'prismDesignBudgets' | 'reviewPolicyCapture' | 'reviewRuntimeBinding'>): Promise<PipelineRunResult> {
   const pinnedGraph = verifyPinnedGraph(context.runRoot, context.definition);
   const snapshot = readRunSnapshot(context.runRoot);
   const runtimeDispatchProfile = snapshot.schemaVersion === 'run-snapshot.v3' || snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.runtimeDispatchProfile : undefined;
@@ -27,7 +27,7 @@ export async function executePrepared(context: ExecutionContext, options: Omit<P
   await assertEffectRecoverySafe(context.runRoot, context.runId, context.definition, context.events, context.runtime.corePolicy);
   const adapters = createAdapterRuntime(context.platform, context.runRoot, context.runtime, context.events); await adapters.start();
   const flush = serializedObserverDrainer(context.platform, context.runRoot, context.runtime, adapters, context.events);
-  try { return await new PipelineRunner({ ...(context.runtime.corePolicy.reviewPolicyCapture === undefined ? {} : {reviewPolicyCapture:context.runtime.corePolicy.reviewPolicyCapture}), prismDesignBudgets: context.runtime.corePolicy.prismDesignBudgets, approvalTimeoutMinutes: context.runtime.corePolicy.humanApproval.defaultTimeoutMinutes, stageMemoryBytes: context.runtime.corePolicy.stageMemoryBytes, definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
+  try { return await new PipelineRunner({reviewRuntimeBinding:context.runtime.reviewRuntimeBinding, ...(context.runtime.corePolicy.reviewPolicyCapture === undefined ? {} : {reviewPolicyCapture:context.runtime.corePolicy.reviewPolicyCapture}), prismDesignBudgets: context.runtime.corePolicy.prismDesignBudgets, approvalTimeoutMinutes: context.runtime.corePolicy.humanApproval.defaultTimeoutMinutes, stageMemoryBytes: context.runtime.corePolicy.stageMemoryBytes, definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
     adapters, journal: context.events, orchestratorIssuerId: context.platform.orchestratorIssuerId, signal: context.leaseSignal,
     onEventsCommitted: flush, ...options, graphSnapshotVersion: pinnedGraph.schemaVersion,
     runtimeDispatchProfile, reviewCacheProfile }).run(context.runId); }
@@ -63,7 +63,7 @@ export async function recoverPipeline(platform: PlatformConfig, definitionInput:
   const definition = deepFreeze(structuredClone(definitionInput));
   const runRoot = resolveRunRoot(platform.storageRoot, runId);
   const retained = retainedRuntimePolicies(runRoot);
-  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections);
+  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding);
   return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
     const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs);
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
@@ -91,7 +91,7 @@ export async function resumePipeline(platform: PlatformConfig, definitionInput: 
   const definition = deepFreeze(structuredClone(definitionInput));
   const runRoot = resolveRunRoot(platform.storageRoot, runId);
   const retained = retainedRuntimePolicies(runRoot);
-  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections);
+  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding);
   return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
     const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs);
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);

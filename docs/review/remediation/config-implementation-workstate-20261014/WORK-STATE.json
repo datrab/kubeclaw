@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T09:58:27.218755+00:00",
+  "updatedAt": "2026-10-16T12:38:30.973771+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "CONFIG_COMPILER_AND_POLICY_BATCH_VERIFIED_REMAINING_REVIEW_PROFILES_OPEN",
+  "status": "CONFIG_CONFIRMED_REVIEW_RESIDUALS_IMPLEMENTED_SOURCE_REVIEWED_RECONCILIATION_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Complete the confirmed 228 review-owned operator settings as a coherent versioned central-author/actual-consumer/original-capture/delivery batch. Native full historical acceptance remains OPEN, not a blanket blocker.",
+  "nextAction": "Reconcile remaining actual hardcoded configurable values against unchanged-source candidates; unchanged central authors, vocabulary key schemas and existing config readers are not automatically residual settings. No restart of historical claimed thread. Native full acceptance remains separately OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -22218,7 +22218,7 @@
   "reviewOwnedDecisionProfiles20261016": {
     "status": "implemented-and-source-reviewed",
     "inventoryRows": 141,
-    "remainingRepositoryGradeRows": 87,
+    "remainingRepositoryGradeRows": 0,
     "evidence": "docs/review/remediation/config-review-owned-20261016",
     "checks": {
       "focusedIntegration": "4/4",
@@ -22236,6 +22236,37 @@
     },
     "historicalNativeAcceptance": "OPEN",
     "deployment": false,
-    "mainMerge": false
+    "mainMerge": false,
+    "remoteSourceCommit": "09a33c0914c7a98e6fcc809498765a73728c3576"
+  },
+  "reviewOwnedRepositoryGrades20261016": {
+    "status": "implemented-source-reviewed",
+    "inventoryRows": 87,
+    "reviewOwnedFields": 81,
+    "runtimeOwnerDerivedRows": 6,
+    "confirmedReviewResidualsRemaining": 0,
+    "evidence": "docs/review/remediation/config-review-grades-20261016",
+    "checks": {
+      "integrated": "17/17",
+      "finalGradeCore": "4/4",
+      "reviewPackage": "all original commands covered; initial scale 49.9s fail, isolated 40.6s pass; remainder+posttest exit 0",
+      "dispatchPackage": "exit 0",
+      "runtimeTypecheck": "exit 0",
+      "builds": "Review and Runtime Dispatch exit 0",
+      "sourceCLI": "exit 0",
+      "packagedCLI": "exit 0"
+    },
+    "independentSourceReview": {
+      "engine": "codex",
+      "actionableFindings": 0,
+      "acceptedAndFixed": 3,
+      "qualification": "complete-dataset source-only; reviewer shell unavailable"
+    },
+    "originalCompatibility": "v1 unchanged; selected v2 restores actual original target before activation without current target merge",
+    "allRepositoryCompleteness": false,
+    "historicalNativeAcceptance": "OPEN",
+    "deployment": false,
+    "mainMerge": false,
+    "unrelatedWipPreserved": true
   }
 }

@@ -1,0 +1,15 @@
+✔ actual Core grade receiving and actual target parser activation remain original after current owners and target change (1876.698303ms)
+✔ every selected grade preserves original values; runtime-owned tokenizer/output never become review authors (116.754228ms)
+✔ A/B quotas have one complete author, original capture survives current mutation and target owner drives output/tokenizer (5.116121ms)
+✔ retained activation restores original targets before timing projection; current target is never merged (2.826612ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (2.674859ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (61.085958ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (1039.947505ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3195.965272

@@ -1,10 +1,16 @@
+import {reviewRuntimeTarget,type ReviewRuntimeBinding} from './review-runtime-targets.ts';
 import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 /** Task deadlines override the selected installation default. The policy is
  * captured in the original runtime snapshot; this function performs no I/O and
  * does not rewrite the task graph or its identity. */
-export function selectedStageConfiguration(type: string, config: Readonly<Record<string, unknown>>, approvalTimeoutMinutes?: number, prismDesignBudgets?: CoreRuntimePolicy['prismDesignBudgets'], reviewPolicyCapture?: CoreRuntimePolicy['reviewPolicyCapture']): Readonly<Record<string, unknown>> {
+export function selectedStageConfiguration(type: string, config: Readonly<Record<string, unknown>>, approvalTimeoutMinutes?: number, prismDesignBudgets?: CoreRuntimePolicy['prismDesignBudgets'], reviewPolicyCapture?: CoreRuntimePolicy['reviewPolicyCapture'], reviewRuntimeBinding?:ReviewRuntimeBinding): Readonly<Record<string, unknown>> {
   if (['kubeclaw.decision.review','kubeclaw.audit.repository-review','kubeclaw.audit.repository-review-revalidation'].includes(type) && reviewPolicyCapture !== undefined) {
     if (Object.hasOwn(config,'ownedPolicyProfiles') || Object.hasOwn(config,'policy')) throw new Error('REVIEW_POLICY_COMPETING_AUTHOR');
+    const grades=reviewPolicyCapture.settings.repositoryGrades;
+    if(grades!==undefined && type!=='kubeclaw.decision.review') {
+      if(Object.hasOwn(config,'repositoryRuntimeTarget'))throw new Error('REVIEW_TARGET_COMPETING_AUTHOR');
+      return Object.freeze({...config,ownedPolicyProfiles:reviewPolicyCapture.settings,repositoryRuntimeTarget:reviewRuntimeTarget(config,reviewRuntimeBinding)});
+    }
     return Object.freeze({...config,ownedPolicyProfiles:reviewPolicyCapture.settings});
   }
   if (type === 'kubeclaw.design.prism') {

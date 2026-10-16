@@ -1,0 +1,13 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-review-profile.ts:288
+  if (Object.hasOwn(values,'overrides')) throw new Error('REPOSITORY_GRADE_COMPETING_AUTHOR');
+                                               ^
+
+Error: REPOSITORY_GRADE_COMPETING_AUTHOR
+    at resolveRepositoryReviewProfile (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-review-profile.ts:288:48)
+    at parseRepositoryReviewInput (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-review-profile.ts:321:10)
+    at parseInput (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-audit-stage.ts:104:41)
+    at runRepositoryAudit (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-audit-stage.ts:690:20)
+    at executeRepositoryAudit (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-audit-stage.ts:767:18)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs:276:28
+
+Node.js v24.21.0

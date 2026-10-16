@@ -1,0 +1,7 @@
+autoreview findings: 1
+[P1] [P1] Preserve valid adapter capacity defaults when enabling v2
+skills/nova/core/execution/review-runtime-targets.ts:9
+The standard owner now selects v2, so every repository audit reaches this check, but the OpenClaw configuration contract still permits all five capacity fields to be omitted and `targetsFrom()` supplies their supported defaults. Consequently, an existing valid installation using those defaults now fails with `REVIEW_ACTIVATED_TARGET_EXPLICIT_CAPACITY_REQUIRED` before activation. This bundle does not migrate adapter configurations. Derive these values using the actual adapter's normalization/default contract, or migrate supported installation configurations before making v2 the standard selection.
+
+overall: patch is incorrect (0.9)
+The default v2 selection introduces an incompatible requirement for capacity fields that remain optional in the activated adapter contract. Recovery otherwise restores retained OpenClaw targets without merging current target values. Review was source-only because local read-only shell inspection failed; no tests were run.

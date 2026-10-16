@@ -1,0 +1,12 @@
+✔ actual Core grade receiving and actual target parser activation remain original after current owners and target change (2094.893371ms)
+✔ every selected grade preserves original values; runtime-owned tokenizer/output never become review authors (105.826577ms)
+✔ A/B quotas have one complete author, original capture survives current mutation and target owner drives output/tokenizer (5.085371ms)
+✔ retained activation restores original targets before timing projection; current target is never merged (2.547766ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3870.83135

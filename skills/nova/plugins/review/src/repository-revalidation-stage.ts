@@ -2,7 +2,7 @@
 import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
 
 import { compileRepositoryAudit } from './repository-audit-stage.ts';
-import { parseRepositoryReviewInput } from './repository-review-profile.ts';
+import {selectedRepositoryGrades, parseRepositoryReviewInput } from './repository-review-profile.ts';
 import { freezeReviewRevision } from './review-repository.ts';
 import { compareCodeUnits } from './review-ordering.ts';
 import { ReviewPhaseAdmission, ReviewPhaseAdmissionError } from './review-phase-admission.ts';
@@ -64,14 +64,14 @@ function baselineReference(value: unknown): BaselineReference {
   return Object.freeze({ artifactId, digest: digest(source.digest, 'baselineReport.digest'),
     sizeBytes: Number(source.sizeBytes) });
 }
-function input(value: unknown): { readonly baseline: BaselineReference;
+function input(value: unknown, context:PluginInvocationContext): { readonly baseline: BaselineReference;
   readonly profile: ReturnType<typeof parseRepositoryReviewInput> } {
   const source = record(value, 'repository revalidation input');
   const allowed = ['baselineReport', 'grade', 'scope', 'overrides'];
   if (Object.keys(source).some((field) => !allowed.includes(field))) throw new RepositoryRevalidationIntegrityError('repository revalidation input has unknown fields');
   return Object.freeze({ baseline: baselineReference(source.baselineReport),
     profile: parseRepositoryReviewInput({ grade: source.grade, scope: source.scope,
-      overrides: source.overrides, mode: 'execute' }) });
+      ...(Object.hasOwn(source,'overrides')?{overrides:source.overrides}:{}), mode: 'execute' }, selectedRepositoryGrades(context.contract.config)) });
 }
 function baselineFindings(value: unknown): { readonly head: string; readonly findings: readonly BaselineFinding[];
   readonly relatedPaths: ReadonlyMap<string, readonly string[]> } {
@@ -305,7 +305,7 @@ async function storeBacklog(value: JsonObject, context: PluginInvocationContext)
 }
 
 async function run(value: unknown, context: PluginInvocationContext): Promise<StageResult> {
-  const parsed = integrity(() => input(value)), baseline = await readBaseline(parsed.baseline, context);
+  const parsed = integrity(() => input(value,context)), baseline = await readBaseline(parsed.baseline, context);
   const revision = await freezeReviewRevision(context);
   const ancestry = record(await context.invoke('git.repository.read', { operation: 'verify_ancestry',
     resource: { type: 'git.repository.path', canonicalId: '.' }, payload: { base: baseline.head,

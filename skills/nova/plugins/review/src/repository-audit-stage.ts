@@ -20,7 +20,7 @@ import { buildScalableVerificationDispatchPayload, buildScalableVerificationJobs
 import { compareCodeUnits } from './review-ordering.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { buildReviewInventoryLookup } from './review-inventory-lookup.ts';
-import { parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from './repository-review-profile.ts';
+import { selectedRepositoryGrades, parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from './repository-review-profile.ts';
 import { repositoryCompleteness, repositoryExecutionFacts, repositoryPlanFacts,
   repositoryUsageAccounting } from './repository-audit-results.ts';
 import { estimatedReviewCostUsd, reserveReviewAttempts, reserveReviewRuntimePrompt, selectFittingCandidates,
@@ -100,8 +100,8 @@ interface DispatchAccountingSnapshot {
   readonly verificationInputTokens: number;
 }
 
-function parseInput(value: unknown): AuditInput {
-  return Object.freeze({ reviewProfile: parseRepositoryReviewInput(value) });
+function parseInput(value: unknown, context:PluginInvocationContext): AuditInput {
+  return Object.freeze({ reviewProfile: parseRepositoryReviewInput(value, selectedRepositoryGrades(context.contract.config)) });
 }
 
 function configText(value: unknown, fallback?: string): string {
@@ -687,7 +687,7 @@ async function storeFollowUpStatus(
 async function runRepositoryAudit(
   input: unknown, context: PluginInvocationContext,
 ): Promise<StageResult> {
-    const parsed = parseInput(input), config = stageConfig(context);
+    const parsed = parseInput(input, context), config = stageConfig(context);
     const policy = config.ownedPolicyProfiles === undefined
       ? resolveReviewPolicy({ builtIn: getReviewPolicyProfile(config.profile), ...(config.policy === undefined ? {} : { settingsFile: config.policy }) })
       : resolveReviewPolicy({selectedFile:getReviewPolicyProfile(config.profile,config.ownedPolicyProfiles)});

@@ -1,0 +1,1138 @@
+{
+  "count": 87,
+  "reviewOwned": 81,
+  "runtimeOwnedDerived": 6,
+  "rows": [
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.tokenizerEncoding",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "actual activation-captured OpenClaw target",
+      "pointer": "/targets/{selectedStageAgent}/tokenizerEncoding",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.componentBudget.maxFiles",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/componentBudget/maxFiles",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.componentBudget.maxBytes",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/componentBudget/maxBytes",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.componentBudget.maxTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/componentBudget/maxTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.boundaryBudget.maxFiles",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/boundaryBudget/maxFiles",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.boundaryBudget.maxBytes",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/boundaryBudget/maxBytes",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.boundaryBudget.maxTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/boundaryBudget/maxTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXRELATIONS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.boundaryBudget.maxRelations",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/boundaryBudget/maxRelations",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXSLICES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.boundaryBudget.maxSlices",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/boundaryBudget/maxSlices",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXPRIMARYJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxPrimaryJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxPrimaryJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTEXPANSIONJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxContextExpansionJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxContextExpansionJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXVERIFICATIONJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxVerificationJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxVerificationJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXINPUTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxInputTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxInputTokensPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxContextTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxContextTokensPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXPROMPTBYTESPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxPromptBytesPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxPromptBytesPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXINITIALINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxInitialInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxInitialInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxContextExpansionInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxContextExpansionInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXVERIFICATIONINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxVerificationInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxVerificationInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXTOTALINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxTotalInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxTotalInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXOUTPUTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxOutputTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "actual activation-captured OpenClaw target",
+      "pointer": "/targets/{selectedStageAgent}/maxOutputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXESTIMATEDCOSTUSD",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxEstimatedCostUsd",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxEstimatedCostUsd",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXWALLTIMESECONDS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxWallTimeSeconds",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxWallTimeSeconds",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-ESTIMATEDSECONDSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.estimatedSecondsPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/estimatedSecondsPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-INPUTUSDPERMILLIONTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.inputUsdPerMillionTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/inputUsdPerMillionTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-OUTPUTUSDPERMILLIONTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.outputUsdPerMillionTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/outputUsdPerMillionTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-CONCURRENCY",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.concurrency",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/concurrency",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXRETRIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxRetries",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxRetries",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-MAXRETRYATTEMPTSPERPHASE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.maxRetryAttemptsPerPhase",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/maxRetryAttemptsPerPhase",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-FAST-ENABLEDLENSES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.fast.enabledLenses",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/fast/enabledLenses",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-TOKENIZERENCODING",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.tokenizerEncoding",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "actual activation-captured OpenClaw target",
+      "pointer": "/targets/{selectedStageAgent}/tokenizerEncoding",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.componentBudget.maxFiles",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/componentBudget/maxFiles",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.componentBudget.maxBytes",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/componentBudget/maxBytes",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.componentBudget.maxTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/componentBudget/maxTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.boundaryBudget.maxFiles",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/boundaryBudget/maxFiles",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.boundaryBudget.maxBytes",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/boundaryBudget/maxBytes",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.boundaryBudget.maxTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/boundaryBudget/maxTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXRELATIONS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.boundaryBudget.maxRelations",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/boundaryBudget/maxRelations",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXSLICES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.boundaryBudget.maxSlices",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/boundaryBudget/maxSlices",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXPRIMARYJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxPrimaryJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxPrimaryJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTEXPANSIONJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxContextExpansionJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxContextExpansionJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXVERIFICATIONJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxVerificationJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxVerificationJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXINPUTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxInputTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxInputTokensPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxContextTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxContextTokensPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXPROMPTBYTESPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxPromptBytesPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxPromptBytesPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXINITIALINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxInitialInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxInitialInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxContextExpansionInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxContextExpansionInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXVERIFICATIONINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxVerificationInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxVerificationInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXTOTALINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxTotalInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxTotalInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXOUTPUTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxOutputTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "actual activation-captured OpenClaw target",
+      "pointer": "/targets/{selectedStageAgent}/maxOutputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXESTIMATEDCOSTUSD",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxEstimatedCostUsd",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxEstimatedCostUsd",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXWALLTIMESECONDS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxWallTimeSeconds",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxWallTimeSeconds",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-ESTIMATEDSECONDSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.estimatedSecondsPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/estimatedSecondsPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-INPUTUSDPERMILLIONTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.inputUsdPerMillionTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/inputUsdPerMillionTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-OUTPUTUSDPERMILLIONTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.outputUsdPerMillionTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/outputUsdPerMillionTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-CONCURRENCY",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.concurrency",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/concurrency",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXRETRIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxRetries",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxRetries",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-MAXRETRYATTEMPTSPERPHASE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.maxRetryAttemptsPerPhase",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/maxRetryAttemptsPerPhase",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-STANDARD-ENABLEDLENSES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.standard.enabledLenses",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/standard/enabledLenses",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-TOKENIZERENCODING",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.tokenizerEncoding",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "actual activation-captured OpenClaw target",
+      "pointer": "/targets/{selectedStageAgent}/tokenizerEncoding",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.componentBudget.maxFiles",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/componentBudget/maxFiles",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.componentBudget.maxBytes",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/componentBudget/maxBytes",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.componentBudget.maxTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/componentBudget/maxTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.boundaryBudget.maxFiles",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/boundaryBudget/maxFiles",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.boundaryBudget.maxBytes",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/boundaryBudget/maxBytes",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.boundaryBudget.maxTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/boundaryBudget/maxTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXRELATIONS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.boundaryBudget.maxRelations",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/boundaryBudget/maxRelations",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXSLICES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.boundaryBudget.maxSlices",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/boundaryBudget/maxSlices",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXPRIMARYJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxPrimaryJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxPrimaryJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTEXPANSIONJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxContextExpansionJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxContextExpansionJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXVERIFICATIONJOBS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxVerificationJobs",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxVerificationJobs",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXINPUTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxInputTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxInputTokensPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxContextTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxContextTokensPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXPROMPTBYTESPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxPromptBytesPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxPromptBytesPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXINITIALINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxInitialInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxInitialInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxContextExpansionInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxContextExpansionInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXVERIFICATIONINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxVerificationInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxVerificationInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXTOTALINPUTTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxTotalInputTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxTotalInputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXOUTPUTTOKENSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxOutputTokensPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "actual activation-captured OpenClaw target",
+      "pointer": "/targets/{selectedStageAgent}/maxOutputTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXESTIMATEDCOSTUSD",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxEstimatedCostUsd",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxEstimatedCostUsd",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXWALLTIMESECONDS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxWallTimeSeconds",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxWallTimeSeconds",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-ESTIMATEDSECONDSPERJOB",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.estimatedSecondsPerJob",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/estimatedSecondsPerJob",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-INPUTUSDPERMILLIONTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.inputUsdPerMillionTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/inputUsdPerMillionTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-OUTPUTUSDPERMILLIONTOKENS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.outputUsdPerMillionTokens",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/outputUsdPerMillionTokens",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-CONCURRENCY",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.concurrency",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/concurrency",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXRETRIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxRetries",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxRetries",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-MAXRETRYATTEMPTSPERPHASE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.maxRetryAttemptsPerPhase",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/maxRetryAttemptsPerPhase",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    },
+    {
+      "id": "RT-REPOSITORY-GRADE-DEEP-ENABLEDLENSES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+        "field": "DEFAULTS.deep.enabledLenses",
+        "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+      },
+      "owner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "pointer": "/profiles/standard/settings/repositoryGrades/deep/enabledLenses",
+      "consumer": "repository-audit and repository-revalidation",
+      "originalReader": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts"
+    }
+  ]
+}

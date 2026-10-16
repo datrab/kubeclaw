@@ -3,7 +3,7 @@
   "profiles": {
     "standard": {
       "settings": {
-        "schemaVersion": "review-owned-decision-profiles.v1",
+        "schemaVersion": "review-owned-decision-profiles.v2",
         "profiles": {
           "gate": {
             "schemaVersion": "review-policy.v2",
@@ -260,6 +260,127 @@
               "absoluteFileAllowance": 2,
               "absoluteNonTestLocAllowance": 100
             }
+          }
+        },
+        "repositoryGrades": {
+          "fast": {
+            "componentBudget": {
+              "maxFiles": 60,
+              "maxBytes": 400000,
+              "maxTokens": 86000
+            },
+            "boundaryBudget": {
+              "maxFiles": 400,
+              "maxBytes": 900000,
+              "maxTokens": 80000,
+              "maxRelations": 600,
+              "maxSlices": 200
+            },
+            "maxPrimaryJobs": 75,
+            "maxContextExpansionJobs": 12,
+            "maxVerificationJobs": 8,
+            "maxInputTokensPerJob": 120000,
+            "maxContextTokensPerJob": 128000,
+            "maxPromptBytesPerJob": 900000,
+            "maxInitialInputTokens": 6500000,
+            "maxContextExpansionInputTokens": 750000,
+            "maxVerificationInputTokens": 750000,
+            "maxTotalInputTokens": 8000000,
+            "maxEstimatedCostUsd": 100,
+            "maxWallTimeSeconds": 3600,
+            "estimatedSecondsPerJob": 120,
+            "inputUsdPerMillionTokens": 10,
+            "outputUsdPerMillionTokens": 30,
+            "concurrency": 8,
+            "maxRetries": 1,
+            "maxRetryAttemptsPerPhase": 4,
+            "enabledLenses": [
+              "contracts",
+              "security",
+              "lifecycle"
+            ]
+          },
+          "standard": {
+            "componentBudget": {
+              "maxFiles": 60,
+              "maxBytes": 400000,
+              "maxTokens": 86000
+            },
+            "boundaryBudget": {
+              "maxFiles": 400,
+              "maxBytes": 900000,
+              "maxTokens": 80000,
+              "maxRelations": 600,
+              "maxSlices": 200
+            },
+            "maxPrimaryJobs": 500,
+            "maxContextExpansionJobs": 100,
+            "maxVerificationJobs": 100,
+            "maxInputTokensPerJob": 120000,
+            "maxContextTokensPerJob": 128000,
+            "maxPromptBytesPerJob": 900000,
+            "maxInitialInputTokens": 25000000,
+            "maxContextExpansionInputTokens": 50000000,
+            "maxVerificationInputTokens": 50000000,
+            "maxTotalInputTokens": 50000000,
+            "maxEstimatedCostUsd": 650,
+            "maxWallTimeSeconds": 28800,
+            "estimatedSecondsPerJob": 120,
+            "inputUsdPerMillionTokens": 10,
+            "outputUsdPerMillionTokens": 30,
+            "concurrency": 10,
+            "maxRetries": 2,
+            "maxRetryAttemptsPerPhase": 20,
+            "enabledLenses": [
+              "architecture",
+              "contracts",
+              "security",
+              "lifecycle",
+              "resilience",
+              "deployment",
+              "simplification"
+            ]
+          },
+          "deep": {
+            "componentBudget": {
+              "maxFiles": 30,
+              "maxBytes": 220000,
+              "maxTokens": 90000
+            },
+            "boundaryBudget": {
+              "maxFiles": 100,
+              "maxBytes": 480000,
+              "maxTokens": 110000,
+              "maxRelations": 100,
+              "maxSlices": 32
+            },
+            "maxPrimaryJobs": 2000,
+            "maxContextExpansionJobs": 250,
+            "maxVerificationJobs": 250,
+            "maxInputTokensPerJob": 120000,
+            "maxContextTokensPerJob": 128000,
+            "maxPromptBytesPerJob": 900000,
+            "maxInitialInputTokens": 50000000,
+            "maxContextExpansionInputTokens": 100000000,
+            "maxVerificationInputTokens": 100000000,
+            "maxTotalInputTokens": 100000000,
+            "maxEstimatedCostUsd": 1300,
+            "maxWallTimeSeconds": 86400,
+            "estimatedSecondsPerJob": 150,
+            "inputUsdPerMillionTokens": 10,
+            "outputUsdPerMillionTokens": 30,
+            "concurrency": 4,
+            "maxRetries": 2,
+            "maxRetryAttemptsPerPhase": 40,
+            "enabledLenses": [
+              "architecture",
+              "contracts",
+              "security",
+              "lifecycle",
+              "resilience",
+              "deployment",
+              "simplification"
+            ]
           }
         }
       }

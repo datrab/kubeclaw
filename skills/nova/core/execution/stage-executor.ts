@@ -1,3 +1,4 @@
+import type {ReviewRuntimeBinding} from './review-runtime-targets.ts';
 import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import { selectedStageConfiguration } from './stage-configuration.ts';
 import crypto from 'node:crypto';
@@ -20,6 +21,7 @@ export type AppendLifecycleEvent = (type: LifecycleEvent['type'], identity: Life
 interface ExecutorOptions {
   readonly stageMemoryBytes: number;
   readonly approvalTimeoutMinutes?: number;
+  readonly reviewRuntimeBinding?:ReviewRuntimeBinding;
   readonly reviewPolicyCapture?: CoreRuntimePolicy['reviewPolicyCapture'];
   readonly prismDesignBudgets?: CoreRuntimePolicy['prismDesignBudgets'];
   readonly runtimeDispatchProfile?: RuntimeDispatchProfile;
@@ -77,7 +79,7 @@ export class StageExecutor {
     const cancel = (): void => { controller.abort(this.#options.signal?.reason); rejectCancellation?.(new Error('PLUGIN_ATTEMPT_CANCELLED')); };
     this.#options.signal?.addEventListener('abort', cancel, { once: true }); if (this.#options.signal?.aborted) cancel();
     const context = this.#context({
-      schemaVersion: 'plugin-context.v2', lease: leaseContract, config: selectedStageConfiguration(definition.type, definition.config, this.#options.approvalTimeoutMinutes, this.#options.prismDesignBudgets, this.#options.reviewPolicyCapture), input: definition.input,
+      schemaVersion: 'plugin-context.v2', lease: leaseContract, config: selectedStageConfiguration(definition.type, definition.config, this.#options.approvalTimeoutMinutes, this.#options.prismDesignBudgets, this.#options.reviewPolicyCapture, this.#options.reviewRuntimeBinding), input: definition.input,
       ...(this.#options.runtimeDispatchProfile ? { runtimeDispatchProfile: this.#options.runtimeDispatchProfile } : {}),
       ...(this.#options.reviewCacheProfile ? { reviewCacheProfile: this.#options.reviewCacheProfile } : {}),
       ...(guidance === undefined ? {} : { guidance }),
