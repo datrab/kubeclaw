@@ -1,3 +1,4 @@
+import { assertBudgetSourceAdmission } from './budget-source-admission.ts';
 import { freeze } from './runner-values.ts';
 import { validateRetainedProviderConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';
 import { ProviderProcessSession, assertCleanupDisposition } from './provider-process-session.ts';
@@ -166,6 +167,7 @@ export class RegisteredTestProviderLoader implements TestProviderLoader {
     // Do not retain an externally mutable reference across asynchronous initialize/cleanup.
     if (invocation.configuration.schemaVersion === 'provider-configuration.v2') invocation = freeze(structuredClone(invocation));
     validateRetainedProviderConfiguration(entry, invocation.configuration, invocation.provider, invocation.evidence);
+    assertBudgetSourceAdmission(invocation.configuration);
     if (signal.aborted) throw signal.reason ?? new Error('TEST_PROVIDER_CANCELLED');
     const provider = new IsolatedLoadedProvider(verifiedSnapshot(entry, workspaceRoot, invocation.attemptId), invocation, workspaceRoot, this.#policy);
     if (signal.aborted) { await provider.discard(); throw signal.reason ?? new Error('TEST_PROVIDER_CANCELLED'); }

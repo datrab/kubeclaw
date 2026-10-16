@@ -1,3 +1,4 @@
+import { assertBudgetSourceAdmission } from './budget-source-admission.ts';
 import { validateRetainedProviderConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -101,6 +102,7 @@ export function prepareRunnerAttempt(owner: PreparationOwner, node: ResolvedPlan
     validateRetainedProviderConfiguration(entry, node.configuration, node.provider, node.evidence);
     const modeErrors = providerPolicyModeErrors(node.configuration, node.mode);
     if (modeErrors.length) throw new Error(`TEST_PROVIDER_SELECTED_POLICY_INVALID:${modeErrors.join(';')}`);
+    assertBudgetSourceAdmission(node.configuration);
     const directories = attemptDirectories(owner, node, attemptNumber);
     const { attemptId, attemptRepositoryRelative, scratchDirectory, evidenceDirectory } = directories;
     const granted = grantedCapabilities(

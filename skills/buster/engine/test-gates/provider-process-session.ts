@@ -1,3 +1,4 @@
+import { assertBudgetSourceAdmission } from './budget-source-admission.ts';
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -71,6 +72,7 @@ export class ProviderProcessSession {
   #resources: ProviderProcessResources = { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 1 };
 
   constructor(entry: TestProviderRegistryEntry, invocation: ProviderInvocationV1, workspaceRootValue: string, policy: BusterProviderRuntimeSettings) {
+    assertBudgetSourceAdmission(invocation.configuration);
     this.#policy = validateBusterProviderRuntimeSettings(policy);
     this.#capabilities = new ProviderCapabilities(this.#policy.provider.maximumPendingCapabilities);
     this.#entry = entry;

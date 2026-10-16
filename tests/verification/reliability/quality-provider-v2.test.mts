@@ -1,3 +1,4 @@
+import {ProviderProcessSession} from '../../../skills/buster/engine/test-gates/provider-process-session.ts';
 import {prepareRunnerAttempt} from '../../../skills/buster/engine/test-gates/runner-attempt-preparation.ts';
 import {spawn} from 'node:child_process';
 import readline from 'node:readline';
@@ -161,4 +162,26 @@ for(const name of ['coverage','size'])test(`${name}: explicit selected map canno
  }
  assert.equal(qualityNode(plan(selected,undefined,name),name).configuration.schemaVersion,'provider-configuration.v2');
  assert.equal(qualityNode(retained,name).configuration.schemaVersion,'provider-configuration.v1');
+});
+
+// QB-R02 has no authenticated inputStore receiver on these production paths.
+// Valid configuration/source metadata alone must not authorize mutable input IO.
+for(const name of ['coverage','size'])test(`${name}: selected v2 cannot execute before original sealed inputStore admission`,async()=>{
+ const node=qualityNode(plan(selection(name),undefined,name),name);
+ const owner={options:{registry},workspaceRoot:'/must-not-create',id:()=>{throw new Error('ATTEMPT_EFFECT');}};
+ assert.throws(()=>prepareRunnerAttempt(owner as any,node,1,new Map()),/^Error: BUDGET_SOURCE_RECEIPT_REQUIRED$/);
+ const entry=registry.testProviderContracts.get(node.provider.contractId)!;
+ const invocation={configuration:node.configuration,provider:node.provider,evidence:node.evidence,inputs:[]};
+ // No initialized loader policy exists: denial must precede snapshot/child work.
+ await assert.rejects(Object.create(RegisteredTestProviderLoader.prototype).load(entry,invocation,'/must-not-create',new AbortController().signal),/^Error: BUDGET_SOURCE_RECEIPT_REQUIRED$/);
+ assert.throws(()=>new ProviderProcessSession(entry,invocation as any,'/must-not-create',undefined as any),/^Error: BUDGET_SOURCE_RECEIPT_REQUIRED$/);
+ // JSON-shaped producer/source labels cannot manufacture store authentication.
+ const fake={...invocation,budgetSourceSnapshot:{schemaVersion:'budget-source-snapshot.v1',producerRunId:'fake',storeVersion:'fake'}};
+ await assert.rejects(Object.create(RegisteredTestProviderLoader.prototype).load(entry,fake,'/must-not-create',new AbortController().signal),/^Error: BUDGET_SOURCE_RECEIPT_REQUIRED$/);
+});
+for(const name of ['coverage','size'])test(`${name}: original v1 preparation still reaches its own unchanged attempt boundary`,()=>{
+ const declaration=(d:any)=>{const n=name==='coverage'?d.suites.unit.add.coverage:d.suites['size-budget'].add['web-assets'];n.config=name==='coverage'?{minimumLinePercent:50}:{maximumTotalBytes:100};};
+ const node=qualityNode(plan(selection(name),declaration,name,null),name);
+ assert.equal(node.configuration.schemaVersion,'provider-configuration.v1');
+ assert.throws(()=>prepareRunnerAttempt({options:{registry},workspaceRoot:'/must-not-create',id:()=>{throw new Error('LEGACY_ATTEMPT_BOUNDARY');}} as any,node,1,new Map()),/LEGACY_ATTEMPT_BOUNDARY/);
 });
