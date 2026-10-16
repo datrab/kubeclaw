@@ -1,0 +1,28 @@
+{
+  "controls": [
+    {
+      "control": "unknown-original-id",
+      "rejected": true,
+      "error": "Duplicate/foreign successor ID: NOT-AN-ORIGINAL-FIELD"
+    },
+    {
+      "control": "duplicate-original-id",
+      "rejected": true,
+      "error": "Duplicate/foreign successor ID: RT-REVIEW-POLICY-GATE-SCHEMAVERSION"
+    },
+    {
+      "control": "missing-owner-pointer",
+      "rejected": true,
+      "error": "'DOES-NOT-EXIST'"
+    },
+    {
+      "control": "classification-drift",
+      "rejected": true,
+      "error": "Original classification changed: RT-REVIEW-POLICY-GATE-SCHEMAVERSION"
+    }
+  ],
+  "restoredPositive": "PASS",
+  "deterministicReplay": true,
+  "outputSha256": "606a0bccc27f43592bc3dddf2e1fce5dde1906f63094ccfc7d1728a857c626aa",
+  "qualification": "Matrix integrity only; no runtime/provider/native acceptance"
+}
