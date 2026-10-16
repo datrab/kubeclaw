@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-16T21:02:40.431635+00:00",
+  "sourceCommit": "ae28461adab80c0bc82a4bcd9046fd8440e64eb2",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-cluster-parity-current-20261016",
+  "change": "Original cluster delivery parity migrated to actual complete central selected authors, both normal chart generators, genuine immutable Buster image bundle/packaged loader/parent-child boot receipts, chart tar packages and topology/RBAC/controller consumers. Revealed and fixed genuine missing rejection of retired busterNamespaceBroker.leaseApiGroup/leaseApiVersion including empty/equal values. No policy values, permissions, graph/auth authority or native behavior changed.",
+  "checks": {
+    "originalParity": {
+      "passed": 1,
+      "total": 1,
+      "failed": 0,
+      "skipped": 0,
+      "qualification": "One composed test retains both original charts and all original malformed policy variants, not one chart subset.",
+      "originalMalformedPoliciesRejected": 269,
+      "chartGeneratorsPerNegative": 2,
+      "actualPackagedRoleBoots": 4,
+      "chartsPerDelivery": 2,
+      "log": "docs/review/remediation/config-cluster-parity-current-20261016/final.txt"
+    },
+    "originalAllRoleDeployment": {
+      "passed": 8,
+      "total": 8,
+      "failed": 0,
+      "skipped": 0,
+      "elapsedSeconds": 135.8,
+      "log": "docs/review/remediation/config-cluster-parity-current-20261016/deployment.txt"
+    },
+    "javascriptSyntax": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "originalResultsChanged": false
+    }
+  },
+  "initialFailuresRetained": [
+    "Original two suites stopped at retired busterComponentFile / missing Prism files/config before target assertions (before.txt).",
+    "Migrated initial fixture inspected obsolete swarm-config rather than actual pipeline-delivery rollout checksum (initial.txt).",
+    "Restored-A fixture initially reserialized original formatted bytes; pin exact test bytes before first build, no generation verifier weakened (second.txt).",
+    "Original retired broker-key rejection exposed genuine missing production helper rejection; fixed actual helper (third.txt).",
+    "Prism schema rejects old broker section before helper with current exact Additional property diagnostic; old/current explicit diagnostic alternatives accepted, rejection unchanged (fourth.txt)."
+  ],
+  "originalObligations": "Both charts; real package archives/exact selected bytes; selected complete profiles; inactive retired chart bytes cannot author policy or alter active projection/rollout; A/B actual received cluster policies and central generation/checksum contrast; CRD/RBAC/controller API group/version; supported versions; original269 invalid policy variants rejected by both whole-author generators and explicit consumed-owner loader; old keys rejected even empty/equal; restored exact A succeeds; private no-alias writes preserve original bytes. No replacement production loader/default refill/receipt exemption.",
+  "providerTimeoutConstraint": "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT remains explicit source residual: optional OpenAICompatibleDesignProvider has only test construction, actual native host uses DeterministicDesignProvider. No productive HTTP provider/model/credential selection invented; no paid provider called. Existing exact constraint in prism-engine-successors.json remains unchanged.",
+  "independentReview": "OPEN: no native spawn/reviewer/collaboration tool exposed by fresh ALL_TOOLS discovery; active/recent CONFIG reviewers0, no new independent result. Known unchanged same-surface app-server initialization EROFS not retried. Author checks do not constitute independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "qualitySealedInputStoreImplemented": false,
+  "qualityProductiveBootImplemented": false,
+  "qualityActivationAllowed": false,
+  "fullC0C6Complete": false,
+  "nextAction": "Genuine QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 activation. Required independent complete-source/original/history/native/fullC0-C6 gates OPEN.",
+  "externalInfrastructure": "UNCHANGED owner Raven; isolated Linux Docker/UID1000/delegated writable cgroup plus sufficiently large genuinely root-trusted writable archive storage; resume required native/archive gates when supplied.",
+  "writerLock": "same nonblocking repository writer lock; released at bounded command exit",
+  "sourceHashes": {
+    "charts/kubeclaw/templates/_swarm-config.tpl": "f0b4ea149cb0700f4c46d5a3c792352becfa6204a267b50ad3178010cbba95b0",
+    "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs": "02327a5dc4f333c1bf941c7bb28fb915fdedb88892ae7fc64daae0515bc48cd2"
+  }
+}

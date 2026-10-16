@@ -1,0 +1,30 @@
+✖ both actual charts, packaged role boot and loader enforce shared cluster invoker policy (19893.070804ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20434.393623
+
+✖ failing tests:
+
+test at tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:20:1
+✖ both actual charts, packaged role boot and loader enforce shared cluster invoker policy (19893.070804ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" not to be strictly deep-equal to:
+  
+  [
+    '72d45c048c4907fc400e2a226ccd6b64637d79b7e0e39a1dfbbbccfbb132d885'
+  ]
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:145:114)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '72d45c048c4907fc400e2a226ccd6b64637d79b7e0e39a1dfbbbccfbb132d885' ],
+    expected: [ '72d45c048c4907fc400e2a226ccd6b64637d79b7e0e39a1dfbbbccfbb132d885' ],
+    operator: 'notDeepStrictEqual',
+    diff: 'simple'
+  }
