@@ -1,0 +1,79 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 7.89,
+    "log": "before.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 13.89,
+    "log": "after.txt"
+  },
+  {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "docs/review/remediation/config-admission-readiness-original-20261016/tsconfig.json"
+    ],
+    "exitCode": 2,
+    "seconds": 3.94,
+    "log": "typecheck-initial.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "seconds": 2.73,
+    "log": "roster.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.26,
+    "log": "diff.txt"
+  },
+  {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "docs/review/remediation/config-admission-readiness-original-20261016/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 3.6,
+    "log": "typecheck.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.06,
+    "log": "diff.txt"
+  }
+]

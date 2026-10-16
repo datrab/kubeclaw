@@ -1,0 +1,15 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "../../../../tests/fixtures/test-gate/buster-admission.mts",
+    "../../../../tests/fixtures/test-gate/buster-readiness-profile.mts",
+    "../../../../tests/verification/reliability/buster-admission-config.test.mts",
+    "../../../../tests/verification/reliability/buster-readiness-consumer.test.mts",
+    "../../../../tests/verification/reliability/buster-shutdown-storage.test.mts"
+  ]
+}

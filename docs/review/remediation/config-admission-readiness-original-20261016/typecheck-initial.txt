@@ -1,0 +1,1 @@
+tests/fixtures/test-gate/buster-readiness-profile.mts(6,28): error TS7016: Could not find a declaration file for module './buster-cli-profile.mjs'. '/home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-cli-profile.mjs' implicitly has an 'any' type.
