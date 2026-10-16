@@ -1,0 +1,24 @@
+✔ actual extraction rejects a same-input alias before reservation and captures caller input (68.590102ms)
+✔ different inputs reach the actual reservation boundary in parallel within authored capacity (5.225768ms)
+✔ actual extraction releases coordination after thrown reservation work (3.577714ms)
+✔ actual extraction releases coordination after aborted reservation work (3.071091ms)
+✔ prepared source accepts valid identity and rejects JSON scalar coercion (1.190412ms)
+✔ staged input accepts valid identity and rejects JSON scalar coercion (16.126844ms)
+✔ cleanup effects accepts valid identity and rejects JSON scalar coercion (0.297598ms)
+✔ cleanup gate digest cannot be coerced from a JSON array (0.263207ms)
+✔ recovered source reference remains bound to the originally accepted extraction header (60.122219ms)
+✔ real ledger serializes competing admissions into exactly two fixed slots (111.823768ms)
+✔ admission reserves a future cleanup record inside the original record quota (42.980429ms)
+✔ profile, clock and settings ownership is captured before waiting on a real writer lock (25.922281ms)
+✔ malformed persisted cleanup association is rejected without rewriting bytes (28.818597ms)
+✔ readiness policy is required and strictly validated at file and direct boundaries (131.510595ms)
+✔ readiness policy captures immutable values rather than retaining the caller object (0.190615ms)
+✔ retired runtime JSON readiness author is rejected even when equal, empty or null (0.319799ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3989.39678

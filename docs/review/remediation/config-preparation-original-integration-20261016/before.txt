@@ -1,0 +1,99 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375
+  throw new Error('SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture');
+        ^
+
+Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+    at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+    at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+    at loadBusterPreparationSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:325:10)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-extraction-concurrency.test.mts:19:18
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ tests/verification/reliability/buster-extraction-concurrency.test.mts (1028.344422ms)
+✔ prepared source accepts valid identity and rejects JSON scalar coercion (1.194881ms)
+✔ staged input accepts valid identity and rejects JSON scalar coercion (17.49506ms)
+✔ cleanup effects accepts valid identity and rejects JSON scalar coercion (0.312919ms)
+✔ cleanup gate digest cannot be coerced from a JSON array (0.270887ms)
+✖ recovered source reference remains bound to the originally accepted extraction header (0.305288ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375
+  throw new Error('SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture');
+        ^
+
+Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+    at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+    at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+    at loadBusterPreparationSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:325:10)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-preparation-ledger.test.mts:13:18
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ tests/verification/reliability/buster-preparation-ledger.test.mts (642.684878ms)
+✖ readiness policy is required and strictly validated at file and direct boundaries (2.629859ms)
+✔ readiness policy captures immutable values rather than retaining the caller object (0.813861ms)
+✔ retired runtime JSON readiness author is rejected even when equal, empty or null (0.297108ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 6
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3365.71971
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-extraction-concurrency.test.mts:1:1
+✖ tests/verification/reliability/buster-extraction-concurrency.test.mts (1028.344422ms)
+  'test failed'
+
+test at tests/verification/reliability/buster-preparation-identities.test.mts:63:1
+✖ recovered source reference remains bound to the originally accepted extraction header (0.305288ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at loadBusterPreparationSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:325:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-preparation-identities.test.mts:64:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/buster-preparation-ledger.test.mts:1:1
+✖ tests/verification/reliability/buster-preparation-ledger.test.mts (642.684878ms)
+  'test failed'
+
+test at tests/verification/reliability/buster-readiness-config.test.mts:12:1
+✖ readiness policy is required and strictly validated at file and direct boundaries (2.629859ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-config.test.mts:25:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-config.test.mts:25:29
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-config.test.mts:25:16)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }

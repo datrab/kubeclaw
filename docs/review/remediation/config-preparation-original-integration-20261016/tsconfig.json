@@ -1,0 +1,14 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "../../../../tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "../../../../tests/verification/reliability/buster-preparation-identities.test.mts",
+    "../../../../tests/verification/reliability/buster-extraction-concurrency.test.mts",
+    "../../../../tests/verification/reliability/buster-readiness-config.test.mts"
+  ]
+}

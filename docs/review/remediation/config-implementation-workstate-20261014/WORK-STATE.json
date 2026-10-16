@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T22:58:43.811154+00:00",
+  "updatedAt": "2026-10-16T23:04:28.399850+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "FINAL_ORIGINAL_WORKSPACE_61_OF_61_PASS_NOT_FULL_ACCEPTANCE",
+  "status": "ORIGINAL_PREPARATION_AND_READINESS_16_OF_16_PASS_NOT_FULL_ACCEPTANCE",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Complete genuine QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and authenticated sole-root/all-profile/schema/file-set/boot+Nova receiving. Preserve BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Final original workspace command61/61 exit0 is closed; independent complete-source/original/history/native/archive/full C0-C6 remain OPEN.",
+  "nextAction": "Continue original admission/readiness/shutdown fixtures through same complete selected owner; no full-facade reconstruction. Complete genuine QB-R02 and authenticated sole-root/boot+Nova receiving without denied-v10 promotion; independent complete-source/original/history/native/archive/fullC0-C6 OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -24515,6 +24515,62 @@
     "productiveQualityBootImplemented": false,
     "externalOwner": "Raven",
     "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000 host with delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL; no trust/UID/kernel spoof or skipped acceptance.",
+    "noHistoricalFollowup": true
+  },
+  "preparationOriginalIntegration20261016": {
+    "at": "2026-10-16T23:04:28.399850+00:00",
+    "status": "ORIGINAL_PREPARATION_AND_READINESS_16_OF_16_PASS_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "8a9d421dc3c1f4e1fc38bcace52e6a46be7241e7",
+    "verifiedRemoteHead": "8a9d421dc3c1f4e1fc38bcace52e6a46be7241e7",
+    "sourceRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-preparation-original-integration-20261016",
+    "change": "Four original preparation/readiness suites now load complete current raw central authors, validate all profiles and capture actual buster-runtime consumed-owner tuple. Real preparation ledger reservations/record quota, extraction coordination and original-header recovery decoder tests preserved. Readiness malformed policy and exact boundary values reach real selected file loader plus direct validator, not retired facade. No new production defaults, synthetic boot receipt, source/store receipt, grants or denied-v10 activation.",
+    "checks": {
+      "originalTests": {
+        "total": 16,
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "strictTypecheck": true,
+      "diffCheck": true,
+      "originalRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "integrityFailures": 0,
+        "fullAcceptance": "OPEN"
+      }
+    },
+    "sourceHashes": {
+      "tests/verification/reliability/buster-preparation-ledger.test.mts": "3d968d7959604f29345b57cf46354e269affb9e4957dbb311cd7fb4a7bf81213",
+      "tests/verification/reliability/buster-preparation-identities.test.mts": "dce30e3b46925153cc4bc013ba2d7e02bb710b1b11797ad1d3dd5ac5427ecd74",
+      "tests/verification/reliability/buster-extraction-concurrency.test.mts": "7fff7a43f787d9a70a5ba94bc3f5d22a4dd369c8cfba4b207b3c2f93e8fafeb4",
+      "tests/verification/reliability/buster-readiness-config.test.mts": "675d821ffb4738511505432823e40d36ad1e4ece2254d49710cbb110a462d4bc"
+    },
+    "retainedFailure": "before.txt: original suites failed at retired SWARM_CONFIG full facade before exercising their original obligations; after.txt16/16 all original assertions retained.",
+    "independentReview": "OPEN: no callable native reviewer/spawn tool in fresh discovery; CONFIG subagents0, parent done, no new reviewer output. Existing same-surface app-server EROFS unchanged, not retried. Author tests are not independent/native acceptance.",
+    "QB_R02_constraint": {
+      "actualBoundary": "runner-attempt-preparation.invocationInputs retains original AttemptResultV1 but projects only ResolvedInputV1.artifact metadata. artifacts.ts EvidenceStore exposes only store(attemptId,evidenceRoot,declaration,maximumBytes,signal); FileEvidenceStore publishes digest/size/storageUrl. No inputStore-owned reserve/seal/storeVersion/prepublication validity API at this boundary.",
+      "required": "Continue genuine original prepared source/build/producer/baseline association and existing input-store ownership/reservation/accounting through sealed input and publication. Do not invent receipt fields from task metadata, a private store author or parallel ledger. Defined contract is not missing design approval.",
+      "activationFence": "BUDGET_SOURCE_RECEIPT_REQUIRED retained unchanged."
+    },
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "remainingOriginalConsumers": [
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/fixtures/test-gate/buster-readiness-profile.mts",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts"
+    ],
+    "nextAction": "Continue original admission/readiness/shutdown fixtures through same complete selected owner; no full-facade reconstruction. Complete genuine QB-R02 and authenticated sole-root/boot+Nova receiving without denied-v10 promotion; independent complete-source/original/history/native/archive/fullC0-C6 OPEN.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped gates.",
+    "writerLock": "SAME nonblocking shared lock; released at script exit",
     "noHistoricalFollowup": true
   }
 }

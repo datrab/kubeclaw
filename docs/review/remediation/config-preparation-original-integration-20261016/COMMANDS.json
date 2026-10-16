@@ -1,0 +1,60 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-preparation-ledger.test.mts",
+      "tests/verification/reliability/buster-preparation-identities.test.mts",
+      "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+      "tests/verification/reliability/buster-readiness-config.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 3.4213920230977237,
+    "log": "before.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-preparation-ledger.test.mts",
+      "tests/verification/reliability/buster-preparation-identities.test.mts",
+      "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+      "tests/verification/reliability/buster-readiness-config.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 4.030679085757583,
+    "log": "after.txt"
+  },
+  {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "docs/review/remediation/config-preparation-original-integration-20261016/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 2.8207948240451515,
+    "log": "typecheck.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "seconds": 2.8688752916641533,
+    "log": "roster.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.2719889716245234,
+    "log": "diff.txt"
+  }
+]
