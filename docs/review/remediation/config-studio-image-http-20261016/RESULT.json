@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-16T23:52:39.749681+00:00",
+  "status": "STUDIO_FINAL_IMAGE_HTTP_SOURCE_GATE_RESTORED_RUNTIME_NOT_VERIFIED",
+  "sourceCommit": "8f5a0e6ac0c04984f80bfb9eeec901d3bc25a818",
+  "sourceRemoteVerified": true,
+  "verifiedRemoteHead": "8f5a0e6ac0c04984f80bfb9eeec901d3bc25a818",
+  "evidence": "docs/review/remediation/config-studio-image-http-20261016",
+  "change": "Original HTTP/canonical suites restored in final Docker stage USER node and built-candidate verification. Four genuine build-published generations use the identical installed role and genuine producer; runtime only authenticates immutable receipts. Fixed isolated loopback ports, actual UID1000 guard, no alternate installed-code locator. Only original post-publication source mutation input is handed to node; package/generation/receipts stay root-owned. Proof builder included in normal image/deployment input detection. Original assertions unchanged.",
+  "checks": {
+    "originalHTTP": {
+      "passed": 11,
+      "total": 11,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "original-http.txt"
+    },
+    "genuinePublishedGenerationReadbacks": {
+      "passed": 4,
+      "total": 4,
+      "each": "receipt/settings, snapshot after actual source mutation, wrong-selection negative",
+      "log": "published-readback.txt",
+      "qualification": "Local UID0 readback, NOT image-user/native acceptance"
+    },
+    "strictTypecheck": {
+      "exitCode": 0,
+      "log": "typecheck-final.txt"
+    },
+    "syntaxAndDiff": true,
+    "deploymentTruth": {
+      "exitCode": 1,
+      "log": "deployment-truth-final.txt",
+      "studioGates": "PASS, including actual publisher/build path/normal input detection/original candidate invocation",
+      "remainingFailure": "the host-native observer must receive its required runtime configuration: old literal-config regex now meets centrally supplied .Values.agentObserverPolicy; original receiving obligation retained"
+    },
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "acceptance": "OPEN"
+    }
+  },
+  "initialFailuresRetained": [
+    "First proof builder attempted chown but local capabilities are zero: EPERM. Ownership handoff moved to genuine Docker image root stage, only unused mutation-source files. Final genuine proof generation passed.",
+    "Actual runuser -u node -- id fails: cannot set groups: Operation not permitted. No UID/kernel/trust spoof. Docker/image-user execution NOT VERIFIED."
+  ],
+  "independentReview": "OPEN; native spawn/reviewer not exposed, CONFIG subagents0, no fresh result; known unchanged same-surface app-server EROFS not retried. Author checks are not independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Migrate remaining original deployment-truth Observer assertion to actual sole selected central owner/rendered receiver without weakening original required fields; continue genuine QB-R02 producer/build/source/baseline/inputStore ownership/accounting/sealed snapshots/publication and sole-root/boot+Nova receiving. Every original/history/native/archive/independent gate stays OPEN.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Isolated Linux Docker UID1000/GID1000 delegated writable cgroup; sufficient genuinely root-trusted writable archive storage and migrated isolated PostgreSQL. Actual image-user tests require Docker or authentic UID1000 execution surface; local CapEff/CapBnd0 and no Docker cannot supply it.",
+  "writerLock": "SAME nonblocking repository lock held for changes/checks/commit/push; released on command exit",
+  "noHistoricalFollowup": true,
+  "sourceHashes": {
+    ".dockerignore": "432ef42964f601b266e259ad96b314b16aed086bcbb65e8030eabf26c367b299",
+    "docker/Dockerfile.prism-studio": "fe69e344b063a4c6186766d58ebc0f4e8949a18d7e437eca901a592652480ffe",
+    "scripts/build-studio-image-proof.mjs": "01802357decf28b73064a85546fe778920eaeab1b126d28843397a7d93b66977",
+    "scripts/check-built-runtime-image.sh": "bfd66104e4e7248b24c17756971f54d4ff5f5ae4070d9648933f13bb326b94cb",
+    "scripts/updates/runtime-inputs.mjs": "c42f6f665ecef3ab9a9389d4929eed5b6fefd590f320304ea136b1a30a0ac89d",
+    "skills/prism/tests/fixtures/studio-service.mts": "ffb71f7c9ad88404ae7b522e93ae5113ac39ccd10014c11dece899b97b62d48d",
+    "skills/prism/tests/studio-canonical-image.mts": "d819135b971208ab9967d1c1a4798c7a8603c84eda551e3b3268dbbd04618c17",
+    "tests/verification/deployment/check-deployment-truth.mjs": "4c2b812895109e747c6cf14ebde3feb1112c0e96a94982fe32a45199021d34c9"
+  }
+}
