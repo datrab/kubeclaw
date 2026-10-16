@@ -1,4 +1,7 @@
 import crypto from 'node:crypto';
+import { freeze } from './runner-values.ts';
+import { assertBusterInput } from './preparation-input.ts';
+import { assertPreparedSource, preparationDigest } from './preparation-header.ts';
 import path from 'node:path';
 import { ensureDirectoryDurable } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
 import { remotePlanResultDigest, remotePlanResultReceipt, validatePipelineTestGateContract,
@@ -43,13 +46,21 @@ async function runPlan(options: BusterRemotePlanServiceOptions, job: PreparedPla
 /** Accepted wire and source publication precede mutable per-attempt execution. */
 export async function executeBusterPreparedJob(options: BusterRemotePlanServiceOptions,
   prepared: BusterStagedAdmission, signal: AbortSignal, now: () => Date): Promise<void> {
+  // Keep the existing accepted wire/source/producer closure through asynchronous
+  // extraction, publication and cleanup. Readonly types do not isolate ownership.
+  prepared = freeze(structuredClone(prepared));
   const { job } = prepared;
   try {
-    const extracted = await options.preparation.extract(prepared);
+    assertBusterInput(prepared.input, job);
+    const extracted = freeze(structuredClone(await options.preparation.extract(prepared)));
+    assertPreparedSource(extracted.source, job);
+    if (preparationDigest(extracted.job) !== prepared.input.headerDigest) {
+      throw new Error('BUSTER_PREPARATION_HEADER_CHANGED');
+    }
     await options.store.attachSource(extracted);
     await options.store.transition(job.jobId, ['accepted'], 'running', now().toISOString());
     const paths = await executionPaths(options, job.jobId, extracted.source);
-    const run = await runPlan(options, job, paths, signal);
+    const run = freeze(structuredClone(await runPlan(options, job, paths, signal)));
     if (run.cleanupErrors.length === 0 && run.attempts.every(attempt => attempt.executionState === 'completed')) {
       await cleanupTerminalWorkspace(paths.jobRoot);
     }
