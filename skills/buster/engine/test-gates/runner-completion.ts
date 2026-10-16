@@ -5,7 +5,7 @@ import { producerRecordDigest } from '@kubeclaw/pipeline-observability-contract'
 import { createProducerClosure, scopedEvidenceId, type FileDurableAttemptStore } from '@kubeclaw/plugin-foundation/observability/durable-attempts';
 import type { FileObservabilityAdmissionStore } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
 import type { TestPlanRunnerOptions } from './runner-types.ts';
-import { receipt } from './runner-values.ts';
+import { receipt, freeze } from './runner-values.ts';
 import { readManagedEvidence } from './runner-managed-evidence.ts';
 
 export interface CompletionOwner {
@@ -93,8 +93,9 @@ async function storeCompletionEvidence(owner: CompletionOwner, envelope: WorkerA
     let remainingEvidenceBytes = envelope.limits.evidenceBytes;
     for (const evidence of result.evidence) {
       const content = await readManagedEvidence(owner.options.artifactRoot,
-        evidence.artifact.storageUrl,
+        evidence.artifact,
         remainingEvidenceBytes,
+        owner.options.signal,
       );
       remainingEvidenceBytes -= content.byteLength;
       durableEvidence.push(
@@ -201,8 +202,14 @@ async function admitCompletion(owner: CompletionOwner, envelope: WorkerAttemptEn
 
 export async function persistRunnerCompletion(owner: CompletionOwner,
   envelope: WorkerAttemptEnvelopeV1, result: WorkerAttemptResultV1) {
+  // Preserve the already-authenticated worker result before asynchronous reads
+  // and store writes; do not let a caller change the producer receipt or outputs.
+  envelope = freeze(structuredClone(envelope));
+  result = freeze(structuredClone(result));
+  owner.options.signal?.throwIfAborted();
   const identity = completionProducer(envelope, result);
   const evidence = await storeCompletionEvidence(owner, envelope, result, identity.producer);
+  owner.options.signal?.throwIfAborted();
   const durableResult = completionResult(owner, result, evidence, identity.bootHash);
   const intent = completionIntent(owner, envelope, durableResult, identity);
   await owner.attemptStore.storeResult(envelope.pipelineRunId, durableResult, intent,
