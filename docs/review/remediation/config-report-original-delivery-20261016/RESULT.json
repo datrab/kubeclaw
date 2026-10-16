@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-16T23:29:25.195852+00:00",
+  "status": "ORIGINAL_REPORT_DELIVERY_AND_CONSUMERS_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "c05dffac13afaaba0a71eaa5c1dff5d5a34aa068",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-report-original-delivery-20261016",
+  "change": "Original report parity now validates complete central runtime author through both actual chart generators, normal Buster image build and actual packaged preparation boot/child handoff. All three original valid profiles, original40 malformed field policies and2 incoherent profiles retained. Private file/inode isolation, both Helm packages, retired author inertness/locator rejection, generation/checksum A/B/restored-A preserved. Original runtime/runner/consumer suites unchanged.",
+  "checks": {
+    "originalTestOutput": "tests.txt",
+    "originalMalformedPolicies": 42,
+    "originalValidProfiles": 3,
+    "packagedRoleBoots": 4,
+    "chartsPerDelivery": 2,
+    "syntax": true,
+    "diffCheck": true,
+    "rosterOutput": "roster.txt"
+  },
+  "independentReview": "OPEN; native spawn/reviewer unavailable, CONFIG subagents0; unchanged same-surface EROFS not retried. Author checks are not independent/native acceptance.",
+  "sourceHashes": {
+    "tests/verification/contracts/buster-report-policy-parity.test.mjs": "b22c34171d1bab6a8d741d5d44a9f6f37fca20c3bda646e93bdbf9b1a9becf27"
+  },
+  "originalCasesNewlyAccepted": 0,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allSemanticObligationsAccepted": false
+  },
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Continue genuine QB-R02 original source/build/baseline/inputStore association, reservation/accounting/sealed snapshot/publication and authenticated coordinated sole-root/boot+Nova receiving. Remaining original fixture source boundaries and all independent/native/full C0-C6 gates remain OPEN. Do not replay unchanged report checks.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Isolated Linux Docker UID1000/GID1000/delegated writable cgroup; sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped acceptance.",
+  "writerLock": "SAME shared nonblocking lock held through commit/push; released on command exit",
+  "noHistoricalFollowup": true
+}
