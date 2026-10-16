@@ -1,7 +1,7 @@
 import { resolveTestPlan } from '../../../skills/nova/core/test-gates/resolver.ts';
 import { validatePipelineTestGateContract } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
 import { QUALITY_TASK_SCHEMA_DIGEST, remotePlanDigest } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
-import { inspectPipelineV10QualityRegistryConfiguration } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts';
+import { inspectPipelineV10QualityRegistryConfiguration, inspectPipelineV10QualityServiceSelection } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -446,7 +446,7 @@ test('pure Platform preparation rejects implicit/noncanonical base and missing s
 
 test('Core source closure reports exact captured raw subset and explicit7missing sources, never canonical/source authority',t=>{
  const f=capture(tree(t),replacements);t.after(f.capture.close);const r=inspectPipelineV10CoreSourceClosure(f.capture);
- assert.equal(r.declaredMemberCount,448);assert.equal(r.observed.length,3);assert.equal(r.missing.length,7);
+ assert.equal(r.declaredMemberCount,449);assert.equal(r.observed.length,3);assert.equal(r.missing.length,7);
  assert.deepEqual(r.observed.map(x=>x.relativePath),[
   'source-current/skills/common/plugin-runtime/foundation/config/platform.schema.json',
   'source-current/skills/nova/core/execution/engine-runtime.ts','source-current/skills/nova/project/compiler.ts']);
@@ -678,7 +678,7 @@ test('captured Core project candidate consumes ONLY exact selected policy from S
    const expected=compileProjectWithCompilerPolicyCandidate(task,owner.profiles[profileId].settings.projectCompiler,encoding,encoding);
    assert.deepEqual(candidate.definition,expected.definition);assert.equal(candidate.runId,task.runId);assert.deepEqual(candidate.selectedCore.selection,document.novaCoreSelection);assert.deepEqual(candidate.selectedCore.settings,owner.profiles[profileId].settings);
    assert.equal(candidate.coreInspection.rootRawSha256,createHash('sha256').update(bytes).digest('hex'));assert.equal(candidate.coreInspection.inputGenerationSha256,f.capture.inputGenerationSha256);
-   assert.equal(candidate.coreInspection.sourceInspection.declaredMemberCount,448);assert.equal(candidate.coreInspection.sourceInspection.missing.length,7);
+   assert.equal(candidate.coreInspection.sourceInspection.declaredMemberCount,449);assert.equal(candidate.coreInspection.sourceInspection.missing.length,7);
    for(const key of ['originalAuthorizationVerified','activationAllowed','sourceClosureVerified','profileDigestVerified','canonicalAuthorPathVerified','taskAuthorizationVerified','originalRunAuthorizationVerified','callerAuthorizationVerified','c3AuthorizationVerified']as const)assert.equal(candidate[key],false);
   }}finally{f.capture.close();}
  }
@@ -793,6 +793,15 @@ test('Quality complete physical A/B generation reaches Nova plan and retained A 
   try{
    const sourceRoot=path.join(root,'source-current/skills/buster/plugins');
    const registry=buildRegistry(discoverPackages({installationRoots:[sourceRoot,helpers],trustPolicy:{trustedBuiltinRoots:[sourceRoot,helpers],allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'quality-physical-generation-plan'}}));
+   const qualityTuples=document.pluginSelections.filter((tuple:any)=>['kubeclaw.size-budget','kubeclaw.coverage-budget'].includes(tuple.packageId));
+   const services=[...new Set(qualityTuples.map((tuple:any)=>tuple.serviceInstanceId))] as string[];
+   assert.equal(services.length,1);
+   const selected=inspectPipelineV10QualityServiceSelection(services[0]!,registry,f.capture);
+   assert.equal(selected.activationAllowed,false);assert.equal(selected.selectedProviderPolicies.size,2);
+   assert.equal(Object.hasOwn(selected.selectedProviderPolicies,'set'),false);
+   assert.throws(()=>inspectPipelineV10QualityServiceSelection('wrong-service',registry,f.capture),/QUALITY_SERVICE_SELECTIONS/);
+   for(const [contractId,policy] of selected.selectedProviderPolicies){assert.ok(Object.isFrozen(policy.processing));assert.equal(policy.binding.profileId,profileId);}
+   selected.selectedProviderPolicies.forEach((policy,key,map)=>{assert.equal(map,selected.selectedProviderPolicies);assert.equal(map.get(key),policy);assert.equal(Object.hasOwn(map,'clear'),false);});
    for(const value of providerCandidates(f).filter((v:any)=>['kubeclaw.size-budget@1','kubeclaw.coverage-budget@1'].includes(v.contractId))){
     const inspected=inspectPipelineV10QualityRegistryConfiguration(Buffer.from(JSON.stringify(value)),registry,f.capture);
     assert.equal(inspected.activationAllowed,false);
@@ -802,7 +811,7 @@ test('Quality complete physical A/B generation reaches Nova plan and retained A 
     const coverage=value.contractId==='kubeclaw.coverage-budget@1';
     const declaration=read(path.join(repository,'contracts/pipeline-test-gate/v1/examples',coverage?'unit-suite-with-coverage.json':'size-budget-tar.json'));
     const taskNode=coverage?declaration.suites.unit.add.coverage:declaration.suites['size-budget'].add['web-assets'];taskNode.config={};taskNode.mode='blocking';
-    const resolve=()=>resolveTestPlan({planId:'plan:physical-quality',runId:'run:physical-quality',project:'quality',scope:{moduleId:'module',gateId:null},createdAt:'2026-10-16T18:00:00Z',declaration,suiteTemplates:suites,registry,facts:{changedPaths:[],moduleType:null,pipelineStage:null},selectedProviderPolicies:new Map([[value.contractId,configuration.selectedPolicy]]),policy:{defaultTimeoutMs:30000,maximumTimeoutMs:900000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:3,maximumMatrixSize:16,maximumNodes:100,defaultConcurrencyLimit:4,maximumConcurrencyLimits:{unit:8,'size-budget':8}}});
+    const resolve=()=>resolveTestPlan({planId:'plan:physical-quality',runId:'run:physical-quality',project:'quality',scope:{moduleId:'module',gateId:null},createdAt:'2026-10-16T18:00:00Z',declaration,suiteTemplates:suites,registry,facts:{changedPaths:[],moduleType:null,pipelineStage:null},selectedProviderPolicies:selected.selectedProviderPolicies,policy:{defaultTimeoutMs:30000,maximumTimeoutMs:900000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:3,maximumMatrixSize:16,maximumNodes:100,defaultConcurrencyLimit:4,maximumConcurrencyLimits:{unit:8,'size-budget':8}}});
     const plan=resolve(),node=plan.nodes.find(n=>n.provider.contractId===value.contractId)!;
     assert.deepEqual(node.configuration,configuration);assert.deepEqual(node.evidence,configuration.selectedPolicy.declarations.evidenceDefaults);
     assert.equal(configuration.selectedPolicy.binding.profileId,profileId);
@@ -823,4 +832,39 @@ test('Quality complete physical A/B generation reaches Nova plan and retained A 
   }finally{f.capture.close();}
  }
  assert.equal(retained.size,2);
+});
+
+
+test('Quality complete service receiving rejects missing, duplicate and split-service tuples before returning policies',t=>{
+ for(const change of ['missing','duplicate','split']){
+  const root=tree(t),file=path.join(root,'config/pipeline.config.json'),document=JSON.parse(rootBytes.toString());
+  const index=document.pluginSelections.findIndex((tuple:any)=>tuple.packageId==='kubeclaw.size-budget');
+  const service=document.pluginSelections[index].serviceInstanceId;
+  if(change==='missing')document.pluginSelections.splice(index,1);
+  if(change==='duplicate')document.pluginSelections.push(structuredClone(document.pluginSelections[index]));
+  if(change==='split')document.pluginSelections[index].serviceInstanceId='foreign-service';
+  const bytes=Buffer.from(JSON.stringify(document));fs.writeFileSync(file,bytes);
+  const f=capture(root,[row('config/pipeline.config.json',bytes),replacements[1]!]);t.after(f.capture.close);
+  // This malformed local raw capture has no admitted root/issuer authority.
+  assert.throws(()=>inspectPipelineV10QualityServiceSelection(service,{} as any,f.capture),/QUALITY_SERVICE_SELECTIONS/);
+ }
+});
+
+test('Quality service map requires both real registry packages and exact retained C3 reference bytes; no partial map escapes',t=>{
+ const root=tree(t),f=capture(root,replacements);t.after(f.capture.close);
+ const sourceRoot=path.join(root,'source-current/skills/buster/plugins');
+ const registry=buildRegistry(discoverPackages({installationRoots:[sourceRoot],trustPolicy:{trustedBuiltinRoots:[sourceRoot],allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'quality-service-receiving'}}));
+ const document=JSON.parse(rootBytes.toString()),service=document.pluginSelections.find((tuple:any)=>tuple.packageId==='kubeclaw.size-budget').serviceInstanceId;
+ const complete=inspectPipelineV10QualityServiceSelection(service,registry,f.capture);
+ const withoutCoverage={...registry,testProviderContracts:new Map([...registry.testProviderContracts].filter(([id])=>id!=='kubeclaw.coverage-budget@1'))};
+ assert.throws(()=>inspectPipelineV10QualityServiceSelection(service,withoutCoverage,f.capture),/QUALITY_REGISTRY_MANIFEST/);
+ const relative='schemas/provider03/c3-registry-peer-reference-contract.json',file=path.join(root,relative),before=fs.readFileSync(file);
+ for(const policy of complete.selectedProviderPolicies.values())assert.equal(policy.binding.c3ReferenceContractDigest,'sha256:'+createHash('sha256').update(before).digest('hex'));
+ let changed=false;
+ const racing={...f.capture,read:(name:string)=>{const bytes=f.capture.read(name);if(!changed&&name===relative){changed=true;fs.appendFileSync(file,' ');}return bytes;}};
+ assert.throws(()=>inspectPipelineV10QualityServiceSelection(service,registry,racing),/PIPELINE_INPUT_CHANGED/);assert.equal(changed,true);
+ // Already returned original snapshots stay immutable but acquire NO grant.
+ assert.equal(complete.activationAllowed,false);assert.equal(complete.selectedProviderPolicies.size,2);
+ f.capture.close();fs.writeFileSync(file,before);const restored=capture(root,replacements);t.after(restored.capture.close);
+ assert.deepEqual([...inspectPipelineV10QualityServiceSelection(service,registry,restored.capture).selectedProviderPolicies],[...complete.selectedProviderPolicies]);
 });

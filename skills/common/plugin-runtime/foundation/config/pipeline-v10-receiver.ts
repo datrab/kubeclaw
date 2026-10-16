@@ -1,4 +1,4 @@
-import { QUALITY_TASK_SCHEMA_DIGEST, remotePlanDigest, validatePipelineTestGateContract, type ProviderConfigurationV2 } from '@kubeclaw/pipeline-test-gate-contract';
+import { QUALITY_TASK_SCHEMA_DIGEST, remotePlanDigest, validatePipelineTestGateContract, type ProviderConfigurationV2, type SelectedProviderPolicyV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { resolveTestProviderConfiguration } from '../registry/configuration.ts';
 import { isDeepStrictEqual } from 'node:util';
 import { computePackageFileSetDigest } from '../registry/digest.ts';
@@ -474,4 +474,78 @@ export function inspectPipelineV10QualityRegistryConfiguration(output: Uint8Arra
   inputs.assertCurrent();
   return Object.freeze({ ...identity, configuration, registrySourceCoherent: true as const,
     installedSourceAuthorizationVerified: false as const, callerAuthorizationVerified: false as const });
+}
+
+/** Complete service-scoped Quality selection from ONE retained input set.
+ * No caller-authored policy/output is accepted. This is a nonactivating source
+ * projection for the existing Nova map seam, NOT boot/caller authentication.
+ * All selected owners/profiles/registry joins succeed before any map escapes.
+ */
+export function inspectPipelineV10QualityServiceSelection(serviceInstanceId: string, registry: RegistrySnapshot,
+  inputs: Pick<ReturnType<typeof capturePipelineInputSet>, 'inputGenerationSha256' | 'read' | 'assertCurrent'>) {
+  requireBinding(typeof serviceInstanceId === 'string' && serviceInstanceId.length > 0, 'QUALITY_SERVICE');
+  inputs.assertCurrent();
+  const rootBytes = inputs.read('config/pipeline.config.json'), root = parse(rootBytes);
+  requireBinding(root.schemaVersion === 'pipeline-entry.v10' && Array.isArray(root.pluginSelections), 'ROOT_VERSION');
+  const packages = ['kubeclaw.size-budget', 'kubeclaw.coverage-budget'];
+  const tuples = root.pluginSelections.filter((tuple: any) => packages.includes(tuple.packageId)
+    && tuple.serviceInstanceId === serviceInstanceId);
+  requireBinding(tuples.length === packages.length && packages.every(packageId =>
+    tuples.filter((tuple: any) => tuple.packageId === packageId && tuple.kind === 'test-provider').length === 1), 'QUALITY_SERVICE_SELECTIONS');
+  const sources = JSON.parse(fs.readFileSync(new URL('./pipeline-v10-plugin-schemas.json', import.meta.url), 'utf8'));
+  const arms = (catalog.provider.schema as any).oneOf;
+  const configurations: ProviderConfigurationV2[] = [];
+  for (const tuple of tuples) {
+    const source = sources.packages[tuple.packageId];
+    requireBinding(source && source.ownerPath === tuple.ownerPath, 'PROVIDER_SOURCE');
+    const manifest = parse(inputs.read(source.manifestPath));
+    const declarations = manifest.testProviders.filter((row: any) => `${manifest.id}:${row.id}` === tuple.registrationId);
+    requireBinding(declarations.length === 1, 'MANIFEST_REGISTRATION');
+    const contractId = declarations[0].contractId;
+    const arm = arms.find((row: any) => row.properties.contractId.const === contractId);
+    requireBinding(arm, 'QUALITY_CONTRACT');
+    const ownerBytes = inputs.read(`config/${source.ownerPath}`), owner = parse(ownerBytes);
+    const profile = owner.profiles[tuple.profileId];
+    requireBinding(profile, 'OWNER_PROFILE');
+    // Fixed ABI constants (reader identity) come from the SAME
+    // reviewed receiver arm, never from a historical example/default policy.
+    const properties = arm.properties.selectedPolicy.properties.binding.properties;
+    const binding: Record<string, unknown> = {};
+    for (const [key, schema] of Object.entries(properties) as [string, any][]) {
+      if (schema.const !== undefined) binding[key] = schema.const;
+      if (Object.hasOwn(tuple, key)) binding[key] = tuple[key];
+    }
+    const schemaName = source.provenance.schemaPath.split('/schemas/')[1];
+    requireBinding(schemaName && !schemaName.split('/').some((part: string) => !part || part === '.' || part === '..'), 'OWNER_SCHEMA_PATH');
+    Object.assign(binding, { rootDigest: `sha256:${sha(rootBytes)}`, ownerDigest: `sha256:${sha(ownerBytes)}`,
+      ownerSchemaDigest: `sha256:${sha(inputs.read(`schemas/${schemaName}`))}`,
+      profileDigest: remotePlanDigest(profile), packageVersion: manifest.packageVersion,
+      packageContentDigest: registry.packages.get(tuple.packageId)?.provenance.package.contentDigest,
+      taskSchemaDigest: QUALITY_TASK_SCHEMA_DIGEST,
+      c3RuntimeSchemaDigest: `sha256:${sha(inputs.read('schemas/provider03/c3-generated-runtime.schema.json'))}`,
+      c3ReferenceContractDigest: `sha256:${sha(inputs.read('schemas/provider03/c3-registry-peer-reference-contract.json'))}` });
+    const document = { schemaVersion: 'provider-configuration.v2', contractId,
+      taskSchemaDigest: QUALITY_TASK_SCHEMA_DIGEST, values: {}, selectedPolicy: {
+        schemaVersion: 'selected-registration-policy.v1', processing: profile.processing,
+        declarations: profile.declarations, binding } };
+    const inspected = inspectPipelineV10QualityRegistryConfiguration(Buffer.from(JSON.stringify(document)), registry, inputs);
+    requireBinding(inspected.configuration.schemaVersion === 'provider-configuration.v2', 'QUALITY_VERSION');
+    configurations.push(inspected.configuration as ProviderConfigurationV2);
+  }
+  inputs.assertCurrent();
+  const retained = new Map<string, SelectedProviderPolicyV1>(configurations.map(configuration => [configuration.contractId, configuration.selectedPolicy]));
+  requireBinding(retained.size === packages.length, 'QUALITY_CONTRACT_DUPLICATE');
+  // Object.freeze(Map) does not freeze its entries. Expose only closures over
+  // the private map; callers cannot set/delete/clear a selected policy.
+  const selectedProviderPolicies: ReadonlyMap<string, SelectedProviderPolicyV1> = Object.freeze({
+    size: retained.size, get: (key: string) => retained.get(key), has: (key: string) => retained.has(key),
+    entries: () => retained.entries(), keys: () => retained.keys(), values: () => retained.values(),
+    [Symbol.iterator]: () => retained[Symbol.iterator](),
+    forEach: (callback: (value: SelectedProviderPolicyV1, key: string, map: ReadonlyMap<string, SelectedProviderPolicyV1>) => void, thisArg?: unknown) => {
+      retained.forEach((value, key) => callback.call(thisArg, value, key, selectedProviderPolicies));
+    },
+  });
+  return Object.freeze({ serviceInstanceId, rootRawSha256: sha(rootBytes), inputGenerationSha256: inputs.inputGenerationSha256,
+    selectedProviderPolicies, registrySourceCoherent: true as const, installedSourceAuthorizationVerified: false as const,
+    callerAuthorizationVerified: false as const, activationAllowed: false as const });
 }

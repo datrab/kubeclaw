@@ -2713,6 +2713,12 @@
       "byteLength": 4569,
       "sha256": "966bf1aeb990b994b1e9104781d536b04af17062482f8e083fd0a530c278d14c",
       "sourcePath": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-11-project-compiler/owned-compiler.schema.json"
+    },
+    {
+      "relativePath": "schemas/provider03/c3-registry-peer-reference-contract.json",
+      "byteLength": 3889,
+      "sha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+      "sourcePath": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-registry-peer-reference-contract.json"
     }
   ],
   "packageSources": [
