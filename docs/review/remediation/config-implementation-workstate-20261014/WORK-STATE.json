@@ -22836,6 +22836,7 @@
     "taskComplete": false,
     "deployment": false,
     "mainMerge": false,
-    "evidenceDirectory": "docs/review/remediation/config-worker-core-v3-20261016"
+    "evidenceDirectory": "docs/review/remediation/config-worker-core-v3-20261016",
+    "sourceCommit": "980374793af8b8fdfc3a8eac218382533e46daa3"
   }
 }

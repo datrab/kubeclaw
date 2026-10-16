@@ -1,0 +1,46 @@
+✔ complete capture is detached/frozen; missing role and duplicate retention author reject (2.67682ms)
+✔ actual constructor A/B bytes boundary (1559.75153ms)
+✔ actual constructor A/B nodes boundary (183.939657ms)
+✔ actual constructor A/B depth boundary (1.819307ms)
+✔ actual retained log writer and completion phases use captured instance, Buster never defaults true (44.634699ms)
+✔ actual 7501 wire log parts distinguish A/B (49.605887ms)
+✔ durable A policy survives B reopen; legacy replay never receives B (616.57987ms)
+✔ v3 receiving validates full author and exact new caller binding; duplicate JSON keys reject (16.72249ms)
+✔ original ownership diagnostic closure survives lower current profile (81.859208ms)
+✔ coupled journal diagnostics and record quota affect real terminal reservation (631.436072ms)
+✔ routing epoch transition requires real supervisor authority and terminal journal; stale participants reject (368.714846ms)
+✔ real trusted file readers apply selected caps before parsing and compare actual host identity (4.413073ms)
+✔ epoch change after outer stripe check cannot admit a stale participant (138.849236ms)
+✔ exact future metadata fit completes valid maximal diagnostics; one byte short admits no blob (536.823846ms)
+✔ all pending rows reserve metadata and concurrent independent journals cannot over-admit (605.72425ms)
+✔ historical pending overcommit remains readable and replayable while growth fails closed (282.237769ms)
+✔ retained metadata outside the journal stream consumes the same whole-store ceiling (575.245525ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (298.95667ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (678.097394ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (1023.014267ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (229.295145ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (204.430515ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (5765.108437ms)
+✔ association addition reserves future terminal bytes, not current owners.json size (44.727052ms)
+✔ native reserve and later lifecycle writes retain sidecar charges under the original ceiling (54.137024ms)
+✔ a retained unaccounted metadata overflow denies lifecycle writes without losing either file (21.197086ms)
+✔ competing sidecar instances serialize against the same ownership metadata fence (62.784786ms)
+✔ unknown/invalid sidecar accounting never silently becomes a zero-byte default (94.043222ms)
+✔ concurrent durable reservations converge and survive reopening (42.511445ms)
+✔ caller mutation after reserve starts cannot change persisted identity (17.145301ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (121.098419ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (39.185579ms)
+✔ record quota fails atomically without losing existing ownership (21.522544ms)
+✔ corrupt persisted ownership fails without overwriting the record (16.498905ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (56.821723ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (415.184303ms)
+✔ native supervision requires explicit valid scope capacity before filesystem access or admission (13.956519ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (21.819632ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9225.189039
