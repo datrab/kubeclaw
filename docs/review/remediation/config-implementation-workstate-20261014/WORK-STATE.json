@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T22:05:27.367179+00:00",
+  "updatedAt": "2026-10-16T22:11:47.400452+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_WORKER_LOCAL_CONTRACT_AND_RUNTIME_GATES_PASS_NOT_FULL_ACCEPTANCE",
+  "status": "ORIGINAL_E2E_AUTHOR_AND_PRODUCTION_GRAPH_VERIFIED_NOT_FULL_ACCEPTANCE",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Genuine QB-R02 authenticated original source/build/baseline/store reservation+accounting+sealed bytes+publication receiver, coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving. Current runner has no inputStore-owned reservation/sealed-version API; no fabricated receipt authority. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Remaining original E2E platform consumer still calls removed facade; migrate through approved exact owners, not a synthesized full projection. Required independent complete-source/original/history/native/fullC0-C6 gates remain OPEN.",
+  "nextAction": "Complete genuinely authenticated QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving; retain BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Investigate clone-backed E2E suite resource/runtime before full rerun; required independent/original/history/native/C0-C6 gates OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -24269,5 +24269,69 @@
     "nextAction": "Genuine QB-R02 authenticated original source/build/baseline/store reservation+accounting+sealed bytes+publication receiver, coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving. Current runner has no inputStore-owned reservation/sealed-version API; no fabricated receipt authority. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Remaining original E2E platform consumer still calls removed facade; migrate through approved exact owners, not a synthesized full projection. Required independent complete-source/original/history/native/fullC0-C6 gates remain OPEN.",
     "externalOwner": "Raven",
     "resumeCondition": "Actual isolated Linux Docker/UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL database; no trust/kernel/UID spoof or skipped gates."
+  },
+  "e2eOriginalIntegration20261016": {
+    "at": "2026-10-16T22:11:47.400452+00:00",
+    "status": "ORIGINAL_E2E_AUTHOR_AND_PRODUCTION_GRAPH_VERIFIED_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "95c03eedea9751cceaabc14e372dc511f828d72e",
+    "branch": "codex/config-c0-semantic-inventory-20261012",
+    "verifiedRemoteHead": "95c03eedea9751cceaabc14e372dc511f828d72e",
+    "matches": true,
+    "evidence": "docs/review/remediation/config-e2e-author-integration-20261016",
+    "productionImplementationChanged": false,
+    "change": "Original E2E root metadata derives from current complete central authored generation through actual Buster runtime consumed-owner tuple/all-profile capture. Real workspace builder no longer reads retired Helm Swarm input. E2E production platform removes repository/network/notification policy coauthors and selects existing operator payload profile; real Core receiving projects limits. No fake boot receipt, whole facade, authority grant or denied-v10 activation.",
+    "checks": {
+      "authorAndAdjacentOriginalTests": {
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0
+      },
+      "directGenerationOriginalTests": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "explicit six original config-generation cases only; NOT full workspace suite"
+      },
+      "originalProductionGraph": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "realValidation": true,
+        "liveModelOrNativeExecution": false
+      },
+      "strictTypecheck": true,
+      "diffCheck": true,
+      "originalRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "integrityFailures": 0,
+        "fullAcceptance": "OPEN"
+      }
+    },
+    "verificationBlocker": "Full clone-backed real-run-workspace suite INCOMPLETE after60-second case/100-second batch deadlines; only own test descendant and partial clone cleaned. Original assertions unchanged. No full E2E/native PASS.",
+    "retainedFailures": [
+      "before.txt: retired full facade",
+      "workspace.txt: inherited retired registry override",
+      "production-graph.txt: REPOSITORY_READ_POLICY_COMPETING_AUTHOR:maxFileBytes; fixed, production-graph-after.txt pass",
+      "workspace-clean-environment.txt: real-run-workspace clone-backed cases timed out; unresolved"
+    ],
+    "sourceHashes": {
+      "tests/verification/e2e/support/platform-config.ts": "8f19ddeec4288d0258f88b8939854b0c52588b5a2ea078c24d4e7a70d746ed09",
+      "tests/verification/e2e/real-run-workspace.mjs": "09d076c786b0ada5454b3a4ddce003170dacaefa504e3005cf7668e8b04933f6",
+      "tests/verification/e2e/swarm-author-profile.test.mjs": "e5300c26e51e2d4d917e3b6d503fbcd8b5630e1425be98b48d4ee68eb9c8b5cc",
+      "tests/verification/e2e/run-v2-production-pipeline.mts": "e2983ecf64c0f866d2e2398ba086c5ec11dbbab8aca33d17b79e834a879fabdf"
+    },
+    "independentReview": "OPEN: native spawn/reviewer/collaboration discovery empty; CONFIG subagents0 and parent terminal. Known unchanged same-surface reviewer EROFS not retried; author checks are not independent acceptance.",
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "fullC0C6Complete": false,
+    "originalCasesNewlyAccepted": 0,
+    "writerLock": "SAME nonblocking repository lock; released on command exit",
+    "noHistoricalFollowup": true,
+    "nextAction": "Complete genuinely authenticated QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving; retain BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. Investigate clone-backed E2E suite resource/runtime before full rerun; required independent/original/history/native/C0-C6 gates OPEN.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Actual isolated Linux Docker/UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL database; no trust/kernel/UID spoof or skipped acceptance."
   }
 }

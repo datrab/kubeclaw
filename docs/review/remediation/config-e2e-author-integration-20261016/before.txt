@@ -1,0 +1,132 @@
+✖ CE01 shared authorship is centrally validated before explicit E2E-profile projection (0.811461ms)
+✖ CE02 root rejects invalid central authorship before E2E derivation (2.104554ms)
+✖ CE02 operator rejects invalid central authorship before E2E derivation (0.835542ms)
+✖ CE02 worker-value rejects invalid central authorship before E2E derivation (1.804827ms)
+✖ CE03 run-scoped E2E overrides are added only after central validation and projection (0.129973ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 497.742902
+
+✖ failing tests:
+
+test at tests/verification/e2e/swarm-author-profile.test.mjs:9:1
+✖ CE01 shared authorship is centrally validated before explicit E2E-profile projection (0.811461ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at pipelineProfileFromSwarm (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/support/platform-config.ts:166:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:11:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/e2e/swarm-author-profile.test.mjs:18:59
+✖ CE02 root rejects invalid central authorship before E2E derivation (2.104554ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at pipelineProfileFromSwarm (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/support/platform-config.ts:166:20)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/e2e/swarm-author-profile.test.mjs:18:59
+✖ CE02 operator rejects invalid central authorship before E2E derivation (0.835542ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at pipelineProfileFromSwarm (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/support/platform-config.ts:166:20)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/e2e/swarm-author-profile.test.mjs:18:59
+✖ CE02 worker-value rejects invalid central authorship before E2E derivation (1.804827ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at pipelineProfileFromSwarm (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/support/platform-config.ts:166:20)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:27:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/e2e/swarm-author-profile.test.mjs:30:1
+✖ CE03 run-scoped E2E overrides are added only after central validation and projection (0.129973ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at pipelineProfileFromSwarm (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/support/platform-config.ts:166:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/swarm-author-profile.test.mjs:31:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

@@ -1,0 +1,23 @@
+✔ Tailscale operator capability probe matches Helm pod label shape (1.235372ms)
+✔ reused matrix capability probe preserves structured failures (0.316828ms)
+✔ configured Codex capability probe follows production smoke dispatch (3.592833ms)
+✔ configured capability probe rejects non-Spark model overrides (1.466978ms)
+From /tmp/fixture-coverage-FoP88D/foreign
+ * branch            HEAD       -> FETCH_HEAD
+✔ actual Git baseline survives later commits and scoped resume without inventing coverage (336.44958ms)
+✔ operator registry projection does not resolve or expose credentials (1.910409ms)
+✔ seed image cannot select another registry, mutable tag or malformed reference (0.959325ms)
+✔ original workspace and failure mutation select the same configured authority (2.384632ms)
+✔ CE01 shared authorship is centrally validated before explicit E2E-profile projection (40.788756ms)
+✔ CE02 root rejects invalid central authorship before E2E derivation (2.833334ms)
+✔ CE02 operator rejects invalid central authorship before E2E derivation (3.692516ms)
+✔ CE02 worker-value rejects invalid central authorship before E2E derivation (3.017968ms)
+✔ CE03 run-scoped E2E overrides are added only after central validation and projection (5.117673ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1317.630282
