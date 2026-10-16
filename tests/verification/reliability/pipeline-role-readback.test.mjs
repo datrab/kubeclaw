@@ -28,9 +28,9 @@ test('real Prism role package readback drives all service caller compositions', 
   const services = Object.entries(consumed).map(([callerId, selected]) => ({ callerId, role: 'prism',
     serviceInstanceId: `test.namespace/test.release/${callerId}`,
     bindings: selected.map(owner => ({ owner, instanceId: `test.namespace/test.release/${callerId}`, profileId: 'standard' })) }));
-  const legacy = path.join(repo, 'charts/kubeclaw/files/config');
-  const entry = JSON.parse(fs.readFileSync(path.join(legacy, 'swarm.config.json')));
-  entry.schemaVersion = 'pipeline-entry.v3';
+  // Start with the actual sole author, retaining its declared version and root fields.
+  // Only the explicit fixture service bindings and copied relative paths change.
+  const entry = JSON.parse(fs.readFileSync(path.join(repo, 'config/pipeline.config.json'), 'utf8'));
   entry.components = Object.fromEntries(owners.map(owner => [owner, `components/${owner}.config.json`]));
   entry.bindings = services.flatMap(service => service.bindings.map(binding => ({ role: service.role, ...binding })));
   write(path.join(author, 'pipeline.config.json'), entry);

@@ -53,9 +53,9 @@ async function fixture(t) {
   fs.mkdirSync(path.join(system, 'selections'));
   const selection = { role: 'prism', serviceInstanceId: 'test.release/studio', callerId: 'prism-studio',
     bindings: [{ owner: 'prism-studio', instanceId: 'test.release/studio', profileId: 'standard' }] };
-  const authored = path.join(repo, 'charts/kubeclaw/files/config');
-  const entry = JSON.parse(fs.readFileSync(path.join(authored, 'swarm.config.json'), 'utf8'));
-  entry.schemaVersion = 'pipeline-entry.v3';
+  // Start with the actual sole author, retaining its declared version and root fields.
+  // Only the explicit fixture service bindings and copied relative paths change.
+  const entry = JSON.parse(fs.readFileSync(path.join(repo, 'config/pipeline.config.json'), 'utf8'));
   entry.components = Object.fromEntries(owners.map(owner => [owner, `components/${owner}.config.json`]));
   entry.bindings = selection.bindings.map(binding => ({ ...binding, role: 'prism' }));
   write(path.join(system, 'pipeline.config.json'), entry);
