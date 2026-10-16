@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-16T23:20:09.195238+00:00",
+  "status": "ORIGINAL_PROCESS_INPUT_DELIVERY_AND_CONSUMERS_16_OF_16_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "bd9ed29c7e5ef0dd7c1d6bcc9128e57560073d82",
+  "verifiedRemoteHead": "bd9ed29c7e5ef0dd7c1d6bcc9128e57560073d82",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-process-input-delivery-20261016",
+  "change": "Original process-input parity migrated from retired chart-local raw authors/full facade to complete central selected Buster runtime policy, both actual chart generators, normal Buster image bundle and real packaged preparation boot/child handoff. Original A/B values, all28 malformed policies, private inode mutation isolation and actual-loader rejection retained; real Helm packages/provenance, A/B/restored-A rollout and inert retired author/locator rejection verified. Prism correctly carries no Buster policy mount.",
+  "checks": {
+    "originalTests": {
+      "total": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "originalParityTopLevelChange": "Former two chart tests consolidated into one integrated two-chart delivery test; each A/B/restored-A visits both charts. Counts not compared as equivalent original case acceptance.",
+    "malformedPolicies": 28,
+    "chartGeneratorsPerNegative": 2,
+    "packagedBusterRoleBoots": 3,
+    "chartsPerDelivery": 2,
+    "baseline": "Both old parity tests failed at retired author/locator boundaries; see before.txt.",
+    "originalRealProcessConsumers": "15 unchanged original policy/caller tests pass; real forced-close/escalation/deadline/scan and Kubernetes factory callers. Not full native kernel/container/UID acceptance.",
+    "syntax": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "fullAcceptance": "OPEN"
+    }
+  },
+  "sourceHashes": {
+    "tests/verification/deployment/buster-process-input-parity.test.mjs": "939ae6d4ca30733dd6a50502a50475bd61a75546e75b9b9f6473bba9818eed1f"
+  },
+  "independentReview": "OPEN: fresh discovery has no native reviewer/spawn tool; parent done, CONFIG subagents0, no new independent result. Recorded same-surface EROFS unchanged, not retried. Author checks not independent acceptance.",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "nextAction": "Continue genuine QB-R02 and authenticated coordinated sole-root/boot+Nova receiving. Classify remaining deployment/native-recovery/history fixture reads at original reader boundaries; process-input delivery now migrated, do not replay unchanged green suites.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped acceptance.",
+  "writerLock": "SAME nonblocking repository lock; released at bounded process exit",
+  "noHistoricalFollowup": true
+}
