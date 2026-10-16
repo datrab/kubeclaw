@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T18:57:52.255613+00:00",
+  "updatedAt": "2026-10-16T19:09:27.736261+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "QB_R02_MISSING_ORIGINAL_INPUTSTORE_EXECUTION_DENIED_NOT_IMPLEMENTED",
+  "status": "QUALITY_ORIGINAL_PLANRUNNER_VERIFIED_QB_R02_BOOT_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Implement genuine original producer/result/source and existing inputStore-owned sealed receiver with accounting/publication fence before permitting selected Quality execution; coordinated authenticated sole-root boot/Nova receiving without v10 promotion. Diagnose original whole-plan-runner50s timeout before repeating. Independent and full2409/6845/50 C0-C6/native/archive gates OPEN.",
+  "nextAction": "Implement genuine original producer/result/source and existing inputStore-owned sealed receiver with accounting/publication fence before permitting selected Quality execution; coordinated authenticated sole-root boot/Nova receiving without v10 promotion. Original whole-planrunner VERIFIED unchanged exit0/98.99s;50s wrapper diagnosis closed. Independent and full2409/6845/50 C0-C6/native/archive gates OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -23233,5 +23233,44 @@
       "Diagnose original plan-runner timeout before repeating same full command; preserve all original native/history/archive/C0-C6 gates"
     ],
     "externalInfrastructure": "Unchanged: owner Raven; isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large genuinely root-trusted writable archive filesystem required; resume on supplied suitable host."
+  },
+  "qualityOriginalPlanRunner20261016": {
+    "at": "2026-10-16T19:09:27.736261+00:00",
+    "evidence": "docs/review/remediation/config-planrunner-diagnosis-20261016",
+    "kind": "Complete original verification after concrete50s timeout diagnosis; no new production implementation",
+    "checks": {
+      "command": [
+        "node",
+        "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 98.99,
+      "timeoutSeconds": 210,
+      "sourceCommit": "46d65b5e1b0d35300877745b7582c669c578b87c",
+      "oracleSha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d",
+      "oracleUnchanged": true,
+      "wholeOriginalCommand": true,
+      "nativeAcceptance": false,
+      "independentAcceptance": false,
+      "fullC0C6Complete": false
+    },
+    "mainScenarioOnly": {
+      "nodes": 15,
+      "attempts": 15,
+      "notOriginalCaseAcceptance": true
+    },
+    "independentReview": "OPEN; no native spawn; unchanged same-surface EROFS not retried",
+    "sealedInputStoreImplemented": false,
+    "productiveBootImplemented": false,
+    "activationAllowed": false,
+    "requiredRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "allSemanticObligationsAccepted": false
+    },
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "writerLock": "same nonblocking; released after checkpoint push"
   }
 }

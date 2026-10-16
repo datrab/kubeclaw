@@ -1,0 +1,6 @@
+{
+  "exitCode": 124,
+  "source": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+  "instrumentation": "progress-only temporary sibling; no assertions or inputs changed",
+  "timeoutSeconds": 40
+}
