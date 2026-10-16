@@ -184,3 +184,34 @@ test('an off-tree reader copy cannot borrow a genuine installed package receipt'
   assert.throws(() => offTree.capturePipelineBootReceipts(f.expectedMount, f.system, 'prism-studio', f.code,
     '/app/prism/skills'), /READER_RESOLUTION_MISMATCH/);
 });
+
+// Atomic-writer aliases are permitted at expected-delivery transport, never
+// at the physical system author root. Keep the original generation race here.
+test('expected-delivery alias replacement during boot rejects, next boot validates the selected receipt', async t => {
+  const f = await fixture(t), originalCapture = f.load();
+  const oldFile = path.join(f.expectedMount, 'version-A/expected-delivery.json');
+  const replacement = JSON.parse(fs.readFileSync(oldFile, 'utf8'));
+  replacement.generationDigest = hash(Buffer.from('different-generation'));
+  write(path.join(f.expectedMount, 'version-B/expected-delivery.json'), replacement);
+  const oldRead = fs.readFileSync;
+  let switched = false;
+  fs.readFileSync = function(file, ...args) {
+    const bytes = Reflect.apply(oldRead, this, [file, ...args]);
+    if (typeof file === 'number' && !switched
+      && fs.realpathSync(`/proc/self/fd/${file}`) === oldFile) {
+      switched = true;
+      fs.symlinkSync('version-B', path.join(f.expectedMount, '..next'));
+      fs.renameSync(path.join(f.expectedMount, '..next'), path.join(f.expectedMount, '..data'));
+    }
+    return bytes;
+  };
+  try { assert.throws(f.load, /PIPELINE_PACKAGE_CHANGED/); }
+  finally { fs.readFileSync = oldRead; }
+  assert.equal(switched, true, 'real expected-delivery descriptor read was intercepted');
+  assert.throws(f.load, /PIPELINE_IMAGE_RECEIPT_INVALID/);
+  fs.symlinkSync('version-A', path.join(f.expectedMount, '..next'));
+  fs.renameSync(path.join(f.expectedMount, '..next'), path.join(f.expectedMount, '..data'));
+  const restored = f.load();
+  assert.deepEqual(restored, originalCapture);
+  f.boot.assertPipelineBootCapture(restored, 'prism-studio');
+});
