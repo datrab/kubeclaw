@@ -1,0 +1,628 @@
+✔ CD01 original chart delivers the one canonical config to the worker mount (2269.945287ms)
+✖ CD02 real Helm output from two author profiles drives the actual production loader (3.963284ms)
+✔ CD03 old Helm shutdown authority is rejected (62.290253ms)
+✔ CD04 port rejects 3 before rendering (5.539755ms)
+✔ CD04 port rejects null before rendering (4.551488ms)
+✔ CD04 port rejects -1 before rendering (4.674922ms)
+✔ CD04 port rejects 0 before rendering (4.58955ms)
+✔ CD04 port rejects 1.5 before rendering (4.466057ms)
+✔ CD04 port rejects 2147483648 before rendering (4.439785ms)
+✔ CD04 port rejects undefined before rendering (4.669051ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (4.441686ms)
+✔ CD04 maximumActiveRequests rejects null before rendering (4.398285ms)
+✔ CD04 maximumActiveRequests rejects -1 before rendering (4.360883ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (4.502747ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (4.304362ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (4.343213ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (4.350413ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (4.471126ms)
+✔ CD04 maximumProbeRequests rejects null before rendering (4.324753ms)
+✔ CD04 maximumProbeRequests rejects -1 before rendering (4.386104ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (4.345553ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (4.299732ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (4.350633ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (4.354683ms)
+✔ CD04 maximumConnections rejects 3 before rendering (4.491747ms)
+✔ CD04 maximumConnections rejects null before rendering (4.356693ms)
+✔ CD04 maximumConnections rejects -1 before rendering (4.334073ms)
+✔ CD04 maximumConnections rejects 0 before rendering (4.311622ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (4.358593ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (4.284162ms)
+✔ CD04 maximumConnections rejects undefined before rendering (4.338363ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (4.285692ms)
+✔ CD04 requestTimeoutMs rejects null before rendering (4.240311ms)
+✔ CD04 requestTimeoutMs rejects -1 before rendering (4.314253ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (4.296982ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (4.367724ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (4.329942ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (4.367644ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (4.483096ms)
+✔ CD04 shutdownTimeoutMs rejects null before rendering (4.420195ms)
+✔ CD04 shutdownTimeoutMs rejects -1 before rendering (4.343813ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (4.269831ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (4.571429ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (4.435435ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (4.375804ms)
+✔ CD04 maximumInputBytes rejects 3 before rendering (4.361613ms)
+✔ CD04 maximumInputBytes rejects null before rendering (4.576819ms)
+✔ CD04 maximumInputBytes rejects -1 before rendering (4.403375ms)
+✔ CD04 maximumInputBytes rejects 0 before rendering (4.300912ms)
+✔ CD04 maximumInputBytes rejects 1.5 before rendering (4.663491ms)
+✔ CD04 maximumInputBytes rejects 2147483648 before rendering (4.471577ms)
+✔ CD04 maximumInputBytes rejects undefined before rendering (4.322093ms)
+✔ CD04 unknown key entry (4.076456ms)
+✔ CD04 unknown key prism-worker (4.327133ms)
+✔ CD04 unknown key prism-worker.settings (4.407395ms)
+✔ CD04 unknown key prism-worker.settings.ingress (4.541098ms)
+✖ CD04 connection overcommit fails Helm rendering (6.824498ms)
+✖ CD05 shutdown 100000 violates native-close or Pod grace (6.035437ms)
+✔ CD05 shutdown 150000 violates native-close or Pod grace (61.643606ms)
+✔ CD06 Helm packages the generated topology and image generation retains exact author/schema bytes (945.568018ms)
+✖ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (65.965628ms)
+✖ CI05 old Helm input authority native.maximumInputBytes is rejected (58.963136ms)
+✔ CR06 native maximumResultBytes rejects 3 before rendering (5.824422ms)
+✔ CR06 native maximumResultBytes rejects null before rendering (4.889527ms)
+✔ CR06 native maximumResultBytes rejects -1 before rendering (4.902267ms)
+✔ CR06 native maximumResultBytes rejects 0 before rendering (4.896748ms)
+✔ CR06 native maximumResultBytes rejects 1.5 before rendering (5.037691ms)
+✔ CR06 native maximumResultBytes rejects 2147483648 before rendering (5.227526ms)
+✔ CR06 native maximumResultBytes rejects undefined before rendering (4.911138ms)
+✔ CR06 native dispatchTimeoutMs rejects 3 before rendering (4.358373ms)
+✔ CR06 native dispatchTimeoutMs rejects null before rendering (4.371864ms)
+✔ CR06 native dispatchTimeoutMs rejects -1 before rendering (4.493148ms)
+✔ CR06 native dispatchTimeoutMs rejects 0 before rendering (4.393915ms)
+✔ CR06 native dispatchTimeoutMs rejects 1.5 before rendering (4.463047ms)
+✔ CR06 native dispatchTimeoutMs rejects 2147483648 before rendering (4.157609ms)
+✔ CR06 native dispatchTimeoutMs rejects undefined before rendering (7.828894ms)
+✔ CR06 missing or unknown native section fails rendering (4.977259ms)
+✔ CR06 missing or unknown native section fails rendering (4.503407ms)
+✔ CR06 missing or unknown native section fails rendering (4.848566ms)
+✔ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (4162.839002ms)
+✖ CR06 old Helm authority worker.native.maximumResultBytes rejected (70.584959ms)
+✔ CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected (59.86393ms)
+✔ CR06 old Helm authority control.maximumWorkerResponseBytes rejected (60.424805ms)
+✔ CP01 resource cpuTimeMs rejects 3 in Helm (5.627107ms)
+✔ CP01 resource cpuTimeMs rejects null in Helm (4.873967ms)
+✔ CP01 resource cpuTimeMs rejects -1 in Helm (4.858386ms)
+✔ CP01 resource cpuTimeMs rejects 0 in Helm (4.794465ms)
+✔ CP01 resource cpuTimeMs rejects 1.5 in Helm (4.929268ms)
+✔ CP01 resource cpuTimeMs rejects 9007199254740992 in Helm (5.276907ms)
+✔ CP01 resource cpuTimeMs rejects undefined in Helm (5.297508ms)
+✔ CP01 resource memoryBytes rejects 3 in Helm (5.518154ms)
+✔ CP01 resource memoryBytes rejects null in Helm (5.103543ms)
+✔ CP01 resource memoryBytes rejects -1 in Helm (4.98351ms)
+✔ CP01 resource memoryBytes rejects 0 in Helm (4.874137ms)
+✔ CP01 resource memoryBytes rejects 1.5 in Helm (4.98421ms)
+✔ CP01 resource memoryBytes rejects 9007199254740992 in Helm (4.923649ms)
+✔ CP01 resource memoryBytes rejects undefined in Helm (4.841207ms)
+✔ CP01 resource tasks rejects 3 in Helm (4.96532ms)
+✔ CP01 resource tasks rejects null in Helm (4.893098ms)
+✔ CP01 resource tasks rejects -1 in Helm (4.883457ms)
+✔ CP01 resource tasks rejects 0 in Helm (4.99507ms)
+✔ CP01 resource tasks rejects 1.5 in Helm (4.970759ms)
+✔ CP01 resource tasks rejects 9007199254740992 in Helm (4.947669ms)
+✔ CP01 resource tasks rejects undefined in Helm (5.099753ms)
+✔ CP01 unsupported resource policy rejected in Helm (5.095633ms)
+✔ CP01 unsupported resource policy rejected in Helm (5.499003ms)
+✔ CP01 unsupported resource policy rejected in Helm (5.159575ms)
+✖ CP06 competing Helm worker.native.resourcePolicy.tasks is rejected (57.222261ms)
+✔ CP06 competing Helm control.nativeResourcePolicy.tasks is rejected (61.475561ms)
+✖ CP06 two resource policies change both rendered snapshots and checksums (855.530459ms)
+✖ CP01 Helm accepts the resource safe-integer ceiling without timer coercion (880.178251ms)
+✔ CS5 Helm rejects supervisor uid=undefined (5.727309ms)
+✔ CS5 Helm rejects supervisor uid=null (4.482897ms)
+✔ CS5 Helm rejects supervisor uid=1 (4.62291ms)
+✔ CS5 Helm rejects supervisor uid=0 (4.835646ms)
+✔ CS5 Helm rejects supervisor uid=-1 (6.15169ms)
+✔ CS5 Helm rejects supervisor uid=1.5 (6.247263ms)
+✔ CS5 Helm rejects supervisor uid=2147483648 (6.197972ms)
+✔ CS5 Helm rejects supervisor gid=undefined (6.024707ms)
+✔ CS5 Helm rejects supervisor gid=null (4.560149ms)
+✔ CS5 Helm rejects supervisor gid=1 (4.336353ms)
+✔ CS5 Helm rejects supervisor gid=0 (4.349613ms)
+✔ CS5 Helm rejects supervisor gid=-1 (4.341924ms)
+✔ CS5 Helm rejects supervisor gid=1.5 (4.348974ms)
+✔ CS5 Helm rejects supervisor gid=2147483648 (4.364844ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=undefined (4.273851ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=null (4.744893ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1 (6.272874ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=0 (6.199871ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=-1 (5.181755ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1.5 (4.292322ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=2147483648 (4.325583ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=undefined (4.411495ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=null (7.67279ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1 (5.35922ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=0 (4.335713ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=-1 (4.294892ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1.5 (4.315753ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=2147483648 (4.338793ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=undefined (4.438866ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=null (4.57416ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1 (4.332673ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=0 (4.287811ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=-1 (4.267631ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1.5 (4.269211ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=2147483648 (4.282971ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=undefined (4.310472ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=null (4.295081ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1 (4.258791ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=0 (4.284701ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=-1 (4.268771ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1.5 (4.264871ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=9007199254740992 (4.249001ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=undefined (4.2453ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=null (4.255691ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1 (4.21621ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=0 (4.275891ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=-1 (4.585689ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1.5 (4.319422ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=2147483648 (4.343703ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=undefined (4.308892ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=null (4.247691ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1 (4.297202ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=0 (4.23298ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=-1 (4.201999ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1.5 (4.250191ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=2147483648 (4.280732ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=undefined (4.277522ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=null (4.239431ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1 (4.301323ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=0 (4.317663ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=-1 (4.324723ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1.5 (4.351783ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=2147483648 (4.23186ms)
+✔ CS5 old Helm supervisor close author is rejected (57.440726ms)
+✖ CS4 Helm uses authored drain as well as close in shutdown budget (874.38317ms)
+✔ CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors (4344.118213ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (5.521604ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (6.292844ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (5.147574ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=undefined (4.393235ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="" (4.383895ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="operator:test" (4.098987ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=1 (4.217819ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=false (4.069336ms)
+✔ CC4 Helm rejects Control artifactRoot=undefined (4.24349ms)
+✔ CC4 Helm rejects Control artifactRoot=null (4.117528ms)
+✔ CC4 Helm rejects Control artifactRoot="" (4.192949ms)
+✔ CC4 Helm rejects Control artifactRoot="/" (4.275401ms)
+✔ CC4 Helm rejects Control artifactRoot="relative" (4.109787ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/../artifacts" (5.719149ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/artifacts/" (5.574016ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp//artifacts" (5.485773ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/\u0000artifacts" (4.154278ms)
+✔ CC4 Helm rejects Control artifactRoot=1 (4.130888ms)
+✔ CC4 Helm rejects Control studioPublicUrl=undefined (4.107257ms)
+✔ CC4 Helm rejects Control studioPublicUrl=null (4.299442ms)
+✔ CC4 Helm rejects Control studioPublicUrl="" (4.266192ms)
+✔ CC4 Helm rejects Control studioPublicUrl="relative" (4.073887ms)
+✔ CC4 Helm rejects Control studioPublicUrl="file:///tmp" (4.037946ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://" (4.087646ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://user:pass@studio" (4.420315ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio?query=1" (4.554819ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio#fragment" (4.445996ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://bad host" (5.509324ms)
+✔ CC4 Helm rejects Control studioPublicUrl=1 (5.270747ms)
+✔ CC4 Helm strict Control object (5.199726ms)
+✔ CC4 Helm strict Control object (4.483547ms)
+✔ CC4 Helm strict Control object (4.551668ms)
+✔ CC4 Helm strict Control object (7.923606ms)
+✔ CC4 retired Helm subject author rejects even disabled value (125.326485ms)
+✖ CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology (1491.452293ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE true) (863.988246ms)
+✖ CL chart listener 23456 keeps every Control destination coherent (SPIFFE false) (868.283418ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE true) (908.020814ms)
+✖ CL chart listener 23457 keeps every Control destination coherent (SPIFFE false) (867.338144ms)
+✔ CL Helm rejects invalid listener undefined (4.782545ms)
+✔ CL Helm rejects invalid listener null (4.19599ms)
+✔ CL Helm rejects invalid listener 8080 (4.163769ms)
+✔ CL Helm rejects invalid listener 0 (4.301643ms)
+✔ CL Helm rejects invalid listener 65536 (4.144168ms)
+✔ CL Helm rejects invalid listener 3.5 (4.270651ms)
+✔ CL Helm rejects invalid listener true (4.497357ms)
+✔ CL Helm rejects second listener author (63.147155ms)
+✖ Studio authored profiles bind loader and all rendered listener edges (869.157851ms)
+✔ Studio chart rejects competing values and unsupported upstream topology (325.632662ms)
+✖ BA Prism chart preserves two Buster admission profiles through the mounted canonical document (892.061337ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=undefined (5.633737ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=null (4.96007ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=2 (4.96331ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=0 (4.994611ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=-1 (4.885998ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=1.5 (4.800765ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=9007199254740992 (4.874027ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=undefined (4.888737ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=null (4.913908ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=2 (4.781785ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=0 (4.917338ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=-1 (4.892828ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=1.5 (4.846566ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=9007199254740992 (4.941959ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=undefined (4.811945ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=null (4.866356ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=2 (4.788775ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=0 (4.855667ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=-1 (4.816735ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=1.5 (6.874519ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=9007199254740992 (4.904438ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (5.459102ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (5.252847ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (4.925828ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (4.937298ms)
+✔ BA Prism chart retains strict Buster sibling rejection (5.149004ms)
+✔ WL Worker topology follows 23458, SPIFFE=false (848.606834ms)
+✔ WL Worker topology follows 23458, SPIFFE=true (867.614519ms)
+✔ WL Worker topology follows 23459, SPIFFE=false (847.082814ms)
+✔ WL Worker topology follows 23459, SPIFFE=true (866.975502ms)
+✔ WL legacy Worker Helm port rejects "8080" (58.622856ms)
+✔ WL legacy Worker Helm port rejects "" (58.059812ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=undefined (5.695009ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=null (4.959399ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=false (5.545204ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=true (5.119323ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=1 (4.688752ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=0 (4.644731ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=-1 (4.667202ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=1.5 (4.728183ms)
+✔ Sessionpolicy Helm rejects maximumProtocolBytes=9007199254740992 (4.624181ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=undefined (4.686402ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=null (4.647021ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=false (4.750993ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=true (4.797015ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=1 (5.218935ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=0 (6.986962ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=-1 (5.040841ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=1.5 (4.849057ms)
+✔ Sessionpolicy Helm rejects terminationGraceMs=9007199254740992 (4.670982ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=undefined (4.707702ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=null (4.763394ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=false (4.688433ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=true (4.740054ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=1 (4.633721ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=0 (4.668301ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=-1 (4.645831ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=1.5 (4.636301ms)
+✔ Sessionpolicy Helm rejects terminationTimeoutMs=9007199254740992 (4.972759ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=undefined (4.903208ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=null (4.639971ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=false (4.748523ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=true (4.62066ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=1 (4.812525ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=0 (4.98689ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=-1 (4.807935ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=1.5 (4.759564ms)
+✔ Sessionpolicy Helm rejects capabilityDrainTimeoutMs=9007199254740992 (4.63569ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=undefined (4.654731ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=null (4.60402ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=false (4.665882ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=true (4.58542ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=1 (4.61319ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=0 (4.59594ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=-1 (4.630331ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=1.5 (4.685252ms)
+✔ Sessionpolicy Helm rejects minimumHeapMiB=9007199254740992 (4.709683ms)
+✔ Sessionpolicy Helm rejects heapFraction=undefined (4.659132ms)
+✔ Sessionpolicy Helm rejects heapFraction=null (4.95385ms)
+✔ Sessionpolicy Helm rejects heapFraction=false (4.675492ms)
+✔ Sessionpolicy Helm rejects heapFraction=true (4.697452ms)
+✔ Sessionpolicy Helm rejects heapFraction=1 (4.550619ms)
+✔ Sessionpolicy Helm rejects heapFraction=0 (4.61345ms)
+✔ Sessionpolicy Helm rejects heapFraction=-1 (4.666872ms)
+✔ Sessionpolicy Helm rejects heapFraction=1.5 (4.571309ms)
+✔ Sessionpolicy Helm rejects heapFraction=9007199254740992 (4.779464ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=undefined (4.969499ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=null (6.095819ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=false (4.63163ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=true (4.515397ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=1 (4.570759ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=0 (4.601329ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=-1 (4.567749ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=1.5 (4.709263ms)
+✔ Sessionpolicy Helm rejects maximumPendingCapabilities=9007199254740992 (4.553438ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=undefined (4.677952ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=null (9.702433ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=false (4.912108ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=true (4.544639ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=1 (4.477267ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=0 (4.453806ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=-1 (4.500807ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=1.5 (4.532319ms)
+✔ Sessionpolicy Helm rejects minimumOpenFiles=9007199254740992 (4.585939ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=undefined (4.528008ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=null (4.470477ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=false (4.486907ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=true (4.477206ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=1 (4.495177ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=0 (4.504808ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=-1 (4.550159ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=1.5 (4.539759ms)
+✔ Sessionpolicy Helm rejects artifactFileDescriptorReserve=9007199254740992 (4.543368ms)
+✖ Sessionpolicy Helm accepts fractional heap 0.1 (840.729808ms)
+✖ Sessionpolicy Helm accepts fractional heap 0.7 (849.527317ms)
+✖ Sessionpolicy Helm accepts fractional heap 1 (860.165914ms)
+ℹ tests 343
+ℹ suites 0
+ℹ pass 325
+ℹ fail 18
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32875.109927
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:101:1
+✖ CD02 real Helm output from two author profiles drives the actual production loader (3.963284ms)
+  TypeError: Cannot set properties of undefined (setting 'ingress')
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:104:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:131:1
+✖ CD04 connection overcommit fails Helm rendering (6.824498ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID/. Input:
+  
+  'Error: SWARM_CONFIG_WORKER_CONNECTION_BUDGET_INVALID'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:134:79)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: SWARM_CONFIG_WORKER_CONNECTION_BUDGET_INVALID',
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:136:51
+✖ CD05 shutdown 100000 violates native-close or Pod grace (6.035437ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID|worker shutdown must cover/. Input:
+  
+  'Error: SWARM_CONFIG_WORKER_SHUTDOWN_BUDGET_INVALID'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:139:79)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: SWARM_CONFIG_WORKER_SHUTDOWN_BUDGET_INVALID',
+    expected: /SWARM_CONFIG_INVALID|worker shutdown must cover/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:153:84
+✖ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (65.965628ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /additional properties 'maximumInputBytes' not allowed/. Input:
+  
+  "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    '- worker.native: Additional property maximumInputBytes is not allowed\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:155:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Error: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- worker.native: Additional property maximumInputBytes is not allowed\n\n",
+    expected: /additional properties 'maximumInputBytes' not allowed/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:153:84
+✖ CI05 old Helm input authority native.maximumInputBytes is rejected (58.963136ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /additional properties 'native' not allowed/. Input:
+  
+  "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    '- (root): Additional property native is not allowed\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:155:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Error: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- (root): Additional property native is not allowed\n\n",
+    expected: /additional properties 'native' not allowed/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:189:136
+✖ CR06 old Helm authority worker.native.maximumResultBytes rejected (70.584959ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /additional properties/. Input:
+  
+  "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    '- worker.native: Additional property maximumResultBytes is not allowed\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:191:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Error: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- worker.native: Additional property maximumResultBytes is not allowed\n\n",
+    expected: /additional properties/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:204:97
+✖ CP06 competing Helm worker.native.resourcePolicy.tasks is rejected (57.222261ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /resource policy must be authored|additional properties/. Input:
+  
+  "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    '- worker.native: Additional property resourcePolicy is not allowed\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:206:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Error: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- worker.native: Additional property resourcePolicy is not allowed\n\n",
+    expected: /resource policy must be authored|additional properties/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:208:1
+✖ CP06 two resource policies change both rendered snapshots and checksums (855.530459ms)
+  TypeError: Cannot read properties of undefined (reading 'resourcePolicy')
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:214:87)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:221:1
+✖ CP01 Helm accepts the resource safe-integer ceiling without timer coercion (880.178251ms)
+  TypeError: Cannot read properties of undefined (reading 'resourcePolicy')
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:225:89)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:242:1
+✖ CS4 Helm uses authored drain as well as close in shutdown budget (874.38317ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID|worker shutdown must cover/. Input:
+  
+  'Error: SWARM_CONFIG_WORKER_SHUTDOWN_BUDGET_INVALID'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:249:54)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: SWARM_CONFIG_WORKER_SHUTDOWN_BUDGET_INVALID',
+    expected: /SWARM_CONFIG_INVALID|worker shutdown must cover/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:302:1
+✖ CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology (1491.452293ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control'
+  - 'spiffe://kubeclaw.internal/ns/default/sa/prism-control'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:320:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control',
+    expected: 'spiffe://kubeclaw.internal/ns/default/sa/prism-control',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:329:5
+✖ CL chart listener 23456 keeps every Control destination coherent (SPIFFE false) (868.283418ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  8080 !== 23456
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:339:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 8080,
+    expected: 23456,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:329:5
+✖ CL chart listener 23457 keeps every Control destination coherent (SPIFFE false) (867.338144ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  8080 !== 23457
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:339:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 8080,
+    expected: 23457,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:381:1
+✖ Studio authored profiles bind loader and all rendered listener edges (869.157851ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      'buster-engine': {
+        owner: 'buster-engine',
+        profiles: {
+          runtime: {
+  ...
+            owner: 'prism-control',
+  +         profileId: 'standard',
+  -         profileId: 'spiffe',
+            role: 'prism'
+          },
+          {
+            instanceId: 'kubeclaw/prism/prism-control',
+            owner: 'prism-execution',
+  ...
+            owner: 'prism-control',
+  +         profileId: 'standard',
+  -         profileId: 'spiffe',
+            role: 'prism'
+          },
+          {
+            instanceId: 'kubeclaw/prism/prism-worker',
+            owner: 'prism-execution',
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:390:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { entry: { schemaVersion: 'pipeline-entry.v3', profile: 'standard', features: [Object], tuning: [Object], overrides: {}, components: [Object], bindings: [Array] }, 'prism-control': { schemaVersion: 'pipeline-component.v4', owner: 'prism-control', profiles: [Object] }, 'prism-studio': { schemaVersion: 'pipeline-component.v2', owner: 'prism-studio', profiles: [Object] }, 'prism-worker': { schemaVersion: 'pipeline-component.v2', owner: 'prism-worker', profiles: [Object] }, 'prism-execution': { schemaVersion: 'pipeline-component.v3', owner: 'prism-execution', profiles: [Object] }, 'buster-engine': { schemaVersion: 'pipeline-component.v2', owner: 'buster-engine', profiles: [Object] }, 'worker-core': { schemaVersion: 'pipeline-component.v3', owner: 'worker-core', profiles: [Object] } },
+    expected: { entry: { schemaVersion: 'pipeline-entry.v3', profile: 'standard', features: [Object], tuning: [Object], overrides: {}, components: [Object], bindings: [Array] }, 'prism-control': { schemaVersion: 'pipeline-component.v4', owner: 'prism-control', profiles: [Object] }, 'prism-studio': { schemaVersion: 'pipeline-component.v2', owner: 'prism-studio', profiles: [Object] }, 'prism-worker': { schemaVersion: 'pipeline-component.v2', owner: 'prism-worker', profiles: [Object] }, 'prism-execution': { schemaVersion: 'pipeline-component.v3', owner: 'prism-execution', profiles: [Object] }, 'buster-engine': { schemaVersion: 'pipeline-component.v2', owner: 'buster-engine', profiles: [Object] }, 'worker-core': { schemaVersion: 'pipeline-component.v3', owner: 'worker-core', profiles: [Object] } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:419:1
+✖ BA Prism chart preserves two Buster admission profiles through the mounted canonical document (892.061337ms)
+  TypeError: Cannot read properties of undefined (reading 'admission')
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:424:89)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:497:43
+✖ Sessionpolicy Helm accepts fractional heap 0.1 (840.729808ms)
+  TypeError: Cannot read properties of undefined (reading 'execution')
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:502:52)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:497:43
+✖ Sessionpolicy Helm accepts fractional heap 0.7 (849.527317ms)
+  TypeError: Cannot read properties of undefined (reading 'execution')
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:502:52)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:497:43
+✖ Sessionpolicy Helm accepts fractional heap 1 (860.165914ms)
+  TypeError: Cannot read properties of undefined (reading 'execution')
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-swarm-config.test.mjs:502:52)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
