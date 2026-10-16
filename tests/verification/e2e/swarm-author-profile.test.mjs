@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { readTestBundle, writeTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
+import { readTestPipeline, writeTestPipeline, canonicalPipelineEntry } from '../../fixtures/config/pipeline-components.mjs';
 import { expandSwarmConfig, pipelineProfileFromSwarm } from './support/platform-config.ts';
-const authored = readTestBundle(canonicalSwarmEntry);
+const authored = readTestPipeline(canonicalPipelineEntry);
 test('CE01 shared authorship is centrally validated before explicit E2E-profile projection', () => {
   const snapshot = JSON.stringify(authored);
-  const profile = pipelineProfileFromSwarm(canonicalSwarmEntry);
+  const profile = pipelineProfileFromSwarm(canonicalPipelineEntry);
   assert.deepEqual(Object.keys(profile).sort(), ['_doc', 'features', 'overrides', 'profile', 'tuning']);
   const expanded = expandSwarmConfig({ ...profile, repo_root: '/tmp/profile-test' });
   assert.equal(Object.hasOwn(expanded, 'operator'), false);
@@ -18,17 +18,17 @@ test('CE01 shared authorship is centrally validated before explicit E2E-profile 
 for (const field of ['root', 'operator', 'worker-value']) test(`CE02 ${field} rejects invalid central authorship before E2E derivation`, t => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'e2e-config-'));
   t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
-  const file = path.join(directory, 'swarm.config.json');
+  const file = path.join(directory, 'pipeline.config.json');
   const invalid = structuredClone(authored);
   if (field === 'root') invalid.entry.unknown = true;
   else if (field === 'operator') invalid['prism-worker'].unknown = true;
-  else invalid['prism-worker'].settings.ingress.maximumConnections = 0;
-  writeTestBundle(file, invalid);
+  else invalid['prism-worker'].profiles.standard.settings.ingress.maximumConnections = 0;
+  writeTestPipeline(file, invalid);
   assert.throws(() => pipelineProfileFromSwarm(file), /SWARM_CONFIG_INVALID/);
   assert.throws(() => expandSwarmConfig(file), /SWARM_CONFIG_INVALID/);
 });
 test('CE03 run-scoped E2E overrides are added only after central validation and projection', () => {
-  const profile = pipelineProfileFromSwarm(canonicalSwarmEntry);
+  const profile = pipelineProfileFromSwarm(canonicalPipelineEntry);
   profile.repo_root = '/tmp/real-profile'; profile.run_id = 'review-profile';
   profile.overrides = { agents: { forge: { cwd: '/tmp/real-profile' } } };
   const expanded = expandSwarmConfig(profile);

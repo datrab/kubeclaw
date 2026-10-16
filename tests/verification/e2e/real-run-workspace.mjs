@@ -26,7 +26,7 @@ export const DEFAULT_REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES = 10;
 const REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD = 2;
 const REAL_E2E_MODULE_MAX_FAILS = REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD + 1;
 const FIXTURE_DIR = path.join(SCRIPT_DIR, 'fixtures', 'nginx-project');
-const DEPLOYED_COMPACT_CONFIG_PATH = path.join(REPO_ROOT, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');
+const CENTRAL_PIPELINE_CONFIG_PATH = path.join(REPO_ROOT, 'config', 'pipeline.config.json');
 const REAL_E2E_MODULE_ID = '01-nginx';
 const REAL_E2E_SEED_MODULE_IDS = Object.freeze(['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
 const REAL_E2E_CONTRACT_REFS = Object.freeze({
@@ -1498,8 +1498,8 @@ async function currentBranch(cwd = REPO_ROOT) {
 }
 
 export function buildRunConfig({ runId, worktreePath, scenarioId = 'success' }) {
-  const compactConfig = pipelineProfileFromSwarm(DEPLOYED_COMPACT_CONFIG_PATH);
-  compactConfig._doc = 'Run-scoped real E2E swarm config generated from the deployed standard profile with repo-local test tool paths.';
+  const compactConfig = pipelineProfileFromSwarm(CENTRAL_PIPELINE_CONFIG_PATH);
+  compactConfig._doc = 'Run-scoped real E2E swarm config generated from the central standard profile with repo-local test tool paths.';
   compactConfig.profile = 'standard';
   compactConfig.repo_root = worktreePath;
   compactConfig.run_id = runId;

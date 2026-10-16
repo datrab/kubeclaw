@@ -475,7 +475,6 @@ async function main(): Promise<void> {
       },
       'kubeclaw.repository-adapter:repository': {
         repositoryRoot: repo,
-        maxFileBytes: 2_097_152,
       },
       'kubeclaw.network-http:http': {
         allowedOrigins: [...new Set([
@@ -490,9 +489,6 @@ async function main(): Promise<void> {
           'idempotency-key',
           'x-kubeclaw-signature',
         ],
-        maxRequestBytes: 91_226_112,
-        maxResponseBytes: 16_777_216,
-        timeoutMs: 60_000,
       },
       'kubeclaw.operator-messaging:operator': {
         deliveryRoot: path.join(stateRoot, 'operator-deliveries'),
@@ -500,7 +496,7 @@ async function main(): Promise<void> {
           discord: {
             endpointOrigin: webhookOrigin,
             endpointSecret: 'discord.webhook',
-            maxPayloadBytes: 65_536,
+            payloadProfile: 'standard',
             format: 'discord_webhook',
           },
         },
@@ -526,7 +522,6 @@ async function main(): Promise<void> {
     observers: {
       'kubeclaw.notification-observer:notifications': {
         target: 'discord',
-        maxMessageChars: 8_192,
         pipelineLabel: `KubeClaw · ${projectName}`,
         modelLabel: model,
         stageLabels,
