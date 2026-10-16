@@ -91,7 +91,7 @@ func testController(t *testing.T) *controller {
 	if err := os.WriteFile(tokenPath, []byte("test-token"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	return &controller{
+	return &controller{policy: testControllerPolicy(t),
 		tokenPath: tokenPath,
 		namespace: "kubeclaw", allowedPrefixes: []string{"test"}, allowedAccess: allowed,
 		serviceAccountName: "agent-buster-namespace-controller",

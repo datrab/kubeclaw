@@ -1,0 +1,18 @@
+{
+  "charts/kubeclaw/values.yaml": "b7c47ca7d804b9254a72057af133260644423bef6b80526a2fd58d291bcdaadd",
+  "charts/kubeclaw/templates/buster-namespace-controller.yaml": "6fad8555ceae7605afc6affa11a5f38a059766da9c1ad1e82d586fcef2368491",
+  "tests/verification/deployment/buster-central-delivery.test.mjs": "46f42649e8c58c4ca6420e27a8fde7e3679bb63abf744ce445bd13c18d346a46",
+  "cmd/buster-namespace-controller/controller-policy.go": "7b5b53b611aa789e5cd354b9616edafb2017c30f9a4fc8d470dac740934e4013",
+  "cmd/buster-namespace-controller/controller-policy_test.go": "debf175366284d5b61ceb76e195b25f78747188265cd777916aa65e0751763ad",
+  "cmd/buster-namespace-controller/main.go": "65140e37cba4eb94105b1a8dfaee9fc946f539f4bbb3931372582d8855649f10",
+  "cmd/buster-namespace-controller/main_test.go": "8bfa70248c568743093ba402d79777f4a134d5181aa0564e756c79711eb3cd2e",
+  "cmd/buster-namespace-controller/demo-readiness.go": "f55e2ee017f4fa0cd37b8940207afb0cd30f47066b90719dcd4c46de101c5585",
+  "cmd/buster-namespace-controller/demo-readiness_test.go": "2671ccb703ebe54650fbdd1a32714f51db2bb9cff6ddd68ad7feac31a64b71e9",
+  "cmd/buster-namespace-controller/demo-readiness-lifecycle.go": "c1dd8e9791fdc4a7e5f961f5b2a49df25f07178196042e092fe5d75f5ca4be0d",
+  "cmd/buster-namespace-controller/demo-product.go": "003dfca921dd331e816c6f18d208177b0fb593540947063257bd05dba156f59a",
+  "cmd/buster-namespace-controller/demo-product_test.go": "6a339449f64aa5437011e02ea4bc455482ffc00d7627d8b9bc2305e39a17a8d1",
+  "cmd/buster-namespace-controller/demo-product-native_test.go": "3af0a38349384af5cc2424d36ede8add7cfe3eaaf9823c38dd45018237a85367",
+  "cmd/buster-namespace-controller/demo-retention.go": "51863fa8037e99edc51bdf9ed797e1603b0926cf6b4d414a484e90d49bea946a",
+  "cmd/buster-namespace-controller/demo-retention_test.go": "6304f62ba7b61227719b8bf5f4e3767c1e0173b05989e6de9abf34b33a5ff964",
+  "cmd/buster-namespace-controller/testdata/controller-policy.json": "7c548c7b0e879707f761dd6022bb199c0ec9c90e7f8a2af29d64acdf2748c7cd"
+}

@@ -55,7 +55,7 @@ func TestNativeProductControllerTransitions(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	c := &controller{apiURL: config.URL, tokenPath: tokenFile, httpClient: client, namespace: "native-controller", apiGroup: "kubeclaw.forgestack.ai", apiVersion: "v1alpha1", allowedPrefixes: []string{"test"}, allowedAccess: allowed, defaultTTL: time.Hour, maxTTL: 24 * time.Hour}
+	c := &controller{policy: testControllerPolicy(t), apiURL: config.URL, tokenPath: tokenFile, httpClient: client, namespace: "native-controller", apiGroup: "kubeclaw.forgestack.ai", apiVersion: "v1alpha1", allowedPrefixes: []string{"test"}, allowedAccess: allowed, defaultTTL: time.Hour, maxTTL: 24 * time.Hour}
 	ctx := context.Background()
 	api := func(method, uri string, body, output interface{}) {
 		t.Helper()

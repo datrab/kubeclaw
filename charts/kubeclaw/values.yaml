@@ -403,6 +403,21 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   maxTtlSeconds: 86400
   controller:
+    # Sole author for controller Ready/Product runtime limits. Transported as JSON.
+    policy:
+      readyReadHeaderTimeoutSeconds: 5
+      readyReadTimeoutSeconds: 20
+      readyWriteTimeoutSeconds: 20
+      readyIdleTimeoutSeconds: 30
+      readyMaxHeaderBytes: 20480
+      readyHandlerTimeoutSeconds: 15
+      readyMaximumBodyBytes: 16384
+      defaultDemoRetentionSeconds: 604800
+      authorizationMaximumBytes: 16384
+      readyObservationMaximumAgeSeconds: 300
+      productHandlerTimeoutSeconds: 15
+      productMaximumBodyBytes: 16384
+      productDecisionMaximumValiditySeconds: 300
     # Independent human-decision authority; empty configuration denies all.
     productDecisions:
       enabled: false

@@ -1,0 +1,75 @@
+{
+  "at": "2026-10-16T12:54:08.784674+00:00",
+  "change": "13 confirmed namespace-controller fields: central deployment policy -> real ConfigMap/read-only mount -> strict captured Go loader -> actual handlers/listener; original v1/v2 retention and product receipt replay preserved",
+  "implementedOriginalRows": 13,
+  "fieldMapping": "docs/review/remediation/config-controller-policy-20261016/field-mapping.json",
+  "verification": [
+    {
+      "command": [
+        "gofmt",
+        "-w",
+        "cmd/buster-namespace-controller/demo-product.go",
+        "cmd/buster-namespace-controller/controller-policy_test.go"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-policy-20261016/final-0.txt"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-json",
+        "./cmd/buster-namespace-controller"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-policy-20261016/final-1.txt",
+      "tests": {
+        "pass": 118,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/deployment/buster-central-delivery.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-policy-20261016/final-2.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-policy-20261016/final-3.txt"
+    }
+  ],
+  "nativeCompileOnly": {
+    "command": [
+      "go",
+      "test",
+      "-tags",
+      "native_product",
+      "-run",
+      "^$",
+      "./cmd/buster-namespace-controller"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/native-compile-only.txt",
+    "nativeExecutionVerified": false
+  },
+  "independentAcceptance": "OPEN; fresh reviewer needed; no native spawn exposed; unchanged EROFS reviewer runtime not retried",
+  "legacyVerificationFailure": {
+    "log": "docs/review/remediation/config-controller-policy-20261016/initial-2.txt",
+    "error": "older readiness chart suite uses retired busterComponentFile and missing charts/prism/files/config",
+    "resolved": false
+  },
+  "sourceManifest": "docs/review/remediation/config-controller-policy-20261016/source-manifest.json",
+  "nextAction": "Fresh independent review of controller batch, then reconcile remaining actual controller/repository configurable literals against their existing owners. Do not count unchanged central authors as residuals or activate denied v10.",
+  "writerLock": "shared nonblocking; released at subprocess exit",
+  "worker": "scheduled direct implementation; completed bounded work; no persistent implementation agent"
+}

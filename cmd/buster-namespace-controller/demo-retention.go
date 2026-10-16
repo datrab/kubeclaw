@@ -6,14 +6,14 @@ import (
 	"time"
 )
 
-const defaultDemoRetentionSeconds int64 = 604800
+const legacyDemoRetentionSeconds int64 = 604800
 
 // Technical arithmetic bound only; this is not an operational retention policy.
 const maximumDemoRetentionSeconds int64 = (1<<63 - 1) / int64(time.Second)
 
 func parseDemoRetention(raw json.RawMessage) (int64, error) {
 	if len(raw) == 0 {
-		return defaultDemoRetentionSeconds, nil
+		return 0, errors.New("DEMO_READY_RETENTION_INVALID")
 	}
 	var seconds int64
 	if string(raw) == "null" || json.Unmarshal(raw, &seconds) != nil || seconds < 1 || seconds > maximumDemoRetentionSeconds {
@@ -26,7 +26,7 @@ func storedDemoRetention(state map[string]interface{}) (int64, error) {
 	value, exists := state["retentionSeconds"]
 	if state["schemaVersion"] == "demo-readiness.v1" && !exists {
 		// Only the actual historical schema has implicit seven-day retention.
-		return defaultDemoRetentionSeconds, nil
+		return legacyDemoRetentionSeconds, nil
 	}
 	if state["schemaVersion"] != "demo-readiness.v2" || !exists {
 		return 0, errors.New("DEMO_READY_RETENTION_INVALID")
@@ -47,4 +47,16 @@ func demoRetentionDeadline(ready time.Time, seconds int64) (time.Time, error) {
 		return time.Time{}, errors.New("DEMO_READY_RETENTION_INVALID")
 	}
 	return expires, nil
+}
+
+// Only new admission selects the current default. Persisted v2 and historical
+// v1 records above are recovered without consulting the current deployment.
+func (c *controller) admittedDemoRetention(raw json.RawMessage) (int64, error) {
+	if len(raw) == 0 {
+		if c.policy.DefaultDemoRetentionSeconds < 1 || c.policy.DefaultDemoRetentionSeconds > maximumDemoRetentionSeconds {
+			return 0, errors.New("CONTROLLER_POLICY_INVALID")
+		}
+		return c.policy.DefaultDemoRetentionSeconds, nil
+	}
+	return parseDemoRetention(raw)
 }

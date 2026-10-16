@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "gofmt",
+      "-w",
+      "cmd/buster-namespace-controller/controller-policy.go",
+      "cmd/buster-namespace-controller/controller-policy_test.go",
+      "cmd/buster-namespace-controller/main.go",
+      "cmd/buster-namespace-controller/main_test.go",
+      "cmd/buster-namespace-controller/demo-readiness.go",
+      "cmd/buster-namespace-controller/demo-readiness_test.go",
+      "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "cmd/buster-namespace-controller/demo-product.go",
+      "cmd/buster-namespace-controller/demo-product_test.go",
+      "cmd/buster-namespace-controller/demo-product-native_test.go",
+      "cmd/buster-namespace-controller/demo-retention.go",
+      "cmd/buster-namespace-controller/demo-retention_test.go"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/initial-0.txt"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "-v",
+      "./cmd/buster-namespace-controller"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/initial-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/buster-readiness-config.test.mjs"
+    ],
+    "exitCode": 1,
+    "log": "docs/review/remediation/config-controller-policy-20261016/initial-2.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/initial-3.txt"
+  }
+]

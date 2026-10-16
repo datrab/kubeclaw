@@ -1,0 +1,122 @@
+{
+  "scope": "exact 13 previously confirmed rows only; no repository-wide completeness claim",
+  "rows": [
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-product.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/productHandlerTimeoutSeconds",
+      "goField": "ProductHandlerTimeoutSeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-product.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/productMaximumBodyBytes",
+      "goField": "ProductMaximumBodyBytes",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-product.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/productDecisionMaximumValiditySeconds",
+      "goField": "ProductDecisionMaximumValiditySeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/readyReadHeaderTimeoutSeconds",
+      "goField": "ReadyReadHeaderTimeoutSeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/readyReadTimeoutSeconds",
+      "goField": "ReadyReadTimeoutSeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/readyWriteTimeoutSeconds",
+      "goField": "ReadyWriteTimeoutSeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/readyIdleTimeoutSeconds",
+      "goField": "ReadyIdleTimeoutSeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/readyMaxHeaderBytes",
+      "goField": "ReadyMaxHeaderBytes",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/readyHandlerTimeoutSeconds",
+      "goField": "ReadyHandlerTimeoutSeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/readyMaximumBodyBytes",
+      "goField": "ReadyMaximumBodyBytes",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/authorizationMaximumBytes",
+      "goField": "AuthorizationMaximumBytes",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-readiness.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/readyObservationMaximumAgeSeconds",
+      "goField": "ReadyObservationMaximumAgeSeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+      "originalSourcePath": "cmd/buster-namespace-controller/demo-retention.go",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "ownerPointer": "/busterNamespaceBroker/controller/policy/defaultDemoRetentionSeconds",
+      "goField": "DefaultDemoRetentionSeconds",
+      "centralSelectionWired": true,
+      "independentAcceptance": "OPEN"
+    }
+  ]
+}

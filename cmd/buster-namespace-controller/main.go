@@ -32,6 +32,7 @@ const (
 var errNamespaceOwnershipMismatch = errors.New("namespace ownership does not match lease")
 
 type controller struct {
+	policy               controllerPolicy
 	namespace            string
 	apiGroup             string
 	apiVersion           string
@@ -130,6 +131,10 @@ func main() {
 }
 
 func newController() (*controller, error) {
+	policy, err := loadControllerPolicy(os.Getenv("BUSTER_CONTROLLER_POLICY_FILE"))
+	if err != nil {
+		return nil, err
+	}
 	namespace := getenvFile("KUBECLAW_NAMESPACE", serviceAccountNamespacePath, "kubeclaw")
 	token := readFile(serviceAccountTokenPath, "")
 	host := os.Getenv("KUBERNETES_SERVICE_HOST")
@@ -153,6 +158,7 @@ func newController() (*controller, error) {
 	}
 
 	ctrl := &controller{
+		policy:             policy,
 		namespace:          namespace,
 		apiGroup:           apiGroup,
 		apiVersion:         apiVersion,

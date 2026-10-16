@@ -1,0 +1,15 @@
+{
+  "readyReadHeaderTimeoutSeconds": 5,
+  "readyReadTimeoutSeconds": 20,
+  "readyWriteTimeoutSeconds": 20,
+  "readyIdleTimeoutSeconds": 30,
+  "readyMaxHeaderBytes": 20480,
+  "readyHandlerTimeoutSeconds": 15,
+  "readyMaximumBodyBytes": 16384,
+  "defaultDemoRetentionSeconds": 604800,
+  "authorizationMaximumBytes": 16384,
+  "readyObservationMaximumAgeSeconds": 300,
+  "productHandlerTimeoutSeconds": 15,
+  "productMaximumBodyBytes": 16384,
+  "productDecisionMaximumValiditySeconds": 300
+}

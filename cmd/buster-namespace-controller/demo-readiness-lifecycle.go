@@ -41,7 +41,7 @@ func (c *controller) startReadinessServer(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	server := &http.Server{Handler: c.readinessHandler(), ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 20 * time.Second, WriteTimeout: 20 * time.Second, IdleTimeout: 30 * time.Second, MaxHeaderBytes: 20 * 1024}
+	server := c.readinessHTTPServer()
 	go func() { <-ctx.Done(); _ = server.Close() }()
 	go func() {
 		if err := server.Serve(listener); err != nil && !errors.Is(err, http.ErrServerClosed) {

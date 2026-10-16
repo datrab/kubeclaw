@@ -43,12 +43,32 @@ test('real full kubeclaw chart uses exact transported parent receipt and no old 
  values.runtimeInfrastructure={registry:{endpoint:'https://registry.example.test',transport:'https',authSecretName:'fixture-registry'}};
  values.extraContainers.find(item=>item.name==='buster-v2-runtime').image='ghcr.io/datrab/kubeclaw-buster-runtime@sha256:'+'a'.repeat(64);
  values.pipelineDelivery={buster:result.metadata};const file=path.join(root,'values.yaml');
- const render=(name='agent-buster',namespace='kubeclaw')=>{fs.writeFileSync(file,yaml.dump(values));return yaml.loadAll(execFileSync('helm',['template',name,'charts/kubeclaw','--namespace',namespace,'-f',file],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));};
+ const chart=path.join(root,'chart');fs.cpSync('charts/kubeclaw',chart,{recursive:true,dereference:true});
+ // Generate from the actual selected input, never pair new receipts with a stale checked-in projection.
+ fs.writeFileSync(path.join(chart,'files/pipeline/buster-topology.json'),JSON.stringify(busterChartProjection(path.join(repository,'config'))));
+ const render=(name='agent-buster',namespace='kubeclaw')=>{fs.writeFileSync(file,yaml.dump(values));return yaml.loadAll(execFileSync('helm',['template',name,chart,'--namespace',namespace,'-f',file],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));};
  const documents=render(),pod=documents.find(item=>item?.kind==='Deployment'&&item.metadata.name==='agent-buster').spec.template.spec;
  const container=pod.containers.find(item=>item.name==='buster-v2-runtime');assert(!(container.env??[]).some(item=>item.name==='SWARM_CONFIG'));
  const mount=container.volumeMounts.find(item=>item.mountPath==='/run/pipeline-delivery');assert(mount?.readOnly);assert(!mount.subPath);
  assert(!pod.containers.flatMap(item=>item.volumeMounts??[]).some(item=>item.mountPath==='/etc/kubeclaw/swarm'));
  const configMap=documents.find(item=>item?.kind==='ConfigMap'&&item.metadata.name==='agent-buster-pipeline-delivery');assert.deepEqual(JSON.parse(configMap.data['expected-delivery.json']),result.metadata.expected);
+
+ // The namespace-controller policy is authored once in deployment values and
+ // delivered through its real read-only ConfigMap mount, not an image fallback.
+ const controllerChecksums=[];
+ for(const seconds of [60,120]) {
+  values.busterNamespaceBroker.controller.policy={...yaml.load(fs.readFileSync('charts/kubeclaw/values.yaml','utf8')).busterNamespaceBroker.controller.policy,defaultDemoRetentionSeconds:seconds};
+  const selected=render(),controller=selected.find(item=>item?.kind==='Deployment'&&item.metadata.name==='agent-buster-namespace-controller');
+  const pod=controller.spec.template.spec,actual=pod.containers.find(item=>item.name==='controller');
+  assert(actual.env.some(item=>item.name==='BUSTER_CONTROLLER_POLICY_FILE'&&item.value==='/etc/kubeclaw/controller/controller-policy.json'));
+  const mount=actual.volumeMounts.find(item=>item.name==='controller-policy');assert(mount?.readOnly&&!mount.subPath);
+  const volume=pod.volumes.find(item=>item.name===mount.name),map=selected.find(item=>item?.kind==='ConfigMap'&&item.metadata.name===volume.configMap.name);
+  const delivered=JSON.parse(map.data['controller-policy.json']);assert.deepEqual(delivered,values.busterNamespaceBroker.controller.policy);
+  controllerChecksums.push(controller.spec.template.metadata.annotations['checksum/controller-policy']);
+  const policyFile=path.join(root,`controller-${seconds}.json`);fs.writeFileSync(policyFile,map.data['controller-policy.json']);
+  execFileSync('go',['test','./cmd/buster-namespace-controller','-run','^TestControllerActualDeliveredPolicy$','-count=1'],{encoding:'utf8',stdio:['ignore','pipe','pipe'],env:{...process.env,CONTROLLER_TEST_DELIVERED_POLICY:policyFile,CONTROLLER_TEST_RETENTION_SECONDS:String(seconds)}});
+ }
+ assert.notEqual(controllerChecksums[0],controllerChecksums[1],'controller owner change triggers rollout');
  assert.throws(()=>render('other-release'),/release identity/);
  delete values.pipelineDelivery.buster;assert.throws(render,/exact selected Buster image delivery receipt required/);values.pipelineDelivery.buster=structuredClone(result.metadata);
  values.pipelineDelivery.buster.expected.generationDigest='sha256:'+'b'.repeat(64);assert.throws(render,/generation mismatch/);
