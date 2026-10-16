@@ -23080,6 +23080,12 @@
     "productiveRootSuppliesSelection": false,
     "activationAllowed": false,
     "originalCasesAccepted": 0,
-    "fullC0C6Complete": false
+    "fullC0C6Complete": false,
+    "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+    "deliveredRolesVerified": [
+      "nova",
+      "buster"
+    ],
+    "deliveredImportsVerified": true
   }
 }

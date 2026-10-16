@@ -79,5 +79,26 @@
     "Task example helpers absent from captured original generation: supplied actual direct-command and JUnit packages under a distinct test-only registry root, never relabelled as captured source or installed authority",
     "Negative assertion used nonexistent TEST_PLAN_PROVIDER_CONFIG_INVALID; corrected to exact existing TEST_PLAN_CONFIGURATION_INVALID without changing production diagnostic"
   ],
-  "remaining": "Independent review; coordinated authenticated productive boot/delivery and selectedProviderPolicies receiving; QB-R02 and full original/native/archive acceptance"
+  "remaining": "Independent review; coordinated authenticated productive boot/delivery and selectedProviderPolicies receiving; QB-R02 and full original/native/archive acceptance",
+  "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+  "deliveredRoles": [
+    {
+      "role": "nova",
+      "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+      "indexedFiles": 1832,
+      "receiverSha256": "72460d228b4478d139186e97c259501cc08922c211b9bf24512abfeb853dffca",
+      "exactSourceBytesAndReceiptDigest": true,
+      "deliveredImport": true,
+      "installedOrNativeAuthority": false
+    },
+    {
+      "role": "buster",
+      "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+      "indexedFiles": 14126,
+      "receiverSha256": "72460d228b4478d139186e97c259501cc08922c211b9bf24512abfeb853dffca",
+      "exactSourceBytesAndReceiptDigest": true,
+      "deliveredImport": true,
+      "installedOrNativeAuthority": false
+    }
+  ]
 }
