@@ -27,7 +27,7 @@ import { blockedReviewStage } from './review-stage-result.ts';
 import { reportArtifactEncoding, type ReportArtifactEncoding } from './review-report-encoding.ts';
 import { reviewSemanticEncoding, type ReviewSemanticEncoding } from './review-semantics.ts';
 
-interface ReviewStageConfig { readonly agent: string; readonly profile: string; readonly policy?: unknown;
+interface ReviewStageConfig { readonly agent: string; readonly profile: string; readonly policy?: unknown; readonly ownedPolicyProfiles?: unknown;
   readonly reportArtifactEncoding?: ReportArtifactEncoding; readonly reviewSemanticEncoding?: ReviewSemanticEncoding }
 class ReviewStageIntegrityError extends Error {
   readonly snapshot: ReviewBundleSnapshot | undefined;
@@ -44,7 +44,8 @@ function config(context: PluginInvocationContext): ReviewStageConfig {
   if (!agent) throw new Error('review agent is not configured');
   const profile = value.profile === undefined ? 'gate' : value.profile;
   if (typeof profile !== 'string' || !profile.trim()) throw new Error('review profile is invalid');
-  return { agent, profile, ...(value.policy === undefined ? {} : { policy: value.policy }),
+  if (value.ownedPolicyProfiles !== undefined && Object.hasOwn(value,'policy')) throw new Error('REVIEW_POLICY_COMPETING_AUTHOR');
+  return { agent, profile, ...(value.ownedPolicyProfiles === undefined ? {} : {ownedPolicyProfiles:value.ownedPolicyProfiles}), ...(value.policy === undefined ? {} : { policy: value.policy }),
     ...(semanticEncoding === undefined ? {} : { reviewSemanticEncoding: semanticEncoding }),
     ...(encoding === undefined ? {} : { reportArtifactEncoding: encoding }) };
 }
@@ -128,6 +129,7 @@ async function expandedDispatch(
 
 function resolvedStagePolicy(stageConfig: ReviewStageConfig): ResolvedReviewPolicy | StageResult {
   try {
+    if(stageConfig.ownedPolicyProfiles !== undefined) return resolveReviewPolicy({selectedFile:getReviewPolicyProfile(stageConfig.profile,stageConfig.ownedPolicyProfiles)},stageConfig.reviewSemanticEncoding);
     return resolveReviewPolicy({
       builtIn: getReviewPolicyProfile(stageConfig.profile),
       ...(stageConfig.policy === undefined ? {} : { settingsFile: stageConfig.policy }),

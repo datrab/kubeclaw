@@ -251,6 +251,11 @@
               "timeoutMs": 120000
             }
           }
+        },
+        "reviewPolicySelection": {
+          "schemaVersion": "review-policy-selection.v1",
+          "file": "../plugins/kubeclaw.review/profiles/standard.config.json",
+          "profile": "standard"
         }
       }
     }

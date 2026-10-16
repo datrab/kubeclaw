@@ -22214,5 +22214,28 @@
     "sourceCommit": "cb1b5a829ddf74c6f13bcf9d1ab32584e4870fad",
     "remoteVerified": true,
     "reviewedProductionPaths": 72
+  },
+  "reviewOwnedDecisionProfiles20261016": {
+    "status": "implemented-and-source-reviewed",
+    "inventoryRows": 141,
+    "remainingRepositoryGradeRows": 87,
+    "evidence": "docs/review/remediation/config-review-owned-20261016",
+    "checks": {
+      "focusedIntegration": "4/4",
+      "originalRecovery": "14/14",
+      "fullReviewPackage": "exit 0 including pretest/posttest",
+      "sourceCLI": "exit 0",
+      "packagedCLI": "exit 0",
+      "runtimeTypecheck": "exit 0",
+      "reviewBuild": "exit 0"
+    },
+    "review": {
+      "engine": "codex",
+      "actionableFindings": 0,
+      "qualification": "complete-dataset source-only; no reviewer shell/native execution"
+    },
+    "historicalNativeAcceptance": "OPEN",
+    "deployment": false,
+    "mainMerge": false
   }
 }

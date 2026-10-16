@@ -1289,6 +1289,31 @@
           "const": "project-compiler-runtime.v1"
         }
       }
+    },
+    "reviewPolicySelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "file",
+        "profile"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "review-policy-selection.v1"
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "reviewPolicyCapture": {
+      "type": "object"
     }
   },
   "dependentRequired": {
@@ -1297,6 +1322,12 @@
     ],
     "projectCompiler": [
       "policyVersion"
+    ],
+    "reviewPolicySelection": [
+      "reviewPolicyCapture"
+    ],
+    "reviewPolicyCapture": [
+      "reviewPolicySelection"
     ]
   }
 }

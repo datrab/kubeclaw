@@ -1,3 +1,5 @@
+import path from 'node:path';
+import {captureReviewPolicy,loadReviewPolicy,type ReviewPolicySelection,type ReviewPolicyCapture} from './review-owned-policy.ts';
 import fs from 'node:fs';
 import Ajv2020 from 'ajv/dist/2020.js';
 
@@ -8,6 +10,8 @@ export interface ProjectCompilerRuntimePolicy {
   readonly executionGroups: Readonly<{cumulative: Readonly<{timeoutMs: number}>; source: Readonly<{timeoutMs: number}>; demo: Readonly<{timeoutMs: number}>}>;
 }
 export interface CoreRuntimePolicy {
+  readonly reviewPolicySelection?: ReviewPolicySelection;
+  readonly reviewPolicyCapture?: ReviewPolicyCapture;
   readonly policyVersion?: 'nova-core-runtime-policy.v2' | 'nova-core-runtime-policy.v3';
   readonly projectCompiler?: ProjectCompilerRuntimePolicy;
   readonly repositoryRead: Readonly<{maxFileBytes:number; maxChangedPaths:number}>;
@@ -85,6 +89,11 @@ export function captureCoreRuntimePolicy(value: unknown): CoreRuntimePolicy {
     || selected.runMutationRenewalMs >= selected.runMutationTtlMs
     || selected.recovery.attempts.maximumEvidenceObjectBytes > selected.recovery.attempts.maximumEvidenceBytes
     || selected.recovery.admission.maximumIngressBytes > selected.recovery.admission.maximumBytes) throw new Error('CORE_RUNTIME_POLICY_BUDGET_INVALID');
+  if ((Object.hasOwn(selected,'reviewPolicySelection') && selected.reviewPolicySelection === undefined) || (Object.hasOwn(selected,'reviewPolicyCapture') && selected.reviewPolicyCapture === undefined)) throw new Error('CORE_RUNTIME_POLICY_INVALID');
+  if (selected.reviewPolicyCapture !== undefined) {
+    captureReviewPolicy(selected.reviewPolicyCapture);
+    if(selected.reviewPolicyCapture.source.profile !== selected.reviewPolicySelection!.profile)throw new Error('REVIEW_POLICY_CAPTURE_SELECTION_MISMATCH');
+  }
   return freeze(selected);
 }
 /** Explicit platform-selected source only; never CWD discovery/ENV/default selection. */
@@ -98,7 +107,11 @@ export function loadCoreRuntimePolicy(selection: Readonly<{file: string; profile
   const profiles = new Map<string, CoreRuntimePolicy>();
   for (const [name, profile] of Object.entries(document.profiles)) {
     if (!profile || typeof profile !== 'object' || Object.keys(profile).join(',') !== 'settings') throw new Error('CORE_RUNTIME_POLICY_PROFILE_INVALID');
-    const settings = captureCoreRuntimePolicy((profile as {settings: unknown}).settings);
+    const authored=(profile as {settings: Record<string,unknown>}).settings;
+    if (!authored || typeof authored !== 'object' || Array.isArray(authored)) throw new Error('CORE_RUNTIME_POLICY_PROFILE_INVALID');
+    if (Object.hasOwn(authored,'reviewPolicyCapture')) throw new Error('REVIEW_POLICY_CAPTURE_COMPETING_AUTHOR');
+    const settings=captureCoreRuntimePolicy(Object.hasOwn(authored,'reviewPolicySelection')
+      ? {...authored,reviewPolicyCapture:loadReviewPolicy(authored.reviewPolicySelection,path.dirname(fs.realpathSync(selection.file)))} : authored);
     if (settings.policyVersion !== (document.schemaVersion === 'nova-core-runtime-policy.v1' ? undefined : document.schemaVersion)) throw new Error('CORE_RUNTIME_POLICY_VERSION_MISMATCH');
     profiles.set(name, settings);
   }

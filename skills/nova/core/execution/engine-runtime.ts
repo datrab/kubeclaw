@@ -53,7 +53,7 @@ export function inspectRuntimeConfiguration(platform: PlatformConfig, definition
   const policy: CapabilityPolicy = { enabledRegistrations: enabled, grants: nestedMap(platform.grants), providers: new Map(Object.entries(platform.providers)) };
   const granted = resolveCapabilityGrants(snapshot, policy);
   validateRuntimeRegistrationConfiguration(snapshot, granted.enabledRegistrations, {
-    stages: definition.stages.map((stage) => ({ type: stage.type, config: selectedStageConfiguration(stage.type, stage.config, corePolicy.humanApproval.defaultTimeoutMinutes, corePolicy.prismDesignBudgets) })), observers: objectMap(observerConfigurations), adapters: objectMap(adapterConfigurations),
+    stages: definition.stages.map((stage) => ({ type: stage.type, config: selectedStageConfiguration(stage.type, stage.config, corePolicy.humanApproval.defaultTimeoutMinutes, corePolicy.prismDesignBudgets, corePolicy.reviewPolicyCapture) })), observers: objectMap(observerConfigurations), adapters: objectMap(adapterConfigurations),
   });
   return { corePolicy, adapterConfigurations, observerConfigurations, configuration: { corePolicy, providers: platform.providers, grants: platform.grants, adapters: adapterConfigurations, activeAdapters: platform.activeAdapters, observers: observerConfigurations, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted };
 }

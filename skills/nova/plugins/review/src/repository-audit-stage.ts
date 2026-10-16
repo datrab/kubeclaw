@@ -38,6 +38,7 @@ interface AuditConfig {
   readonly reviewerThinking: string;
   readonly profile: string;
   readonly policy?: unknown;
+  readonly ownedPolicyProfiles?: unknown;
 }
 class RepositoryAuditIntegrityError extends Error {}
 class RepositoryAuditInfrastructureError extends Error {}
@@ -119,7 +120,8 @@ function stageConfig(context: PluginInvocationContext): AuditConfig {
     || !reviewerAgentId || !reviewerThinking || !profile) {
     throw new Error('repository audit config is invalid');
   }
-  return { agent, reviewerModel, reviewerRuntime: reviewerRuntime as ReviewRuntimeIdentity['runtime'],
+  if(value.ownedPolicyProfiles !== undefined && Object.hasOwn(value,'policy'))throw new Error('REVIEW_POLICY_COMPETING_AUTHOR');
+  return { ...(value.ownedPolicyProfiles === undefined ? {} : {ownedPolicyProfiles:value.ownedPolicyProfiles}), agent, reviewerModel, reviewerRuntime: reviewerRuntime as ReviewRuntimeIdentity['runtime'],
     reviewerAgentId, reviewerThinking, profile,
     ...(value.policy === undefined ? {} : { policy: value.policy }) };
 }
@@ -686,8 +688,9 @@ async function runRepositoryAudit(
   input: unknown, context: PluginInvocationContext,
 ): Promise<StageResult> {
     const parsed = parseInput(input), config = stageConfig(context);
-    const policy = resolveReviewPolicy({ builtIn: getReviewPolicyProfile(config.profile),
-      ...(config.policy === undefined ? {} : { settingsFile: config.policy }) });
+    const policy = config.ownedPolicyProfiles === undefined
+      ? resolveReviewPolicy({ builtIn: getReviewPolicyProfile(config.profile), ...(config.policy === undefined ? {} : { settingsFile: config.policy }) })
+      : resolveReviewPolicy({selectedFile:getReviewPolicyProfile(config.profile,config.ownedPolicyProfiles)});
     if (parsed.reviewProfile.enabledLenses.includes('simplification') && !policy.policy.simplification.enabled) {
       throw new RepositoryAuditIntegrityError('repository audit simplification lens requires an enabled simplification policy');
     }

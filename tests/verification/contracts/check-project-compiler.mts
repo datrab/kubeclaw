@@ -195,7 +195,7 @@ try {
     // including mixed review branches, not only the pure compiler candidate.
     const {loadCoreRuntimePolicy} = await import('../../../skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts');
     const {compileProjectWithCorePolicy} = await import('../../../skills/nova/project/compiler.ts');
-    const selected = structuredClone(loadCoreRuntimePolicy(TEST_CORE_POLICY_SELECTION));
+    const {reviewPolicySelection,reviewPolicyCapture,...selected} = structuredClone(loadCoreRuntimePolicy(TEST_CORE_POLICY_SELECTION));
     const policy = {...selected.projectCompiler!, execution: {...selected.projectCompiler!.execution, timeoutMs:654321}};
     const changedSelection = {...selected, projectCompiler:policy};
     const mixed = structuredClone(project); delete mixed.modules[1].review;

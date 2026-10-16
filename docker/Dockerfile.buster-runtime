@@ -130,6 +130,7 @@ COPY --from=buster-package /proof /opt/buster-image-proofs
 COPY --from=buster-package /out/kubeclaw-native-worker-launcher /usr/local/libexec/kubeclaw-native-worker-launcher
 COPY --from=buster-package /out/plugin-sandbox /opt/kubeclaw-trusted/plugin-sandbox
 COPY config/nova/core.config.json /etc/kubeclaw/nova/core.config.json
+COPY config/plugins/kubeclaw.review /etc/kubeclaw/plugins/kubeclaw.review
 RUN cc -std=c11 -O2 -Wall -Wextra -Werror -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fPIE -pie -Wl,-z,relro,-z,now /tmp/buster-lifetime-guardian.c -o /usr/local/libexec/kubeclaw-buster-lifetime-guardian \
     && chmod 0755 /usr/local/libexec/kubeclaw-buster-lifetime-guardian /usr/local/libexec/kubeclaw-native-worker-launcher \
     && rm /tmp/buster-lifetime-guardian.c \

@@ -12,7 +12,7 @@ import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
 import {projectSourceFixture} from './project-source-fixture.mjs';
 import {TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION} from '../../fixtures/core-runtime-policy.mjs';
 
-const selected = () => loadCoreRuntimePolicy(TEST_CORE_POLICY_SELECTION);
+const selected = () => {const {reviewPolicySelection,reviewPolicyCapture,...policy}=loadCoreRuntimePolicy(TEST_CORE_POLICY_SELECTION);return policy;};
 test('selected compiler preserves original graphs for absent, mixed and all review modules', async t => {
   const root=fs.mkdtempSync(path.join(os.tmpdir(),'compiler-policy-'));
   const fixture=await projectSourceFixture(root,{clean:false});

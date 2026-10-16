@@ -300,6 +300,7 @@ WORKDIR /app
 
 # Explicit Platform policy reference target; never auto-selected by the runtime.
 COPY config/nova/core.config.json /etc/kubeclaw/nova/core.config.json
+COPY config/plugins/kubeclaw.review /etc/kubeclaw/plugins/kubeclaw.review
 
 ENV HOME=/home/node
 

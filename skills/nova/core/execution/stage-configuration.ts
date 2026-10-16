@@ -2,7 +2,11 @@ import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-
 /** Task deadlines override the selected installation default. The policy is
  * captured in the original runtime snapshot; this function performs no I/O and
  * does not rewrite the task graph or its identity. */
-export function selectedStageConfiguration(type: string, config: Readonly<Record<string, unknown>>, approvalTimeoutMinutes?: number, prismDesignBudgets?: CoreRuntimePolicy['prismDesignBudgets']): Readonly<Record<string, unknown>> {
+export function selectedStageConfiguration(type: string, config: Readonly<Record<string, unknown>>, approvalTimeoutMinutes?: number, prismDesignBudgets?: CoreRuntimePolicy['prismDesignBudgets'], reviewPolicyCapture?: CoreRuntimePolicy['reviewPolicyCapture']): Readonly<Record<string, unknown>> {
+  if (['kubeclaw.decision.review','kubeclaw.audit.repository-review','kubeclaw.audit.repository-review-revalidation'].includes(type) && reviewPolicyCapture !== undefined) {
+    if (Object.hasOwn(config,'ownedPolicyProfiles') || Object.hasOwn(config,'policy')) throw new Error('REVIEW_POLICY_COMPETING_AUTHOR');
+    return Object.freeze({...config,ownedPolicyProfiles:reviewPolicyCapture.settings});
+  }
   if (type === 'kubeclaw.design.prism') {
     if (Object.hasOwn(config, 'budgets')) throw new Error('CORE_PRISM_BUDGET_DUPLICATE_AUTHOR');
     if (!prismDesignBudgets || Object.values(prismDesignBudgets).some(value => !Number.isSafeInteger(value) || value < 1)) throw new Error('CORE_PRISM_BUDGET_REQUIRED');

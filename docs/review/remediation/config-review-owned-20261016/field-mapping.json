@@ -1,0 +1,1698 @@
+{
+  "count": 141,
+  "note": "141 original inventory rows includes protocol/generated bindings, not 141 new operator knobs",
+  "rows": [
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SCHEMAVERSION",
+      "class": "protocol-invariant",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.schemaVersion",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/schemaVersion",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-PROFILE",
+      "class": "generated-binding",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.profile",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/profile",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-BLOCKING-PRIORITIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.blocking.priorities",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/blocking/priorities",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-BLOCKING-CATEGORIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.blocking.categories",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/blocking/categories",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.blocking.requireIntroducedByDiff",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/blocking/requireIntroducedByDiff",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.blocking.requireDirectEvidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/blocking/requireDirectEvidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXPROPOSALS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxProposals",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxProposals",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXROOTCAUSES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxRootCauses",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxRootCauses",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINSTANCESPERCLUSTER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxInstancesPerCluster",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxInstancesPerCluster",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXBUNDLEBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxBundleBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxBundleBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxContextFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxContextFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINITIALCONTEXTFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxInitialContextFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxInitialContextFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTFILEBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxContextFileBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxContextFileBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxContextBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxContextBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINITIALCONTEXTBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxInitialContextBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxInitialContextBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXDEPENDENCYDEPTH",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxDependencyDepth",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxDependencyDepth",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXEXPANSIONFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxExpansionFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxExpansionFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-LIMITS-MAXADVISORIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.limits.maxAdvisories",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/limits/maxAdvisories",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SCOPE-OUTSIDESCOPE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.scope.outsideScope",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/scope/outsideScope",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SCOPE-UNKNOWNSCOPE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.scope.unknownScope",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/scope/unknownScope",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SCOPE-RETAINPREEXISTING",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.scope.retainPreExisting",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/scope/retainPreExisting",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-VERIFICATION-SEMANTICVERIFIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.verification.semanticVerifier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/verification/semanticVerifier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.verification.insufficientFindingEvidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/verification/insufficientFindingEvidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.verification.unverifiedRequirement",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/verification/unverifiedRequirement",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-ENABLED",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.simplification.enabled",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/simplification/enabled",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-REGISTRYVERSION",
+      "class": "version",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.simplification.registryVersion",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/simplification/registryVersion",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-ENABLEDRULES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.simplification.enabledRules",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/simplification/enabledRules",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.simplification.maxRecommendations",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/simplification/maxRecommendations",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.simplification.minimumConfidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/simplification/minimumConfidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P0",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.priorityWeights.P0",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/priorityWeights/P0",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P1",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.priorityWeights.P1",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/priorityWeights/P1",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P2",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.priorityWeights.P2",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/priorityWeights/P2",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P3",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.priorityWeights.P3",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/priorityWeights/P3",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.categoryWeights.correctness",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/categoryWeights/correctness",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.categoryWeights.security",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/categoryWeights/security",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.categoryWeights.contract",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/categoryWeights/contract",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.categoryWeights.architecture",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/categoryWeights/architecture",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.categoryWeights.simplification",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/categoryWeights/simplification",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-INTRODUCEDBYDIFFBONUS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.introducedByDiffBonus",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/introducedByDiffBonus",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-RANKING-DIRECTEVIDENCEBONUS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.ranking.directEvidenceBonus",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/ranking/directEvidenceBonus",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-FOLLOWUP-RETAINEDPRIORITIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.followUp.retainedPriorities",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/followUp/retainedPriorities",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-FOLLOWUP-MAXITEMS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.followUp.maxItems",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/followUp/maxItems",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-GOVERNOR-MAXREPAIRCYCLES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.governor.maxRepairCycles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/governor/maxRepairCycles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.governor.fileGrowthMultiplier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/governor/fileGrowthMultiplier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.governor.nonTestLocGrowthMultiplier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/governor/nonTestLocGrowthMultiplier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.governor.absoluteFileAllowance",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/governor/absoluteFileAllowance",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-GATE-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "gate.governor.absoluteNonTestLocAllowance",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/gate/governor/absoluteNonTestLocAllowance",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SCHEMAVERSION",
+      "class": "protocol-invariant",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.schemaVersion",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/schemaVersion",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-PROFILE",
+      "class": "generated-binding",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.profile",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/profile",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-BLOCKING-PRIORITIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.blocking.priorities",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/blocking/priorities",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-BLOCKING-CATEGORIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.blocking.categories",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/blocking/categories",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.blocking.requireIntroducedByDiff",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/blocking/requireIntroducedByDiff",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.blocking.requireDirectEvidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/blocking/requireDirectEvidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXPROPOSALS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxProposals",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxProposals",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXROOTCAUSES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxRootCauses",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxRootCauses",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINSTANCESPERCLUSTER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxInstancesPerCluster",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxInstancesPerCluster",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXBUNDLEBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxBundleBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxBundleBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxContextFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxContextFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINITIALCONTEXTFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxInitialContextFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxInitialContextFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTFILEBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxContextFileBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxContextFileBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxContextBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxContextBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINITIALCONTEXTBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxInitialContextBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxInitialContextBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXDEPENDENCYDEPTH",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxDependencyDepth",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxDependencyDepth",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXEXPANSIONFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxExpansionFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxExpansionFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXADVISORIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.limits.maxAdvisories",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/limits/maxAdvisories",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SCOPE-OUTSIDESCOPE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.scope.outsideScope",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/scope/outsideScope",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SCOPE-UNKNOWNSCOPE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.scope.unknownScope",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/scope/unknownScope",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SCOPE-RETAINPREEXISTING",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.scope.retainPreExisting",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/scope/retainPreExisting",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-VERIFICATION-SEMANTICVERIFIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.verification.semanticVerifier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/verification/semanticVerifier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.verification.insufficientFindingEvidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/verification/insufficientFindingEvidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.verification.unverifiedRequirement",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/verification/unverifiedRequirement",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-ENABLED",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.simplification.enabled",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/simplification/enabled",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-REGISTRYVERSION",
+      "class": "version",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.simplification.registryVersion",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/simplification/registryVersion",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-ENABLEDRULES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.simplification.enabledRules",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/simplification/enabledRules",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.simplification.maxRecommendations",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/simplification/maxRecommendations",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.simplification.minimumConfidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/simplification/minimumConfidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P0",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.priorityWeights.P0",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/priorityWeights/P0",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P1",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.priorityWeights.P1",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/priorityWeights/P1",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P2",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.priorityWeights.P2",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/priorityWeights/P2",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P3",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.priorityWeights.P3",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/priorityWeights/P3",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.categoryWeights.correctness",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/categoryWeights/correctness",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.categoryWeights.security",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/categoryWeights/security",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.categoryWeights.contract",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/categoryWeights/contract",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.categoryWeights.architecture",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/categoryWeights/architecture",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.categoryWeights.simplification",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/categoryWeights/simplification",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-INTRODUCEDBYDIFFBONUS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.introducedByDiffBonus",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/introducedByDiffBonus",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-RANKING-DIRECTEVIDENCEBONUS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.ranking.directEvidenceBonus",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/ranking/directEvidenceBonus",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-FOLLOWUP-RETAINEDPRIORITIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.followUp.retainedPriorities",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/followUp/retainedPriorities",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-FOLLOWUP-MAXITEMS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.followUp.maxItems",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/followUp/maxItems",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-GOVERNOR-MAXREPAIRCYCLES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.governor.maxRepairCycles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/governor/maxRepairCycles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.governor.fileGrowthMultiplier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/governor/fileGrowthMultiplier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.governor.nonTestLocGrowthMultiplier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/governor/nonTestLocGrowthMultiplier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.governor.absoluteFileAllowance",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/governor/absoluteFileAllowance",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-LEAN-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "lean.governor.absoluteNonTestLocAllowance",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/lean/governor/absoluteNonTestLocAllowance",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SCHEMAVERSION",
+      "class": "protocol-invariant",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.schemaVersion",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/schemaVersion",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-PROFILE",
+      "class": "generated-binding",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.profile",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/profile",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-BLOCKING-PRIORITIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.blocking.priorities",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/blocking/priorities",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-BLOCKING-CATEGORIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.blocking.categories",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/blocking/categories",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.blocking.requireIntroducedByDiff",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/blocking/requireIntroducedByDiff",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.blocking.requireDirectEvidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/blocking/requireDirectEvidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXPROPOSALS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxProposals",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxProposals",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXROOTCAUSES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxRootCauses",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxRootCauses",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINSTANCESPERCLUSTER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxInstancesPerCluster",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxInstancesPerCluster",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXBUNDLEBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxBundleBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxBundleBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxContextFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxContextFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINITIALCONTEXTFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxInitialContextFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxInitialContextFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTFILEBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxContextFileBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxContextFileBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxContextBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxContextBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINITIALCONTEXTBYTES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxInitialContextBytes",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxInitialContextBytes",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXDEPENDENCYDEPTH",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxDependencyDepth",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxDependencyDepth",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXEXPANSIONFILES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxExpansionFiles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxExpansionFiles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXADVISORIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.limits.maxAdvisories",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/limits/maxAdvisories",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SCOPE-OUTSIDESCOPE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.scope.outsideScope",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/scope/outsideScope",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SCOPE-UNKNOWNSCOPE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.scope.unknownScope",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/scope/unknownScope",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SCOPE-RETAINPREEXISTING",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.scope.retainPreExisting",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/scope/retainPreExisting",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-SEMANTICVERIFIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.verification.semanticVerifier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/verification/semanticVerifier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.verification.insufficientFindingEvidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/verification/insufficientFindingEvidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.verification.unverifiedRequirement",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/verification/unverifiedRequirement",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-ENABLED",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.simplification.enabled",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/simplification/enabled",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-REGISTRYVERSION",
+      "class": "version",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.simplification.registryVersion",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/simplification/registryVersion",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-ENABLEDRULES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.simplification.enabledRules",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/simplification/enabledRules",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.simplification.maxRecommendations",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/simplification/maxRecommendations",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.simplification.minimumConfidence",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/simplification/minimumConfidence",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P0",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.priorityWeights.P0",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/priorityWeights/P0",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P1",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.priorityWeights.P1",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/priorityWeights/P1",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P2",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.priorityWeights.P2",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/priorityWeights/P2",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P3",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.priorityWeights.P3",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/priorityWeights/P3",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.categoryWeights.correctness",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/categoryWeights/correctness",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.categoryWeights.security",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/categoryWeights/security",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.categoryWeights.contract",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/categoryWeights/contract",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.categoryWeights.architecture",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/categoryWeights/architecture",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.categoryWeights.simplification",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/categoryWeights/simplification",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-INTRODUCEDBYDIFFBONUS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.introducedByDiffBonus",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/introducedByDiffBonus",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-RANKING-DIRECTEVIDENCEBONUS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.ranking.directEvidenceBonus",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/ranking/directEvidenceBonus",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-FOLLOWUP-RETAINEDPRIORITIES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.followUp.retainedPriorities",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/followUp/retainedPriorities",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-FOLLOWUP-MAXITEMS",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.followUp.maxItems",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/followUp/maxItems",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-MAXREPAIRCYCLES",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.governor.maxRepairCycles",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/governor/maxRepairCycles",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.governor.fileGrowthMultiplier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/governor/fileGrowthMultiplier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.governor.nonTestLocGrowthMultiplier",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/governor/nonTestLocGrowthMultiplier",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.governor.absoluteFileAllowance",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/governor/absoluteFileAllowance",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    },
+    {
+      "id": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "class": "operator-setting",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "field": "audit.governor.absoluteNonTestLocAllowance",
+        "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+      },
+      "currentOwner": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+      "currentPointer": "/profiles/standard/settings/profiles/audit/governor/absoluteNonTestLocAllowance",
+      "originalReader": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts"
+    }
+  ]
+}

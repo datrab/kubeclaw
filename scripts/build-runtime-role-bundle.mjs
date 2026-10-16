@@ -14,6 +14,7 @@ if (!['nova', 'buster', 'prism'].includes(role) || !outputValue || !commit || !c
 }
 const output = path.resolve(outputValue);
 assert.equal(fs.existsSync(output), false, `bundle output already exists: ${output}`);
+execFileSync(process.execPath, [path.join(root, 'scripts/sync-review-owned-policy-schema.mjs'), '--check'], { stdio: 'inherit' });
 execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });
 
 const ownership = JSON.parse(fs.readFileSync(path.join(root, 'packaging/runtime/package-ownership.json'), 'utf8'));

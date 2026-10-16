@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
@@ -261,4 +262,11 @@ const unresolved = await executeRepositoryAudit({}, unresolvedContext);
 assert.equal(unresolved.outcome, 'blocked');
 assert.match(unresolved.reason.message, /coverage is incomplete/u);
 
+const owned = JSON.parse(fs.readFileSync(new URL('../../../../../config/plugins/kubeclaw.review/profiles/standard.config.json',import.meta.url),'utf8')).profiles.standard.settings;
+const ownedContext={...context,contract:{...context.contract,config:{...context.contract.config,ownedPolicyProfiles:owned}}};
+assert.equal((await executeRepositoryAudit({},ownedContext)).outcome,'passed');
+const changed=structuredClone(owned);changed.profiles.audit={...structuredClone(changed.profiles.gate),profile:'audit'};
+const changedResult=await executeRepositoryAudit({},{...ownedContext,contract:{...ownedContext.contract,config:{...ownedContext.contract.config,ownedPolicyProfiles:changed}}});
+assert.equal(changedResult.outcome,'blocked');
+assert.match(changedResult.reason.message,/simplification lens requires an enabled simplification policy/);
 console.log(JSON.stringify({ ok: true, suite: 'repository-audit-stage' }));
