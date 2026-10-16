@@ -11,7 +11,9 @@ const configRoot = fileURLToPath(new URL('../../../config/', import.meta.url));
 function writeControlPolicy(root: string, changes: Record<string, unknown>) {
   const file = path.join(root, 'components/prism-control.config.json');
   const author = JSON.parse(fs.readFileSync(file, 'utf8'));
-  Object.assign(author.profiles.standard.settings, changes);
+  const entry = JSON.parse(fs.readFileSync(path.join(root, 'pipeline.config.json'), 'utf8'));
+  const profileId = entry.bindings.find((binding: any) => binding.owner === 'prism-control' && binding.instanceId === 'kubeclaw/prism/prism-control').profileId;
+  Object.assign(author.profiles[profileId].settings, changes);
   fs.writeFileSync(file, JSON.stringify(author));
 }
 function controlPolicyFixture(t: { after(fn: () => void): void }, changes: Record<string, unknown>) {

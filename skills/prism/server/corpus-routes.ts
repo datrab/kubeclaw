@@ -114,6 +114,7 @@ async function searchCorpus(
       model: String(embedded.model),
     },
     {
+      ...(config.corpusRanking ? {ranking: config.corpusRanking} : {}),
       required: parseFilter("required"),
       preferred: parseFilter("preferred"),
       avoid: parseFilter("avoid"),

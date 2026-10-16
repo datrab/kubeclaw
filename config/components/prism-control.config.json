@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "pipeline-component.v2",
+  "schemaVersion": "pipeline-component.v3",
   "owner": "prism-control",
   "profiles": {
     "standard": {
@@ -84,7 +84,13 @@
           "controlRequestTimeoutMs": 10000,
           "pollIntervalMs": 1000
         },
-        "agentToolControlUrl": "http://127.0.0.1:28080"
+        "agentToolControlUrl": "http://127.0.0.1:28080",
+        "corpusRanking": {
+          "schemaVersion": "corpus-ranking.v1",
+          "candidateFloor": 100,
+          "candidateMultiplier": 10,
+          "rrfDamping": 60
+        }
       }
     },
     "spiffe": {
@@ -169,7 +175,13 @@
           "controlRequestTimeoutMs": 10000,
           "pollIntervalMs": 1000
         },
-        "agentToolControlUrl": "http://127.0.0.1:28080"
+        "agentToolControlUrl": "http://127.0.0.1:28080",
+        "corpusRanking": {
+          "schemaVersion": "corpus-ranking.v1",
+          "candidateFloor": 100,
+          "candidateMultiplier": 10,
+          "rrfDamping": 60
+        }
       }
     }
   }

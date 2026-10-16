@@ -1,3 +1,4 @@
+import { captureCorpusRanking, type CorpusRankingPolicy } from '@kubeclaw/plugin-foundation/config/corpus-ranking';
 import { createHash, randomUUID } from "node:crypto";
 import { isIP } from "node:net";
 import { inTransaction, type Database, type Queryable } from "../storage/index.ts";
@@ -157,9 +158,15 @@ export async function search(
     preferred?: Record<string, unknown>;
     avoid?: Record<string, unknown>;
     sourceFamilyLimit: number;
+    /** Explicit selected v3 reader; omission preserves the original v2 API. */
+    ranking?: CorpusRankingPolicy;
   },
 ): Promise<Array<Record<string, unknown>>> {
   if (!Number.isSafeInteger(limit) || limit < 1 || !Number.isSafeInteger(options?.sourceFamilyLimit) || options.sourceFamilyLimit < 1) throw new Error("valid corpus search limits required");
+  // Capture before the first query await; never consult a current owner on retry.
+  const ranking = options.ranking === undefined ? undefined : captureCorpusRanking(options.ranking);
+  const candidateLimit = Math.max(limit * (ranking?.candidateMultiplier ?? 10), ranking?.candidateFloor ?? 100);
+  if (ranking && (!Number.isSafeInteger(candidateLimit) || candidateLimit > 2147483647)) throw new Error("CORPUS_CANDIDATE_LIMIT_INVALID");
   const vector = queryEmbedding?.embedding;
   if (
     vector &&
@@ -170,19 +177,20 @@ export async function search(
   const avoidFilter = JSON.stringify(options.avoid ?? {});
   const result = vector
     ? await db.query(
-        "WITH eligible AS (SELECT r.*,e.embedding,e.model FROM prism.corpus_revision r JOIN prism.corpus_item i ON i.current_revision_id=r.id JOIN prism.rights_policy p ON p.id=r.rights_id JOIN prism.corpus_embedding e ON e.corpus_revision_id=r.id WHERE i.status='active' AND p.allow_design_use=true AND (p.valid_until IS NULL OR p.valid_until>now()) AND e.model=$4 AND r.normalized @> $5::jsonb AND ($6::jsonb='{}'::jsonb OR NOT r.normalized @> $6::jsonb)), text_rank AS (SELECT id,row_number() OVER(ORDER BY ts_rank(search_vector,websearch_to_tsquery('simple',$1)) DESC,id) AS rank FROM eligible WHERE search_vector @@ websearch_to_tsquery('simple',$1) LIMIT 100), vector_rank AS (SELECT id,row_number() OVER(ORDER BY embedding <=> $3::vector,id) AS rank FROM eligible LIMIT 100), fused AS (SELECT COALESCE(t.id,v.id) id,COALESCE(1.0/(60+t.rank),0)+COALESCE(1.0/(60+v.rank),0) score FROM text_rank t FULL JOIN vector_rank v USING(id)) SELECT r.id,r.normalized,r.source_kind,f.score,'hybrid-rrf-v1' AS ranking FROM fused f JOIN prism.corpus_revision r ON r.id=f.id ORDER BY f.score DESC,r.id LIMIT $2",
+        ranking ? "WITH eligible AS (SELECT r.*,e.embedding,e.model FROM prism.corpus_revision r JOIN prism.corpus_item i ON i.current_revision_id=r.id JOIN prism.rights_policy p ON p.id=r.rights_id JOIN prism.corpus_embedding e ON e.corpus_revision_id=r.id WHERE i.status='active' AND p.allow_design_use=true AND (p.valid_until IS NULL OR p.valid_until>now()) AND e.model=$4 AND r.normalized @> $5::jsonb AND ($6::jsonb='{}'::jsonb OR NOT r.normalized @> $6::jsonb)), text_rank AS (SELECT id,row_number() OVER(ORDER BY ts_rank(search_vector,websearch_to_tsquery('simple',$1)) DESC,id) AS rank FROM eligible WHERE search_vector @@ websearch_to_tsquery('simple',$1) LIMIT $7), vector_rank AS (SELECT id,row_number() OVER(ORDER BY embedding <=> $3::vector,id) AS rank FROM eligible LIMIT $7), fused AS (SELECT COALESCE(t.id,v.id) id,COALESCE(1.0/($8::numeric+t.rank),0)+COALESCE(1.0/($8::numeric+v.rank),0) score FROM text_rank t FULL JOIN vector_rank v USING(id)) SELECT r.id,r.normalized,r.source_kind,f.score,'hybrid-rrf-v1' AS ranking FROM fused f JOIN prism.corpus_revision r ON r.id=f.id ORDER BY f.score DESC,r.id LIMIT $2" : "WITH eligible AS (SELECT r.*,e.embedding,e.model FROM prism.corpus_revision r JOIN prism.corpus_item i ON i.current_revision_id=r.id JOIN prism.rights_policy p ON p.id=r.rights_id JOIN prism.corpus_embedding e ON e.corpus_revision_id=r.id WHERE i.status='active' AND p.allow_design_use=true AND (p.valid_until IS NULL OR p.valid_until>now()) AND e.model=$4 AND r.normalized @> $5::jsonb AND ($6::jsonb='{}'::jsonb OR NOT r.normalized @> $6::jsonb)), text_rank AS (SELECT id,row_number() OVER(ORDER BY ts_rank(search_vector,websearch_to_tsquery('simple',$1)) DESC,id) AS rank FROM eligible WHERE search_vector @@ websearch_to_tsquery('simple',$1) LIMIT 100), vector_rank AS (SELECT id,row_number() OVER(ORDER BY embedding <=> $3::vector,id) AS rank FROM eligible LIMIT 100), fused AS (SELECT COALESCE(t.id,v.id) id,COALESCE(1.0/(60+t.rank),0)+COALESCE(1.0/(60+v.rank),0) score FROM text_rank t FULL JOIN vector_rank v USING(id)) SELECT r.id,r.normalized,r.source_kind,f.score,'hybrid-rrf-v1' AS ranking FROM fused f JOIN prism.corpus_revision r ON r.id=f.id ORDER BY f.score DESC,r.id LIMIT $2",
         [
           query,
-          Math.max(limit * 10, 100),
+          candidateLimit,
           `[${vector.join(",")}]`,
           queryEmbedding!.model,
           requiredFilter,
           avoidFilter,
+          ...(ranking ? [ranking.candidateFloor, ranking.rrfDamping] : []),
         ],
       )
     : await db.query(
         "SELECT r.id,r.normalized,r.source_kind,ts_rank(r.search_vector,websearch_to_tsquery('simple',$1)) AS score,'text-v1' AS ranking FROM prism.corpus_revision r JOIN prism.corpus_item i ON i.current_revision_id=r.id JOIN prism.rights_policy p ON p.id=r.rights_id WHERE i.status='active' AND p.allow_design_use=true AND (p.valid_until IS NULL OR p.valid_until>now()) AND r.normalized @> $3::jsonb AND ($4::jsonb='{}'::jsonb OR NOT r.normalized @> $4::jsonb) AND r.search_vector @@ websearch_to_tsquery('simple',$1) ORDER BY score DESC,r.id LIMIT $2",
-        [query, Math.max(limit * 10, 100), requiredFilter, avoidFilter],
+        [query, candidateLimit, requiredFilter, avoidFilter],
       );
   const matches = (
     normalized: Record<string, unknown>,

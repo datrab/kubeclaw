@@ -129,6 +129,8 @@ export interface PrismAgentBridgeSettings {
   readonly pollIntervalMs: number;
 }
 export interface PrismControlSettings {
+  /** Absent only on the original component-v2 reader. V3 requires all leaves. */
+  readonly corpusRanking?: import('./corpus-ranking.ts').CorpusRankingPolicy;
   readonly agentToolControlUrl: string;
   readonly agentBridge: PrismAgentBridgeSettings;
   readonly databaseBootstrap: Readonly<{ connectionTimeoutMs: number; maximumAttempts: number; retryDelayMs: number }>;

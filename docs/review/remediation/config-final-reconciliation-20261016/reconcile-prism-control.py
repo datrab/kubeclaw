@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exact Control source joins; role and ranking residuals remain open."""
+"""Exact Control source joins; selected ranking source joins; role residual remains open."""
 import copy
 import importlib.util
 import json
@@ -15,6 +15,9 @@ ROUTES = 'skills/prism/server/corpus-routes.ts'
 CORPUS = 'skills/prism/corpus/index.ts'
 SESSION = 'skills/prism/control/session.ts'
 SPECS = {
+ 'AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR': ('corpusRanking/candidateFloor','SQL LIMIT100 and Math.max(limit*10,100)',CORPUS,'ranking.candidateFloor, ranking.rrfDamping'),
+ 'AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER': ('corpusRanking/candidateMultiplier','Math.max(limit*10,100)',CORPUS,'ranking?.candidateMultiplier ?? 10'),
+ 'AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING': ('corpusRanking/rrfDamping','1.0/(60+rank)',CORPUS,'$8::numeric+t.rank'),
  'AUTH-PRISM-CONTROL-SESSION-TTL': ('sessionLifetimeSeconds','mintSession expiresAt',SESSION,'expiresAt: now + lifetimeSeconds * 1000'),
  'AUTH-PRISM-CONTROL-HTTP-BODY-BYTES': ('maximumJsonBodyBytes','body maxBytes default',HTTP,'if (size > maxBytes)'),
  'AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES': ('maximumArtifactUploadBodyBytes','uploadArtifact body(request,8500000)',ROUTES,'body(request, context.config.maximumArtifactUploadBodyBytes)'),
@@ -28,15 +31,12 @@ SPECS = {
 }
 RESIDUALS = {
  'AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES': ('mintSession roles default',SESSION,'roles=["editor"]','Default editor role remains literal; selected role domain and token/original semantics must be explicit. Do not change grants or add authentication authority hardening.'),
- 'AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR': ('SQL LIMIT100 and Math.max(limit*10,100)',CORPUS,'Math.max(limit * 10, 100)','Two SQL inner LIMIT 100 and both outer candidate floors100 remain literals. Coupled selected receiving for actual HTTP/direct search and original query policy required; not the result limit.'),
- 'AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER': ('Math.max(limit*10,100)',CORPUS,'Math.max(limit * 10, 100)','Both SQL query branches retain oversampling multiplier10. Coherent candidate policy/receiving and original query binding required; no private policy root.'),
- 'AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING': ('1.0/(60+rank)',CORPUS,'1.0/(60+t.rank)','Both rank arms retain damping60. Explicit selected ranking compatibility and actual DB/original acceptance remain required; ranking label is not proof of a protocol constant.'),
 }
 def build(ledgers=None, owner=None):
  roster=h.read(h.ROSTER);refs={r['id']:r for r in roster['fields']}
  ledgers=h.read(str((OUT/'fields.json').relative_to(h.ROOT))) if ledgers is None else ledgers
  owner=h.read(OWNER) if owner is None else owner
- if owner['owner']!='prism-control' or owner['schemaVersion']!='pipeline-component.v2':raise ValueError('Owner/version drift')
+ if owner['owner']!='prism-control' or owner['schemaVersion']!='pipeline-component.v3':raise ValueError('Owner/version drift')
  rows=[];seen=set();cache={}
  for row in ledgers:
   locators=[x['path'] for x in row['explicitConfigLocatorObservations'] if x['path'] in LEGACIES]
@@ -60,13 +60,17 @@ def build(ledgers=None, owner=None):
     leaves.append({'profile':profile,'pointer':ptr,'valueSha256':h.digest(h.pointer(owner,ptr))})
    if not leaves:raise ValueError('No profiles')
    common.update(status='EXACT_PRISM_CONTROL_SOURCE_JOIN',selectedOwner=h.pin(OWNER),selectedPointerTemplate='/profiles/<original-selected>/settings/'+leaf,authoredProfileLeaves=leaves,actualReceivingEffect=h.anchor(effect,text),startupCapture=h.anchor('skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs','verifiedCaptures.add(result)'))
-   common.update(composition=h.anchor('skills/prism/server/control-config.ts',leaf+': control.'+leaf),roleProjection=h.anchor('skills/common/plugin-runtime/foundation/config/pipeline-composition.ts',"assertPipelineBootCapture(capture, 'prism-control')"))
+   common.update(composition=h.anchor('skills/prism/server/control-config.ts','corpusRanking: control.corpusRanking' if leaf.startswith('corpusRanking/') else leaf+': control.'+leaf),roleProjection=h.anchor('skills/common/plugin-runtime/foundation/config/pipeline-composition.ts',"assertPipelineBootCapture(capture, 'prism-control')"))
    if leaf=='sessionLifetimeSeconds':
     common.update(actualCaller=h.anchor('skills/prism/server/session-routes.ts','context.config.sessionLifetimeSeconds,'),cookieProjection=h.anchor('skills/prism/server/session-routes.ts','Max-Age=${context.config.sessionLifetimeSeconds}'),expiryVerifier=h.anchor(SESSION,'session.expiresAt <= now'))
    elif leaf=='maximumJsonBodyBytes':common['actualCaller']=h.anchor(ROUTES,'body(request, context.config.maximumJsonBodyBytes)')
    elif leaf.startswith('corpus'):
     common['directSearchReceiving']=h.anchor(CORPUS,'valid corpus search limits required')
     common['qualification']='HTTP defaults/clamps are selected policy; exported direct search now requires explicit limits, not a duplicate default. Direct API is not silently given the HTTP maximum.'
+   if leaf.startswith('corpusRanking/'):
+    common['actualCaller']=h.anchor(ROUTES,'ranking: config.corpusRanking')
+    common['policyCapture']=h.anchor('skills/common/plugin-runtime/foundation/config/corpus-ranking.ts','return Object.freeze({ ...value })')
+    common['qualification']='V3 explicit complete policy at startup and per query, parameterized SQL; original v2 reader retains original constants and never refills from current B. Embedded PostgreSQL A/B and packaged caller checks are scoped source verification, not independent original/history/native acceptance.'
    if leaf.startswith('ingestion'):
     common['qualification']='Startup timeout source join only; no durable original acquisition endpoint/credential/uncertain effect reconstruction inferred.'
 
@@ -74,7 +78,7 @@ def build(ledgers=None, owner=None):
    _,path,text,constraint=RESIDUALS[identity];common.update(status='PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN',selectedOwner=None,actualLiteral=h.anchor(path,text),constraint=constraint)
   rows.append(common)
  if seen!=set(SPECS)|set(RESIDUALS):raise ValueError('Missing original attempt fields')
- return {'scope':'14 original Control fields;10 exact existing source joins and4 explicit receiving residuals, no new settings or runtime passes','inputs':[h.pin(h.ROSTER),h.pin(str((OUT/'fields.json').relative_to(h.ROOT)))],'counts':{'originalFields':len(rows),'exactSourceJoins':len(SPECS),'remainingOriginalFields':len(RESIDUALS)},'rows':rows,'independentReview':'OPEN; native spawn unavailable; unchanged direct reviewer EROFS not retried','fullAcceptance':'OPEN; all2409/6845/50/fullC0-C6 and original history/native/archive mandatory'}
+ return {'scope':'14 original Control fields;13 exact source joins including3 implemented versioned ranking leaves;1 explicit role residual, no original runtime passes','inputs':[h.pin(h.ROSTER),h.pin(str((OUT/'fields.json').relative_to(h.ROOT)))],'counts':{'originalFields':len(rows),'exactSourceJoins':len(SPECS),'remainingOriginalFields':len(RESIDUALS)},'rows':rows,'independentReview':'OPEN; native spawn unavailable; unchanged direct reviewer EROFS not retried','fullAcceptance':'OPEN; all2409/6845/50/fullC0-C6 and original history/native/archive mandatory'}
 def controls():
  baseline = build()
  ledger = h.read(str((OUT/'fields.json').relative_to(h.ROOT)))

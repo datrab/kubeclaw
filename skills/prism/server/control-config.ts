@@ -57,6 +57,7 @@ export function loadControlServerConfig(capture: PipelineBootCapture, environmen
     port: control.port,
     maximumArtifactAcknowledgmentBytes: control.maximumArtifactAcknowledgmentBytes,
     agentLauncher: control.agentLauncher,
+    ...(control.corpusRanking ? {corpusRanking: control.corpusRanking} : {}),
     corpusSearchDefaultLimit: control.corpusSearchDefaultLimit,
     corpusSearchMaximumLimit: control.corpusSearchMaximumLimit,
     corpusSourceFamilyDefaultLimit: control.corpusSourceFamilyDefaultLimit,

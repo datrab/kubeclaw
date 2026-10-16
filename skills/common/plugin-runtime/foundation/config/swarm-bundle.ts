@@ -1,4 +1,5 @@
 import { parseDocument } from 'yaml';
+import { captureCorpusRanking } from './corpus-ranking.ts';
 import { validateWorkerCoreV3Author } from './worker-core-policy.ts';
 import { inspectPipelineV10PackageSource } from './pipeline-v10-package-source.ts';
 import { preflightPipelineV10Infrastructure } from './pipeline-v10-infra.ts';
@@ -18,7 +19,7 @@ const AjvConstructor = Ajv2020 as unknown as new (options: { allErrors: boolean;
   compile(schema: object): Validator;
 };
 const ajv = new AjvConstructor({ allErrors: true, strict: true });
-const readerAssetNames = ['pipeline-v10-receiver.ts', 'pipeline-v10-receiver-schemas.json', 'pipeline-v10-input-set.ts', 'pipeline-v10-input-contract.json', 'pipeline-v10-package-source.ts', 'pipeline-v10-package-sources.json', 'registry-digest.ts', 'registry-errors.ts', 'browser-native-profile.ts', 'browser-native-profile-sources.json', 'gateway-native-duration.ts', 'gateway-native-duration-sources.json', 'parse-duration-DBWI377R.mjs', 'string-coerce-CIXf7egm.mjs', 'provisioning-task-reference.ts', 'provisioning-task-reference.schema.json', 'pipeline-v10-recovery.ts', 'pipeline-v10-gateway.ts', 'pipeline-v10-gateway-sources.json', 'pipeline-v10-infra.ts', 'pipeline-v10-infra-schemas.json', 'swarm.schema.json', 'swarm-components.schema.json', 'worker-core-policy.ts', 'worker-core-v3.schema.json', 'pipeline-v10-owner-schemas.json', 'pipeline-v10-plugin-schemas.json', 'pipeline-v10-plugin-relations.ts', 'pipeline-v10-source-relations.json', 'swarm-bundle.ts', 'swarm.ts',
+const readerAssetNames = ['pipeline-v10-receiver.ts', 'pipeline-v10-receiver-schemas.json', 'pipeline-v10-input-set.ts', 'pipeline-v10-input-contract.json', 'pipeline-v10-package-source.ts', 'pipeline-v10-package-sources.json', 'registry-digest.ts', 'registry-errors.ts', 'browser-native-profile.ts', 'browser-native-profile-sources.json', 'gateway-native-duration.ts', 'gateway-native-duration-sources.json', 'parse-duration-DBWI377R.mjs', 'string-coerce-CIXf7egm.mjs', 'provisioning-task-reference.ts', 'provisioning-task-reference.schema.json', 'pipeline-v10-recovery.ts', 'pipeline-v10-gateway.ts', 'pipeline-v10-gateway-sources.json', 'pipeline-v10-infra.ts', 'pipeline-v10-infra-schemas.json', 'swarm.schema.json', 'swarm-components.schema.json', 'worker-core-policy.ts', 'worker-core-v3.schema.json', 'corpus-ranking.ts', 'pipeline-v10-owner-schemas.json', 'pipeline-v10-plugin-schemas.json', 'pipeline-v10-plugin-relations.ts', 'pipeline-v10-source-relations.json', 'swarm-bundle.ts', 'swarm.ts',
   'buster-cluster-invokers.ts', 'buster-execution.ts', 'buster-service-policy.ts', 'buster-service-policy.schema.json', 'pipeline-generation.ts', 'pipeline-input-set.ts', 'pipeline-boot.mjs',
   'runtime-bundle-receipt.mjs', 'buster-startup.ts', 'buster-startup-file.mjs', 'buster-lifetime.mjs', 'pipeline-composition.ts', 'sdk-values.ts'] as const;
 export const swarmReaderAssetLocations = Object.freeze(Object.fromEntries(readerAssetNames.map(name =>
@@ -381,6 +382,13 @@ export function readSwarmBundle(file: string | undefined, selection?: SwarmSelec
       if (!(owner === 'worker-core' && (value as ComponentAuthor)?.schemaVersion === 'pipeline-component.v3'
         ? validateWorkerCoreV3Author(value) : validateComponent(value)) || (value as ComponentAuthor).owner !== owner) {
         throw new Error(`SWARM_CONFIG_INVALID:component:${owner}`);
+      }
+      if (owner === 'prism-control' && (value as ComponentAuthor).schemaVersion === 'pipeline-component.v3') {
+        for (const profile of Object.values((value as ComponentAuthor).profiles)) {
+          const ranking = captureCorpusRanking(profile.settings.corpusRanking as never);
+          const candidateLimit = Number(profile.settings.corpusSearchMaximumLimit) * ranking.candidateMultiplier;
+          if (!Number.isSafeInteger(candidateLimit) || candidateLimit > 2147483647) throw new Error('CORPUS_CANDIDATE_LIMIT_INVALID');
+        }
       }
       freezeJson(value);
       authors[owner] = value as ComponentAuthor;

@@ -119,6 +119,7 @@ test('real Prism role package readback drives all service caller compositions', 
   changedControl.profiles.standard.settings.maximumJsonBodyBytes = 4096;
   changedControl.profiles.standard.settings.maximumArtifactUploadBodyBytes = 16384;
   changedControl.profiles.standard.settings.ingestionAcquireTimeoutMs = 3000;
+  changedControl.profiles.standard.settings.corpusRanking = {schemaVersion:'corpus-ranking.v1', candidateFloor:17, candidateMultiplier:3, rrfDamping:7};
   changedControl.profiles.standard.settings.corpusSearchDefaultLimit = 3;
   changedControl.profiles.standard.settings.corpusSearchMaximumLimit = 7;
   changedControl.profiles.standard.settings.corpusSourceFamilyDefaultLimit = 1;
@@ -418,6 +419,10 @@ test('real Prism role package readback drives all service caller compositions', 
   fs.unlinkSync(path.join(controlMount, '..data')); fs.symlinkSync('version-B', path.join(controlMount, '..data'));
   const controlB = boot.capturePipelineBootReceipts(controlMount, path.join(generationB, 'system'), 'prism-control', code, '/app/prism/skills');
   const newControl = configs.control.loadControlServerConfig(controlB, credentials);
+  assert.deepEqual(newControl.corpusRanking, {schemaVersion:'corpus-ranking.v1',candidateFloor:17,candidateMultiplier:3,rrfDamping:7});
+  assert.deepEqual(configs.control.loadControlServerConfig(captures['prism-control'],credentials).corpusRanking,
+    {schemaVersion:'corpus-ranking.v1',candidateFloor:100,candidateMultiplier:10,rrfDamping:60});
+  assert.ok(Object.isFrozen(newControl.corpusRanking));
   // Control installation credentials remain external to the delivered author.
   // Capture them once, fail closed on each missing secret, and retain A/B policy.
   // The async composition must capture installation inputs before yielding,
@@ -575,6 +580,11 @@ test('real Prism role package readback drives all service caller compositions', 
         pool: { query: async (sql, params) => {
           queries++; assert.match(sql, /WITH eligible/);
           assert.equal(params[0], ''); assert.equal(params[3], 'delivered-fixture');
+          assert.deepEqual(params.slice(6), [selected.corpusRanking.candidateFloor,selected.corpusRanking.rrfDamping]);
+          assert.match(sql, /LIMIT \$7/); assert.match(sql, /\$8::numeric/);
+          const requested = new URL('http://local/'+query).searchParams.get('limit');
+          const resultLimit = Math.min(expectedMaximum, Math.max(1, Number(requested ?? expectedDefault)));
+          assert.equal(params[1],Math.max(resultLimit*selected.corpusRanking.candidateMultiplier,selected.corpusRanking.candidateFloor));
           return { rows: corpusRows };
         } },
         runWorker: async (operation, input) => {
