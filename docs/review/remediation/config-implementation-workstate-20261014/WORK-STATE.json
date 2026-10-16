@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T17:16:06.546910+00:00",
+  "updatedAt": "2026-10-16T17:20:05.459804+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "CONFIG_WORKER_V3_AND_QUALITY_GUARDS_VERIFIED_PROVIDER_V2_MATRIX_NATIVE_OPEN",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Implement defined Quality provider-v2 task-only/selectedPolicy with actual registry/resolver/runner and original inputStore/package/delivery closure; no denied v10/private author. Continue exact per-field joins for23 current-section candidates and13 unresolved historic-owner groups in semantic-successors.json. Obtain independent review of new join; full applicable C0-C6/native/archive acceptance remains OPEN, external infrastructure owner Raven.",
+  "nextAction": "Implement defined Quality v2 actual registry/resolver/runner/original inputStore/package/delivery closure; continue17 candidate groups,12 exact adapter root/admission residuals,13 unresolved historic owner groups; fresh independent matrix review and full applicable C0-C6/native/archive remain OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -22920,5 +22920,19 @@
     "independentReview": "OPEN; native reviewer/spawn tool not exposed, known unchanged direct-surface initialization failure not retried",
     "wholeAcceptance": "OPEN; all original mandatory gates retained",
     "writerLock": "released on bounded command exit"
+  },
+  "exactAdapterScalarJoins20261016": {
+    "at": "2026-10-16T17:20:05.459804+00:00",
+    "evidence": "docs/review/remediation/config-final-reconciliation-20261016",
+    "groups": 6,
+    "originalFields": 31,
+    "exactCurrentCoreScalarJoins": 19,
+    "remainingRootAdmissionFields": 12,
+    "negativeControlsRejected": 6,
+    "restoredPositive": "PASS",
+    "implementationPerformed": false,
+    "independentReview": "OPEN; native spawn/reviewer unavailable; known unchanged direct EROFS not retried",
+    "writerLock": "SAME nonblocking lock; released at command exit",
+    "qualification": "Productive exact matrix joins only, not provider integration or runtime acceptance"
   }
 }

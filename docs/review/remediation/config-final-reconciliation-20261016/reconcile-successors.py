@@ -96,6 +96,12 @@ if len(mappings) != 228:
 
 runtime_anchors = [anchor(RUNTIME, "reviewRuntimeBinding"), anchor(SNAPSHOTS, "reviewRuntimeBinding"),
                    anchor("skills/nova/core/execution/engine-run.ts", "reviewPolicyCapture")]
+adapter_path = str((OUT / 'adapter-successors.json').relative_to(ROOT))
+adapter_joins = read(adapter_path)
+adapter_exact = {r['id']: r for g in adapter_joins['groups'] for r in g['rows']
+                 if r['status'] == 'EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN'}
+if len(adapter_exact) != 19 or set(adapter_exact) & set(mappings):
+    raise ValueError('Adapter successor roster overlap/drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -108,6 +114,12 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
     if exact:
         group["sourceAndOriginalRecoveryAnchors"] = runtime_anchors
         group["status"] = "EXACT_EXISTING_SCOPED_MAPPING" if not remaining else "PARTIAL_EXACT_EXISTING_SCOPED_MAPPING"
+    scalar_exact = [adapter_exact[i] for i in ids if i in adapter_exact]
+    if scalar_exact:
+        group['exactCoreScalarMappings'] = scalar_exact
+        group['remainingFieldIds'] = [i for i in remaining if i not in adapter_exact]
+        group['supplementalJoin'] = pin(adapter_path)
+        group['status'] = 'PARTIAL_EXACT_CORE_SCALAR_SOURCE_JOIN' if group['remainingFieldIds'] else 'EXACT_CORE_SCALAR_SOURCE_JOIN'
     parts = old.split("/")
     if len(parts) > 2 and parts[1] == "plugins":
         plugin = parts[2].removeprefix("kubeclaw.")
@@ -134,7 +146,7 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
             anchor("skills/common/plugin-runtime/foundation/config/pipeline-generation.ts", "pipeline-entry.v3")]
         group["constraint"] = "Defined v2 task-only/selectedPolicy plus original inputStore/package/delivery closure must be implemented together. Current root/provider remain v3/v1. No denied v10 promotion/private root/current-value fill. Completed finite byte guards do not externalize these24 fields or accept168 cases."
         group["definition"] = pin("docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/RECEIVING-AND-ORACLES.md")
-    if group["candidateSuccessors"] and not exact:
+    if group["candidateSuccessors"] and not exact and not scalar_exact:
         group["status"] = "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN"
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
@@ -142,9 +154,9 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
 joined = [entry["id"] for group in groups for entry in group["exactExistingMappings"]]
 if set(joined) != set(mappings) or len(joined) != len(set(joined)):
     raise ValueError("Scoped mappings not conserved across historical locator groups")
-result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review joins reuse existing evidence, not new implementation or runtime replay",
+result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review and Core scalar joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
-          "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined),
+          "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact),
               "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
               "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
