@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-16T19:33:12.908059+00:00",
+  "sourceCommit": "b34610227527c1645d476ef95cc6353855aa2c64",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-quality-original-producer-join-20261016",
+  "implemented": "Actual RunnerScheduler -> TestPlanRunner -> executeRunnerNode -> prepareRunnerAttempt retains original producer AttemptResultV1 objects and receipts instead of discarding them for a second output-only map. Each input now resolves only from its last actual producer attempt. Artifact metadata is captured before provider invocation; values remain cloned. A later errored/missing-output attempt cannot refill from an earlier successful attempt or redundant NodeExecution.outputs. Existing original attempt/result ownership, grants, graph and budget semantics unchanged; no new receipt authority or ledger.",
+  "checks": {
+    "focusedProducerSchedulerAndQuality": {
+      "passed": 41,
+      "total": 41,
+      "failed": 0,
+      "skipped": 0,
+      "newProducerRegressions": 7
+    },
+    "strictRunnerSourceTypecheck": true,
+    "wholeOriginalPlanRunner": {
+      "exitCode": 0,
+      "elapsedSeconds": 98.88,
+      "oracleChanged": false
+    },
+    "actualBusterRoleBuildFourModuleByteReadbackAndImports": true
+  },
+  "independentReview": "OPEN; no native reviewer/spawn tool exposed; no new reviewer output; unchanged same-surface EROFS not retried. Not independently accepted.",
+  "scopeQualification": "Original producer/result transport substep only. Does NOT provide sourceRevision/buildDigest/baseline association, authenticated original store reservation, sealed inputStore snapshot or prepublication validity. BUDGET_SOURCE_RECEIPT_REQUIRED remains unchanged; productive boot/v10 authorization remains denied.",
+  "sealedInputStoreImplemented": false,
+  "productiveBootImplemented": false,
+  "activationAllowed": false,
+  "originalCasesNewlyAccepted": 0,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allSemanticObligationsAccepted": false
+  },
+  "fullC0C6Complete": false,
+  "nextAction": "Join retained original producer attempt/result receipt with genuinely verified prepared-source/sourceRevision/build and baseline producer association at original store ownership/accounting. Then implement existing store-owned sealed snapshot and publication validity. Preserve missing-association denial until complete. Authenticated coordinated sole-root boot/Nova receiving, independent review and full C0-C6 remain OPEN.",
+  "externalInfrastructure": "UNCHANGED; owner Raven; isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large genuinely root-trusted writable archive filesystem; resume on supplied suitable system.",
+  "writerLock": "same nonblocking shared lock; released at bounded command exit"
+}
