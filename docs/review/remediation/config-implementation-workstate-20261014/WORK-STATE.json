@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T12:38:30.973771+00:00",
+  "updatedAt": "2026-10-16T13:20:20.198723+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "CONFIG_CONFIRMED_REVIEW_RESIDUALS_IMPLEMENTED_SOURCE_REVIEWED_RECONCILIATION_OPEN",
+  "status": "CONFIG_CONTROLLER_13_WIRED_VERIFIED_REVIEW_OPEN_RECONCILIATION_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Reconcile remaining actual hardcoded configurable values against unchanged-source candidates; unchanged central authors, vocabulary key schemas and existing config readers are not automatically residual settings. No restart of historical claimed thread. Native full acceptance remains separately OPEN.",
+  "nextAction": "Remaining-source reconciliation, including Ops MCP/ops pod and worker envelope policies; native full historical acceptance still open",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -15998,7 +15998,7 @@
       "tests/verification/reliability/nova-dispatch-policy.test.mjs": "c70cc7215f952246efe5d8d99a047327c094cfd3e20d251235a7f0de13308ff4"
     }
   },
-  "lastHealthCheckAt": "2026-10-16T06:20:09.449749+00:00",
+  "lastHealthCheckAt": "2026-10-16T12:54:08.784674+00:00",
   "originalDispatchAfterLookback20261016": {
     "at": "2026-10-16T00:09:15.342626+00:00",
     "command": [
@@ -21136,7 +21136,7 @@
   "implementationAgentRunning": false,
   "lastObservedAt": "2026-10-16T09:29:30.006921+00:00",
   "workerActivity": "Direct scheduled worker completed bounded production batch; no background worker",
-  "writerLock": "free at script exit",
+  "writerLock": "released on bounded worker exit",
   "duplicateRecoveryQueued": false,
   "reviewerActive": false,
   "lastAnnouncedAt": "2026-10-16T08:51:22.359043+00:00",
@@ -22271,5 +22271,424 @@
     "sourceCommit": "20d188fc90245a10578317c3e24b35c3efc830cc",
     "remoteVerified": true,
     "deliveredFileIdentityCount": 329
+  },
+  "controllerSourceReconciliation20261016": {
+    "at": "2026-10-16T12:43:37.567705+00:00",
+    "evidence": "docs/review/remediation/config-controller-reconciliation-20261016/source-classification.json",
+    "confirmedRowsInBoundedBatch": 13,
+    "implementationPerformed": false,
+    "nextAction": "No selected namespace-controller policy receiver in inspected production controller. Existing controller is ENV configured; do not add another implicit ENV/default authority. Need coherent central deployment owner -> delivered policy file/locator -> strict Go loader -> controller HTTP/product/readiness consumers. Preserve legacy persisted v1 retention; v2 captures actual admitted retention. This is a concrete next implementation batch, not acceptance."
+  },
+  "controllerSelectedPolicy20261016": {
+    "at": "2026-10-16T12:54:08.784674+00:00",
+    "change": "13 confirmed namespace-controller fields: central deployment policy -> real ConfigMap/read-only mount -> strict captured Go loader -> actual handlers/listener; original v1/v2 retention and product receipt replay preserved",
+    "implementedOriginalRows": 13,
+    "fieldMapping": "docs/review/remediation/config-controller-policy-20261016/field-mapping.json",
+    "verification": [
+      {
+        "command": [
+          "gofmt",
+          "-w",
+          "cmd/buster-namespace-controller/demo-product.go",
+          "cmd/buster-namespace-controller/controller-policy_test.go"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-policy-20261016/final-0.txt"
+      },
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "./cmd/buster-namespace-controller"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-policy-20261016/final-1.txt",
+        "tests": {
+          "pass": 118,
+          "fail": 0,
+          "skip": 0
+        }
+      },
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/deployment/buster-central-delivery.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-policy-20261016/final-2.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-policy-20261016/final-3.txt"
+      }
+    ],
+    "nativeCompileOnly": {
+      "command": [
+        "go",
+        "test",
+        "-tags",
+        "native_product",
+        "-run",
+        "^$",
+        "./cmd/buster-namespace-controller"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-policy-20261016/native-compile-only.txt",
+      "nativeExecutionVerified": false
+    },
+    "independentAcceptance": "OPEN; fresh reviewer needed; no native spawn exposed; unchanged EROFS reviewer runtime not retried",
+    "legacyVerificationFailure": {
+      "log": "docs/review/remediation/config-controller-policy-20261016/initial-2.txt",
+      "error": "older readiness chart suite uses retired busterComponentFile and missing charts/prism/files/config",
+      "resolved": true,
+      "resolutionEvidence": "docs/review/remediation/config-readiness-fixture-current-20261016/result.json"
+    },
+    "sourceManifest": "docs/review/remediation/config-controller-policy-20261016/source-manifest.json",
+    "nextAction": "Fresh independent review of controller batch, then reconcile remaining actual controller/repository configurable literals against their existing owners. Do not count unchanged central authors as residuals or activate denied v10.",
+    "writerLock": "shared nonblocking; released at subprocess exit",
+    "worker": "scheduled direct implementation; completed bounded work; no persistent implementation agent",
+    "remoteCheckpoint": {
+      "branch": "codex/config-c0-semantic-inventory-20261012",
+      "commit": "7abf41cbbae834f3233a564c872f01fa520af223",
+      "remote": "origin",
+      "remoteBranch": "codex/config-c0-semantic-inventory-20261012",
+      "verifiedRemoteHead": "7abf41cbbae834f3233a564c872f01fa520af223",
+      "independentAcceptance": "OPEN"
+    }
+  },
+  "readinessFixtureCurrent20261016": {
+    "at": "2026-10-16T13:00:01.801017+00:00",
+    "change": "Migrate original readiness chart fixture to central pipeline component runtime profile, actual emitted Buster A/B bundles, mounted generated policy capture and real kubeclaw/Prism Helm rendering. Prism no longer carries Buster owner files; both normal projection producers validate malformed central readiness before delivery. No production setting added or defaults changed.",
+    "verification": [
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/deployment/buster-readiness-config.test.mjs"
+        ],
+        "exitCode": 0,
+        "tests": {
+          "pass": 1,
+          "fail": 0,
+          "skip": 0
+        },
+        "log": "docs/review/remediation/config-readiness-fixture-current-20261016/final.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-readiness-fixture-current-20261016/diff.txt"
+      }
+    ],
+    "conservedObligations": {
+      "charts": [
+        "kubeclaw",
+        "prism"
+      ],
+      "validPolicies": 2,
+      "malformedPolicies": 29,
+      "numericBoundaryPolicies": 4,
+      "retiredAuthorRejections": 4,
+      "restoredPositive": true,
+      "sourceMutationIsolation": true
+    },
+    "independentAcceptance": "OPEN; no callable native reviewer; unchanged reviewer EROFS not retried",
+    "qualification": "Focused source delivery/Helm regression, not native execution or whole C0-C6 acceptance",
+    "initialFailure": "Prism values schema rejects retired key before helper; exact schema diagnostic now accepted, rejection requirement unchanged.",
+    "writerLock": "same shared nonblocking; held for fixture edits/tests/checkpoint and released at process exit",
+    "nextAction": "Fresh independent controller review; continue repository-wide literal-to-owner/consumer reconciliation.",
+    "remoteCheckpoint": {
+      "commit": "73de6c5d0c3422f01e3d7242c7a76e0b522cb69a",
+      "branch": "codex/config-c0-semantic-inventory-20261012",
+      "verifiedRemoteHead": "73de6c5d0c3422f01e3d7242c7a76e0b522cb69a",
+      "matches": true
+    }
+  },
+  "controllerAPITimeout20261016": {
+    "at": "2026-10-16T13:05:24.193270+00:00",
+    "fieldId": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+    "owner": "charts/kubeclaw/values.yaml#/busterNamespaceBroker/controller/policy/httpClientTimeoutSeconds",
+    "originalValue": 60,
+    "change": "Strict selected deployment policy captured before real trusted Kubernetes TLS client creation; local60-second default removed; zero/overflow cannot become unlimited. Actual TLS A timeout/B successful response and capture after owner deletion tested.",
+    "verification": [
+      {
+        "command": [
+          "gofmt",
+          "-w",
+          "cmd/buster-namespace-controller/controller-policy.go",
+          "cmd/buster-namespace-controller/main.go",
+          "cmd/buster-namespace-controller/main_test.go",
+          "cmd/buster-namespace-controller/controller-policy_test.go"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-api-timeout-20261016/check-0.txt"
+      },
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "./cmd/buster-namespace-controller"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-api-timeout-20261016/check-1.txt"
+      },
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/deployment/buster-central-delivery.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-api-timeout-20261016/check-2.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-api-timeout-20261016/check-3.txt"
+      },
+      {
+        "command": [
+          "gofmt",
+          "-w",
+          "cmd/buster-namespace-controller/controller-policy_test.go"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-api-timeout-20261016/delivery-0.txt"
+      },
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/deployment/buster-central-delivery.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-api-timeout-20261016/delivery-1.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-api-timeout-20261016/delivery-2.txt"
+      }
+    ],
+    "independentAcceptance": "OPEN; fresh reviewer unavailable; recorded EROFS not retried",
+    "writerLock": "same shared nonblocking; released on process exit",
+    "nextAction": "Independent controller review and remaining eight main.go candidate reconciliation; no all-repository completeness claim.",
+    "delivery": "Real chart A/B6/12-second API policies parsed by actual Go loader; exact ConfigMap/mount and rollout checks passed."
+  },
+  "controllerRefresh20261016": {
+    "at": "2026-10-16T13:08:59.948007+00:00",
+    "fieldId": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+    "originalValue": 5,
+    "owner": "charts/kubeclaw/values.yaml#/busterNamespaceBroker/controller/policy/runtimeSecurityRefreshSeconds",
+    "change": "Selected captured refresh interval feeds actual runtime-security refresh caller; no local default. Existing five-second future-clock tolerance remains separate unchanged behavior. Original patch-loop tests retained; real delivered A5/B10 boundary and captured policy after owner deletion verified.",
+    "verification": [
+      {
+        "command": [
+          "gofmt",
+          "-w",
+          "cmd/buster-namespace-controller/controller-policy.go",
+          "cmd/buster-namespace-controller/main.go",
+          "cmd/buster-namespace-controller/main_test.go",
+          "cmd/buster-namespace-controller/controller-policy_test.go"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-refresh-20261016/check-0.txt"
+      },
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "./cmd/buster-namespace-controller"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-refresh-20261016/check-1.txt"
+      },
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/deployment/buster-central-delivery.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-refresh-20261016/check-2.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-refresh-20261016/check-3.txt"
+      }
+    ],
+    "independentAcceptance": "OPEN; reviewer EROFS unchanged, no independent acceptance inferred",
+    "writerLock": "same shared nonblocking; released on exit",
+    "nextAction": "Independent controller review; reconcile remaining controller ENV defaults and other repository literals with existing selected owners.",
+    "tests": {
+      "pass": 120,
+      "fail": 0,
+      "skip": 0,
+      "deliveryPass": 5
+    },
+    "remoteCheckpoint": {
+      "commit": "770c5d485b480a71072f6049a4831c4b1f2415d4",
+      "branch": "codex/config-c0-semantic-inventory-20261012",
+      "verifiedRemoteHead": "770c5d485b480a71072f6049a4831c4b1f2415d4",
+      "matches": true
+    }
+  },
+  "controllerDeletionTimeout20261016": {
+    "at": "2026-10-16T13:14:38.930274+00:00",
+    "fieldId": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+    "originalValue": 120,
+    "owner": "charts/kubeclaw/values.yaml#/busterNamespaceBroker/controller/policy/namespaceDeletionTimeoutSeconds",
+    "change": "Captured selected namespace deletion timeout feeds actual API polling; original120 seconds preserved; local two-minute default removed. Real A1 timeout/B2 deletion success with same1300ms deletion visibility, owner removed after capture; missing/invalid/overflow selection rejected. Real Helm A120/B240 values reach actual Go receiver.",
+    "verification": [
+      {
+        "command": [
+          "gofmt",
+          "-w",
+          "cmd/buster-namespace-controller/controller-policy.go",
+          "cmd/buster-namespace-controller/controller-policy_test.go",
+          "cmd/buster-namespace-controller/main.go"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-deletion-timeout-20261016/check-0.txt"
+      },
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "./cmd/buster-namespace-controller"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-deletion-timeout-20261016/check-1.txt"
+      },
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/deployment/buster-central-delivery.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-deletion-timeout-20261016/check-2.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-deletion-timeout-20261016/check-3.txt"
+      }
+    ],
+    "tests": {
+      "goPassEvents": 123,
+      "deliveryPass": 5
+    },
+    "independentAcceptance": "OPEN; unchanged reviewer EROFS; not retried",
+    "writerLock": "same shared nonblocking; released on process exit",
+    "nextAction": "Independent controller review; remaining controller policy and ENV reconciliation, not whole repository completion."
+  },
+  "controllerFindingBudgets20261016": {
+    "verification": [
+      {
+        "command": [
+          "gofmt",
+          "-w",
+          "cmd/buster-namespace-controller/controller-policy.go",
+          "cmd/buster-namespace-controller/controller-policy_test.go",
+          "cmd/buster-namespace-controller/main.go",
+          "cmd/buster-namespace-controller/main_test.go"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-finding-budgets-20261016/check-0.txt"
+      },
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "./cmd/buster-namespace-controller"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-finding-budgets-20261016/check-1.txt"
+      },
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/deployment/buster-central-delivery.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-finding-budgets-20261016/check-2.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-controller-finding-budgets-20261016/check-3.txt"
+      }
+    ],
+    "independentAcceptance": "OPEN; no active independent CONFIG reviewer; unchanged EROFS initialization not retried",
+    "at": "2026-10-16T13:20:20.198723+00:00",
+    "change": "Selected deployment owner supplies count and serialized byte budgets to actual runtime-security status collector; original4096/524288 defaults removed from productive caller; original CRD4096 envelope and worst-case overflow representability validated before activation.",
+    "tests": {
+      "goPassEvents": 124,
+      "goFailEvents": 0,
+      "goSkippedEvents": 0,
+      "deliveryPass": 5
+    },
+    "capture": "A2/B4 count and A524288/B700 bytes captured before owner removal; real delivered Helm A10/1200 and B20/2400 received by Go loader and bounding caller; original regression retained.",
+    "nextAction": "Independent controller source review; continue controller ENV and remaining source reconciliation without all-repository completeness claim.",
+    "writerLock": "same shared nonblocking; released on process exit",
+    "remoteCheckpoint": {
+      "commit": "e3f4ea7fc81ac481a496013fd9cbbe7818e07946",
+      "branch": "codex/config-c0-semantic-inventory-20261012",
+      "verifiedRemoteHead": "e3f4ea7fc81ac481a496013fd9cbbe7818e07946",
+      "matches": true
+    }
+  },
+  "controllerCloseout20261016": {
+    "at": "2026-10-16T13:26:40.023284+00:00",
+    "status": "source-reviewed-corrected",
+    "goTests": {
+      "pass": 131,
+      "fail": 0,
+      "skip": 0
+    },
+    "deliveryTests": "6/6",
+    "independentSourceReview": "clean; reviewer shell unavailable",
+    "acceptedFinding": "deletion deadline covers requests and polling; actual delayed requests tested",
+    "extraExistingSettings": "5-second clock skew selected; TTL/maxTTL/poll hidden fallback authors removed",
+    "evidence": "docs/review/remediation/config-controller-closeout-20261016",
+    "next": "Remaining-source reconciliation, including Ops MCP/ops pod and worker envelope policies; native full historical acceptance still open"
   }
 }

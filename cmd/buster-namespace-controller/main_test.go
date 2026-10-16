@@ -63,7 +63,7 @@ func TestKubernetesHTTPClientRequiresServiceAccountCA(t *testing.T) {
 }
 
 func TestControllerPollIntervalRejectsNonPositiveValues(t *testing.T) {
-	for _, value := range []string{"0", "-1", "9223372036855", "not-a-number"} {
+	for _, value := range []string{"", "0", "-1", "9223372036855", "not-a-number"} {
 		t.Run(value, func(t *testing.T) {
 			t.Setenv("BUSTER_CONTROLLER_POLL_MS", value)
 			if _, err := controllerPollInterval(); err == nil {
@@ -835,13 +835,31 @@ func TestRuntimeSecurityResultDigestUsesCanonicalPayload(t *testing.T) {
 
 func TestRuntimeSecurityRefreshAvoidsStatusPatchLoop(t *testing.T) {
 	now := time.Date(2026, 9, 4, 6, 0, 0, 0, time.UTC)
-	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-4 * time.Second).Format(time.RFC3339)}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second) {
+	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-4 * time.Second).Format(time.RFC3339)}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second, 5*time.Second) {
 		t.Fatal("fresh runtime-security status must not refresh on each controller poll")
 	}
-	if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second) {
+	if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second, 5*time.Second) {
 		t.Fatal("runtime-security status must refresh at the bounded interval")
 	}
-	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Unavailable"}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second) {
+	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Unavailable"}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second, 5*time.Second) {
 		t.Fatal("immutable leases without security inputs must not patch unchanged unavailable status")
+	}
+}
+
+func TestControllerLeaseTimingRequiresCentralTransport(t *testing.T) {
+	for _, key := range []string{"BUSTER_DEFAULT_TTL_SECONDS", "BUSTER_MAX_TTL_SECONDS"} {
+		for _, invalid := range []string{"", "0", "-1", "invalid", "9223372037"} {
+			t.Setenv(key, invalid)
+			if _, err := requiredDurationSeconds(key); err == nil {
+				t.Fatalf("invalid central timing %s=%q accepted", key, invalid)
+			}
+		}
+		for _, seconds := range []int64{7200, 86400, 1} {
+			t.Setenv(key, strconv.FormatInt(seconds, 10))
+			actual, err := requiredDurationSeconds(key)
+			if err != nil || actual != seconds {
+				t.Fatalf("selected timing lost %s=%d: %v", key, actual, err)
+			}
+		}
 	}
 }

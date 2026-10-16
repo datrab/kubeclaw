@@ -16,6 +16,7 @@ import (
 // Captured once at startup from the deployment owner. The locator is transport,
 // not another author; absent, partial and ambiguous policies never get defaults.
 type controllerPolicy struct {
+	RuntimeSecurityFutureSkewSeconds      int64 `json:"runtimeSecurityFutureSkewSeconds"`
 	RuntimeSecurityMaximumFindings        int64 `json:"runtimeSecurityMaximumFindings"`
 	RuntimeSecurityMaximumSerializedBytes int64 `json:"runtimeSecurityMaximumSerializedBytes"`
 	NamespaceDeletionTimeoutSeconds       int64 `json:"namespaceDeletionTimeoutSeconds"`

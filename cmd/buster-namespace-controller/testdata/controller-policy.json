@@ -16,5 +16,6 @@
   "runtimeSecurityRefreshSeconds": 5,
   "namespaceDeletionTimeoutSeconds": 120,
   "runtimeSecurityMaximumFindings": 4096,
-  "runtimeSecurityMaximumSerializedBytes": 524288
+  "runtimeSecurityMaximumSerializedBytes": 524288,
+  "runtimeSecurityFutureSkewSeconds": 5
 }

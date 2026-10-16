@@ -1,0 +1,86 @@
+[
+  {
+    "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+    "sha256": "6fad8555ceae7605afc6affa11a5f38a059766da9c1ad1e82d586fcef2368491"
+  },
+  {
+    "path": "charts/kubeclaw/values.yaml",
+    "sha256": "e14ee54471f806bc02312b3c621752d927ce5c47267c82f5844e808941f7fef3"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/controller-policy.go",
+    "sha256": "2cd81393772caab2d8236ce13b89d89d22273a1f122413a04db11f93c87ddab2"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/controller-policy_test.go",
+    "sha256": "2c676c663ef653e5ba58da92ecb88c4684cbe2a0a0d59364f3433db4269eb4cc"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-credentials.go",
+    "sha256": "170356e6abad1547a973b34211fea24a10ad51e00a93906bce3bee12b6f78f26"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-product-native_test.go",
+    "sha256": "3af0a38349384af5cc2424d36ede8add7cfe3eaaf9823c38dd45018237a85367"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-product.go",
+    "sha256": "003dfca921dd331e816c6f18d208177b0fb593540947063257bd05dba156f59a"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-product_test.go",
+    "sha256": "6a339449f64aa5437011e02ea4bc455482ffc00d7627d8b9bc2305e39a17a8d1"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+    "sha256": "c1dd8e9791fdc4a7e5f961f5b2a49df25f07178196042e092fe5d75f5ca4be0d"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness-sources.go",
+    "sha256": "d1aca629a3c5c739e84a9116a95af6d0a0bbc7b0782cc0b0ee680a004f621628"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness.go",
+    "sha256": "f55e2ee017f4fa0cd37b8940207afb0cd30f47066b90719dcd4c46de101c5585"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness_test.go",
+    "sha256": "2671ccb703ebe54650fbdd1a32714f51db2bb9cff6ddd68ad7feac31a64b71e9"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-retention.go",
+    "sha256": "51863fa8037e99edc51bdf9ed797e1603b0926cf6b4d414a484e90d49bea946a"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-retention_test.go",
+    "sha256": "6304f62ba7b61227719b8bf5f4e3767c1e0173b05989e6de9abf34b33a5ff964"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/exposure-generation.go",
+    "sha256": "063922ee15724270e88a63edd93e1817330804f04aebce448204f8baf5ee1fea"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "d749cb94ef4467daa1d686381aa13f2aa87d6e1e6806fdcdca48dc85917b91a9"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main_test.go",
+    "sha256": "614374d7ef32140f99a42c2e4c780dd0b692189256b413142fc953966b0a4648"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/rbac.go",
+    "sha256": "8269bc44ca1cfec92d5eefa4a9f6915cbd22f31ac6b3a91657829ddbe5542086"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/testdata/controller-policy.json",
+    "sha256": "ed0d99cde599efac86a284615c43739379d9a5ac69cad79cd458fabde4897502"
+  },
+  {
+    "path": "tests/verification/deployment/buster-central-delivery.test.mjs",
+    "sha256": "d855d4c10ca7e7e7e5a160bfe50ee4d7c120e8c524ec192884b654e5ac68ee8f"
+  },
+  {
+    "path": "tests/verification/deployment/buster-readiness-config.test.mjs",
+    "sha256": "1c591ac8a546f0ff6f9faf0a77a011e36ee9c0b9d02d2e8a7ee2f73c35d29f6d"
+  }
+]

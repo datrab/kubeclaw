@@ -175,10 +175,10 @@ func TestControllerActualDeliveredPolicy(t *testing.T) {
 		}
 		now := time.Date(2026, 10, 16, 0, 0, 0, 0, time.UTC)
 		duration := time.Duration(policy.RuntimeSecurityRefreshSeconds) * time.Second
-		if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-duration + time.Second).Format(time.RFC3339)}, now, duration) {
+		if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-duration + time.Second).Format(time.RFC3339)}, now, duration, 5*time.Second) {
 			t.Fatal("refresh before selected boundary")
 		}
-		if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-duration).Format(time.RFC3339)}, now, duration) {
+		if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-duration).Format(time.RFC3339)}, now, duration, 5*time.Second) {
 			t.Fatal("no refresh at selected boundary")
 		}
 	}
@@ -328,7 +328,7 @@ func TestControllerRefreshPolicyCapture(t *testing.T) {
 	}
 	now := time.Date(2026, 10, 16, 0, 0, 0, 0, time.UTC)
 	snapshot := map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}
-	if !runtimeSecurityRefreshDue(snapshot, now, time.Duration(a.RuntimeSecurityRefreshSeconds)*time.Second) || runtimeSecurityRefreshDue(snapshot, now, time.Duration(b.RuntimeSecurityRefreshSeconds)*time.Second) {
+	if !runtimeSecurityRefreshDue(snapshot, now, time.Duration(a.RuntimeSecurityRefreshSeconds)*time.Second, time.Duration(a.RuntimeSecurityFutureSkewSeconds)*time.Second) || runtimeSecurityRefreshDue(snapshot, now, time.Duration(b.RuntimeSecurityRefreshSeconds)*time.Second, time.Duration(b.RuntimeSecurityFutureSkewSeconds)*time.Second) {
 		t.Fatal("selected A/B refresh not retained")
 	}
 	if _, err := loadControllerPolicy(file); err == nil {
@@ -453,5 +453,51 @@ func TestControllerFindingBudgetsCapture(t *testing.T) {
 		if _, err := decodeControllerPolicy(raw); err == nil {
 			t.Fatal("unrepresentable budget accepted", bad)
 		}
+	}
+}
+
+func TestSelectedDeletionDeadlineBoundsRequestsAndPolling(t *testing.T) {
+	for _, scenario := range []string{"poll-pause", "late-not-found", "slow-request"} {
+		t.Run(scenario, func(t *testing.T) {
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if scenario == "late-not-found" {
+					time.Sleep(1400 * time.Millisecond)
+					w.WriteHeader(http.StatusNotFound)
+					return
+				}
+				if scenario == "slow-request" {
+					select {
+					case <-r.Context().Done():
+						return
+					case <-time.After(5 * time.Second):
+						w.WriteHeader(http.StatusNotFound)
+						return
+					}
+				}
+				w.WriteHeader(http.StatusOK)
+			}))
+			defer server.Close()
+			c := testController(t)
+			c.policy.NamespaceDeletionTimeoutSeconds = 1
+			c.apiURL = server.URL
+			c.httpClient = server.Client()
+			c.pollInterval = 3 * time.Second
+			started := time.Now()
+			err := c.waitForNamespaceDeleted(context.Background(), "test-delete")
+			if err == nil || !strings.Contains(err.Error(), "cleanup timeout") {
+				t.Fatal("selected ceiling not enforced", err)
+			}
+			if elapsed := time.Since(started); elapsed > 1800*time.Millisecond {
+				t.Fatalf("selected one-second ceiling exceeded: %s", elapsed)
+			}
+		})
+	}
+}
+
+func TestSelectedRuntimeSecurityFutureSkew(t *testing.T) {
+	now := time.Date(2026, 10, 16, 0, 0, 0, 0, time.UTC)
+	snapshot := map[string]interface{}{"phase": "Observed", "observedAt": now.Add(5 * time.Second).Format(time.RFC3339)}
+	if !runtimeSecurityRefreshDue(snapshot, now, 5*time.Second, time.Second) || runtimeSecurityRefreshDue(snapshot, now, 5*time.Second, 10*time.Second) {
+		t.Fatal("selected A/B skew not enforced")
 	}
 }

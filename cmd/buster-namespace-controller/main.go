@@ -149,8 +149,14 @@ func newController() (*controller, error) {
 		prefixes = []string{"test"}
 	}
 
-	ttlSeconds := envInt("BUSTER_DEFAULT_TTL_SECONDS", 7200)
-	maxTTLSeconds := envInt("BUSTER_MAX_TTL_SECONDS", 86400)
+	ttlSeconds, err := requiredDurationSeconds("BUSTER_DEFAULT_TTL_SECONDS")
+	if err != nil {
+		return nil, err
+	}
+	maxTTLSeconds, err := requiredDurationSeconds("BUSTER_MAX_TTL_SECONDS")
+	if err != nil {
+		return nil, err
+	}
 	pollInterval, err := controllerPollInterval()
 	if err != nil {
 		return nil, err
@@ -361,7 +367,7 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 		exposure[key] = value
 	}
 	runtimeSecurity := objectValue(item.Status["runtimeSecurity"])
-	if runtimeSecurityRefreshDue(runtimeSecurity, time.Now().UTC(), time.Duration(c.policy.RuntimeSecurityRefreshSeconds)*time.Second) {
+	if runtimeSecurityRefreshDue(runtimeSecurity, time.Now().UTC(), time.Duration(c.policy.RuntimeSecurityRefreshSeconds)*time.Second, time.Duration(c.policy.RuntimeSecurityFutureSkewSeconds)*time.Second) {
 		var err error
 		runtimeSecurity, err = c.runtimeSecurityStatus(ctx, item, namespaceName)
 		if err != nil {
@@ -391,7 +397,7 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 	return c.patchLeaseStatus(ctx, item, next)
 }
 
-func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time, refreshAfter time.Duration) bool {
+func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time, refreshAfter time.Duration, futureSkew time.Duration) bool {
 	phase := stringValue(snapshot["phase"])
 	if phase == "Unavailable" {
 		return false
@@ -400,7 +406,7 @@ func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time, r
 		return true
 	}
 	observedAt, err := time.Parse(time.RFC3339, stringValue(snapshot["observedAt"]))
-	if err != nil || observedAt.After(now.Add(5*time.Second)) {
+	if err != nil || observedAt.After(now.Add(futureSkew)) {
 		return true
 	}
 	return now.Sub(observedAt) >= refreshAfter
@@ -1477,10 +1483,20 @@ func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, name
 	return c.deleteNamespaceCAS(ctx, namespaceName, namespace)
 }
 
-func (c *controller) waitForNamespaceDeleted(ctx context.Context, namespaceName string) error {
-	deadline := time.Now().Add(time.Duration(c.policy.NamespaceDeletionTimeoutSeconds) * time.Second)
-	for time.Now().Before(deadline) {
+func (c *controller) waitForNamespaceDeleted(parent context.Context, namespaceName string) error {
+	ctx, cancel := context.WithTimeout(parent, time.Duration(c.policy.NamespaceDeletionTimeoutSeconds)*time.Second)
+	defer cancel()
+	timeout := func() error {
+		return fmt.Errorf("namespace %s was not deleted before cleanup timeout: %w", namespaceName, ctx.Err())
+	}
+	for {
+		if ctx.Err() != nil {
+			return timeout()
+		}
 		err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName, nil, "application/json", nil)
+		if ctx.Err() != nil {
+			return timeout()
+		}
 		if err != nil {
 			var apiErr *apiError
 			if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
@@ -1488,9 +1504,14 @@ func (c *controller) waitForNamespaceDeleted(ctx context.Context, namespaceName 
 			}
 			return err
 		}
-		time.Sleep(c.pollInterval)
+		timer := time.NewTimer(c.pollInterval)
+		select {
+		case <-ctx.Done():
+			timer.Stop()
+			return timeout()
+		case <-timer.C:
+		}
 	}
-	return fmt.Errorf("namespace %s was not deleted before cleanup timeout", namespaceName)
 }
 
 func (c *controller) createOrPatch(ctx context.Context, createPath string, patchPath string, manifest map[string]interface{}, out interface{}) error {
@@ -1877,23 +1898,18 @@ func env(name string, fallback string) string {
 	return value
 }
 
-func envInt(name string, fallback int) int {
-	value := strings.TrimSpace(os.Getenv(name))
-	if value == "" {
-		return fallback
+// Helm transports the selected central values. Missing/malformed values never
+// create a second hidden author inside the controller.
+func requiredDurationSeconds(name string) (int64, error) {
+	parsed, err := strconv.ParseInt(strings.TrimSpace(os.Getenv(name)), 10, 64)
+	if err != nil || parsed < 1 || parsed > (1<<63-1)/int64(time.Second) {
+		return 0, fmt.Errorf("%s must be configured as positive duration seconds", name)
 	}
-	parsed, err := strconv.Atoi(value)
-	if err != nil {
-		return fallback
-	}
-	return parsed
+	return parsed, nil
 }
 
 func controllerPollInterval() (time.Duration, error) {
 	value := strings.TrimSpace(os.Getenv("BUSTER_CONTROLLER_POLL_MS"))
-	if value == "" {
-		value = "3000"
-	}
 	pollMs, err := strconv.ParseInt(value, 10, 64)
 	if err != nil || pollMs <= 0 || pollMs > (1<<63-1)/int64(time.Millisecond) {
 		return 0, errors.New("BUSTER_CONTROLLER_POLL_MS must be positive")
