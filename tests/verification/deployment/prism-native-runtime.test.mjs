@@ -1,4 +1,6 @@
-import { bundleFromConfigMap, projectTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { buildPrismImageBundle } from '../../../scripts/build-prism-image-bundle.mjs';
+import { pathToFileURL } from 'node:url';
+import { prismChartProjection } from '../../../scripts/generate-prism-chart-config.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -12,15 +14,20 @@ import { nativePrismDeploymentSelection } from '../../../scripts/native-worker-d
 const selected = { ...load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8')),
   nodeName: 'native-render-test', runtime: { containerdVersion: 'v2.2.0-k3s1' } };
 
-test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts', () => {
+test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts', async () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-native-render-'));
   try {
     const bundle = renderNativeWorkerNode(selected);
     const file = path.join(directory, 'native.yaml'); fs.writeFileSync(file, bundle['prism-native-values.yaml']);
-    const args = ['template', 'native-review', 'charts/prism', '-f', 'charts/prism/ci-values.yaml',
+    const projection = prismChartProjection(path.resolve('config'));
+    const args = ['template', projection.deployment.releaseName, 'charts/prism', '-f', 'charts/prism/ci-values.yaml',
       '-f', file, '--namespace', 'kubeclaw', '--set', 'workerTrust.spiffe.enabled=true'];
     const docs = loadAll(execFileSync('helm', args, { encoding: 'utf8' }));
     assert.equal(nativePrismDeploymentSelection(docs, 'kubeclaw', selected), true);
+    const retired = structuredClone(docs);
+    retired.find(doc => doc?.kind === 'Deployment' && doc.metadata.name === 'prism-worker')
+      .spec.template.spec.containers.find(container => container.name === 'worker').command = ['node', 'skills/prism/server/worker.ts'];
+    assert.throws(() => nativePrismDeploymentSelection(retired, 'kubeclaw', selected), /PROTOCOL_MISMATCH/);
     assert.throws(() => nativePrismDeploymentSelection(docs, 'other', selected), /POLICY_MISMATCH/);
     assert.throws(() => nativePrismDeploymentSelection(docs, 'kubeclaw', { ...selected, nodeName: 'other-node' }), /POLICY_MISMATCH/);
     const deployment = name => docs.find(doc => doc?.kind === 'Deployment' && doc.metadata.name === `prism-${name}`);
@@ -31,16 +38,29 @@ test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and 
     assert.equal(nri.roles.prism.container, supervisor.name); assert.equal(nri.roles.prism.namespace, 'kubeclaw');
     assert.equal(worker.spec.template.metadata.annotations['kubeclaw.dev/native-worker-role'], 'prism');
     assert.equal(spec.terminationGracePeriodSeconds, 150);
-    assert.equal(supervisor.env.find(item => item.name === 'SWARM_CONFIG').value, '/etc/kubeclaw/swarm/swarm.config.json');
-    const authored = projectTestBundle(bundleFromConfigMap(docs.find(doc => doc?.kind === 'ConfigMap' && doc.metadata.name === 'prism-swarm-config').data));
-    assert.equal(authored.operator.prism.worker.shutdownTimeoutMs, 120000);
+    // The same original native render obligations now receive policy through the
+    // real immutable role image and its authenticated package/generation receipts.
+    assert.equal(supervisor.env.find(item => item.name === 'SWARM_CONFIG'), undefined);
+    assert.equal(spec.volumes.some(volume => volume.name === 'swarm-config'), false);
+    assert.equal(docs.some(doc => doc?.kind === 'ConfigMap' && doc.data?.['swarm.config.json']), false);
+    const image = await buildPrismImageBundle({ repository: path.resolve(import.meta.dirname, '../../..'),
+      output: path.join(directory, 'image'), callerId: 'prism-worker',
+      revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+      builtAt: '2026-10-16T00:00:00Z' });
+    const boot = await import(pathToFileURL(path.join(image.packageRoot, 'skills/packages/plugin-foundation/config/pipeline-boot.mjs')).href);
+    const installed = await import(pathToFileURL(path.join(image.packageRoot, 'skills/packages/prism-engine/server/worker-config.ts')).href);
+    const capture = boot.capturePipelineBootReceipts(image.deliveryRoot, image.systemRoot,
+      'prism-worker', image.packageRoot, '/app/prism/skills');
+    const received = installed.loadWorkerConfig(capture, {
+      WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://test/control' });
+    assert.equal(received.shutdownTimeoutMs, 120000);
     assert.equal(supervisor.env.find(item => item.name === 'PRISM_WORKER_SHUTDOWN_TIMEOUT_MS'), undefined);
     assert.equal(supervisor.env.find(item => item.name === 'PRISM_NATIVE_CLOSE_TIMEOUT_MS'), undefined);
-    assert.equal(authored.operator.prism.native.supervisor.closeTimeoutMs, 105000);
+    assert.equal(received.native.supervisor.closeTimeoutMs, 105000);
     assert.equal(worker.spec.strategy.type, 'Recreate'); assert.equal(worker.spec.replicas, 1);
     assert.deepEqual(spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms,
       [{ matchFields: [{ key: 'metadata.name', operator: 'In', values: [selected.nodeName] }] }]);
-    assert.deepEqual(supervisor.command, ['node', 'skills/prism/server/worker.ts']);
+    assert.deepEqual(supervisor.command, ['node', 'skills/packages/prism-engine/server/worker.ts']);
     assert.equal(spec.securityContext.runAsUser, 0); assert.equal(spec.securityContext.fsGroup, undefined);
     assert.deepEqual(supervisor.securityContext.capabilities, { drop: ['ALL'], add: ['SETUID', 'SETGID', 'KILL'] });
     assert.equal(supervisor.securityContext.allowPrivilegeEscalation, false);

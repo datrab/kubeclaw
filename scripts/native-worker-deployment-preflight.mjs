@@ -13,7 +13,7 @@ export function nativePrismDeploymentSelection(documents, namespace, policy) {
   if (!worker || !control) throw new Error('NATIVE_DEPLOYMENT_WORKLOADS_REQUIRED');
   const container = (workload, name) => workload?.spec.template.spec.containers.find(container => container.name === name);
   const supervisor = container(worker, 'worker');
-  if (JSON.stringify(supervisor?.command) !== JSON.stringify(['node', 'skills/prism/server/worker.ts'])
+  if (JSON.stringify(supervisor?.command) !== JSON.stringify(['node', 'skills/packages/prism-engine/server/worker.ts'])
     || worker.spec.template.metadata.annotations?.['kubeclaw.dev/native-worker-role'] !== 'prism') {
     throw new Error('NATIVE_DEPLOYMENT_PROTOCOL_MISMATCH');
   }
