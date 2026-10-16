@@ -28,7 +28,30 @@
       "QB-R01 mandatory log eligibility all outcomes both providers",
       "blocking Size active limit on original node restore before attempt effects"
     ],
-    "preFixProof": "accepted-findings-red.txt: initial two regressions fail against separate exact reviewed pre-fix snapshot; production files never reset"
+    "preFixProof": "accepted-findings-red.txt: initial two regressions fail against separate exact reviewed pre-fix snapshot; production files never reset",
+    "deliveredRoleReadbacks": [
+      {
+        "role": "buster",
+        "sourceCommit": "8c3cf250ca7e65ab335fa2085c333be10b3af553",
+        "indexedFiles": 14126,
+        "packages": 11,
+        "plugins": 24,
+        "exactSourceReadbacks": 4,
+        "actualDeliveredModuleImports": true,
+        "nativeActivation": false
+      },
+      {
+        "role": "nova",
+        "sourceCommit": "8c3cf250ca7e65ab335fa2085c333be10b3af553",
+        "indexedFiles": 1832,
+        "packages": 12,
+        "plugins": 32,
+        "exactSourceReadbacks": 4,
+        "actualDeliveredModuleImports": true,
+        "nativeActivation": false
+      }
+    ],
+    "roleBundles": "Normal Nova and Buster role builder; exact emitted module bytes/digests and actual emitted-module imports. Fixture build metadata, not installed/image/native authority."
   },
   "qualification": {
     "originalQualityFields": 24,
@@ -44,5 +67,6 @@
     "QB-R02 authenticated original inputStore sealed snapshot/producer/build/source/baseline receipts and original accounting; absent authentic receipts must fail activation",
     "Other original field/case receiving residuals and full independent semantic/history/native acceptance",
     "Native UID1000/Docker/delegated writable cgroup and root-trusted writable archive host unavailable as separately evidenced"
-  ]
+  ],
+  "sourceCommit": "8c3cf250ca7e65ab335fa2085c333be10b3af553"
 }
