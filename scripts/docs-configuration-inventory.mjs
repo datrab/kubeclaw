@@ -5405,13 +5405,8 @@ function pythonShellPrograms(text, depth = 0) {
       python = tokens.findIndex((word, index) => index > first && /^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(word));
     }
     if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(tokens[first] ?? '')) {
-      let flag = first + 1;
-      while (/^-[efuvxnCli]+$/u.test(tokens[flag] ?? '')) flag += 1;
-      if (/^-[a-z]*c[a-z]*$/u.test(tokens[flag] ?? '')) return { shell: true, codeFlag: flag };
-      assert(!tokens[flag]?.startsWith('-') || tokens[flag] === '--'
-        || !tokens.slice(flag + 1).some((value) => /^-[a-z]*c[a-z]*$/u.test(value ?? '')),
-      'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved nested shell argv mode');
-      return null;
+      const bodyIndex = nodeShellArgvSelection(tokens, first, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED');
+      return bodyIndex === null ? null : { shell: true, codeFlag: bodyIndex - 1 };
     }
     if (!/^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(tokens[python] ?? '')) {
       // An expanded executable with recognizable Python -c source has lost
@@ -5655,17 +5650,14 @@ function pythonYamlPrograms(file, text) {
         const body = scalar(items[flag + 1]);
         programs.push({ code: body.value, positions: body.positions, kind: 'yaml-argv' });
       } else if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(values[python] ?? '') || !YAML.isSeq(command.value)) {
-        let flag = python + 1;
+        let bodyIndex = 0;
         if (YAML.isSeq(command.value)) {
-          while (/^-[efuvxnCli]+$/u.test(values[flag] ?? '')) flag += 1;
-          if (!/^-[a-z]*c[a-z]*$/u.test(values[flag] ?? '')) {
-            assert(!values[flag]?.startsWith('-') || values[flag] === '--', `${diagnostic}: unresolved shell argv mode`);
-            return; // Shell script operands and their trailing -c data are passive.
-          }
           assert(values.every((value) => typeof value === 'string'), `${diagnostic}: nonliteral shell argv`);
           assert(!args || YAML.isSeq(args.value), `${diagnostic}: nonliteral shell args sequence`);
+          bodyIndex = nodeShellArgvSelection(values, python, diagnostic, 'unresolved shell argv mode');
+          if (bodyIndex === null) return;
         }
-        const body = scalar(items[YAML.isSeq(command.value) ? flag + 1 : 0]);
+        const body = scalar(items[bodyIndex]);
         const nested = pythonShellPrograms(body.value);
         assert(!nested.unresolvedStdin, `${diagnostic}: unresolved Python stdin source custody`);
         for (const program of nested) programs.push({ ...program,
@@ -6763,7 +6755,12 @@ function nodeArgvSelection(file, words, commandArrays = new Set()) {
   let first = 0;
   while (words[first] && (/^[A-Za-z_][A-Za-z0-9_]*=/u.test(words[first].value)
     || ['if', 'then', 'elif', 'do', 'while', 'until', '!', 'exec', 'command'].includes(words[first].value))) first++;
-  first += pythonInterpreterIndex(words.slice(first).map(word => word.value), `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}`);
+  // Shared wrapper refusal happens before interpreter selection. Preserve the
+  // recognizable Python owner's diagnostic instead of masking it as Node.
+  const pythonOwner = words.slice(first).some(word => /^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(word.value))
+    && !words.slice(first).some(word => /^(?:.*\/)?node(?:js)?$/u.test(word.value));
+  const wrapperDiagnostic = `${pythonOwner ? 'PYTHON' : 'NODE'}_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}`;
+  first += pythonInterpreterIndex(words.slice(first).map(word => word.value), wrapperDiagnostic);
   if ((['kubectl', 'docker'].includes(words[first]?.value) || commandArrays.has(words[first]?.value)) && words.some(word => word.value === 'exec')) {
     const separator = words.findIndex(word => word.value === '--');
     if (separator >= 0) first = separator + 1;
@@ -6783,13 +6780,13 @@ function nodeArgvSelection(file, words, commandArrays = new Set()) {
   return { first, node: true, stdin: !words[next], script: words[next]?.value };
 }
 
-function nodeShellArgvSelection(values, first, diagnostic) {
+function nodeShellArgvSelection(values, first, diagnostic, modeDescription = 'unresolved nested shell argv mode') {
   let index = first + 1;
   let unsupportedSelectedPrefix = false;
   let selected = false;
   const selector = value => /^-[A-Za-z]*c[A-Za-z]*$/u.test(value ?? '');
   const selectedBody = bodyIndex => {
-    assert(!unsupportedSelectedPrefix, `${diagnostic}: unresolved nested shell argv mode`);
+    assert(!unsupportedSelectedPrefix, `${diagnostic}: ${modeDescription}`);
     assert(values[bodyIndex] !== undefined, `${diagnostic}: missing selected shell program`);
     return bodyIndex;
   };
@@ -6801,7 +6798,7 @@ function nodeShellArgvSelection(values, first, diagnostic) {
     if (!value.startsWith('-') && !value.startsWith('+')) return selected ? selectedBody(index) : null;
     if (selector(value)) {
       assert(!unsupportedSelectedPrefix && /^-[efuvxnClic]+$/u.test(value),
-        `${diagnostic}: unresolved nested shell argv mode`);
+        `${diagnostic}: ${modeDescription}`);
       selected = true; index++; continue;
     }
     if (/^-[efuvxnCli]+$/u.test(value)) { index++; continue; }
@@ -6809,7 +6806,7 @@ function nodeShellArgvSelection(values, first, diagnostic) {
     // selected body using them is explicitly unsupported, never omitted.
     if (['-o', '+o', '-O', '+O', '--rcfile', '--init-file'].includes(value)) {
       if (values[index + 1] === undefined) {
-        assert(!selected, `${diagnostic}: unresolved nested shell argv mode`);
+        assert(!selected, `${diagnostic}: ${modeDescription}`);
         return null;
       }
       index += 2; unsupportedSelectedPrefix = true; continue;
@@ -6817,7 +6814,7 @@ function nodeShellArgvSelection(values, first, diagnostic) {
     if (['--noprofile', '--norc', '--posix', '--restricted', '--verbose', '--login', '--debugger'].includes(value)) {
       index++; unsupportedSelectedPrefix = true; continue;
     }
-    assert(!selected, `${diagnostic}: unresolved nested shell argv mode`);
+    assert(!selected, `${diagnostic}: ${modeDescription}`);
     // An unknown pre-selector option might consume the next word. Preserve
     // the distinction between ambiguous custody and definite script data.
     assert(!values.slice(index + 1).some(selector), `${diagnostic}: ambiguous shell option custody`);

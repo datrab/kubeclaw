@@ -1129,9 +1129,11 @@ if (process.argv.includes('--sync-map-identities')) {
 }
 const mapping = mappingFor(inventory);
 if (!mapping) {
-  fs.mkdirSync(path.dirname(jsonTarget), { recursive: true });
-  fs.writeFileSync(jsonTarget, `${JSON.stringify(inventory, null, 2)}\n`);
-  process.stderr.write(`Missing ${relative(mappingTarget)}. Inventory was written so that the documentation map can be created.\n`);
+  if (!check) {
+    fs.mkdirSync(path.dirname(jsonTarget), { recursive: true });
+    fs.writeFileSync(jsonTarget, `${JSON.stringify(inventory, null, 2)}\n`);
+  }
+  process.stderr.write(`Missing ${relative(mappingTarget)}.${check ? ' Check mode did not write inventory.' : ' Inventory was written so that the documentation map can be created.'}\n`);
   process.exitCode = 2;
 } else {
   const page = markdown(inventory, mapping);

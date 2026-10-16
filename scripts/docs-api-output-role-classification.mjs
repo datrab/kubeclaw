@@ -105,6 +105,9 @@ export function deriveNativeOperationFacts(root,source,selectors,{trustAnchorSou
   if(!/\.(?:[cm]?js|ts)$/u.test(file)){const state={file,bytes};modules.set(file,state);return state;}
   const tree=ts.createSourceFile(file,bytes,ts.ScriptTarget.Latest,true),definitions=new Map(),imports=new Map(),reexports=[];
   for(const statement of tree.statements){
+    // A bare eager import can mutate selected global state without a referenced
+    // binding. Refuse receipt authority until its initialization is qualified.
+    if(ts.isImportDeclaration(statement)&&!statement.importClause)throw new Error(`OUTPUT_ROLE_INITIALIZATION_UNQUALIFIED: ${file}: side-effect import requires independent custody`);
    if(statement.name)definitions.set(statement.name.getText(tree),statement);
    if(statement.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.DefaultKeyword)||ts.isExportAssignment(statement)&&!statement.isExportEquals)definitions.set('default',statement);
    if(ts.isVariableStatement(statement))for(const declaration of statement.declarationList.declarations){if(ts.isIdentifier(declaration.name))definitions.set(declaration.name.text,statement);if(ts.isObjectBindingPattern(declaration.name))for(const element of declaration.name.elements)if(ts.isIdentifier(element.name))definitions.set(element.name.text,statement);}

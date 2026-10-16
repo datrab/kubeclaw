@@ -548,7 +548,13 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
         # Fixed nested envelope members can change without changing API identity.
         # Unknown root keys, root updates and escaping aliases remain explicit gaps.
         for item in ast.walk(tree):
-            if getattr(item, 'lineno', 0) <= getattr(value, 'end_lineno', 0) or getattr(item, 'lineno', 0) >= publication.lineno: continue
+            # Include overlapping source spans conservatively: line numbers alone
+            # cannot order semicolon statements or nested argument evaluation.
+            item_end = (getattr(item, 'end_lineno', 0), getattr(item, 'end_col_offset', 0))
+            value_end = (getattr(value, 'end_lineno', 0), getattr(value, 'end_col_offset', 0))
+            item_start = (getattr(item, 'lineno', 0), getattr(item, 'col_offset', 0))
+            publication_end = (publication.end_lineno, publication.end_col_offset)
+            if item_end <= value_end or item_start >= publication_end: continue
             if owner(item) is not owner(publication): continue
             if isinstance(item, (ast.Assign, ast.AnnAssign, ast.AugAssign, ast.Delete)):
                 targets = getattr(item, 'targets', [getattr(item, 'target', None)])
@@ -559,7 +565,7 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
                 if isinstance(item.func, ast.Attribute):
                     actual, path = projection(item.func.value)
                     if actual is value and not path: return True
-                if capability(item.func) not in pure and any(root(arg) is value for arg in item.args): return True
+                if capability(item.func) not in pure and any(root(part) is value for arg in [*item.args, *(keyword.value for keyword in item.keywords)] for part in ast.walk(arg)): return True
         return False
     def serializer_options_qualified(node):
         name = capability(node.func)

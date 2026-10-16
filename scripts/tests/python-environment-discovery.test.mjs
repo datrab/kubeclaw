@@ -625,7 +625,10 @@ test('heredoc quoting separates passive literal syntax from unresolved shell exp
     assert.throws(() => sandbox.acquiredPythonEnvironmentReads('fixture.sh', text), /expanded Python heredoc custody/);
     sandbox.runtimeTextSources = () => ['fixture.sh']; sandbox.read = () => text;
     assert.throws(() => sandbox.verifyEnvironmentConsumerCoverage(), /expanded Python heredoc custody/);
-    assert.deepEqual(Array.from(sandbox.acquiredPythonEnvironmentReads('fixture.sh', text.replace('<<PY', "<<'PY'"))), []);
+    // Quoting suppresses shell expansion, not the genuine Python reader.
+    // These literal keys are outside the maintained known-name grammar.
+    assert.throws(() => sandbox.acquiredPythonEnvironmentReads('fixture.sh', text.replace('<<PY', "<<'PY'")),
+      error => error.message.includes('fixture.sh') && /unsupported statically known environment name/.test(error.message));
   }
   for (const delimiter of ['PY', "'PY'", '"PY"', '\\PY']) {
     const text = `python3 <<${delimiter}\nimport os\nos.getenv('UNEXPANDED_REAL')\nPY\n`;

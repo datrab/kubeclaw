@@ -492,7 +492,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
         "canonical": "scripts/docs-api-go-output-role-adapter.go",
-        "sha256": "d411bfe264f68ae7b3aaefe52dc2ab832a22e633d6764b1dc60589859ea23327"
+        "sha256": "a519b565ac0f821489d9c31743f3febefd065ba3e95e767909a7e9caeef792d4"
       },
       {
         "path": "scripts/docs-api-go-output-shapes.go",
@@ -507,7 +507,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-python-output-adapter.py",
         "canonical": "scripts/docs-api-python-output-adapter.py",
-        "sha256": "5cf3103575c3604732328b2227b7106cb354f009e4f5a7c952be850f428d8496"
+        "sha256": "48ca523a3385bc1c9a1e166b1f2aa41c7d47d3d2ecd16da92f39da8ac65b2c2b"
       },
       {
         "path": "scripts/infrastructure-chart.mjs",
@@ -6021,7 +6021,7 @@ const reviewedVariableDocumentationChildren=Object.freeze(Object.fromEntries(Obj
     "owner": "deployedStaticObjects",
     "variable": "recoverySource",
     "child": "scripts/render-postgresql-recovery.mjs",
-    "sourceSha256": "0a351f643d93c20518b0dd54443a227ffc2f40194c7a35cd7ec55025b5b6bda0",
+    "sourceSha256": "a3a1d632599be39d09eaefc7ef412b3065ac2189f2cb9f687d0733a6327e6d42",
     "ownerSyntaxSha256": "578d77bca1b924ca4bbab32d41080da9d536502c2aa0a2b74d57d38346f00d86",
     "guardDefinitionSha256": "2881d2b5759ce07f60926b3be53b5715c8298455ed0e6747ff334d07f94cc081",
     "definingSyntax": [
@@ -9097,6 +9097,22 @@ export const reviewedRootNodeEntryRecipes = {
         {
           "kind": "ExpressionStatement",
           "syntaxSha256": "4ca8de6cdce11f48e7f6ef902963a31e66b9435906d5d65c1e8ca6eb6211d905"
+        },
+        {
+          "kind": "ExpressionStatement",
+          "syntaxSha256": "7d6892a45c54061092ebeafd2fe6627d1297352d492207a822179ea142786bab"
+        },
+        {
+          "kind": "ForOfStatement",
+          "syntaxSha256": "1a06afdd21b3a5e01c7785398fcf104a3463429b07b25e7385acdd87e6f40c33"
+        },
+        {
+          "kind": "ExpressionStatement",
+          "syntaxSha256": "588ec7db8c56a271f6b76d11d2a90a0bde078777b63d82e9028acc32afa38b69"
+        },
+        {
+          "kind": "ExpressionStatement",
+          "syntaxSha256": "e9f5219097b679e6c68f3f31eb9e7e0ce297816a12c985a0dcf8ade77b39d4a4"
         }
       ],
       "selectors": [
@@ -9198,6 +9214,15 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "expressionSha256": "db8a826daf336a48030dc6790d2b05bdce56cbefa39e535522124de421c8d260"
+        },
+        {
+          "expressionSha256": "7d6892a45c54061092ebeafd2fe6627d1297352d492207a822179ea142786bab"
+        },
+        {
+          "expressionSha256": "e9f5219097b679e6c68f3f31eb9e7e0ce297816a12c985a0dcf8ade77b39d4a4"
+        },
+        {
+          "expressionSha256": "588ec7db8c56a271f6b76d11d2a90a0bde078777b63d82e9028acc32afa38b69"
         },
         {
           "expressionSha256": "d9f821d88321e741a1dfb575f4ce5fcf4fad1ee282e2a6115006e67a67616723"
@@ -25723,6 +25748,9 @@ export function nodeEntryInitializationReceipt(source,bytes){
  const tree=nodeEntryTree(source,bytes);
  return tree.statements.filter(statement=>!ts.isFunctionDeclaration(statement)&&!ts.isInterfaceDeclaration(statement)&&!ts.isTypeAliasDeclaration(statement)).map(statement=>{
   if(ts.isClassDeclaration(statement)){
+    // Decorators on classes, members and parameters may execute at initialization.
+    // Until their eager effects are qualified, fail closed without renewing receipts.
+    const rejectDecorators=node=>{assert(!ts.isDecorator(node),`DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED: ${source}; executable decorators require independent initialization qualification`);ts.forEachChild(node,rejectDecorators);};rejectDecorators(statement);
    const staticEffects=statement.members.filter(member=>ts.isClassStaticBlockDeclaration(member)||member.modifiers?.some(item=>item.kind===ts.SyntaxKind.StaticKeyword)&&ts.isPropertyDeclaration(member)||member.name&&ts.isComputedPropertyName(member.name)).map(member=>member.getText(tree));
    return {kind:'ClassInitialization',symbol:statement.name?.text??'<anonymous>',syntaxSha256:syntaxSha256(JSON.stringify({heritage:statement.heritageClauses?.map(item=>item.getText(tree))??[],staticEffects}))};
   }

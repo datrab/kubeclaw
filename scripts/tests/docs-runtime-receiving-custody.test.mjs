@@ -162,7 +162,7 @@ test('first-party default launch and COPY-source changes reject unchanged manife
     ]) {
       assert.notEqual(text, original);
       fs.writeFileSync(path.join(directory, recipe), text);
-      assert.throws(() => qualify(row, directory), /selected launch\/COPY\/build authority changed/u);
+      assert.throws(() => qualify(row, directory), /complete exact recipe-byte authority changed in docker\/Dockerfile\.prism-ingestion/u);
     }
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });

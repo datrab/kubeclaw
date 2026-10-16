@@ -51,7 +51,7 @@ export function shellCommandAcquisitions(source,bytes) {
  // Parse their shell span with the same finite lexer; no expansion is evaluated.
  let quote=null;
  for(let i=0;i<code.length;i++){
-  const c=code[i];if(c==='\\'){i++;continue;}if(quote==="'"){if(c===quote)quote=null;continue;}if(c==="'"){quote=c;continue;}if(c==='"'){quote=quote==='"'?null:'"';continue;}
+  const c=code[i];if(c==='\\'){i++;continue;}if(quote==="'"){if(c===quote)quote=null;continue;}if(c==="'"&&quote!=='"'){quote=c;continue;}if(c==='"'){quote=quote==='"'?null:'"';continue;}
   if(c==='#'&&!quote&&(i===0||/\s/u.test(code[i-1]))){while(i<code.length&&code[i]!=='\n')i++;continue;}
   if(c==='`'){
    const begin=i+1;let close=begin;for(;close<code.length;close++){if(code[close]==='\\'){close++;continue;}if(code[close]==='`')break;}
@@ -91,7 +91,7 @@ export function shellNativeNodeAcquisitions(source,bytes,depth=0){
  const result=[];
  for(const command of shellCommandAcquisitions(source,bytes).commands){
   const words=command.words;let index=0;
-  while(words[index]&&/^[A-Za-z_][A-Za-z0-9_]*=/u.test(words[index].value))index++;
+   while(words[index]&&(/^[A-Za-z_][A-Za-z0-9_]*=/u.test(words[index].value)||['if','then','elif','while','until','do','!','exec'].includes(words[index].value)))index++;
   if(['env','/usr/bin/env'].includes(words[index]?.value)){
    index++;while(words[index]&&/^[A-Za-z_][A-Za-z0-9_]*=/u.test(words[index].value))index++;
    if(words[index]?.value.startsWith('-')&&words.slice(index).some(word=>/(?:^|\/)node$/u.test(word.value)))fail(source,command.line,'unsupported env-wrapped Node argv authority');
