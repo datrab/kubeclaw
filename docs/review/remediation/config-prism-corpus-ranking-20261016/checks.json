@@ -1,0 +1,173 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/generate-prism-chart-config.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.69,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/generate-buster-chart-config.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.71,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/generate-prism-chart-config.mjs",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.6,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-2.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/generate-buster-chart-config.mjs",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.63,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-3.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/corpus-ranking-policy.test.mts",
+      "skills/prism/tests/corpus.test.mts",
+      "skills/prism/tests/swarm-control-policy.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 9.56,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-4.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.83,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-5.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-prism-control.py"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.57,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-6.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.14,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-7.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/prism/corpus/index.ts",
+      "skills/prism/server/control-config.ts",
+      "skills/prism/server/corpus-routes.ts",
+      "skills/prism/tests/corpus-ranking-policy.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.66,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-8.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=real Prism role package",
+      "tests/verification/reliability/pipeline-role-readback.test.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 11.91,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-9.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.23,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-10.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "skills/prism/tests/corpus-ranking-policy.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.64,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/final-rank-effects.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/buster-central-delivery.test.mjs",
+      "tests/verification/deployment/prism-image-generation.test.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 26.34,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-12.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/prism/tests/corpus-ranking-policy.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.8,
+    "log": "docs/review/remediation/config-prism-corpus-ranking-20261016/check-13.txt"
+  }
+]

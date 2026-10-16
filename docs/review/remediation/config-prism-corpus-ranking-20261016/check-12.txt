@@ -1,0 +1,16 @@
+✔ actual emitted role verifies exact installed files, both selections and native parent/child handoff (5921.095318ms)
+✔ extra/missing/mutated installed bytes and wrong parent receipt reject; restored original generation works (9855.439112ms)
+✔ real full kubeclaw chart uses exact transported parent receipt and no old source mounts/ENV (1419.082613ms)
+✔ immutable release transports exact Buster image metadata; missing/cross-commit receipt cannot be synthesized (2.292598ms)
+✔ external proof harness resolves installed role dependencies without changing installed file identity (3867.98763ms)
+✔ normal image producer installs a complete role and matching selected central generation (4617.695414ms)
+✔ normal image producer does not invent missing build or caller identity (0.430211ms)
+✔ agent image producer publishes a distinct bridge selection and installed startup without partial main closure (4405.737624ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26304.683733
