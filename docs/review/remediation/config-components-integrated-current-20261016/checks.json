@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/deployment/config-component-packaging.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-components-integrated-current-20261016/final-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.config-components.json"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-components-integrated-current-20261016/final-1.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-components-integrated-current-20261016/final-2.txt"
+  }
+]

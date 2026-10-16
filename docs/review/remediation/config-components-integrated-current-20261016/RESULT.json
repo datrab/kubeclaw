@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-16T21:19:59.225232+00:00",
+  "status": "ORIGINAL_PACKAGING_OBLIGATIONS_MIGRATED_AND_FOCUSED_VERIFIED",
+  "sourceCommit": "229dce9a7e2ada453863d033c3f2751696da7750",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-components-integrated-current-20261016",
+  "sourceSha256": "6beb45b214dfd78ad7b89b30851b328c531fedde8c516efc6e5bea511937515a",
+  "change": "Original nine packaging tests follow actual image builders, same materializer/publisher, complete seven-member author bytes, actual packaged validators and Helm topology archives. All six real owner profile mutations drive rollout on each chart; Buster stale authentic receipt rejects, actual emitted receipt accepted. Missing chart topology archive and missing image author reject; original restored boot passes. Docker multi-stage COPY omission and actual per-chart checksum omission mutants fail the unchanged assertions. Worker integer boundaries pass/fail at actual capture and pre-Helm projection. No productive setting/default changed.",
+  "checks": {
+    "packaging": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "total": 9,
+      "sourceBuilds": 2,
+      "ownerRolloutContrasts": 12,
+      "omittedChecksumMutants": 2,
+      "malformedWorkerBoundaries": 48,
+      "validWorkerBoundaries": 12
+    },
+    "strictSourceTypecheck": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "originalResultsChanged": false
+    }
+  },
+  "initialFailure": "8/9: original Buster assertion looked at lint-only checksum/swarm-config; actual runtime generation rollout uses existing checksum/pipeline-delivery. Correct receiving annotation, no chart production change.",
+  "aggregateAttempt": {
+    "command": "npm run verify:config:components",
+    "status": "INCOMPLETE_TIMEOUT_NOT_PASS",
+    "exitCode": 124,
+    "timeoutSeconds": 180,
+    "completedStudioTests": 13,
+    "ownRemainingTestTreeStopped": [
+      2521700,
+      2521708,
+      2523496,
+      2523857
+    ],
+    "explanation": "Healthy sequential Studio checks exceeded bounded command lifetime. Stopped only exact owned timed-out descendants, no shared runtime killed. Remaining aggregate suites not globally passed. Packaging migration independently completed; baseline matrix still OPEN."
+  },
+  "independentReview": "OPEN: fresh ALL_TOOLS discovery has no spawn/reviewer/native collaboration tool; active/recent CONFIG subagents0; unchanged same-surface EROFS not retried. Author tests are not independent review.",
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "qualityActivationAllowed": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "nextAction": "Genuine QB-R02 original source/build/baseline producer association, existing input ownership/reservation/accounting, sealed original bytes and provider publication; coordinated sole-root/all-profile/schema/file-set/boot+Nova receiving. Remaining original deployment fixture suites and full integrated command still require current-author migration/verification; never count subset9 as full gate. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 activation. Independent full original/history/native C0-C6 gates OPEN.",
+  "externalInfrastructure": "UNCHANGED; owner Raven. Native Docker/UID1000/writable delegated cgroup, trusted sufficient archive storage and isolated migrated real PostgreSQL database remain external required gates.",
+  "writerLock": "same shared nonblocking; released at command exit"
+}
