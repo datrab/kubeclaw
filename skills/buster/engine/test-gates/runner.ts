@@ -21,7 +21,7 @@ export type { ReportAdapterExecutor } from './specialist-report-finalization.ts'
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { type DeclaredEvidenceV1, type EvidenceRefV1, type ProducedOutputV1, type ProviderInvocationV1, type ResolvedInputV1, type ResolvedPlanNodeV1 } from "@kubeclaw/pipeline-test-gate-contract";
+import { type DeclaredEvidenceV1, type EvidenceRefV1, type AttemptResultV1, type ProviderInvocationV1, type ResolvedInputV1, type ResolvedPlanNodeV1 } from "@kubeclaw/pipeline-test-gate-contract";
 import type { TestProviderCapabilityRequest, TestProviderExecutionContext } from "@kubeclaw/plugin-sdk";
 import type { TestProviderRegistryEntry } from "@kubeclaw/plugin-foundation/registry/types";
 import { FileObservabilityAdmissionStore } from "@kubeclaw/plugin-foundation/observability/durable-delivery";
@@ -94,27 +94,27 @@ export class TestPlanRunner {
       authorityId: this.#authorityId,
       id: this.#id,
       cleanupErrors: this.#cleanupErrors,
-      executeNode: (node, outputs) => this.#executeNode(node, outputs),
+      executeNode: (node, producerAttempts) => this.#executeNode(node, producerAttempts),
       retainFixture: (node, execution) => this.#retainedFixtures.push({ node, execution }),
       cleanupFixtures: () => this.#cleanupFixtures(),
     }).run();
   }
 
   #executeNode(node: ResolvedPlanNodeV1,
-    outputs: ReadonlyMap<string, readonly ProducedOutputV1[]>): Promise<NodeExecution> {
+    producerAttempts: readonly AttemptResultV1[]): Promise<NodeExecution> {
     return executeRunnerNode({
       options: this.#options, authorityId: this.#authorityId, id: this.#id,
       executeAttempt: (next, attempt, values) => this.#executeAttempt(next, attempt, values),
-    }, node, outputs);
+    }, node, producerAttempts);
   }
 
   async #executeAttempt(
     node: ResolvedPlanNodeV1,
     attemptNumber: number,
-    outputs: ReadonlyMap<string, readonly ProducedOutputV1[]>,
+    producerAttempts: readonly AttemptResultV1[],
   ): Promise<AttemptExecution> {
     const prepared = prepareRunnerAttempt({ options: this.#options, workspaceRoot: this.#workspaceRoot, id: this.#id },
-      node, attemptNumber, outputs);
+      node, attemptNumber, producerAttempts);
     const { attemptId, attemptRepository, stagingBase, evidenceDirectory, stagedEvidenceDirectory,
       stagedErrorEvidenceDirectory, runnerEvidenceDirectory, entry, granted, preparationFault,
       missingCapability, invocation } = prepared;

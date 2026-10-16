@@ -1,4 +1,4 @@
-import type { AttemptResultV1, ProducedOutputV1, ResolvedPlanNodeV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import type { AttemptResultV1, ResolvedPlanNodeV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { AttemptExecution, NodeExecution, TestPlanRunnerOptions } from './runner-types.ts';
 import { finalNodeResult } from './runner-values.ts';
 
@@ -7,7 +7,7 @@ interface NodeOwner {
   readonly authorityId: string;
   readonly id: () => string;
   executeAttempt(node: ResolvedPlanNodeV1, attemptNumber: number,
-    outputs: ReadonlyMap<string, readonly ProducedOutputV1[]>): Promise<AttemptExecution>;
+    producerAttempts: readonly AttemptResultV1[]): Promise<AttemptExecution>;
 }
 
 function shouldRetry(execution: AttemptExecution, signal: AbortSignal | undefined,
@@ -24,12 +24,12 @@ function retainedFixture(node: ResolvedPlanNodeV1, execution: AttemptExecution):
 }
 
 export async function executeRunnerNode(owner: NodeOwner, node: ResolvedPlanNodeV1,
-  outputs: ReadonlyMap<string, readonly ProducedOutputV1[]>): Promise<NodeExecution> {
+  producerAttempts: readonly AttemptResultV1[]): Promise<NodeExecution> {
   const attempts: AttemptResultV1[] = [];
   let finalExecution: AttemptExecution | null = null;
   const maximumAttempts = node.retryCount + 1;
   for (let attemptNumber = 1; attemptNumber <= maximumAttempts; attemptNumber += 1) {
-    const execution = await owner.executeAttempt(node, attemptNumber, outputs);
+    const execution = await owner.executeAttempt(node, attemptNumber, producerAttempts);
     attempts.push(execution.result);
     finalExecution = execution;
     const retry = shouldRetry(execution, owner.options.signal, attemptNumber, maximumAttempts);

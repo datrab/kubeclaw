@@ -3,7 +3,7 @@ import { validateRetainedProviderConfiguration } from '@kubeclaw/plugin-foundati
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { validatePipelineTestGateContract, providerPolicyModeErrors, type ExecutionState, type ProducedOutputV1, type ProviderInvocationV1, type ResolvedInputV1, type ResolvedPlanNodeV1, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import { validatePipelineTestGateContract, providerPolicyModeErrors, type ExecutionState, type AttemptResultV1, type ProviderInvocationV1, type ResolvedInputV1, type ResolvedPlanNodeV1, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { TestPlanRunnerOptions } from './runner-types.ts';
 import { containedRelative } from './runner-paths.ts';
 import { providerEntry, grantedCapabilities } from './runner-worker-profile.ts';
@@ -22,18 +22,21 @@ class RunnerFault extends Error {
   }
 }
 
-function invocationInputs(
+export function invocationInputs(
   plan: ResolvedTestPlanV1,
   node: ResolvedPlanNodeV1,
-  outputs: ReadonlyMap<string, readonly ProducedOutputV1[]>,
+  producerAttempts: readonly AttemptResultV1[],
 ): ResolvedInputV1[] {
   return plan.links
     .filter((link) => link.to.nodeId === node.id)
     .sort((a, b) => compareText(a.to.input, b.to.input))
     .map((link) => {
-      const output = outputs
-        .get(link.from.nodeId)
-        ?.find((item) => item.name === link.from.output);
+      // Source the input from the actual original producer result, not the
+      // redundant NodeExecution.outputs projection. In particular, never fall
+      // back to an earlier successful attempt after a later attempt errored.
+      const producer = producerAttempts.findLast(attempt => attempt.nodeId === link.from.nodeId);
+      const output = producer?.executionState === 'completed'
+        ? producer.outputs.find(item => item.name === link.from.output) : undefined;
       if (!output)
         throw new Error(
           `TEST_PLAN_LINK_OUTPUT_MISSING:${link.from.nodeId}:${link.from.output}`,
@@ -49,7 +52,7 @@ function invocationInputs(
         return {
           name: link.to.input,
           kind: "artifact",
-          artifact: output.artifact,
+          artifact: Object.freeze({ ...output.artifact }),
         };
       throw new Error(
         `TEST_PLAN_LINK_OUTPUT_MISMATCH:${link.from.nodeId}:${link.from.output}`,
@@ -97,7 +100,7 @@ function attemptDirectories(owner: PreparationOwner, node: ResolvedPlanNodeV1, a
 }
 
 export function prepareRunnerAttempt(owner: PreparationOwner, node: ResolvedPlanNodeV1,
-  attemptNumber: number, outputs: ReadonlyMap<string, readonly ProducedOutputV1[]>) {
+  attemptNumber: number, producerAttempts: readonly AttemptResultV1[]) {
     const entry = providerEntry(owner.options.registry, node);
     validateRetainedProviderConfiguration(entry, node.configuration, node.provider, node.evidence);
     const modeErrors = providerPolicyModeErrors(node.configuration, node.mode);
@@ -115,7 +118,7 @@ export function prepareRunnerAttempt(owner: PreparationOwner, node: ResolvedPlan
     let resolvedInputs: ResolvedInputV1[] = [];
     let preparationFault: RunnerFault | null = null;
     try {
-      resolvedInputs = invocationInputs(owner.options.plan, node, outputs);
+      resolvedInputs = invocationInputs(owner.options.plan, node, producerAttempts);
     } catch (error) {
       preparationFault = new RunnerFault("errored", detail(error));
     }
