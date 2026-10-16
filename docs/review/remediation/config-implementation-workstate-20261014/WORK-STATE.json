@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T21:32:10.556535+00:00",
+  "updatedAt": "2026-10-16T21:49:02.151642+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_CONSUMER_VERIFICATION_INCOMPLETE_NOT_ACCEPTED",
+  "status": "FOUR_ORIGINAL_CONSUMER_SUITES_PASS_NOT_FULL_ACCEPTANCE",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -21138,7 +21138,7 @@
   },
   "lastCheckAt": "2026-10-16T08:40:27.660565+00:00",
   "implementationAgentRunning": false,
-  "lastObservedAt": "2026-10-16T09:29:30.006921+00:00",
+  "lastObservedAt": "2026-10-16T21:49:02.151642+00:00",
   "workerActivity": "Direct scheduled worker completed bounded production batch; no background worker",
   "writerLock": "released on bounded worker exit",
   "duplicateRecoveryQueued": false,
@@ -24090,5 +24090,63 @@
     "localNext": "Do not replay 99 unchanged green events as new progress. Remaining four original consumer suites need sufficient bounded runtime for their actual repeated role-build fixtures; retain exact files/case assertions, no early refactor. Continue genuine QB-R02 inputStore sealed original bytes/producer/build/source/baseline ownership accounting and coordinated physical generation/boot+Nova receiving; preserve BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10.",
     "writerLock": "same nonblocking lock acquired for supported final verification and checkpoint; released at command exit",
     "noHistoricalFollowup": true
+  },
+  "originalConsumerRemainingFour20261016": {
+    "startedAt": "2026-10-16T21:38:07.668981+00:00",
+    "finishedAt": "2026-10-16T21:47:50.521958+00:00",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/swarm-supervisor-config.test.mts",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+      "skills/prism/tests/swarm-worker-behavior.test.mts",
+      "skills/prism/tests/swarm-worker-config.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-prism-original-consumers-current-20261016/remaining-four.txt",
+    "sourceCommit": "cf0ae5b5fad3fbc012ea175d7a5ea623ec0aad26",
+    "qualification": "Four previously incomplete original suites only; author source-test mode, not whole-task/native/independent acceptance. No assertions changed.",
+    "writerLock": "same exclusive nonblocking lock; released on process exit",
+    "at": "2026-10-16T21:49:02.151642+00:00",
+    "status": "FOUR_ORIGINAL_CONSUMER_SUITES_PASS_NOT_FULL_ACCEPTANCE",
+    "counts": {
+      "passed": 162,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "total": 162
+    },
+    "sourceHashes": {
+      "skills/prism/tests/swarm-supervisor-config.test.mts": "a6a6b9779822afeef69e14c7e0ada78c1a822dbcbbd00bcf4f9ad3244930fa9e",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts": "454762e9d438372a1187d4ea554513cf111fabd013b3052ad5a90b370e3acb86",
+      "skills/prism/tests/swarm-worker-behavior.test.mts": "bd06f0ce917c70812b68e894e4ba5b148a4b3daa9d95cbd1172aaf72fe7aa839",
+      "skills/prism/tests/swarm-worker-config.test.mts": "0f08cb0fa71e204c57c6fa022f01f90eb46a1303b40625653251a67ff2b3731e"
+    },
+    "logSha256": "18a6d465be1bfcd57ea40a391837933e322c843102292d9579c102c1b0a53117",
+    "independentReview": "OPEN; fresh tool discovery exposes no native spawn/review tool; no independent execution. Existing unchanged same-surface EROFS not retried.",
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "qualityActivationAllowed": false,
+    "fullC0C6Complete": false,
+    "originalCasesNewlyAccepted": 0,
+    "noHistoricalFollowup": true,
+    "originalRoster": {
+      "counts": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "preserved": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "integrityFailures": 0,
+      "unknownFieldIds": 0,
+      "unknownRequirementIds": 0,
+      "missingTargetLocatorCount": 45,
+      "fullAcceptance": "OPEN"
+    }
   }
 }
