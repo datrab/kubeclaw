@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-16T19:17:55.757449+00:00",
+  "sourceCommit": "73fb1310f577a47e35372c47ba5703e30363425d",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-quality-producer-snapshot-20261016",
+  "implemented": "Actual FileEvidenceStore.store and stageEvidenceFiles now read original producer bytes via one bounded held descriptor, original remaining-byte cap and cancellation before/after each chunk, exact EOF probe, nanosecond before/after inode/version observations, and post-close cancellation before write. No unbounded readFile after stat; changed/truncated/growing producer output cannot be retained as a coherent source copy. Existing staging aggregate cap, wx output and digest/size use remain unchanged.",
+  "scopeQualification": "A bounded original producer-output copy, NOT an authenticated QB-R02 inputStore sealed receiver or source/producer association. No new inputStore author, reservation/ledger, receipt-shaped authority, operator setting, task field or v10 activation.",
+  "checks": {
+    "focusedAndOriginalDeadline": {
+      "passed": 23,
+      "total": 23,
+      "failed": 0,
+      "skipped": 0,
+      "newProducerSnapshotTests": 13
+    },
+    "directCommandOutputContract": true,
+    "strictSourceAndRegressionTypecheck": true,
+    "wholeOriginalPlanRunner": {
+      "exitCode": 0,
+      "elapsedSeconds": 98.94,
+      "oracleChanged": false,
+      "nativeAcceptance": false
+    },
+    "actualBusterRoleBuildByteReadbackImport": true
+  },
+  "receivingConstraint": {
+    "observed": "Repository TypeScript callers provide ArtifactRefV1 via invocationInputs from ProducedOutputV1. Existing FileEvidenceStore publishes digest/size/storageUrl only; no authenticated original producerRunId/producerModuleId/sourceRevision/buildDigest/input receipt/storeVersion or original source accounting/publication API is supplied by that boundary.",
+    "required": "Implement source association from actual original producer/result/prepared-source and existing store ownership/accounting before wiring sealed-byte consumption and publication validity. Never derive authentication from named task/IPC fields, arbitrary artifact label or baseline.sourceDigest. The defined QB-R02 contract is present; no missing design approval is asserted.",
+    "activationFence": "BUDGET_SOURCE_RECEIPT_REQUIRED remains unchanged in runner/loader/session. No executable v2 Quality path enabled."
+  },
+  "independentReview": "OPEN: native spawn/review tool absent; recorded same-surface app-server EROFS unchanged and not retried. No new reviewer output.",
+  "sealedInputStoreImplemented": false,
+  "productiveBootImplemented": false,
+  "activationAllowed": false,
+  "originalCasesNewlyAccepted": 0,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allSemanticObligationsAccepted": false
+  },
+  "fullC0C6Complete": false,
+  "remaining": [
+    "Authenticated coordinated sole-root boot/delivery and actual Nova receiving without denied-v10 promotion",
+    "QB-R02 real producer/build/source/baseline association, original store reservation/accounting, sealed byte consumption and prepublication fence",
+    "Fresh independent complete-source and original integrated semantic/history/native/archive C0-C6 gates"
+  ],
+  "externalInfrastructure": "Unchanged; owner Raven; isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large genuinely root-trusted writable archive filesystem; resume when supplied.",
+  "writerLock": "same nonblocking lock for edits/checks/commits; released at each bounded command exit"
+}

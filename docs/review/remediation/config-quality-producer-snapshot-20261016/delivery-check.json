@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-16T19:17:16.624547+00:00",
+  "sourceCommit": "73fb1310f577a47e35372c47ba5703e30363425d",
+  "sourceRemoteVerified": true,
+  "bundle": "/home/node/.openclaw/workspace/tmp/config-quality-producer-snapshot-buster-73fb1310f5",
+  "roleBuildExitCode": 0,
+  "sourceBytesEqual": true,
+  "sourceSha256": "2eca049eacba6691a6c4c4071859d46d2250f5060d47255dfa095d85d8e4db68",
+  "actualImportExitCode": 0,
+  "emittedPath": "skills/packages/buster-engine/test-gates/artifacts.ts",
+  "initialVerifierFailure": "Readback first used non-emitted skills/buster/engine path and failed FileNotFoundError after successful role build. Corrected readback to actual builder-emitted buster-engine package path; same built artifact verified, no rebuild or fixture change."
+}
