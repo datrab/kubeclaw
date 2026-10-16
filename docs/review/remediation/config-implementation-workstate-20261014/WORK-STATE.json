@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T20:35:39.978444+00:00",
+  "updatedAt": "2026-10-16T20:39:34.904835+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_COMPONENT_AND_SELECTION_FIXTURES_MIGRATED_QB_R02_BOOT_OPEN",
+  "status": "ORIGINAL_GENERATION_RACES_MIGRATED_QB_R02_BOOT_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Genuine QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and coordinated sole-root/all-profile/schema/file-set/Nova receiving; optional design-provider timeout remains exact source residual. Independent full original/history/native/C0-C6 gates OPEN.",
+  "nextAction": "Genuine QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root boot/Nova receiving. Required independent full original/history/native/C0-C6 gates OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -23767,5 +23767,34 @@
     "writerLock": "same nonblocking repository lock; released on command exit",
     "sourceCommit": "22743c03580ca47e57e6627c59112405c829a646",
     "sourceRemoteVerified": true
+  },
+  "generationRaceFixture20261016": {
+    "at": "2026-10-16T20:39:34.904835+00:00",
+    "sourceCommit": "f20fd98192d725281f21fe658173d459c70b13f5",
+    "sourceRemoteVerified": true,
+    "change": "Original generation-race fixture now reads actual complete selected authors via captureSwarmSettings. Physical old capture survives unrelated delivery alias switch; explicit new capture observes new studio port. Original component deletion and already-read-byte mutation controls retained. Real packaged boot transport now tests mid-read atomic-writer alias switch fails closed, subsequent selected wrong receipt denies, restored genuine receipt succeeds. No production trust/codec behavior changed.",
+    "checks": {
+      "integratedPassed": 34,
+      "integratedTotal": 34,
+      "failed": 0,
+      "skipped": 0,
+      "originalRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "integrityFailures": 0
+      },
+      "diffCheck": true
+    },
+    "initialFailure": "New boot race initially expected old capture success; genuine retained mount/alias observation rejects PIPELINE_PACKAGE_CHANGED. Corrected test to actual mandated fail-closed receipt contract, not production. New stale generation receipt denies PIPELINE_IMAGE_RECEIPT_INVALID before final generation check. Initial12/13 log preserved.",
+    "independentReview": "OPEN: discovery exposes no native spawn/review tool; active/recent CONFIG subagents0. Existing unchanged same-surface EROFS not retried. No independent acceptance claimed.",
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualitySealedInputStoreImplemented": false,
+    "qualityProductiveBootImplemented": false,
+    "qualityActivationAllowed": false,
+    "nextAction": "Genuine QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root boot/Nova receiving. Required independent full original/history/native/C0-C6 gates OPEN.",
+    "externalInfrastructure": "UNCHANGED owner Raven: isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large genuinely root-trusted writable archive filesystem; resume when supplied.",
+    "writerLock": "same nonblocking repository lock; released at bounded command exit"
   }
 }
