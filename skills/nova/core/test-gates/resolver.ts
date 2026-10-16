@@ -551,6 +551,13 @@ function expandNodes(input: ResolveTestPlanInput, drafts: readonly DraftNode[]):
     if (draft.kind === 'fixture' && draft.declaration.mode !== undefined) fail('TEST_PLAN_MODE_INVALID', draft.id);
     if (draft.kind === 'fixture' && draft.declaration.review !== undefined) fail('TEST_PLAN_REVIEW_INVALID', draft.id);
     const selectedPolicy = input.selectedProviderPolicies?.get(provider.registration.contractId);
+    // An explicit generation selection must never reopen the old task-policy
+    // author for a missing Quality member. Absence of the entire map alone
+    // identifies the historical v1 calling convention.
+    if (input.selectedProviderPolicies !== undefined && selectedPolicy === undefined
+      && ['kubeclaw.size-budget@1', 'kubeclaw.coverage-budget@1'].includes(provider.registration.contractId)) {
+      fail('TEST_PLAN_SELECTED_POLICY_MISSING', `${draft.id}:${provider.registration.contractId}`);
+    }
     const effectiveProvider = selectedPolicy ? { ...provider, registration: { ...provider.registration,
       retrySafe: provider.registration.retrySafe && selectedPolicy.declarations.retrySafe,
       matrixFields: provider.registration.matrixFields.filter(field => selectedPolicy.declarations.matrixFields.includes(field)),

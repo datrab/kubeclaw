@@ -30,11 +30,11 @@ function ref(name='coverage'){const registration=registry.testProviderContracts.
 const exampleRoot=path.join(root,'contracts/pipeline-test-gate/v1');
 const suites=fs.readdirSync(path.join(exampleRoot,'suites')).filter(x=>x.endsWith('.json')).map(x=>JSON.parse(fs.readFileSync(path.join(exampleRoot,'suites',x),'utf8')));
 const limits={cpuMillis:900000,memoryBytes:4294967296,logBytes:16777216,artifactBytes:268435456,artifactFiles:256,processes:64};
-function plan(policy:any,change?:(declaration:any)=>void,name='coverage'):any {
+function plan(policy:any,change?:(declaration:any)=>void,name='coverage',policies:ReadonlyMap<string,any>|null=new Map([[`kubeclaw.${name}-budget@1`,policy]])):any {
  const declaration=JSON.parse(fs.readFileSync(path.join(exampleRoot,'examples',name==='coverage'?'unit-suite-with-coverage.json':'size-budget-tar.json'),'utf8'));
  const node=name==='coverage'?declaration.suites.unit.add.coverage:declaration.suites['size-budget'].add['web-assets'];node.config={};node.mode='blocking';
  change?.(declaration);
- return resolveTestPlan({planId:'plan:quality',runId:'run:quality',project:'quality',scope:{moduleId:'module',gateId:null},createdAt:'2026-10-16T18:00:00Z',declaration,suiteTemplates:suites,registry,facts:{changedPaths:[],moduleType:null,pipelineStage:null},selectedProviderPolicies:new Map([[`kubeclaw.${name}-budget@1`,policy]]),policy:{defaultTimeoutMs:30000,maximumTimeoutMs:900000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:3,maximumMatrixSize:16,maximumNodes:100,defaultConcurrencyLimit:4,maximumConcurrencyLimits:{unit:8,'size-budget':8}}});
+ return resolveTestPlan({planId:'plan:quality',runId:'run:quality',project:'quality',scope:{moduleId:'module',gateId:null},createdAt:'2026-10-16T18:00:00Z',declaration,suiteTemplates:suites,registry,facts:{changedPaths:[],moduleType:null,pipelineStage:null},...(policies===null?{}:{selectedProviderPolicies:policies}),policy:{defaultTimeoutMs:30000,maximumTimeoutMs:900000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:3,maximumMatrixSize:16,maximumNodes:100,defaultConcurrencyLimit:4,maximumConcurrencyLimits:{unit:8,'size-budget':8}}});
 }
 const qualityNode=(p:any,name='coverage')=>p.nodes.find((n:any)=>n.provider.contractId===`kubeclaw.${name}-budget@1`);
 
@@ -147,4 +147,18 @@ test('restored advisory-only Size policy cannot become blocking before repositor
  const restored=JSON.parse(JSON.stringify(advisory));const node=qualityNode(restored,'size');node.mode='blocking';
  assert.throws(()=>validatePipelineTestGateContract('resolvedTestPlan',restored),/blocking-size-limit-required/);
  assert.throws(()=>prepareRunnerAttempt({options:{registry},workspaceRoot:'/must-not-create',id:()=>{throw new Error('ATTEMPT_EFFECT');}} as any,node,1,new Map()),/blocking-size-limit-required/);
+});
+
+for(const name of ['coverage','size'])test(`${name}: explicit selected map cannot fall back to legacy task policy when original selection is missing`,()=>{
+ const selected=selection(name);
+ const legacy=(declaration:any)=>{const node=name==='coverage'?declaration.suites.unit.add.coverage:declaration.suites['size-budget'].add['web-assets'];node.config=name==='coverage'?{minimumLinePercent:50}:{maximumTotalBytes:100};};
+ // Genuine old callers with NO selected-generation map keep their original v1 ABI.
+ const original=plan(selected,legacy,name,null);assert.equal(qualityNode(original,name).configuration.schemaVersion,'provider-configuration.v1');
+ const retained=JSON.parse(JSON.stringify(original));validatePipelineTestGateContract('resolvedTestPlan',retained);
+ for(const map of [new Map(),new Map([[`kubeclaw.${name==='coverage'?'size':'coverage'}-budget@1`,selection(name==='coverage'?'size':'coverage')]])]){
+  assert.throws(()=>plan(selected,legacy,name,map),/TEST_PLAN_SELECTED_POLICY_MISSING/);
+  assert.throws(()=>plan(selected,d=>{const node=name==='coverage'?d.suites.unit.add.coverage:d.suites['size-budget'].add['web-assets'];node.mode='advisory';},name,map),/TEST_PLAN_SELECTED_POLICY_MISSING/);
+ }
+ assert.equal(qualityNode(plan(selected,undefined,name),name).configuration.schemaVersion,'provider-configuration.v2');
+ assert.equal(qualityNode(retained,name).configuration.schemaVersion,'provider-configuration.v1');
 });
