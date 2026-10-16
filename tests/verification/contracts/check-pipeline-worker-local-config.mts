@@ -17,8 +17,9 @@ import {
 import { TestPlanRunner, type TestPlanRunnerOptions } from '../../../skills/buster/engine/test-gates/runner.ts';
 import { BusterRemotePlanService, type BusterRemotePlanServiceOptions } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
 import { loadProductionBusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
-import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { captureSwarmSettings, type BusterSettings, type WorkerCoreSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { declaredPipelineServices } from '../../../scripts/updates/pipeline-generation.mjs';
+import { readTestPipeline, writeTestPipeline } from '../../fixtures/config/pipeline-components.mjs';
 import {
   resolvedTestPlanDigest,
   stableTestIdentity,
@@ -132,11 +133,29 @@ export function provider() {
   // Provider loading/execution is real; only native preparation ownership is modeled.
   for (const replayLimit of [1, 2]) {
     const profileRoot = path.join(temporary, `replay-${replayLimit}`);
-    const entryFile = path.join(profileRoot, 'bundle', 'swarm.config.json');
-    const documents = readTestBundle(canonicalSwarmEntry);
-    documents['worker-core'].settings.localRuntime.replayLimit = replayLimit;
-    writeTestBundle(entryFile, documents);
-    const snapshot = loadSwarmSettings({ SWARM_CONFIG: entryFile });
+    const entryFile = path.join(profileRoot, 'bundle', 'pipeline.config.json');
+    const documents = readTestPipeline();
+    // Change complete actual authored profiles; no projected legacy facade or
+    // synthetic boot receipt feeds the original service/runner boundaries.
+    for (const profile of Object.values(documents['worker-core'].profiles) as Array<{ settings: { localRuntime: { replayLimit: number } } }>) {
+      profile.settings.localRuntime.replayLimit = replayLimit;
+    }
+    writeTestPipeline(entryFile, documents);
+    const selection = declaredPipelineServices(path.dirname(entryFile),
+      { role: 'buster', namespace: 'kubeclaw', releaseName: 'agent-buster' })
+      .find(service => service.callerId === 'buster-runtime');
+    assert.ok(selection, 'actual Buster runtime caller required');
+    const capture = captureSwarmSettings(entryFile, selection);
+    const buster = capture.components['buster-engine'];
+    const worker = capture.components['worker-core'];
+    assert.ok(buster && worker, 'both consumed owners required');
+    const authored = buster.settings as unknown as BusterSettings;
+    const snapshot = {
+      buster: { ...authored, clusterInvokers: { ...authored.clusterInvokers,
+        shared: { ...authored.clusterInvokers.shared,
+          kubectlExecutable: path.resolve(capture.identity.generationDirectory, authored.clusterInvokers.shared.kubectlExecutable) } } },
+      workerCore: worker.settings as unknown as WorkerCoreSettings,
+    };
     assert.equal(snapshot.workerCore.localRuntime.replayLimit, replayLimit);
     const platformConfig = path.join(profileRoot, 'platform.json');
     fs.writeFileSync(platformConfig, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION,
