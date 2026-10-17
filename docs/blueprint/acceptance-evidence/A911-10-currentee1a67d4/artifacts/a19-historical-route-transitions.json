@@ -1,0 +1,364 @@
+{
+  "method": "Complete first-parent committed map-changing history, not proof of actual external deployment. Pre-registry routes remain unknown.",
+  "snapshots": [
+    {
+      "revision": "2cf11eafeca6b12f6e5ecc1395150c570ce49379",
+      "mapSHA256": "7c40561b94ab49ecf0fe8c3422dab1e729974e53fec63667b500a4f8699ec288",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 100,
+      "changes": []
+    },
+    {
+      "revision": "0b2c5f98d6d6f537aa489685df346f250346b40b",
+      "mapSHA256": "6a06fff94c302d3e38c48d04b2dbb509c38ddef238aa57e392aa68915cab326c",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 103,
+      "changes": []
+    },
+    {
+      "revision": "9f280fed0e56fa4bf73fec40b183d02e87c2f208",
+      "mapSHA256": "b9181175d555159adb9b5e71da6cffa2ff9f2f408e97538dc2e3325930dda576",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 108,
+      "changes": []
+    },
+    {
+      "revision": "d5eab38a9ed67432773dcbe69bd291faa805f9d3",
+      "mapSHA256": "5b05fe4eb4da7e1a14c28285fe61365dc308f70a5bd919ae1cdce98fddb93857",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 113,
+      "changes": []
+    },
+    {
+      "revision": "0cb37dc94fe88a88fc106a88e0f233d7e943d48c",
+      "mapSHA256": "2411e6f32799c97a13543464cee75b5d89b1ea9bede3f8a29c29bb2460aad7f9",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 114,
+      "changes": []
+    },
+    {
+      "revision": "7de8e026a429086e2c8efdf4ed8913d6709e86bc",
+      "mapSHA256": "f69ea4a3a6d1b02af51b8c3654ff92142f93eab1754f276ad8f91c8f5cf26ce0",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 115,
+      "changes": []
+    },
+    {
+      "revision": "d7ab0888aa10a634e5b29503067891f9cd746a9a",
+      "mapSHA256": "fb64da71112f3688355239e145b506bbaecaf82b2cb228d9d9b602b83d0f45c1",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 116,
+      "changes": []
+    },
+    {
+      "revision": "3294df547e5c5cdfebd4812d38ce93214cc5ffa7",
+      "mapSHA256": "d31093298e3ba930408aaed27e8105d759257a6716eff1e48e2e0eada28325a4",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 116,
+      "changes": []
+    },
+    {
+      "revision": "cab5569c972d5596d27aab34d80f2cf11a114746",
+      "mapSHA256": "879ef40dfcd642df0d7f1ae65838b7264690d8b0568e4048f3661059102e96e2",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 128,
+      "changes": []
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "mapSHA256": "b4c60f12ffc08c2f009eda3a8421f642e8cf1f8b969a1b924658b7fb2db01574",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 130,
+      "changes": []
+    },
+    {
+      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "mapSHA256": "eb1b09a6b8376ff9cb4dde528e87f0949ff343974fd88079d71452c40c4e39d0",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 130,
+      "changes": []
+    },
+    {
+      "revision": "46d2142042fcbc534a5e5083adc3651e49408f35",
+      "mapSHA256": "c6a2de2a75fb46005005f1823dcc5e1b2477bd5b24570c86a47842364ef68fad",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 130,
+      "changes": []
+    },
+    {
+      "revision": "0cd36a240a25b08eeb780ffcee9e8d334b5a0521",
+      "mapSHA256": "71c6f363b54e9c6d59814a3f6baa21ac5d565f56fea3f5203de423e97e6c6d1a",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 131,
+      "changes": []
+    },
+    {
+      "revision": "1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de",
+      "mapSHA256": "63ad4ed3668c597b55aafe58ca7b1fe6f7313edd44bb1829b05353f207c5469f",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 131,
+      "changes": [
+        {
+          "kind": "changed-owner",
+          "route": "/reference/platform-surfaces-generated/",
+          "from": "documentation automation",
+          "to": "platform maintainers"
+        }
+      ]
+    },
+    {
+      "revision": "454099bd71f0c98ebdd748a6b98a3b2e8870ed87",
+      "mapSHA256": "90e3fea0ff4e3c3634bc65af1a36df16cb6057a96cde5a4abcab3a95afc96c84",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": [
+        {
+          "kind": "changed-owner",
+          "route": "/use/worker-trust/",
+          "from": "platform operations",
+          "to": "platform operations and workload-identity owner"
+        }
+      ]
+    },
+    {
+      "revision": "621c1d53cb10ebdb351f8789b0266efb60c2f9d1",
+      "mapSHA256": "a35fc3f3a7c04b73280a28d7cfa5fe6ed8a94e3b56dac1403281d50abac0fd97",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "0ddc111cc70b5b9088d4f50c99c7781dbabf4ec2",
+      "mapSHA256": "03401e600f1eb965f2c721122f78ac2725149c1d8b357a97663f7479d59633ec",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "04cb9a55f8a68219686049b95613ac87ecda9e58",
+      "mapSHA256": "abeb1f269f40590d2f4cc95db2cc2a595290046f210d5ac4fc8fef8339186810",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "a3fff00b0260340bafd3df2af6814cf3c95934a3",
+      "mapSHA256": "532a460d4f32a122da2e63a0f4be43ceb96a507c0ff27d98823b4afa9c0258c0",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "83d9dcf4611511e2e0603bb20fcfac45a8e089f8",
+      "mapSHA256": "e3a8364d658bf5c566b937f100605075603f41e5f562e78dd4d30401d35ea1ea",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "a2514fd06847566e690df201ea0256b4e77ab919",
+      "mapSHA256": "0ba369ec7bdb0dd0eeb0ed951126000a39d771aac36360111dbcdbceec443989",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "c255db50abed6a0315afff3de476e2236a27703d",
+      "mapSHA256": "e666e9dc3f73cfddccefb0bab2acdf28c6ad2eb913d8501f6662f6db7300c707",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "74afa71d47e89401448d9567f10e3abfcde2efff",
+      "mapSHA256": "c6bcefd5bd4398b88f476efe106d71c615ac60c5524f0bda1ac72299a3c0a79c",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "87781bd2fa32447221b9fbbd1bf355cd85b14fe9",
+      "mapSHA256": "5964a67961a375ff463dc91970042637c570ccff3d7de4f065e924d7cdb21e79",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "441aa81bc7b858f1e2cd811d6e5d0bad9a7106bc",
+      "mapSHA256": "b97255e54f9f6d9c38fd8b900712f08b7420dd30b0ba67f22b1e610ebf7902e6",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "3bf2a6d43c0a112a88cb731adea891c62f20c5ad",
+      "mapSHA256": "f196a348ce5374970d0cef92ed64e5efe32f9b8c98a17b5ca942e8c356942fac",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "ef14b4239925502204e8db1ff2a1c14ff48cb8c4",
+      "mapSHA256": "42864b2963a2e25761b39ed160192d4e986302f2ee0023f8a3fcdc922a1209ac",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "1b6b1d9beb47268aed96a453f92f706e17aaface",
+      "mapSHA256": "a8064f45f4b53c5c8c9efb568be88c9a101dc16210a2a12cdb5546e747f1d6e8",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "903118d012604334b81eeaef30557c41032edb57",
+      "mapSHA256": "0549e9c7f5f401ab307627bd35859f7370bfda817da656054c7be71e8e952051",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "c78747075a27dcedf577c2f89d699e21891dbe0e",
+      "mapSHA256": "e98898347094dd9a63f078d0f4c7e34ddc8765bf18307131d4100e126f08f9bb",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+      "mapSHA256": "8abe6826f446eee44d437f44ded8df1233aad2c1f715bc510c9d3a9f5d5fa879",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "8e53c7e7a7e1dd1862899392694c4c75e9fdc5db",
+      "mapSHA256": "2ee3e4e6c9fe3a069725ea53aa7c409b04724fcdde2cafbbbb5b7d5006d3106d",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "00705ed30c40649267ce5ef4a06c714ae16cbc76",
+      "mapSHA256": "ae57d127d25a4171c3e13a5c45764e2e0467ab0545bbc32973028cf63e2cf78d",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "c8987b18b450bc27571d5037cb6ce3fb26e0cbd0",
+      "mapSHA256": "b23fd5d7b7f92ddeab23142f3fa64f17cbaf72770c2b7d6950715514d4df0974",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "mapSHA256": "92dff878bb9840f3aa44ab9280d97283ab0ae0fafbabfccbf8826e03aae4e5d7",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "mapSHA256": "a3c2be03bdc54063d0f85840b9e52757e4eb37f181158f15cd53b4f901b7f56b",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
+      "mapSHA256": "0878927ee61a4efaf1575a42056db805355dce50f0d3cc50c0e62f10d6498b16",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 147,
+      "changes": []
+    },
+    {
+      "revision": "98254187269e58734fdcdcd19ff7d0c5d5af37ef",
+      "mapSHA256": "12aa66cd79f125a8ff1e483a0982ff6b7cac6c42baae71d2cab33c52e68e6091",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 152,
+      "changes": []
+    },
+    {
+      "revision": "5de04728653e7b4c350850e5fbeb6218b25ba5c3",
+      "mapSHA256": "8d2170cdfbad04bac797bfa8cad73aabac01e639401ef67c880d99ba9be1ab00",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 155,
+      "changes": []
+    },
+    {
+      "revision": "d4c0a624d737bd212cb8611fa7b8f7510143b567",
+      "mapSHA256": "8c60795d8df2fb646d79cd6e50de24f455efad31911fae7ab165931e433366f6",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 166,
+      "changes": []
+    },
+    {
+      "revision": "3354d2d1e641e8332326d0a1641f459b2d494c62",
+      "mapSHA256": "b7d02ee21604ca1c0abd8a52dfea3b4f8a517e492dbfb5bf95f6702d4bbf5a00",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 166,
+      "changes": []
+    },
+    {
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "mapSHA256": "b1cb93f01751080c9f34672a20117698b974f3430a24e41b6102f47fd18377ac",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 166,
+      "changes": [
+        {
+          "kind": "changed-owner",
+          "route": "/reference/sdk/",
+          "from": "documentation automation",
+          "to": "SDK maintainers (plugin-foundation)"
+        }
+      ]
+    },
+    {
+      "revision": "5b307298d506b463f3b1f46c08c5527164030755",
+      "mapSHA256": "d71a48aaa124f62b48f24eb6dbdeb64ae3692217e2ac4870661f3587fa6a6456",
+      "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "pageCount": 166,
+      "changes": [
+        {
+          "kind": "changed-owner",
+          "route": "/reference/sdk/",
+          "from": "SDK maintainers (plugin-foundation)",
+          "to": "documentation automation"
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "revision": "1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de",
+      "kind": "changed-owner",
+      "route": "/reference/platform-surfaces-generated/",
+      "from": "documentation automation",
+      "to": "platform maintainers"
+    },
+    {
+      "revision": "454099bd71f0c98ebdd748a6b98a3b2e8870ed87",
+      "kind": "changed-owner",
+      "route": "/use/worker-trust/",
+      "from": "platform operations",
+      "to": "platform operations and workload-identity owner"
+    },
+    {
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "kind": "changed-owner",
+      "route": "/reference/sdk/",
+      "from": "documentation automation",
+      "to": "SDK maintainers (plugin-foundation)"
+    },
+    {
+      "revision": "5b307298d506b463f3b1f46c08c5527164030755",
+      "kind": "changed-owner",
+      "route": "/reference/sdk/",
+      "from": "SDK maintainers (plugin-foundation)",
+      "to": "documentation automation"
+    }
+  ]
+}

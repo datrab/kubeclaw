@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects found in the four-file correction. The generator validates the commit type and exact consumed manifest/schema contents before writing, while preserving the existing no-argument caller through the stored revision. The supplied derivation supports the narrowly updated authority digest, and the bounded evidence supports source mismatch rejection and removal/rename rendering. This conclusion does not establish formal acceptance or resolve the documented pre-existing map drift. No code or tests were executed during this review.",
+  "overall_confidence": 0.88
+}

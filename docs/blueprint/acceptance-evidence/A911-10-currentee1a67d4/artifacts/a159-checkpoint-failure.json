@@ -1,0 +1,5 @@
+{
+  "failure": "git diff --cached --check rejected generated maintenance line597 trailing space; no commit or push occurred.",
+  "materialRecovery": "Remove only final ASCII space from generator maintenance string and generated markdown line; rerun affected current output equality and exact selected authority fact computation, then review coherent corrected package. Original15mutation receipt reused only with explicit one-character whitespace-only impact, not renamed current-bytePASS.",
+  "sourceResult": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-result.json"
+}

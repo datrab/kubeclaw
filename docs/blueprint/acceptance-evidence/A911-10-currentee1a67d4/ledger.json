@@ -1,0 +1,2254 @@
+{
+  "schemaVersion": "kubeclaw-ap09-evidence.v2",
+  "bundle_scope": "Individual complete A911-10 PASS only; five exact requirement facets; NOT final all261/all89 evidence ledger.",
+  "reviewed_revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+  "fixture_sha256": "bb5114fd19697495854dcb58f36cd9ee579fe3c146293f2895152bbb94797552",
+  "artifacts": [
+    {
+      "id": "current-source-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/current-source-review-source-review.json",
+      "bytes": 1819,
+      "sha256": "bfc6ed338c13dbdeda244089a2e3a05965d781a5294f8379e05cba6a67ea00fb",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/source-review.json"
+    },
+    {
+      "id": "a2",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a2-source-engine-raw-tool-log.json",
+      "bytes": 3933,
+      "sha256": "868fb8b365708771cad9d52a70ec9c54ab545d7705730566a55b2bafbb0f0e81",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/source-engine-raw-tool-log.json"
+    },
+    {
+      "id": "a3",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a3-source-prompt.md.raw",
+      "bytes": 288081,
+      "sha256": "d8b62da5527414967aecd9bd2b695beb892e8666ce35fac6c1ea2caba84b45f9",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/source-prompt.md"
+    },
+    {
+      "id": "current-reader-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/current-reader-review-reader-review.json",
+      "bytes": 1844,
+      "sha256": "f675ee08c2d123bbb2775ac2900adaa72900c30bf3749821c1ecd91016053385",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/reader-review.json"
+    },
+    {
+      "id": "a5",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a5-reader-engine-raw-tool-log.json",
+      "bytes": 3979,
+      "sha256": "7647f57f160d23d8a8ba3a3f7de1e76ddb472c4a4b1cc6a6c3ada4d4242b7773",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/reader-engine-raw-tool-log.json"
+    },
+    {
+      "id": "a6",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a6-reader-prompt.md.raw",
+      "bytes": 291673,
+      "sha256": "917bfcb3eb5d0284340cf9b42a6d3147e8ceec6a33d61629297f18616f4bea07",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/reader-prompt.md"
+    },
+    {
+      "id": "current-quality-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/current-quality-review-quality-review.json",
+      "bytes": 2055,
+      "sha256": "b851a1eb439d9da40415ba02130cab5816fc273ae6e2a23613a7db5a4be6265c",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/quality-review.json"
+    },
+    {
+      "id": "a8",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a8-quality-engine-raw-tool-log.json",
+      "bytes": 4409,
+      "sha256": "8fa4287fd15681e55fa567c7a13a4cadadeeb5e63338d2c046b170984f317022",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/quality-engine-raw-tool-log.json"
+    },
+    {
+      "id": "a9",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a9-quality-prompt.md.raw",
+      "bytes": 291732,
+      "sha256": "21fa5baa2fc220f453d0b24bdca66593fb9baf1fdb7b8d917b89a96a68ed6398",
+      "evidence_class": "review",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/quality-prompt.md"
+    },
+    {
+      "id": "a10",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a10-actual-link-transition-result.json",
+      "bytes": 17578,
+      "sha256": "beb32714cd7b4a60987c35f2d63fbbaa98ce70f844c45bb3b83131b774476e4a",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/actual-link-transition-result.json"
+    },
+    {
+      "id": "a11",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a11-applicability-and-baseline-verification.json",
+      "bytes": 3861,
+      "sha256": "1608e400b26430f46cf1a85111ab04ebfbbc25c403070687de2a0dcd0363339e",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/applicability-and-baseline-verification.json"
+    },
+    {
+      "id": "a12",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a12-audit.py.raw",
+      "bytes": 5078,
+      "sha256": "fcf6f7e1ef10df34ed7036f98046cf57f81751cd901002e22718c8d7636bba11",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/audit.py"
+    },
+    {
+      "id": "a13",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a13-close-run.py.raw",
+      "bytes": 10882,
+      "sha256": "2d4a0a2ab198f9a760147a4d8b72a809ddf8d5ff45d034fb82654a955000a0a8",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/close-run.py"
+    },
+    {
+      "id": "a14",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a14-continuation-next-task.json",
+      "bytes": 2342,
+      "sha256": "c622ea4544ebeefce33b4cd1bbab80eaadbc05658ed89cbff7db68fc6f46cd7a",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/continuation-next-task.json"
+    },
+    {
+      "id": "a15",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a15-continuation-result.json",
+      "bytes": 3061,
+      "sha256": "4e4c91e06c919a986c5aefcab71f627116b5429b4d68514a1875054728fadfdf",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/continuation-result.json"
+    },
+    {
+      "id": "a16",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a16-current-route-census.json",
+      "bytes": 88400,
+      "sha256": "e09dc090e773d1f67e4df7b1092d66229f908a0b31adfa2c3d4716219d3a86d0",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/current-route-census.json"
+    },
+    {
+      "id": "a17",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a17-current-source-impact.json",
+      "bytes": 1993,
+      "sha256": "30d78f4bdbc32aec6b2e74ccd8a85507213f598ff2f20bab7ac3ec9eb2938aba",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/current-source-impact.json"
+    },
+    {
+      "id": "a18",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a18-fresh-canonical-census.json",
+      "bytes": 1024,
+      "sha256": "6d0f05183eb13a3f2f773d464d995d1b6294afb7c7b7752f7143eb3b7c82f3a7",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/fresh-canonical-census.json"
+    },
+    {
+      "id": "a19",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a19-historical-route-transitions.json",
+      "bytes": 14773,
+      "sha256": "315c65a9ede5d5f1f16192a39e899d162f24c3dba2c4379d5fb46bca3d9c65f1",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/historical-route-transitions.json"
+    },
+    {
+      "id": "a20",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a20-links-baseline.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-baseline.stderr"
+    },
+    {
+      "id": "a21",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a21-links-baseline.stdout.raw",
+      "bytes": 108,
+      "sha256": "78b22c0f4726335dea536c5fa249ffc4b2d5538c464d47a5fa6ef53ed8153266",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-baseline.stdout"
+    },
+    {
+      "id": "a22",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a22-links-removal-migrated-disposition.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-removal-migrated-disposition.stderr"
+    },
+    {
+      "id": "a23",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a23-links-removal-migrated-disposition.stdout.raw",
+      "bytes": 108,
+      "sha256": "78b22c0f4726335dea536c5fa249ffc4b2d5538c464d47a5fa6ef53ed8153266",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-removal-migrated-disposition.stdout"
+    },
+    {
+      "id": "a24",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a24-links-removal-stale-reference.stderr.raw",
+      "bytes": 314,
+      "sha256": "b963453edfc26907b4f9bbc02a011e0a4733fe9fd91e4bc0acdf14594550e421",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-removal-stale-reference.stderr"
+    },
+    {
+      "id": "a25",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a25-links-removal-stale-reference.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-removal-stale-reference.stdout"
+    },
+    {
+      "id": "a26",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a26-links-rename-migrated-anchor.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-rename-migrated-anchor.stderr"
+    },
+    {
+      "id": "a27",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a27-links-rename-migrated-anchor.stdout.raw",
+      "bytes": 108,
+      "sha256": "78b22c0f4726335dea536c5fa249ffc4b2d5538c464d47a5fa6ef53ed8153266",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-rename-migrated-anchor.stdout"
+    },
+    {
+      "id": "a28",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a28-links-rename-migrated-reference.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-rename-migrated-reference.stderr"
+    },
+    {
+      "id": "a29",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a29-links-rename-migrated-reference.stdout.raw",
+      "bytes": 108,
+      "sha256": "78b22c0f4726335dea536c5fa249ffc4b2d5538c464d47a5fa6ef53ed8153266",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-rename-migrated-reference.stdout"
+    },
+    {
+      "id": "a30",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a30-links-rename-stale-anchor.stderr.raw",
+      "bytes": 318,
+      "sha256": "60b78a2f0e0abbb58da3901506525d668ccc4112c5ac428a211ddb0ee321c9d8",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-rename-stale-anchor.stderr"
+    },
+    {
+      "id": "a31",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a31-links-rename-stale-anchor.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-rename-stale-anchor.stdout"
+    },
+    {
+      "id": "a32",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a32-links-rename-stale-reference.stderr.raw",
+      "bytes": 313,
+      "sha256": "a7be3be77c0d8ce410ffe70c35cecb0431958a85c146d14efea1a91273a608bb",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-rename-stale-reference.stderr"
+    },
+    {
+      "id": "a33",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a33-links-rename-stale-reference.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/links-rename-stale-reference.stdout"
+    },
+    {
+      "id": "a34",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a34-no-progress-recovery-result.json",
+      "bytes": 1501,
+      "sha256": "313fb62af12fa53ef57c6a4ff0e183107232d56d75f9de0ac7ba257cd7a5e8d9",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/no-progress-recovery-result.json"
+    },
+    {
+      "id": "a35",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a35-prepare-correction.py.raw",
+      "bytes": 8718,
+      "sha256": "d3637e78a7a94c796638572071c382d8eea627bde47edfcb553fc738d90c230c",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/prepare-correction.py"
+    },
+    {
+      "id": "a36",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a36-receipt.json",
+      "bytes": 1912,
+      "sha256": "e8fa9c32eed9486b59def14aa6ef4adb0f9058a194e2be342a6b7e0541052994",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/receipt.json"
+    },
+    {
+      "id": "a37",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a37-run-link-transition.py.raw",
+      "bytes": 3832,
+      "sha256": "5f4bb8ac03c84e6601b90c1c376900b92f0d76efd67f4a234371889b5262c470",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/run-link-transition.py"
+    },
+    {
+      "id": "a38",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a38-scope-receipt.json",
+      "bytes": 859,
+      "sha256": "819b7748282090ce7d923dcc8e9f937c6e599113573734d15089187a73d6ae3d",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/scope-receipt.json"
+    },
+    {
+      "id": "a39",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a39-actual-focused-result.json",
+      "bytes": 8415,
+      "sha256": "b4ba297e0686dbedefb4ec56e13bee5954ca6135808a5f2f49a44dd956fd2398",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/actual-focused-result.json"
+    },
+    {
+      "id": "a40",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a40-baseline-byte-tamper-refused.stderr.raw",
+      "bytes": 829,
+      "sha256": "5d8016925b53708ccec6395e1bb34c97d81cbb56469417834f0f349004686496",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/baseline-byte-tamper-refused.stderr"
+    },
+    {
+      "id": "a41",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a41-baseline-byte-tamper-refused.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/baseline-byte-tamper-refused.stdout"
+    },
+    {
+      "id": "a42",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a42-checkpoint-prepush.json",
+      "bytes": 1203,
+      "sha256": "0a9457b478a894d5266989c440bcf11c1d7903fb484c64d5e36e2e758370da13",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/checkpoint-prepush.json"
+    },
+    {
+      "id": "a43",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a43-checkpoint-receipt.json",
+      "bytes": 2103,
+      "sha256": "56309fa517c8016233ad6899ce51a9e7d64c683ff9cd803e4ee8b31e573ac63b",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/checkpoint-receipt.json"
+    },
+    {
+      "id": "a44",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a44-checkpoint.py.raw",
+      "bytes": 6861,
+      "sha256": "5183a4770c8469edbf0dc7cbd8497a694738490758e4341f5e639cb0f7daf485",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/checkpoint.py"
+    },
+    {
+      "id": "a45",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a45-focused-release.json",
+      "bytes": 1344,
+      "sha256": "fb976ee45669652364c4aa9feecfc81730b1d8fd03c3dae3c17ace9374971a6a",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/focused-release.json"
+    },
+    {
+      "id": "a46",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a46-full166-baseline-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/full166-baseline-check.stderr"
+    },
+    {
+      "id": "a47",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a47-full166-baseline-check.stdout.raw",
+      "bytes": 51,
+      "sha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/full166-baseline-check.stdout"
+    },
+    {
+      "id": "a48",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a48-manifest.json",
+      "bytes": 1558,
+      "sha256": "30f2120b9da1fbc746e39ac739ae5602b3ce786eb8e97b8237bcc806c7edbda3",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/manifest.json"
+    },
+    {
+      "id": "a49",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a49-old-freeze-preserved.json",
+      "bytes": 611,
+      "sha256": "8c24c48b290cea59ad426ded1679d0b0bc097b00064672afc46af2537fc6e1dc",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/old-freeze-preserved.json"
+    },
+    {
+      "id": "a50",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a50-pure-tests.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/pure-tests.stderr"
+    },
+    {
+      "id": "a51",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a51-pure-tests.stdout.raw",
+      "bytes": 846,
+      "sha256": "f11d39c3d7ba96113322e9a7d3b9b173d2bcb5f635724fb187dda28545415390",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/pure-tests.stdout"
+    },
+    {
+      "id": "a52",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a52-removal-owned-successor-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/removal-owned-successor-check.stderr"
+    },
+    {
+      "id": "a53",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a53-removal-owned-successor-check.stdout.raw",
+      "bytes": 51,
+      "sha256": "78d22690f2dd92d03d7d8e08eacc9f0f4f2899b2b522cb361ef96daf56166091",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/removal-owned-successor-check.stdout"
+    },
+    {
+      "id": "a54",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a54-removal-owned-successor-generate.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/removal-owned-successor-generate.stderr"
+    },
+    {
+      "id": "a55",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a55-removal-owned-successor-generate.stdout.raw",
+      "bytes": 75,
+      "sha256": "37e29118ae15e37f020f92202d9da400fd08ce48c1a6ba3a515b44e8878d18a1",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/removal-owned-successor-generate.stdout"
+    },
+    {
+      "id": "a56",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a56-removal-refused-before-generation.stderr.raw",
+      "bytes": 1081,
+      "sha256": "6f000af7adfc40f6c32b829a9db54eeca32bc07b4fa6d35e4d9429cd83036413",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/removal-refused-before-generation.stderr"
+    },
+    {
+      "id": "a57",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a57-removal-refused-before-generation.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/removal-refused-before-generation.stdout"
+    },
+    {
+      "id": "a58",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a58-rename-owned-successor-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/rename-owned-successor-check.stderr"
+    },
+    {
+      "id": "a59",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a59-rename-owned-successor-check.stdout.raw",
+      "bytes": 51,
+      "sha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/rename-owned-successor-check.stdout"
+    },
+    {
+      "id": "a60",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a60-rename-owned-successor-generate.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/rename-owned-successor-generate.stderr"
+    },
+    {
+      "id": "a61",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a61-rename-owned-successor-generate.stdout.raw",
+      "bytes": 75,
+      "sha256": "e3ad3ed194ee7ef06f66373b48e9f0b611a0c2d3055a20dade2ca83656302623",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/rename-owned-successor-generate.stdout"
+    },
+    {
+      "id": "a62",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a62-rename-refused-before-generation.stderr.raw",
+      "bytes": 1081,
+      "sha256": "6f000af7adfc40f6c32b829a9db54eeca32bc07b4fa6d35e4d9429cd83036413",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/rename-refused-before-generation.stderr"
+    },
+    {
+      "id": "a63",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a63-rename-refused-before-generation.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/rename-refused-before-generation.stdout"
+    },
+    {
+      "id": "a64",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a64-rename-refused-check.stderr.raw",
+      "bytes": 1081,
+      "sha256": "6f000af7adfc40f6c32b829a9db54eeca32bc07b4fa6d35e4d9429cd83036413",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/rename-refused-check.stderr"
+    },
+    {
+      "id": "a65",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a65-rename-refused-check.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/rename-refused-check.stdout"
+    },
+    {
+      "id": "a66",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a66-review.json",
+      "bytes": 558,
+      "sha256": "8e6fb9edd4d732a947528765a2c74b55bfd052f2240b2f2d2d2e5aea5aaa0916",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/review.json"
+    },
+    {
+      "id": "a67",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a67-run-focused.py.raw",
+      "bytes": 5834,
+      "sha256": "411989f878adacff43810d1f4c925e816e87f9adc6bac7ae3d3adfdafa8f4c7f",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/run-focused.py"
+    },
+    {
+      "id": "a68",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a68-audit.py.raw",
+      "bytes": 4195,
+      "sha256": "66b66926edc19419e7ca0484af1533631c04e12466c2e9d1e25eaedfff35f0bb",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/audit.py"
+    },
+    {
+      "id": "a69",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a69-continuation-next-task.json",
+      "bytes": 2661,
+      "sha256": "3cc53862806a644805418e54e4bdf1e59a6a1685741aa025a4798558fc436afd",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/continuation-next-task.json"
+    },
+    {
+      "id": "a70",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a70-continuation-result.json",
+      "bytes": 3568,
+      "sha256": "454106c267578b146f2131800b1d4774c9afc16df5626302ee6a4bc9cc125023",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/continuation-result.json"
+    },
+    {
+      "id": "a71",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a71-controller-path-resolution.json",
+      "bytes": 652,
+      "sha256": "f629723e77a5b307eb75b4aea61082fea11def0b1b1aa2b496f992d16d7c5226",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/controller-path-resolution.json"
+    },
+    {
+      "id": "a72",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a72-dispatch-error.json",
+      "bytes": 566,
+      "sha256": "34f51ddff232138dd26b47dc0a3e4711d658b38aad516bb64f593ac560671968",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/dispatch-error.json"
+    },
+    {
+      "id": "a73",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a73-input-bindings.json",
+      "bytes": 467,
+      "sha256": "7f7ef82798d2766962433edad05bd69cda99d3ef49843cf9ba000eefc3bf3fc0",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/input-bindings.json"
+    },
+    {
+      "id": "a74",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a74-no-progress-recovery-result.json",
+      "bytes": 1505,
+      "sha256": "c6b8f736d13769b2583a32e665d0e3bf32874642fb5f27f26fad5b02ff10e54f",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/no-progress-recovery-result.json"
+    },
+    {
+      "id": "a75",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a75-observed-remote-heads.json",
+      "bytes": 276,
+      "sha256": "10ce102768502f5a6df873d679011c2b38ed9fab95353064f5d8db3d0c3b4022",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/observed-remote-heads.json"
+    },
+    {
+      "id": "a76",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a76-pinned-links.py.raw",
+      "bytes": 2394,
+      "sha256": "2f8f771731e15e9909c4705d27e97f27661f7e18ce6f54b58181ed27acd4e91a",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/pinned-links.py"
+    },
+    {
+      "id": "a77",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a77-pinned-source-link-resolution.json",
+      "bytes": 3593344,
+      "sha256": "49f1c68c826ba05c426f740cef1dd4195f9615870cc10738b4a3e291f74db1db",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/pinned-source-link-resolution.json"
+    },
+    {
+      "id": "a78",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a78-prepare-gate-dossier.py.raw",
+      "bytes": 7335,
+      "sha256": "9a8337603bc60bb67d8a95229a25208e9ef352790b53cd463b43c86425a3b5b0",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/prepare-gate-dossier.py"
+    },
+    {
+      "id": "a79",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a79-prepare-provenance.py.raw",
+      "bytes": 3302,
+      "sha256": "9d8cea0cff286aeb73792de66cc11ee4c4f42ad5aa8905879e26c8e361944fd8",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/prepare-provenance.py"
+    },
+    {
+      "id": "a80",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a80-provider-baseline.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-baseline.stderr"
+    },
+    {
+      "id": "a81",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a81-provider-baseline.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-baseline.stdout"
+    },
+    {
+      "id": "a82",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a82-provider-controller-review-v1.json",
+      "bytes": 1207,
+      "sha256": "3f39d7ca02741128656f97576f1fcce26a8ebb86951e5ab6c0076b6e99f22ad3",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-controller-review-v1.json"
+    },
+    {
+      "id": "a83",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a83-provider-controller-review-v2.json",
+      "bytes": 1271,
+      "sha256": "3f535359cd0a3704598c469f485ba4e146e4acc55678f713f6d212523ac107ee",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-controller-review-v2.json"
+    },
+    {
+      "id": "a84",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a84-provider-controller-review.json",
+      "bytes": 509,
+      "sha256": "b5b6f88d78d39f635c8fbea4dcfa8626ce1c0c75d15dd67807fa914d236ab9b6",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-controller-review.json"
+    },
+    {
+      "id": "a85",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a85-provider-input-bindings.json",
+      "bytes": 9101,
+      "sha256": "a0479e757a40c7d6b1aa0fee2cfb13ade12ac2feeac50205bebee34ac1efe123",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-input-bindings.json"
+    },
+    {
+      "id": "a86",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a86-provider-removal-current-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-removal-current-check.stderr"
+    },
+    {
+      "id": "a87",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a87-provider-removal-current-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-removal-current-check.stdout"
+    },
+    {
+      "id": "a88",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a88-provider-removal-stale-rejected.stderr.raw",
+      "bytes": 24978,
+      "sha256": "4a10a59359a951235aa08706e7620050f5d722e6f3c1bfd2ae3b5f6f48c347de",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-removal-stale-rejected.stderr"
+    },
+    {
+      "id": "a89",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a89-provider-removal-stale-rejected.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-removal-stale-rejected.stdout"
+    },
+    {
+      "id": "a90",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a90-provider-removal-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-removal-write.stderr"
+    },
+    {
+      "id": "a91",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a91-provider-removal-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-removal-write.stdout"
+    },
+    {
+      "id": "a92",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a92-provider-rename-current-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-rename-current-check.stderr"
+    },
+    {
+      "id": "a93",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a93-provider-rename-current-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-rename-current-check.stdout"
+    },
+    {
+      "id": "a94",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a94-provider-rename-stale-rejected.stderr.raw",
+      "bytes": 24978,
+      "sha256": "e7519993da5022a9cbe631785b63ca5267babacdd8ed49a0b0089ce23bf58b60",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-rename-stale-rejected.stderr"
+    },
+    {
+      "id": "a95",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a95-provider-rename-stale-rejected.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-rename-stale-rejected.stdout"
+    },
+    {
+      "id": "a96",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a96-provider-rename-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-rename-write.stderr"
+    },
+    {
+      "id": "a97",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a97-provider-rename-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-rename-write.stdout"
+    },
+    {
+      "id": "a98",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a98-provider-transition-result.json",
+      "bytes": 3362,
+      "sha256": "821a7e9538666f1e9b85927dafe14fd105562b17583805ab2e449614521adf2b",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-transition-result.json"
+    },
+    {
+      "id": "a99",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a99-resolve.py.raw",
+      "bytes": 4126,
+      "sha256": "2643f43827377acab46cd7aa0ca1ef76be3b32869f70cd1348bdb4328e4693f6",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/resolve.py"
+    },
+    {
+      "id": "a100",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a100-review.json",
+      "bytes": 2755,
+      "sha256": "97d16fa52bb62efc8df45eafe6450133c8cc32d07bbb01e05479bccf97420a08",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/review.json"
+    },
+    {
+      "id": "a101",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a101-run-provider-transition.py.raw",
+      "bytes": 5232,
+      "sha256": "aa16b75d7c4603563e99835406cc8f0a77500b235ea6ccd00edfb63c039e81a8",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/run-provider-transition.py"
+    },
+    {
+      "id": "a102",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a102-scope-receipt.json",
+      "bytes": 1020,
+      "sha256": "70775be3eeb00dafbd02c4d4474f63c3581dea4c2703d577e1b7f37c7ab99d50",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/scope-receipt.json"
+    },
+    {
+      "id": "a103",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a103-source-reference-relations.json",
+      "bytes": 27356,
+      "sha256": "86bc93267572092e6abaac5e8ae87a2b61855f3515ed6f0a0c0396af973290aa",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/source-reference-relations.json"
+    },
+    {
+      "id": "a104",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a104-source-transition-ledger.json",
+      "bytes": 52404,
+      "sha256": "ccb43eb0e32535a35bd2eb669980371e9ebe9c3784c2f8330d52ab00b4ba5d83",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/source-transition-ledger.json"
+    },
+    {
+      "id": "a105",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a105-update-work.py.raw",
+      "bytes": 10066,
+      "sha256": "7d672f3d2fbc89be4349c2acc3866685ac9631e90ac705d091b11c5061692f13",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/update-work.py"
+    },
+    {
+      "id": "a106",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a106-actual-governance-map-delta.json",
+      "bytes": 31399,
+      "sha256": "932c13f290ed8f8279fb7729a10a7fb496e8e69a064ec89bab507f700b147d72",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-governance-map-delta.json"
+    },
+    {
+      "id": "a107",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a107-actual-result.json",
+      "bytes": 14595,
+      "sha256": "4cbb7eb91f3ce1862e311a2949729d408741b59773172294a349e0fd52b185da",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-result.json"
+    },
+    {
+      "id": "a108",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a108-baseline-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/baseline-check.stderr"
+    },
+    {
+      "id": "a109",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a109-baseline-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/baseline-check.stdout"
+    },
+    {
+      "id": "a110",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a110-baseline-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/baseline-write.stderr"
+    },
+    {
+      "id": "a111",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a111-baseline-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/baseline-write.stdout"
+    },
+    {
+      "id": "a112",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a112-checkpoint.py.raw",
+      "bytes": 5731,
+      "sha256": "7f734d5be59d62c8ffbbed323e9c30318ca1690a6a9497950f7ea9eceefe6343",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/checkpoint.py"
+    },
+    {
+      "id": "a113",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a113-current-governance-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-governance-check.stderr"
+    },
+    {
+      "id": "a114",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a114-current-governance-check.stdout.raw",
+      "bytes": 51,
+      "sha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-governance-check.stdout"
+    },
+    {
+      "id": "a115",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a115-current-governance-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-governance-write.stderr"
+    },
+    {
+      "id": "a116",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a116-current-governance-write.stdout.raw",
+      "bytes": 75,
+      "sha256": "e3ad3ed194ee7ef06f66373b48e9f0b611a0c2d3055a20dade2ca83656302623",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-governance-write.stdout"
+    },
+    {
+      "id": "a117",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a117-current-package-result.json",
+      "bytes": 2774,
+      "sha256": "05acdddb150287c9ce36461a81eb9ad20a046fb2ef0b791d8af20437f84be151",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-package-result.json"
+    },
+    {
+      "id": "a118",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a118-current-provider-noarg-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-provider-noarg-check.stderr"
+    },
+    {
+      "id": "a119",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a119-current-provider-noarg-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-provider-noarg-check.stdout"
+    },
+    {
+      "id": "a120",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a120-current-provider-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-provider-write.stderr"
+    },
+    {
+      "id": "a121",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a121-current-provider-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/current-provider-write.stdout"
+    },
+    {
+      "id": "a122",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a122-fix-whitespace.py.raw",
+      "bytes": 4243,
+      "sha256": "deeb2aaed95a296d1a0e300d01cd86691846069c421f161a37b3eb0cc818d1f2",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/fix-whitespace.py"
+    },
+    {
+      "id": "a123",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a123-narrow-provider-successor-governance.stderr.raw",
+      "bytes": 101,
+      "sha256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/narrow-provider-successor-governance.stderr"
+    },
+    {
+      "id": "a124",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a124-narrow-provider-successor-governance.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/narrow-provider-successor-governance.stdout"
+    },
+    {
+      "id": "a125",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a125-noarg-owning-caller-after-rename.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/noarg-owning-caller-after-rename.stderr"
+    },
+    {
+      "id": "a126",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a126-noarg-owning-caller-after-rename.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/noarg-owning-caller-after-rename.stdout"
+    },
+    {
+      "id": "a127",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a127-package-review.json",
+      "bytes": 675,
+      "sha256": "405c841a57277d14304f76fe4194b0876e594c3c8cace088ab37e8400f11b634",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/package-review.json"
+    },
+    {
+      "id": "a128",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a128-prepare-current.py.raw",
+      "bytes": 4762,
+      "sha256": "1775452ec10bb76a595a97d0986e4cdd671d8c3794c55daaf1260d006eaa6486",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/prepare-current.py"
+    },
+    {
+      "id": "a129",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a129-proposal.json",
+      "bytes": 1150,
+      "sha256": "bfad24de261922a2d6db356e6ec117c77a37104010e6dfcd5435cfbd363f3cf3",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/proposal.json"
+    },
+    {
+      "id": "a130",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a130-published-baseline-governance.stderr.raw",
+      "bytes": 101,
+      "sha256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/published-baseline-governance.stderr"
+    },
+    {
+      "id": "a131",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a131-published-baseline-governance.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/published-baseline-governance.stdout"
+    },
+    {
+      "id": "a132",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a132-reconcile-current.py.raw",
+      "bytes": 4415,
+      "sha256": "6cf3ba8de352819b6e5a614905e812491c66b412bd2157dbcc6b704ba5199e47",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/reconcile-current.py"
+    },
+    {
+      "id": "a133",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a133-reject-invalid-revision.stderr.raw",
+      "bytes": 760,
+      "sha256": "726085ad9a4dd562dc8687ff780f836f794603bb02e952f688a1b8ba98377dcb",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/reject-invalid-revision.stderr"
+    },
+    {
+      "id": "a134",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a134-reject-invalid-revision.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/reject-invalid-revision.stdout"
+    },
+    {
+      "id": "a135",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a135-reject-missing-revision.stderr.raw",
+      "bytes": 906,
+      "sha256": "3ff047ccaa0ffddbd0bca041678764bda39879f546e5db6014862c0c293094d3",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/reject-missing-revision.stderr"
+    },
+    {
+      "id": "a136",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a136-reject-missing-revision.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/reject-missing-revision.stdout"
+    },
+    {
+      "id": "a137",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a137-reject-tree-object.stderr.raw",
+      "bytes": 804,
+      "sha256": "eec9772a1522ae89666ed684143cd766374a6a0b9c4e6f54d1724021f4da8e59",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/reject-tree-object.stderr"
+    },
+    {
+      "id": "a138",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a138-reject-tree-object.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/reject-tree-object.stdout"
+    },
+    {
+      "id": "a139",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a139-remove-new-source-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/remove-new-source-check.stderr"
+    },
+    {
+      "id": "a140",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a140-remove-new-source-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/remove-new-source-check.stdout"
+    },
+    {
+      "id": "a141",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a141-remove-new-source-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/remove-new-source-write.stderr"
+    },
+    {
+      "id": "a142",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a142-remove-new-source-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/remove-new-source-write.stdout"
+    },
+    {
+      "id": "a143",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a143-remove-stale-output-rejected.stderr.raw",
+      "bytes": 30301,
+      "sha256": "2047c6b8182879716d2d0f44870d61ec1246054793f2d6e615ac2376c2d106fa",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/remove-stale-output-rejected.stderr"
+    },
+    {
+      "id": "a144",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a144-remove-stale-output-rejected.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/remove-stale-output-rejected.stdout"
+    },
+    {
+      "id": "a145",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a145-remove-uncommitted-rejected-before-write.stderr.raw",
+      "bytes": 5070,
+      "sha256": "e20d6c4eea32f8fd72d0cb87931261338b90acd1d36226ccbdcf7ac21d7b9210",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/remove-uncommitted-rejected-before-write.stderr"
+    },
+    {
+      "id": "a146",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a146-remove-uncommitted-rejected-before-write.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/remove-uncommitted-rejected-before-write.stdout"
+    },
+    {
+      "id": "a147",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a147-rename-new-source-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-new-source-check.stderr"
+    },
+    {
+      "id": "a148",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a148-rename-new-source-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-new-source-check.stdout"
+    },
+    {
+      "id": "a149",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a149-rename-new-source-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-new-source-write.stderr"
+    },
+    {
+      "id": "a150",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a150-rename-new-source-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-new-source-write.stdout"
+    },
+    {
+      "id": "a151",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a151-rename-old-pin-rejected.stderr.raw",
+      "bytes": 5444,
+      "sha256": "882b1197856e7e91f12943e20260fe15fd5d0cc5c181afc4ca136f084406aa3b",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-old-pin-rejected.stderr"
+    },
+    {
+      "id": "a152",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a152-rename-old-pin-rejected.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-old-pin-rejected.stdout"
+    },
+    {
+      "id": "a153",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a153-rename-stale-output-rejected.stderr.raw",
+      "bytes": 30301,
+      "sha256": "571efd809a4da0fa1cf84d71c940bad85b1c5cf4a4e84f2c39e94c94b419813c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-stale-output-rejected.stderr"
+    },
+    {
+      "id": "a154",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a154-rename-stale-output-rejected.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-stale-output-rejected.stdout"
+    },
+    {
+      "id": "a155",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a155-rename-uncommitted-rejected-before-write.stderr.raw",
+      "bytes": 4132,
+      "sha256": "099cc9645a754c03878114530e62a8fe829c04df7781cb6062ea32479cc5d86b",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-uncommitted-rejected-before-write.stderr"
+    },
+    {
+      "id": "a156",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a156-rename-uncommitted-rejected-before-write.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/rename-uncommitted-rejected-before-write.stdout"
+    },
+    {
+      "id": "a157",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a157-review.json",
+      "bytes": 617,
+      "sha256": "7be9bde21923694694c9da14cecb4c75887234a33b79a41583cd4754a8e3dfc0",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/review.json"
+    },
+    {
+      "id": "a158",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a158-run.py.raw",
+      "bytes": 5423,
+      "sha256": "78cd71ed061bc6cda949b395cab508b656dfc30042bb29b0d220aeeeeba6e2cc",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/run.py"
+    },
+    {
+      "id": "a159",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a159-checkpoint-failure.json",
+      "bytes": 696,
+      "sha256": "5bc899c5e916d68d0baa9158936ab1ff1f7a41b56d5d8775ba12cf3776e4d9da",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/checkpoint-failure.json"
+    },
+    {
+      "id": "a160",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a160-checkpoint-prepush.json",
+      "bytes": 993,
+      "sha256": "c756e6ff672f667f8a891412dcce008da303c78be9330ddb0e0e6329713686b1",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/checkpoint-prepush.json"
+    },
+    {
+      "id": "a161",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a161-checkpoint-receipt.json",
+      "bytes": 2513,
+      "sha256": "d8b13e111c12e1b2686a6960cd93bec9d70d1308765558d30ba91d33667a8805",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/checkpoint-receipt.json"
+    },
+    {
+      "id": "a162",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a162-checkpoint.py.raw",
+      "bytes": 5763,
+      "sha256": "3a31bedd9a5b23d7868fe53340ccb328c1f1e228cd52ae126b93f129c883ab15",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/checkpoint.py"
+    },
+    {
+      "id": "a163",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a163-current-package-result.json",
+      "bytes": 4119,
+      "sha256": "2e07f9c1feaa75181cdc4f75f712161bbb17aa1041d989b0c52a44441101a826",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/current-package-result.json"
+    },
+    {
+      "id": "a164",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a164-current-provider-noarg-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/current-provider-noarg-check.stderr"
+    },
+    {
+      "id": "a165",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a165-current-provider-noarg-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/current-provider-noarg-check.stdout"
+    },
+    {
+      "id": "a166",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a166-current-provider-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/current-provider-write.stderr"
+    },
+    {
+      "id": "a167",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a167-current-provider-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/current-provider-write.stdout"
+    },
+    {
+      "id": "a168",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a168-fresh-canonical-census.json",
+      "bytes": 1140,
+      "sha256": "ec6d02cb608fa55b924d31a0531ca748a67b30b494fcac3eca82c4d89929d57e",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/fresh-canonical-census.json"
+    },
+    {
+      "id": "a169",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a169-package-review.json",
+      "bytes": 593,
+      "sha256": "28e5649c280cd09389067ad0ec94ea66ea2dd725ee15a5b6c6451de1f414a462",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/package-review.json"
+    },
+    {
+      "id": "a170",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a170-actual-result.json",
+      "bytes": 11349,
+      "sha256": "a98ccabf7e7362847f55e22811a889f065b09e69ace07234569ee9f94e2fa203",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/actual-result.json"
+    },
+    {
+      "id": "a171",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a171-direct-baseline-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-baseline-check.stderr"
+    },
+    {
+      "id": "a172",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a172-direct-baseline-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-baseline-check.stdout"
+    },
+    {
+      "id": "a173",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a173-direct-baseline-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-baseline-write.stderr"
+    },
+    {
+      "id": "a174",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a174-direct-baseline-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-baseline-write.stdout"
+    },
+    {
+      "id": "a175",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a175-direct-rename-check.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-rename-check.stderr"
+    },
+    {
+      "id": "a176",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a176-direct-rename-check.stdout.raw",
+      "bytes": 75,
+      "sha256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-rename-check.stdout"
+    },
+    {
+      "id": "a177",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a177-direct-rename-stale-row-correct-pin-rejected.stderr.raw",
+      "bytes": 24913,
+      "sha256": "e99c5e6c3da2d662f8a7b48d1036659fbf27fc1e40262c16dbdfe51c18badbfd",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-rename-stale-row-correct-pin-rejected.stderr"
+    },
+    {
+      "id": "a178",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a178-direct-rename-stale-row-correct-pin-rejected.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-rename-stale-row-correct-pin-rejected.stdout"
+    },
+    {
+      "id": "a179",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a179-direct-rename-write.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-rename-write.stderr"
+    },
+    {
+      "id": "a180",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a180-direct-rename-write.stdout.raw",
+      "bytes": 59,
+      "sha256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/direct-rename-write.stdout"
+    },
+    {
+      "id": "a181",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a181-review.json",
+      "bytes": 522,
+      "sha256": "00d3a04642bfb332c736792e5ce4778f788f670ff5fe7b9c9aeb901d6a42afde",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/review.json"
+    },
+    {
+      "id": "a182",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a182-run.py.raw",
+      "bytes": 4912,
+      "sha256": "f41f82d04adc93ef2c8f9cc5133f4598084e908f6fcb9408cea0d5f344740818",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/run.py"
+    },
+    {
+      "id": "a183",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a183-source-after.json",
+      "bytes": 914,
+      "sha256": "4af37bac774ee4ab219d8bce410b3dc8039081e00dd38f711a73c9d8771f7dd8",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/source-after.json"
+    },
+    {
+      "id": "a184",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a184-source-before.json",
+      "bytes": 903,
+      "sha256": "c0572fbd46b11ac9a1a749ff720077d9298f8b48f072a645fb6fba95ddbe5107",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/source-before.json"
+    },
+    {
+      "id": "a185",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a185-active-owner.json",
+      "bytes": 297,
+      "sha256": "7fe64384b63927971fe335aea3cd1ad285c0d1d6a8d2348e9bf0156ef38d32d1",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/active-owner.json"
+    },
+    {
+      "id": "a186",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a186-dossier.json",
+      "bytes": 6867,
+      "sha256": "3f476819462280d7ef2a5fb57b3f4fce34d7c640302700701fda82c1ebd129b5",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/dossier.json"
+    },
+    {
+      "id": "a187",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a187-source-engine-finding-transcription.json",
+      "bytes": 2287,
+      "sha256": "029f9603f0d98f48f0de687524eb355120f32b44d0dad8c1fce6c60901958484",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/source-engine-finding-transcription.json"
+    },
+    {
+      "id": "a188",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a188-source-engine-raw-tool-log.json",
+      "bytes": 2991,
+      "sha256": "5ec5ef24dcc88647cda70d871a3d7462015cb804b389fc8ed4f8e2d2ced7667f",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/source-engine-raw-tool-log.json"
+    },
+    {
+      "id": "a189",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a189-dossier.json",
+      "bytes": 10073,
+      "sha256": "d9941c6dc551ff7e25c349c6ce9677cad8f9bea6b8d50ba5701d4c51b9768ab3",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v2/dossier.json"
+    },
+    {
+      "id": "a190",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a190-baseline-output.md.raw",
+      "bytes": 38685,
+      "sha256": "72b25d62175c6c4746bb3335805264678d714af173ac4f452b49a7c8ff650d55",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/baseline-output.md"
+    },
+    {
+      "id": "a191",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a191-stale-old-row-with-correct-new-pin.md.raw",
+      "bytes": 38685,
+      "sha256": "0da368d1e593b46a8bda7fa1e24d2cbade61e3e9c7ddf427ea74209b194f2c76",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/stale-old-row-with-correct-new-pin.md"
+    },
+    {
+      "id": "a192",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a192-renamed-output.md.raw",
+      "bytes": 38696,
+      "sha256": "27301e16d04f194b5f78fca9637d16f4537045a0d8606dd0a18bb6721b9d3555",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/direct-rename-proof-v1/renamed-output.md"
+    },
+    {
+      "id": "a193",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a193-provider-baseline-output.md.raw",
+      "bytes": 38608,
+      "sha256": "61a83b12f519fe6e9249ef96233a57dd886ccd2b8704abb27c606d8817b4a8c5",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-baseline-output.md"
+    },
+    {
+      "id": "a194",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a194-provider-removed-output.md.raw",
+      "bytes": 38531,
+      "sha256": "351040ecd5a401e59b6173033d80a3da0995cb560a53119317aab5e08b247290",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-removed-output.md"
+    },
+    {
+      "id": "a195",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a195-provider-renamed-output.md.raw",
+      "bytes": 38619,
+      "sha256": "b58bce293b560483865e9f1e961bf634bb27c25cc1e33146fc36c46fb0fe0b15",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-renamed-output.md"
+    },
+    {
+      "id": "a196",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a196-result.json",
+      "bytes": 16976,
+      "sha256": "b1c8ea8be8770d635618094564021e83e4340eb83f8a97560dc51df11dcf3086",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/authority-impact/result.json"
+    },
+    {
+      "id": "a197",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a197-selected-authority.json",
+      "bytes": 1101,
+      "sha256": "18e03754c8ef1829745dd3bc82426c4c05032dd9d6c7d46d3f5995b6bf2a3130",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/authority-impact/selected-authority.json"
+    },
+    {
+      "id": "a198",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a198-derive.mjs.raw",
+      "bytes": 1109,
+      "sha256": "dc55a9e66b29eab4be2639292109d0c4a15131570fa95da4b1bc874327afe6fe",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/authority-impact/derive.mjs"
+    },
+    {
+      "id": "a199",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a199-docs-api-output-role-classification.mjs.raw",
+      "bytes": 124087,
+      "sha256": "f0dc5e563534030adc6074b1c99b7e194a431cc062a80b64b6bbfc6df07d1e2a",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/authority-impact/docs-api-output-role-classification.mjs"
+    },
+    {
+      "id": "a200",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a200-docs-api-observer-materialized-source.mjs.raw",
+      "bytes": 6763,
+      "sha256": "c05f1fb516078ed1f2aecc4478e298877a9df061a967f1d7ff24689a82b96dc3",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/authority-impact/docs-api-observer-materialized-source.mjs"
+    },
+    {
+      "id": "a201",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a201-result.json",
+      "bytes": 16976,
+      "sha256": "36ac4da960b24a76ed3ce6034a6aa54dc2f58c4c929b8bfbcc22b7e16bbc5898",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/authority-impact/result.json"
+    },
+    {
+      "id": "a202",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a202-selected-authority.json",
+      "bytes": 1101,
+      "sha256": "18e03754c8ef1829745dd3bc82426c4c05032dd9d6c7d46d3f5995b6bf2a3130",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/authority-impact/selected-authority.json"
+    },
+    {
+      "id": "a203",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a203-derive.mjs.raw",
+      "bytes": 1109,
+      "sha256": "dc55a9e66b29eab4be2639292109d0c4a15131570fa95da4b1bc874327afe6fe",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/authority-impact/derive.mjs"
+    },
+    {
+      "id": "a204",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a204-docs-api-output-role-classification.mjs.raw",
+      "bytes": 124087,
+      "sha256": "f0dc5e563534030adc6074b1c99b7e194a431cc062a80b64b6bbfc6df07d1e2a",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/authority-impact/docs-api-output-role-classification.mjs"
+    },
+    {
+      "id": "a205",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a205-docs-api-observer-materialized-source.mjs.raw",
+      "bytes": 6763,
+      "sha256": "c05f1fb516078ed1f2aecc4478e298877a9df061a967f1d7ff24689a82b96dc3",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/authority-impact/docs-api-observer-materialized-source.mjs"
+    },
+    {
+      "id": "a206",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a206-direct-rename-source.bundle.raw",
+      "bytes": 25128,
+      "sha256": "241eb8ac2926715927f99c372eba9f3f2b4037e17162b74e89e2a8acf4af56b8",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/registration-v1/direct-rename-source.bundle"
+    },
+    {
+      "id": "a207",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a207-provider-v3-source.bundle.raw",
+      "bytes": 25336,
+      "sha256": "6f8754e5ce057180e8bc395acb13fff37238bc72bf64fd12a5cce27172a778eb",
+      "evidence_class": "mutation",
+      "status": "captured",
+      "originalPath": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/registration-v1/provider-v3-source.bundle"
+    },
+    {
+      "id": "a208",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a208-docs-governance.mjs.reviewed-source.raw",
+      "bytes": 7846,
+      "sha256": "94f45c1d481c906687f5de6612143000f231162d136e2a6f46004e6d03348a2a",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:scripts/docs-governance.mjs"
+    },
+    {
+      "id": "a209",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a209-docs-route-continuity.mjs.reviewed-source.raw",
+      "bytes": 2038,
+      "sha256": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:scripts/lib/docs-route-continuity.mjs"
+    },
+    {
+      "id": "a210",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a210-docs-route-continuity.test.mjs.reviewed-source.raw",
+      "bytes": 2632,
+      "sha256": "afeea510841cff67d9d49c90e4d08671772a7f258647476e980ad853b1ff999b",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:scripts/tests/docs-route-continuity.test.mjs"
+    },
+    {
+      "id": "a211",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a211-docs-published-route-baseline.json.reviewed-source.raw",
+      "bytes": 27859,
+      "sha256": "c9fd21962ade0616a71cc5f0a30363b0020ed26028fd88444a9934197d76f6b7",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:scripts/docs-published-route-baseline.json"
+    },
+    {
+      "id": "a212",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a212-generate-buster-provider-reference.mjs.reviewed-source.raw",
+      "bytes": 14929,
+      "sha256": "078c8598fba6dd875e2e802c0620caf7201747b75ba8c1c3efd49ce998681273",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:scripts/generate-buster-provider-reference.mjs"
+    },
+    {
+      "id": "a213",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a213-docs-check-refs.mjs.reviewed-source.raw",
+      "bytes": 14014,
+      "sha256": "065f77f316f8c306afd8aba56943093351352369bce210c70504b2317dddfb38",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:scripts/docs-check-refs.mjs"
+    },
+    {
+      "id": "a214",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a214-docs-markdown-anchors.mjs.reviewed-source.raw",
+      "bytes": 17308,
+      "sha256": "b0358c0f628781c5056376f673ca23465b7b8cc54a722c1e0892f0268c42c652",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:scripts/lib/docs-markdown-anchors.mjs"
+    },
+    {
+      "id": "a215",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a215-docs-upstream-reference.mjs.reviewed-source.raw",
+      "bytes": 4228,
+      "sha256": "1741bd5738fda0c2ed3954ad074a91ca0045479beb6484b61eb446eaf74296c2",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:scripts/lib/docs-upstream-reference.mjs"
+    },
+    {
+      "id": "a216",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a216-documentation-route-registry.json.reviewed-source.raw",
+      "bytes": 758,
+      "sha256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:docs/site/reference/documentation-route-registry.json"
+    },
+    {
+      "id": "a217",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a217-buster-provider-configuration.md.reviewed-source.raw",
+      "bytes": 38685,
+      "sha256": "47b562aa81bd9c15bffc32d466b3605bb831abd917e4a03982356a525e28e016",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:docs/site/reference/buster-provider-configuration.md"
+    },
+    {
+      "id": "a218",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a218-generated-documentation-map.json.reviewed-source.raw",
+      "bytes": 167152,
+      "sha256": "9fcb9f79d982254e9c4e57d02bb85860013ed1610fb8d92c4936fe95813ae8b6",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:docs/site/reference/generated-documentation-map.json"
+    },
+    {
+      "id": "a219",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a219-config.schema.json.reviewed-source.raw",
+      "bytes": 741,
+      "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc",
+      "evidence_class": "contract",
+      "status": "captured",
+      "originalPath": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120:skills/buster/plugins/api-flow/schemas/config.schema.json"
+    },
+    {
+      "id": "a220",
+      "path": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a220-AP09-acceptance-fixtures.reviewed.json",
+      "bytes": 67108,
+      "sha256": "bb5114fd19697495854dcb58f36cd9ee579fe3c146293f2895152bbb94797552",
+      "evidence_class": "contract",
+      "status": "captured"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "GOV-007",
+      "work_package": "AP09.11",
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "verdict": "PASS",
+      "finding": "Known-route historical disposition; direct owned successors without invented serving/pre-registry claims.",
+      "acceptance_ids": [
+        "A911-10"
+      ],
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-route-continuity.mjs#L1-L33",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/tests/docs-route-continuity.test.mjs#L1-L41",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-published-route-baseline.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/generate-buster-provider-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-check-refs.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-markdown-anchors.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-upstream-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/documentation-route-registry.json#L1-L18",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/buster-provider-configuration.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/generated-documentation-map.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/skills/buster/plugins/api-flow/schemas/config.schema.json#L1-L12"
+      ],
+      "artifact_ids": [
+        "a170"
+      ],
+      "scope": "Exact A911-10 facet only; not requirement-wide or all261 final acceptance."
+    },
+    {
+      "id": "MNT-009",
+      "work_package": "AP09.11",
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "verdict": "PASS",
+      "finding": "Affected provider field removal/direct rename removes obsolete rendered source authority; no actual source-path events in stated census interval.",
+      "acceptance_ids": [
+        "A911-10"
+      ],
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-route-continuity.mjs#L1-L33",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/tests/docs-route-continuity.test.mjs#L1-L41",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-published-route-baseline.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/generate-buster-provider-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-check-refs.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-markdown-anchors.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-upstream-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/documentation-route-registry.json#L1-L18",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/buster-provider-configuration.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/generated-documentation-map.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/skills/buster/plugins/api-flow/schemas/config.schema.json#L1-L12"
+      ],
+      "artifact_ids": [
+        "a170"
+      ],
+      "scope": "Exact A911-10 facet only; not requirement-wide or all261 final acceptance."
+    },
+    {
+      "id": "MNT-013",
+      "work_package": "AP09.11",
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "verdict": "PASS",
+      "finding": "Actual local path/anchor migration and exact immutable source pins; direct rename stale-row rejection independent of revision-only changes.",
+      "acceptance_ids": [
+        "A911-10"
+      ],
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-route-continuity.mjs#L1-L33",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/tests/docs-route-continuity.test.mjs#L1-L41",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-published-route-baseline.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/generate-buster-provider-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-check-refs.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-markdown-anchors.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-upstream-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/documentation-route-registry.json#L1-L18",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/buster-provider-configuration.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/generated-documentation-map.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/skills/buster/plugins/api-flow/schemas/config.schema.json#L1-L12"
+      ],
+      "artifact_ids": [
+        "a170"
+      ],
+      "scope": "Exact A911-10 facet only; not requirement-wide or all261 final acceptance."
+    },
+    {
+      "id": "MNT-015",
+      "work_package": "AP09.11",
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "verdict": "PASS",
+      "finding": "Owned successor validation and provider ownerbuster preserved in the affected transitions.",
+      "acceptance_ids": [
+        "A911-10"
+      ],
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-route-continuity.mjs#L1-L33",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/tests/docs-route-continuity.test.mjs#L1-L41",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-published-route-baseline.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/generate-buster-provider-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-check-refs.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-markdown-anchors.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-upstream-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/documentation-route-registry.json#L1-L18",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/buster-provider-configuration.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/generated-documentation-map.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/skills/buster/plugins/api-flow/schemas/config.schema.json#L1-L12"
+      ],
+      "artifact_ids": [
+        "a170"
+      ],
+      "scope": "Exact A911-10 facet only; not requirement-wide or all261 final acceptance."
+    },
+    {
+      "id": "MNT-017",
+      "work_package": "AP09.11",
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "verdict": "PASS",
+      "finding": "Commit-before-generation maintenance route preserves source-attribution truth after remove/rename.",
+      "acceptance_ids": [
+        "A911-10"
+      ],
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-route-continuity.mjs#L1-L33",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/tests/docs-route-continuity.test.mjs#L1-L41",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-published-route-baseline.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/generate-buster-provider-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-check-refs.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-markdown-anchors.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-upstream-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/documentation-route-registry.json#L1-L18",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/buster-provider-configuration.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/generated-documentation-map.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/skills/buster/plugins/api-flow/schemas/config.schema.json#L1-L12"
+      ],
+      "artifact_ids": [
+        "a170"
+      ],
+      "scope": "Exact A911-10 facet only; not requirement-wide or all261 final acceptance."
+    }
+  ],
+  "points": [
+    {
+      "acceptance_id": "A911-10",
+      "catalogue_ids": [
+        "GOV-007",
+        "MNT-009",
+        "MNT-013",
+        "MNT-015",
+        "MNT-017"
+      ],
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "reader_task": "After removal or rename identify the current reference, surviving link/anchor, declared successor route, current owner and exact historical source boundary.",
+      "reader_fixture_ids": [],
+      "execution_scenario_ids": [],
+      "canonical_pages": [
+        "docs/site/reference/buster-provider-configuration.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/extend/documentation-maintenance.md"
+      ],
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-route-continuity.mjs#L1-L33",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/tests/docs-route-continuity.test.mjs#L1-L41",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-published-route-baseline.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/generate-buster-provider-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/docs-check-refs.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-markdown-anchors.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/scripts/lib/docs-upstream-reference.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/documentation-route-registry.json#L1-L18",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/buster-provider-configuration.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/docs/site/reference/generated-documentation-map.json#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120/skills/buster/plugins/api-flow/schemas/config.schema.json#L1-L12"
+      ],
+      "execution": {
+        "environment": "Existing isolated Node/Git fixture tools; no product/native imports, deployment or canonical source changes. Sourcecodeee1reviewed; priorV3mutation execution reused only after explicit1space currentimpact. Directrename uses exactpublished078generator bytes.",
+        "commands": [
+          {
+            "run_id": "A911-10-DIRECT-RENAME",
+            "status": "passed",
+            "command": "Original published provider generator on baseline95420a49 -> directchild19cf6ac; correct-new-pin/old-row negative then regenerate/check",
+            "exit_code": 0,
+            "observation": "Old field present in baseline schema AND reference; direct parent equality proved. Metadata repin alone cannot hide old authority: old-row/new-pin document rejected; only successor row/exact source pin/current owner remain after regeneration.",
+            "evidence_class": "mutation",
+            "artifact_ids": [
+              "a170"
+            ]
+          }
+        ]
+      },
+      "negative_proof": [
+        {
+          "scenario": "Lost route/missing owned successor; stale local path/anchor; source removal/old pinned source/tree object; direct rename stale old row with new revision tokens.",
+          "expected_failure": "Each original governing checker rejects the relevant obsolete or unattributable authority; corrected successor/reference passes.",
+          "observed": "Raw genuine exitcodes and raw output retained at original scopes; earlier addition-only rename claim explicitly rejected and replaced by actual direct-baseline proof.",
+          "artifact_ids": [
+            "a39",
+            "a10",
+            "a107",
+            "a170"
+          ]
+        }
+      ],
+      "limits": [
+        {
+          "status": "scope-boundary",
+          "reason": "Declarative route disposition, not deployedHTTPserver. No source-path deletion/rename occurred in censused interval; no universal history/current-sitegreen claimed.54pre-existing unrelated map metadata deltas remain. All84/native/P17/fullGo/final261/89 obligations remain at own scopes.",
+          "owner": "Existing PR13 coordinator",
+          "acceptance_condition": "This individual criterion has3distinct completePASS; global obligations still require their actual evidence.",
+          "artifact_ids": [
+            "a189"
+          ]
+        }
+      ],
+      "reviewer_ids": [
+        "codex:01a149d6-1204-7793-89ea-0644b8ecf5b1",
+        "codex:01a149d6-dc7a-7da1-905a-74f8ce9bb8a9",
+        "codex:01a149d6-e08d-7030-b6ae-a1f05da85ebc"
+      ],
+      "verdict": "PASS",
+      "reason": "Three distinct complete gate decisions at exactee1 accept full criterion after actual direct-rename corrective proof. Not author selfacceptance; registration/count only after persisted evidence and verifiedcommit/push."
+    }
+  ],
+  "reviewers": [
+    {
+      "id": "codex:01a149d6-1204-7793-89ea-0644b8ecf5b1",
+      "role": "source",
+      "assignment": "Distinct independent complete A911-10 source criterion/automatic-failure assessment; not partial patch correctness.",
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "fresh_context": true,
+      "initial_read_only": true,
+      "verdict": "PASS",
+      "report_artifact_id": "current-source-review",
+      "executionEvidence": "Separate fresh GPT6.1Sol Codex CLI context; full provided source and immutable actual evidence; no reviewer target executions.",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "id": "codex:01a149d6-dc7a-7da1-905a-74f8ce9bb8a9",
+      "role": "reader",
+      "assignment": "Distinct independent complete A911-10 reader criterion/automatic-failure assessment; not partial patch correctness.",
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "fresh_context": true,
+      "initial_read_only": true,
+      "verdict": "PASS",
+      "report_artifact_id": "current-reader-review",
+      "executionEvidence": "Separate fresh GPT6.1Sol Codex CLI context; full provided source and immutable actual evidence; no reviewer target executions.",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "id": "codex:01a149d6-e08d-7030-b6ae-a1f05da85ebc",
+      "role": "quality",
+      "assignment": "Distinct independent complete A911-10 quality criterion/automatic-failure assessment; not partial patch correctness.",
+      "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+      "fresh_context": true,
+      "initial_read_only": true,
+      "verdict": "PASS",
+      "report_artifact_id": "current-quality-review",
+      "executionEvidence": "Separate fresh GPT6.1Sol Codex CLI context; full provided source and immutable actual evidence; no reviewer target executions.",
+      "model": "gpt-6.1-sol"
+    }
+  ],
+  "participants": [],
+  "fixture_results": [],
+  "execution_scenario_results": [],
+  "formalAcceptance": false,
+  "registryDisposition": "Three complete independent rolePASS persisted first; exact registry metadata adoption/publication is a separate final step, never source/runtime thaw."
+}

@@ -1,0 +1,41 @@
+{
+  "publishedBaseline": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "state": "EXACT_FOUR_FILE_PROVIDER_CORRECTION_READY_FOR_PACKAGE_REVIEW_EXISTING_MAP_DRIFT_PRESERVED",
+  "scope": "Real current JSON inputs equal historical3cf; exact source-pinned generator passed current write+noarg check. Tables unchanged. Only provider map.lastVerified changed;54existing unrelated metadata deltas not adopted.",
+  "files": {
+    "scripts/generate-buster-provider-reference.mjs": "e9aa08dca92a386456b863f2c9da3557340c07d82321c3f2660ba18ad4f607f3",
+    "scripts/docs-api-producer-adapter-authorities.json": "eeae3cd9783fa2b46499d9bb77a475c6033fcc054ff22661bbac7ad4bafcf8e2",
+    "docs/site/reference/buster-provider-configuration.md": "b6d7ece9d865d72e1f0c185026fecefa3767cec0271558a7968070ac0239eb11",
+    "docs/site/reference/generated-documentation-map.json": "9fcb9f79d982254e9c4e57d02bb85860013ed1610fb8d92c4936fe95813ae8b6"
+  },
+  "tableLinesUnchanged": 342,
+  "baselineAndSuccessorChecks": [
+    {
+      "id": "published-baseline",
+      "exitCode": 1,
+      "expected": "pre-existing stale map; no new broad clean claim",
+      "stderrSHA256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3"
+    },
+    {
+      "id": "narrow-provider-successor",
+      "exitCode": 1,
+      "expected": "pre-existing stale map; no new broad clean claim",
+      "stderrSHA256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3"
+    }
+  ],
+  "preExistingMapDifferences": 54,
+  "preExistingDifferencesEvidence": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-governance-map-delta.json",
+  "authorityDelta": {
+    "source": "scripts/generate-buster-provider-reference.mjs",
+    "before": "9b623dbf0088d5e8f5ccc38e6960a3bccde03fdab26e1b08310a929bdde4f479",
+    "after": "03fb50e9f1eba280821189311f0e34ed452a4439d38b608d0e3332c365f52935",
+    "baselineReproduced": true,
+    "onlyOneOperationUpdated": true
+  },
+  "sourceImpact": "New local Git cat-file/show reads on exact consumed schema/manifest inputs; inherited noarg caller uses existing page pin and still checks exact bytes. Same output path, same provider fields, unchanged owner/route. Non-API wrote diagnostic remains same; one exact newly derived native-operation digest must be reviewed, not blanket repin.",
+  "formalAcceptance": false,
+  "canonicalWrites": false,
+  "ciDirtyMutation": false,
+  "fullCurrentGovernancePASS": false,
+  "remaining": "Independent coherent4file package impact and actual evidence review; then normalFF isolated-index WIP checkpoint preserving accepted1/12 and all dirty state. A91110 semantic scope and distinct full gate decisions remain open."
+}

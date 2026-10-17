@@ -1,0 +1,71 @@
+{
+  "utc": "2026-10-17T12:16:10.490512+00:00",
+  "acceptanceId": "A911-10",
+  "state": "BOUNDED_PROVIDER_FIELD_REMOVE_RENAME_STRUCTURAL_PASS_HISTORICAL_ATTRIBUTION_OPEN",
+  "revision": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "cases": [
+    {
+      "name": "provider-baseline",
+      "exitCode": 0,
+      "expected": 0,
+      "stdoutSHA256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "provider-removal-stale-rejected",
+      "exitCode": 1,
+      "expected": 1,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "4a10a59359a951235aa08706e7620050f5d722e6f3c1bfd2ae3b5f6f48c347de"
+    },
+    {
+      "name": "provider-removal-write",
+      "exitCode": 0,
+      "expected": 0,
+      "stdoutSHA256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "provider-removal-current-check",
+      "exitCode": 0,
+      "expected": 0,
+      "stdoutSHA256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "provider-rename-stale-rejected",
+      "exitCode": 1,
+      "expected": 1,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "e7519993da5022a9cbe631785b63ca5267babacdd8ed49a0b0089ce23bf58b60"
+    },
+    {
+      "name": "provider-rename-write",
+      "exitCode": 0,
+      "expected": 0,
+      "stdoutSHA256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "provider-rename-current-check",
+      "exitCode": 0,
+      "expected": 0,
+      "stdoutSHA256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+  "field": "maximumSteps",
+  "renamedField": "maximumStepsAfterRename",
+  "output": "docs/site/reference/buster-provider-configuration.md",
+  "owner": "buster",
+  "routeChanged": false,
+  "redirectApplicability": "No route, page, source path or owner changes; field identifiers only. This is not the separately proved page-route redirect scenario.",
+  "actualProof": "Original generator rejects stale output, removes obsolete field and migrates renamed field; unchanged owner. Fixed historical revision in original generator output is retained, NOT claimed to substantiate mutated synthetic field semantics.",
+  "historicalAttributionFinding": "Generator revision constant cannot attribute hypothetical changed schema to its new source. No generated synthetic output is published or claimed as valid current-source evidence. Qualify or fix source-revision binding before formal gate PASS.",
+  "formalAcceptance": false,
+  "canonicalWrites": false,
+  "runtimeCodeImported": false,
+  "targetExecutions": 7,
+  "inputBindingsSHA256": "a0479e757a40c7d6b1aa0fee2cfb13ade12ac2feeac50205bebee34ac1efe123"
+}

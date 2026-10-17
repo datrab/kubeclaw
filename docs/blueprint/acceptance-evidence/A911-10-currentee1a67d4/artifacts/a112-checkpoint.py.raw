@@ -1,0 +1,39 @@
+import hashlib,json,os,subprocess,tempfile
+from pathlib import Path
+from datetime import datetime,timezone
+P=Path(__file__).resolve().parent;E=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015');R=E/'finish-20261017/ci-green/repo';CAN=Path('/home/node/.openclaw/workspace/kubeclaw-documentation-cloud');V='b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9'
+ENV=dict(os.environ,GIT_OPTIONAL_LOCKS='0',GIT_AUTHOR_NAME='Nova',GIT_AUTHOR_EMAIL='nova@openclaw.local',GIT_COMMITTER_NAME='Nova',GIT_COMMITTER_EMAIL='nova@openclaw.local')
+def git(*a,input=None,env=None):
+ r=subprocess.run(['git',*a],cwd=R,input=input,env=env or ENV,capture_output=True)
+ if r.returncode:raise RuntimeError((a,r.stderr.decode()))
+ return r.stdout
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(n,d):(P/n).write_text(json.dumps(d,indent=2)+'\n')
+def bind(p):return {'path':str(p),'sha256':sha(p)}
+assert json.loads((P/'package-review.json').read_text())['findings']==[]
+package=json.loads((P/'current-package-result.json').read_text());files=package['files']
+for f,h in files.items():assert sha(P/'candidate'/f)==h
+notice=json.loads((E/'pending-source-proposal-checkpoint.json').read_text());receipt=json.loads(Path(notice['currentVerifiedReceipt']).read_text());assert receipt['remoteVerified']
+reg=json.loads((E/'finish-20261017/acceptance-registration-1152/receipt.json').read_text());assert reg['state']=='REGISTERED_COMMITTED_PUSHED_BOTH_REFS_VERIFIED'
+assert sha(CAN/'docs/blueprint/documentation-completion-matrix.json')==reg['canonicalRegistry']['afterSha256']
+head=git('rev-parse','HEAD').decode().strip();idx=Path(git('rev-parse','--git-path','index').decode().strip());idx=idx if idx.is_absolute() else R/idx;idxsha=sha(idx)
+status=git('status','--porcelain=v1','-z','--untracked-files=all');paths=set(x.decode() for x in git('diff','--name-only','-z','HEAD').split(b'\0')+git('ls-files','--others','--exclude-standard','-z').split(b'\0') if x);dirty={p:sha(R/p) for p in paths if (R/p).is_file()}
+# FF reconcile actual published source into temporary index ONLY; dirty checkout stays exact.
+git('fetch','origin','refs/heads/docs/documentation-overhaul:refs/remotes/origin/docs/documentation-overhaul','refs/heads/checkpoint/pr13-documentation-overhaul:refs/remotes/origin/checkpoint/pr13-documentation-overhaul')
+base=git('rev-parse','refs/remotes/origin/docs/documentation-overhaul').decode().strip();assert base==git('rev-parse','refs/remotes/origin/checkpoint/pr13-documentation-overhaul').decode().strip();git('merge-base','--is-ancestor',V,base);git('merge-base','--is-ancestor',reg['registrationCommit'],base)
+for f in files:assert git('show',base+':'+f)==git('show',V+':'+f),'remote path changed; requalify exact composition'
+assert hashlib.sha256(git('show',base+':docs/blueprint/documentation-completion-matrix.json')).hexdigest()==reg['canonicalRegistry']['afterSha256']
+with tempfile.TemporaryDirectory(prefix='provider-pin-index-',dir=P) as t:
+ env=dict(ENV,GIT_INDEX_FILE=str(Path(t)/'index'));git('read-tree',base,env=env)
+ for f in files:
+  blob=git('hash-object','-w','--stdin',input=(P/'candidate'/f).read_bytes()).decode().strip();git('update-index','--add','--cacheinfo','100644',blob,f,env=env)
+ git('diff','--cached','--check',base,env=env);tree=git('write-tree',env=env).decode().strip();assert tree!=git('show','-s','--format=%T',base).decode().strip()
+ message='docs: bind provider removal and rename outputs to exact source commits\n\nReject invalid/tree/stale schema source pins before write; preserve existing\nno-argument guide caller. One independently reconciled diagnostic authority\ndelta; unchanged provider tables and narrow provider map metadata only.\n15 bounded cases pass; existing unrelated map drift preserved. No gate PASS.\n'
+ commit=git('commit-tree',tree,'-p',base,input=message.encode()).decode().strip();save('checkpoint-prepush.json',{'base':base,'commit':commit,'tree':tree,'files':files,'packageReview':bind(P/'package-review.json')})
+ assert git('rev-parse','HEAD').decode().strip()==head and sha(idx)==idxsha and {p:sha(R/p) for p in dirty}==dirty and git('status','--porcelain=v1','-z','--untracked-files=all')==status
+ git('push','--atomic','origin',commit+':refs/heads/docs/documentation-overhaul',commit+':refs/heads/checkpoint/pr13-documentation-overhaul')
+ heads={x.split()[1]:x.split()[0] for x in git('ls-remote','--heads','origin','refs/heads/docs/documentation-overhaul','refs/heads/checkpoint/pr13-documentation-overhaul').decode().splitlines()};assert set(heads.values())=={commit}
+ assert git('rev-parse','HEAD').decode().strip()==head and sha(idx)==idxsha and {p:sha(R/p) for p in dirty}==dirty and git('status','--porcelain=v1','-z','--untracked-files=all')==status
+ assert sha(CAN/'docs/blueprint/documentation-completion-matrix.json')==reg['canonicalRegistry']['afterSha256']
+ out={'utc':datetime.now(timezone.utc).isoformat(),'state':'REVIEWED_PROVIDER_PROVENANCE_CORRECTION_PUSHED_BOTH_REFS_VERIFIED','commit':commit,'base':base,'tree':tree,'files':files,'remoteHeads':heads,'remoteVerified':True,'ciHEADUnchanged':head,'ciIndexSHA256Unchanged':idxsha,'originalDirtyPathsPreserved':len(dirty),'packageReview':bind(P/'package-review.json'),'actual':bind(P/'actual-result.json'),'currentPackage':bind(P/'current-package-result.json'),'checkpointMethod':'git-checkpoint.py invariant reused for exact external candidate: source helper cannot snapshot canonical frozen stale source. NormalFF temporary index against fetched remote; no real checkout/index writes.','formalAcceptance':False,'canonicalWrites':False,'fullCurrentGovernancePASS':False,'ciGreen':False}
+ save('checkpoint-receipt.json',out);print(json.dumps(out,indent=2))

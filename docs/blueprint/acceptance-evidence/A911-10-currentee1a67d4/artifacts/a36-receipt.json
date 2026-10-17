@@ -1,0 +1,31 @@
+{
+  "utc": "2026-10-17T12:02:28.669753+00:00",
+  "acceptanceId": "A911-10",
+  "criterionDependency": "Removal und Rename entfernen oder migrieren Referenz, Links, Redirect und Ownership ohne stille historische Falschaussage.",
+  "publishedRevision": "af792991b9bad92b43b6e1f52832a02ca71a5256",
+  "publishedMapSHA256": "d71a48aaa124f62b48f24eb6dbdeb64ae3692217e2ac4870661f3587fa6a6456",
+  "registrySHA256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+  "committedMapSnapshots": 43,
+  "everObservedRoutes": 166,
+  "currentRoutes": 166,
+  "historicalRemovedRoutes": [],
+  "currentlyMissingHistoricalRoutes": [],
+  "currentOwnerChanges": [],
+  "missingDeclaredSourcePaths": [],
+  "evidence": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/historical-route-transitions.json",
+      "sha256": "315c65a9ede5d5f1f16192a39e899d162f24c3dba2c4379d5fb46bca3d9c65f1"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/current-route-census.json",
+      "sha256": "e09dc090e773d1f67e4df7b1092d66229f908a0b31adfa2c3d4716219d3a86d0"
+    }
+  ],
+  "methodLimit": "Passive Git/blob/filesystem audit only. First-parent publication lineage, not all merged histories or proof a URL was externally served. No source remove/rename execution, link/anchor or semantic acceptance.",
+  "gateState": "not-accepted",
+  "formalIndependentDecision": false,
+  "canonicalWrites": false,
+  "sourceRuntimeChanges": false,
+  "nextAction": "If no actual historical route loss, protect this observed published baseline against future silent loss; prove rename/removal with changed route registry, current links and current ownership plus original source-family mutations. Never invent pre-registry URLs."
+}

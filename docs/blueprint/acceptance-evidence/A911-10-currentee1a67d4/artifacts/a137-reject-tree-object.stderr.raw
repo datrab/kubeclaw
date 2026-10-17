@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: BUSTER_PROVIDER_SOURCE_REVISION: source revision must identify a commit object
+
+'tree' !== 'commit'
+
+    at file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/fixture/scripts/generate-buster-provider-reference.mjs:26:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'tree',
+  expected: 'commit',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

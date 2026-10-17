@@ -1,0 +1,132 @@
+{
+  "utc": "2026-10-17T12:08:34.330508+00:00",
+  "state": "BOUNDED_ROUTE_CONTINUITY_REGRESSIONS_PASS",
+  "primaryGate": "A911-10",
+  "pureTests": 10,
+  "originalGovernanceIntegrationCases": 9,
+  "cases": [
+    {
+      "id": "pure-tests",
+      "argv": [
+        "node",
+        "--test",
+        "scripts/tests/docs-route-continuity.test.mjs"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "✔ unchanged route and new additions retain known routes (0.962085ms)\n✔ rename cannot erase the known route even with a regenerated map (1.376436ms)\n✔ removal cannot erase the last known route (0.188075ms)\n✔ rename or removal with an owned active successor and reason is allowed (0.135664ms)\n✔ retained old owner cannot substitute for successor ownership (0.190005ms)\n✔ dangling redirect, chain, and loop are refused (0.256736ms)\n✔ redirect cannot leave the old route active as a second authority (0.171595ms)\n✔ duplicate routes and redirects are refused (0.235186ms)\n✔ empty migration reasons cannot silently acknowledge historical loss (0.234836ms)\n✔ unknown pre-registry routes are not invented (0.202146ms)\nℹ tests 10\nℹ suites 0\nℹ pass 10\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 61.952274\n",
+      "stderr": ""
+    },
+    {
+      "id": "full166-baseline-check",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "documentation governance passed (166 pages mapped)\n",
+      "stderr": ""
+    },
+    {
+      "id": "rename-refused-before-generation",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExit": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Published route disappeared without a redirect: /reference/documentation-governance/ (docs/site/reference/documentation-governance.md, previous owner: documentation)\n    at assertRouteContinuity (file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/lib/docs-route-continuity.mjs:30:5)\n    at file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/docs-governance.mjs:133:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n"
+    },
+    {
+      "id": "rename-refused-check",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs",
+        "--check"
+      ],
+      "exitCode": 1,
+      "expectedExit": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Published route disappeared without a redirect: /reference/documentation-governance/ (docs/site/reference/documentation-governance.md, previous owner: documentation)\n    at assertRouteContinuity (file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/lib/docs-route-continuity.mjs:30:5)\n    at file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/docs-governance.mjs:133:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n"
+    },
+    {
+      "id": "rename-owned-successor-generate",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "generated docs/site/reference/generated-documentation-map.json (166 pages)\n",
+      "stderr": ""
+    },
+    {
+      "id": "rename-owned-successor-check",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "documentation governance passed (166 pages mapped)\n",
+      "stderr": ""
+    },
+    {
+      "id": "removal-refused-before-generation",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExit": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Published route disappeared without a redirect: /reference/documentation-governance/ (docs/site/reference/documentation-governance.md, previous owner: documentation)\n    at assertRouteContinuity (file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/lib/docs-route-continuity.mjs:30:5)\n    at file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/docs-governance.mjs:133:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n"
+    },
+    {
+      "id": "removal-owned-successor-generate",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "generated docs/site/reference/generated-documentation-map.json (165 pages)\n",
+      "stderr": ""
+    },
+    {
+      "id": "removal-owned-successor-check",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "documentation governance passed (165 pages mapped)\n",
+      "stderr": ""
+    },
+    {
+      "id": "baseline-byte-tamper-refused",
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExit": 1,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/docs-governance.mjs:131\n  throw new Error('Published-route baseline bytes changed; do not repin to hide route loss.');\n        ^\n\nError: Published-route baseline bytes changed; do not repin to hide route loss.\n    at file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/docs-governance.mjs:131:9\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+    }
+  ],
+  "unchangedBaselineOutputSHA256": "d71a48aaa124f62b48f24eb6dbdeb64ae3692217e2ac4870661f3587fa6a6456",
+  "baselineCheckReadOnly": true,
+  "renameRefusalPreservedOutput": true,
+  "removalRefusalPreservedOutput": true,
+  "successorOwnerAndOldMapRemovalAsserted": true,
+  "productionWrites": false,
+  "formalAcceptance": false,
+  "remaining": "Current-link/anchor migration, source-family removal/rename and separate independent Source/Reader/Quality full-gate decisions remain open. Valid redirected synthetic fixture does NOT assert unchanged incoming old markdown links are migrated."
+}

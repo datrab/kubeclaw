@@ -1,0 +1,34 @@
+import subprocess,json,shutil,hashlib
+from pathlib import Path
+from datetime import datetime,timezone
+P=Path(__file__).resolve().parent;F=P/'link-transition-fixture';R=P.parents[1]/'ci-green/repo'
+R=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo')
+assert not F.exists();F.mkdir()
+inputs={}
+for name in ['scripts/docs-check-refs.mjs','scripts/lib/docs-upstream-reference.mjs','scripts/lib/docs-markdown-anchors.mjs']:
+ b=(R/name).read_bytes();inputs[name]=hashlib.sha256(b).hexdigest();p=F/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+entity=R/'node_modules/entities';shutil.copytree(entity,F/'node_modules/entities')
+for p in (F/'node_modules/entities').rglob('*'):
+ if p.is_file():inputs[p.relative_to(F).as_posix()]=hashlib.sha256(p.read_bytes()).hexdigest()
+(F/'package.json').write_text('{"type":"module"}\n')
+subprocess.run(['git','init','-q'],cwd=F,check=True)
+subprocess.run(['git','add','package.json'],cwd=F,check=True)
+subprocess.run(['git','-c','user.name=Nova','-c','user.email=nova@openclaw.local','-c','core.hooksPath=/dev/null','commit','-qm','isolated reference checker package fixture'],cwd=F,check=True)
+D=F/'docs/site';D.mkdir(parents=True);old=D/'old.md';new=D/'new.md';index=D/'README.md'
+old.write_text('# Old reference\n\n## Retained details\n\nCurrent source-backed meaning.\n');index.write_text('# Reader entry\n\n[Current reference](old.md#retained-details)\n')
+cases=[]
+def run(name,expected,diagnostic=None):
+ p=subprocess.run(['node','scripts/docs-check-refs.mjs'],cwd=F,text=True,capture_output=True,timeout=60)
+ (P/(name+'.stdout')).write_text(p.stdout);(P/(name+'.stderr')).write_text(p.stderr)
+ cases.append({'id':name,'exitCode':p.returncode,'expectedExit':expected,'stdout':p.stdout,'stderr':p.stderr})
+ assert p.returncode==expected,(name,p.stdout,p.stderr)
+ if diagnostic:assert diagnostic in p.stderr,(name,p.stderr)
+run('links-baseline',0)
+old.rename(new);run('links-rename-stale-reference',1,'missing local path')
+index.write_text('# Reader entry\n\n[Current reference](new.md#retained-details)\n');run('links-rename-migrated-reference',0)
+new.write_text('# New reference\n\n## Successor details\n\nRetained historical meaning.\n');run('links-rename-stale-anchor',1,'missing Markdown anchor')
+index.write_text('# Reader entry\n\n[Current reference](new.md#successor-details)\n');run('links-rename-migrated-anchor',0)
+new.unlink();run('links-removal-stale-reference',1,'missing local path')
+index.write_text('# Reader entry\n\n## Retained historical decision\n\nThe removed reference has no current contract; its explanation is retained here.\n\n[Current historical disposition](#retained-historical-decision)\n');run('links-removal-migrated-disposition',0)
+result={'utc':datetime.now(timezone.utc).isoformat(),'acceptanceId':'A911-10','state':'ORIGINAL_LINK_CHECKER_SEVEN_TRANSITION_CASES_PASS','cases':cases,'inputsSHA256':inputs,'effects':'Existing reference-checker route in external fixture only. Reuses earlier actual checker route from coordinator-recovery-v1/reference-result.json; copied authentic entities7.0.1 parser package, no stubs. Git operations limited to external package fixture read and setup commit with hooks disabled. No canonical/CI writes.','limit':'Synthetic structural local-link/anchor migration only. Does not qualify source-family rename/removal, full current166page link corpus, semantic content preservation, deployed redirect behavior, or formal independent gate decisions.','formalAcceptance':False,'canonicalWrites':False}
+(P/'actual-link-transition-result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print('Original link checker:7 transitions PASS; stale rename/removal paths and stale anchor rejected; corrected successor/disposition passes.')

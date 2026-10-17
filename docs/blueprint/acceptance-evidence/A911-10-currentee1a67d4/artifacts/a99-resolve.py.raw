@@ -1,0 +1,37 @@
+import json,re,posixpath,subprocess,hashlib
+from pathlib import Path
+from collections import deque
+P=Path(__file__).resolve().parent;E=P.parents[2];R=E/'finish-20261017/ci-green/repo';REV='b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9'
+def git(*a):return subprocess.check_output(['git',*a],cwd=R)
+def sha(b):return hashlib.sha256(b).hexdigest()
+d=json.loads((P/'source-transition-ledger.json').read_text());mp=json.loads(git('show',REV+':docs/site/reference/generated-documentation-map.json'))
+texts={r['page']:git('show',REV+':'+r['page']).decode() for r in mp['pages']};graph={}
+for page,text in texts.items():
+ links=[]
+ for target in re.findall(r'\]\(([^)\s]+)',text):
+  if '://' in target or target.startswith('#'):continue
+  target=target.split('#')[0];dest=posixpath.normpath(posixpath.join(posixpath.dirname(page),target))
+  if dest in texts:links.append(dest)
+ graph[page]=sorted(set(links))
+rows=[]
+for row in d['rows']:
+ src=row['source'];mentions=sorted(p for p,t in texts.items() if src in t);routes=[]
+ for expected in row['expectedPages']:
+  start=expected['page'];q=deque([(start,[start])]);seen=set();found=None
+  while q:
+   page,chain=q.popleft()
+   if page in seen:continue
+   seen.add(page)
+   if page in mentions:found=chain;break
+   if len(chain)<4:q.extend((dest,chain+[dest]) for dest in graph[page])
+  routes.append({'expectedPage':start,'literalSourcePresent':start in mentions,'shortestLiteralSourceLinkChainUpTo3Edges':found,'limit':'Literal path or link reachability is attribution only, not complete semantic removal qualification.'})
+ rows.append({'family':row['family'],'variant':row['variant'],'source':src,'pagesLiterallyCitingSource':mentions,'expectedPageRelations':routes})
+res={'revision':REV,'method':'Complete committed166page literal source-path census and Markdown local-link BFS of at most3edges. Links in inline/code text may be included; reachability is an inspection candidate, not parser/link acceptance. No execution or claim that transitive citation proves exact mutation coverage.','rows':rows,'unresolvedVariants':[r['variant'] for r in rows if any(not x['shortestLiteralSourceLinkChainUpTo3Edges'] for x in r['expectedPageRelations'])],'formalAcceptance':False}
+(P/'source-reference-relations.json').write_text(json.dumps(res,indent=2)+'\n');print('unresolved',res['unresolvedVariants'])
+# Stable complete text review bundle with no source execution, provided inline because shell sandbox can be unavailable.
+prompt='''Independent bounded technical inspection for A911-10; no formal gate Source/Reader/Quality PASS is requested. Do NOT run project code or nested reviews. Use provided exact committed text. Review the audit method and determine which actual evidence gaps prevent A911-10 acceptance. Do not infer a missing direct dependency is a defect if legitimate generated/transitive source binding exists. Distinguish the gate Removal/Rename from the separate all84 mutation A91111 obligation: do not demand all84 here without actual criterion dependency. In particular inspect whether preregistered expected workflows page documents product pipeline/compiler or just GitHub Actions, and whether relation findings are real acceptance-scope gaps rather than authority to silently rewrite fixtures. Return actionable findings about the supplied audit, not a whole PR review. No source/runtime authorization is sought. Source baseline c559 and current b1b2 source surfaces match byte-for-byte; no actual path removals/renames occurred in that interval. Current A91109 registered1/12 must be preserved. We need a finite next targeted removal/rename proof, not unrelated native research.\n'''
+for n in ['audit.py','resolve.py','source-transition-ledger.json','source-reference-relations.json']:
+ prompt+='\nFILE '+n+'\n'+(P/n).read_text()
+prompt+='\nEXACT CURRENT WORKFLOWS PAGE\n'+texts['docs/site/reference/workflows.md']
+(P/'review-prompt.md').write_text(prompt)
+(P/'input-bindings.json').write_text(json.dumps({n:sha((P/n).read_bytes()) for n in ['audit.py','resolve.py','source-transition-ledger.json','source-reference-relations.json','review-prompt.md']},indent=2)+'\n')

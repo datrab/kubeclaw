@@ -1,0 +1,1204 @@
+{
+  "utc": "2026-10-17T12:11:59.538612+00:00",
+  "acceptanceId": "A911-10",
+  "criterion": "Removal und Rename entfernen oder migrieren Referenz, Links, Redirect und Ownership ohne stille historische Falschaussage.",
+  "scope": "All preregistered source surfaces, expected pages, current map ownership and actual Git removal/rename events since c559. Passive exact committed-byte census only; no discovery/generation/native replay.",
+  "reviewedBaseline": "c559e97960a89a0f80487483addb91d2e6e4527d",
+  "publishedRevision": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "authorities": {
+    "docs/blueprint/AP09-acceptance-fixtures.json": "bb5114fd19697495854dcb58f36cd9ee579fe3c146293f2895152bbb94797552",
+    "docs/site/reference/generated-documentation-map.json": "d71a48aaa124f62b48f24eb6dbdeb64ae3692217e2ac4870661f3587fa6a6456"
+  },
+  "families": 14,
+  "variants": 28,
+  "rows": [
+    {
+      "family": "config",
+      "variant": "helm-field",
+      "source": "charts/kubeclaw/values.yaml",
+      "sourceOldSHA256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa",
+      "sourceCurrentSHA256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/use/install.md",
+          "sha256": "8ff7e0d41674ab6a725c0ae091af8fe57c77a55b5c17794853eb904a5d7debed",
+          "exists": true,
+          "owner": "platform operations",
+          "route": "/use/install/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "scripts/deploy.sh",
+            "docs/generated/inventory/deploy-script.json"
+          ],
+          "checks": [
+            "npm run docs:operator-tasks:check",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "yaml-field-v1",
+      "diagnostic": "DOC_DRIFT_CONFIG",
+      "gate": "npm run docs:drift:config:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "config",
+      "variant": "environment-setting",
+      "source": "charts/kubeclaw/templates/deployment.yaml",
+      "sourceOldSHA256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883",
+      "sourceCurrentSHA256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/understand/deployment-and-trust.md",
+          "sha256": "c8d0d18350d14d3b726752f1f52450b24f7d687483175eb06d0178665c7d6037",
+          "exists": true,
+          "owner": "platform architecture and operations",
+          "route": "/understand/deployment-and-trust/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "packaging/runtime/roles",
+            "charts/kubeclaw",
+            "charts/prism"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "yaml-env-entry-v1",
+      "diagnostic": "DOC_DRIFT_CONFIG",
+      "gate": "npm run docs:drift:config:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "config",
+      "variant": "secret-setting",
+      "source": "my-values/setup-secrets.sh",
+      "sourceOldSHA256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+      "sourceCurrentSHA256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/understand/security-and-trust.md",
+          "sha256": "a6bf024534a78d4738417d9aa7070b4e2343c1f7b4f2e56cf4b6fc5184ba04d4",
+          "exists": true,
+          "owner": "platform security and runtime maintainers",
+          "route": "/understand/security-and-trust/",
+          "directSourceDependency": true,
+          "sourceDependencies": [
+            "my-values/infra/spire-values.yaml",
+            "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+            "charts/prism/templates/networkpolicy.yaml",
+            "skills/nova/core/execution/authorization.ts",
+            "my-values/setup-secrets.sh",
+            "skills/nova/core/test-gates/source-snapshot.ts"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "shell-secret-key-v1",
+      "diagnostic": "DOC_DRIFT_CONFIG",
+      "gate": "npm run docs:drift:config:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "config",
+      "variant": "script-flag",
+      "source": "scripts/deploy.sh",
+      "sourceOldSHA256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "sourceCurrentSHA256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/use/install.md",
+          "sha256": "8ff7e0d41674ab6a725c0ae091af8fe57c77a55b5c17794853eb904a5d7debed",
+          "exists": true,
+          "owner": "platform operations",
+          "route": "/use/install/",
+          "directSourceDependency": true,
+          "sourceDependencies": [
+            "scripts/deploy.sh",
+            "docs/generated/inventory/deploy-script.json"
+          ],
+          "checks": [
+            "npm run docs:operator-tasks:check",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "shell-flag-v1",
+      "diagnostic": "DOC_DRIFT_CONFIG",
+      "gate": "npm run docs:drift:config:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "config",
+      "variant": "swarm-config-field",
+      "source": "charts/kubeclaw/files/config/swarm.config.json",
+      "sourceOldSHA256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678",
+      "sourceCurrentSHA256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/use/operate.md",
+          "sha256": "aa713a0462cf8b4781831c2021f3f96fa4e4a263806c27350247d7aa5366f745",
+          "exists": true,
+          "owner": "Nova Core and platform operations",
+          "route": "/use/operate/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "skills/nova/project/cli.ts",
+            "skills/nova/core/cli.ts",
+            "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+            "skills/nova/core/execution/engine-snapshots.ts",
+            "skills/nova/core/execution/engine-run.ts"
+          ],
+          "checks": [
+            "npm run docs:operator-tasks:check",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "json-field-v1",
+      "diagnostic": "DOC_DRIFT_CONFIG",
+      "gate": "npm run docs:drift:config:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "config",
+      "variant": "nested-plugin-config",
+      "source": "skills/nova/plugins/lint/schemas/config.schema.json",
+      "sourceOldSHA256": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8",
+      "sourceCurrentSHA256": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+          "sha256": "85aceb4750cf8270235bd300e8da16872462b3b06950e4fcf2ba24659f3418f3",
+          "exists": true,
+          "owner": "plugin-foundation",
+          "route": "/extend/plugin-catalogue/kubeclaw.lint/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "skills/nova/plugins/lint/plugin.json",
+            "skills/nova/plugins/lint/README.md"
+          ],
+          "checks": [
+            "npm run docs:publication:check",
+            "npm run docs:governance:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "json-schema-nested-field-v1",
+      "diagnostic": "DOC_DRIFT_CONFIG",
+      "gate": "npm run docs:drift:config:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "config",
+      "variant": "default-precedence",
+      "source": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+      "sourceOldSHA256": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3",
+      "sourceCurrentSHA256": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+          "sha256": "85aceb4750cf8270235bd300e8da16872462b3b06950e4fcf2ba24659f3418f3",
+          "exists": true,
+          "owner": "plugin-foundation",
+          "route": "/extend/plugin-catalogue/kubeclaw.lint/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "skills/nova/plugins/lint/plugin.json",
+            "skills/nova/plugins/lint/README.md"
+          ],
+          "checks": [
+            "npm run docs:publication:check",
+            "npm run docs:governance:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-default-precedence-v1",
+      "diagnostic": "DOC_DRIFT_CONFIG",
+      "gate": "npm run docs:drift:config:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "schema",
+      "variant": "recursive-pipeline-field",
+      "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sourceOldSHA256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "sourceCurrentSHA256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/workflows.md",
+          "sha256": "0280269e57663e4cf11da185f31bf19e1cc176def25c7e8edeb8310845351615",
+          "exists": true,
+          "owner": "platform-maintainers",
+          "route": "/reference/workflows/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "scripts/docs-generate.mjs",
+            "docs/generated/inventory/workflows.json"
+          ],
+          "checks": [
+            "npm run docs:inventory:config:check",
+            "npm run docs:generate:check",
+            "npm run docs:drift:config:mutations",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-contract-field-v1",
+      "diagnostic": "DOC_DRIFT_SCHEMA",
+      "gate": "npm run docs:drift:schema:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "schema",
+      "variant": "pipeline-stage-type",
+      "source": "skills/nova/project/compiler.ts",
+      "sourceOldSHA256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "sourceCurrentSHA256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/workflows.md",
+          "sha256": "0280269e57663e4cf11da185f31bf19e1cc176def25c7e8edeb8310845351615",
+          "exists": true,
+          "owner": "platform-maintainers",
+          "route": "/reference/workflows/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "scripts/docs-generate.mjs",
+            "docs/generated/inventory/workflows.json"
+          ],
+          "checks": [
+            "npm run docs:inventory:config:check",
+            "npm run docs:generate:check",
+            "npm run docs:drift:config:mutations",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-stage-kind-v1",
+      "diagnostic": "DOC_DRIFT_SCHEMA",
+      "gate": "npm run docs:drift:schema:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "cli",
+      "variant": "nova-cli-flag",
+      "source": "skills/nova/core/cli.ts",
+      "sourceOldSHA256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+      "sourceCurrentSHA256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/use/operate.md",
+          "sha256": "aa713a0462cf8b4781831c2021f3f96fa4e4a263806c27350247d7aa5366f745",
+          "exists": true,
+          "owner": "Nova Core and platform operations",
+          "route": "/use/operate/",
+          "directSourceDependency": true,
+          "sourceDependencies": [
+            "skills/nova/project/cli.ts",
+            "skills/nova/core/cli.ts",
+            "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+            "skills/nova/core/execution/engine-snapshots.ts",
+            "skills/nova/core/execution/engine-run.ts"
+          ],
+          "checks": [
+            "npm run docs:operator-tasks:check",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-cli-flag-v1",
+      "diagnostic": "DOC_DRIFT_CLI",
+      "gate": "npm run docs:drift:cli:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "contract",
+      "variant": "sdk-export",
+      "source": "skills/common/plugin-runtime/sdk/src/index.ts",
+      "sourceOldSHA256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a",
+      "sourceCurrentSHA256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/extend/developer-handbook.md",
+          "sha256": "4f222cef6c4e6d5c80b3a6dba59d0fddfbb5c74e62bb115cab9365dd7ec20502",
+          "exists": true,
+          "owner": "developer experience maintainers",
+          "route": "/extend/developer-handbook/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "package.json",
+            "package-lock.json",
+            "tsconfig.base.json",
+            "packaging/runtime/package-ownership.json",
+            "versions.json",
+            ".github/workflows",
+            "skills/nova/core",
+            "skills/worker/core",
+            "skills/buster/engine",
+            "skills/prism",
+            "tools/ops-mcp",
+            "scripts"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-export-v1",
+      "diagnostic": "DOC_DRIFT_CONTRACT",
+      "gate": "npm run docs:drift:contract:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "contract",
+      "variant": "public-contract-member",
+      "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sourceOldSHA256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "sourceCurrentSHA256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/extend/developer-handbook.md",
+          "sha256": "4f222cef6c4e6d5c80b3a6dba59d0fddfbb5c74e62bb115cab9365dd7ec20502",
+          "exists": true,
+          "owner": "developer experience maintainers",
+          "route": "/extend/developer-handbook/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "package.json",
+            "package-lock.json",
+            "tsconfig.base.json",
+            "packaging/runtime/package-ownership.json",
+            "versions.json",
+            ".github/workflows",
+            "skills/nova/core",
+            "skills/worker/core",
+            "skills/buster/engine",
+            "skills/prism",
+            "tools/ops-mcp",
+            "scripts"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-contract-member-v1",
+      "diagnostic": "DOC_DRIFT_CONTRACT",
+      "gate": "npm run docs:drift:contract:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "contract",
+      "variant": "progress-contract",
+      "source": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+      "sourceOldSHA256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe",
+      "sourceCurrentSHA256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/workflows.md",
+          "sha256": "0280269e57663e4cf11da185f31bf19e1cc176def25c7e8edeb8310845351615",
+          "exists": true,
+          "owner": "platform-maintainers",
+          "route": "/reference/workflows/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "scripts/docs-generate.mjs",
+            "docs/generated/inventory/workflows.json"
+          ],
+          "checks": [
+            "npm run docs:inventory:config:check",
+            "npm run docs:generate:check",
+            "npm run docs:drift:config:mutations",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-progress-contract-v1",
+      "diagnostic": "DOC_DRIFT_CONTRACT",
+      "gate": "npm run docs:drift:contract:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "event",
+      "variant": "runtime-event",
+      "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sourceOldSHA256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "sourceCurrentSHA256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/understand/telemetry.md",
+          "sha256": "17addd6c976b192627f14d0cf882bc9b8422ae75317878daf5f04f7a15677566",
+          "exists": true,
+          "owner": "observability maintainers",
+          "route": "/understand/telemetry/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "skills/nova/core/telemetry",
+            "skills/common/plugins/openclaw-agent-observer",
+            "contracts/agent-observability/v1",
+            "skills/common/plugins/telemetry-observer",
+            "skills/common/plugins/telemetry-store",
+            "skills/common/plugins/redis-transport",
+            "contracts/telemetry/v1"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-event-member-v1",
+      "diagnostic": "DOC_DRIFT_EVENT",
+      "gate": "npm run docs:drift:event:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "endpoint",
+      "variant": "runtime-http-route",
+      "source": "skills/prism/server/control-server.ts",
+      "sourceOldSHA256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+      "sourceCurrentSHA256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/understand/communication.md",
+          "sha256": "2ea5706d05942d5604c1a83bb86a9dd5f50fbe2fcf8138821b1b500dbba19320",
+          "exists": true,
+          "owner": "runtime and platform maintainers",
+          "route": "/understand/communication/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "contracts/pipeline-test-gate/v1",
+            "contracts/pipeline-worker-core/v1",
+            "skills/nova/core",
+            "skills/worker/core",
+            "skills/common/plugins/redis-transport",
+            "charts/kubeclaw",
+            "charts/prism",
+            "tests/verification/reliability"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-http-route-v1",
+      "diagnostic": "DOC_DRIFT_ENDPOINT",
+      "gate": "npm run docs:drift:endpoint:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "store",
+      "variant": "runtime-store",
+      "source": "skills/nova/core/test-gates/production.ts",
+      "sourceOldSHA256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+      "sourceCurrentSHA256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/understand/data-and-state.md",
+          "sha256": "31ecaea3f860b629ca20fa51b86052d03ad936fa0af0147c703d477e3b4b08c1",
+          "exists": true,
+          "owner": "state-owning component maintainers",
+          "route": "/understand/data-and-state/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "skills/nova/core",
+            "skills/worker/core",
+            "skills/buster/engine",
+            "skills/prism",
+            "charts/prism",
+            "gitops/platform",
+            "scripts/postgresql-recovery.sh",
+            "scripts/redis-prepare-migration.sh"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-store-path-v1",
+      "diagnostic": "DOC_DRIFT_STORE",
+      "gate": "npm run docs:drift:store:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "secret",
+      "variant": "runtime-secret-reference",
+      "source": "charts/kubeclaw/templates/deployment.yaml",
+      "sourceOldSHA256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883",
+      "sourceCurrentSHA256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/understand/security-and-trust.md",
+          "sha256": "a6bf024534a78d4738417d9aa7070b4e2343c1f7b4f2e56cf4b6fc5184ba04d4",
+          "exists": true,
+          "owner": "platform security and runtime maintainers",
+          "route": "/understand/security-and-trust/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "my-values/infra/spire-values.yaml",
+            "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+            "charts/prism/templates/networkpolicy.yaml",
+            "skills/nova/core/execution/authorization.ts",
+            "my-values/setup-secrets.sh",
+            "skills/nova/core/test-gates/source-snapshot.ts"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "yaml-secret-reference-v1",
+      "diagnostic": "DOC_DRIFT_SECRET",
+      "gate": "npm run docs:drift:secret:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "runtime-service",
+      "variant": "kubernetes-service",
+      "source": "charts/prism/templates/services.yaml",
+      "sourceOldSHA256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b",
+      "sourceCurrentSHA256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/understand/platform-and-operations.md",
+          "sha256": "e76fffd0eacba02fb40acf11400bd0748cd2c77e71a846f323d0bc6794cbd607",
+          "exists": true,
+          "owner": "platform architecture and operations",
+          "route": "/understand/platform-and-operations/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "scripts/deploy.sh",
+            "scripts/platform-services.mjs",
+            "charts/ops-pod",
+            "gitops/platform",
+            "my-values/infra"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "yaml-service-v1",
+      "diagnostic": "DOC_DRIFT_RUNTIME_SERVICE",
+      "gate": "npm run docs:drift:runtime-service:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "ops-tool",
+      "variant": "ops-mcp-tool",
+      "source": "tools/ops-mcp/src/server.mjs",
+      "sourceOldSHA256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d",
+      "sourceCurrentSHA256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/understand/ops-mcp.md",
+          "sha256": "ef368af6d2ec5d29576948457cce87dd2f696d03d8b7d2ccce0c3441eb8231ff",
+          "exists": true,
+          "owner": "Ops MCP maintainers",
+          "route": "/understand/ops-mcp/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "tools/ops-mcp/src",
+            "tools/ops-mcp/test",
+            "charts/ops-pod",
+            "scripts/deploy-ops-pod.sh"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "javascript-mcp-tool-v1",
+      "diagnostic": "DOC_DRIFT_OPS_TOOL",
+      "gate": "npm run docs:drift:ops-tool:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "capability",
+      "variant": "plugin-capability",
+      "source": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "sourceOldSHA256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "sourceCurrentSHA256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/capabilities.md",
+          "sha256": "c38ea549137d307fd99eadd500147d3c15125111da765188532bb01a1bf6ed01",
+          "exists": true,
+          "owner": "plugin-foundation",
+          "route": "/reference/capabilities/",
+          "directSourceDependency": true,
+          "sourceDependencies": [
+            "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "skills/buster/engine/test-gates/remote-plan-service.ts"
+          ],
+          "checks": [
+            "npm run docs:publication:check",
+            "npm run docs:governance:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-capability-v1",
+      "diagnostic": "DOC_DRIFT_CAPABILITY",
+      "gate": "npm run docs:drift:capability:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "capability",
+      "variant": "role-grant",
+      "source": "charts/kubeclaw/files/config/swarm.config.json",
+      "sourceOldSHA256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678",
+      "sourceCurrentSHA256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/capabilities.md",
+          "sha256": "c38ea549137d307fd99eadd500147d3c15125111da765188532bb01a1bf6ed01",
+          "exists": true,
+          "owner": "plugin-foundation",
+          "route": "/reference/capabilities/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "skills/buster/engine/test-gates/remote-plan-service.ts"
+          ],
+          "checks": [
+            "npm run docs:publication:check",
+            "npm run docs:governance:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "json-role-grant-v1",
+      "diagnostic": "DOC_DRIFT_CAPABILITY",
+      "gate": "npm run docs:drift:capability:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "plugin-manifest",
+      "source": "skills/nova/plugins/lint/plugin.json",
+      "sourceOldSHA256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+      "sourceCurrentSHA256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+          "sha256": "85aceb4750cf8270235bd300e8da16872462b3b06950e4fcf2ba24659f3418f3",
+          "exists": true,
+          "owner": "plugin-foundation",
+          "route": "/extend/plugin-catalogue/kubeclaw.lint/",
+          "directSourceDependency": true,
+          "sourceDependencies": [
+            "skills/nova/plugins/lint/plugin.json",
+            "skills/nova/plugins/lint/README.md"
+          ],
+          "checks": [
+            "npm run docs:publication:check",
+            "npm run docs:governance:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "plugin-manifest-registration-v1",
+      "diagnostic": "DOC_DRIFT_PLUGIN_REGISTRATION",
+      "gate": "npm run docs:drift:plugin-registration:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "extension-class",
+      "source": "skills/common/plugin-runtime/foundation/registry/types.ts",
+      "sourceOldSHA256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+      "sourceCurrentSHA256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/extend/README.md",
+          "sha256": "6348ee643de064af6c0be4387d943ba3478d58c7a5514d99b6897badceca70ba",
+          "exists": true,
+          "owner": "plugin-foundation",
+          "route": "/extend/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+            "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "skills/common/plugin-runtime/foundation/registry",
+            "packaging/runtime/roles",
+            "packaging/runtime/package-ownership.json"
+          ],
+          "checks": [
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-extension-class-v1",
+      "diagnostic": "DOC_DRIFT_PLUGIN_REGISTRATION",
+      "gate": "npm run docs:drift:plugin-registration:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "provider-registration",
+      "source": "tests/verification/e2e/provider-catalog.mjs",
+      "sourceOldSHA256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e",
+      "sourceCurrentSHA256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/buster-provider-configuration.md",
+          "sha256": "61a83b12f519fe6e9249ef96233a57dd886ccd2b8704abb27c606d8817b4a8c5",
+          "exists": true,
+          "owner": "buster",
+          "route": "/reference/buster-provider-configuration/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "scripts/generate-buster-provider-reference.mjs",
+            "skills/buster/plugins/api-flow/schemas/config.schema.json",
+            "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+            "skills/buster/plugins/axe/schemas/config.schema.json",
+            "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+            "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "skills/buster/plugins/http/schemas/config.schema.json",
+            "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+            "skills/buster/plugins/visual/schemas/config.schema.json"
+          ],
+          "checks": [
+            "npm run docs:buster-guides:check",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "javascript-provider-registration-v1",
+      "diagnostic": "DOC_DRIFT_PLUGIN_REGISTRATION",
+      "gate": "npm run docs:drift:plugin-registration:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "fixture-registration",
+      "source": "tests/verification/e2e/fixture-coverage.mjs",
+      "sourceOldSHA256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6",
+      "sourceCurrentSHA256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/buster-suites.md",
+          "sha256": "70e0d24fa3fc633dfa292c47705ed45e33dade9c3b396143daa404e3bbc2e4f1",
+          "exists": true,
+          "owner": "buster",
+          "route": "/reference/buster-suites/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "contracts/pipeline-test-gate/v1/suites",
+            "skills/buster/plugins"
+          ],
+          "checks": [
+            "npm run docs:buster-guides:check",
+            "npm run docs:inventory:config:check",
+            "npm run docs:generate:check",
+            "npm run docs:drift:config:mutations",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "javascript-fixture-registration-v1",
+      "diagnostic": "DOC_DRIFT_PLUGIN_REGISTRATION",
+      "gate": "npm run docs:drift:plugin-registration:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "report-format-registration",
+      "source": "skills/buster/engine/test-gates/production.ts",
+      "sourceOldSHA256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+      "sourceCurrentSHA256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/buster-suites.md",
+          "sha256": "70e0d24fa3fc633dfa292c47705ed45e33dade9c3b396143daa404e3bbc2e4f1",
+          "exists": true,
+          "owner": "buster",
+          "route": "/reference/buster-suites/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "contracts/pipeline-test-gate/v1/suites",
+            "skills/buster/plugins"
+          ],
+          "checks": [
+            "npm run docs:buster-guides:check",
+            "npm run docs:inventory:config:check",
+            "npm run docs:generate:check",
+            "npm run docs:drift:config:mutations",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-report-registration-v1",
+      "diagnostic": "DOC_DRIFT_PLUGIN_REGISTRATION",
+      "gate": "npm run docs:drift:plugin-registration:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "error-code",
+      "variant": "runtime-error-family",
+      "source": "skills/buster/engine/test-gates/production.ts",
+      "sourceOldSHA256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+      "sourceCurrentSHA256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/buster-error-codes.md",
+          "sha256": "db2cb8053f9a16ca269cc093143e1703bc7d5518104072dbf41020ea77e0920f",
+          "exists": true,
+          "owner": "buster",
+          "route": "/reference/buster-error-codes/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "scripts/generate-buster-error-reference.mjs"
+          ],
+          "checks": [
+            "npm run docs:buster-guides:check",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-error-code-v1",
+      "diagnostic": "DOC_DRIFT_ERROR_CODE",
+      "gate": "npm run docs:drift:error-code:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    },
+    {
+      "family": "workflow",
+      "variant": "pipeline-workflow",
+      "source": "skills/nova/project/compiler.ts",
+      "sourceOldSHA256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "sourceCurrentSHA256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "sourceChangedSinceA91109ReviewedRevision": false,
+      "sourcePresent": true,
+      "actualDeletionRenameEvents": "",
+      "expectedPages": [
+        {
+          "page": "docs/site/reference/workflows.md",
+          "sha256": "0280269e57663e4cf11da185f31bf19e1cc176def25c7e8edeb8310845351615",
+          "exists": true,
+          "owner": "platform-maintainers",
+          "route": "/reference/workflows/",
+          "directSourceDependency": false,
+          "sourceDependencies": [
+            "scripts/docs-generate.mjs",
+            "docs/generated/inventory/workflows.json"
+          ],
+          "checks": [
+            "npm run docs:inventory:config:check",
+            "npm run docs:generate:check",
+            "npm run docs:drift:config:mutations",
+            "npm run docs:governance:check",
+            "npm run docs:publication:check",
+            "npm run docs:check:refs"
+          ]
+        }
+      ],
+      "constructor": "typescript-workflow-selection-v1",
+      "diagnostic": "DOC_DRIFT_WORKFLOW",
+      "gate": "npm run docs:drift:workflow:check",
+      "actualMutationEvidence": "not established by this passive census",
+      "removeRenameQualification": "open; drift change/remove is not automatically a positive migrated output/owner/link proof"
+    }
+  ],
+  "summary": {
+    "changedSources": [],
+    "absentSources": [],
+    "actualRemovalRenameEvents": [],
+    "missingExpectedPages": [],
+    "ownerlessExpectedPages": [],
+    "missingDirectSourceBindings": [
+      {
+        "variant": "helm-field",
+        "source": "charts/kubeclaw/values.yaml",
+        "page": "docs/site/use/install.md"
+      },
+      {
+        "variant": "environment-setting",
+        "source": "charts/kubeclaw/templates/deployment.yaml",
+        "page": "docs/site/understand/deployment-and-trust.md"
+      },
+      {
+        "variant": "swarm-config-field",
+        "source": "charts/kubeclaw/files/config/swarm.config.json",
+        "page": "docs/site/use/operate.md"
+      },
+      {
+        "variant": "nested-plugin-config",
+        "source": "skills/nova/plugins/lint/schemas/config.schema.json",
+        "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md"
+      },
+      {
+        "variant": "default-precedence",
+        "source": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+        "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md"
+      },
+      {
+        "variant": "recursive-pipeline-field",
+        "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "page": "docs/site/reference/workflows.md"
+      },
+      {
+        "variant": "pipeline-stage-type",
+        "source": "skills/nova/project/compiler.ts",
+        "page": "docs/site/reference/workflows.md"
+      },
+      {
+        "variant": "sdk-export",
+        "source": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "page": "docs/site/extend/developer-handbook.md"
+      },
+      {
+        "variant": "public-contract-member",
+        "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "page": "docs/site/extend/developer-handbook.md"
+      },
+      {
+        "variant": "progress-contract",
+        "source": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "page": "docs/site/reference/workflows.md"
+      },
+      {
+        "variant": "runtime-event",
+        "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "page": "docs/site/understand/telemetry.md"
+      },
+      {
+        "variant": "runtime-http-route",
+        "source": "skills/prism/server/control-server.ts",
+        "page": "docs/site/understand/communication.md"
+      },
+      {
+        "variant": "runtime-store",
+        "source": "skills/nova/core/test-gates/production.ts",
+        "page": "docs/site/understand/data-and-state.md"
+      },
+      {
+        "variant": "runtime-secret-reference",
+        "source": "charts/kubeclaw/templates/deployment.yaml",
+        "page": "docs/site/understand/security-and-trust.md"
+      },
+      {
+        "variant": "kubernetes-service",
+        "source": "charts/prism/templates/services.yaml",
+        "page": "docs/site/understand/platform-and-operations.md"
+      },
+      {
+        "variant": "ops-mcp-tool",
+        "source": "tools/ops-mcp/src/server.mjs",
+        "page": "docs/site/understand/ops-mcp.md"
+      },
+      {
+        "variant": "role-grant",
+        "source": "charts/kubeclaw/files/config/swarm.config.json",
+        "page": "docs/site/reference/capabilities.md"
+      },
+      {
+        "variant": "extension-class",
+        "source": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "page": "docs/site/extend/README.md"
+      },
+      {
+        "variant": "provider-registration",
+        "source": "tests/verification/e2e/provider-catalog.mjs",
+        "page": "docs/site/reference/buster-provider-configuration.md"
+      },
+      {
+        "variant": "fixture-registration",
+        "source": "tests/verification/e2e/fixture-coverage.mjs",
+        "page": "docs/site/reference/buster-suites.md"
+      },
+      {
+        "variant": "report-format-registration",
+        "source": "skills/buster/engine/test-gates/production.ts",
+        "page": "docs/site/reference/buster-suites.md"
+      },
+      {
+        "variant": "runtime-error-family",
+        "source": "skills/buster/engine/test-gates/production.ts",
+        "page": "docs/site/reference/buster-error-codes.md"
+      },
+      {
+        "variant": "pipeline-workflow",
+        "source": "skills/nova/project/compiler.ts",
+        "page": "docs/site/reference/workflows.md"
+      }
+    ]
+  },
+  "limits": [
+    "Missing direct dependency may have a legitimate transitive owner/generator; not an automatic defect verdict.",
+    "No change since c559 proves no new source loss in that interval, not completeness of older source coverage.",
+    "Registered 84 mutation evidence and distinct Source/Reader/Quality decisions remain open; this receipt grants no gate PASS."
+  ],
+  "formalAcceptance": false,
+  "canonicalWrites": false,
+  "targetExecutions": 0
+}

@@ -1,0 +1,59 @@
+{
+  "acceptanceId": "A911-10",
+  "state": "PARTIAL_APPLICABILITY_NOT_REQUIREMENT_ACCEPTANCE",
+  "criterion": "Removal und Rename entfernen oder migrieren Referenz, Links, Redirect und Ownership ohne stille historische Falschaussage.",
+  "directRequirementPortions": [
+    {
+      "id": "GOV-007",
+      "portion": "Known-route deprecation/redirect/supersession and truthful historical boundary",
+      "requiredEvidence": "Exact historical map provenance + lost-route refusal + valid owned successor; semantic rationale and compatibility reviewed independently."
+    },
+    {
+      "id": "MNT-009",
+      "portion": "After source/page rename or removal no orphan source or stale reverse reference",
+      "requiredEvidence": "Per-affected-family source inventory, current generated reference, owner and source-to-doc mapping; not supplied by route-only validator."
+    },
+    {
+      "id": "MNT-013",
+      "portion": "Migrate links, anchors and pinned source ranges on affected pages",
+      "requiredEvidence": "Actual selected link/anchor/source-range checker diagnostics and clean corrected outputs; no route-count substitute."
+    },
+    {
+      "id": "MNT-015",
+      "portion": "Current ownership after affected page/source transition",
+      "requiredEvidence": "New current map with nonblank owner, no obsolete competing active route, independent ownership semantics."
+    },
+    {
+      "id": "MNT-017",
+      "portion": "Safe maintenance removal/rename procedure",
+      "requiredEvidence": "Route/source/reference/link/ownership transitions and historical retention explained without claiming global AP11 closure."
+    }
+  ],
+  "familyRequirements": "MNT-002 through MNT-008 and MNT-010 through MNT-012 apply to their actually affected inventory/drift surfaces; no global acceptance of these requirements, and route-only tests cannot satisfy them.",
+  "neighborGateBoundary": {
+    "A911-07": "Exhaustive complete source-to-doc coverage stays open; this gate checks preservation/migration for affected removal/rename.",
+    "A911-09": "Original c559 reviewed/c48 evidence/af792 registration unchanged. New governance-source change requires its own impact review; no blanket replay or inherited current-head PASS.",
+    "A911-11": "84 registered add/change/remove mutation variants remain mandatory at overall scope; not all arbitrarily repeated for route-only change. Exact remove/rename reference evidence remains necessary for A911-10."
+  },
+  "fixtures": {
+    "readerFixtureIds": [],
+    "executionScenarioIds": [],
+    "authority": "Exact A911-10 matrix record; empty direct IDs do not waive applicable source/reference/link mutation evidence."
+  },
+  "baselineVerification": {
+    "revision": "af792991b9bad92b43b6e1f52832a02ca71a5256",
+    "mapSHA256": "d71a48aaa124f62b48f24eb6dbdeb64ae3692217e2ac4870661f3587fa6a6456",
+    "pageProjectionExact": true,
+    "pages": 166
+  },
+  "otherLayerFinding": {
+    "parity": "docs-parity-check.mjs:882-915 checks redirect decisions for classified legacy extraction; does not compare arbitrary future canonical route removals with an immutable previous map.",
+    "publication": "docs-publication.mjs:1000-1033 copies markdown plus allowed registry assets. No HTTP redirect handler is implemented or claimed by this patch.",
+    "governance": "Existing validation checks declared redirect targets but had no retained route baseline; prior eight actual runs prove post-regeneration escape."
+  },
+  "remainingDecisionConditions": [
+    "Independent bounded source review, then focused pure and original governance integration regressions.",
+    "Actually remove/rename source-family references and migrate current links with attributable actual evidence.",
+    "Stable reviewed revision + independent Source/Reader/Quality gate decisions + persisted evidence/registration/verified commit and push."
+  ]
+}
