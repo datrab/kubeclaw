@@ -1,3 +1,4 @@
+import { restorePublisherRuntimeBindings, type PublisherRuntimeBindings } from './publisher-runtime-binding.ts';
 import { restoreOperatorRuntimeBindings, type OperatorRuntimeBindings } from './operator-runtime-binding.ts';
 import { restoreRedisRuntimeBindings, type RedisRuntimeBindings } from './redis-runtime-binding.ts';
 import type {ReviewRuntimeBinding} from './review-runtime-targets.ts';
@@ -44,10 +45,11 @@ export interface PreparedRuntime extends RuntimeConfigurationInspection {
  * NOT original-run discovery, a v10 source receipt, or permission to activate.
  * In particular, it does not authenticate canonical AUTHOR/task/R/caller inputs.
  */
-export function inspectRuntimeConfiguration(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>, retainedReviewBinding?:ReviewRuntimeBinding, retainedRedisBindings?:RedisRuntimeBindings, retainedOperatorBindings?:OperatorRuntimeBindings): RuntimeConfigurationInspection {
+export function inspectRuntimeConfiguration(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>, retainedReviewBinding?:ReviewRuntimeBinding, retainedRedisBindings?:RedisRuntimeBindings, retainedOperatorBindings?:OperatorRuntimeBindings, retainedPublisherBindings?:PublisherRuntimeBindings): RuntimeConfigurationInspection {
   const corePolicy = retainedCorePolicy === undefined ? loadCoreRuntimePolicy(platform.corePolicySelection) : captureCoreRuntimePolicy(retainedCorePolicy);
   const originalRedis = retainedRedisBindings === undefined ? platform.adapters : restoreRedisRuntimeBindings(platform.adapters, retainedRedisBindings);
-  const originalAdapters = retainedOperatorBindings === undefined ? originalRedis : restoreOperatorRuntimeBindings(originalRedis, retainedOperatorBindings);
+  const originalOperator = retainedOperatorBindings === undefined ? originalRedis : restoreOperatorRuntimeBindings(originalRedis, retainedOperatorBindings);
+  const originalAdapters = retainedPublisherBindings === undefined ? originalOperator : restorePublisherRuntimeBindings(originalOperator, retainedPublisherBindings);
   const adapterConfigurations = selectedAdapterConfigurations(originalAdapters, corePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections, retainedReviewBinding);
   if(retainedReviewBinding!==undefined) {
     if(corePolicy.reviewPolicyCapture?.settings.schemaVersion!=='review-owned-decision-profiles.v2' || platform.providers['runtime.dispatch']!==retainedReviewBinding.provider || !platform.activeAdapters.includes(retainedReviewBinding.provider))throw new Error('RECOVERY_REVIEW_TARGET_PROVIDER_MISMATCH');
@@ -70,8 +72,8 @@ export function inspectRuntimeConfiguration(platform: PlatformConfig, definition
   return { reviewRuntimeBinding, corePolicy, adapterConfigurations, observerConfigurations, configuration: { corePolicy, providers: platform.providers, grants: platform.grants, adapters: adapterConfigurations, activeAdapters: platform.activeAdapters, observers: observerConfigurations, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted };
 }
 
-export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>, retainedReviewBinding?:ReviewRuntimeBinding, retainedRedisBindings?:RedisRuntimeBindings, retainedOperatorBindings?:OperatorRuntimeBindings): Promise<PreparedRuntime> {
-  const inspected = inspectRuntimeConfiguration(platform, definition, retainedCorePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections, retainedReviewBinding, retainedRedisBindings, retainedOperatorBindings);
+export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>, retainedReviewBinding?:ReviewRuntimeBinding, retainedRedisBindings?:RedisRuntimeBindings, retainedOperatorBindings?:OperatorRuntimeBindings, retainedPublisherBindings?:PublisherRuntimeBindings): Promise<PreparedRuntime> {
+  const inspected = inspectRuntimeConfiguration(platform, definition, retainedCorePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections, retainedReviewBinding, retainedRedisBindings, retainedOperatorBindings, retainedPublisherBindings);
   return { ...inspected, activated: await activateRegistry(inspected.snapshot, new Set(inspected.granted.grants.keys()), platform.isolation, inspected.corePolicy.isolationSession) };
 }
 
