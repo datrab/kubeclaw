@@ -1,3 +1,4 @@
+import { materializeHistoricalRuntime } from '../../fixtures/historical-runtime-producers.mjs';
 import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 // Actual original run creation, registered adapters, HTTP and process death.
 // The 503 ACP receiver is deliberately NOT a Gateway; no session success claim.
@@ -52,26 +53,7 @@ function platform(root,origin,kind){
 }
 function archivedCore(root,version){
   if(version==='v4')return path.join(source,'skills/nova/core');
-  const target=path.join(root,'archived-core');
-  if(!fs.existsSync(target)){
-    fs.cpSync(path.join(source,'skills/nova/core'),target,{recursive:true,filter:file=>!file.split(path.sep).includes('node_modules')});
-    fs.symlinkSync(path.join(source,'node_modules'),path.join(target,'node_modules'),'dir');
-    const old=version==='v1'?path.join(fixtures,'legacy-source-producer/core/execution/engine-snapshots.ts.txt'):
-      version==='v2'?path.join(fixtures,'legacy-transport-profile/engine-snapshots-v2.ts.txt'):
-      path.join(fixtures,'legacy-review-cache/engine-snapshots.ts.txt');
-    const manifest=JSON.parse(fs.readFileSync(path.join(fixtures,version==='v1'?'legacy-source-producer/provenance.json':
-      version==='v2'?'legacy-transport-profile/provenance.json':'legacy-review-cache/provenance.json'),'utf8'));
-    const verify=(file,sha)=>{const bytes=fs.readFileSync(file);assert.equal(crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),sha);};
-    verify(old,version==='v1'?manifest.files.find(x=>x.archivePath==='core/execution/engine-snapshots.ts.txt').gitBlobSha1:
-      version==='v2'?manifest.gitBlobSha1:manifest.files.find(x=>x.archivePath==='engine-snapshots.ts.txt').gitBlobSha1);
-    fs.copyFileSync(old,path.join(target,'execution/engine-snapshots.ts'));
-    if(version==='v1'){
-      const graph=path.join(fixtures,'legacy-source-producer/core/execution/graph.ts.txt');
-      verify(graph,manifest.files.find(x=>x.archivePath==='core/execution/graph.ts.txt').gitBlobSha1);
-      fs.copyFileSync(graph,path.join(target,'execution/graph.ts'));
-    }
-  }
-  return target;
+  return materializeHistoricalRuntime(root,version,source);
 }
 if(process.argv[2]==='--child'){
   const [root,origin,version,mode,boundary,localeJournal]=process.argv.slice(3);
@@ -82,6 +64,17 @@ if(process.argv[2]==='--child'){
   const {runRoot}=await import(pathToFileURL(path.join(source,'skills/nova/core/execution/run-root.ts')));
   const {buildArchitectureRequest}=await import(pathToFileURL(path.join(source,'skills/nova/plugins/architecture-validator/src/protocol.ts')));
   const p=platform(root,origin,mode==='prefix'||mode.startsWith('helper-')?'generic':'acp');
+  if((mode==='pipeline'||mode==='recover')&&version!=='v4'){
+    const original=path.resolve(archivedCore(root,version),'../../..');
+    p.installationRoots=['common','nova'].map(role=>path.join(original,'skills',role,'plugins'));
+    p.trustedBuiltinRoots=p.installationRoots;
+    // Historical wire predates timing-profile selection. Preserve the same
+    // explicit fixture owner values when invoking its original typed parser.
+    const target=p.adapters['kubeclaw.runtime-dispatch:openclaw'].targets.agent;
+    const owner=JSON.parse(fs.readFileSync(p.corePolicySelection.file,'utf8'));
+    const timing=owner.profiles.standard.settings.openClawDispatch.targetTimingProfiles[target.timingProfile];
+    delete target.timingProfile;Object.assign(target,timing);
+  }
   const location=runRoot(p.storageRoot,runId);
   if(mode.startsWith('helper-')){
     const sdk=await import('@kubeclaw/plugin-sdk');
@@ -127,9 +120,14 @@ if(process.argv[2]==='--child'){
     }finally{await runtime.shutdown();}
     process.stdout.write(JSON.stringify({helper:mode,checked,nativeModel:false}));
   }else if(mode==='pipeline'||mode==='recover'){
-    // Historical source writer is archived byte-for-byte; current source is used
-    // for all package resolution. No old local Git object or fabricated journal.
-    const engine=await import(pathToFileURL(path.join(mode==='pipeline'?archivedCore(root,version):path.join(source,'skills/nova/core'),'execution/engine.ts')));
+    // Genuine pre-CONFIG runs have no captured Core policy: maintained source
+    // must deny execution, never refill the absent policy from current B.
+    // Reopen their terminal state through the authentic original runtime.
+    if(mode==='recover'&&version!=='v4'){
+      const maintained=await import(pathToFileURL(path.join(source,'skills/nova/core/execution/engine.ts')));
+      await assert.rejects(maintained.recoverPipelineV2(p,definition,runId),/RECOVERY_CORE_POLICY_MISSING/);
+    }
+    const engine=await import(pathToFileURL(path.join(archivedCore(root,version),'execution/engine.ts')));
     let result,error;
     try{result=await(mode==='pipeline'?engine.runPipelineV2(p,definition,runId):engine.recoverPipelineV2(p,definition,runId));}
     catch(e){error=e.message;}
