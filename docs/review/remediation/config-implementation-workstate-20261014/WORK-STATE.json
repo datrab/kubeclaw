@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T04:39:32.246549+00:00",
+  "updatedAt": "2026-10-17T04:43:39.780104+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -28797,5 +28797,41 @@
     "writerLock": "SAME nonblocking repository lock held for bounded operations; released at command exit",
     "noHistoricalFollowup": true,
     "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites."
+  },
+  "productDecisionsPackaged20261017": {
+    "at": "2026-10-17T04:43:39.780104+00:00",
+    "status": "ORIGINAL_PRODUCT_AUTHORITY_ARCHIVE_3_OF_3_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "788c70987cb6692a3eb81c36256664e2d7b536b1",
+    "verifiedRemoteHead": "788c70987cb6692a3eb81c36256664e2d7b536b1",
+    "sourceRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-product-decisions-packaged-20261017",
+    "change": "Three original Product authority suites now render complete normal Prism chart archives; actual sole-root selected topology supplies release/namespace and is byte-semantically verified inside archive. Original disabled isolation, Control-only signing/scoped transport, rotation, trust coexistence and all incomplete/ambiguous authority negative assertions unchanged. No production policy/default/authority change.",
+    "checks": {
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "original-suite.txt",
+      "allOriginalCaseBodiesByteIdentical": true,
+      "syntaxAndDiffCheck": true
+    },
+    "independentReview": "OPEN: no callable native spawn/review/collaboration tools; CONFIG subagents0; parent terminal; no fresh independent report; unchanged EROFS not replayed. Author checks only.",
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "originalResultsChanged": false
+    },
+    "qualification": "Local full archive Helm rendering only; synthetic CI OCI/native identities are not boot proof. Original product authority Helm inputs retained, not claimed newly externalized.",
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "externalOwner": "Raven",
+    "resumeCondition": "Unchanged genuine isolated Linux Docker UID1000 delegated writable cgroup/native pool, trusted writable archive storage and migrated isolated PostgreSQL.",
+    "writerLock": "SAME shared nonblocking exclusive lock; released on bounded command exit",
+    "noHistoricalFollowup": true
   }
 }
