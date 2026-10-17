@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-17T04:04:53.164220+00:00",
+  "status": "ORIGINAL_PRISM_PACKAGED_CHART_345_OF_345_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "c2c79aa8ff22f8c966a65ca70228ca8f03601927",
+  "sourceRemoteVerified": true,
+  "testedBaseCommit": "2d124af33fe48985617f8f2b24035d0ef754eca9",
+  "evidence": "docs/review/remediation/config-prism-original-packaged-chart-20261017",
+  "change": "All original Prism delivery Helm calls now render the complete normal .tgz package, verifying archived selected topology. Genuine role build uses actual checkout revision and timestamp with manifest equality, not synthetic identity. Original tests and negative/restored-positive boot and checksum controls preserved. No production policy/schema/default/authority changed.",
+  "checks": {
+    "command": "NODE_ENV=test node --test --test-concurrency=1 tests/verification/deployment/prism-swarm-config.test.mjs",
+    "tests": 345,
+    "passed": 345,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "exitCode": 0,
+    "durationMs": 50374.637457,
+    "nodeSyntaxAndDiffCheck": true
+  },
+  "qualification": "Local complete chart packaging/render and genuine installed role receipt/capture consumers only. NOT OCI, actual UID1000, native, independent or full C0-C6 acceptance. Render fixture native identities remain shape-only; worktree package source revision is not proof of a clean committed closure. No reproduced production failure claimed.",
+  "originalRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+    "unchangedFromHEAD": true,
+    "originalResultsChanged": false
+  },
+  "sourceHashes": {
+    "tests/verification/deployment/prism-swarm-config.test.mjs": "9b032b5ae0c3dcab34feb3c9a33c42dd4aa6218abc3cc95c340723e9e073151e"
+  },
+  "independentReview": "OPEN; native spawn/review/collaboration tools absent, CONFIG subagents0, parent terminal, no fresh independent reviewer output; unchanged helper EROFS not retried. Author checks only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged suitable isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL. No identity/kernel/trust spoof or skipped acceptance.",
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites.",
+  "writerLock": "SAME nonblocking exclusive lock; terminal parent and no productive repository worker; released after each bounded command",
+  "noHistoricalFollowup": true
+}
