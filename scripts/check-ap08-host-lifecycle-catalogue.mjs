@@ -7,18 +7,25 @@ import { execFileSync } from 'node:child_process';
 
 const root = path.resolve(import.meta.dirname, '..');
 const revision = '32b02816cc19cc8865a45b221b8b6ca28e99e8fb';
+// Reader journeys have independently maintained evidence; catalogue authority stays fixed.
+const readerRevisions = new Map([
+  ['docs/site/extend/host-and-engine.md', '569f7b4933d4859cc67c80ddf40d5154ffd95ce5'],
+  ['docs/site/extend/testing.md', 'f68a7294abf0928c1aabf290c6a7e486c651a808'],
+]);
 
 function read(relative) {
   return fs.readFileSync(path.join(root, relative), 'utf8');
 }
 
 function pinnedLinks(relative, minimum) {
+  const readerRevision = readerRevisions.get(relative);
+  assert(readerRevision, `${relative} has no qualified reader evidence revision`);
   const source = read(relative);
   const links = [...source.matchAll(/https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^#)]+)#L([0-9]+)-L([0-9]+)/gu)];
   assert(links.length >= minimum, `${relative} has only ${links.length} pinned line links`);
   for (const [, linkRevision, repositoryPath, firstValue, lastValue] of links) {
-    assert.equal(linkRevision, revision, `${relative} uses another revision for ${repositoryPath}`);
-    const value = execFileSync('git', ['-C', root, 'show', `${revision}:${repositoryPath}`], { encoding: 'utf8' });
+    assert.equal(linkRevision, readerRevision, `${relative} uses another revision for ${repositoryPath}`);
+    const value = execFileSync('git', ['-C', root, 'show', `${readerRevision}:${repositoryPath}`], { encoding: 'utf8' });
     const first = Number(firstValue);
     const last = Number(lastValue);
     assert(first >= 1 && last >= first && last <= value.split('\n').length,
@@ -61,7 +68,7 @@ for (const [relative, source] of [
   ['docs/site/extend/host-and-engine.md', host],
   ['docs/site/extend/testing.md', lifecycle],
 ]) {
-  assert(source.includes(`Evidence revision: \`${revision}\``), `${relative} lacks the evidence revision`);
+  assert(source.includes(`Evidence revision: \`${readerRevisions.get(relative)}\``), `${relative} lacks the evidence revision`);
   const codeBlocks = [...source.matchAll(/^```([^\n]*)$/gmu)]
     .map((match) => match[1].trim().toLowerCase())
     .filter((language) => language && !['bash', 'text', 'mermaid'].includes(language));
