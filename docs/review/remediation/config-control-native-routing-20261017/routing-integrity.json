@@ -1,0 +1,10 @@
+{
+  "originalProcessSuffixSha256": "ed45fa8315ebf3ede5b0bb7d8d32d81ded7796fe5a7e3fe3d2222e3b1e58398f",
+  "processSuffixByteIdentical": true,
+  "originalProcessCases": 3,
+  "existingNativeCommand": "npm run test:worker:native --prefix skills/prism",
+  "existingSourceCommand": "npm test --prefix skills/prism",
+  "nativeCasesRemovedFromSourceOnlyGlob": true,
+  "nativeCasesIncludedByExistingMandatoryNativeGlob": true,
+  "noSkippedOrRemovedOriginalCases": true
+}

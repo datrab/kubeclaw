@@ -1,0 +1,19 @@
+✔ Control listener rejects invalid authored port undefined (3551.881397ms)
+✔ Control listener rejects invalid authored port null (3352.480366ms)
+✔ Control listener rejects invalid authored port 8080 (3355.105473ms)
+✔ Control listener rejects invalid authored port 0 (3264.76705ms)
+✔ Control listener rejects invalid authored port -1 (3340.458624ms)
+✔ Control listener rejects invalid authored port 1.5 (3258.848906ms)
+✔ Control listener rejects invalid authored port 65536 (3288.009809ms)
+✔ Control listener rejects invalid authored port true (3361.347504ms)
+✔ Control accepts TCP boundary 1 without promising host bind permissions (4213.698582ms)
+✔ Control accepts TCP boundary 65535 without promising host bind permissions (4120.519086ms)
+✔ Control snapshot owns the port before asynchronous composition; Worker uses its separate authored port (4737.78086ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40017.240361

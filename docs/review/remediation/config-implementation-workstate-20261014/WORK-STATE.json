@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T03:14:17.967619+00:00",
+  "updatedAt": "2026-10-17T03:20:21.711180+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Resolve original three invalid-port entrypoint receiving obligations without authenticating invalid generation; complete genuine QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed publication and coordinated sole-root actual boot/Nova receiving. All independent/history/native/archive/full C0-C6 gates OPEN.",
+  "nextAction": "Complete genuine QB-R02 producer/source/build/baseline and original inputStore reservation/accounting/sealed publication plus coordinated sole-root actual boot/Nova receiving. Keep three original invalid-port entrypoint obligations and independent/history/native/archive/full C0-C6 gates OPEN. Do not rerun unchanged green source listener suite.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -26854,5 +26854,60 @@
     "verifiedRemoteHead": "2d7dc1d1fd569288c90e511b94dbd3b130aa21d4",
     "sourceRemoteVerified": true,
     "evidence": "docs/review/remediation/config-worker-listener-installed-20261017"
+  },
+  "controlNativeRouting20261017": {
+    "at": "2026-10-17T03:20:21.711180+00:00",
+    "status": "ORIGINAL_CONTROL_PROCESS_ROUTING_FIXED_NATIVE_EXECUTION_OPEN",
+    "sourceCommit": "720c7eb7789a8039f285a3a1172b5ef248543abd",
+    "verifiedRemoteHead": "720c7eb7789a8039f285a3a1172b5ef248543abd",
+    "sourceRemoteVerified": true,
+    "change": "Three original installed Control process cases routed from generic source test glob into existing mandatory sequential native glob. Original process bodies/helpers/credentials byte-identical; no original assertion/deadline changed. No production source/settings change.",
+    "checks": {
+      "wholeOriginalSourceListenerSuite": {
+        "passed": 11,
+        "total": 11,
+        "failed": 0,
+        "skipped": 0
+      },
+      "strictPrismTypecheck": true,
+      "nativeGuestDenial": "Expected failure before fixture build/install; NOT native execution PASS",
+      "routingIntegrity": "Exact suffix/helper preservation plus actual existing glob membership",
+      "diffCheck": true
+    },
+    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable \u2139 summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
+    "originalRoster": {
+      "fields": {
+        "required": 2409,
+        "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+        "originalResultsChanged": false
+      },
+      "cases": {
+        "required": 6845,
+        "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+        "originalResultsChanged": false
+      },
+      "requirements": {
+        "required": 50,
+        "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+        "originalResultsChanged": false
+      }
+    },
+    "nativeExecution": "NOT_RUN_NOT_VERIFIED: suitable isolated guest absent",
+    "independentReview": "OPEN: no native spawn/review tools exposed; CONFIG subagents0, parent done; no fresh independent output. Unchanged EROFS not retried.",
+    "remainingInvalidPortEntrypointCases": {
+      "count": 3,
+      "file": "skills/prism/tests/worker-listener-config.test.mts",
+      "constraint": "Current generation rejects undefined/0/65536 before publication. A genuine receipt cannot authenticate invalid selected authors. Retain original entrypoint obligations OPEN, not replace with producer denial/integrity failures or bypass boot trust. Untouched."
+    },
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "nextAction": "Complete genuine QB-R02 producer/source/build/baseline and original inputStore reservation/accounting/sealed publication plus coordinated sole-root actual boot/Nova receiving. Keep three original invalid-port entrypoint obligations and independent/history/native/archive/full C0-C6 gates OPEN. Do not rerun unchanged green source listener suite.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Suitable isolated Linux Docker guest, real UID/GID1000 native worker subprocess, root installer, delegated writable cgroup/native pool; trusted archive storage and migrated isolated PostgreSQL. Existing npm run test:worker:native --prefix skills/prism includes all three relocated Control cases.",
+    "writerLock": "SAME nonblocking lock; terminal parent/no productive repository process; released on command exit",
+    "noHistoricalFollowup": true
   }
 }
