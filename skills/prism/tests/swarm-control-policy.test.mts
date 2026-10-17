@@ -1,5 +1,3 @@
-import { fileURLToPath } from 'node:url';
-import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 import test from 'node:test';
@@ -7,20 +5,9 @@ import assert from 'node:assert/strict';
 import { loadControlServerConfig } from '../server/control-config.ts';
 import { captureSwarmSettings, type PrismControlSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import { authorizePipelinePreferenceSubject } from '../control/pipeline-preference-subject.ts';
-const configRoot = fileURLToPath(new URL('../../../config/', import.meta.url));
-function writeControlPolicy(root: string, changes: Record<string, unknown>) {
-  const file = path.join(root, 'components/prism-control.config.json');
-  const author = JSON.parse(fs.readFileSync(file, 'utf8'));
-  const entry = JSON.parse(fs.readFileSync(path.join(root, 'pipeline.config.json'), 'utf8'));
-  const profileId = entry.bindings.find((binding: any) => binding.owner === 'prism-control' && binding.instanceId === 'kubeclaw/prism/prism-control').profileId;
-  Object.assign(author.profiles[profileId].settings, changes);
-  fs.writeFileSync(file, JSON.stringify(author));
-}
+import { controlPolicyFixture as sourceControlPolicyFixture, writeControlPolicy } from './fixtures/control-policy.mts';
 function controlPolicyFixture(t: { after(fn: () => void): void }, changes: Record<string, unknown>) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-control-selected-'));
-  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  fs.cpSync(configRoot, root, { recursive: true });
-  writeControlPolicy(root, changes);
+  const { root } = sourceControlPolicyFixture(t, changes);
   const load = () => {
     const entryFile = path.join(root, 'pipeline.config.json');
     const entry = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
