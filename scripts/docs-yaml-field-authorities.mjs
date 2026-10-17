@@ -554,8 +554,8 @@ addResourceSet(postgresqlRecovery, '$.resources', 'each PostgreSQL backup and ve
 // contract so an opaque payload can never pass as generic API-schema evidence.
 const childApplicationFiles = [
   ['gitops/platform/bootstrap/alloy.yaml', 'b2c06f6acba94c24edd5b30980376675ba920a9ea6f92c403577d2a236073434'],
-  ['gitops/platform/bootstrap/argocd.yaml', 'f657afba943a76efc66d093a257eac141fce940a88a1e3e0f533e2fbec12d6b8'],
-  ['gitops/platform/bootstrap/codex-ops.yaml', 'b7e8780eac84b1638be814588244b32f6e71e7c29e2f1dad76b4807a0d955e0e'],
+  ['gitops/platform/bootstrap/argocd.yaml', '9e1413fbdc243cfbb0a4ac5d31ec806f3a4f2f28c2ec8d996629aa83fa8cd4f2'],
+  ['gitops/platform/bootstrap/codex-ops.yaml', '7b5f813ecf6e5c6e5a99b0ce7e1545abd30c7a283b3a06b63d78f701703d9bac'],
   ['gitops/platform/bootstrap/csi-driver-smb.yaml', 'ce561dc5a9a2b5f8b06fbb80c59f5590fcab9b43906a6acc5df12ca62122c99e'],
   ['gitops/platform/bootstrap/litellm.yaml', 'f2fef2026978872c4b27bcef37722e981c3498e816514feff66bf989acb858f6'],
   ['gitops/platform/bootstrap/loki.yaml', '2b3721a57154eb14e92ebccd1e9cabf82499cddf9c98369b88b195e042958c6e'],
@@ -616,7 +616,7 @@ special('gitops/platform/bootstrap/argocd.yaml', '$.spec.sources[0].helm.valuesO
   purpose: 'Installs the Lua health evaluator that separates observed platform children from runtime children that require selected-revision proof.',
   acceptedValues: 'Lua code accepted by Argo CD resource health customization and returning a status and message for an Application object.',
   emptyBehavior: 'Empty or missing code removes the platform-specific child health contract and leaves Argo CD default Application health behavior.',
-  impact: 'Controls parent and child health reporting, including degraded comparison errors, observed workload health, and strict revision matching.',
+  impact: 'Controls parent and child health reporting, including degraded comparison errors and observed workload health. Strict children require synced resolved revision and successful operation proof. Main-branch children may retain a successful operation at another revision only for the same annotated immutable bundle path and matching repository, source revision selector and directory include; comparison and destination checks still apply.',
   failure: 'Invalid Lua makes Application health evaluation fail. Incorrect conditions can report a stale or failed child as healthy or block a healthy rollout.',
 });
 
