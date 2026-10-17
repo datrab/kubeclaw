@@ -3,7 +3,13 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "hooks"
+    "hooks",
+    "maxQueueEvents",
+    "maxQueueBytes",
+    "drainTimeoutMs",
+    "maxObservedFields",
+    "maxObservedFieldCharacters",
+    "maxIdentityCharacters"
   ],
   "properties": {
     "hooks": {
@@ -30,20 +36,32 @@
     "maxQueueEvents": {
       "type": "integer",
       "minimum": 1,
-      "maximum": 10000,
-      "default": 256
+      "maximum": 10000
     },
     "maxQueueBytes": {
       "type": "integer",
       "minimum": 1,
-      "maximum": 16777216,
-      "default": 1048576
+      "maximum": 16777216
     },
     "drainTimeoutMs": {
       "type": "integer",
       "minimum": 1,
-      "maximum": 60000,
-      "default": 5000
+      "maximum": 60000
+    },
+    "maxObservedFields": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 128
+    },
+    "maxObservedFieldCharacters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 128
+    },
+    "maxIdentityCharacters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 512
     }
   }
 }

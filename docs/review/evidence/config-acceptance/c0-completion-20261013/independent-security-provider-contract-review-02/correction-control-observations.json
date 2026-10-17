@@ -1,0 +1,289 @@
+{
+  "qualification": "Only complete author fixture/schema/source rule and isolated native response-name argument boundary checks, no class/invoke/transport",
+  "controls": [
+    {
+      "id": "unique-32",
+      "schemaAccepts": true,
+      "nativeError": null,
+      "semanticErrors": [],
+      "ruleCount": 32,
+      "uniqueRequestedHeaderNames": 32,
+      "returnedNames": [
+        "content-type",
+        "x-content-type-options",
+        "content-security-policy",
+        "referrer-policy",
+        "permissions-policy",
+        "x-extra-0",
+        "x-extra-1",
+        "x-extra-2",
+        "x-extra-3",
+        "x-extra-4",
+        "x-extra-5",
+        "x-extra-6",
+        "x-extra-7",
+        "x-extra-8",
+        "x-extra-9",
+        "x-extra-10",
+        "x-extra-11",
+        "x-extra-12",
+        "x-extra-13",
+        "x-extra-14",
+        "x-extra-15",
+        "x-extra-16",
+        "x-extra-17",
+        "x-extra-18",
+        "x-extra-19",
+        "x-extra-20",
+        "x-extra-21",
+        "x-extra-22",
+        "x-extra-23",
+        "x-extra-24",
+        "x-extra-25",
+        "x-extra-26",
+        "x-extra-27"
+      ],
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "unique-33",
+      "schemaAccepts": true,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "semanticErrors": [
+        "A:resolved-native-header-domain:HTTP_RESPONSE_HEADERS_INVALID"
+      ],
+      "ruleCount": 33,
+      "uniqueRequestedHeaderNames": 33,
+      "returnedNames": null,
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "denied-connection",
+      "schemaAccepts": true,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "semanticErrors": [
+        "A:resolved-native-header-domain:HTTP_RESPONSE_HEADERS_INVALID"
+      ],
+      "ruleCount": 5,
+      "uniqueRequestedHeaderNames": 5,
+      "returnedNames": null,
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "content-length-exception",
+      "schemaAccepts": true,
+      "nativeError": null,
+      "semanticErrors": [],
+      "ruleCount": 5,
+      "uniqueRequestedHeaderNames": 5,
+      "returnedNames": [
+        "content-type",
+        "x-content-type-options",
+        "content-security-policy",
+        "referrer-policy",
+        "permissions-policy",
+        "content-length"
+      ],
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "rules-64-shared-names",
+      "schemaAccepts": true,
+      "nativeError": null,
+      "semanticErrors": [],
+      "ruleCount": 64,
+      "uniqueRequestedHeaderNames": 4,
+      "returnedNames": [
+        "content-type",
+        "x-content-type-options",
+        "content-security-policy",
+        "referrer-policy",
+        "permissions-policy"
+      ],
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "denied-host",
+      "schemaAccepts": true,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "semanticErrors": [
+        "A:resolved-native-header-domain:HTTP_RESPONSE_HEADERS_INVALID"
+      ],
+      "ruleCount": 5,
+      "uniqueRequestedHeaderNames": 5,
+      "returnedNames": null,
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "denied-proxy-authorization",
+      "schemaAccepts": true,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "semanticErrors": [
+        "A:resolved-native-header-domain:HTTP_RESPONSE_HEADERS_INVALID"
+      ],
+      "ruleCount": 5,
+      "uniqueRequestedHeaderNames": 5,
+      "returnedNames": null,
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "denied-transfer-encoding",
+      "schemaAccepts": true,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "semanticErrors": [
+        "A:resolved-native-header-domain:HTTP_RESPONSE_HEADERS_INVALID"
+      ],
+      "ruleCount": 5,
+      "uniqueRequestedHeaderNames": 5,
+      "returnedNames": null,
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "denied-upgrade",
+      "schemaAccepts": true,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "semanticErrors": [
+        "A:resolved-native-header-domain:HTTP_RESPONSE_HEADERS_INVALID"
+      ],
+      "ruleCount": 5,
+      "uniqueRequestedHeaderNames": 5,
+      "returnedNames": null,
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "replace-denied",
+      "schemaAccepts": true,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "semanticErrors": [
+        "A:resolved-native-header-domain:HTTP_RESPONSE_HEADERS_INVALID"
+      ],
+      "ruleCount": 4,
+      "uniqueRequestedHeaderNames": 4,
+      "returnedNames": null,
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "remove-before-replace-denied",
+      "schemaAccepts": true,
+      "nativeError": null,
+      "semanticErrors": [],
+      "ruleCount": 3,
+      "uniqueRequestedHeaderNames": 3,
+      "returnedNames": [
+        "content-type",
+        "x-content-type-options",
+        "referrer-policy",
+        "permissions-policy"
+      ],
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "selected-preset-denied",
+      "schemaAccepts": true,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "semanticErrors": [
+        "A:resolved-native-header-domain:HTTP_RESPONSE_HEADERS_INVALID"
+      ],
+      "ruleCount": 4,
+      "uniqueRequestedHeaderNames": 4,
+      "returnedNames": null,
+      "providerOrNativeInvoked": false
+    },
+    {
+      "id": "same-runtime-five",
+      "schemaAccepts": true,
+      "errors": [],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "split-service",
+      "schemaAccepts": true,
+      "errors": [
+        "split-one-package-service-context",
+        "missing-exact-runtime-receiving-closure"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "missing-service",
+      "schemaAccepts": false,
+      "errors": [
+        "split-one-package-service-context",
+        "missing-exact-runtime-receiving-closure"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "all-preparation-context",
+      "schemaAccepts": true,
+      "errors": [
+        "missing-exact-runtime-receiving-closure"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "wrong-role",
+      "schemaAccepts": true,
+      "errors": [
+        "wrong-runtime-role"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "wrong-worker-role",
+      "schemaAccepts": true,
+      "errors": [
+        "wrong-runtime-role"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "wrong-native-context",
+      "schemaAccepts": true,
+      "errors": [
+        "wrong-captured-runtime-context",
+        "wrong-captured-native-resource-projection"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "missing-worker",
+      "schemaAccepts": false,
+      "errors": [
+        "missing-exact-runtime-receiving-closure"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "duplicate-runtime",
+      "schemaAccepts": false,
+      "errors": [
+        "missing-exact-runtime-receiving-closure"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "split-owner",
+      "schemaAccepts": true,
+      "errors": [
+        "split-one-package-owner-path",
+        "wrong-package-instance-profile-kind"
+      ],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "same-TLS-runtime-five",
+      "schemaAccepts": true,
+      "errors": [],
+      "productiveSelectionExecuted": false
+    },
+    {
+      "id": "resource-projection-mismatch",
+      "schemaAccepts": true,
+      "errors": [
+        "wrong-captured-native-resource-projection"
+      ],
+      "productiveSelectionExecuted": false
+    }
+  ]
+}

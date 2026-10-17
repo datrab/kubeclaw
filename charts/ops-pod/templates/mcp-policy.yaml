@@ -1,0 +1,7 @@
+{{- $server := dict "port" .Values.mcpPolicy.server.port "host" .Values.mcpPolicy.server.host "localOnly" .Values.mcpPolicy.server.localOnly "allowedOrigins" .Values.mcpPolicy.server.allowedOrigins "defaultNamespace" .Values.defaultNamespace "argoNamespace" .Values.argoNamespace "namespaces" .Values.rbac.namespaces -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-mcp-policy
+data:
+  policy.json: {{ dict "schemaVersion" "ops-mcp-policy.v1" "server" $server "kubernetes" .Values.mcpPolicy.kubernetes "hubble" .Values.mcpPolicy.hubble "presentation" .Values.mcpPolicy.presentation "supervisor" .Values.mcpPolicy.supervisor | toJson | quote }}

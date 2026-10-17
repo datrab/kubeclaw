@@ -1,0 +1,43 @@
+{
+  "currentNormativeRoot": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/pipeline.config.json",
+    "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "bytes": 6751
+  },
+  "currentNormativeSchema": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+    "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228",
+    "bytes": 8365
+  },
+  "currentReviewedSupplement": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/README.md",
+    "sha256": "36bc2bdd387cf9a5343fea6443dd6a27a253c95575840edafb45bca57290aa86",
+    "bytes": 4020
+  },
+  "independentReviewedSupplement": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/README.md",
+    "sha256": "5d1b8afe6befdf800c93363139244793d31e616afc606a16edd9e7fe6f60e775",
+    "bytes": 10492
+  },
+  "ownBaseRoot": "config/pipeline.config.json",
+  "proposalSchema": "schemas/future-same-entry-extension.schema.json",
+  "qualification": "No simultaneous normative schemas. Engine02 is supplement of physical Engine01 v7. This artifact is a future additive Nova extension pending independent review + combined same-entry author integration; no publication/version reservation. v8 Gateway/Browser author pending explicitly NOT inherited.",
+  "soleWriter": "User writes complete per-package-instance profile under the original config/plugins/<package>.config.json. One selection tuple chooses it. The generation author reads once, validates every declared profile/whole entry and all source relations, creates readonly current receiver projection. TASK has no fallback/shadow writer. No file reread/latest/deep merge on retry/recovery/cleanup.",
+  "receivingClosure": [
+    "same role/service/package/instance/registration/profile tuple per ALL stage+adapter rows belonging to one package instance",
+    "stage type owner actual manifest; module export, config/input/result source/schema digests unchanged until approved migration",
+    "original R selected runtime.dispatch provider EXACTLY one registration (HTTP or OpenClaw), its complete selected owner/target map/grants/secret revision shared, not switched by stage codec",
+    "pipeline-review stage AND evidence adapter same package instance/profile/service; evidence root/writer exact original source authority, source service relationship verified independently",
+    "existing six components remain six; Nova native state/orchestrator/host/grant contexts are original C3 R resource dependencies, no invented seventh component or borrowing arbitrary Buster/Prism role as Nova authorization",
+    "new receiving ABI required at engine-runtime/registry configuration validation/runner graph/StageExecutor config/AdapterStarter config/parent R provenance/snapshot. Current readers do not load these selected owners."
+  ],
+  "rejections": [
+    "missing/duplicate selection",
+    "wrong package or source/module/schema digest",
+    "same package stage/evidence split profile/instance/service",
+    "wrong role/context or arbitrary service owner",
+    "wrong original native grant/resource/target/catalog/secret revision",
+    "unbound task override or ordinary model payload attempting control metadata",
+    "recovery latest-B replacement of stored original R/J binding"
+  ]
+}

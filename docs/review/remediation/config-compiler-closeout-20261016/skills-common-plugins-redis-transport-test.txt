@@ -1,0 +1,4 @@
+npm notice run test
+npm notice run node tests/live-function.test.ts && node tests/package-boundary.test.ts
+{"ok":true,"plugin":"kubeclaw.redis-transport","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.redis-transport","suite":"package-boundary"}

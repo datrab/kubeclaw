@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-16T23:26:32.393584+00:00",
+  "status": "ORIGINAL_REGISTRY_5_OF_5_AND_KUBERNETES_CUTOVER_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "bdd8a41108c8fdcbf1c9532c0f1f632b463a52c4",
+  "sourceRemoteVerified": true,
+  "verifiedRemoteHead": "bdd8a41108c8fdcbf1c9532c0f1f632b463a52c4",
+  "evidence": "docs/review/remediation/config-original-registry-cutover-20261016",
+  "change": "Original four Buster policy registry entries plus actual execution/observation decoder now read complete central selected runtime owner. Original Kubernetes cutover rejects retired Helm author and reads actual selected runtime cluster settings through typed production decoder. Existing scaffold retirement, typed producer/fixture links, implementation and48-entry parity commands preserved. Added precise shared registry-contract declaration; readonly negative typed-link fixture reconstructed without changing assertion.",
+  "checks": {
+    "registryTests": {
+      "passed": 5,
+      "total": 5,
+      "failed": 0,
+      "skipped": 0
+    },
+    "originalKubernetesCutover": "exit0; original implementation/parity imports exit0;48 parity items retain proved/deferred classifications, no nativeCluster",
+    "strictTypecheck": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "fullAcceptance": "OPEN"
+    }
+  },
+  "initialFailures": [
+    "Original cutover required retired busterComponentFile author.",
+    "First added assertion looked for profileId on settings capture instead of selected binding; corrected.",
+    "Ambient KUBECLAW_LOCAL_REGISTRY inherited on this execution surface is correctly rejected by actual loader; final command removes only this retired ambient variable and keeps existing explicit non-secret registryTestContract. Production rejection untouched.",
+    "Strict compiler exposed missing shared registry declaration and preexisting mutation of readonly negative input. Precise declaration and immutable negative declaration fixed without relaxing strictness."
+  ],
+  "sourceHashes": {
+    "tests/verification/contracts/buster-settings-registry.test.mjs": "578e7a20702d94bcbe1634ff76b63d4112b4922723a84ee0fa50c6e49120ad19",
+    "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts": "fb61a759a373bcd6a023ec64286d9a5be955d58298f2f63f9cfcca36fce61ef0",
+    "tests/verification/e2e/registry-test-contract.d.mts": "c9cd13977b21beb51dc262a59ce98e6b84adab737b64061af24f0255b1481c5e"
+  },
+  "independentReview": "OPEN: fresh ALL_TOOLS reviewer/spawn discovery empty, CONFIG subagents0, parent terminal; no new independent result. Unchanged same-surface EROFS not retried. Author checks are not independent/native acceptance.",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "nextAction": "Genuine QB-R02 source/build/baseline and original inputStore ownership/accounting/sealed-byte/publication integration; authenticated sole-root boot+Nova receiving; remaining original boot/readback fixture entry references still require current central migration, not historical classification. Do not replay unchanged green checks.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Isolated Linux Docker UID1000/GID1000/delegated writable cgroup, sufficient genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped gates.",
+  "writerLock": "SAME nonblocking shared lock held through edits/checks/commit/push; released at process exit",
+  "noHistoricalFollowup": true
+}

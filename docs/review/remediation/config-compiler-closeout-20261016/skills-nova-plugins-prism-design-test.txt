@@ -1,0 +1,5 @@
+npm notice run test
+npm notice run node tests/live-function.test.ts && node ../../../../tests/verification/integration/prism-wait.test.mts && node ../../../../tests/verification/integration/prism-archive.test.mts
+{"ok":true,"plugin":"kubeclaw.prism-design","path":"design-not-required","mocks":0}
+{"ok":true,"suite":"prism-real-wait-store"}
+{"ok":true,"suite":"prism-real-archive-integrity","designGeneration":false}

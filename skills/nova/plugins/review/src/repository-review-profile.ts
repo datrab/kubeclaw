@@ -1,4 +1,7 @@
+import Ajv2020 from 'ajv/dist/2020.js';
+import {repositoryGradeSchema} from './review-owned-policy-schema.ts';
 /* eslint-disable max-lines -- Review grades, validation, and resolution stay together as one profile authority. */
+import {resolveRepositoryReviewProfile as resolveLegacyProfile, parseRepositoryReviewInput as parseLegacyInput} from './legacy-repository-review-profile.ts';
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
 
 import type { ReviewSliceBudget } from './review-scale-slicing.ts';
@@ -103,50 +106,6 @@ interface GradeDefaults extends RepositoryReviewProfileOverrides {
 const ALL_LENSES = Object.freeze<RepositoryReviewLens[]>([
   'architecture', 'contracts', 'security', 'lifecycle', 'resilience', 'deployment', 'simplification',
 ]);
-const DEFAULTS: Readonly<Record<RepositoryReviewGrade, GradeDefaults>> = Object.freeze({
-  fast: Object.freeze({
-    tokenizerEncoding: 'o200k_base',
-    componentBudget: Object.freeze({ maxFiles: 60, maxBytes: 400_000, maxTokens: 86_000 }),
-    boundaryBudget: Object.freeze({ maxFiles: 400, maxBytes: 900_000, maxTokens: 80_000, maxRelations: 600, maxSlices: 200 }),
-    maxPrimaryJobs: 75, maxContextExpansionJobs: 12, maxVerificationJobs: 8, maxInputTokensPerJob: 120_000,
-    maxContextTokensPerJob: 128_000, maxPromptBytesPerJob: 900_000,
-    maxInitialInputTokens: 6_500_000, maxContextExpansionInputTokens: 750_000,
-    maxVerificationInputTokens: 750_000, maxTotalInputTokens: 8_000_000,
-    maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 100,
-    maxWallTimeSeconds: 3_600, estimatedSecondsPerJob: 120,
-    inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30, concurrency: 8, maxRetries: 1,
-    maxRetryAttemptsPerPhase: 4,
-    enabledLenses: Object.freeze<RepositoryReviewLens[]>(['contracts', 'security', 'lifecycle']),
-  }),
-  standard: Object.freeze({
-    tokenizerEncoding: 'o200k_base',
-    componentBudget: Object.freeze({ maxFiles: 60, maxBytes: 400_000, maxTokens: 86_000 }),
-    boundaryBudget: Object.freeze({ maxFiles: 400, maxBytes: 900_000, maxTokens: 80_000, maxRelations: 600, maxSlices: 200 }),
-    maxPrimaryJobs: 500, maxContextExpansionJobs: 100, maxVerificationJobs: 100, maxInputTokensPerJob: 120_000,
-    maxContextTokensPerJob: 128_000, maxPromptBytesPerJob: 900_000,
-    maxInitialInputTokens: 25_000_000, maxContextExpansionInputTokens: 50_000_000,
-    maxVerificationInputTokens: 50_000_000, maxTotalInputTokens: 50_000_000,
-    maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 650,
-    maxWallTimeSeconds: 28_800, estimatedSecondsPerJob: 120,
-    inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30, concurrency: 10, maxRetries: 2,
-    maxRetryAttemptsPerPhase: 20,
-    enabledLenses: ALL_LENSES,
-  }),
-  deep: Object.freeze({
-    tokenizerEncoding: 'o200k_base',
-    componentBudget: Object.freeze({ maxFiles: 30, maxBytes: 220_000, maxTokens: 90_000 }),
-    boundaryBudget: Object.freeze({ maxFiles: 100, maxBytes: 480_000, maxTokens: 110_000, maxRelations: 100, maxSlices: 32 }),
-    maxPrimaryJobs: 2_000, maxContextExpansionJobs: 250, maxVerificationJobs: 250, maxInputTokensPerJob: 120_000,
-    maxContextTokensPerJob: 128_000, maxPromptBytesPerJob: 900_000,
-    maxInitialInputTokens: 50_000_000, maxContextExpansionInputTokens: 100_000_000,
-    maxVerificationInputTokens: 100_000_000, maxTotalInputTokens: 100_000_000,
-    maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 1_300,
-    maxWallTimeSeconds: 86_400, estimatedSecondsPerJob: 150,
-    inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30, concurrency: 4, maxRetries: 2,
-    maxRetryAttemptsPerPhase: 40,
-    enabledLenses: ALL_LENSES,
-  }),
-});
 
 function positive(value: unknown, fallback: number, label: string, maximum: number): number {
   const resolved = value === undefined ? fallback : value;
@@ -217,7 +176,7 @@ function prefixes(scope: RepositoryReviewScope): readonly string[] {
 
 function reviewGrade(value: RepositoryReviewGrade | undefined): RepositoryReviewGrade {
   const grade = value ?? 'standard';
-  if (!DEFAULTS[grade]) throw new Error('repository review grade is invalid');
+  if (!['fast','standard','deep'].includes(grade)) throw new Error('repository review grade is invalid');
   return grade;
 }
 function reviewMode(value: RepositoryReviewMode | undefined): RepositoryReviewMode {
@@ -251,20 +210,20 @@ function reviewOverrides(value: RepositoryReviewProfileOverrides | undefined): R
   return value;
 }
 
-function tokenizerEncoding(value: ReviewTokenizerEncoding | undefined, fallback: ReviewTokenizerEncoding): ReviewTokenizerEncoding {
+function tokenizerEncoding(value: ReviewTokenizerEncoding | undefined, fallback: ReviewTokenizerEncoding, target: RepositoryRuntimeTarget): ReviewTokenizerEncoding {
   const resolved = value ?? fallback;
   if (!['o200k_base', 'cl100k_base'].includes(resolved)) {
     throw new Error('repository review profile tokenizer encoding is invalid');
   }
-  if (resolved !== 'o200k_base') {
+  if (resolved !== target.tokenizerEncoding) {
     throw new Error('repository review profile tokenizer encoding conflicts with the review runtime target');
   }
   return resolved;
 }
 
-function runtimeOutputTokens(value: number | undefined, fallback: number): number {
+function runtimeOutputTokens(value: number | undefined, fallback: number, target: RepositoryRuntimeTarget): number {
   const resolved = positive(value, fallback, 'output token reserve', 1_000_000);
-  if (resolved !== 6_000) {
+  if (resolved !== target.maxOutputTokens) {
     throw new Error('repository review profile output token reserve conflicts with the review runtime target');
   }
   return resolved;
@@ -277,7 +236,7 @@ function runtimeMaximum(value: number | undefined, fallback: number, label: stri
 }
 
 function operationalLimits(
-  overrides: RepositoryReviewProfileOverrides, defaults: GradeDefaults,
+  overrides: RepositoryReviewProfileOverrides, defaults: GradeDefaults, target: RepositoryRuntimeTarget,
 ): Omit<GradeDefaults, 'tokenizerEncoding' | 'componentBudget' | 'boundaryBudget' | 'enabledLenses'> {
   const totalInputOverride = overrides.maxTotalInputTokens ?? overrides.maxInputTokens;
   const limits = {
@@ -286,11 +245,11 @@ function operationalLimits(
       defaults.maxContextExpansionJobs, 'context expansion job limit', 10_000),
     maxVerificationJobs: positive(overrides.maxVerificationJobs, defaults.maxVerificationJobs, 'verification job limit', 10_000),
     maxInputTokensPerJob: runtimeMaximum(overrides.maxInputTokensPerJob ?? overrides.maxPromptTokensPerJob,
-      defaults.maxInputTokensPerJob, 'per-job input token limit', 120_000),
+      defaults.maxInputTokensPerJob, 'per-job input token limit', target.maxInputTokens),
     maxContextTokensPerJob: runtimeMaximum(overrides.maxContextTokensPerJob,
-      defaults.maxContextTokensPerJob, 'per-job context token limit', 128_000),
+      defaults.maxContextTokensPerJob, 'per-job context token limit', target.maxContextTokens),
     maxPromptBytesPerJob: runtimeMaximum(overrides.maxPromptBytesPerJob,
-      defaults.maxPromptBytesPerJob, 'per-job byte limit', 900_000),
+      defaults.maxPromptBytesPerJob, 'per-job byte limit', target.maxPromptBytes),
     maxInitialInputTokens: positive(overrides.maxInitialInputTokens, defaults.maxInitialInputTokens,
       'initial input token limit', 1_000_000_000),
     maxContextExpansionInputTokens: positive(overrides.maxContextExpansionInputTokens,
@@ -298,7 +257,7 @@ function operationalLimits(
     maxVerificationInputTokens: positive(overrides.maxVerificationInputTokens,
       defaults.maxVerificationInputTokens, 'verification input token limit', 1_000_000_000),
     maxTotalInputTokens: positive(totalInputOverride, defaults.maxTotalInputTokens, 'total input token limit', 1_000_000_000),
-    maxOutputTokensPerJob: runtimeOutputTokens(overrides.maxOutputTokensPerJob, defaults.maxOutputTokensPerJob),
+    maxOutputTokensPerJob: runtimeOutputTokens(overrides.maxOutputTokensPerJob, defaults.maxOutputTokensPerJob, target),
     maxEstimatedCostUsd: positiveNumber(overrides.maxEstimatedCostUsd, defaults.maxEstimatedCostUsd, 'cost limit', 1_000_000),
     maxWallTimeSeconds: positive(overrides.maxWallTimeSeconds, defaults.maxWallTimeSeconds, 'wall time limit', 604_800),
     estimatedSecondsPerJob: positive(overrides.estimatedSecondsPerJob, defaults.estimatedSecondsPerJob, 'job duration estimate', 86_400),
@@ -324,8 +283,13 @@ export function resolveRepositoryReviewProfile(values: {
   readonly mode?: RepositoryReviewMode;
   readonly scope?: RepositoryReviewScope;
   readonly overrides?: RepositoryReviewProfileOverrides;
-}): ResolvedRepositoryReviewProfile {
-  const grade = reviewGrade(values.grade), defaults = DEFAULTS[grade];
+}, selected?: {readonly grades: unknown; readonly target: RepositoryRuntimeTarget}): ResolvedRepositoryReviewProfile {
+  if (selected === undefined) return resolveLegacyProfile(values);
+  if (Object.hasOwn(values,'overrides')) throw new Error('REPOSITORY_GRADE_COMPETING_AUTHOR');
+  const grade = reviewGrade(values.grade), target = selected.target;
+  if(!target || !['o200k_base','cl100k_base'].includes(target.tokenizerEncoding) || !['maxInputTokens','maxOutputTokens','maxContextTokens','maxPromptBytes'].every(k=>Number.isSafeInteger(target[k as keyof RepositoryRuntimeTarget]) && Number(target[k as keyof RepositoryRuntimeTarget])>0))throw new Error('REPOSITORY_RUNTIME_TARGET_INVALID');
+  const grades = validateOwnedRepositoryGrades(selected.grades);
+  const defaults = {...grades[grade],tokenizerEncoding:target.tokenizerEncoding,maxOutputTokensPerJob:target.maxOutputTokens} as GradeDefaults;
   const mode = reviewMode(values.mode), scope = reviewScope(values.scope), overrides = reviewOverrides(values.overrides);
   const componentBudget = budget(overrides.componentBudget, defaults.componentBudget);
   const baseBoundary = budget(overrides.boundaryBudget, defaults.boundaryBudget);
@@ -336,17 +300,21 @@ export function resolveRepositoryReviewProfile(values: {
   const enabledLenses = reviewLenses(overrides, defaults);
   const unsigned = {
     schemaVersion: 'repository-review-profile.v1' as const, grade, mode, scope,
-    allowedPrefixes: prefixes(scope), tokenizerEncoding: tokenizerEncoding(overrides.tokenizerEncoding, defaults.tokenizerEncoding),
-    componentBudget, boundaryBudget, ...operationalLimits(overrides, defaults), enabledLenses,
+    allowedPrefixes: prefixes(scope), tokenizerEncoding: tokenizerEncoding(overrides.tokenizerEncoding, defaults.tokenizerEncoding, target),
+    componentBudget, boundaryBudget, ...operationalLimits(overrides, defaults, target), enabledLenses,
   };
   return Object.freeze({ ...unsigned, digest: sha256Text(canonicalJson(unsigned)) });
 }
 
-export function parseRepositoryReviewInput(value: unknown): ResolvedRepositoryReviewProfile {
+export function parseRepositoryReviewInput(value: unknown, selected?: {readonly grades:unknown;readonly target:RepositoryRuntimeTarget}): ResolvedRepositoryReviewProfile {
+  // Retained v1 input uses its original parser, not a current-policy projection.
+  if (selected === undefined) return parseLegacyInput(value);
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('repository audit input is invalid');
   const record = value as Readonly<Record<string, unknown>>;
   const allowed = new Set(['allowedPrefixes', 'grade', 'mode', 'scope', 'overrides']);
   if (Object.keys(record).some((key) => !allowed.has(key))) throw new Error('repository audit input has unknown fields');
+  // Presence itself is a second author, including an explicit undefined.
+  if (Object.hasOwn(record, 'overrides')) throw new Error('REPOSITORY_GRADE_COMPETING_AUTHOR');
   const legacy = record.allowedPrefixes;
   const scope = record.scope ?? (legacy === undefined ? { kind: 'repository' } : { kind: 'path', prefixes: legacy });
   const settings: { grade?: RepositoryReviewGrade; mode?: RepositoryReviewMode; scope: RepositoryReviewScope;
@@ -354,5 +322,28 @@ export function parseRepositoryReviewInput(value: unknown): ResolvedRepositoryRe
   if (record.grade !== undefined) settings.grade = record.grade as RepositoryReviewGrade;
   if (record.mode !== undefined) settings.mode = record.mode as RepositoryReviewMode;
   if (record.overrides !== undefined) settings.overrides = record.overrides as RepositoryReviewProfileOverrides;
-  return resolveRepositoryReviewProfile(settings);
+  return resolveRepositoryReviewProfile(settings, selected);
+}
+
+export interface RepositoryRuntimeTarget {
+ readonly tokenizerEncoding: ReviewTokenizerEncoding;
+ readonly maxInputTokens:number;readonly maxOutputTokens:number;readonly maxContextTokens:number;readonly maxPromptBytes:number;
+}
+export function validateOwnedRepositoryGrades(value:unknown):Readonly<Record<RepositoryReviewGrade,Omit<GradeDefaults,'tokenizerEncoding'|'maxOutputTokensPerJob'>>> {
+ if(!validateGrades(value))throw new Error('REPOSITORY_GRADES_INVALID');
+ return value as ReturnType<typeof validateOwnedRepositoryGrades>;
+}
+
+const AjvConstructor=Ajv2020 as unknown as new(options:object)=>{compile(schema:object):(value:unknown)=>boolean};
+const validateGrades=new AjvConstructor({strict:true}).compile({type:'object',additionalProperties:false,required:['fast','standard','deep'],properties:{fast:repositoryGradeSchema,standard:repositoryGradeSchema,deep:repositoryGradeSchema}});
+
+export function selectedRepositoryGrades(config:Readonly<Record<string,unknown>>):{readonly grades:unknown;readonly target:RepositoryRuntimeTarget}|undefined {
+ const owned=config.ownedPolicyProfiles as Record<string,unknown>|undefined;
+ if(owned?.schemaVersion!=='review-owned-decision-profiles.v2') {
+  if(Object.hasOwn(config,'repositoryRuntimeTarget'))throw new Error('REPOSITORY_RUNTIME_TARGET_UNEXPECTED');
+  return undefined;
+ }
+ const selected={grades:owned.repositoryGrades,target:config.repositoryRuntimeTarget as RepositoryRuntimeTarget};
+ for(const grade of ['fast','standard','deep'] as const)resolveRepositoryReviewProfile({grade},selected);
+ return selected;
 }

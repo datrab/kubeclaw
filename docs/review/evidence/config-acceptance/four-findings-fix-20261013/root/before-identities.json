@@ -1,0 +1,13 @@
+{
+  "head": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+  "files": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "b1af942080285f5c7d97c50f2b30bc14a1a0850ffb77908cb73fb3f8c9f6b36c"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "623462221f87371c23e0a0b8857a1c8563cd7dc6e1e76f457221b0ba63894a21"
+    }
+  ]
+}

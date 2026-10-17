@@ -1,3 +1,4 @@
+import {TEST_CORE_POLICY} from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -51,7 +52,7 @@ function createAdapter(overrides = {}) {
       allowedRepositoryRoots: [fs.realpathSync(repository)],
       workspaceRoot: fs.realpathSync(workspaceRoot),
       gitExecutable,
-      authorName: 'Git Workspace Adapter',
+      errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'Git Workspace Adapter',
       authorEmail: 'git-workspace-adapter@example.test',
       maxExecutionMs: 5_000,
       maxOutputBytes: 64 * 1024,

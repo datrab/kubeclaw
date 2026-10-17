@@ -1,9 +1,9 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { captureSwarmSettings, type PrismWorkerSettings, type PrismNonceDatabaseSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import fs from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import test from 'node:test';
+import test, { type TestContext } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer as createTcpServer, type Socket } from 'node:net';
 import { once } from 'node:events';
@@ -11,18 +11,35 @@ import { createManagedWorkerServer } from '../server/worker-lifecycle.ts';
 import { WorkerNonceDatabase } from '../server/worker-readiness.ts';
 import { loadWorkerConfig } from '../server/worker-config.ts';
 
-async function setup(t: { after(callback: () => Promise<void>): void }, connectTimeoutMs: number, shutdownTimeoutMs = 1500) {
+function settings(t: TestContext, shutdownTimeoutMs?: number) {
   const root = fs.mkdtempSync(path.join(tmpdir(), 'prism-shutdown-author-'));
-  t.after(async () => { fs.rmSync(root, { recursive: true, force: true }); });
-  const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-  authored['prism-worker'].settings.ingress.shutdownTimeoutMs = shutdownTimeoutMs;
-  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, authored);
-  const config = loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+  t.after(() => { fs.rmSync(root, { recursive: true, force: true }); });
+  fs.cpSync(fileURLToPath(new URL('../../../config/', import.meta.url)), root, { recursive: true });
+  const authorFile = path.join(root, 'components/prism-worker.config.json');
+  const authored = JSON.parse(fs.readFileSync(authorFile, 'utf8'));
+  if (shutdownTimeoutMs !== undefined) authored.profiles.standard.settings.ingress.shutdownTimeoutMs = shutdownTimeoutMs;
+  // Lifecycle deadlines are intentionally short; keep the selected profile internally valid.
+  if (shutdownTimeoutMs !== undefined) Object.assign(authored.profiles.standard.settings.supervisor, { drainTimeoutMs: 1, closeTimeoutMs: 1 });
+  fs.writeFileSync(authorFile, JSON.stringify(authored));
+  const entryFile = path.join(root, 'pipeline.config.json');
+  const entry = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
+  const instanceId = 'kubeclaw/prism/prism-worker';
+  const captured = captureSwarmSettings(entryFile, { role: 'prism', callerId: 'prism-worker', serviceInstanceId: instanceId,
+    bindings: entry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
+      .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding) });
+  // Real central selection for lifecycle coverage, not a verified startup/native capability.
+  const ingress = captured.components['prism-worker']!.settings.ingress as unknown as PrismWorkerSettings;
+  return { ingress, shutdownTimeoutMs: ingress.shutdownTimeoutMs,
+    nonceDatabase: captured.components['prism-worker']!.settings.nonceDatabase as unknown as PrismNonceDatabaseSettings };
+}
+
+async function setup(t: TestContext, connectTimeoutMs: number, shutdownTimeoutMs = 1500) {
+  const config = settings(t, shutdownTimeoutMs);
   const sockets = new Set<Socket>();
   const tcp = createTcpServer(socket => { sockets.add(socket); socket.on('data', () => {}); socket.on('close', () => sockets.delete(socket)); });
   tcp.listen(0, '127.0.0.1'); await once(tcp, 'listening');
   const address = tcp.address(); assert(address && typeof address !== 'string');
-  const database = new WorkerNonceDatabase(`postgresql://local:local@127.0.0.1:${address.port}/local`, connectTimeoutMs);
+  const database = new WorkerNonceDatabase(`postgresql://local:local@127.0.0.1:${address.port}/local`, { ...config.nonceDatabase, timeoutMs: connectTimeoutMs });
   // Exercise the original service lifecycle and original pg pool directly.
   // This HTTP application performs a real database check; it does not stand in
   // for native attempt execution or manufacture Worker receipts.
@@ -82,9 +99,10 @@ test('invalid service deadline cannot stop a healthy listener; configuration own
     const response = await fetch(new URL('/bootstrap', f.origin)); assert.equal(response.status, 200); await response.body?.cancel();
   }
   await f.worker.shutdown(f.config.shutdownTimeoutMs);
-  const environment = { SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
-  assert.equal(loadWorkerConfig(environment).shutdownTimeoutMs, 120_000);
+  const environment = { WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
+  assert.equal(settings(t).shutdownTimeoutMs, 120_000);
+  // Retired environment authors must reject before requiring a boot capture.
   for (const value of ['', '0', '-1', '1.5', 'NaN', 'Infinity', '2147483648']) {
-    assert.throws(() => loadWorkerConfig({ ...environment, PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: value }), /PRISM_WORKER_SHUTDOWN_TIMEOUT_MS/u);
+    assert.throws(() => loadWorkerConfig(undefined as never, { ...environment, PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: value }), /PRISM_WORKER_SHUTDOWN_TIMEOUT_MS/u);
   }
 });

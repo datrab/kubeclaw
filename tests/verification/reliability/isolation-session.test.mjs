@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ISOLATION_TEST_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -36,7 +38,7 @@ function gone(child) { assert.equal(child.exitCode !== null || child.signalCode 
 
 test('early real child exit contains pipe error and host survives', async () => {
   const process = spawn('/bin/true', [], { stdio: ['pipe', 'pipe', 'pipe'] });
-  await assert.rejects(runIsolationSession({ child: process, context, wallTimeMs: 2000, invocationMessage: { value: 'x'.repeat(900000) } }), /ISOLATION_PIPE_FAILED|ISOLATED_PLUGIN_EXITED/);
+  await assert.rejects(runIsolationSession({ policy: ISOLATION_TEST_POLICY.isolationSession, child: process, context, wallTimeMs: 2000, invocationMessage: { value: 'x'.repeat(900000) } }), /ISOLATION_PIPE_FAILED|ISOLATED_PLUGIN_EXITED/);
   gone(process);
   await delay(25);
 });
@@ -45,7 +47,7 @@ test('real plugin exit during host RPC prevents late response writing a dead pip
   let completed = false;
   const host = { ...context, async invoke() { await delay(80); completed = true; return { value: 'completed' }; } };
   const process = child();
-  await assert.rejects(runIsolationSession({ child: process, context: host, wallTimeMs: 1000, invocationMessage: invocation({ mode: 'exit-rpc' }) }), /ISOLATED_PLUGIN_EXITED/);
+  await assert.rejects(runIsolationSession({ policy: ISOLATION_TEST_POLICY.isolationSession, child: process, context: host, wallTimeMs: 1000, invocationMessage: invocation({ mode: 'exit-rpc' }) }), /ISOLATED_PLUGIN_EXITED/);
   gone(process);
   await delay(100);
   assert.equal(completed, true);
@@ -53,7 +55,7 @@ test('real plugin exit during host RPC prevents late response writing a dead pip
 
 test('unfinished RPC result cannot claim completion', async () => {
   const process = child();
-  await assert.rejects(runIsolationSession({ child: process, context: { ...context, async invoke() { await delay(80); return {}; } }, wallTimeMs: 1000, invocationMessage: invocation({ mode: 'early-result' }) }), /ISOLATION_RPC_NOT_DRAINED/);
+  await assert.rejects(runIsolationSession({ policy: ISOLATION_TEST_POLICY.isolationSession, child: process, context: { ...context, async invoke() { await delay(80); return {}; } }, wallTimeMs: 1000, invocationMessage: invocation({ mode: 'early-result' }) }), /ISOLATION_RPC_NOT_DRAINED/);
   gone(process);
   await delay(100);
 });
@@ -64,7 +66,7 @@ for (const character of ['é', '€', '😀']) {
       const observed = [];
       const host = { ...context, async invoke(_capability, request) { observed.push(request.text); return request; }, async emit(_type, _identity, payload) { observed.push(payload.text); } };
       const process = child();
-      assert.equal(await runIsolationSession({ child: process, context: host, wallTimeMs: 2000, invocationMessage: invocation({ character, split }) }), character);
+      assert.equal(await runIsolationSession({ policy: ISOLATION_TEST_POLICY.isolationSession, child: process, context: host, wallTimeMs: 2000, invocationMessage: invocation({ character, split }) }), character);
       assert.deepEqual(observed, [character, character]);
       gone(process);
     });
@@ -74,14 +76,14 @@ for (const character of ['é', '€', '😀']) {
 for (const bytes of [[0xc0, 0xaf], [0xe2, 0x28, 0xa1], [0xf0, 0x9f]]) {
   test(`invalid UTF8 wire bytes ${bytes.join(',')} are rejected`, async () => {
     const process = child();
-    await assert.rejects(runIsolationSession({ child: process, context, wallTimeMs: 1000, invocationMessage: invocation({ mode: 'invalid', bytes }) }), /ISOLATION_PROTOCOL_INVALID_UTF8/);
+    await assert.rejects(runIsolationSession({ policy: ISOLATION_TEST_POLICY.isolationSession, child: process, context, wallTimeMs: 1000, invocationMessage: invocation({ mode: 'invalid', bytes }) }), /ISOLATION_PROTOCOL_INVALID_UTF8/);
     gone(process);
   });
 }
 
 test('TERM-ignoring direct protocol child is killed and reaped on timeout', async () => {
   const process = child();
-  await assert.rejects(runIsolationSession({ child: process, context, wallTimeMs: 100, invocationMessage: invocation({ mode: 'hang' }) }), /ISOLATED_PLUGIN_TIMEOUT/);
+  await assert.rejects(runIsolationSession({ policy: ISOLATION_TEST_POLICY.isolationSession, child: process, context, wallTimeMs: 100, invocationMessage: invocation({ mode: 'hang' }) }), /ISOLATED_PLUGIN_TIMEOUT/);
   gone(process);
 });
 
@@ -89,10 +91,10 @@ test('real cgroup2 delegation is required and host platform paths resolve', asyn
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'isolation-admission-'));
   try {
     const fullContext = { ...context, contract: { artifacts: [], lease: { limits: { memoryBytes: 64 * 1024 * 1024, cpuMillis: 1000, wallTimeMs: 1000 } } } };
-    await assert.rejects(invokeIsolated({ packageRoot: path.dirname(modulePath), modulePath, exportName: 'execute', surface: 'stage', argument: {}, context: fullContext }), /ISOLATION_CGROUP_REQUIRED/);
+    await assert.rejects(invokeIsolated({ sessionPolicy: ISOLATION_TEST_POLICY.isolationSession, packageRoot: path.dirname(modulePath), modulePath, exportName: 'execute', surface: 'stage', argument: {}, context: fullContext }), /ISOLATION_CGROUP_REQUIRED/);
     assert.throws(() => IsolationCgroup.create(root, 64 * 1024 * 1024), /ISOLATION_CGROUP_ROOT_INVALID/);
     assert.throws(() => IsolationCgroup.create('/sys/fs/cgroup', 64 * 1024 * 1024), /ISOLATION_CGROUP_ROOT_INVALID/);
-    const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [root], trustedBuiltinRoots: [root], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: 'state', shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [], isolation: { cgroupRoot: 'delegated' } };
+    const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [root], trustedBuiltinRoots: [root], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: 'state', shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [], isolation: { cgroupRoot: 'delegated' } };
     const file = path.join(root, 'platform.json'); fs.writeFileSync(file, JSON.stringify(platform));
     assert.equal(loadPlatformConfig(file).isolation.cgroupRoot, path.join(root, 'delegated'));
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
@@ -103,13 +105,71 @@ test('changed isolation policy is pinned for recovery while builtin execution st
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'isolation-pinned-policy-'));
   try {
     const fixture = path.resolve('tests/fixtures/plugin-system-v2');
-    const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [fixture], trustedBuiltinRoots: [fixture], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };
+    const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [fixture], trustedBuiltinRoots: [fixture], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };
     const definition = { schemaVersion: 'pipeline-definition.v2', id: 'test:isolation-policy', maxConcurrency: 1, stages: [{ id: 'review', type: 'test.resume', dependsOn: [], config: {}, input: {}, execution: { maxAttempts: 3, maxRemediationCycles: 0, timeoutMs: 2000 } }] };
+    const coreFile = path.join(root, 'core.json');
+    const original = {...ISOLATION_TEST_POLICY, isolationSession:{maximumStderrBytes:1024,stderrExcerptCharacters:10,terminationGraceMs:25,exitAcknowledgementMs:30}};
+    fs.writeFileSync(coreFile, JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:original}}}));
+    platform.corePolicySelection = {file:coreFile,profile:'selected'};
     const first = await runPipelineV2(platform, definition, 'run:isolation-policy');
+    const {readRunSnapshot} = await import('../../../skills/nova/core/execution/engine-snapshots.ts');
+    const {runRoot} = await import('../../../skills/nova/core/execution/run-root.ts');
+    const before = readRunSnapshot(runRoot(platform.storageRoot,'run:isolation-policy'));
+    assert.deepEqual(before.registry.configuration.corePolicy.isolationSession,original.isolationSession);
+    fs.unlinkSync(coreFile); // Retained original policy, not current-source defaults.
+
     assert.equal(first.status, 'waiting');
     const wait = first.stages.get('review').wait;
     const signal = { schemaVersion: 'resume-signal.v2', signalId: 'signal:policy', idempotencyKey: 'key:policy', waitId: wait.waitId, signalType: wait.signalType, issuer: wait.authorizedIssuer, issuedAt: new Date().toISOString(), payload: { approved: true } };
     await assert.rejects(resumePipelineV2({ ...platform, isolation: { cgroupRoot: path.join(root, 'unprovisioned') } }, definition, 'run:isolation-policy', signal), /RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
     assert.equal((await resumePipelineV2(platform, definition, 'run:isolation-policy', signal)).status, 'succeeded');
+    assert.deepEqual(readRunSnapshot(runRoot(platform.storageRoot,'run:isolation-policy')),before);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+
+test('selected stderr byte cap and excerpt reach real child handlers, capture A and restore positive', async () => {
+  async function attempt(policy, text, expected) {
+    const proc=spawn(process.execPath,['-e',"process.stdin.resume();process.stdin.once('data',()=>{process.stderr.write("+JSON.stringify(text)+");setTimeout(()=>process.exit(3),25)});"],{stdio:['pipe','pipe','pipe']});
+    const result=runIsolationSession({policy,child:proc,context,wallTimeMs:2000,invocationMessage:{}});
+    policy.maximumStderrBytes=1;policy.stderrExcerptCharacters=1; // Session captured input before first write.
+    await assert.rejects(result, expected);gone(proc);
+  }
+  const base=ISOLATION_TEST_POLICY.isolationSession;
+  await attempt({...base,maximumStderrBytes:4,stderrExcerptCharacters:2},'éé',/ISOLATED_PLUGIN_EXITED:3:null:éé$/u);
+  await attempt({...base,maximumStderrBytes:3,stderrExcerptCharacters:2},'éé',/ISOLATED_PLUGIN_STDERR_LIMIT/u);
+  await attempt({...base,maximumStderrBytes:4,stderrExcerptCharacters:1},'éé',/ISOLATED_PLUGIN_EXITED:3:null:é$/u);
+  await attempt({...base,maximumStderrBytes:4,stderrExcerptCharacters:2},'éé',/ISOLATED_PLUGIN_EXITED:3:null:éé$/u);
+});
+
+test('selected TERM grace reaches real ignoring child and waits for reaping', async () => {
+  const proc=child();const started=Date.now();
+  await assert.rejects(runIsolationSession({policy:{...ISOLATION_TEST_POLICY.isolationSession,terminationGraceMs:25,exitAcknowledgementMs:25},child:proc,context,wallTimeMs:200,invocationMessage:invocation({mode:'hang'})}),/ISOLATED_PLUGIN_TIMEOUT/);
+  gone(proc);assert(Date.now()-started<1000,'must use selected25ms TERM grace rather than former1000ms');
+});
+
+test('central and direct session budgets reject missing/invalid fields and never synthesize defaults', async () => {
+  const {captureIsolationSessionPolicy}=await import('../../../skills/common/plugin-runtime/foundation/isolation/session.ts');
+  const {captureCoreRuntimePolicy}=await import('../../../skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts');
+  const base=ISOLATION_TEST_POLICY.isolationSession;
+  for(const field of Object.keys(base)) for(const value of [undefined,null,0,-1,1.5,'1',base[field]+1]) {
+    const bad={...base,[field]:value};if(value===undefined)delete bad[field];
+    assert.throws(()=>captureIsolationSessionPolicy(bad),/INVALID/);
+    assert.throws(()=>captureCoreRuntimePolicy({...ISOLATION_TEST_POLICY,isolationSession:bad}),/INVALID/);
+  }
+  assert.throws(()=>captureIsolationSessionPolicy(undefined),/INVALID/);
+  assert.throws(()=>captureIsolationSessionPolicy({...base,extra:1}),/INVALID/);
+  assert.deepEqual(captureIsolationSessionPolicy(base),base);
+});
+
+
+test('post-KILL missing exit acknowledgement uses selected deadline without hanging host', async () => {
+  const {EventEmitter}=await import('node:events');
+  const {PassThrough}=await import('node:stream');
+  const proc=new EventEmitter();proc.stdin=new PassThrough();proc.stdout=new PassThrough();proc.stderr=new PassThrough();
+  const kills=[];proc.kill=signal=>{kills.push(signal);return true;};
+  const start=Date.now();
+  await assert.rejects(runIsolationSession({policy:{...ISOLATION_TEST_POLICY.isolationSession,terminationGraceMs:10,exitAcknowledgementMs:20},child:proc,context,wallTimeMs:10,invocationMessage:{}}),/ISOLATION_PROCESS_CLEANUP_TIMEOUT/);
+  assert.deepEqual(kills,['SIGTERM','SIGKILL']);assert(Date.now()-start<500);
+  assert(proc.stdout.destroyed && proc.stderr.destroyed);
 });

@@ -1,0 +1,400 @@
+[
+  {
+    "setting": "RT-27e9026bdac33ece",
+    "provider": "coverage-budget",
+    "completeOwnedA": {
+      "minimumLinePercent": 40,
+      "combine": false
+    },
+    "completeOwnedB": {
+      "minimumLinePercent": 80,
+      "combine": false
+    }
+  },
+  {
+    "setting": "RT-ee4bd1b95c8e9049",
+    "provider": "coverage-budget",
+    "completeOwnedA": {
+      "minimumLinePercent": 80,
+      "combine": true
+    },
+    "completeOwnedB": {
+      "minimumLinePercent": 80,
+      "combine": false
+    }
+  },
+  {
+    "setting": "RT-4bdd3187c110ade5",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 29,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 31,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-313716d959435f4e",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 1,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 2,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-91cea7a8490c1779",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 9,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 10,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-1b82f488dab26d1b",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 9,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 10,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-417c83b86ae40313",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-b",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-1d56ef14eb5ba3c9",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 15,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.css",
+          "maximumBytes": 15,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-fa510e37b64c8b83",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 9,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 10,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-f09ca71ea0f869ea",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "missing/**",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "missing/**",
+          "maximumBytes": 1000,
+          "requireMatch": false
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-ba7769d6b9828e8c",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 19,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 20,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-0641d8cbf57ca18e",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 199,
+      "largestFiles": 10
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 200,
+      "largestFiles": 10
+    }
+  },
+  {
+    "setting": "RT-669087f7bbde7e87",
+    "provider": "size-budget",
+    "completeOwnedA": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 1
+    },
+    "completeOwnedB": {
+      "maximumTotalBytes": 1000,
+      "maximumFileCount": 10,
+      "matchingFiles": [
+        {
+          "id": "rule-a",
+          "pattern": "**/*.js",
+          "maximumBytes": 1000,
+          "requireMatch": true
+        }
+      ],
+      "maximumGrowthBytes": 1000,
+      "maximumGrowthPercent": 1000,
+      "largestFiles": 2
+    }
+  }
+]

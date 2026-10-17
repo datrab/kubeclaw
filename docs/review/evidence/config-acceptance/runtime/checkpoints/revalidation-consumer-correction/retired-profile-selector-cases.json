@@ -1,0 +1,318 @@
+[
+  {
+    "id": "RT-d8c6d7de4c4201d3-REGISTRATION-CONTRACT",
+    "settings": [
+      "RT-d8c6d7de4c4201d3"
+    ],
+    "requirements": [
+      "C0-B",
+      "C0-C",
+      "C0-D",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-BIND",
+      "F-MUT"
+    ],
+    "scope": "proposed actual kubeclaw.review:repository-revalidation productive boundary; live externalinstalledmodel/runtime selection separately blocked until exactprofile input",
+    "productiveCaller": [
+      "skills/nova/plugins/review/src/stage.ts:execute -> config -> resolvedStagePolicy -> prepareReview -> dispatchEcho -> reduceReviewDecision/report artifact",
+      "skills/nova/plugins/review/src/stage.ts:dispatchEcho -> actual runtime.dispatch with context.contract.runtimeDispatchProfile"
+    ],
+    "inputProfile": {
+      "currentFullRegistrationControl": {
+        "agent": "${ACTUAL_REGISTERED_REVIEW_TARGET_A}",
+        "profile": "gate",
+        "policy": "use complete explicitly recorded matchingreviewownedpolicy; current inline optional only"
+      },
+      "completeOwnedReviewPolicies": "review-policy-productive-contracts.json full preserved/A/B objects; no partialpolicy",
+      "requiredExternalBindings": [
+        "ACTUAL_REGISTERED_REVIEW_TARGET_A/B",
+        "EXPECTED_ACTUAL_ATTESTED_MODEL_A/B",
+        "complete actualdispatchprofiles, grant/catalog/package/model identity and constraints"
+      ],
+      "field": "profile",
+      "literalKnownDefault": "gate for decision-review, audit for repository-audit",
+      "actualDefinitionControls": {
+        "fictionalIdentityOnly": {
+          "targetId": "case-fixture",
+          "runtime": "subagent",
+          "agentId": "case-agent",
+          "model": "fictional/identity-only",
+          "thinking": "high"
+        },
+        "actualAttestation": {
+          "schemaVersion": "runtime-agent-attestation.v1",
+          "targetId": "case-fixture",
+          "runtime": "subagent",
+          "agentId": "case-agent",
+          "model": "fictional/identity-only",
+          "thinking": "high",
+          "identityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9"
+        }
+      },
+      "validityLimit": "fictional sourceidentity controls are NOT supported installedmodel selectors; beforefutureexecution resolve externalbindings with exact supported profile or markcaseblocked, not permissive defaults"
+    },
+    "sourceDigests": {
+      "skills/nova/plugins/review/schemas/repository-audit-config.schema.json": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "skills/nova/plugins/review/src/stage.ts": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+      "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+      "skills/nova/plugins/review/src/review-policy-profiles.ts": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+    },
+    "testDigests": {
+      "tests/verification/reliability/config-review-registration-consumers.test.mts": "proposed notauthored"
+    },
+    "toolDependencyImageConfigIdentities": {
+      "node": "v24.21.0",
+      "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+      "roleImageConfigDigest": "mustfreezeactualprofile/package closure afterapproval"
+    },
+    "rawEvidence": null,
+    "result": "not-run",
+    "reason": "C0 proposed full productive specification; externalmodel/runtime operatorselection unknown; sourcedefinitioncontrols separate",
+    "reviewerConfirmation": "pending",
+    "priorState": "unboundmodule/order; completelegal explicitlyselectedprofile and actualruntimeclosure",
+    "action": "missing profile, wrongtype/emptytext/unsupportedcodecenum; duplicateequaloldstageinlineauthor and newownedauthor; reviewer expectation conflicts with actualruntimeprofile ref; missing/escapingownerref",
+    "expected": "targetowner/registration/binding compatibility rejects beforeeffect; finiteversions obey supporteddomain; reviewerfields derived notindependentmissingcachefallback. Positiveexactmatchingclosure reaches actualconsumer; actualattestation thenmustmatch",
+    "observer": "actual registered stage/runtime-dispatch destination and attestation, exact bundled policy/codec/cache/report digests and effectrecord; no fake modelparameter selection",
+    "expectedEffectOrRejectingBoundary": "targetowner/registration/binding compatibility rejects beforeeffect; finiteversions obey supporteddomain; reviewerfields derived notindependentmissingcachefallback. Positiveexactmatchingclosure reaches actualconsumer; actualattestation thenmustmatch",
+    "command": "node --test --test-name-pattern='^RT-d8c6d7de4c4201d3-REGISTRATION-CONTRACT$' tests/verification/reliability/config-review-registration-consumers.test.mts"
+  },
+  {
+    "id": "RT-d8c6d7de4c4201d3-REGISTRATION-ALTERNATE",
+    "settings": [
+      "RT-d8c6d7de4c4201d3"
+    ],
+    "requirements": [
+      "C0-B",
+      "C0-C",
+      "C0-D",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-BIND",
+      "F-MUT"
+    ],
+    "scope": "proposed actual kubeclaw.review:repository-revalidation productive boundary; live externalinstalledmodel/runtime selection separately blocked until exactprofile input",
+    "productiveCaller": [
+      "skills/nova/plugins/review/src/stage.ts:execute -> config -> resolvedStagePolicy -> prepareReview -> dispatchEcho -> reduceReviewDecision/report artifact",
+      "skills/nova/plugins/review/src/stage.ts:dispatchEcho -> actual runtime.dispatch with context.contract.runtimeDispatchProfile"
+    ],
+    "inputProfile": {
+      "currentFullRegistrationControl": {
+        "agent": "${ACTUAL_REGISTERED_REVIEW_TARGET_A}",
+        "profile": "gate",
+        "policy": "use complete explicitly recorded matchingreviewownedpolicy; current inline optional only"
+      },
+      "completeOwnedReviewPolicies": "review-policy-productive-contracts.json full preserved/A/B objects; no partialpolicy",
+      "requiredExternalBindings": [
+        "ACTUAL_REGISTERED_REVIEW_TARGET_A/B",
+        "EXPECTED_ACTUAL_ATTESTED_MODEL_A/B",
+        "complete actualdispatchprofiles, grant/catalog/package/model identity and constraints"
+      ],
+      "field": "profile",
+      "literalKnownDefault": "gate for decision-review, audit for repository-audit",
+      "actualDefinitionControls": {
+        "fictionalIdentityOnly": {
+          "targetId": "case-fixture",
+          "runtime": "subagent",
+          "agentId": "case-agent",
+          "model": "fictional/identity-only",
+          "thinking": "high"
+        },
+        "actualAttestation": {
+          "schemaVersion": "runtime-agent-attestation.v1",
+          "targetId": "case-fixture",
+          "runtime": "subagent",
+          "agentId": "case-agent",
+          "model": "fictional/identity-only",
+          "thinking": "high",
+          "identityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9"
+        }
+      },
+      "validityLimit": "fictional sourceidentity controls are NOT supported installedmodel selectors; beforefutureexecution resolve externalbindings with exact supported profile or markcaseblocked, not permissive defaults"
+    },
+    "sourceDigests": {
+      "skills/nova/plugins/review/schemas/repository-audit-config.schema.json": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "skills/nova/plugins/review/src/stage.ts": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+      "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+      "skills/nova/plugins/review/src/review-policy-profiles.ts": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+    },
+    "testDigests": {
+      "tests/verification/reliability/config-review-registration-consumers.test.mts": "proposed notauthored"
+    },
+    "toolDependencyImageConfigIdentities": {
+      "node": "v24.21.0",
+      "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+      "roleImageConfigDigest": "mustfreezeactualprofile/package closure afterapproval"
+    },
+    "rawEvidence": null,
+    "result": "not-run",
+    "reason": "C0 proposed full productive specification; externalmodel/runtime operatorselection unknown; sourcedefinitioncontrols separate",
+    "reviewerConfirmation": "pending",
+    "priorState": "fresh actualA/B bindings and same legal immutableGit/task; fixture localreceiver allowed, no actualplugin/validator/cache mock",
+    "action": "Current explicit gate versus audit selector loads two real complete builtinprofiles; observe actual full policy/bundle digests and stated materially differentlimits at consumer; unknown/profile omission target rejects ownerref beforedispatch; target explicit ownedprofile no builtin fallback",
+    "expected": "Current explicit gate versus audit selector loads two real complete builtinprofiles; observe actual full policy/bundle digests and stated materially differentlimits at consumer; unknown/profile omission target rejects ownerref beforedispatch; target explicit ownedprofile no builtin fallback",
+    "observer": "actual registered stage/runtime-dispatch destination and attestation, exact bundled policy/codec/cache/report digests and effectrecord; no fake modelparameter selection",
+    "expectedEffectOrRejectingBoundary": "Current explicit gate versus audit selector loads two real complete builtinprofiles; observe actual full policy/bundle digests and stated materially differentlimits at consumer; unknown/profile omission target rejects ownerref beforedispatch; target explicit ownedprofile no builtin fallback",
+    "command": "node --test --test-name-pattern='^RT-d8c6d7de4c4201d3-REGISTRATION-ALTERNATE$' tests/verification/reliability/config-review-registration-consumers.test.mts"
+  },
+  {
+    "id": "RT-d8c6d7de4c4201d3-REGISTRATION-BINDING",
+    "settings": [
+      "RT-d8c6d7de4c4201d3"
+    ],
+    "requirements": [
+      "C0-B",
+      "C0-C",
+      "C0-D",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-BIND",
+      "F-MUT"
+    ],
+    "scope": "proposed actual kubeclaw.review:repository-revalidation productive boundary; live externalinstalledmodel/runtime selection separately blocked until exactprofile input",
+    "productiveCaller": [
+      "skills/nova/plugins/review/src/stage.ts:execute -> config -> resolvedStagePolicy -> prepareReview -> dispatchEcho -> reduceReviewDecision/report artifact",
+      "skills/nova/plugins/review/src/stage.ts:dispatchEcho -> actual runtime.dispatch with context.contract.runtimeDispatchProfile"
+    ],
+    "inputProfile": {
+      "currentFullRegistrationControl": {
+        "agent": "${ACTUAL_REGISTERED_REVIEW_TARGET_A}",
+        "profile": "gate",
+        "policy": "use complete explicitly recorded matchingreviewownedpolicy; current inline optional only"
+      },
+      "completeOwnedReviewPolicies": "review-policy-productive-contracts.json full preserved/A/B objects; no partialpolicy",
+      "requiredExternalBindings": [
+        "ACTUAL_REGISTERED_REVIEW_TARGET_A/B",
+        "EXPECTED_ACTUAL_ATTESTED_MODEL_A/B",
+        "complete actualdispatchprofiles, grant/catalog/package/model identity and constraints"
+      ],
+      "field": "profile",
+      "literalKnownDefault": "gate for decision-review, audit for repository-audit",
+      "actualDefinitionControls": {
+        "fictionalIdentityOnly": {
+          "targetId": "case-fixture",
+          "runtime": "subagent",
+          "agentId": "case-agent",
+          "model": "fictional/identity-only",
+          "thinking": "high"
+        },
+        "actualAttestation": {
+          "schemaVersion": "runtime-agent-attestation.v1",
+          "targetId": "case-fixture",
+          "runtime": "subagent",
+          "agentId": "case-agent",
+          "model": "fictional/identity-only",
+          "thinking": "high",
+          "identityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9"
+        }
+      },
+      "validityLimit": "fictional sourceidentity controls are NOT supported installedmodel selectors; beforefutureexecution resolve externalbindings with exact supported profile or markcaseblocked, not permissive defaults"
+    },
+    "sourceDigests": {
+      "skills/nova/plugins/review/schemas/repository-audit-config.schema.json": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "skills/nova/plugins/review/src/stage.ts": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+      "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+      "skills/nova/plugins/review/src/review-policy-profiles.ts": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+    },
+    "testDigests": {
+      "tests/verification/reliability/config-review-registration-consumers.test.mts": "proposed notauthored"
+    },
+    "toolDependencyImageConfigIdentities": {
+      "node": "v24.21.0",
+      "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+      "roleImageConfigDigest": "mustfreezeactualprofile/package closure afterapproval"
+    },
+    "rawEvidence": null,
+    "result": "not-run",
+    "reason": "C0 proposed full productive specification; externalmodel/runtime operatorselection unknown; sourcedefinitioncontrols separate",
+    "reviewerConfirmation": "pending",
+    "priorState": "A modulebound beforefirstdispatch; review/cache/verificationstarted; publishcompleteB",
+    "action": "continue actualdispatch/verification/cache then crashrecover/retry; permissibleunstartedB; fixedEvalA; missinghistoricalclosure",
+    "expected": "startedA keepsactualtarget/model/profile/codec/expectedattestation/cache namespaceA, unchangedclaimdeadline/budgets; B newmoduleonly; missinghistoryblocks; noLatest or perrequestcontext reload",
+    "observer": "actual registered stage/runtime-dispatch destination and attestation, exact bundled policy/codec/cache/report digests and effectrecord; no fake modelparameter selection",
+    "expectedEffectOrRejectingBoundary": "startedA keepsactualtarget/model/profile/codec/expectedattestation/cache namespaceA, unchangedclaimdeadline/budgets; B newmoduleonly; missinghistoryblocks; noLatest or perrequestcontext reload",
+    "command": "node --test --test-name-pattern='^RT-d8c6d7de4c4201d3-REGISTRATION-BINDING$' tests/verification/reliability/config-review-registration-consumers.test.mts"
+  },
+  {
+    "id": "RT-d8c6d7de4c4201d3-REGISTRATION-MUTANT",
+    "settings": [
+      "RT-d8c6d7de4c4201d3"
+    ],
+    "requirements": [
+      "C0-B",
+      "C0-C",
+      "C0-D",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-BIND",
+      "F-MUT"
+    ],
+    "scope": "proposed actual kubeclaw.review:repository-revalidation productive boundary; live externalinstalledmodel/runtime selection separately blocked until exactprofile input",
+    "productiveCaller": [
+      "skills/nova/plugins/review/src/stage.ts:execute -> config -> resolvedStagePolicy -> prepareReview -> dispatchEcho -> reduceReviewDecision/report artifact",
+      "skills/nova/plugins/review/src/stage.ts:dispatchEcho -> actual runtime.dispatch with context.contract.runtimeDispatchProfile"
+    ],
+    "inputProfile": {
+      "currentFullRegistrationControl": {
+        "agent": "${ACTUAL_REGISTERED_REVIEW_TARGET_A}",
+        "profile": "gate",
+        "policy": "use complete explicitly recorded matchingreviewownedpolicy; current inline optional only"
+      },
+      "completeOwnedReviewPolicies": "review-policy-productive-contracts.json full preserved/A/B objects; no partialpolicy",
+      "requiredExternalBindings": [
+        "ACTUAL_REGISTERED_REVIEW_TARGET_A/B",
+        "EXPECTED_ACTUAL_ATTESTED_MODEL_A/B",
+        "complete actualdispatchprofiles, grant/catalog/package/model identity and constraints"
+      ],
+      "field": "profile",
+      "literalKnownDefault": "gate for decision-review, audit for repository-audit",
+      "actualDefinitionControls": {
+        "fictionalIdentityOnly": {
+          "targetId": "case-fixture",
+          "runtime": "subagent",
+          "agentId": "case-agent",
+          "model": "fictional/identity-only",
+          "thinking": "high"
+        },
+        "actualAttestation": {
+          "schemaVersion": "runtime-agent-attestation.v1",
+          "targetId": "case-fixture",
+          "runtime": "subagent",
+          "agentId": "case-agent",
+          "model": "fictional/identity-only",
+          "thinking": "high",
+          "identityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9"
+        }
+      },
+      "validityLimit": "fictional sourceidentity controls are NOT supported installedmodel selectors; beforefutureexecution resolve externalbindings with exact supported profile or markcaseblocked, not permissive defaults"
+    },
+    "sourceDigests": {
+      "skills/nova/plugins/review/schemas/repository-audit-config.schema.json": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "skills/nova/plugins/review/src/stage.ts": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+      "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+      "skills/nova/plugins/review/src/review-policy-profiles.ts": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+    },
+    "testDigests": {
+      "tests/verification/reliability/config-review-registration-consumers.test.mts": "proposed notauthored"
+    },
+    "toolDependencyImageConfigIdentities": {
+      "node": "v24.21.0",
+      "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+      "roleImageConfigDigest": "mustfreezeactualprofile/package closure afterapproval"
+    },
+    "rawEvidence": null,
+    "result": "not-run",
+    "reason": "C0 proposed full productive specification; externalmodel/runtime operatorselection unknown; sourcedefinitioncontrols separate",
+    "reviewerConfirmation": "pending",
+    "priorState": "approvedmigratedbaselineexactpositive; isolatedcheckout",
+    "action": "restore cited fallback or independent reviewer expectedidentity/stageinlinewriter; run exactCONTRACT missing/duplicate/compatibility and ALTERNATE named actualconsumer case",
+    "expected": "intendedauthor/domain/matchingattestation/actualdispatchorcache assertionfails; compile/setup failure notkill; restoreexactbaseline/rerun",
+    "observer": "actual registered stage/runtime-dispatch destination and attestation, exact bundled policy/codec/cache/report digests and effectrecord; no fake modelparameter selection",
+    "expectedEffectOrRejectingBoundary": "intendedauthor/domain/matchingattestation/actualdispatchorcache assertionfails; compile/setup failure notkill; restoreexactbaseline/rerun",
+    "command": "node --test --test-name-pattern='^RT-d8c6d7de4c4201d3-REGISTRATION-MUTANT$' tests/verification/reliability/config-review-registration-consumers.test.mts"
+  }
+]

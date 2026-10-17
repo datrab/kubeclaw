@@ -1,0 +1,1422 @@
+{
+  "scope": "Finite exact proposed controls attached to existing original cases; localControlIds are navigation, NOT new global canonical case IDs or changed original bodies.",
+  "counts": {
+    "controls": 31,
+    "byFamily": {
+      "P1": 6,
+      "P2": 6,
+      "P3": 6,
+      "P4": 13
+    }
+  },
+  "cases": [
+    {
+      "localControlId": "P1-D1",
+      "family": "P1",
+      "category": "definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Whole profile and duration/probe domain",
+      "completeProfileFixture": "Explicit eight complete trust-role A/B fixture paths in completeProfileFixtures (standalone Prism projects Control and Worker).",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "priorState": "All unrelated role/image/namespace/Secret/trust refs identical within each pair.",
+      "actualConsumerProcedure": "Compare all four role pairs and load the closed proposed P1 block through the selected whole owner profile; no patch merge. Encode durations by integer quotient/remainder.",
+      "expectedEffectOrRejectingBoundary": "All four trust-role whole pairs: A1000/2000/2000ms/probe3s and B2000/4000/4000ms/probe5s. Both satisfy self-check<request/idle<probe. Actual encoder outputs A1s/2s and B2s/4s; exact proxy seconds3\u21925. No ignored field, fallback, truncation or unrelated-field change.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P1",
+          "tests/verification/deployment/worker-trust-readiness.test.mjs"
+        ],
+        "extend": "Current renderedTrust harness must consume these complete selected fixture projections and verify real extracted Envoy config/probe fields for Nova/Buster/Prism-agent/standalone Control+Worker."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "completeProfileFixtures": [
+        "fixtures/kubeclaw-nova-A-values.json",
+        "fixtures/kubeclaw-nova-B-values.json",
+        "fixtures/kubeclaw-buster-A-values.json",
+        "fixtures/kubeclaw-buster-B-values.json",
+        "fixtures/kubeclaw-prism-agent-A-values.json",
+        "fixtures/kubeclaw-prism-agent-B-values.json",
+        "fixtures/prism-A-values.json",
+        "fixtures/prism-B-values.json"
+      ]
+    },
+    {
+      "localControlId": "P1-L1",
+      "family": "P1",
+      "category": "implementation-local",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Actual helper caller and proxy render propagation",
+      "completeProfileFixture": "Explicit eight complete trust-role A/B fixture paths in completeProfileFixtures (standalone Prism projects Control and Worker).",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "priorState": "Selected immutable generation and same SPIFFE/Envoy images.",
+      "actualConsumerProcedure": "After authorized C3, actual selected-profile materializer and Helm render each complete Nova/Buster/Prism-agent/standalone Prism fixture. Extract actual readiness helper ConfigMaps and every corresponding proxy startup/readiness/liveness probe: three agent proxies plus standalone Control+Worker. A self-check1s/request2s/idle2s/probe3; B2s/4s/4s/probe5. Associate every extracted value with full selected profile digest.",
+      "expectedEffectOrRejectingBoundary": "All five actual proxy consumer instances and all15 probe fields carry selected A3s versus B5s. All five real helper instances carry A1s/2s/2s versus B2s/4s/4s. Exact role/SPIFFE/image/grant fields, five removed headers and GET/404 routes remain unchanged. A hardcoded probe3s mutant fails B at each matching actual workload field.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P1",
+          "tests/verification/deployment/worker-trust-readiness.test.mjs"
+        ],
+        "extend": "Current renderedTrust harness must consume these complete selected fixture projections and verify real extracted Envoy config/probe fields for Nova/Buster/Prism-agent/standalone Control+Worker."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Keep proxy probe timeout3s instead of B5s: Bstartup/readiness/liveness extraction mustfail",
+        "Keep helper route1s or outer2s instead of B2s/4s",
+        "Omit any of five role/caller projections",
+        "Wrong ms\u2194seconds duration encoding"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "completeProfileFixtures": [
+        "fixtures/kubeclaw-nova-A-values.json",
+        "fixtures/kubeclaw-nova-B-values.json",
+        "fixtures/kubeclaw-buster-A-values.json",
+        "fixtures/kubeclaw-buster-B-values.json",
+        "fixtures/kubeclaw-prism-agent-A-values.json",
+        "fixtures/kubeclaw-prism-agent-B-values.json",
+        "fixtures/prism-A-values.json",
+        "fixtures/prism-B-values.json"
+      ]
+    },
+    {
+      "localControlId": "P1-X1",
+      "family": "P1",
+      "category": "implementation-local-negative",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Missing/type/unit/relation/unknown/competing author rejection",
+      "completeProfileFixture": "Explicit eight complete trust-role A/B fixture paths in completeProfileFixtures (standalone Prism projects Control and Worker).",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "priorState": "No rendered output or process/network effect has started.",
+      "actualConsumerProcedure": "Remove each required P1 field; inject null,string,0,fraction,unknown key; set selfCheck>=request or outer>=probe milliseconds; supply equal and unequal legacy field/extraValues/ENV overrides.",
+      "expectedEffectOrRejectingBoundary": "Selected whole profile validator/materializer rejects with exact pointer/relation before output publication. No fallback old literal may make the case pass.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P1",
+          "tests/verification/deployment/worker-trust-readiness.test.mjs"
+        ],
+        "extend": "Current renderedTrust harness must consume these complete selected fixture projections and verify real extracted Envoy config/probe fields for Nova/Buster/Prism-agent/standalone Control+Worker."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "completeProfileFixtures": [
+        "fixtures/kubeclaw-nova-A-values.json",
+        "fixtures/kubeclaw-nova-B-values.json",
+        "fixtures/kubeclaw-buster-A-values.json",
+        "fixtures/kubeclaw-buster-B-values.json",
+        "fixtures/kubeclaw-prism-agent-A-values.json",
+        "fixtures/kubeclaw-prism-agent-B-values.json",
+        "fixtures/prism-A-values.json",
+        "fixtures/prism-B-values.json"
+      ]
+    },
+    {
+      "localControlId": "P1-N1",
+      "family": "P1",
+      "category": "native-definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Original pinned Envoy validates both actual renders",
+      "completeProfileFixture": "Explicit eight complete trust-role A/B fixture paths in completeProfileFixtures (standalone Prism projects Control and Worker).",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "priorState": "Original selected Envoy1.39.0 executable/image/source receipt bound to same renderer generation.",
+      "actualConsumerProcedure": "Run current native driver extended for both selected configs; original Envoy --mode validate consumes the actual rendered ConfigMaps and selected trust configuration.",
+      "expectedEffectOrRejectingBoundary": "Both genuine A/B rendered Envoy configs validate with original native parser. A deliberately malformed Duration string such as bad-duration fails original parser. Zero-valued P1 policy is rejected by the selected-profile policy validator before projection; do NOT claim the Envoy parser universally rejects0s. This proves native config parsing, not kubelet/provider health.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "tests/verification/deployment/check-worker-trust-envoy-native.mjs"
+        ],
+        "extend": "Current pinned-native Envoy driver must consume each selected A/B render and include named native validation and genuine self-check deadline fault gates. Use original Envoy and an isolated original-provider network fault, never a substitute TLS responder."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Original pinned Envoy executable/image receipt"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "completeProfileFixtures": [
+        "fixtures/kubeclaw-nova-A-values.json",
+        "fixtures/kubeclaw-nova-B-values.json",
+        "fixtures/kubeclaw-buster-A-values.json",
+        "fixtures/kubeclaw-buster-B-values.json",
+        "fixtures/kubeclaw-prism-agent-A-values.json",
+        "fixtures/kubeclaw-prism-agent-B-values.json",
+        "fixtures/prism-A-values.json",
+        "fixtures/prism-B-values.json"
+      ]
+    },
+    {
+      "localControlId": "P1-N2",
+      "family": "P1",
+      "category": "native-effect",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Self-check deadline and immutable override-denial boundary",
+      "completeProfileFixture": "Explicit eight complete trust-role A/B fixture paths in completeProfileFixtures (standalone Prism projects Control and Worker).",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "priorState": "Original Envoy healthy200, same TLS/SPIFFE and connect_timeout500ms; no connection/handshake failure. Full selected fixture digest plus separately pinned test-only overlay.",
+      "actualConsumerProcedure": "Use exact P1-N2-post-handshake recipe: prepend real fault filter only in original self-check HCM, match x-config-policy-fault:response-stall, fixed6s delay after original TLS/HTTP request establishment, unchanged direct200 response and original500ms connect cap. Correlate connection-ready/request-arrival/delay counter before evaluating outer route. Capture original Envoy logs/stats, not a substitute server.",
+      "expectedEffectOrRejectingBoundary": "Faulted A produces real504 UT/upstream_response_timeout at900..1100ms; B at1900..2100ms. Both have successful original TLS/HTTP establishment beforefault. UF/UC/SI, connect_timeout, missingphaseevidence, clienttimeout or outside100ms tolerance cannotPASS. No budget enlargement. Probe3\u21925 is separately proven by realrender control P1-L1.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "tests/verification/deployment/check-worker-trust-envoy-native.mjs"
+        ],
+        "extend": "Current pinned-native Envoy driver must consume each selected A/B render and include named native validation and genuine self-check deadline fault gates. Use original Envoy and an isolated original-provider network fault, never a substitute TLS responder."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Route stays1s despite B2s: B timing interval fails",
+        "Connect timeout mistaken for route timeout: missing successful connection/request phase or UF/503 fails",
+        "Fault injected before handshake or on different listener: native prerequisite evidence fails",
+        "Override header bypasses selectedroute: actual timing/flag oracle fails"
+      ],
+      "externalRequiredInputs": [
+        "Original Envoy and selected genuine TLS identities",
+        "Isolated native network namespace/fault-control grant; no shared-host intervention"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "completeProfileFixtures": [
+        "fixtures/kubeclaw-nova-A-values.json",
+        "fixtures/kubeclaw-nova-B-values.json",
+        "fixtures/kubeclaw-buster-A-values.json",
+        "fixtures/kubeclaw-buster-B-values.json",
+        "fixtures/kubeclaw-prism-agent-A-values.json",
+        "fixtures/kubeclaw-prism-agent-B-values.json",
+        "fixtures/prism-A-values.json",
+        "fixtures/prism-B-values.json"
+      ],
+      "faultRecipeRef": "p1-response-phase-fault.json"
+    },
+    {
+      "localControlId": "P1-S1",
+      "family": "P1",
+      "category": "implementation-and-native-capture",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Publish B without changing started A proxy",
+      "completeProfileFixture": "Explicit eight complete trust-role A/B fixture paths in completeProfileFixtures (standalone Prism projects Control and Worker).",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "priorState": "A proxy started from frozen A generation and admitted probe; B author published later.",
+      "actualConsumerProcedure": "Publish/materialize B while A remains running, then controlled replacement starts B. Compare selected digest and captured timeout across old/new processes; retain original SPIFFE/role grants.",
+      "expectedEffectOrRejectingBoundary": "Started A remains1s/2s/2s with3s probes until controlled replacement. Only newly validated B is2s/4s/4s with5s probes. No Latest read or grant/identity drift.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "tests/verification/deployment/check-worker-trust-envoy-native.mjs"
+        ],
+        "extend": "Current pinned-native Envoy driver must consume each selected A/B render and include named native validation and genuine self-check deadline fault gates. Use original Envoy and an isolated original-provider network fault, never a substitute TLS responder."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Original Envoy/process generation identities for native portion"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "completeProfileFixtures": [
+        "fixtures/kubeclaw-nova-A-values.json",
+        "fixtures/kubeclaw-nova-B-values.json",
+        "fixtures/kubeclaw-buster-A-values.json",
+        "fixtures/kubeclaw-buster-B-values.json",
+        "fixtures/kubeclaw-prism-agent-A-values.json",
+        "fixtures/kubeclaw-prism-agent-B-values.json",
+        "fixtures/prism-A-values.json",
+        "fixtures/prism-B-values.json"
+      ]
+    },
+    {
+      "localControlId": "P2-D1",
+      "family": "P2",
+      "category": "definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Entropy and length are separate typed policies",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-INPUT-PRECEDENCE",
+        "DLV-CASE-OPS-RENDER-PRE-EFFECT",
+        "DLV-CASE-OPS-SERVICE-AUTH-NAMESPACE"
+      ],
+      "priorState": "Full same Ops images/Secret references/namespace/grants per pair; no credential files read.",
+      "actualConsumerProcedure": "Check complete credentials block: A entropy48 encodes64characters, B entropy64 encodes86. Validate min<=generated<=max and positive typed bounds.",
+      "expectedEffectOrRejectingBoundary": "A32..512/48bytes and B64..256/64bytes valid; no equality between48bytes and minimum32chars. No schema.const or entropy inference from observed string length.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P2",
+          "tools/ops-mcp/test/authentication.test.mjs",
+          "tools/ops-mcp/test/bootstrap.test.mjs"
+        ],
+        "extend": "Exercise the real shared captured policy paths in authentication/fileToken and bootstrap/supervisor wiring; current hardcoded functions do not yet support these options."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P2-L1",
+      "family": "P2",
+      "category": "implementation-local",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Shared validator and exact raw file boundary",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-INPUT-PRECEDENCE",
+        "DLV-CASE-OPS-RENDER-PRE-EFFECT",
+        "DLV-CASE-OPS-SERVICE-AUTH-NAMESPACE"
+      ],
+      "priorState": "Public dummy ASCII fixture strings only, local temporary files, no original secrets.",
+      "actualConsumerProcedure": "Exercise actual validate/fileToken with synthetic token lengths31,32,63,64,256,257,512,513 and non-URLsafe Unicode/space. A raw token512+LF513 is accepted; +CRLF514 is rejected beforetrim; repeat B raw bound258. Supervisor receives same policy and validates same alphabet/min/max.",
+      "expectedEffectOrRejectingBoundary": "All boundaries match selected min/max and derived raw read ceiling, with constant-time auth paths retained. A accepts300char token while B rejects it; invalid/too-long file never disables auth.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P2",
+          "tools/ops-mcp/test/authentication.test.mjs",
+          "tools/ops-mcp/test/bootstrap.test.mjs"
+        ],
+        "extend": "Exercise the real shared captured policy paths in authentication/fileToken and bootstrap/supervisor wiring; current hardcoded functions do not yet support these options."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Keep fixed minimum32 in supervisor",
+        "Keep fixed max512 in MCP",
+        "Use entropy bytes as character minimum",
+        "Cache rotated file inode",
+        "Remove raw read limit or trim before equality-cap rejection"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P2-N1",
+      "family": "P2",
+      "category": "native-effect",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Actual producer, Secret mount and MCP authorization cutover",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-INPUT-PRECEDENCE",
+        "DLV-CASE-OPS-RENDER-PRE-EFFECT",
+        "DLV-CASE-OPS-SERVICE-AUTH-NAMESPACE"
+      ],
+      "priorState": "Original isolated Ops install/profile/provider refs; one absent-token fixture Secret then retained Secret; authenticated native API.",
+      "actualConsumerProcedure": "Use actual bootstrap branch with48/64 entropy argument and genuine crypto provider, create only absent fixture Secret, mount actual selected Secret. Call real MCP with correct/incorrect bearer and observe200/401. For retained Secret, publish B but do not regenerate it; validate its shape and require controlled authorized replacement/restart when incompatible. Do not print token bytes.",
+      "expectedEffectOrRejectingBoundary": "Actual producer consumes selected entropy argument; generated shape fits selected min/max. Existing Secret preserved. Only valid matching bearer authorizes actual endpoint; no automatic weak-token migration, credential deletion or login/PVC reset.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_POLICY_NATIVE",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Add actual managed-profile startup plus original backend/native reference fixtures; do not count the current unit/mock-only cases as native effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Authenticated Kubernetes fixture/API namespace/provider revision and original image/source receipts",
+        "Actual projected Secret/volume and crypto provider"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P2-X1",
+      "family": "P2",
+      "category": "implementation-local-negative",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Policy/reference/migration preeffect rejection",
+      "completeProfileFixture": "Full A/B mutations",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-INPUT-PRECEDENCE",
+        "DLV-CASE-OPS-RENDER-PRE-EFFECT",
+        "DLV-CASE-OPS-SERVICE-AUTH-NAMESPACE"
+      ],
+      "priorState": "No Secret write or process spawn yet.",
+      "actualConsumerProcedure": "Delete fields; null/string/fraction; min>max; entropy below48 or encoded chars outsideinterval; contradictory old deployment JSON/ENV/CLI equal and unequal; invalid provider binding.",
+      "expectedEffectOrRejectingBoundary": "Same selected Ops validator/materializer rejects before bootstrap apply/spawn. No old config/deployment/ops author lookup is allowed; old canonical proposal remains historical.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P2",
+          "tools/ops-mcp/test/authentication.test.mjs",
+          "tools/ops-mcp/test/bootstrap.test.mjs"
+        ],
+        "extend": "Exercise the real shared captured policy paths in authentication/fileToken and bootstrap/supervisor wiring; current hardcoded functions do not yet support these options."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P2-S1",
+      "family": "P2",
+      "category": "native-effect",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Once-read Codex versus perrequest MCP rotation",
+      "completeProfileFixture": "fixtures/ops-A-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-INPUT-PRECEDENCE",
+        "DLV-CASE-OPS-RENDER-PRE-EFFECT",
+        "DLV-CASE-OPS-SERVICE-AUTH-NAMESPACE"
+      ],
+      "priorState": "Both original processes started on capturedA and selected provider revision; native Secret rollover permitted.",
+      "actualConsumerProcedure": "Atomically rotate fixture file/Secret to another valid public-teststand token revision. Query actual MCP with old/new bearer. Keep A Codex supervisor running, then perform controlled restart. Also rotate to invalid shape and unreadable fixture under native mount semantics.",
+      "expectedEffectOrRejectingBoundary": "MCP reopens and new token authenticates; old token denies. A Codex remains on its captured old bytes until controlled restart; mismatch is visible, never silently considered paired. Invalid/missing rotation denies all requests rather than disabling auth.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_POLICY_NATIVE",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Add actual managed-profile startup plus original backend/native reference fixtures; do not count the current unit/mock-only cases as native effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Original projected volume/revision rollover and started Codex/MCP process identities"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P2-M1",
+      "family": "P2",
+      "category": "proposed-mutation",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Detect ignored strength/generator policy",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-INPUT-PRECEDENCE",
+        "DLV-CASE-OPS-RENDER-PRE-EFFECT",
+        "DLV-CASE-OPS-SERVICE-AUTH-NAMESPACE"
+      ],
+      "priorState": "Same full fixtures and all prior cases.",
+      "actualConsumerProcedure": "Apply each one-line temporary branch mutant only in an authorized isolated future review checkout; rerun exact changed effect/boundary control.",
+      "expectedEffectOrRejectingBoundary": "Hardcoded48 generator, hardcoded32 min, hardcoded512 max, entropy/length conflation or cached read must each fail at least one specific named oracle; mutated source identities invalidate earlier evidence.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P2",
+          "tools/ops-mcp/test/authentication.test.mjs",
+          "tools/ops-mcp/test/bootstrap.test.mjs"
+        ],
+        "extend": "Exercise the real shared captured policy paths in authentication/fileToken and bootstrap/supervisor wiring; current hardcoded functions do not yet support these options."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "token_urlsafe(48) ignores selectedB64",
+        "supervisor>=32 ignoresB64",
+        "authmax512 ignoresB256",
+        "fileToken cached atstartup",
+        "minimumcharacters = entropybytes"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P3-D1",
+      "family": "P3",
+      "category": "definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Selected window/limit parser boundaries",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Explicit fixed timestamp endpoint2025-01-01T00:15:00Z; no CLI/provider needed.",
+      "actualConsumerProcedure": "Use actual queryWindow with selected captured policy: omittedstart gives A5min/B2min. Explicit11min interval acceptedA, rejectedB10min; maximum15min exact acceptedA and15min+1ms rejected. Schema limit defaults20/10, maxima50/25.",
+      "expectedEffectOrRejectingBoundary": "Correct exact absolute window and limit outputs/rejections, no parse coercion or fallback. Future function must readselectedpolicy; existing hardcodedimplementation failsB.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P3",
+          "tools/ops-mcp/test/hubble.test.mjs"
+        ],
+        "extend": "Pure parser/argv shape cases stay definition-only where the existing fake CLI fixture is used; native variant must use actual pinned Hubble binary and relay."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P3-X1",
+      "family": "P3",
+      "category": "implementation-local-negative",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Invalid interval/policy/competing source at intended boundary",
+      "completeProfileFixture": "Full A/B and task arg mutations",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "No getHubbleFlows child spawn yet.",
+      "actualConsumerProcedure": "Missing policyfield, default>max,0/fraction/string/null, unknown field, maximumwindow>900000 or flowceiling>50; invaliddates/start>=end/oversizedtaskwindow; tasklimit>selectedcap; equal/different legacyENV/function option overrides.",
+      "expectedEffectOrRejectingBoundary": "Selected serviceconfig/parser/inputschema denies beforeCLIspawn. Valid tasknamespace/pod/node/time remain accepted operationinputs, not rejected as competing operatorwriters.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P3",
+          "tools/ops-mcp/test/hubble.test.mjs"
+        ],
+        "extend": "Pure parser/argv shape cases stay definition-only where the existing fake CLI fixture is used; native variant must use actual pinned Hubble binary and relay."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P3-L1",
+      "family": "P3",
+      "category": "implementation-local-definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Actual schema and argv field propagation",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Use current controlled testCLI only as declared library/argv definition fixture.",
+      "actualConsumerProcedure": "Extend current getHubbleFlows and actual MCP schema test; inspect literal argv for selected accepted window, --last limit+1, namespace/pod/node/verdict; keep server/bin captured typed bindings.",
+      "expectedEffectOrRejectingBoundary": "A default --last21 andB11; accepted timearguments match selected parser. No shell and childENV onlyPATH/HOME. Fake CLI never counts as installed provider/nativeflow proof.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P3",
+          "tools/ops-mcp/test/hubble.test.mjs"
+        ],
+        "extend": "Pure parser/argv shape cases stay definition-only where the existing fake CLI fixture is used; native variant must use actual pinned Hubble binary and relay."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "queryWindow uses5min regardlessB",
+        "schema alwaysdefault20/max50",
+        "CLI ignoresacceptedlimit+1",
+        "CLI changes--since/--until or childinheritsallENV"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P3-N1",
+      "family": "P3",
+      "category": "native-effect",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Original Hubble CLI/relay and policy enforcement",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Original locked CLI/image+relay peers and controlled known flow corpus tied to namespace/pod/node.",
+      "actualConsumerProcedure": "Use original installedCLI via actual MCPtool with11min absolute query and explicitlimit30; A permits invocation,B rejects both outsideBbounds before native spawn. WithinBbounds invoke originalrelay and inspect nativeargv/result/time/peer/loss observations.",
+      "expectedEffectOrRejectingBoundary": "A invokes realCLI and preserves unknown historical coverage; B rejects atactualschema/window boundary. Actualreturnedflows match exactpeerpostfilter; loss/nodewarnings forcepartial. Empty/no-access cannot satisfy known-corpus positive control.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_POLICY_NATIVE",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Add actual managed-profile startup plus original backend/native reference fixtures; do not count the current unit/mock-only cases as native effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Original installed Hubble CLI/source receipt, relay identity, controlled original flows and peers"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P3-S1",
+      "family": "P3",
+      "category": "implementation-and-native-capture",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "One operation captures A during B publication",
+      "completeProfileFixture": "fixtures/ops-A-values.json then fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "A service/query admitted with capturedA and original query args.",
+      "actualConsumerProcedure": "PublishB while Aquery running; do not rereadLatest. Start replacementBservice then same admitted/query inputs.",
+      "expectedEffectOrRejectingBoundary": "A window/quota remainA; newBusesB. Grants/peerbinding and historicalCompleteness unknown remainunchanged.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_POLICY_NATIVE",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Add actual managed-profile startup plus original backend/native reference fixtures; do not count the current unit/mock-only cases as native effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Original CLI/relay for native portion"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P3-M1",
+      "family": "P3",
+      "category": "proposed-mutation",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Kill fallback/guard/remapping mutations",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Exact parser/schema/argv cases already specified.",
+      "actualConsumerProcedure": "Temporarily revert eachconsumer toAconstant, permitmaximum+1, changeunit or omitpostfilter; keepfullvalidBprofile.",
+      "expectedEffectOrRejectingBoundary": "Atleastone intendedboundary/actualargv/nativepeercontrol fails; freshidentity neededafterrestore, never countskippedcurrentpattern tests.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P3",
+          "tools/ops-mcp/test/hubble.test.mjs"
+        ],
+        "extend": "Pure parser/argv shape cases stay definition-only where the existing fake CLI fixture is used; native variant must use actual pinned Hubble binary and relay."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "maximum always900000 despiteB600000",
+        "default always300000 despiteB120000",
+        "schema always50/20",
+        "multiplywindowby1000 again",
+        "removeexactpodpostfilter"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile."
+    },
+    {
+      "localControlId": "P4-D1",
+      "family": "P4",
+      "category": "definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Representable mode and complete scan policy",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Same full Ops provider/RBAC/API/CA/token refs and10s/8MiB perrequest policy.",
+      "actualConsumerProcedure": "Load exact closed paginationA/B; Aunboundedobjecthasonlymode; Bboundedobjecthas7pages/14attempts/5000ms. Validatepagesizes500/500/50 versus1/1/25 and finite-call30000/15000.",
+      "expectedEffectOrRejectingBoundary": "NoInfinity/NaN/null/absentfallback serialized. No numericcap or deadline silently inferred inA. Explicit B uses shared counters; no const500/30000 type domain.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs"
+        ],
+        "extend": "Use real createKubeRequest/createKubeList and same new captured policy/budget. Controlled callback or selfsigned HTTPS responder is a library definition fixture, not original Kubernetes effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-X1",
+      "family": "P4",
+      "category": "implementation-local-negative",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Mode, safe integer, timer and relation rejection",
+      "completeProfileFixture": "Full A/B mutations",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "No API read/discovery/write started.",
+      "actualConsumerProcedure": "Missing/unknown policyfields; mode absent/unknown; unboundedwithanycap; boundedmissingcap; attempts<pages; zero/fraction/string/null/unsafeinteger; deadline>2147483647; competingENV/CLI/extraValues/default constructor policy same anddifferent.",
+      "expectedEffectOrRejectingBoundary": "Same actual selectedservicevalidator denies beforeanykubeRequest. No timer overflowto1ms or previousdefault500 restores invalidpolicy.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs"
+        ],
+        "extend": "Use real createKubeRequest/createKubeList and same new captured policy/budget. Controlled callback or selfsigned HTTPS responder is a library definition fixture, not original Kubernetes effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-L1",
+      "family": "P4",
+      "category": "implementation-local-definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Budget reservation and oversized retry mechanics",
+      "completeProfileFixture": "Full B clone with defaultPageSize2, maxBytes8192 as valid existing transport option",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Library definition fixture only: selected same original request/list functions; deterministic callback/clock observations are not nativeAPIproof.",
+      "actualConsumerProcedure": "Sixchildlistcalls share onebudget. Eachsuccesscommitsonepage; oversizedpage retrieswithhalfsize andsamequerytoken/selectors. Checkattempts counttwo forone successfulpage, hardfailurepageSize1, and no attemptrefund onterminalerror.",
+      "expectedEffectOrRejectingBoundary": "Successpages<=7, attempts<=14 acrossallchildren; retrydoesnotconsumeextra successfulpage, page reservation remainsheldacrossretry; no cap reset or ceilingrelaxation.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs"
+        ],
+        "extend": "Use real createKubeRequest/createKubeList and same new captured policy/budget. Controlled callback or selfsigned HTTPS responder is a library definition fixture, not original Kubernetes effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Createbudgetineachlist",
+        "Incrementpagesonlyafterawaitwithoutreserve",
+        "Resetdeadlineineachretry",
+        "Refundfailedattempt",
+        "Retry401/networkfailure",
+        "Raise maxBytes onoversize"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-N1",
+      "family": "P4",
+      "category": "native-effect",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Six actual API resource scans share one cap",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Original authenticated fixture namespace with two Services and two Ingresses; otherfour listed resourcekinds empty; originalnative APIaudit/transportobservation binding.",
+      "actualConsumerProcedure": "Call realnamespace_overview throughMCP. Apage500 completes allsixfirstpages. Bpage1 requires eight totalpages to exhaustthefixture, but sharedcap7 prevents one finalpage despite sixconcurrentcalls. Read originalAPIaudit and toolresourcecompleteness.",
+      "expectedEffectOrRejectingBoundary": "A6successfulpages/fullobservedfixture; B<=7successfulpages/<=14attempts, partialscan_page_limit, at leastone retainedcontinuation; whichresourcewinslastracing slot isnotfixed. No unstarted/partialemptyresource isassertedabsent. Do not count syntheticresponsecallback asnative.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_POLICY_NATIVE",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Add actual managed-profile startup plus original backend/native reference fixtures; do not count the current unit/mock-only cases as native effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Original nativeKubernetes/API namespace/CA/token/grants and read-onlyaudit or independentlyauthenticatedwireobservations"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-N2",
+      "family": "P4",
+      "category": "native-effect",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Real API oversized page consumes attempts without resetting budget",
+      "completeProfileFixture": "Full B variant: defaultPageSize2,maxBytes8192,aggregate caps selected unchanged",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "OriginalAPIcontains two Service objects with public5000-byteannotations; independently measure originalresponse framing one-object<=8192 andtwo-object>8192 beforeoracle.",
+      "actualConsumerProcedure": "Call same realMCP/APItransport; observe originalAPI requests atlimit2 then1 withsameselector/cursor andone sharedbudget. Try separate singleobject>transportceiling negative.",
+      "expectedEffectOrRejectingBoundary": "Oversize retry consumes attempt but notsecond successpage; maxBytes stays8192; singleoversizeditem rejects; no othertransportfailure retries. Actualproviderresponse identity and byteobservations required.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_POLICY_NATIVE",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Add actual managed-profile startup plus original backend/native reference fixtures; do not count the current unit/mock-only cases as native effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Original APIfixture/service objects and authenticatedraw response size/auditobservations"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-N3",
+      "family": "P4",
+      "category": "native-effect",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "One overall deadline cancels real in-flight scans",
+      "completeProfileFixture": "Full B valid variant: aggregate deadline1000ms; finiteCallDeadlineMs15000; requesttimeout10000",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "OriginalAPIconnection in isolated namespace with authorized networkdelay/drop; no substituted HTTPSAPI.",
+      "actualConsumerProcedure": "Apply native fault delayingoriginalAPI traffic beyondshared1s; invoke six-resourcequery. Captureone monotonicstartdeadline, in-flight cancellation and absenceof GETstarts afterexpiry. ForrecentEvents, use originalAPI withmorepages andsameoperationbudget outsideouterloop.",
+      "expectedEffectOrRejectingBoundary": "No GETstarts afterselecteddeadline; cancelledbudget requests yieldpartialscan_deadline, notfullsuccess; deadline neverrenewedbyresource/page/retry or eventinnercall. Cleanuprestoresoriginalpath. Nativefault failure/unavailable isnotpassed.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_POLICY_NATIVE",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Add actual managed-profile startup plus original backend/native reference fixtures; do not count the current unit/mock-only cases as native effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "Original API and isolated networkfault-control grant plus actual audit/elapsed observations"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-S1",
+      "family": "P4",
+      "category": "implementation-and-native-capture",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Unbounded A and retained event scan semantics",
+      "completeProfileFixture": "fixtures/ops-A-values.json then fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "A serviceoperation captured explicitunbounded; authenticevent/historyfixture andnamespacefirstpage data.",
+      "actualConsumerProcedure": "PublishB duringAoperation withoutreplacement. ObserveAfollowsallcontinuation withcurrent perGET10s/8MiB and fresh finiteinner30s. NewBservice capturesboundedsharedbudgetoutsideeventloop. Keep eventresultlimit behaviorseparate.",
+      "expectedEffectOrRejectingBoundary": "A noaggregatepage/attempt/deadlinecap isinvented; oldoperationretainsA. B doesnotresetbudgetevery eventpage. Bothtrim events torequestedlimit, reportactualscannedpages and neverequate boundedmemory toboundedtotal A work.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_POLICY_NATIVE",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Add actual managed-profile startup plus original backend/native reference fixtures; do not count the current unit/mock-only cases as native effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [],
+      "externalRequiredInputs": [
+        "OriginalAPIevent/namespace fixture and started process generation identity"
+      ],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-M1",
+      "family": "P4",
+      "category": "proposed-mutation",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Kill independent caps, retry/deadline and partial-truth mutations",
+      "completeProfileFixture": "fixtures/ops-A-values.json versus fixtures/ops-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Exact reservation/nativecase sources frozen.",
+      "actualConsumerProcedure": "Mutate onlyonefailure atatime: perbranchbudget, freshouterdeadline, successcounterwithoutreservation, attemptsrefund, increasedbyteceiling, partialmissingmetadata or unboundedmodefallback.",
+      "expectedEffectOrRejectingBoundary": "Relevant nativeorintendeddefinitioncontrol failsatfinite selected cap/deadline/output boundary; not generic lexicalvalidation or raisedlimits to pass.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs"
+        ],
+        "extend": "Use real createKubeRequest/createKubeList and same new captured policy/budget. Controlled callback or selfsigned HTTPS responder is a library definition fixture, not original Kubernetes effect."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Perbranch7pages allows42",
+        "Fresh5000mseventdeadlineoneverypage",
+        "ReservepageafterGET races",
+        "Oversizedretries donotspendattempts",
+        "Emptyunknownresource markedcomplete",
+        "Aunbounded defaultscoerced toboundedcap"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-L2",
+      "family": "P4",
+      "category": "implementation-local-definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Both actual local-only tools consume selected50\u219225 page size",
+      "completeProfileFixture": "fixtures/ops-single-page-A-values.json and fixtures/ops-single-page-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Actual managed full-profile service localOnly=true,host127.0.0.1,port8080 in isolated test scope; same namespace/grants/CA/token/shape-valid provider fixture. Actual MCPHTTPtransport and both real registrations. Fixture result corpus51 items per resource; transport peer is definition-only, not claimedoriginalAPI.",
+      "actualConsumerProcedure": "Invoke platform_cluster_state(resource:ciliumclusterwidenetworkpolicies) at /apis/cilium.io/v2/ciliumclusterwidenetworkpolicies and platform_network_state(namespace:policy-c0-fixture,resource:networkpolicies) at /apis/networking.k8s.io/v1/namespaces/policy-c0-fixture/networkpolicies. Actual real Kube request/list functions send selected limit; observe URL at HTTPSpeer, actual toolpages/nextContinueToken. Call again with returnedopaque token. Repeat against originalAPI only under native external bindings with controlled51 resources and no substitute server.",
+      "expectedEffectOrRejectingBoundary": "A actualfirstGETlimit50,onepage50items with nonemptycontinuation; B limit25,onepage25items with nonemptycontinuation. Subsequent explicitcursor requests retain exactcursor and limit; no automaticpage2 in single call. Source205/219 registrations and212/231 reads are actualtoolnames. OriginalAPIvariant requires authenticatednative dataset/APIobservations and isnot fulfilled by TLSpeer definition. Argoacceptedtasklimit stays separate.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Existing real Kube request/list TLS library harness and actual MCP HTTP registrations; named phase cases are future test extensions only. No replacement kubeRequest, mock budget, fake clock or native-production substitution. Controlled HTTPS peer is explicitly transport definition evidence, never native Kubernetes/RBAC proof."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Hardcode singlePageSize50: B actual URL/resultcount oracle fails for BOTHtools",
+        "Wrongtool name or onlyone registration updated: matching actual toolcollect count/errorfails",
+        "Ignore returnedcursor or auto-scan secondpage despitemaxPages1: request/page oraclefails"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-L3",
+      "family": "P4",
+      "category": "implementation-local-definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Isolated finite-call deadline30s\u219215s across actual oversized retries",
+      "completeProfileFixture": "fixtures/ops-finite-call-A-values.json and fixtures/ops-finite-call-B-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Both fullvariants have unbounded aggregate, requesttimeout10000ms,maxBytes8192,singlePageSize4, same realclient/TLS/token/CA. Future task-local HTTPS transport peer emits actual TLS/HTTP I/O with two5000-bytepayload items; it is NOT a Kubernetes API acceptance substitute.",
+      "actualConsumerProcedure": "Through actual platform_network_state one-page registration, delay each original transportfixture RESPONSE after observedTLS handshake+GET receipt by exactly7000ms. limit4 response is >8192; samecursor/selectors limit2 response remains >8192; limit1 response<=8192. Observe three realHTTPS requests/retry halving and actualmonotonic localdeadline; request10s neverexpires on7s phase. No fakeclock or mockedclient. A/Bfullprofile onlyfinite deadline differs.",
+      "expectedEffectOrRejectingBoundary": "A parses one successfulpage onthird response near21s (<30s) with continuation retained. B begins third request near14s then localfinite deadline aborts near15s before its21s response; successfulpages0, attempts3, partialfinite_call_deadline/retainedoriginalcursor. Local cancellation observable independentof5saggregate (disabled) and10sindividual (eachreply7s). Require phaseeach7000\u00b1250ms and Bcancellation15000\u00b1500ms declaredbeforeexecution; latephase outoftolerance notpass. Backendfixtures are librarytransportdefinitions; native originalAPIcase cannot be replaced by them.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Existing real Kube request/list TLS library harness and actual MCP HTTP registrations; named phase cases are future test extensions only. No replacement kubeRequest, mock budget, fake clock or native-production substitution. Controlled HTTPS peer is explicitly transport definition evidence, never native Kubernetes/RBAC proof."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Hardcode finiteCallDeadlineMs30000 despiteB15000: B succeeds near21s or misses15s cancel",
+        "Resetfinite deadline eachoversizedretry: Bwronglygetsfullthirdresponse",
+        "Treat request10s or aggregate5s expiration as finite-fieldproof: explicit phase/origin mismatchfails"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-L4",
+      "family": "P4",
+      "category": "implementation-local-definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Temporary reservation saturation waits FIFO and releases correctly",
+      "completeProfileFixture": "fixtures/ops-fifo-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Same fullselectedgeneration, shared2potentialpages/4attempts/5000ms. Six actual listclients use exactly namespaceOverview301/302/303/304/313/321 paths and onebudget. Fixture collection uses Promise.allSettled only to observe librarycleanup, never to replaceproduction Promise.all/errortruth. RealHTTPSpeer heldresponsegates; no kubeRequest/budgetfake.",
+      "actualConsumerProcedure": "Firstdeployments andsecondstatefulsets reservebothslots and dispatch; wait until readonlyqueueobservations show pods,jobs,services,ingresses in FIFO and zero dispatch for them. Releasefirst response as invalidJSON; actualclientrejects and releasesuncommittedslot withoutrefundattempt. Keepsecond responseheld. Verify podsalone dequeuesand actuallydispatches beforeothers. Return podsuccess thenstatefulsuccess; cap2 successes closesremainingadmission. Record realHTTPSrequestcounts, clientpromiseerrors and synchronous reservation/queue logs with fullprofile digest. Use the exact selected full profile defaultNamespace for task namespace and require membership in its actual allowed namespace enum. Do not bypass caller namespace validation or invent an unlisted namespace. Read only declared public fixture token/CA paths; no original credential files are opened by these definition controls.",
+      "expectedEffectOrRejectingBoundary": "Beforefirstrelease: twoGETs and fourwaiters, no falsepage-limit response. Afterrelease: GETsequence deployments,statefulsets,pods only; firstpromise retainsJSONreject, totalattempts3, successes2; jobs/services/ingresses not-started/partial aftertruecap. FIFOtransfer doesnotclaimaggregateoperation success afterprovidererror. Capture canonicalhelper/caller identities and Bprofileidentity, no newproductionerrorsemantics.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs"
+        ],
+        "extend": "Existing real Kube request/list TLS library harness and actual MCP HTTP registrations; named phase cases are future test extensions only. No replacement kubeRequest, mock budget, fake clock or native-production substitution. Controlled HTTPS peer is explicitly transport definition evidence, never native Kubernetes/RBAC proof."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Reportpage_limit while capacity onlytemporarilyreserved: podneverdispatchesafterrelease",
+        "Dequeue nonFIFO waiter: orderedactualGETpathfails",
+        "Leak/double-release slot or refundfirstattempt: exact counts/queue fail"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-L5",
+      "family": "P4",
+      "category": "implementation-local-definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Attempt cap terminates before page/deadline caps and event loop cannot renew it",
+      "completeProfileFixture": "fixtures/ops-attempt-cap-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Shared maximumPages1/maximumAttempts1/deadline5000ms; page/eventsize2,maxBytes8192, nativeclientrealTLS validproviderfiles; peerresponse twolargeitems exceedsceiling before5000ms. No successfulpage yet.",
+      "actualConsumerProcedure": "Execute same actual request/list library and actual get_events\u2192recentEvents107\u2013131 paths with selectedbudget mintedonceoutsideouterloop. First realGET withlimit2 exceedsbytes; halvingwouldrequestlimit1,but attemptcap blockssecondGET. Repeat sixnamespaceOverview branches underone sharedcap; onlyfirst maydispatch, othersnotstarted. Observe attempts separatelyfromcommittedpages and response-phase clock, notjustsourceassertion. Use the exact selected full profile defaultNamespace for task namespace and require membership in its actual allowed namespace enum. Do not bypass caller namespace validation or invent an unlisted namespace. Read only declared public fixture token/CA paths; no original credential files are opened by these definition controls.",
+      "expectedEffectOrRejectingBoundary": "Exactlyone realGET invocation; attempts1, successfulpages0, remainingpagecapacity notexhausted, elapsed<5000. Returnpartialscan_attempt_limit, unknown/nonstarted completeness and originalcursor(null isnotproofexhaustion). get_events doesnotresetattemptbudget or labelzeroevents complete because nocontinuation wasparsed. No API/autherror convertedtosuccess.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Existing real Kube request/list TLS library harness and actual MCP HTTP registrations; named phase cases are future test extensions only. No replacement kubeRequest, mock budget, fake clock or native-production substitution. Controlled HTTPS peer is explicitly transport definition evidence, never native Kubernetes/RBAC proof."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Ignoreattemptcap: secondGETlimit1appears/succeeds",
+        "Countoversizedresponseassuccesspage: wrongreasonpage_limit andpagecountfails",
+        "Create newbudget eachrecentEventsouteriteration ornamespacechild: GETcount exceeds1",
+        "Treat nullcursor/emptyevents as complete afterunparsedoversize: partialtruthfails"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    },
+    {
+      "localControlId": "P4-L6",
+      "family": "P4",
+      "category": "implementation-local-definition",
+      "phase": "proposed-C3-acceptance-specification",
+      "title": "Post-token and post-CA deadline checks precede real HTTPS construction",
+      "completeProfileFixture": "fixtures/ops-post-credential-values.json",
+      "originalCanonicalCaseIds": [
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "priorState": "Actual monotonic deadline20ms, shared6pages/6attempts, validpublictemporarytoken/CA files and realclient/originalTLSfixture. No livecredentials; source22/24 reads are real readFileSync. Exact future task-only instrumentation delays AFTER original read returns, never supplies fakebytes or replacesKubeclient.",
+      "actualConsumerProcedure": "Two separate subcontrols: aroundonlythatfixture tokenread, then onlyCAread, calloriginalfs.readFileSync and synchronouslyholdreturn for60ms usingactual monotonic clock; retainactualbytes. Capturephasebefore/afterreadtimestamps. Independently countactualoriginalhttps.request constructions via transparentobserver returningoriginalClientRequest plus peerwireevents; scheduledbudgettimer cannotrun duringblockingread. Execute sixresourcebudgetcase, thensame get_eventsouterbudgetcase with fullsamegeneration IDs. Afterreads realconsumer mustrecheckmonotonicdeadline beforehttps.request26. Use the exact selected full profile defaultNamespace for task namespace and require membership in its actual allowed namespace enum. Do not bypass caller namespace validation or invent an unlisted namespace. Read only declared public fixture token/CA paths; no original credential files are opened by these definition controls.",
+      "expectedEffectOrRejectingBoundary": "Bothreadphases cross20ms deadline and then zero https.request constructions/zeroGETdispatch, even iftimer callbackhasnotrun. Exactlyone initialattempt reservation maybespent; otherbranches cannotstartlate. Budgetpartialscan_deadline/unknownresult; sameonebudget acrosssixchildren and eventouterloop. Counter0 construction isdecisiveevenifwrong-mutant lateconstruction iscancelledbeforewire byqueuedtimer. Definitionsonly; transparentfs/httpsobservations do not replacecrypto/TLS/provider/client and cannot supplynativeAPIacceptance.",
+      "plannedDriverExtension": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=CONFIG_P4",
+          "tools/ops-mcp/test/kubernetes.test.mjs",
+          "tools/ops-mcp/test/http.test.mjs"
+        ],
+        "extend": "Existing real Kube request/list TLS library harness and actual MCP HTTP registrations; named phase cases are future test extensions only. No replacement kubeRequest, mock budget, fake clock or native-production substitution. Controlled HTTPS peer is explicitly transport definition evidence, never native Kubernetes/RBAC proof."
+      },
+      "status": "not-run",
+      "currentImplementationSupportsCase": false,
+      "driverMeaning": "Existing actual harness path to extend after approval; current command alone cannot execute these new contracts. No missing/empty/name-filtered/skipped case may be reported passed. No new generic validator is proposed.",
+      "mutationControls": [
+        "Omitpost-credentialdeadlinegate: actualhttps.requestconstructor count>=1 after60ms eveniflater timer preventswire",
+        "CheckonlybeforefileIO: both exactphasecontrols fail",
+        "Re-mintdeadline afterfileIO or perresource/eventloop: laterrequests appear",
+        "Mockclock/filebytes/client: violatescaseprerequisites, cannotpass"
+      ],
+      "externalRequiredInputs": [],
+      "evidenceRequired": "Exact before/after source/test/tool/image/config/fixture/native identity, complete selected profile digest, named case counts, raw stdout/stderr/observations and independent review. Native case cannot be satisfied by fake CLI/callback/server or lexical source check.",
+      "selectedProfileEvidence": "Before execution record full selected fixture path+SHA256 from contracts.json or diagnosticFullProfileFixtures, actual managed projection/generation digest, source/caller/request/list/budget/harness/tool identities and immutable native/provider references where applicable. No naked policy snippet stands in for complete profile.",
+      "requiredSourcePins": [
+        "tools/ops-mcp/src/kubernetes.mjs:22",
+        "tools/ops-mcp/src/kubernetes.mjs:24",
+        "tools/ops-mcp/src/kubernetes.mjs:26",
+        "tools/ops-mcp/src/kubernetes.mjs:66",
+        "tools/ops-mcp/src/kubernetes.mjs:69",
+        "tools/ops-mcp/src/kubernetes.mjs:86",
+        "tools/ops-mcp/src/server.mjs:205",
+        "tools/ops-mcp/src/server.mjs:212",
+        "tools/ops-mcp/src/server.mjs:219",
+        "tools/ops-mcp/src/server.mjs:231",
+        "tools/ops-mcp/src/server.mjs:119",
+        "tools/ops-mcp/src/server.mjs:129",
+        "tools/ops-mcp/src/server.mjs:301",
+        "tools/ops-mcp/src/server.mjs:321"
+      ]
+    }
+  ],
+  "globalC0Accepted": false,
+  "implementationAuthorization": false,
+  "executed": false,
+  "supersedes": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/case-specifications.json"
+}

@@ -1,0 +1,35 @@
+✔ actual Nova state/wait A/B entry policies reach both real adapters and retained A resumes without B (4897.659397ms)
+✔ selected state and wait entry bytes, records and store capacities enforce actual boundaries and restore positives (438.232008ms)
+✔ all six central leaves are mandatory; malformed, missing and raw duplicate authors reject without defaults (5.80789ms)
+✔ original durable store roots survive B relocation without effects at B; grants still bind (2524.923556ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (9400.497514ms)
+✔ Core exposes retained Wait resolver only to the selected original built-in and revokes it on shutdown (4693.769829ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (8957.651739ms)
+✔ real terminal approval projects Wait bytes, uses actual Core-owned adapter reader and keeps late duplicate identity (11298.142836ms)
+✔ retained original prefix mutation, truncation and same-byte inode replacement fail without rewriting the projected Wait (11835.502165ms)
+{"proof":"actual-wait-adapter-byte-and-count-quota","originalInitialQuota":268435456,"fixedLaterQuota":9440,"fixedLaterRecordQuota":2,"originalSerializedBytes":9312,"projectedSerializedBytes":3186,"finalSerializedBytesIncludingMetadata":5052,"releasedBytes":6126,"rejected":"blocked","admitted":"waiting","recordRejected":"blocked"}
+✔ fixed real Wait byte quota admits original Core work only after measured savings and record quota is unchanged (12538.238669ms)
+✔ real separate delivery writer fence blocks Wait commit and late original writers retain the accepted receipt (6837.865321ms)
+✔ actual SIGKILL before-rename leaves one atomic Wait state and retry never reinflates original bytes (5968.006954ms)
+✔ actual SIGKILL after-rename leaves one atomic Wait state and retry never reinflates original bytes (5873.190231ms)
+
+Interrupted while running:
+
+⚠ tests/verification/reliability/wait-value-projection.test.mjs (tests/verification/reliability/wait-value-projection.test.mjs:1:1)
+✖ tests/verification/reliability/wait-value-projection.test.mjs (66587.09319ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 89919.958983
+
+✖ failing tests:
+
+test at tests/verification/reliability/wait-value-projection.test.mjs:1:1
+✖ tests/verification/reliability/wait-value-projection.test.mjs (66587.09319ms)
+  'Promise resolution is still pending but the event loop has already resolved'

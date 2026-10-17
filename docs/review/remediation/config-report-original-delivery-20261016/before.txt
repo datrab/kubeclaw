@@ -1,0 +1,224 @@
+✖ prism: raw schema/Helm reject invalid report minimumOpenFiles (3.503528ms)
+✖ prism: raw schema/Helm reject invalid report minimumHeapMiB (1.884458ms)
+✖ prism: raw schema/Helm reject invalid report heapFraction (1.803465ms)
+✖ prism: raw schema/Helm reject invalid report runtimeMemoryReserveBytes (1.880818ms)
+✖ prism: schema and Helm preserve exact valid report profiles and coherent bounds (1.977519ms)
+✖ kubeclaw: raw schema/Helm reject invalid report minimumOpenFiles (67.857101ms)
+✖ kubeclaw: raw schema/Helm reject invalid report minimumHeapMiB (54.757123ms)
+✖ kubeclaw: raw schema/Helm reject invalid report heapFraction (57.586374ms)
+✖ kubeclaw: raw schema/Helm reject invalid report runtimeMemoryReserveBytes (52.965308ms)
+✖ kubeclaw: schema and Helm preserve exact valid report profiles and coherent bounds (52.349243ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 0
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 841.314289
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:50:56
+✖ prism: raw schema/Helm reject invalid report minimumOpenFiles (3.503528ms)
+  Error: ENOENT: no such file or directory, unlink '/tmp/report-policy-parity-aWPNzq/prism/files/config/swarm.config.json'
+      at Object.unlinkSync (node:fs:2000:11)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:21:8)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:51:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'unlink',
+    path: '/tmp/report-policy-parity-aWPNzq/prism/files/config/swarm.config.json'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:50:56
+✖ prism: raw schema/Helm reject invalid report minimumHeapMiB (1.884458ms)
+  Error: ENOENT: no such file or directory, unlink '/tmp/report-policy-parity-LcVBrO/prism/files/config/swarm.config.json'
+      at Object.unlinkSync (node:fs:2000:11)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:21:8)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:51:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'unlink',
+    path: '/tmp/report-policy-parity-LcVBrO/prism/files/config/swarm.config.json'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:50:56
+✖ prism: raw schema/Helm reject invalid report heapFraction (1.803465ms)
+  Error: ENOENT: no such file or directory, unlink '/tmp/report-policy-parity-lpBqxr/prism/files/config/swarm.config.json'
+      at Object.unlinkSync (node:fs:2000:11)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:21:8)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:51:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'unlink',
+    path: '/tmp/report-policy-parity-lpBqxr/prism/files/config/swarm.config.json'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:50:56
+✖ prism: raw schema/Helm reject invalid report runtimeMemoryReserveBytes (1.880818ms)
+  Error: ENOENT: no such file or directory, unlink '/tmp/report-policy-parity-RuC7UD/prism/files/config/swarm.config.json'
+      at Object.unlinkSync (node:fs:2000:11)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:21:8)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:51:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'unlink',
+    path: '/tmp/report-policy-parity-RuC7UD/prism/files/config/swarm.config.json'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:61:1
+✖ prism: schema and Helm preserve exact valid report profiles and coherent bounds (1.977519ms)
+  Error: ENOENT: no such file or directory, unlink '/tmp/report-policy-parity-71hObW/prism/files/config/swarm.config.json'
+      at Object.unlinkSync (node:fs:2000:11)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:21:8)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:62:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'unlink',
+    path: '/tmp/report-policy-parity-71hObW/prism/files/config/swarm.config.json'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:50:56
+✖ kubeclaw: raw schema/Helm reject invalid report minimumOpenFiles (67.857101ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /buster execution reports/. Input:
+  
+  'Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:58:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /buster execution reports/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:50:56
+✖ kubeclaw: raw schema/Helm reject invalid report minimumHeapMiB (54.757123ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /buster execution reports/. Input:
+  
+  'Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:58:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /buster execution reports/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:50:56
+✖ kubeclaw: raw schema/Helm reject invalid report heapFraction (57.586374ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /buster execution reports/. Input:
+  
+  'Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:58:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /buster execution reports/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:50:56
+✖ kubeclaw: raw schema/Helm reject invalid report runtimeMemoryReserveBytes (52.965308ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /buster execution reports/. Input:
+  
+  'Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:58:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /buster execution reports/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-report-policy-parity.test.mjs:61:1
+✖ kubeclaw: schema and Helm preserve exact valid report profiles and coherent bounds (52.349243ms)
+  AssertionError [ERR_ASSERTION]: Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile is retired; select central pipeline bindings
+  
+  Use --debug flag to render out invalid YAML
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-report-policy-parity.test.mjs:70:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

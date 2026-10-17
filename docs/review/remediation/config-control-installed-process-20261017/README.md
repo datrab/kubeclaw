@@ -1,0 +1,7 @@
+# Original Control installed-process transport
+
+Three original process cases now publish the complete selected current source set with the actual role builder, materializer and C publisher. In an explicitly isolated test guest, the fixture exclusively reserves the three fixed installed directories, preserves all emitted bytes/modes/relative aliases, executes the original installed Control entrypoint and retains installation until process exit. Existing installations are never overwritten. Credentials are explicit; no legacy policy environment or synthetic capture is passed to the process. The original failed stderr setup and all HTTP/snapshot assertions remain.
+
+`source-receiving-controls.txt`: two actual publication profiles, complete original author conservation, same-module authenticated capture and real selected consumer; original source rewrite cannot refill capture, actual entrypoint-byte mutation rejects, exact restored package succeeds. Strict Prism compilation, module syntax and diff checks pass. Original roster hashes are unchanged.
+
+**NOT VERIFIED:** the three original installed HTTP/diagnostic-sink process cases, fixed-path installation cleanup and all native/independent/history/archive/full C0–C6 acceptance. No isolated guest is available, so no shared system installation was attempted. This is source transport implementation, not native execution evidence. See RESULT.json for the exact guest command and residuals. Worker process consumers still require migration; no Quality activation/inputStore completion inferred.

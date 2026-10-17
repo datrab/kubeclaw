@@ -1,0 +1,26 @@
+PASS restored positive: 269 inactive historical mappings; no root edit
+PASS intended rejection: historical body tampering / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: historical body drift
+PASS intended rejection: historical requirement loss / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: historical body drift
+PASS intended rejection: reactivated obsolete case / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: obsolete case reactivation/acceptance
+PASS intended rejection: historical acceptance promotion / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: disposition drift
+PASS intended rejection: removed successor / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: dangling successor
+PASS intended rejection: successor body changed / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor material drift
+PASS intended rejection: successor requirement loss / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor material drift
+PASS intended rejection: successor made inactive / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor
+PASS intended rejection: unsupported successor state 'quarantined' / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor
+PASS intended rejection: unsupported successor state 'inactive' / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor
+PASS intended rejection: unsupported successor state 'unknown' / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor
+PASS intended rejection: unsupported successor state 'historical-source-evidence' / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor
+PASS intended rejection: unsupported successor state '' / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor
+PASS intended rejection: unsupported successor state None / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor
+PASS intended rejection: successor metadata countsTowardAcceptance / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift
+PASS intended rejection: successor metadata evidenceResultPreserved / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift
+PASS intended rejection: successor metadata originalRequirementsPreserved / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift
+PASS intended rejection: successor metadata activeSettingLinks / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift
+PASS intended rejection: successor metadata supersededBy / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift
+PASS intended rejection: reviewed field changed / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: reviewed field material drift
+PASS intended rejection: whole historical entry omitted / HISTORICAL_MAPPING:historical record set drift
+PASS intended rejection: duplicate historical entry / HISTORICAL_MAPPING:historical record set drift
+PASS intended rejection: semantic acceptance promotion / HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: obsolete case reactivation/acceptance
+PASS restored positive: 269 inactive historical mappings; no root edit
+23 negative documentation guards / 2 restored positives; implementation cases not-run

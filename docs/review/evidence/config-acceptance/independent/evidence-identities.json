@@ -1,0 +1,105 @@
+{
+  "note": "Reviewer-owned evidence snapshots; author corrections later require new review identities",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/author-strict-raw.log",
+      "sha256": "fd068b84c3ec04acc38c5a45526efc4f31e9a7188422479005690f018b142cb3",
+      "size": 1939058
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/author-structural-raw.log",
+      "sha256": "d1d01ca5136dab4d746cecd9a25c57f69ae28d9eb5a04229f29dc9e382bc2248",
+      "size": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/diff-check-raw.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/enumerate.py",
+      "sha256": "78b5ad333f8f1aeec95af2314fc5ef816c5892cbd130cdf9dc255bf6eda851e8",
+      "size": 6542
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/enumeration-raw.log",
+      "sha256": "9c471f719f3ce30a42cc91919cfc5fd934ffcfe747e7299ab48d7e2b9d66f2a8",
+      "size": 4640
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/expected-case-obligations.json",
+      "sha256": "2771b65570885de9c03dc6a051603c57a17954a058e2e496646308e236c104c2",
+      "size": 2785913
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/expected-field-obligations.json",
+      "sha256": "a14d683cf9e3df7b5de905d1388e3ec10395ae1d1cc5527df7562cd240a44a80",
+      "size": 13695166
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/expected-logical-schema-fields.json",
+      "sha256": "06a4cbfd5eb7e40dc39a6edd22ffc0b8bc046a907fba32700f0f3aaed0810997",
+      "size": 2625401
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/independent-integrity.json",
+      "sha256": "2b1d7f2b8fa2493c0ec79c1a0eba6cba7c22a267a00a953cc81b158904409588",
+      "size": 384147
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/logical-schemas-raw.log",
+      "sha256": "a52d05afc26898a7a3e312e29685468a06c54e6e8eab7bed8c1b7691f9a2c568",
+      "size": 6405
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/logical-schemas.py",
+      "sha256": "db4c16895e57afb1583de17d5a58a408cf7b0ee8a0637dd90d0b6417a685728a",
+      "size": 3324
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/register-corrected-reproduction.log",
+      "sha256": "c5e201217130fbac5199a42c25b7bfc644c33dfb7d94c78ac87050107cc0403b",
+      "size": 121
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/register-reproduction.log",
+      "sha256": "dc0626f5ff3fed54a9a3c31257da9b4f4cb6d0e0ddd72002d1dfa72bcda06ee7",
+      "size": 810
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/review-input-identities.json",
+      "sha256": "6b27c373bbf02859f73d949222dc7b2142776f500778e0124914c543b3e678f2",
+      "size": 4397545
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/scope-summary.json",
+      "sha256": "9c471f719f3ce30a42cc91919cfc5fd934ffcfe747e7299ab48d7e2b9d66f2a8",
+      "size": 4640
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/semantic-probes.json",
+      "sha256": "a9699ef2bcae3e3248cce12794b4d3ac85fd3eb9e85feab30a2d0c540fb278e0",
+      "size": 10526
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/source-roster.json",
+      "sha256": "b4d29028f8ae08b632b3c08b1167676bab94bb45fea3843c195ee1a01b3ee9ef",
+      "size": 7526704
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/tracked-later.patch",
+      "sha256": "b30070cb38eb75a2e97a92ae26c5b2956822b945e794387f9c347572098e275d",
+      "size": 1401
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/tracked.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/uid-negative-reproduction.log",
+      "sha256": "f8ff5172b7f6910fa1be292849165c90b17aaf315d16a9108cd1a45ff4fc7919",
+      "size": 1085
+    }
+  ]
+}

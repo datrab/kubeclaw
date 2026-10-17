@@ -1,0 +1,82 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=60000",
+      "tests/verification/reliability/config-component-bundle.test.mts",
+      "tests/verification/reliability/pipeline-selection.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-component-fixture-current-20261016/final-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "tests/verification/reliability/config-component-bundle.test.mts",
+      "tests/verification/reliability/pipeline-selection.test.mts"
+    ],
+    "exitCode": 2,
+    "log": "docs/review/remediation/config-component-fixture-current-20261016/final-1.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-component-fixture-current-20261016/final-2.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "tests/verification/reliability/config-component-bundle.test.mts",
+      "tests/verification/reliability/pipeline-selection.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-component-fixture-current-20261016/typecheck-final.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=60000",
+      "tests/verification/reliability/config-component-bundle.test.mts",
+      "tests/verification/reliability/pipeline-selection.test.mts",
+      "tests/verification/reliability/pipeline-boot.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-component-fixture-current-20261016/integrated-final.txt"
+  }
+]

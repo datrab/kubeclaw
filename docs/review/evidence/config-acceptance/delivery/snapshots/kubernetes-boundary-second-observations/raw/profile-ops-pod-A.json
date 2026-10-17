@@ -1,0 +1,68 @@
+{
+  "codexImage": "ghcr.io/datrab/kubeclaw-ops-codex@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "mcpImage": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-a"
+    }
+  ],
+  "bearerSecret": "delivery-bearer-a",
+  "githubSecret": "delivery-github-a",
+  "defaultNamespace": "default",
+  "argoNamespace": "argocd",
+  "rbac": {
+    "namespaces": [
+      "default",
+      "argocd"
+    ],
+    "execNamespaces": [
+      "default"
+    ]
+  },
+  "networkPolicy": {
+    "apiServerCIDRs": [
+      "192.0.2.10/32"
+    ],
+    "apiServerPort": 6443
+  },
+  "persistence": {
+    "size": "20Gi",
+    "storageClass": "delivery-storage-a"
+  },
+  "resources": {
+    "codex": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    },
+    "mcp": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "tailscale": {
+    "enabled": true,
+    "authSecret": "delivery-tailnet-a",
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  }
+}

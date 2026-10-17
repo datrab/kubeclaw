@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/config-component-generation.test.mjs",
+      "tests/verification/reliability/pipeline-boot.test.mjs",
+      "tests/verification/reliability/config-component-bundle.test.mts",
+      "tests/verification/reliability/pipeline-selection.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-generation-race-current-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-generation-race-current-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-generation-race-current-20261016/check-2.txt"
+  }
+]

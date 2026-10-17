@@ -1,0 +1,66 @@
+{
+  "scope": "Independent NONAUTHORED parent historical mapping GUARD PREPARATION only; NOT parent root projection or semantic field/target approval",
+  "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "verdict": "ONE_MATERIAL_FAIL_CLOSED_GUARD_CORRECTION_REQUIRED",
+  "globalC0Verdict": null,
+  "findings": [
+    {
+      "id": "HMAP-GUARD-01",
+      "severity": "medium",
+      "title": "Non-superseded is treated as active without validating successor disposition",
+      "location": "docs/review/evidence/config-acceptance/author/historical_mapping.py:74",
+      "frozenHelperSha256": "390f8c138c996a109de07b38fb79cc6270d08c439d773cb9aaa2e12d48511e5a",
+      "observed": "validate checks history[sid].disposition != superseded, not disposition == active. In-memory changes to a frozen successor disposition quarantined/inactive/unknown all pass, and the returned historical link still advertises that successor as activeCanonicalSuccessors. load_reviewed pins mapping/review/report/source files but not current successor disposition content; it delegates this same check. The historical original disposition is exact equality checked; successor disposition is not. Current baseline successor states remain active; this finding is the required tamper guard gap, not a baseline semantic failure.",
+      "evidence": [
+        "check-independent-guards.py",
+        "independent-controls.json#/observations/nonactive-successor-quarantined",
+        "independent-controls.json#/observations/nonactive-successor-inactive",
+        "independent-controls.json#/observations/nonactive-successor-unknown"
+      ],
+      "relatedObservations": "Changes to successor evidenceResultPreserved/originalRequirementsPreserved/activeSettingLinks/countsTowardAcceptance also pass because that metadata is not checked. Native successor body/result/requirements/scope are independently hash-pinned, and every returned historical link retains countsTowardAcceptance:false. Thus no false acceptance or native result is claimed from those metadata controls.",
+      "consequence": "A later successor quarantine or malformed/unknown disposition can be advertised as reviewed active lineage, violating fail-closed active-successor preparation. This guard is not yet root-integrated, so no existing root promotion occurred.",
+      "requiredCorrection": "Require exactly the supported active disposition for every successor, fail closed on unknown or all nonactive states. Validate current disposition metadata consistency with the pinned native body/requirements and expected setting links (or pin an independently reviewed complete successor-disposition slice), while retaining historical nonacceptance. At minimum the active-state contradiction must reject; explicitly document any intentionally ignored successor metadata rather than claiming it preserved.",
+      "exactCorrectionOracles": [
+        "Baseline 269 historical entries/356 successor IDs remain valid with unchanged selected625 native case bodies/dispositions and95 rows.",
+        "Each quarantined/inactive/unknown successor must raise a named inactive-or-unsupported disposition error through public load_reviewed as well as validate, with pinned mapping/review/report/source bytes unchanged.",
+        "Original269 bodies/requirements/results/scopes/inactive disposition and historical nonaccepting output must remain unchanged.",
+        "Any claimed disposition-metadata preservation must have specific negative cases and restored positive; no result/runtime or acceptance promotion from mapping."
+      ]
+    }
+  ],
+  "supportedWithinScope": [
+    "269 distinct original map entries and356 distinct existing active native successors; all269 historical native bodies equal immutable committed6606 baseline.",
+    "Original canonical body hashes, exact requirements/results/scopes/dispositions, superseded status and no acceptance/reactivation checks reject tested drift.",
+    "Successor native bodies/results/requirements/scopes and requirement union are hash-pinned; row canonical body/source/case links checked; all95 referenced fields retained.",
+    "Public load_reviewed rejects changes to exact map SHA1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3, independent receipt SHAb6f59adce3b44c68edc2268c89fe24b47411c1771cc4680daeeba9c71e7e2787, report SHA5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749 and both referenced productive source file bytes.",
+    "Historical output explicitly canonicalCaseId:null/countsTowardAcceptance:false/semanticAcceptance:false with bounded pending-projection review scope. No code writes root or author files.",
+    "All356 selected existing root canonical IDs currently retain native requirements as subset. This is metadata conservation only, not verification of root body transformation/projection."
+  ],
+  "controls": {
+    "authorReplay": "12 intended negatives /2 restored positives passed",
+    "independent": "32 controls:23 intended rejections,3 escaped nonactive successor guards,4 unchecked successor metadata probes,2 positives",
+    "commands": [
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/author/check-historical-mapping-guards.py",
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/independent-historical-mapping-guard-6606/check-independent-guards.py",
+      "python3 docs/review/evidence/config-acceptance/independent-historical-mapping-guard-6606/check-metadata-conservation.py"
+    ],
+    "limit": "Pure doc integrity guards/hash/metadata checks only, not future behavior cases or F-MUT. Independent guard module frozen and executed in memory; loader tampering virtual filesystem only.",
+    "reviewerSetupFailurePreserved": "metadata-conservation-attempt1.stderr: initial reviewer root metadata lookup used native requirements key instead of root requirementIds; corrected run passes, no author failure implied."
+  },
+  "inputFreeze": {
+    "path": "input-freeze.json",
+    "rawInputs": 12,
+    "selectedNativeCases": 625,
+    "selectedDispositions": 625,
+    "selectedRows": 95,
+    "selectedRootMetadata": 356,
+    "endDrift": 0,
+    "sourceScope": "2 productive source files named by exact reviewed map, read/hash only; no substantive Core selfreview"
+  },
+  "limits": [
+    "No consolidation/check-matrix/root integration occurred or reviewed. Preparation cannot certify root coverage/projection.",
+    "No field/target/native/deployment/authentic quota/implementation/global C0 acceptance. No target definitions substantively reviewed.",
+    "No author/root/Runtime/Delivery/Core/production/test mutation, commit, delegation, live/native/API/host/image/auth/model action. Reviewer output directory only.",
+    "Runtime unrelated append-only inputs deliberately excluded from frozen drift; immutable6606 and exact selected live identities preserved."
+  ]
+}

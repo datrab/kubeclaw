@@ -1,0 +1,114 @@
+[
+  {
+    "fieldId": "RT-ae11bf913a6050c6",
+    "family": "diagnostic-event-provenance-not-authorization",
+    "limitation": "Meaningful diagnostic-only A/B. No agentRole authorization/model/backend effect exists in these plugin modules; original F-EFFECT obligations asking for such effect remain OPEN. Preserve batch20 correction and historical exact event bytes.",
+    "originalCaseIds": [
+      "RT-ae11bf913a6050c6-CURRENT-SCHEMA-FIELD",
+      "RT-ae11bf913a6050c6-AGENT16-VAL",
+      "RT-ae11bf913a6050c6-AGENT16-AB",
+      "RT-ae11bf913a6050c6-AGENT16-BINDING",
+      "RT-ae11bf913a6050c6-AGENT16-RECOVERY",
+      "RT-ae11bf913a6050c6-AGENT16-EVAL",
+      "RT-ae11bf913a6050c6-AGENT16-MUTANT",
+      "RT-ae11bf913a6050c6-AGENT16-CURRENT-DEFINITION"
+    ],
+    "requirementsOpen": true
+  },
+  {
+    "fieldId": "RT-6442142673149854",
+    "family": "diagnostic-event-provenance-not-authorization",
+    "limitation": "Meaningful diagnostic-only A/B. No agentRole authorization/model/backend effect exists in these plugin modules; original F-EFFECT obligations asking for such effect remain OPEN. Preserve batch20 correction and historical exact event bytes.",
+    "originalCaseIds": [
+      "RT-6442142673149854-CURRENT-SCHEMA-FIELD",
+      "RT-6442142673149854-AGENT16-VAL",
+      "RT-6442142673149854-AGENT16-AB",
+      "RT-6442142673149854-AGENT16-BINDING",
+      "RT-6442142673149854-AGENT16-RECOVERY",
+      "RT-6442142673149854-AGENT16-EVAL",
+      "RT-6442142673149854-AGENT16-MUTANT",
+      "RT-6442142673149854-AGENT16-CURRENT-DEFINITION"
+    ],
+    "requirementsOpen": true
+  },
+  {
+    "fieldId": "RT-4c1a2b66cdab7e18",
+    "family": "diagnostic-event-provenance-not-authorization",
+    "limitation": "Meaningful diagnostic-only A/B. No agentRole authorization/model/backend effect exists in these plugin modules; original F-EFFECT obligations asking for such effect remain OPEN. Preserve batch20 correction and historical exact event bytes.",
+    "originalCaseIds": [
+      "RT-4c1a2b66cdab7e18-CURRENT-SCHEMA-FIELD",
+      "RT-4c1a2b66cdab7e18-AGENT16-VAL",
+      "RT-4c1a2b66cdab7e18-AGENT16-AB",
+      "RT-4c1a2b66cdab7e18-AGENT16-BINDING",
+      "RT-4c1a2b66cdab7e18-AGENT16-RECOVERY",
+      "RT-4c1a2b66cdab7e18-AGENT16-EVAL",
+      "RT-4c1a2b66cdab7e18-AGENT16-MUTANT",
+      "RT-4c1a2b66cdab7e18-AGENT16-CURRENT-DEFINITION"
+    ],
+    "requirementsOpen": true
+  },
+  {
+    "fieldId": "RT-8750f030bf25ecae",
+    "family": "original-state-writer-projection",
+    "limitation": "A/B identical for same original source. Valid B requires a separately genuine complete source/writer context, not a new author of the same retained history. Original effects remain OPEN.",
+    "originalCaseIds": [
+      "RT-8750f030bf25ecae-CURRENT-SCHEMA-FIELD",
+      "RT-8750f030bf25ecae-REPORT17-VAL",
+      "RT-8750f030bf25ecae-REPORT17-AB",
+      "RT-8750f030bf25ecae-REPORT17-BINDING",
+      "RT-8750f030bf25ecae-REPORT17-RECOVERY",
+      "RT-8750f030bf25ecae-REPORT17-EVAL",
+      "RT-8750f030bf25ecae-REPORT17-MUTANT",
+      "RT-8750f030bf25ecae-REPORT17-CURRENT-DEFINITION"
+    ],
+    "requirementsOpen": true
+  },
+  {
+    "fieldId": "RT-96698b5568aba94d",
+    "family": "original-state-writer-projection",
+    "limitation": "A/B identical for same original source. Valid B requires a separately genuine complete source/writer context, not a new author of the same retained history. Original effects remain OPEN.",
+    "originalCaseIds": [
+      "RT-96698b5568aba94d-CURRENT-SCHEMA-FIELD",
+      "RT-96698b5568aba94d-REPORT17-VAL",
+      "RT-96698b5568aba94d-REPORT17-AB",
+      "RT-96698b5568aba94d-REPORT17-BINDING",
+      "RT-96698b5568aba94d-REPORT17-RECOVERY",
+      "RT-96698b5568aba94d-REPORT17-EVAL",
+      "RT-96698b5568aba94d-REPORT17-MUTANT",
+      "RT-96698b5568aba94d-REPORT17-CURRENT-DEFINITION"
+    ],
+    "requirementsOpen": true
+  },
+  {
+    "fieldId": "RT-8e39db110874a9d6",
+    "family": "fixed-prism-protocol-resource",
+    "limitation": "A and B are intentionally identical complete profiles; distinct supported agent B is unavailable in current code. Original alternate/F-EFFECT requirements not waived.",
+    "originalCaseIds": [
+      "RT-8e39db110874a9d6-CURRENT-SCHEMA-FIELD",
+      "RT-8e39db110874a9d6-APPROVAL13-VAL",
+      "RT-8e39db110874a9d6-APPROVAL13-AB",
+      "RT-8e39db110874a9d6-APPROVAL13-BINDING",
+      "RT-8e39db110874a9d6-APPROVAL13-RECOVERY",
+      "RT-8e39db110874a9d6-APPROVAL13-EVAL",
+      "RT-8e39db110874a9d6-APPROVAL13-MUTANT",
+      "RT-8e39db110874a9d6-APPROVAL13-CURRENT-DEFINITION"
+    ],
+    "requirementsOpen": true
+  },
+  {
+    "fieldId": "RT-2b6e3bc13743e80c",
+    "family": "diagnostic-event-provenance-not-authorization",
+    "limitation": "Meaningful diagnostic-only A/B. No agentRole authorization/model/backend effect exists in these plugin modules; original F-EFFECT obligations asking for such effect remain OPEN. Preserve batch20 correction and historical exact event bytes.",
+    "originalCaseIds": [
+      "RT-2b6e3bc13743e80c-CURRENT-SCHEMA-FIELD",
+      "RT-2b6e3bc13743e80c-AGENT16-VAL",
+      "RT-2b6e3bc13743e80c-AGENT16-AB",
+      "RT-2b6e3bc13743e80c-AGENT16-BINDING",
+      "RT-2b6e3bc13743e80c-AGENT16-RECOVERY",
+      "RT-2b6e3bc13743e80c-AGENT16-EVAL",
+      "RT-2b6e3bc13743e80c-AGENT16-MUTANT",
+      "RT-2b6e3bc13743e80c-AGENT16-CURRENT-DEFINITION"
+    ],
+    "requirementsOpen": true
+  }
+]

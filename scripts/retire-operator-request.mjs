@@ -1,3 +1,4 @@
+import { retainedCoreRuntimePolicy } from '../skills/nova/core/execution/engine-snapshots.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -59,7 +60,7 @@ export async function retireOperatorRequest(input) {
   const scope = scopeValue(input), roots = distinctRoots(scope);
   const canonical = runRoot(scope.novaStorageRoot, scope.intent.runId, { maximumLegacyBytes: scope.inventoryLimits.maximumSnapshotBytes });
   if (canonical !== scope.intent.runRoot) throw new Error('OPERATOR_RETENTION_FOREIGN_RUN');
-  return withRunMutationLock(canonical, async signal => {
+  return withRunMutationLock(canonical, retainedCoreRuntimePolicy(canonical), async signal => {
     signal.throwIfAborted();
     const initial = retainedRun(scope), config = initial.configuration;
     const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);

@@ -1,0 +1,1386 @@
+{
+  "BusterProfiles": [
+    {
+      "id": "A",
+      "scope": "complete existing Buster author with required proposed extensions, NOT currentloaderaccepted/physicaldeploymentprofile",
+      "author": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 16777216,
+                "maximumRecords": 10000,
+                "maximumBytes": 268435456,
+                "maximumQuarantineRecords": 1000,
+                "maximumQuarantineBytes": 67108864,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "tarRuntimeCompanion": {
+        "sameExistingRuntimeField": "runtime.tarExecutable",
+        "value": "/usr/bin/tar",
+        "BphysicalProvisioning": "genuineGNUtar in disposable approvedimage required, not assumedinstalled"
+      },
+      "kernelLockByRoot": "every owningBuster store receives selectedlockWaitSeconds; exactrootcaller map retained",
+      "generation": {
+        "owner": "buster-engine",
+        "profile": "A",
+        "generationId": "question-definition-A",
+        "digestRule": "SHA256 exactcanonical completeauthor+runtime+schema+source+imageprojection; generated in realharness beforeclaim"
+      },
+      "eval": "fixed complete profile noambient/latestlookup",
+      "bindingEnvelope": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "profileDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "schemaDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "id": "B",
+      "scope": "complete existing Buster author with required proposed extensions, NOT currentloaderaccepted/physicaldeploymentprofile",
+      "author": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 2048,
+            "storeLockWaitSeconds": 1
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 1
+              },
+              "admission": {
+                "maximumIngressBytes": 16777216,
+                "maximumRecords": 10000,
+                "maximumBytes": 268435456,
+                "maximumQuarantineRecords": 1000,
+                "maximumQuarantineBytes": 67108864,
+                "reasonThresholdCodeUnits": 128,
+                "reasonPrefixCodeUnits": 56,
+                "metadataReserveBytes": 16384,
+                "lockWaitSeconds": 1
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "tarRuntimeCompanion": {
+        "sameExistingRuntimeField": "runtime.tarExecutable",
+        "value": "/opt/kubeclaw/tools/tar",
+        "BphysicalProvisioning": "genuineGNUtar in disposable approvedimage required, not assumedinstalled"
+      },
+      "kernelLockByRoot": "every owningBuster store receives selectedlockWaitSeconds; exactrootcaller map retained",
+      "generation": {
+        "owner": "buster-engine",
+        "profile": "B",
+        "generationId": "question-definition-B",
+        "digestRule": "SHA256 exactcanonical completeauthor+runtime+schema+source+imageprojection; generated in realharness beforeclaim"
+      },
+      "eval": "fixed complete profile noambient/latestlookup",
+      "bindingEnvelope": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "profileDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "schemaDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  ],
+  "baseIdentity": {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+  },
+  "NovaProfiles": {
+    "definition": "extend existing required PlatformConfig with observability.admission and projectScaffold.lockWaitSeconds, full existing platform companion MUST be selected not invented deployedprofile",
+    "currentAuthor": "skills/common/plugin-runtime/foundation/config/platform.ts and platform.schema.json",
+    "A": {
+      "admission": {
+        "maximumIngressBytes": 16777216,
+        "maximumRecords": 1000000,
+        "maximumBytes": 4294967296,
+        "maximumQuarantineRecords": 10000,
+        "maximumQuarantineBytes": 1073741824,
+        "metadataReserveBytes": 8192,
+        "reasonThresholdCodeUnits": 256,
+        "reasonPrefixCodeUnits": 180,
+        "lockWaitSeconds": 5
+      },
+      "projectScaffold": {
+        "lockWaitSeconds": 5
+      }
+    },
+    "B": {
+      "admission": {
+        "maximumIngressBytes": 16777216,
+        "maximumRecords": 1000000,
+        "maximumBytes": 4294967296,
+        "maximumQuarantineRecords": 10000,
+        "maximumQuarantineBytes": 1073741824,
+        "metadataReserveBytes": 16384,
+        "reasonThresholdCodeUnits": 128,
+        "reasonPrefixCodeUnits": 56,
+        "lockWaitSeconds": 1
+      },
+      "projectScaffold": {
+        "lockWaitSeconds": 1
+      }
+    },
+    "externalPrerequisite": "Actual deployed Nova complete PlatformConfig and installation/secret/physicalprofile remain external; reference existing runtime complete-platform definition fixture for C0, never fabricate deploymentvalues",
+    "completeDefinitionFixtures": [
+      {
+        "id": "A",
+        "author": {
+          "schemaVersion": "pipeline-platform.v2",
+          "installationRoots": [
+            "${CASE_ROOT}/installed"
+          ],
+          "trustedBuiltinRoots": [
+            "${CASE_ROOT}/installed"
+          ],
+          "externalTrust": {
+            "allowedSourceDigests": {},
+            "verifiedAttestations": {}
+          },
+          "providers": {},
+          "grants": {},
+          "adapters": {},
+          "activeAdapters": [],
+          "observers": {},
+          "storageRoot": "${CASE_ROOT}/state",
+          "shutdownTimeoutMs": 1000,
+          "effectLockTtlMs": 300000,
+          "orchestratorIssuerId": "c0-question-fixture",
+          "administrativeDecisionIssuers": [],
+          "observability": {
+            "admission": {
+              "maximumIngressBytes": 16777216,
+              "maximumRecords": 1000000,
+              "maximumBytes": 4294967296,
+              "maximumQuarantineRecords": 10000,
+              "maximumQuarantineBytes": 1073741824,
+              "metadataReserveBytes": 8192,
+              "reasonThresholdCodeUnits": 256,
+              "reasonPrefixCodeUnits": 180,
+              "lockWaitSeconds": 5
+            },
+            "attempts": {
+              "maximumEvidenceObjects": 100000,
+              "maximumEvidenceBytes": 10737418240,
+              "maximumEvidenceObjectBytes": 1073741824,
+              "maximumResults": 100000,
+              "maximumClosures": 100000,
+              "maximumMetadataBytes": 1073741824,
+              "maximumPendingEvidenceAgeMs": 3600000,
+              "lockWaitSeconds": 5
+            }
+          },
+          "projectScaffold": {
+            "lockWaitSeconds": 5
+          }
+        },
+        "scope": "complete synthetic existingPlatformConfig companion plus proposed requiredextensions; no deployedauthority/profileclaim",
+        "materialization": "replace CASE_ROOT by fresh absolute temporary root; create installed/state directories; noexternalplugins/services",
+        "bindingEnvelope": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "nova-platform",
+          "generationDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "profileDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schemaDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      {
+        "id": "B",
+        "author": {
+          "schemaVersion": "pipeline-platform.v2",
+          "installationRoots": [
+            "${CASE_ROOT}/installed"
+          ],
+          "trustedBuiltinRoots": [
+            "${CASE_ROOT}/installed"
+          ],
+          "externalTrust": {
+            "allowedSourceDigests": {},
+            "verifiedAttestations": {}
+          },
+          "providers": {},
+          "grants": {},
+          "adapters": {},
+          "activeAdapters": [],
+          "observers": {},
+          "storageRoot": "${CASE_ROOT}/state",
+          "shutdownTimeoutMs": 1000,
+          "effectLockTtlMs": 300000,
+          "orchestratorIssuerId": "c0-question-fixture",
+          "administrativeDecisionIssuers": [],
+          "observability": {
+            "admission": {
+              "maximumIngressBytes": 16777216,
+              "maximumRecords": 1000000,
+              "maximumBytes": 4294967296,
+              "maximumQuarantineRecords": 10000,
+              "maximumQuarantineBytes": 1073741824,
+              "metadataReserveBytes": 16384,
+              "reasonThresholdCodeUnits": 128,
+              "reasonPrefixCodeUnits": 56,
+              "lockWaitSeconds": 1
+            },
+            "attempts": {
+              "maximumEvidenceObjects": 100000,
+              "maximumEvidenceBytes": 10737418240,
+              "maximumEvidenceObjectBytes": 1073741824,
+              "maximumResults": 100000,
+              "maximumClosures": 100000,
+              "maximumMetadataBytes": 1073741824,
+              "maximumPendingEvidenceAgeMs": 3600000,
+              "lockWaitSeconds": 1
+            }
+          },
+          "projectScaffold": {
+            "lockWaitSeconds": 1
+          }
+        },
+        "scope": "complete synthetic existingPlatformConfig companion plus proposed requiredextensions; no deployedauthority/profileclaim",
+        "materialization": "replace CASE_ROOT by fresh absolute temporary root; create installed/state directories; noexternalplugins/services",
+        "bindingEnvelope": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "nova-platform",
+          "generationDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "profileDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schemaDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    ]
+  },
+  "blobAPICompleteProfiles": [
+    {
+      "maximumBytes": 8,
+      "maximumTotalBytes": 16,
+      "root": "freshdisposableA"
+    },
+    {
+      "maximumBytes": 8,
+      "maximumTotalBytes": 8,
+      "root": "freshdisposableB"
+    }
+  ],
+  "originalCore13": "unchanged; notretuned",
+  "metadataResourceDelta": "Compared with current1024, targetA8192/B16384 reserves MORE inside UNCHANGED maximumBytes; lower usable normal/quarantinepayload is explicit UNAPPROVED behavioral change. Never compact/shrinkoriginal records/history tofitB. Current1024 remains historical and cannot promise allfutureoverflow/headercases.",
+  "CoreNativeStoreLockProfiles": [
+    {
+      "id": "A",
+      "completeExistingCompanions": {
+        "prism-worker": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-worker",
+          "settings": {
+            "ingress": {
+              "port": 8080,
+              "maximumActiveRequests": 16,
+              "maximumProbeRequests": 4,
+              "maximumConnections": 128,
+              "requestTimeoutMs": 120000,
+              "shutdownTimeoutMs": 120000,
+              "maximumInputBytes": 16777216
+            },
+            "supervisor": {
+              "uid": 1000,
+              "gid": 1000,
+              "maximumOwnershipRecords": 65536,
+              "maximumOwnershipBytes": 67108864,
+              "maximumOutputBytes": 33554432,
+              "maximumJournalBytes": 68719476736,
+              "pollIntervalMs": 20,
+              "drainTimeoutMs": 10000,
+              "closeTimeoutMs": 105000
+            }
+          }
+        },
+        "worker-core": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "worker-core",
+          "settings": {
+            "localRuntime": {
+              "drainTimeoutMs": 300000,
+              "cancellationTimeoutMs": 30000,
+              "replayLimit": 65536
+            },
+            "runtime": {
+              "input_bytes": 16777216,
+              "json_nodes": 100000,
+              "json_depth": 64,
+              "log_parts": 10000,
+              "retain_logs": {
+                "prism-native": true,
+                "prism-agent": true,
+                "buster-provider": false,
+                "buster-preparation": false,
+                "buster-historical-import": false,
+                "buster-source-cleanup": false
+              },
+              "drain_poll_ms": 10,
+              "pool_file_bytes": 65536,
+              "runtime_identity_file_bytes": 4096,
+              "node_identity_file_bytes": 128,
+              "journal_record_bytes": 65536,
+              "journal_diagnostic_units": 4096,
+              "ownership_diagnostic_units": 4096,
+              "journalLockHexDigits": 2,
+              "native_store_lock_wait_seconds": 5
+            }
+          }
+        },
+        "prism-studio": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-studio",
+          "settings": {
+            "port": 8080,
+            "controlTimeoutMs": 30000,
+            "controlUrl": "http://prism-control:8080"
+          }
+        },
+        "buster-engine": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000
+                },
+                "admission": {
+                  "maximumIngressBytes": 16777216,
+                  "maximumRecords": 10000,
+                  "maximumBytes": 268435456,
+                  "maximumQuarantineRecords": 1000,
+                  "maximumQuarantineBytes": 67108864
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "prism-control": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-control",
+          "settings": {
+            "pipelinePreferenceSubject": null,
+            "artifactRoot": "/var/lib/prism/artifacts",
+            "studioPublicUrl": "https://prism-studio",
+            "port": 8080,
+            "dispatchTimeoutMs": 900000
+          }
+        },
+        "prism-execution": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-execution",
+          "settings": {
+            "resourcePolicy": {
+              "cpuTimeMs": 60000,
+              "memoryBytes": 8589934592,
+              "tasks": 2048
+            },
+            "maximumResultBytes": 67108864
+          }
+        }
+      },
+      "scope": "same EXISTING worker-core author, extends native store lock behavior only; no global foundation author; verified13 originalfields copied unchanged fromprotectedA",
+      "source": "core-adjustable-profiles.json#/CMP-WCORE-INPUT-BYTES/A",
+      "originalSourceSHA256": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43"
+    },
+    {
+      "id": "B",
+      "completeExistingCompanions": {
+        "prism-worker": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-worker",
+          "settings": {
+            "ingress": {
+              "port": 8080,
+              "maximumActiveRequests": 16,
+              "maximumProbeRequests": 4,
+              "maximumConnections": 128,
+              "requestTimeoutMs": 120000,
+              "shutdownTimeoutMs": 120000,
+              "maximumInputBytes": 16777216
+            },
+            "supervisor": {
+              "uid": 1000,
+              "gid": 1000,
+              "maximumOwnershipRecords": 65536,
+              "maximumOwnershipBytes": 67108864,
+              "maximumOutputBytes": 33554432,
+              "maximumJournalBytes": 68719476736,
+              "pollIntervalMs": 20,
+              "drainTimeoutMs": 10000,
+              "closeTimeoutMs": 105000
+            }
+          }
+        },
+        "worker-core": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "worker-core",
+          "settings": {
+            "localRuntime": {
+              "drainTimeoutMs": 300000,
+              "cancellationTimeoutMs": 30000,
+              "replayLimit": 65536
+            },
+            "runtime": {
+              "input_bytes": 16777216,
+              "json_nodes": 100000,
+              "json_depth": 64,
+              "log_parts": 10000,
+              "retain_logs": {
+                "prism-native": true,
+                "prism-agent": true,
+                "buster-provider": false,
+                "buster-preparation": false,
+                "buster-historical-import": false,
+                "buster-source-cleanup": false
+              },
+              "drain_poll_ms": 10,
+              "pool_file_bytes": 65536,
+              "runtime_identity_file_bytes": 4096,
+              "node_identity_file_bytes": 128,
+              "journal_record_bytes": 65536,
+              "journal_diagnostic_units": 4096,
+              "ownership_diagnostic_units": 4096,
+              "journalLockHexDigits": 2,
+              "native_store_lock_wait_seconds": 1
+            }
+          }
+        },
+        "prism-studio": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-studio",
+          "settings": {
+            "port": 8080,
+            "controlTimeoutMs": 30000,
+            "controlUrl": "http://prism-control:8080"
+          }
+        },
+        "buster-engine": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000
+                },
+                "admission": {
+                  "maximumIngressBytes": 16777216,
+                  "maximumRecords": 10000,
+                  "maximumBytes": 268435456,
+                  "maximumQuarantineRecords": 1000,
+                  "maximumQuarantineBytes": 67108864
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "prism-control": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-control",
+          "settings": {
+            "pipelinePreferenceSubject": null,
+            "artifactRoot": "/var/lib/prism/artifacts",
+            "studioPublicUrl": "https://prism-studio",
+            "port": 8080,
+            "dispatchTimeoutMs": 900000
+          }
+        },
+        "prism-execution": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-execution",
+          "settings": {
+            "resourcePolicy": {
+              "cpuTimeMs": 60000,
+              "memoryBytes": 8589934592,
+              "tasks": 2048
+            },
+            "maximumResultBytes": 67108864
+          }
+        }
+      },
+      "scope": "same EXISTING worker-core author, extends native store lock behavior only; no global foundation author; verified13 originalfields copied unchanged fromprotectedA",
+      "source": "core-adjustable-profiles.json#/CMP-WCORE-INPUT-BYTES/A",
+      "originalSourceSHA256": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43"
+    }
+  ],
+  "RegisteredStoreAdapterProfiles": [
+    {
+      "registration": "artifact-store",
+      "id": "A",
+      "completeConfigDefinition": {
+        "artifactRoot": "${CASE_ROOT}/artifact",
+        "maxArtifactBytes": 16777216,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456,
+        "maximumRecordBytes": 65536,
+        "storeLockWaitSeconds": 5
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/artifact-store",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "artifact-store",
+      "id": "B",
+      "completeConfigDefinition": {
+        "artifactRoot": "${CASE_ROOT}/artifact",
+        "maxArtifactBytes": 16777216,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456,
+        "maximumRecordBytes": 65536,
+        "storeLockWaitSeconds": 1
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/artifact-store",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "state-store",
+      "id": "A",
+      "completeConfigDefinition": {
+        "root": "${CASE_ROOT}/state",
+        "maxEntryBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456,
+        "storeLockWaitSeconds": 5
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/state-store",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "state-store",
+      "id": "B",
+      "completeConfigDefinition": {
+        "root": "${CASE_ROOT}/state",
+        "maxEntryBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456,
+        "storeLockWaitSeconds": 1
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/state-store",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "telemetry-store",
+      "id": "A",
+      "completeConfigDefinition": {
+        "root": "${CASE_ROOT}/telemetry",
+        "maxRecordBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456,
+        "jsonMaximumDepth": 64,
+        "jsonMaximumNodes": 100000,
+        "storeLockWaitSeconds": 5
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/telemetry-store",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "telemetry-store",
+      "id": "B",
+      "completeConfigDefinition": {
+        "root": "${CASE_ROOT}/telemetry",
+        "maxRecordBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456,
+        "jsonMaximumDepth": 64,
+        "jsonMaximumNodes": 100000,
+        "storeLockWaitSeconds": 1
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/telemetry-store",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "wait-store",
+      "id": "A",
+      "completeConfigDefinition": {
+        "root": "${CASE_ROOT}/wait",
+        "maxEntryBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456,
+        "storeLockWaitSeconds": 5
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/wait-store",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "wait-store",
+      "id": "B",
+      "completeConfigDefinition": {
+        "root": "${CASE_ROOT}/wait",
+        "maxEntryBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456,
+        "storeLockWaitSeconds": 1
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/wait-store",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "transport-publisher",
+      "id": "A",
+      "completeConfigDefinition": {
+        "deliveryRoot": "${CASE_ROOT}/transport",
+        "maximumDeliveryRecords": 100000,
+        "maximumDeliveryBytes": 268435456,
+        "targets": {
+          "case-target": {
+            "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+            "signingSecret": "case.signing",
+            "maxPayloadBytes": 262144
+          }
+        },
+        "terminalReservationBytes": 8192,
+        "deliveryMetadataAllowanceBytes": 65536,
+        "jsonMaximumDepth": 64,
+        "storeLockWaitSeconds": 5
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/transport-publisher",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "transport-publisher",
+      "id": "B",
+      "completeConfigDefinition": {
+        "deliveryRoot": "${CASE_ROOT}/transport",
+        "maximumDeliveryRecords": 100000,
+        "maximumDeliveryBytes": 268435456,
+        "targets": {
+          "case-target": {
+            "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+            "signingSecret": "case.signing",
+            "maxPayloadBytes": 262144
+          }
+        },
+        "terminalReservationBytes": 8192,
+        "deliveryMetadataAllowanceBytes": 65536,
+        "jsonMaximumDepth": 64,
+        "storeLockWaitSeconds": 1
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/transport-publisher",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "operator-messaging",
+      "id": "A",
+      "completeConfigDefinition": {
+        "deliveryRoot": "${CASE_ROOT}/operator",
+        "maximumDeliveryRecords": 100000,
+        "maximumDeliveryBytes": 268435456,
+        "targets": {
+          "case-target": {
+            "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+            "tokenSecret": "case.signing",
+            "maxPayloadBytes": 65536,
+            "format": "json",
+            "receiptMode": "disabled"
+          }
+        },
+        "terminalReservationBytes": 8192,
+        "deliveryMetadataAllowanceBytes": 65536,
+        "jsonMaximumDepth": 20,
+        "jsonMaximumContainerEntries": 1000,
+        "storeLockWaitSeconds": 5
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/operator-messaging",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    },
+    {
+      "registration": "operator-messaging",
+      "id": "B",
+      "completeConfigDefinition": {
+        "deliveryRoot": "${CASE_ROOT}/operator",
+        "maximumDeliveryRecords": 100000,
+        "maximumDeliveryBytes": 268435456,
+        "targets": {
+          "case-target": {
+            "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+            "tokenSecret": "case.signing",
+            "maxPayloadBytes": 65536,
+            "format": "json",
+            "receiptMode": "disabled"
+          }
+        },
+        "terminalReservationBytes": 8192,
+        "deliveryMetadataAllowanceBytes": 65536,
+        "jsonMaximumDepth": 20,
+        "jsonMaximumContainerEntries": 1000,
+        "storeLockWaitSeconds": 1
+      },
+      "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+      "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/operator-messaging",
+      "newField": "config.storeLockWaitSeconds",
+      "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory"
+    }
+  ],
+  "additionalRuntimeCallers": {
+    "BusterPreparedJob": "existing Buster runtime JSON author required storeLockWaitSeconds; production.ts:52 projects to PreparedBusterPlanJobStore records/blob/admission",
+    "NovaStandaloneGate": "existing standalone Nova runtime JSON author required storeLockWaitSeconds; runtime-config.ts->production.ts dispatch/import rootwriters",
+    "NovaRegisteredGate": "existing remote-test-gate adapter/evidence-adapter required config.storeLockWaitSeconds; distinctfromstandalone runtime evenequalvalue",
+    "DemoHandoff": "existingregistered demo-handoff config.storeLockWaitSeconds; no new foundationauthor",
+    "nativeFixture": "public FileBusterFixtureJournal constructor required limits.lockWaitSeconds fromexternalcaller existingowner; no currentouterdeploymentproved",
+    "historyReaders": "retirement/compact scripts take originalcaptured storeoptions including requiredlockwait; cannot authorcurrent/latestoverride",
+    "completePhysicalInputs": "Buster runtime author selected fullprofiles and Nova adapter/standalone physicalservice/secretprofile fromtheir existing owners are required actualharness companions, not inventeddeployedcapacity/addresses"
+  }
+}

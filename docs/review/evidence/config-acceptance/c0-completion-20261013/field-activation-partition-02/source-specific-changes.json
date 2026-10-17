@@ -1,0 +1,90 @@
+[
+  {
+    "id": "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+    "oldContract": "review-quality-module",
+    "newContract": "native-run-deadline",
+    "classes": [
+      "R"
+    ],
+    "reason": "Actual native timeout resolver reads cfg.agents.defaults.timeoutSeconds and invocation override; configured foundation + derived run deadline, not Nova review policy."
+  },
+  {
+    "id": "DLV-PRISM-BACKUP-CONTROLLER-TIMEZONE",
+    "oldContract": "review-quality-module",
+    "newContract": "native-cron-scheduler",
+    "classes": [
+      "S",
+      "R"
+    ],
+    "reason": "Actual pinned Cron parser Parse extracts TZ/CRON_TZ or time.Local; Chart emits backup/verify/database-proof schedules. Scheduler generation is S, original admitted Jobs/deadlines R, never review-quality M."
+  },
+  {
+    "id": "AUTH-PRISM-PRODUCT-ENABLE",
+    "oldContract": "host-authority",
+    "newContract": "service-global-policy",
+    "classes": [
+      "S",
+      "R"
+    ],
+    "reason": "loadProductConfig gate composes selected service routes/controller authority before requests; feature boolean is service activation, not itself host capacity or module tuning."
+  },
+  {
+    "id": "AUTH-PRISM-PRODUCT-DECISION-TTL",
+    "oldContract": "host-authority",
+    "newContract": "service-global-policy",
+    "classes": [
+      "S",
+      "R"
+    ],
+    "reason": "Signer policy TTL applies at actual signed intent mint with original session expiry; current literal300000 is not per-module grant/reset."
+  },
+  {
+    "id": "AUTH-PRISM-BROWSER-ROOT",
+    "oldContract": "standalone-operation",
+    "newContract": "installed-asset-browser-reference",
+    "classes": [
+      "G",
+      "H",
+      "S"
+    ],
+    "reason": "Actual installation locator/package/native dependency is generated/captured host/service input, not J editable policy. Preserve existing installation reference target; no new author/root."
+  },
+  {
+    "id": "AUTH-PRISM-STUDIO-ASSET-ROOT",
+    "oldContract": "standalone-operation",
+    "newContract": "installed-asset-browser-reference",
+    "classes": [
+      "G",
+      "H",
+      "S"
+    ],
+    "reason": "Actual installation locator/package/native dependency is generated/captured host/service input, not J editable policy. Preserve existing installation reference target; no new author/root."
+  },
+  {
+    "id": "AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES",
+    "oldContract": "standalone-operation",
+    "newContract": "prism-service-parser-ceiling",
+    "classes": [
+      "S"
+    ],
+    "reason": "internal-artifacts.ts authenticated POST rejects bytes>134217728 before digest check/artifacts.put; matched route has no order-envelope selector"
+  },
+  {
+    "id": "AUTH-PRISM-ARTIFACT-ACK-BYTES",
+    "oldContract": "standalone-operation",
+    "newContract": "prism-service-parser-ceiling",
+    "classes": [
+      "S"
+    ],
+    "reason": "WorkerArtifactClient.upload bounds ACK bytes8192 before JSON/identity parsing; the same client transport policy applies to uploads, while requested artifact bytes and evidence IDs remain original J/R data"
+  },
+  {
+    "id": "AUTH-PRISM-STUDIO-REQUEST-BYTES",
+    "oldContract": "standalone-operation",
+    "newContract": "prism-service-parser-ceiling",
+    "classes": [
+      "S"
+    ],
+    "reason": "studio-request.ts requestBody rejects bytes>2000000 with413 before proxy fetch; options supplied from captured Studio service, no job/order view"
+  }
+]

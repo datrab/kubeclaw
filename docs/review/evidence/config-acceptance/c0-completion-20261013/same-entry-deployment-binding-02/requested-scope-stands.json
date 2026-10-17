@@ -1,0 +1,29 @@
+{
+  "qualification": "public structural independent caller request shapes only, never authentic installed grants; no composite union capability",
+  "controller": {
+    "scope": "controller",
+    "role": "buster",
+    "deploymentInstanceId": "agent-buster",
+    "consumer": "namespace-controller",
+    "serviceInstanceId": "agent-buster-namespace-controller"
+  },
+  "recovery": {
+    "scope": "recovery",
+    "role": "postgresql-recovery",
+    "deploymentInstanceId": "fixture.recovery"
+  },
+  "controllerSecond": {
+    "scope": "controller",
+    "role": "buster",
+    "deploymentInstanceId": "agent-buster-second",
+    "consumer": "namespace-controller",
+    "serviceInstanceId": "agent-buster-second-namespace-controller"
+  },
+  "recoverySecond": {
+    "scope": "recovery",
+    "role": "postgresql-recovery",
+    "deploymentInstanceId": "fixture.recovery-second"
+  },
+  "nativeSecondInstanceQualification": "distinct source-schema tuple resolution is demonstrated, not installed second role/service/namespace/grant/transport eligibility; those original per-deployment receipts remain absent",
+  "taskAuthorityRef": "not supplied/minted by CONFIG request shape; recovery02 original task envelope, descriptor FD10/11 and supervisor boundary remain mandatory before effects"
+}

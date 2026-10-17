@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-15T19:03:34.874821+00:00",
+  "qualification": "Original two-package baseline prerequisite for payload-profile migration; no new setting and no independent acceptance claimed.",
+  "verification": [
+    {
+      "package": "operator-messaging",
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-payload-migration-baseline-20261015/operator-messaging-0.txt"
+    },
+    {
+      "package": "operator-messaging",
+      "command": [
+        "node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-payload-migration-baseline-20261015/operator-messaging-1.txt"
+    },
+    {
+      "package": "operator-messaging",
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-payload-migration-baseline-20261015/operator-messaging-2.txt"
+    },
+    {
+      "package": "transport-publisher",
+      "command": [
+        "node",
+        "tests/config-validation.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-payload-migration-baseline-20261015/transport-publisher-0.txt"
+    },
+    {
+      "package": "transport-publisher",
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-payload-migration-baseline-20261015/transport-publisher-1.txt"
+    },
+    {
+      "package": "transport-publisher",
+      "command": [
+        "node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-payload-migration-baseline-20261015/transport-publisher-2.txt"
+    },
+    {
+      "package": "transport-publisher",
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-payload-migration-baseline-20261015/transport-publisher-3.txt"
+    }
+  ],
+  "settingsSourceWired": 88,
+  "independentAcceptance": "OPEN",
+  "nextAction": "Migrate separate publisher/operator target payload profiles via selected Core plus original retained per-target selection, preserving 262144/65536 and explicit overrides. Include engine-runtime injection, engine-snapshots capture and recovery call chain, schemas, authored platform adapters and original live tests as one coherent change."
+}

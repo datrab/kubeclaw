@@ -1,15 +1,16 @@
 import net from 'node:net';
 import tls from 'node:tls';
-import { command, ReplyDecoder } from './resp.ts';
+import { command, ReplyDecoder, captureReplyLimits, type ReplyLimits } from './resp.ts';
 
-export interface RedisConnectionOptions { readonly url: URL; readonly timeoutMs: number; }
+export interface RedisConnectionOptions extends ReplyLimits { readonly url: URL; readonly timeoutMs: number; }
 
 export async function exchange(options: RedisConnectionOptions, password: string, parts: readonly string[], signal: AbortSignal): Promise<string | number | null> {
+  const limits = captureReplyLimits(options);
   if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
   const socket = options.url.protocol === 'rediss:'
     ? tls.connect({ host: options.url.hostname, port: Number(options.url.port), servername: options.url.hostname })
     : net.connect({ host: options.url.hostname, port: Number(options.url.port) });
-  const decoder = new ReplyDecoder();
+  const decoder = new ReplyDecoder(limits);
   let settled = false;
   return new Promise((resolve, reject) => {
     const finish = (error?: Error, value?: string | number | null): void => {

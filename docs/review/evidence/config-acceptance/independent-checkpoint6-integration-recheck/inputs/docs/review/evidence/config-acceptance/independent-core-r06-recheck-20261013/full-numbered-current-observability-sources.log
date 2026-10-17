@@ -1,0 +1,3644 @@
+SOURCE skills/common/plugin-runtime/foundation/observability/admission-retirement.ts SHA256 134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12
+1: import path from 'node:path';
+2: import fs from 'node:fs/promises';
+3: import { constants } from 'node:fs';
+4: import {fileURLToPath} from 'node:url';
+5: import { canonicalJson, validatePipelineObservabilityContract, type AdmissionAcknowledgementV1 } from '@kubeclaw/pipeline-observability-contract';
+6: import { replayAssert, replayIdentity, replayObject } from './replay-validation.ts';
+7: import { scopedEvidenceId, type DurableAttemptStoreSnapshot, type DurableResultMetadata } from './durable-attempts.ts';
+8: import {createHash} from 'node:crypto';
+9: import {decodeAttemptState,type PersistedAttempt} from './attempt-projection.ts';
+10: import type { AdmittedRecordView } from './durable-delivery.ts';
+11: 
+12: /** A reference to an immutable, already committed completion, never a new archive. */
+13: export interface AdmissionCompletionReference {
+14:   file: string;
+15:   maximumBytes: number;
+16:   pipelineRunId: string;
+17:   planId: string;
+18:   nodeId: string;
+19:   attemptId: string;
+20:   claimGeneration: number;
+21:   resultDigest: string;
+22:   closureDigest: string;
+23: }
+24: export interface AdmissionRetiredEntry {
+25:   key: string;
+26:   acknowledgement: AdmissionAcknowledgementV1;
+27:   source: AdmissionCompletionReference;
+28:   operationId: string;
+29:   actor: string;
+30:   authority: {runRoot:string;journalHead:string;snapshotDigest:string};
+31: }
+32: export function assertAdmissionRetiredEntry(entry: AdmissionRetiredEntry): void {
+33:   replayObject(entry, ['key','acknowledgement','source','operationId','actor','authority'], 'admission-retired-entry');
+34:   replayAssert(replayIdentity(entry.operationId) && replayIdentity(entry.actor), 'admission-retirement-author');
+35:   validatePipelineObservabilityContract('admissionAcknowledgement',entry.acknowledgement);
+36:   replayAssert(entry.acknowledgement.state === 'duplicate','admission-retirement-ack');
+37:   const s=entry.source, a=entry.acknowledgement;
+38:   replayObject(entry.authority,['runRoot','journalHead','snapshotDigest'],'admission-retirement-authority');
+39:   replayAssert(typeof entry.authority.runRoot==='string' && path.isAbsolute(entry.authority.runRoot) && path.resolve(entry.authority.runRoot)===entry.authority.runRoot
+40:     && /^sha256:[a-f0-9]{64}$/.test(entry.authority.journalHead) && /^sha256:[a-f0-9]{64}$/.test(entry.authority.snapshotDigest),'admission-retirement-authority-binding');
+41:   replayObject(s,['file','maximumBytes','pipelineRunId','planId','nodeId','attemptId','claimGeneration','resultDigest','closureDigest'],'admission-retirement-source');
+42:   replayAssert(s.file === path.join(entry.authority.runRoot,'observability/attempts/attempt-store.json'),'admission-retirement-file');
+43:   replayAssert(Number.isSafeInteger(s.maximumBytes) && s.maximumBytes > 0 && Number.isSafeInteger(s.claimGeneration) && s.claimGeneration > 0,'admission-retirement-bounds');
+44:   for(const field of ['pipelineRunId','planId','nodeId','attemptId'] as const)replayAssert(replayIdentity(s[field]),'admission-retirement-owner');
+45:   replayAssert(/^sha256:[a-f0-9]{64}$/.test(s.resultDigest) && /^sha256:[a-f0-9]{64}$/.test(s.closureDigest),'admission-retirement-digest');
+46:   replayAssert(a.pipelineRunId === s.pipelineRunId && entry.key === [a.producer.producerId,a.producer.bootId,a.producer.producerType,a.pipelineRunId,String(a.sequence)].join('|'),'admission-retirement-identity');
+47: }
+48: 
+49: /** Atomic source snapshots are immutable for this result identity. No nested store lock. */
+50: async function readRetirementBytes(file:string,maximumBytes:number):Promise<Buffer> {
+51:   replayAssert(await fs.realpath(file)===file,'admission-retirement-source-path');
+52:   const handle=await fs.open(file,constants.O_RDONLY|constants.O_NOFOLLOW|constants.O_NONBLOCK);
+53:   let bytes:Buffer;
+54:   try {
+55:     const stat=await handle.stat();
+56:     replayAssert(stat.isFile() && stat.size<=maximumBytes,'admission-retirement-source-size');
+57:     bytes=Buffer.alloc(stat.size);let offset=0;
+58:     while(offset<bytes.length){const read=await handle.read(bytes,offset,bytes.length-offset,offset);replayAssert(read.bytesRead>0,'admission-retirement-source-truncated');offset+=read.bytesRead;}
+59:     replayAssert((await handle.read(Buffer.alloc(1),0,1,offset)).bytesRead===0,'admission-retirement-source-grew');
+60:   } finally {await handle.close();}
+61:   replayAssert(await fs.realpath(file)===file,'admission-retirement-source-path');
+62:   return bytes;
+63: }
+64: async function readSource(s:AdmissionCompletionReference):Promise<DurableAttemptStoreSnapshot> {
+65:   const state=JSON.parse((await readRetirementBytes(s.file,s.maximumBytes)).toString()) as PersistedAttempt;
+66:   return decodeAttemptState(state,path.dirname(s.file),{
+67:     maximumEvidenceObjects:Number.MAX_SAFE_INTEGER,maximumEvidenceBytes:Number.MAX_SAFE_INTEGER,
+68:     maximumEvidenceObjectBytes:Number.MAX_SAFE_INTEGER,maximumResults:Number.MAX_SAFE_INTEGER,
+69:     maximumClosures:Number.MAX_SAFE_INTEGER,maximumMetadataBytes:s.maximumBytes,maximumPendingEvidenceAgeMs:Number.MAX_SAFE_INTEGER,
+70:   }).state;
+71: }
+72: export function resolveAdmissionRetiredSnapshot(entry:AdmissionRetiredEntry,state:DurableAttemptStoreSnapshot):AdmittedRecordView {
+73:   assertAdmissionRetiredEntry(entry);
+74:   const s=entry.source;
+75:   const result=state.results.find(item=>item.pipelineRunId===s.pipelineRunId && item.attemptId===s.attemptId && item.claimGeneration===s.claimGeneration);
+76:   replayAssert(result?.storedAt && result.planId===s.planId && result.nodeId===s.nodeId && result.result.resultDigest===s.resultDigest,'admission-retirement-source-result');
+77:   const intent=result.completionIntent;
+78:   replayAssert(intent && intent.closure.closureDigest===s.closureDigest && state.closures.some(item=>canonicalJson(item)===canonicalJson(intent.closure)),'admission-retirement-source-closure');
+79:   const record=intent.record,a=entry.acknowledgement;
+80:   replayAssert(record.recordDigest===a.recordDigest && record.recordId===a.recordId && canonicalJson(record.producer)===canonicalJson(a.producer)
+81:     && record.sequence===a.sequence && record.correlation.pipelineRunId===a.pipelineRunId,'admission-retirement-source-record');
+82:   return {record:structuredClone(record),canonicalCursor:a.canonicalCursor,admittedAt:a.admittedAt};
+83: }
+84: 
+85: export async function resolveAdmissionRetiredEntries(entries:readonly AdmissionRetiredEntry[]):Promise<AdmittedRecordView[]> {
+86:   const sources=new Map<string,Promise<DurableAttemptStoreSnapshot>>();
+87:   return Promise.all(entries.map(async entry=>{
+88:     assertAdmissionRetiredEntry(entry);
+89:     const key=canonicalJson([entry.source.file,entry.source.maximumBytes]);
+90:     let source=sources.get(key);
+91:     if(!source){source=readSource(entry.source);sources.set(key,source);}
+92:     return resolveAdmissionRetiredSnapshot(entry,await source);
+93:   }));
+94: }
+95: export async function resolveAdmissionRetiredEntry(entry:AdmissionRetiredEntry):Promise<AdmittedRecordView> {
+96:   return (await resolveAdmissionRetiredEntries([entry]))[0]!;
+97: }
+98: 
+99: async function assertCompletionEvidence(state:DurableAttemptStoreSnapshot,result:DurableResultMetadata):Promise<void> {
+100:       for(const evidenceId of result.completionIntent!.closure.requiredEvidenceIds) {
+101:         const metadata=state.evidence.find(item=>item.pipelineRunId===result.pipelineRunId && item.attemptId===result.attemptId && item.claimGeneration===result.claimGeneration
+102:           && canonicalJson(item.producer)===canonicalJson(result.completionIntent!.closure.producer) && scopedEvidenceId(item.attemptId,item.claimGeneration,item.evidenceId)===evidenceId
+103:           && result.result.evidence.some(ref=>ref.evidenceId===item.evidenceId));
+104:         if(!metadata)throw new Error('OBSERVABILITY_RETIREMENT_EVIDENCE_REQUIRED');
+105:         const bytes=await readRetirementBytes(fileURLToPath(metadata.artifact.storageUrl),metadata.artifact.sizeBytes);
+106:         if(bytes.length!==metadata.artifact.sizeBytes || `sha256:${createHash('sha256').update(bytes).digest('hex')}`!==metadata.artifact.contentDigest)throw new Error('OBSERVABILITY_RETIREMENT_EVIDENCE_CHANGED');
+107:       }
+108: }
+109: export async function completionRetirementSource(state:DurableAttemptStoreSnapshot,scope:{pipelineRunId:string;attemptId:string;claimGeneration:number;recordDigest:string},file:string,maximumBytes:number):Promise<AdmissionCompletionReference> {
+110:       const result=state.results.find(item=>item.pipelineRunId===scope.pipelineRunId && item.attemptId===scope.attemptId && item.claimGeneration===scope.claimGeneration);
+111:       if(!result?.storedAt || !result.planId || !result.nodeId || !result.completionIntent)throw new Error('OBSERVABILITY_RETIREMENT_COMPLETION_REQUIRED');
+112:       const {record,closure}=result.completionIntent;
+113:       if(record.recordDigest!==scope.recordDigest || closure.recordCount!==1 || closure.firstSequence!==1 || closure.finalSequence!==1 || record.sequence!==1
+114:         || !state.closures.some(item=>canonicalJson(item)===canonicalJson(closure)))throw new Error('OBSERVABILITY_RETIREMENT_CLOSURE_REQUIRED');
+115: 
+116:   await assertCompletionEvidence(state,result);
+117:   return {file,maximumBytes,pipelineRunId:scope.pipelineRunId,planId:result.planId,nodeId:result.nodeId,attemptId:scope.attemptId,claimGeneration:scope.claimGeneration,resultDigest:result.result.resultDigest,closureDigest:closure.closureDigest};
+118: }
+SOURCE skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts SHA256 9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2
+1: import fs from "node:fs/promises";
+2: import { createHash } from "node:crypto";
+3: import { sameProducer, scopedEvidenceId, digest } from "./attempt-evidence.ts";
+4: import {
+5:   canonicalJson,
+6:   validatePipelineObservabilityContract,
+7:   type ProducerClosureV1,
+8:   type ObservabilityCompletenessV1,
+9:   type ProducerGapReportV1,
+10:   type UnresolvedObservabilityItemV1,
+11: } from "@kubeclaw/pipeline-observability-contract";
+12: import type {
+13:   DurableAttemptStoreSnapshot,
+14:   RequiredProducerClosure,
+15: } from "./durable-attempts.ts";
+16: import type { AttemptState } from "./attempt-state.ts";
+17: import type {
+18:   FileObservabilityAdmissionStore,
+19:   AdmittedRecordView,
+20: } from "./durable-delivery.ts";
+21: export async function storeClosureUnlocked(
+22:   store: AttemptState,
+23:   state: DurableAttemptStoreSnapshot,
+24:   snapshot: ProducerClosureV1,
+25:   admitted: ReadonlyArray<AdmittedRecordView>,
+26: ): Promise<ProducerClosureV1> {
+27:   const existing = state.closures.find(
+28:     (item) =>
+29:       item.pipelineRunId === snapshot.pipelineRunId &&
+30:       item.closureId === snapshot.closureId,
+31:   );
+32:   if (existing) {
+33:     if (existing.closureDigest !== snapshot.closureDigest)
+34:       throw new Error("OBSERVABILITY_CLOSURE_IDENTITY_CONFLICT");
+35:     return structuredClone(existing);
+36:   }
+37:   const records = admitted
+38:     .filter(
+39:       (item) =>
+40:         sameProducer(item.record.producer, snapshot.producer) &&
+41:         item.record.correlation.pipelineRunId === snapshot.pipelineRunId,
+42:     )
+43:     .sort((left, right) => left.record.sequence - right.record.sequence);
+44:   if (
+45:     records.length !== snapshot.recordCount ||
+46:     records.some((item, index) => item.record.sequence !== index + 1)
+47:   )
+48:     throw new Error("OBSERVABILITY_CLOSURE_SEQUENCE_INCOMPLETE");
+49:   for (const evidenceId of snapshot.requiredEvidenceIds) {
+50:     if (
+51:       !state.evidence.some(
+52:         (item) =>
+53:           item.pipelineRunId === snapshot.pipelineRunId &&
+54:           sameProducer(item.producer, snapshot.producer) &&
+55:           scopedEvidenceId(
+56:             item.attemptId,
+57:             item.claimGeneration,
+58:             item.evidenceId,
+59:           ) === evidenceId,
+60:       )
+61:     )
+62:       throw new Error(`OBSERVABILITY_CLOSURE_EVIDENCE_MISSING:${evidenceId}`);
+63:   }
+64:   if (
+65:     state.closures.length - store.closureProjections.size >=
+66:     store.limits.maximumClosures
+67:   )
+68:     throw new Error("OBSERVABILITY_CLOSURE_STORE_FULL");
+69:   const candidate = { ...state, closures: [...state.closures, snapshot] };
+70:   store.checkSize(candidate);
+71:   await store.writeState(candidate);
+72:   return structuredClone(snapshot);
+73: }
+74: export async function storeClosure(
+75:   store: AttemptState,
+76:   closure: ProducerClosureV1,
+77:   admission: FileObservabilityAdmissionStore,
+78: ): Promise<ProducerClosureV1> {
+79:   const snapshot = structuredClone(closure);
+80:   validatePipelineObservabilityContract("producerClosure", snapshot);
+81:   const admitted = await admission.admittedRecords();
+82:   return store.serial(async () => {
+83:     const state = await store.readState();
+84:     await store.reclaimExpiredEvidence(state);
+85:     return storeClosureUnlocked(store, state, snapshot, admitted);
+86:   });
+87: }
+88: export async function evaluateCompleteness(
+89:   store: AttemptState,
+90:   pipelineRunId: string,
+91:   required: ReadonlyArray<RequiredProducerClosure>,
+92:   admission: FileObservabilityAdmissionStore,
+93:   missingRanges: ReadonlyArray<ProducerGapReportV1> = [],
+94:   unresolvedItems: ReadonlyArray<UnresolvedObservabilityItemV1> = [],
+95: ): Promise<ObservabilityCompletenessV1> {
+96:   const requirements = structuredClone(required);
+97:   const durableIssues = await admission.observabilityIssues(pipelineRunId);
+98:   const rangeSnapshot = [
+99:     ...durableIssues.missingRanges,
+100:     ...structuredClone(missingRanges),
+101:   ].filter(
+102:     (item, index, items) =>
+103:       items.findIndex(
+104:         (candidate) => canonicalJson(candidate) === canonicalJson(item),
+105:       ) === index,
+106:   );
+107:   const unresolvedSnapshot = uniqueUnresolvedItems([
+108:     ...durableIssues.unresolvedItems,
+109:     ...structuredClone(unresolvedItems),
+110:   ]);
+111:   const admittedRecords = await admission.admittedTail(pipelineRunId, 1);
+112:   return store.serial(async () => {
+113:     const state = await store.readState();
+114:     await store.reclaimExpiredEvidence(state);
+115:     return evaluateStoredClosures(state, {
+116:       pipelineRunId,
+117:       requirements,
+118:       admittedRecords,
+119:       rangeSnapshot,
+120:       unresolvedSnapshot,
+121:     });
+122:   });
+123: }
+124: 
+125: interface CompletenessRequest {
+126:   pipelineRunId: string;
+127:   requirements: ReadonlyArray<RequiredProducerClosure>;
+128:   admittedRecords: ReadonlyArray<AdmittedRecordView>;
+129:   rangeSnapshot: ProducerGapReportV1[];
+130:   unresolvedSnapshot: UnresolvedObservabilityItemV1[];
+131: }
+132: async function evaluateStoredClosures(
+133:   state: DurableAttemptStoreSnapshot,
+134:   request: CompletenessRequest,
+135: ): Promise<ObservabilityCompletenessV1> {
+136:   const {
+137:     pipelineRunId,
+138:     requirements,
+139:     admittedRecords,
+140:     rangeSnapshot,
+141:     unresolvedSnapshot,
+142:   } = request;
+143:   const requiredClosureIds = requirements.map((item) => item.closureId);
+144:   if (new Set(requiredClosureIds).size !== requiredClosureIds.length)
+145:     throw new Error("OBSERVABILITY_REQUIRED_CLOSURE_DUPLICATE");
+146:   const admittedClosureIds: string[] = [];
+147:   const evidenceItems: UnresolvedObservabilityItemV1[] = [];
+148:   for (const requirement of requirements) {
+149:     const evaluated = await evaluateClosure(
+150:       state,
+151:       pipelineRunId,
+152:       requirement,
+153:       admittedRecords,
+154:     );
+155:     evidenceItems.push(...evaluated.evidenceItems);
+156:     if (evaluated.valid) admittedClosureIds.push(requirement.closureId);
+157:   }
+158:   const missingClosureIds = requiredClosureIds.filter(
+159:     (id) => !admittedClosureIds.includes(id),
+160:   );
+161:   const closureItems = missingClosureIssues(
+162:     state,
+163:     missingClosureIds,
+164:     requirements,
+165:   );
+166:   const allItems = uniqueUnresolvedItems([
+167:     ...closureItems,
+168:     ...evidenceItems,
+169:     ...unresolvedSnapshot,
+170:   ]);
+171:   const completeness: ObservabilityCompletenessV1 = {
+172:     schemaVersion: "observability-completeness.v1",
+173:     pipelineRunId,
+174:     state:
+175:       missingClosureIds.length || rangeSnapshot.length || allItems.length
+176:         ? "partial"
+177:         : "complete",
+178:     requiredClosureIds,
+179:     admittedClosureIds,
+180:     missingClosureIds,
+181:     missingRanges: rangeSnapshot,
+182:     unresolvedItems: allItems,
+183:     evaluatedAt: new Date().toISOString(),
+184:   };
+185:   validatePipelineObservabilityContract(
+186:     "observabilityCompleteness",
+187:     completeness,
+188:   );
+189:   return completeness;
+190: }
+191: 
+192: async function evaluateClosure(
+193:   state: DurableAttemptStoreSnapshot,
+194:   pipelineRunId: string,
+195:   requirement: RequiredProducerClosure,
+196:   admittedRecords: ReadonlyArray<AdmittedRecordView>,
+197: ): Promise<{ valid: boolean; evidenceItems: UnresolvedObservabilityItemV1[] }> {
+198:   const evidenceItems: UnresolvedObservabilityItemV1[] = [];
+199:   const closure = state.closures.find(
+200:     (item) =>
+201:       item.pipelineRunId === pipelineRunId &&
+202:       item.closureId === requirement.closureId &&
+203:       sameProducer(item.producer, requirement.producer),
+204:   );
+205:   if (!closure) return { valid: false, evidenceItems: [] };
+206:   const records = admittedRecords.filter(
+207:     (item) =>
+208:       item.record.correlation.pipelineRunId === pipelineRunId &&
+209:       sameProducer(item.record.producer, requirement.producer),
+210:   );
+211:   let valid =
+212:     records.length === closure.recordCount &&
+213:     records.every(
+214:       (item) =>
+215:         item.record.sequence >= closure.firstSequence &&
+216:         item.record.sequence <= closure.finalSequence,
+217:     );
+218:   for (const evidenceId of closure.requiredEvidenceIds) {
+219:     const issue = await evidenceIssue(
+220:       state,
+221:       pipelineRunId,
+222:       requirement,
+223:       evidenceId,
+224:     );
+225:     if (issue) {
+226:       valid = false;
+227:       evidenceItems.push(issue);
+228:     }
+229:   }
+230:   return { valid, evidenceItems };
+231: }
+232: 
+233: async function evidenceIssue(
+234:   state: DurableAttemptStoreSnapshot,
+235:   pipelineRunId: string,
+236:   requirement: RequiredProducerClosure,
+237:   evidenceId: string,
+238: ): Promise<UnresolvedObservabilityItemV1 | null> {
+239:   const metadata = state.evidence.find(
+240:     (item) =>
+241:       item.pipelineRunId === pipelineRunId &&
+242:       sameProducer(item.producer, requirement.producer) &&
+243:       scopedEvidenceId(
+244:         item.attemptId,
+245:         item.claimGeneration,
+246:         item.evidenceId,
+247:       ) === evidenceId,
+248:   );
+249:   let reasonCode: string | null = null;
+250:   if (!metadata) reasonCode = "evidence-missing";
+251:   else {
+252:     try {
+253:       const bytes = await fs.readFile(new URL(metadata.artifact.storageUrl));
+254:       if (
+255:         bytes.byteLength !== metadata.artifact.sizeBytes ||
+256:         digest(bytes) !== metadata.artifact.contentDigest
+257:       )
+258:         reasonCode = "evidence-corrupt";
+259:     } catch {
+260:       reasonCode = "evidence-unavailable";
+261:     }
+262:   }
+263:   if (!reasonCode) return null;
+264:   return {
+265:     itemId: `evidence:${createHash("sha256").update(evidenceId).digest("hex")}`,
+266:     kind: "missing-evidence",
+267:     producer: requirement.producer,
+268:     subjectId: evidenceId,
+269:     reasonCode,
+270:   };
+271: }
+272: 
+273: function missingClosureIssues(
+274:   state: DurableAttemptStoreSnapshot,
+275:   missingClosureIds: readonly string[],
+276:   requirements: readonly RequiredProducerClosure[],
+277: ): UnresolvedObservabilityItemV1[] {
+278:   return missingClosureIds.map((id) => {
+279:     const requirement = requirements.find((item) => item.closureId === id)!;
+280:     return {
+281:       itemId: `gap:${id}`,
+282:       kind: "missing-closure" as const,
+283:       producer: requirement.producer,
+284:       subjectId: id,
+285:       reasonCode: state.closures.some((item) => item.closureId === id)
+286:         ? "producer-closure-stale"
+287:         : "producer-closure-missing",
+288:     };
+289:   });
+290: }
+291: 
+292: function uniqueUnresolvedItems(
+293:   items: UnresolvedObservabilityItemV1[],
+294: ): UnresolvedObservabilityItemV1[] {
+295:   return items.filter(
+296:     (item, index, items) =>
+297:       items.findIndex((candidate) => candidate.itemId === item.itemId) ===
+298:       index,
+299:   );
+300: }
+SOURCE skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts SHA256 e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95
+1: import fs from "node:fs/promises";
+2: import type { Dirent } from "node:fs";
+3: import path from "node:path";
+4: import { createHash, randomUUID } from "node:crypto";
+5: import { pathToFileURL } from "node:url";
+6: import type { WorkerEvidenceRefV1 } from "@kubeclaw/pipeline-worker-core-contract";
+7: import { ensureDirectoryDurable } from "./durable-delivery.ts";
+8: import {
+9:   canonicalJson,
+10:   validatePipelineObservabilityContract,
+11:   type ProducerIdentityV1,
+12: } from "@kubeclaw/pipeline-observability-contract";
+13: import type {
+14:   DurableAttemptStoreLimits,
+15:   DurableEvidenceInput,
+16:   DurableEvidenceMetadata,
+17:   DurableAttemptStoreSnapshot,
+18: } from "./durable-attempts.ts";
+19: import type { AttemptState } from "./attempt-state.ts";
+20: export function requireIdentity(value: string, code: string): void {
+21:   if (typeof value !== "string" || value.length < 1 || value.length > 512)
+22:     throw new Error(code);
+23: }
+24: 
+25: export function digest(bytes: Uint8Array): string {
+26:   return `sha256:${createHash("sha256").update(bytes).digest("hex")}`;
+27: }
+28: 
+29: export function sameProducer(
+30:   left: ProducerIdentityV1,
+31:   right: ProducerIdentityV1,
+32: ): boolean {
+33:   return (
+34:     left.producerId === right.producerId &&
+35:     left.bootId === right.bootId &&
+36:     left.producerType === right.producerType
+37:   );
+38: }
+39: 
+40: export async function syncDirectory(directory: string): Promise<void> {
+41:   const handle = await fs.open(directory, "r");
+42:   try {
+43:     await handle.sync();
+44:   } finally {
+45:     await handle.close();
+46:   }
+47: }
+48: 
+49: export async function durableBlob(
+50:   root: string,
+51:   contentDigest: string,
+52:   bytes: Uint8Array,
+53: ): Promise<string> {
+54:   const hex = contentDigest.slice("sha256:".length);
+55:   const directory = path.join(root, "blobs", hex.slice(0, 2));
+56:   const staging = path.join(root, "staging");
+57:   await ensureDirectoryDurable(directory);
+58:   await ensureDirectoryDurable(staging);
+59:   const destination = path.join(directory, hex);
+60:   try {
+61:     const existing = await fs.readFile(destination);
+62:     if (digest(existing) !== contentDigest)
+63:       throw new Error("OBSERVABILITY_EVIDENCE_DIGEST_CONFLICT");
+64:     return destination;
+65:   } catch (error) {
+66:     if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+67:   }
+68:   const temporary = path.join(staging, `${hex}.${randomUUID()}.tmp`);
+69:   let renamed = false;
+70:   try {
+71:     const handle = await fs.open(temporary, "wx", 0o600);
+72:     try {
+73:       await handle.writeFile(bytes);
+74:       await handle.sync();
+75:     } finally {
+76:       await handle.close();
+77:     }
+78:     await fs.rename(temporary, destination);
+79:     renamed = true;
+80:     await syncDirectory(directory);
+81:     return destination;
+82:   } finally {
+83:     if (!renamed) await fs.unlink(temporary).catch(() => undefined);
+84:   }
+85: }
+86: 
+87: export async function cleanupStaging(root: string): Promise<void> {
+88:   const staging = path.join(root, "staging");
+89:   await fs.mkdir(staging, { recursive: true });
+90:   for (const entry of await fs.readdir(staging, { withFileTypes: true })) {
+91:     if (entry.isFile() && entry.name.endsWith(".tmp"))
+92:       await fs.unlink(path.join(staging, entry.name));
+93:   }
+94: }
+95: 
+96: export async function cleanupUnreferencedBlobs(
+97:   root: string,
+98:   state: DurableAttemptStoreSnapshot,
+99: ): Promise<void> {
+100:   const blobs = path.join(root, "blobs");
+101:   const referenced = new Set(
+102:     state.evidence.map((item) => item.artifact.contentDigest.slice(7)),
+103:   );
+104:   let prefixes: Dirent<string>[] = [];
+105:   try {
+106:     prefixes = await fs.readdir(blobs, {
+107:       withFileTypes: true,
+108:       encoding: "utf8",
+109:     });
+110:   } catch (error) {
+111:     if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
+112:     throw error;
+113:   }
+114:   for (const prefix of prefixes) {
+115:     if (!prefix.isDirectory() || !/^[0-9a-f]{2}$/.test(prefix.name)) continue;
+116:     const directory = path.join(blobs, prefix.name);
+117:     for (const entry of await fs.readdir(directory, {
+118:       withFileTypes: true,
+119:       encoding: "utf8",
+120:     })) {
+121:       if (
+122:         entry.isFile() &&
+123:         /^[0-9a-f]{64}$/.test(entry.name) &&
+124:         !referenced.has(entry.name)
+125:       )
+126:         await fs.unlink(path.join(directory, entry.name));
+127:     }
+128:   }
+129: }
+130: 
+131: export function scopedEvidenceId(
+132:   attemptId: string,
+133:   claimGeneration: number,
+134:   evidenceId: string,
+135: ): string {
+136:   return `evidence:${createHash("sha256").update(canonicalJson({ attemptId, claimGeneration, evidenceId })).digest("hex")}`;
+137: }
+138: export async function storeEvidence(
+139:   store: AttemptState,
+140:   input: DurableEvidenceInput,
+141:   bytes: Uint8Array,
+142: ): Promise<WorkerEvidenceRefV1> {
+143:   const snapshot = structuredClone(input);
+144:   validateEvidenceInput(snapshot);
+145:   const content = Uint8Array.from(bytes);
+146:   if (content.byteLength > store.limits.maximumEvidenceObjectBytes)
+147:     throw new Error("OBSERVABILITY_EVIDENCE_OBJECT_TOO_LARGE");
+148:   return store.serial(() => persistEvidence(store, snapshot, content));
+149: }
+150: 
+151: function validateEvidenceInput(snapshot: DurableEvidenceInput): void {
+152:   requireIdentity(
+153:     snapshot.pipelineRunId,
+154:     "OBSERVABILITY_PIPELINE_RUN_ID_INVALID",
+155:   );
+156:   requireIdentity(snapshot.attemptId, "OBSERVABILITY_ATTEMPT_ID_INVALID");
+157:   requireIdentity(snapshot.evidenceId, "OBSERVABILITY_EVIDENCE_ID_INVALID");
+158:   requireIdentity(snapshot.type, "OBSERVABILITY_EVIDENCE_TYPE_INVALID");
+159:   requireIdentity(
+160:     snapshot.mediaType,
+161:     "OBSERVABILITY_EVIDENCE_MEDIA_TYPE_INVALID",
+162:   );
+163:   if (
+164:     !Number.isSafeInteger(snapshot.claimGeneration) ||
+165:     snapshot.claimGeneration < 1
+166:   )
+167:     throw new Error("OBSERVABILITY_CLAIM_GENERATION_INVALID");
+168:   validatePipelineObservabilityContract("producerIdentity", snapshot.producer);
+169: }
+170: 
+171: async function persistEvidence(
+172:   store: AttemptState,
+173:   snapshot: DurableEvidenceInput,
+174:   content: Uint8Array,
+175: ): Promise<WorkerEvidenceRefV1> {
+176:   const state = await store.readState();
+177:   await store.reclaimExpiredEvidence(state);
+178:   await cleanupUnreferencedBlobs(store.root, state);
+179:   const existing = state.evidence.find(
+180:     (item) =>
+181:       item.pipelineRunId === snapshot.pipelineRunId &&
+182:       item.attemptId === snapshot.attemptId &&
+183:       item.claimGeneration === snapshot.claimGeneration &&
+184:       item.evidenceId === snapshot.evidenceId,
+185:   );
+186:   const contentDigest = digest(content);
+187:   if (existing) {
+188:     if (
+189:       existing.artifact.contentDigest !== contentDigest ||
+190:       existing.type !== snapshot.type ||
+191:       existing.mediaType !== snapshot.mediaType ||
+192:       !sameProducer(existing.producer, snapshot.producer)
+193:     )
+194:       throw new Error("OBSERVABILITY_EVIDENCE_IDENTITY_CONFLICT");
+195:     return structuredClone({
+196:       evidenceId: existing.evidenceId,
+197:       type: existing.type,
+198:       artifact: existing.artifact,
+199:     });
+200:   }
+201:   assertEvidenceCapacity(state, store.limits, content);
+202:   const hex = contentDigest.slice(7);
+203:   const destination = path.join(store.root, "blobs", hex.slice(0, 2), hex);
+204:   const artifact = {
+205:     artifactId: `artifact:${hex}`,
+206:     type: snapshot.type,
+207:     mediaType: snapshot.mediaType,
+208:     contentDigest,
+209:     sizeBytes: content.byteLength,
+210:     storageUrl: pathToFileURL(destination).href,
+211:   };
+212:   const metadata: DurableEvidenceMetadata = {
+213:     ...snapshot,
+214:     artifact,
+215:     stagedAt: new Date().toISOString(),
+216:   };
+217:   const candidate = { ...state, evidence: [...state.evidence, metadata] };
+218:   store.checkSize(candidate);
+219:   await durableBlob(store.root, contentDigest, content);
+220:   await store.writeState(candidate);
+221:   return structuredClone({
+222:     evidenceId: snapshot.evidenceId,
+223:     type: snapshot.type,
+224:     artifact,
+225:   });
+226: }
+227: 
+228: function assertEvidenceCapacity(
+229:   state: DurableAttemptStoreSnapshot,
+230:   limits: DurableAttemptStoreLimits,
+231:   content: Uint8Array,
+232: ): void {
+233:   const total = state.evidence.reduce(
+234:     (sum, item) => sum + item.artifact.sizeBytes,
+235:     0,
+236:   );
+237:   if (
+238:     state.evidence.length >= limits.maximumEvidenceObjects ||
+239:     total + content.byteLength > limits.maximumEvidenceBytes
+240:   )
+241:     throw new Error("OBSERVABILITY_EVIDENCE_STORE_FULL");
+242: }
+SOURCE skills/common/plugin-runtime/foundation/observability/attempt-projection.ts SHA256 5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793
+1: import {decodeClosures,encodeClosures,type ClosureReference,type ClosureProjections} from './closure-projection.ts';
+2: import fs from 'node:fs';
+3: import path from 'node:path';
+4: import {createHash,randomUUID} from 'node:crypto';
+5: import {canonicalJson, validatePipelineObservabilityContract} from '@kubeclaw/pipeline-observability-contract';
+6: import {validatePipelineWorkerCoreContract, type WorkerAttemptResultV1} from '@kubeclaw/pipeline-worker-core-contract';
+7: import type {DurableAttemptStoreLimits, DurableAttemptStoreSnapshot, DurableResultMetadata} from './durable-attempts.ts';
+8: import {assertAttemptReplay} from './attempt-replay.ts';
+9: import {parseHashJournal, type HashJournalRecord} from './hash-journal.ts';
+10: import {replayAssert, replayIdentity, replayObject} from './replay-validation.ts';
+11: 
+12: export interface AttemptRetirementIntent {
+13:   pipelineRunId:string; attemptId:string; claimGeneration:number; resultDigest:string;
+14:   recordDigest:string; operationId:string; actor:string; runRoot:string;
+15:   runJournalHead:string; snapshotDigest:string; expectedStoreDigest:string;
+16:   journalSequence:number; journalHash:string;
+17: }
+18: export interface AttemptResultReference {
+19:   schemaVersion:'attempt-result-reference.v1';
+20:   intent:AttemptRetirementIntent;
+21:   journalPrefixBytes:number;
+22: }
+23: export type ProjectedResultMetadata=Omit<DurableResultMetadata,'result'> & {resultReference:AttemptResultReference};
+24: export type AttemptProjections=Map<string,ProjectedResultMetadata>;
+25: export interface PersistedAttemptV2 extends Omit<DurableAttemptStoreSnapshot,'schemaVersion'|'results'> {
+26:   schemaVersion:'durable-attempt-store.v2';
+27:   results:(DurableResultMetadata|ProjectedResultMetadata)[];
+28: }
+29: export interface PersistedAttemptV3 extends Omit<PersistedAttemptV2,'schemaVersion'|'closures'> {
+30:   schemaVersion:'durable-attempt-store.v3';
+31:   closures:(DurableAttemptStoreSnapshot['closures'][number]|ClosureReference)[];
+32: }
+33: export type PersistedAttempt=DurableAttemptStoreSnapshot|PersistedAttemptV2|PersistedAttemptV3;
+34: interface ImportEntry {
+35:   schemaVersion:string;
+36:   decisionKey:string;
+37:   decision:{pipelineRunId:string;planId:string;nodeId:string;attemptId:string;claimGeneration:number;action:string;
+38:     nextClaimGeneration:number|null;result:WorkerAttemptResultV1;completeness:{pipelineRunId:string;state:string;requiredClosureIds:string[];admittedClosureIds:string[];missingClosureIds:string[];missingRanges:unknown[];unresolvedItems:unknown[]}};
+39: }
+40: export const attemptProjectionKey=(item:{pipelineRunId:string;attemptId:string;claimGeneration:number}):string=>canonicalJson([item.pipelineRunId,item.attemptId,item.claimGeneration]);
+41: export const attemptStoreDigest=(bytes:Uint8Array):string=>`sha256:${createHash('sha256').update(bytes).digest('hex')}`;
+42: const DIGEST=/^sha256:[a-f0-9]{64}$/u;
+43: 
+44: function removeUncommittedFile(file:string):void {
+45:   try {fs.unlinkSync(file);} catch(error) {if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;}
+46: }
+47: 
+48: /** Existing store only: no await may split a journal-fenced validation/commit. */
+49: export function replaceAttemptProjectionSync(file:string,value:PersistedAttempt):void {
+50:   replayAssert(fs.realpathSync(file)===file&&fs.lstatSync(file).isFile(),'attempt-store-path');
+51:   const directory=path.dirname(file),temporary=`${file}.${process.pid}.${randomUUID()}.tmp`;
+52:   let renamed=false;
+53:   try {
+54:     const fd=fs.openSync(temporary,fs.constants.O_WRONLY|fs.constants.O_CREAT|fs.constants.O_EXCL|fs.constants.O_NOFOLLOW,0o600);
+55:     try {fs.writeFileSync(fd,canonicalJson(value));fs.fsyncSync(fd);} finally {fs.closeSync(fd);}
+56:     fs.renameSync(temporary,file);renamed=true;
+57:     const dir=fs.openSync(directory,fs.constants.O_RDONLY|fs.constants.O_DIRECTORY|fs.constants.O_NOFOLLOW);
+58:     try {fs.fsyncSync(dir);} finally {fs.closeSync(dir);}
+59:   } finally {if(!renamed)removeUncommittedFile(temporary);}
+60: }
+61: 
+62: export function assertAttemptRetirementIntent(intent:AttemptRetirementIntent,root:string):void {
+63:   replayObject(intent,['pipelineRunId','attemptId','claimGeneration','resultDigest','recordDigest','operationId','actor','runRoot','runJournalHead','snapshotDigest','expectedStoreDigest','journalSequence','journalHash'],'attempt-retirement-intent');
+64:   for(const field of ['pipelineRunId','attemptId','operationId','actor'] as const)replayAssert(replayIdentity(intent[field]),'attempt-retirement-identity');
+65:   for(const field of ['resultDigest','recordDigest','runJournalHead','snapshotDigest','expectedStoreDigest','journalHash'] as const)replayAssert(DIGEST.test(intent[field]),'attempt-retirement-digest');
+66:   replayAssert(Number.isSafeInteger(intent.claimGeneration)&&intent.claimGeneration>0&&Number.isSafeInteger(intent.journalSequence)&&intent.journalSequence>0,'attempt-retirement-sequence');
+67:   replayAssert(typeof intent.runRoot==='string'&&path.isAbsolute(intent.runRoot)&&path.resolve(intent.runRoot)===intent.runRoot
+68:     &&root===path.join(intent.runRoot,'observability/attempts'),'attempt-retirement-root');
+69: }
+70: export function attemptImportJournal(root:string):string {return path.join(path.dirname(root),'reconciliation.jsonl');}
+71: 
+72: /** Reads an existing regular canonical file or immutable prefix, never follows a link or repairs a tail. */
+73: export function readAttemptJournalPrefix(file:string,maximumBytes:number,prefixBytes?:number):Buffer {
+74:   replayAssert(Number.isSafeInteger(maximumBytes)&&maximumBytes>0,'attempt-journal-read-limit');
+75:   replayAssert(fs.realpathSync(file)===file,'attempt-journal-path');
+76:   const fd=fs.openSync(file,fs.constants.O_RDONLY|fs.constants.O_NOFOLLOW|fs.constants.O_NONBLOCK);
+77:   try {
+78:     const stat=fs.fstatSync(fd),length=prefixBytes??stat.size;
+79:     replayAssert(stat.isFile()&&Number.isSafeInteger(length)&&length>0&&length<=maximumBytes&&stat.size>=length,'attempt-journal-size');
+80:     const bytes=Buffer.alloc(length);let offset=0;
+81:     while(offset<length){const count=fs.readSync(fd,bytes,offset,length-offset,offset);replayAssert(count>0,'attempt-journal-truncated');offset+=count;}
+82:     replayAssert(fs.realpathSync(file)===file,'attempt-journal-path');
+83:     return bytes;
+84:   } finally {fs.closeSync(fd);}
+85: }
+86: function assertReference(item:ProjectedResultMetadata,root:string,maximumBytes:number):void {
+87:   replayObject(item,['pipelineRunId','planId','nodeId','attemptId','claimGeneration','workerId','completionIntent','storedAt','resultReference'],'attempt-projected-result');
+88:   const reference=item.resultReference;
+89:   replayObject(reference,['schemaVersion','intent','journalPrefixBytes'],'attempt-result-reference');
+90:   replayAssert(reference.schemaVersion==='attempt-result-reference.v1','attempt-result-reference-version');
+91:   assertAttemptRetirementIntent(reference.intent,root);
+92:   replayAssert(attemptProjectionKey(item)===attemptProjectionKey(reference.intent)&&item.completionIntent?.record.recordDigest===reference.intent.recordDigest,'attempt-result-reference-owner');
+93:   replayAssert(Number.isSafeInteger(reference.journalPrefixBytes)&&reference.journalPrefixBytes>0&&reference.journalPrefixBytes<=maximumBytes,'attempt-result-reference-budget');
+94: }
+95: function assertImportedCompleteness(item:ProjectedResultMetadata,d:ImportEntry['decision']):void {
+96:   validatePipelineObservabilityContract('observabilityCompleteness',d.completeness);
+97:   const closure=item.completionIntent?.closure,c=d.completeness;
+98:   replayAssert(closure&&c.pipelineRunId===item.pipelineRunId&&c.state==='complete'&&!c.missingClosureIds.length&&!c.missingRanges.length&&!c.unresolvedItems.length
+99:     &&c.requiredClosureIds.includes(closure.closureId)&&c.admittedClosureIds.includes(closure.closureId),'attempt-result-import-completeness');
+100: }
+101: function resolveResult(item:ProjectedResultMetadata,record:HashJournalRecord<ImportEntry>):WorkerAttemptResultV1 {
+102:   const {intent}=item.resultReference,entry=record.entry,d=entry.decision;
+103:   replayAssert(record.sequence===intent.journalSequence&&record.hash===intent.journalHash&&entry.schemaVersion==='nova-observability-reconciliation.v1','attempt-result-journal-binding');
+104:   replayAssert(d?.pipelineRunId===item.pipelineRunId&&d.planId===item.planId&&d.nodeId===item.nodeId&&d.attemptId===item.attemptId&&d.claimGeneration===item.claimGeneration
+105:     &&d.action==='imported'&&d.nextClaimGeneration===null,'attempt-result-import-owner');
+106:   validatePipelineWorkerCoreContract('workerAttemptResult',d.result);
+107:   replayAssert(d.result.resultDigest===intent.resultDigest&&d.result.workerId===item.workerId&&item.storedAt!==null,'attempt-result-import-digest');
+108:   replayAssert(entry.decisionKey===[item.pipelineRunId,item.planId,item.nodeId,item.attemptId,String(item.claimGeneration),intent.resultDigest,'imported'].join('|'),'attempt-result-import-key');
+109:   assertImportedCompleteness(item,d);
+110:   return structuredClone(d.result);
+111: }
+112: function offsets(bytes:Buffer):number[] {
+113:   const ends:number[]=[];let at=-1;
+114:   while((at=bytes.indexOf(10,at+1))!==-1)ends.push(at+1);
+115:   return ends;
+116: }
+117: 
+118: /** All references share the canonical run journal: one bounded read and one chain validation. */
+119: export function decodeAttemptState(raw:PersistedAttempt,root:string,limits:DurableAttemptStoreLimits,
+120:   readPrefix:(file:string,maximumBytes:number,prefixBytes:number)=>Buffer=readAttemptJournalPrefix,
+121: ):{state:DurableAttemptStoreSnapshot;projections:AttemptProjections;closureProjections:ClosureProjections} {
+122:   if(raw.schemaVersion==='durable-attempt-store.v1') {assertAttemptReplay(raw,root,limits);return {state:raw,projections:new Map(),closureProjections:new Map()};}
+123:   replayObject(raw,['schemaVersion','evidence','results','closures'],'attempt-v2-envelope');
+124:   replayAssert(['durable-attempt-store.v2','durable-attempt-store.v3'].includes(raw.schemaVersion)&&Array.isArray(raw.results)&&Array.isArray(raw.closures),'attempt-v2-version');
+125:   const projected=raw.results.filter((item):item is ProjectedResultMetadata=>Object.hasOwn(item,'resultReference'));
+126:   replayAssert(projected.length>0,'attempt-v2-empty-projections');
+127:   for(const item of projected)assertReference(item,root,limits.maximumMetadataBytes);
+128:   const maximumPrefix=projected.reduce((maximum,item)=>Math.max(maximum,item.resultReference.journalPrefixBytes),0);
+129:   const journal=attemptImportJournal(root),bytes=readPrefix(journal,limits.maximumMetadataBytes,maximumPrefix);
+130:   replayAssert(bytes.length===maximumPrefix,'attempt-journal-prefix-length');
+131:   const records=parseHashJournal<ImportEntry>(bytes,journal),ends=offsets(bytes),projections:AttemptProjections=new Map();
+132:   const results=raw.results.map(item=>{
+133:     if(!('resultReference' in item))return item;
+134:     const ref=item.resultReference,record=records[ref.intent.journalSequence-1];
+135:     replayAssert(record&&ends[ref.intent.journalSequence-1]===ref.journalPrefixBytes,'attempt-journal-prefix-binding');
+136:     const key=attemptProjectionKey(item);replayAssert(!projections.has(key),'attempt-result-projection-duplicate');projections.set(key,item);
+137:     const {resultReference:_,...metadata}=item;
+138:     return {...metadata,result:resolveResult(item,record)};
+139:   });
+140:   const decoded=raw.schemaVersion==='durable-attempt-store.v3'?decodeClosures(raw.closures,projections):{closures:raw.closures,closureProjections:new Map()};
+141:   const state:DurableAttemptStoreSnapshot={...raw,schemaVersion:'durable-attempt-store.v1',results,closures:decoded.closures};
+142:   assertAttemptReplay(state,root,limits,projections.size,decoded.closureProjections.size);
+143:   return {state,projections,closureProjections:decoded.closureProjections};
+144: }
+145: 
+146: export function encodeAttemptState(state:DurableAttemptStoreSnapshot,projections:AttemptProjections,closureProjections:ClosureProjections=new Map()):PersistedAttempt {
+147:   if(!projections.size){replayAssert(!closureProjections.size,'closure-result-projection-required');return state;}
+148:   let found=0;
+149:   const results=state.results.map(item=>{
+150:     const projected=projections.get(attemptProjectionKey(item));if(!projected)return item;
+151:     const {result,...metadata}=item,{resultReference,...retained}=projected;
+152:     replayAssert(result.resultDigest===resultReference.intent.resultDigest&&canonicalJson(metadata)===canonicalJson(retained),'attempt-projection-mutated');
+153:     found++;return projected;
+154:   });
+155:   replayAssert(found===projections.size,'attempt-projection-removed');
+156:   if(closureProjections.size)return {...state,schemaVersion:'durable-attempt-store.v3',results,closures:encodeClosures(state.closures,closureProjections,projections)};
+157:   return {...state,schemaVersion:'durable-attempt-store.v2',results};
+158: }
+159: 
+160: export function createAttemptProjection(item:DurableResultMetadata,intent:AttemptRetirementIntent,root:string,maximumBytes:number):ProjectedResultMetadata {
+161:   assertAttemptRetirementIntent(intent,root);
+162:   const journal=attemptImportJournal(root),bytes=readAttemptJournalPrefix(journal,maximumBytes);
+163:   const records=parseHashJournal<ImportEntry>(bytes,journal),end=offsets(bytes)[intent.journalSequence-1];
+164:   replayAssert(end!==undefined,'attempt-import-checkpoint-missing');
+165:   const {result,...metadata}=item;
+166:   const projected:ProjectedResultMetadata={...metadata,resultReference:{schemaVersion:'attempt-result-reference.v1',intent:structuredClone(intent),journalPrefixBytes:end}};
+167:   assertReference(projected,root,maximumBytes);
+168:   replayAssert(canonicalJson(resolveResult(projected,records[intent.journalSequence-1]!))===canonicalJson(result),'attempt-import-result-changed');
+169:   return projected;
+170: }
+SOURCE skills/common/plugin-runtime/foundation/observability/attempt-replay.ts SHA256 99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08
+1: import path from 'node:path';
+2: import { pathToFileURL } from 'node:url';
+3: import { canonicalJson, validatePipelineObservabilityContract, type ProducerClosureV1, type ProducerIdentityV1 } from '@kubeclaw/pipeline-observability-contract';
+4: import { validatePipelineWorkerCoreContract, type WorkerAttemptResultV1 } from '@kubeclaw/pipeline-worker-core-contract';
+5: import { scopedEvidenceId, type DurableAttemptStoreLimits, type DurableAttemptStoreSnapshot, type DurableCompletionIntent, type DurableEvidenceMetadata, type DurableResultMetadata } from './durable-attempts.ts';
+6: import { replayAssert, replayIdentity, replayObject, replayTimestamp, replayUnique } from './replay-validation.ts';
+7: 
+8: function sameProducer(left: ProducerIdentityV1, right: ProducerIdentityV1): boolean {
+9:   return canonicalJson(left) === canonicalJson(right);
+10: }
+11: export function assertCompletionIntent(pipelineRunId: string, snapshot: WorkerAttemptResultV1, intent: DurableCompletionIntent | null): void {
+12:   if (intent === null) return;
+13:   replayObject(intent, ['record', 'closure'], 'attempt-intent');
+14:   validatePipelineObservabilityContract('producerRecord', intent.record);
+15:   validatePipelineObservabilityContract('producerClosure', intent.closure);
+16:   const declared = new Set(intent.closure.requiredEvidenceIds);
+17:   const evidenceBound = snapshot.evidence.every((item) => declared.has(scopedEvidenceId(snapshot.attemptId, snapshot.claimGeneration, item.evidenceId)));
+18:   const payload = intent.record.payload as Record<string, unknown> | null;
+19:   if (intent.record.recordType !== 'attempt.completed' || !payload || payload.resultDigest !== snapshot.resultDigest || payload.workerId !== snapshot.workerId
+20:     || intent.record.correlation.pipelineRunId !== pipelineRunId || intent.record.correlation.attemptId !== snapshot.attemptId
+21:     || intent.record.correlation.claimId !== snapshot.claimId || intent.record.correlation.claimGeneration !== snapshot.claimGeneration
+22:     || intent.closure.pipelineRunId !== pipelineRunId || !sameProducer(intent.record.producer, intent.closure.producer) || !evidenceBound) {
+23:     throw new Error('OBSERVABILITY_COMPLETION_INTENT_IDENTITY_MISMATCH');
+24:   }
+25: }
+26: function evidenceKey(item: { pipelineRunId: string; attemptId: string; claimGeneration: number; evidenceId: string }): string {
+27:   return canonicalJson([item.pipelineRunId, item.attemptId, item.claimGeneration, item.evidenceId]);
+28: }
+29: function evidenceReplay(item: DurableEvidenceMetadata, root: string, keys: Set<string>): void {
+30:   replayObject(item, ['pipelineRunId', 'attemptId', 'claimGeneration', 'producer', 'evidenceId', 'type', 'mediaType', 'artifact', 'stagedAt'], 'attempt-evidence');
+31:   for (const field of ['pipelineRunId', 'attemptId', 'evidenceId', 'type', 'mediaType'] as const) replayAssert(replayIdentity(item[field]), `attempt-evidence-${field}`);
+32:   replayAssert(Number.isSafeInteger(item.claimGeneration) && item.claimGeneration > 0 && replayTimestamp(item.stagedAt), 'attempt-evidence-generation');
+33:   validatePipelineObservabilityContract('producerIdentity', item.producer);
+34:   validatePipelineWorkerCoreContract('workerEvidenceRef', { evidenceId: item.evidenceId, type: item.type, artifact: item.artifact });
+35:   const hex = item.artifact.contentDigest.slice(7);
+36:   replayAssert(item.artifact.artifactId === `artifact:${hex}` && item.artifact.type === item.type && item.artifact.mediaType === item.mediaType
+37:     && item.artifact.storageUrl === pathToFileURL(path.join(root, 'blobs', hex.slice(0, 2), hex)).href, 'attempt-evidence-artifact');
+38:   replayUnique(keys, evidenceKey(item), 'attempt-evidence-duplicate');
+39: }
+40: function resultReplay(item: DurableResultMetadata, evidence: Map<string, DurableEvidenceMetadata>, keys: Set<string>): void {
+41:   replayObject(item, ['pipelineRunId', 'planId', 'nodeId', 'attemptId', 'claimGeneration', 'workerId', 'result', 'completionIntent', 'storedAt'], 'attempt-result');
+42:   replayAssert(replayIdentity(item.pipelineRunId) && (item.storedAt === null || replayTimestamp(item.storedAt)), 'attempt-result-metadata');
+43:   replayAssert((item.planId === null && item.nodeId === null) || (replayIdentity(item.planId) && replayIdentity(item.nodeId)), 'attempt-result-owner');
+44:   validatePipelineWorkerCoreContract('workerAttemptResult', item.result);
+45:   replayAssert(item.attemptId === item.result.attemptId && item.claimGeneration === item.result.claimGeneration && item.workerId === item.result.workerId, 'attempt-result-identity');
+46:   replayUnique(keys, canonicalJson([item.pipelineRunId, item.attemptId, item.claimGeneration]), 'attempt-result-duplicate');
+47:   assertCompletionIntent(item.pipelineRunId, item.result, item.completionIntent);
+48:   if (item.completionIntent !== null) closureEvidenceReplay(item.completionIntent.closure, evidence.values());
+49:   for (const reference of item.result.evidence) {
+50:     const metadata = evidence.get(evidenceKey({ ...item, evidenceId: reference.evidenceId }));
+51:     replayAssert(metadata && canonicalJson(metadata.artifact) === canonicalJson(reference.artifact) && metadata.type === reference.type, 'attempt-result-evidence');
+52:     if (item.completionIntent !== null) replayAssert(sameProducer(metadata.producer, item.completionIntent.record.producer), 'attempt-result-evidence-producer');
+53:   }
+54: }
+55: function closureEvidenceReplay(closure: ProducerClosureV1, evidence: Iterable<DurableEvidenceMetadata>): void {
+56:   for (const metadata of evidence) {
+57:     if (metadata.pipelineRunId !== closure.pipelineRunId) continue;
+58:     const scoped = scopedEvidenceId(metadata.attemptId, metadata.claimGeneration, metadata.evidenceId);
+59:     if (closure.requiredEvidenceIds.includes(scoped)) replayAssert(sameProducer(metadata.producer, closure.producer), 'attempt-closure-evidence-producer');
+60:   }
+61:   // Closure-only staged evidence may already have expired under the existing
+62:   // retention contract. Missing bytes/metadata remain a completeness issue;
+63:   // present metadata must never contradict the closure's producer identity.
+64: }
+65: function projectionCount(count:number,length:number,reason:string):void {
+66:   replayAssert(Number.isSafeInteger(count)&&count>=0&&count<=length,reason);
+67: }
+68: export function assertAttemptReplay(state: DurableAttemptStoreSnapshot, root: string, limits: DurableAttemptStoreLimits, validatedProjectedResults = 0, validatedProjectedClosures = 0): void {
+69:   replayObject(state, ['schemaVersion', 'evidence', 'results', 'closures'], 'attempt-envelope');
+70:   replayAssert(state.schemaVersion === 'durable-attempt-store.v1' && Array.isArray(state.evidence) && Array.isArray(state.results) && Array.isArray(state.closures), 'attempt-version');
+71:   projectionCount(validatedProjectedResults,state.results.length,'attempt-projection-count');
+72:   projectionCount(validatedProjectedClosures,state.closures.length,'closure-projection-count');
+73:   replayAssert(state.evidence.length <= limits.maximumEvidenceObjects && state.results.length - validatedProjectedResults <= limits.maximumResults && state.closures.length - validatedProjectedClosures <= limits.maximumClosures, 'attempt-count');
+74:   const evidenceKeys = new Set<string>();
+75:   const evidence = new Map<string, DurableEvidenceMetadata>();
+76:   for (const item of state.evidence) { evidenceReplay(item, root, evidenceKeys); evidence.set(evidenceKey(item), item); }
+77:   const resultKeys = new Set<string>();
+78:   const generations = new Map<string, number>();
+79:   for (const item of state.results) {
+80:     resultReplay(item, evidence, resultKeys);
+81:     const attemptKey = canonicalJson([item.pipelineRunId, item.attemptId]);
+82:     replayAssert(item.claimGeneration > (generations.get(attemptKey) ?? 0), 'attempt-generation-order');
+83:     generations.set(attemptKey, item.claimGeneration);
+84:   }
+85:   const closureKeys = new Set<string>();
+86:   for (const closure of state.closures) {
+87:     validatePipelineObservabilityContract('producerClosure', closure);
+88:     closureEvidenceReplay(closure, state.evidence);
+89:     replayUnique(closureKeys, canonicalJson([closure.pipelineRunId, closure.closureId]), 'attempt-closure-duplicate');
+90:     const owners = state.results.filter((item) => item.pipelineRunId === closure.pipelineRunId && item.completionIntent?.closure.closureId === closure.closureId);
+91:     for (const owner of owners) replayAssert(canonicalJson(owner.completionIntent!.closure) === canonicalJson(closure), 'attempt-closure-intent');
+92:   }
+93: }
+SOURCE skills/common/plugin-runtime/foundation/observability/attempt-results.ts SHA256 8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c
+1: import fs from "node:fs/promises";
+2: import {
+3:   canonicalJson,
+4:   type ProducerClosureV1,
+5: } from "@kubeclaw/pipeline-observability-contract";
+6: import {
+7:   validatePipelineWorkerCoreContract,
+8:   type WorkerAttemptResultV1,
+9: } from "@kubeclaw/pipeline-worker-core-contract";
+10: import { assertCompletionIntent } from "./attempt-replay.ts";
+11: import {
+12:   requireIdentity,
+13:   digest,
+14:   cleanupUnreferencedBlobs,
+15: } from "./attempt-evidence.ts";
+16: import { storeClosureUnlocked } from "./attempt-completeness.ts";
+17: import type {
+18:   DurableCompletionIntent,
+19:   DurableResultMetadata,
+20:   DurableAttemptStoreSnapshot,
+21:   DurableResultOwner,
+22: } from "./durable-attempts.ts";
+23: import type { AttemptState } from "./attempt-state.ts";
+24: import type { FileObservabilityAdmissionStore } from "./durable-delivery.ts";
+25: export async function storeResult(
+26:   store: AttemptState,
+27:   pipelineRunId: string,
+28:   result: WorkerAttemptResultV1,
+29:   completionIntent: DurableCompletionIntent | null = null,
+30:   owner: DurableResultOwner | null = null,
+31: ): Promise<DurableResultMetadata> {
+32:   requireIdentity(pipelineRunId, "OBSERVABILITY_PIPELINE_RUN_ID_INVALID");
+33:   const snapshot = structuredClone(result);
+34:   const intent = structuredClone(completionIntent);
+35:   const ownerSnapshot = structuredClone(owner);
+36:   if (ownerSnapshot) {
+37:     requireIdentity(ownerSnapshot.planId, "OBSERVABILITY_PLAN_ID_INVALID");
+38:     requireIdentity(ownerSnapshot.nodeId, "OBSERVABILITY_NODE_ID_INVALID");
+39:   }
+40:   validatePipelineWorkerCoreContract("workerAttemptResult", snapshot);
+41:   assertCompletionIntent(pipelineRunId, snapshot, intent);
+42:   return store.serial(async () => {
+43:     const state = await store.readState();
+44:     await store.reclaimExpiredEvidence(state);
+45:     await cleanupUnreferencedBlobs(store.root, state);
+46:     const existing = findResult(state, pipelineRunId, snapshot);
+47:     if (existing)
+48:       return resumeResultCommit(
+49:         store,
+50:         state,
+51:         existing,
+52:         snapshot,
+53:         intent,
+54:         ownerSnapshot,
+55:       );
+56:     requireUnfinalizedAttempt(state, pipelineRunId, snapshot);
+57:     await verifyResultEvidence(state, pipelineRunId, snapshot);
+58:     return commitResult(
+59:       store,
+60:       state,
+61:       pipelineRunId,
+62:       snapshot,
+63:       intent,
+64:       ownerSnapshot,
+65:     );
+66:   });
+67: }
+68: export async function resumeCompletion(
+69:   store: AttemptState,
+70:   pipelineRunId: string,
+71:   attemptId: string,
+72:   claimGeneration: number,
+73:   admission: FileObservabilityAdmissionStore,
+74: ): Promise<ProducerClosureV1> {
+75:   return store.serial(async () => {
+76:     const state = await store.readState();
+77:     await store.reclaimExpiredEvidence(state);
+78:     if (
+79:       state.results.some(
+80:         (item) =>
+81:           item.pipelineRunId === pipelineRunId &&
+82:           item.attemptId === attemptId &&
+83:           item.claimGeneration > claimGeneration,
+84:       )
+85:     )
+86:       throw new Error("OBSERVABILITY_STALE_CLAIM_COMPLETION");
+87:     const stored = state.results.find(
+88:       (item) =>
+89:         item.pipelineRunId === pipelineRunId &&
+90:         item.attemptId === attemptId &&
+91:         item.claimGeneration === claimGeneration,
+92:     );
+93:     if (!stored?.completionIntent)
+94:       throw new Error("OBSERVABILITY_COMPLETION_INTENT_MISSING");
+95:     if (typeof stored.storedAt !== "string")
+96:       throw new Error("OBSERVABILITY_RESULT_COMMIT_PENDING");
+97:     const { records: admitted } = await admission.admitAndRead(
+98:       canonicalJson(stored.completionIntent.record),
+99:     );
+100:     return storeClosureUnlocked(
+101:       store,
+102:       state,
+103:       stored.completionIntent.closure,
+104:       admitted,
+105:     );
+106:   });
+107: }
+108: 
+109: function findResult(
+110:   state: DurableAttemptStoreSnapshot,
+111:   pipelineRunId: string,
+112:   snapshot: WorkerAttemptResultV1,
+113: ): DurableResultMetadata | undefined {
+114:   const generations = state.results
+115:     .filter(
+116:       (item) =>
+117:         item.pipelineRunId === pipelineRunId &&
+118:         item.attemptId === snapshot.attemptId,
+119:     )
+120:     .map((item) => item.claimGeneration);
+121:   const highest = generations.length ? Math.max(...generations) : 0;
+122:   if (snapshot.claimGeneration < highest)
+123:     throw new Error("OBSERVABILITY_STALE_CLAIM_RESULT");
+124:   return state.results.find(
+125:     (item) =>
+126:       item.pipelineRunId === pipelineRunId &&
+127:       item.attemptId === snapshot.attemptId &&
+128:       item.claimGeneration === snapshot.claimGeneration,
+129:   );
+130: }
+131: 
+132: async function resumeResultCommit(
+133:   store: AttemptState,
+134:   state: DurableAttemptStoreSnapshot,
+135:   existing: DurableResultMetadata,
+136:   snapshot: WorkerAttemptResultV1,
+137:   intent: DurableCompletionIntent | null,
+138:   ownerSnapshot: DurableResultOwner | null,
+139: ): Promise<DurableResultMetadata> {
+140:   if (
+141:     existing.result.resultDigest !== snapshot.resultDigest ||
+142:     canonicalJson(existing.completionIntent) !== canonicalJson(intent) ||
+143:     existing.planId !== (ownerSnapshot?.planId ?? null) ||
+144:     existing.nodeId !== (ownerSnapshot?.nodeId ?? null)
+145:   )
+146:     throw new Error("OBSERVABILITY_RESULT_IDENTITY_CONFLICT");
+147:   if (existing.storedAt === null) {
+148:     existing.storedAt = new Date().toISOString();
+149:     store.checkSize(state);
+150:     await store.writeState(state);
+151:   }
+152:   return structuredClone(existing);
+153: }
+154: 
+155: function requireUnfinalizedAttempt(
+156:   state: DurableAttemptStoreSnapshot,
+157:   pipelineRunId: string,
+158:   snapshot: WorkerAttemptResultV1,
+159: ): void {
+160:   const finalizedGeneration = state.results.find(
+161:     (item) =>
+162:       item.pipelineRunId === pipelineRunId &&
+163:       item.attemptId === snapshot.attemptId &&
+164:       item.claimGeneration < snapshot.claimGeneration &&
+165:       item.completionIntent !== null &&
+166:       state.closures.some(
+167:         (closure) =>
+168:           closure.pipelineRunId === pipelineRunId &&
+169:           closure.closureId === item.completionIntent!.closure.closureId,
+170:       ),
+171:   );
+172:   if (finalizedGeneration)
+173:     throw new Error("OBSERVABILITY_ATTEMPT_ALREADY_COMPLETED");
+174: }
+175: 
+176: async function verifyResultEvidence(
+177:   state: DurableAttemptStoreSnapshot,
+178:   pipelineRunId: string,
+179:   snapshot: WorkerAttemptResultV1,
+180: ): Promise<void> {
+181:   for (const evidence of snapshot.evidence) {
+182:     const metadata = state.evidence.find(
+183:       (item) =>
+184:         item.pipelineRunId === pipelineRunId &&
+185:         item.attemptId === snapshot.attemptId &&
+186:         item.claimGeneration === snapshot.claimGeneration &&
+187:         item.evidenceId === evidence.evidenceId,
+188:     );
+189:     if (
+190:       !metadata ||
+191:       canonicalJson(metadata.artifact) !== canonicalJson(evidence.artifact)
+192:     )
+193:       throw new Error(
+194:         `OBSERVABILITY_RESULT_EVIDENCE_MISSING:${evidence.evidenceId}`,
+195:       );
+196:     const file = new URL(metadata.artifact.storageUrl);
+197:     const evidenceBytes = await fs.readFile(file);
+198:     if (
+199:       evidenceBytes.byteLength !== metadata.artifact.sizeBytes ||
+200:       digest(evidenceBytes) !== metadata.artifact.contentDigest
+201:     )
+202:       throw new Error(
+203:         `OBSERVABILITY_RESULT_EVIDENCE_CORRUPT:${evidence.evidenceId}`,
+204:       );
+205:   }
+206: }
+207: 
+208: async function commitResult(
+209:   store: AttemptState,
+210:   state: DurableAttemptStoreSnapshot,
+211:   pipelineRunId: string,
+212:   snapshot: WorkerAttemptResultV1,
+213:   intent: DurableCompletionIntent | null,
+214:   ownerSnapshot: DurableResultOwner | null,
+215: ): Promise<DurableResultMetadata> {
+216:   if (
+217:     state.results.length - store.projections.size >=
+218:     store.limits.maximumResults
+219:   )
+220:     throw new Error("OBSERVABILITY_RESULT_STORE_FULL");
+221:   const metadata: DurableResultMetadata = {
+222:     pipelineRunId,
+223:     planId: ownerSnapshot?.planId ?? null,
+224:     nodeId: ownerSnapshot?.nodeId ?? null,
+225:     attemptId: snapshot.attemptId,
+226:     claimGeneration: snapshot.claimGeneration,
+227:     workerId: snapshot.workerId,
+228:     result: snapshot,
+229:     completionIntent: intent,
+230:     storedAt: null,
+231:   };
+232:   const pending = { ...state, results: [...state.results, metadata] };
+233:   const reservedCommit: DurableResultMetadata = {
+234:     ...metadata,
+235:     storedAt: "9999-12-31T23:59:59.999Z",
+236:   };
+237:   store.checkSize({
+238:     ...state,
+239:     results: [...state.results, reservedCommit],
+240:   });
+241:   await store.writeState(pending);
+242:   const committed: DurableResultMetadata = {
+243:     ...metadata,
+244:     storedAt: new Date().toISOString(),
+245:   };
+246:   const committedState = {
+247:     ...state,
+248:     results: [...state.results, committed],
+249:   };
+250:   store.checkSize(committedState);
+251:   await store.writeState(committedState);
+252:   return structuredClone(committed);
+253: }
+SOURCE skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts SHA256 669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327
+1: import path from "node:path";
+2: import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";
+3: import {
+4:   closureKey,
+5:   closureIntentDigest,
+6:   type ClosureRetirementIntent,
+7:   type ClosureReference,
+8: } from "./closure-projection.ts";
+9: import {
+10:   completionRetirementSource,
+11:   type AdmissionRetiredEntry,
+12: } from "./admission-retirement.ts";
+13: import {
+14:   createAttemptProjection,
+15:   attemptProjectionKey,
+16:   attemptStoreDigest,
+17:   assertAttemptRetirementIntent,
+18:   readAttemptJournalPrefix,
+19:   replaceAttemptProjectionSync,
+20:   encodeAttemptState,
+21:   type AttemptRetirementIntent,
+22: } from "./attempt-projection.ts";
+23: import { assertAttemptReplay } from "./attempt-replay.ts";
+24: import type { ProducerClosureV1 } from "@kubeclaw/pipeline-observability-contract";
+25: import type { DurableAttemptStoreSnapshot } from "./durable-attempts.ts";
+26: import type { ProjectedResultMetadata } from "./attempt-projection.ts";
+27: import type { AttemptState } from "./attempt-state.ts";
+28: import type { FileObservabilityAdmissionStore } from "./durable-delivery.ts";
+29: export async function retireAdmissionCompletion(
+30:   store: AttemptState,
+31:   admission: FileObservabilityAdmissionStore,
+32:   input: {
+33:     pipelineRunId: string;
+34:     attemptId: string;
+35:     claimGeneration: number;
+36:     recordDigest: string;
+37:     operationId: string;
+38:     actor: string;
+39:     authority: AdmissionRetiredEntry["authority"];
+40:   },
+41:   authorize: () => Promise<void>,
+42: ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
+43:   const scope = structuredClone(input);
+44:   if (path.resolve(admission.storageDirectory()) === path.resolve(store.root))
+45:     throw new Error("OBSERVABILITY_RETIREMENT_STORE_OVERLAP");
+46:   return store.serial(async () => {
+47:     const state = await store.readState();
+48:     const source = await completionRetirementSource(
+49:       state,
+50:       scope,
+51:       store.file,
+52:       store.limits.maximumMetadataBytes,
+53:     );
+54:     const issues = await admission.observabilityIssues(scope.pipelineRunId);
+55:     if (issues.missingRanges.length || issues.unresolvedItems.length)
+56:       throw new Error("OBSERVABILITY_RETIREMENT_INCOMPLETE");
+57:     return admission.retireCompletion(
+58:       {
+59:         authority: scope.authority,
+60:         operationId: scope.operationId,
+61:         actor: scope.actor,
+62:         recordDigest: scope.recordDigest,
+63:         source,
+64:       },
+65:       authorize,
+66:     );
+67:   });
+68: }
+69: export async function retireImportedResult(
+70:   store: AttemptState,
+71:   input: AttemptRetirementIntent,
+72:   withCheckpointFence: CheckpointFence,
+73:   authorize: () => void,
+74: ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
+75:   const intent = structuredClone(input);
+76:   assertAttemptRetirementIntent(intent, store.root);
+77:   return store.serial(async () => {
+78:     const state = await store.readState(),
+79:       key = attemptProjectionKey(intent);
+80:     const existing = store.projections.get(key);
+81:     authorize();
+82:     // Async source/evidence checks finish before acquiring the synchronous
+83:     // journal fence. Existing FileJournal appenders must not wait on an await.
+84:     await completionRetirementSource(
+85:       state,
+86:       intent,
+87:       store.file,
+88:       store.limits.maximumMetadataBytes,
+89:     );
+90:     return withCheckpointFence(() =>
+91:       commitImportedResult(store, state, intent, existing, authorize),
+92:     );
+93:   });
+94: }
+95: export async function retireImportedClosure(
+96:   store: AttemptState,
+97:   input: ClosureRetirementIntent,
+98:   withCheckpointFence: CheckpointFence,
+99:   authorize: () => void,
+100: ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
+101:   const intent = structuredClone(input),
+102:     { closureDigest, ...resultIntent } = intent;
+103:   assertAttemptRetirementIntent(resultIntent, store.root);
+104:   if (!/^sha256:[a-f0-9]{64}$/u.test(closureDigest))
+105:     throw new Error("OBSERVABILITY_CLOSURE_RETIREMENT_DIGEST");
+106:   return store.serial(async () => {
+107:     const state = await store.readState(),
+108:       key = attemptProjectionKey(intent),
+109:       result = store.projections.get(key);
+110:     const closure = result?.completionIntent?.closure;
+111:     if (!result || !closure || closure.closureDigest !== closureDigest)
+112:       throw new Error("OBSERVABILITY_CLOSURE_RESULT_PROJECTION_REQUIRED");
+113:     const source = result.resultReference.intent;
+114:     for (const field of [
+115:       "resultDigest",
+116:       "recordDigest",
+117:       "journalSequence",
+118:       "journalHash",
+119:     ] as const) {
+120:       if (source[field] !== intent[field])
+121:         throw new Error("OBSERVABILITY_CLOSURE_RETIREMENT_SOURCE_CHANGED");
+122:     }
+123:     authorize();
+124:     await completionRetirementSource(
+125:       state,
+126:       intent,
+127:       store.file,
+128:       store.limits.maximumMetadataBytes,
+129:     );
+130:     return withCheckpointFence(() =>
+131:       commitImportedClosure(store, state, intent, closure, authorize),
+132:     );
+133:   });
+134: }
+135: 
+136: interface RetirementOutcome {
+137:   newlyRetired: boolean;
+138:   releasedBytes: number;
+139: }
+140: type CheckpointFence = (
+141:   operation: () => RetirementOutcome,
+142: ) => RetirementOutcome;
+143: 
+144: function commitImportedResult(
+145:   store: AttemptState,
+146:   state: DurableAttemptStoreSnapshot,
+147:   intent: AttemptRetirementIntent,
+148:   existing: ProjectedResultMetadata | undefined,
+149:   authorize: () => void,
+150: ): RetirementOutcome {
+151:   const key = attemptProjectionKey(intent);
+152:   authorize();
+153:   if (existing) {
+154:     if (
+155:       canonicalJson(existing.resultReference.intent) !== canonicalJson(intent)
+156:     )
+157:       throw new Error("OBSERVABILITY_RESULT_RETIREMENT_CONFLICT");
+158:     return { newlyRetired: false, releasedBytes: 0 };
+159:   }
+160:   const before = readAttemptJournalPrefix(
+161:     store.file,
+162:     store.limits.maximumMetadataBytes,
+163:   );
+164:   if (attemptStoreDigest(before) !== intent.expectedStoreDigest)
+165:     throw new Error("OBSERVABILITY_RESULT_RETIREMENT_STORE_CHANGED");
+166:   const item = state.results.find(
+167:     (result) => attemptProjectionKey(result) === key,
+168:   );
+169:   if (
+170:     !item ||
+171:     item.result.resultDigest !== intent.resultDigest ||
+172:     !item.storedAt
+173:   )
+174:     throw new Error("OBSERVABILITY_RESULT_RETIREMENT_UNCONFIRMED");
+175:   // Reuse the original full completion/evidence/closure validation. Never fabricate an ACK.
+176:   const projected = createAttemptProjection(
+177:     item,
+178:     intent,
+179:     store.root,
+180:     store.limits.maximumMetadataBytes,
+181:   );
+182:   store.projections.set(key, projected);
+183:   store.checkSize(state);
+184:   const releasedBytes =
+185:     before.length -
+186:     Buffer.byteLength(
+187:       canonicalJson(
+188:         encodeAttemptState(state, store.projections, store.closureProjections),
+189:       ),
+190:     );
+191:   if (releasedBytes <= 0)
+192:     throw new Error("OBSERVABILITY_RESULT_RETIREMENT_NOT_SMALLER");
+193:   authorize();
+194:   replaceAttemptProjectionSync(
+195:     store.file,
+196:     encodeAttemptState(state, store.projections, store.closureProjections),
+197:   );
+198:   return { newlyRetired: true, releasedBytes };
+199: }
+200: 
+201: function commitImportedClosure(
+202:   store: AttemptState,
+203:   state: DurableAttemptStoreSnapshot,
+204:   intent: ClosureRetirementIntent,
+205:   closure: ProducerClosureV1,
+206:   authorize: () => void,
+207: ): RetirementOutcome {
+208:   const key = attemptProjectionKey(intent);
+209:   authorize();
+210:   const existing = store.closureProjections.get(closureKey(closure));
+211:   if (existing) {
+212:     if (existing.intentDigest !== closureIntentDigest(intent))
+213:       throw new Error("OBSERVABILITY_CLOSURE_RETIREMENT_CONFLICT");
+214:     return { newlyRetired: false, releasedBytes: 0 };
+215:   }
+216:   const before = readAttemptJournalPrefix(
+217:     store.file,
+218:     store.limits.maximumMetadataBytes,
+219:   );
+220:   if (attemptStoreDigest(before) !== intent.expectedStoreDigest)
+221:     throw new Error("OBSERVABILITY_CLOSURE_RETIREMENT_STORE_CHANGED");
+222:   const reference: ClosureReference = {
+223:     schemaVersion: "attempt-closure-reference.v1",
+224:     resultKey: key,
+225:     closureDigest: intent.closureDigest,
+226:     operationId: intent.operationId,
+227:     actor: intent.actor,
+228:     intentDigest: closureIntentDigest(intent),
+229:   };
+230:   const references = new Map(store.closureProjections);
+231:   references.set(closureKey(closure), reference);
+232:   const encoded = encodeAttemptState(state, store.projections, references);
+233:   assertAttemptReplay(
+234:     state,
+235:     store.root,
+236:     store.limits,
+237:     store.projections.size,
+238:     references.size,
+239:   );
+240:   const afterBytes = Buffer.byteLength(canonicalJson(encoded)),
+241:     releasedBytes = before.length - afterBytes;
+242:   if (afterBytes > store.limits.maximumMetadataBytes)
+243:     throw new Error("OBSERVABILITY_ATTEMPT_METADATA_FULL");
+244:   if (releasedBytes <= 0)
+245:     throw new Error("OBSERVABILITY_CLOSURE_RETIREMENT_NOT_SMALLER");
+246:   authorize();
+247:   replaceAttemptProjectionSync(store.file, encoded);
+248:   store.closureProjections = references;
+249:   return { newlyRetired: true, releasedBytes };
+250: }
+SOURCE skills/common/plugin-runtime/foundation/observability/attempt-state.ts SHA256 392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca
+1: import path from "node:path";
+2: import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";
+3: import {
+4:   decodeAttemptState,
+5:   encodeAttemptState,
+6:   type AttemptProjections,
+7:   type PersistedAttempt,
+8: } from "./attempt-projection.ts";
+9: import type { ClosureProjections } from "./closure-projection.ts";
+10: import { assertAttemptReplay } from "./attempt-replay.ts";
+11: import {
+12:   cleanupStaging,
+13:   cleanupUnreferencedBlobs,
+14: } from "./attempt-evidence.ts";
+15: import {
+16:   readDurableState,
+17:   writeDurableState,
+18:   withDurableStoreLock,
+19: } from "./durable-delivery.ts";
+20: import type {
+21:   DurableAttemptStoreLimits,
+22:   DurableAttemptStoreSnapshot,
+23: } from "./durable-attempts.ts";
+24: const EMPTY_STATE: DurableAttemptStoreSnapshot = {
+25:   schemaVersion: "durable-attempt-store.v1",
+26:   evidence: [],
+27:   results: [],
+28:   closures: [],
+29: };
+30: 
+31: function validLimit(value: number): boolean {
+32:   return Number.isSafeInteger(value) && value > 0;
+33: }
+34: 
+35: export class AttemptState {
+36:   readonly root: string;
+37:   readonly file: string;
+38:   readonly limits: DurableAttemptStoreLimits;
+39:   #queue: Promise<unknown> = Promise.resolve();
+40:   closureProjections: ClosureProjections = new Map();
+41:   projections: AttemptProjections = new Map();
+42:   constructor(root: string, limits: DurableAttemptStoreLimits) {
+43:     if (!path.isAbsolute(root))
+44:       throw new Error("OBSERVABILITY_ATTEMPT_STORE_ROOT_NOT_ABSOLUTE");
+45:     if (Object.values(limits).some((value) => !validLimit(value)))
+46:       throw new Error("OBSERVABILITY_ATTEMPT_STORE_LIMIT_INVALID");
+47:     this.root = root;
+48:     this.file = path.join(root, "attempt-store.json");
+49:     this.limits = limits;
+50:   }
+51:   serial<T>(operation: () => Promise<T>): Promise<T> {
+52:     const locked = () =>
+53:       withDurableStoreLock(this.file, async () => {
+54:         await cleanupStaging(this.root);
+55:         return operation();
+56:       });
+57:     const result = this.#queue.then(locked, locked);
+58:     this.#queue = result.then(
+59:       () => undefined,
+60:       () => undefined,
+61:     );
+62:     return result;
+63:   }
+64:   async readState(): Promise<DurableAttemptStoreSnapshot> {
+65:     const raw = await readDurableState<PersistedAttempt>(
+66:       this.file,
+67:       EMPTY_STATE,
+68:       this.limits.maximumMetadataBytes,
+69:     );
+70:     const { state, projections, closureProjections } = decodeAttemptState(
+71:       raw,
+72:       this.root,
+73:       this.limits,
+74:     );
+75:     this.projections = projections;
+76:     this.closureProjections = closureProjections;
+77:     return state;
+78:   }
+79:   async writeState(state: DurableAttemptStoreSnapshot): Promise<void> {
+80:     this.checkSize(state);
+81:     await writeDurableState(
+82:       this.file,
+83:       encodeAttemptState(state, this.projections, this.closureProjections),
+84:     );
+85:   }
+86:   checkSize(state: DurableAttemptStoreSnapshot): void {
+87:     const encoded = encodeAttemptState(
+88:       state,
+89:       this.projections,
+90:       this.closureProjections,
+91:     );
+92:     assertAttemptReplay(
+93:       state,
+94:       this.root,
+95:       this.limits,
+96:       this.projections.size,
+97:       this.closureProjections.size,
+98:     );
+99:     if (
+100:       Buffer.byteLength(canonicalJson(encoded)) >
+101:       this.limits.maximumMetadataBytes
+102:     )
+103:       throw new Error("OBSERVABILITY_ATTEMPT_METADATA_FULL");
+104:   }
+105:   async reclaimExpiredEvidence(
+106:     state: DurableAttemptStoreSnapshot,
+107:   ): Promise<void> {
+108:     const referenced = new Set(
+109:       state.results.flatMap((stored) =>
+110:         stored.result.evidence.map(
+111:           (item) =>
+112:             `${stored.pipelineRunId}\0${stored.attemptId}\0${stored.claimGeneration}\0${item.evidenceId}`,
+113:         ),
+114:       ),
+115:     );
+116:     const now = Date.now();
+117:     const retained = state.evidence.filter((item) => {
+118:       const key = `${item.pipelineRunId}\0${item.attemptId}\0${item.claimGeneration}\0${item.evidenceId}`;
+119:       if (referenced.has(key)) return true;
+120:       const stagedAt = Date.parse(item.stagedAt);
+121:       return (
+122:         Number.isFinite(stagedAt) &&
+123:         now - stagedAt < this.limits.maximumPendingEvidenceAgeMs
+124:       );
+125:     });
+126:     if (retained.length === state.evidence.length) return;
+127:     state.evidence = retained;
+128:     this.checkSize(state);
+129:     await this.writeState(state);
+130:     await cleanupUnreferencedBlobs(this.root, state);
+131:   }
+132: }
+SOURCE skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts SHA256 51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41
+1: import type {
+2:   ObservabilityCompletenessV1,
+3:   ProducerGapReportV1,
+4:   ProducerRecordV1,
+5:   UnresolvedObservabilityItemV1,
+6: } from "@kubeclaw/pipeline-observability-contract";
+7: import type { WorkerAttemptResultV1 } from "@kubeclaw/pipeline-worker-core-contract";
+8: import {
+9:   FileDurableAttemptStore,
+10:   type DurableEvidenceMetadata,
+11:   type RequiredProducerClosure,
+12: } from "./durable-attempts.ts";
+13: import { FileObservabilityAdmissionStore } from "./durable-delivery.ts";
+14: 
+15: export interface ClawDeckRawRecord {
+16:   canonicalCursor: number;
+17:   admittedAt: string;
+18:   record: ProducerRecordV1;
+19: }
+20: export interface ClawDeckAttemptView {
+21:   attemptId: string;
+22:   claimGeneration: number;
+23:   workerId: string;
+24:   result: WorkerAttemptResultV1;
+25:   storedAt: string | null;
+26:   evidence: DurableEvidenceMetadata[];
+27: }
+28: export interface ClawDeckObservationView {
+29:   schemaVersion: "clawdeck-observation-view.v1";
+30:   pipelineRunId: string;
+31:   fromCursor: number;
+32:   nextCursor: number;
+33:   rawRecords: ClawDeckRawRecord[];
+34:   attempts: ClawDeckAttemptView[];
+35:   closureIds: string[];
+36:   completeness: ObservabilityCompletenessV1;
+37: }
+38: 
+39: export async function buildClawDeckObservationView(options: {
+40:   pipelineRunId: string;
+41:   fromCursor?: number;
+42:   requiredClosures: ReadonlyArray<RequiredProducerClosure>;
+43:   missingRanges?: ReadonlyArray<ProducerGapReportV1>;
+44:   unresolvedItems?: ReadonlyArray<UnresolvedObservabilityItemV1>;
+45:   admissionStore: FileObservabilityAdmissionStore;
+46:   attemptStore: FileDurableAttemptStore;
+47: }): Promise<ClawDeckObservationView> {
+48:   const fromCursor = options.fromCursor ?? 1;
+49:   if (!Number.isSafeInteger(fromCursor) || fromCursor < 1)
+50:     throw new Error("CLAWDECK_CURSOR_INVALID");
+51:   for (const gap of options.missingRanges ?? [])
+52:     await options.admissionStore.recordGap(gap);
+53:   const [admissionTail, attemptState, completeness] = await Promise.all([
+54:     options.admissionStore.admittedTailSnapshot(
+55:       options.pipelineRunId,
+56:       fromCursor,
+57:     ),
+58:     options.attemptStore.snapshot(),
+59:     options.attemptStore.evaluateCompleteness(
+60:       options.pipelineRunId,
+61:       options.requiredClosures,
+62:       options.admissionStore,
+63:       [],
+64:       options.unresolvedItems,
+65:     ),
+66:   ]);
+67:   const rawRecords = [...admissionTail.records]
+68:     .sort((left, right) => left.canonicalCursor - right.canonicalCursor)
+69:     .map((item) => ({
+70:       canonicalCursor: item.canonicalCursor,
+71:       admittedAt: item.admittedAt,
+72:       record: structuredClone(item.record),
+73:     }));
+74:   const attempts = attemptState.results
+75:     .filter((item) => item.pipelineRunId === options.pipelineRunId)
+76:     .map((item) => ({
+77:       attemptId: item.attemptId,
+78:       claimGeneration: item.claimGeneration,
+79:       workerId: item.workerId,
+80:       result: structuredClone(item.result),
+81:       storedAt: item.storedAt,
+82:       evidence: attemptState.evidence
+83:         .filter(
+84:           (evidence) =>
+85:             evidence.pipelineRunId === item.pipelineRunId &&
+86:             evidence.attemptId === item.attemptId &&
+87:             evidence.claimGeneration === item.claimGeneration,
+88:         )
+89:         .map((evidence) => structuredClone(evidence)),
+90:     }))
+91:     .sort(
+92:       (left, right) =>
+93:         left.attemptId.localeCompare(right.attemptId) ||
+94:         left.claimGeneration - right.claimGeneration,
+95:     );
+96:   const closureIds = attemptState.closures
+97:     .filter((item) => item.pipelineRunId === options.pipelineRunId)
+98:     .map((item) => item.closureId)
+99:     .sort();
+100:   const nextCursor = Math.max(fromCursor, admissionTail.nextCursor);
+101:   return {
+102:     schemaVersion: "clawdeck-observation-view.v1",
+103:     pipelineRunId: options.pipelineRunId,
+104:     fromCursor,
+105:     nextCursor,
+106:     rawRecords,
+107:     attempts,
+108:     closureIds,
+109:     completeness,
+110:   };
+111: }
+SOURCE skills/common/plugin-runtime/foundation/observability/closure-projection.ts SHA256 0c76760e141a63472111d2e930e8215b8336a3a9ed9bac1533dd2cd2c0cae69a
+1: import {canonicalJson, type ProducerClosureV1} from '@kubeclaw/pipeline-observability-contract';
+2: import {createHash} from 'node:crypto';
+3: import type {AttemptRetirementIntent, AttemptProjections} from './attempt-projection.ts';
+4: import {replayAssert, replayIdentity, replayObject} from './replay-validation.ts';
+5: 
+6: export interface ClosureRetirementIntent extends AttemptRetirementIntent {
+7:   closureDigest:string;
+8: }
+9: /** The result's completionIntent remains full; this never points to another closure reference. */
+10: export interface ClosureReference {
+11:   schemaVersion:'attempt-closure-reference.v1';
+12:   resultKey:string;
+13:   closureDigest:string;
+14:   operationId:string;
+15:   actor:string;
+16:   intentDigest:string;
+17: }
+18: export type ClosureProjections=Map<string,ClosureReference>;
+19: export const closureKey=(closure:ProducerClosureV1):string=>canonicalJson([closure.pipelineRunId,closure.closureId]);
+20: export const closureIntentDigest=(intent:ClosureRetirementIntent):string=>`sha256:${createHash('sha256').update(canonicalJson(intent)).digest('hex')}`;
+21: const DIGEST=/^sha256:[a-f0-9]{64}$/u;
+22: 
+23: export function resolveClosureReference(reference:ClosureReference,results:AttemptProjections):ProducerClosureV1 {
+24:   replayObject(reference,['schemaVersion','resultKey','closureDigest','operationId','actor','intentDigest'],'closure-reference');
+25:   replayAssert(reference.schemaVersion==='attempt-closure-reference.v1'&&typeof reference.resultKey==='string'
+26:     &&DIGEST.test(reference.closureDigest)&&DIGEST.test(reference.intentDigest)
+27:     &&replayIdentity(reference.operationId)&&replayIdentity(reference.actor),'closure-reference-identity');
+28:   const result=results.get(reference.resultKey),closure=result?.completionIntent?.closure;
+29:   replayAssert(result&&closure&&result.storedAt!==null&&closure.closureDigest===reference.closureDigest,'closure-reference-source');
+30:   // Imported result decoding validates the full completion and its import. The
+31:   // copied closure is then subject to the original closure/evidence replay rules.
+32:   return structuredClone(closure);
+33: }
+34: 
+35: export function decodeClosures(items:readonly (ProducerClosureV1|ClosureReference)[],results:AttemptProjections):{
+36:   closures:ProducerClosureV1[];closureProjections:ClosureProjections;
+37: } {
+38:   const closureProjections:ClosureProjections=new Map();
+39:   const closures=items.map(item=>{
+40:     if(item.schemaVersion==='producer-closure.v1')return item;
+41:     const reference=item as ClosureReference,closure=resolveClosureReference(reference,results),key=closureKey(closure);
+42:     replayAssert(!closureProjections.has(key),'closure-reference-duplicate');
+43:     closureProjections.set(key,reference);return closure;
+44:   });
+45:   replayAssert(closureProjections.size>0,'closure-projections-empty');
+46:   return {closures,closureProjections};
+47: }
+48: 
+49: export function encodeClosures(closures:readonly ProducerClosureV1[],references:ClosureProjections,results:AttemptProjections):(ProducerClosureV1|ClosureReference)[] {
+50:   let found=0;
+51:   const encoded=closures.map(closure=>{
+52:     const reference=references.get(closureKey(closure));if(!reference)return closure;
+53:     replayAssert(canonicalJson(resolveClosureReference(reference,results))===canonicalJson(closure),'closure-reference-mutated');
+54:     found++;return reference;
+55:   });
+56:   replayAssert(found===references.size,'closure-reference-removed');return encoded;
+57: }
+SOURCE skills/common/plugin-runtime/foundation/observability/durable-attempts.ts SHA256 19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20
+1: import {
+2:   producerClosureDigest,
+3:   type ObservabilityCompletenessV1,
+4:   type ProducerClosureV1,
+5:   type ProducerGapReportV1,
+6:   type ProducerIdentityV1,
+7:   type ProducerRecordV1,
+8:   type UnresolvedObservabilityItemV1,
+9: } from "@kubeclaw/pipeline-observability-contract";
+10: import type {
+11:   WorkerAttemptResultV1,
+12:   WorkerEvidenceRefV1,
+13: } from "@kubeclaw/pipeline-worker-core-contract";
+14: import type { ClosureRetirementIntent } from "./closure-projection.ts";
+15: import type { AttemptRetirementIntent } from "./attempt-projection.ts";
+16: import type { AdmissionRetiredEntry } from "./admission-retirement.ts";
+17: import type { FileObservabilityAdmissionStore } from "./durable-delivery.ts";
+18: import { AttemptState } from "./attempt-state.ts";
+19: import { storeEvidence } from "./attempt-evidence.ts";
+20: import { storeResult, resumeCompletion } from "./attempt-results.ts";
+21: import { storeClosure, evaluateCompleteness } from "./attempt-completeness.ts";
+22: import {
+23:   retireAdmissionCompletion,
+24:   retireImportedResult,
+25:   retireImportedClosure,
+26: } from "./attempt-retirement.ts";
+27: export { scopedEvidenceId } from "./attempt-evidence.ts";
+28: export interface DurableAttemptStoreLimits {
+29:   maximumEvidenceObjects: number;
+30:   maximumEvidenceBytes: number;
+31:   maximumEvidenceObjectBytes: number;
+32:   maximumResults: number;
+33:   maximumClosures: number;
+34:   maximumMetadataBytes: number;
+35:   maximumPendingEvidenceAgeMs: number;
+36: }
+37: export interface DurableEvidenceInput {
+38:   pipelineRunId: string;
+39:   attemptId: string;
+40:   claimGeneration: number;
+41:   producer: ProducerIdentityV1;
+42:   evidenceId: string;
+43:   type: string;
+44:   mediaType: string;
+45: }
+46: export interface DurableEvidenceMetadata extends DurableEvidenceInput {
+47:   artifact: WorkerEvidenceRefV1["artifact"];
+48:   stagedAt: string;
+49: }
+50: export interface DurableCompletionIntent {
+51:   record: ProducerRecordV1;
+52:   closure: ProducerClosureV1;
+53: }
+54: export interface DurableResultMetadata {
+55:   pipelineRunId: string;
+56:   planId: string | null;
+57:   nodeId: string | null;
+58:   attemptId: string;
+59:   claimGeneration: number;
+60:   workerId: string;
+61:   result: WorkerAttemptResultV1;
+62:   completionIntent: DurableCompletionIntent | null;
+63:   storedAt: string | null;
+64: }
+65: export interface DurableAttemptStoreSnapshot {
+66:   schemaVersion: "durable-attempt-store.v1";
+67:   evidence: DurableEvidenceMetadata[];
+68:   results: DurableResultMetadata[];
+69:   closures: ProducerClosureV1[];
+70: }
+71: export interface DurableResultOwner {
+72:   planId: string;
+73:   nodeId: string;
+74: }
+75: export interface RequiredProducerClosure {
+76:   closureId: string;
+77:   producer: ProducerIdentityV1;
+78: }
+79: export class FileDurableAttemptStore {
+80:   readonly #state: AttemptState;
+81:   constructor(root: string, limits: DurableAttemptStoreLimits) {
+82:     this.#state = new AttemptState(root, limits);
+83:   }
+84:   storageDirectory(): string {
+85:     return this.#state.root;
+86:   }
+87:   async storeEvidence(
+88:     input: DurableEvidenceInput,
+89:     bytes: Uint8Array,
+90:   ): Promise<WorkerEvidenceRefV1> {
+91:     return storeEvidence(this.#state, input, bytes);
+92:   }
+93:   async storeResult(
+94:     pipelineRunId: string,
+95:     result: WorkerAttemptResultV1,
+96:     completionIntent: DurableCompletionIntent | null = null,
+97:     owner: DurableResultOwner | null = null,
+98:   ): Promise<DurableResultMetadata> {
+99:     return storeResult(
+100:       this.#state,
+101:       pipelineRunId,
+102:       result,
+103:       completionIntent,
+104:       owner,
+105:     );
+106:   }
+107:   async resumeCompletion(
+108:     pipelineRunId: string,
+109:     attemptId: string,
+110:     claimGeneration: number,
+111:     admission: FileObservabilityAdmissionStore,
+112:   ): Promise<ProducerClosureV1> {
+113:     return resumeCompletion(
+114:       this.#state,
+115:       pipelineRunId,
+116:       attemptId,
+117:       claimGeneration,
+118:       admission,
+119:     );
+120:   }
+121:   async retireAdmissionCompletion(
+122:     admission: FileObservabilityAdmissionStore,
+123:     input: {
+124:       pipelineRunId: string;
+125:       attemptId: string;
+126:       claimGeneration: number;
+127:       recordDigest: string;
+128:       operationId: string;
+129:       actor: string;
+130:       authority: AdmissionRetiredEntry["authority"];
+131:     },
+132:     authorize: () => Promise<void>,
+133:   ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
+134:     return retireAdmissionCompletion(this.#state, admission, input, authorize);
+135:   }
+136:   async retireImportedResult(
+137:     input: AttemptRetirementIntent,
+138:     withCheckpointFence: (
+139:       operation: () => { newlyRetired: boolean; releasedBytes: number },
+140:     ) => { newlyRetired: boolean; releasedBytes: number },
+141:     authorize: () => void,
+142:   ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
+143:     return retireImportedResult(
+144:       this.#state,
+145:       input,
+146:       withCheckpointFence,
+147:       authorize,
+148:     );
+149:   }
+150:   async retireImportedClosure(
+151:     input: ClosureRetirementIntent,
+152:     withCheckpointFence: (
+153:       operation: () => { newlyRetired: boolean; releasedBytes: number },
+154:     ) => { newlyRetired: boolean; releasedBytes: number },
+155:     authorize: () => void,
+156:   ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
+157:     return retireImportedClosure(
+158:       this.#state,
+159:       input,
+160:       withCheckpointFence,
+161:       authorize,
+162:     );
+163:   }
+164:   async storeClosure(
+165:     closure: ProducerClosureV1,
+166:     admission: FileObservabilityAdmissionStore,
+167:   ): Promise<ProducerClosureV1> {
+168:     return storeClosure(this.#state, closure, admission);
+169:   }
+170:   async evaluateCompleteness(
+171:     pipelineRunId: string,
+172:     required: ReadonlyArray<RequiredProducerClosure>,
+173:     admission: FileObservabilityAdmissionStore,
+174:     missingRanges: ReadonlyArray<ProducerGapReportV1> = [],
+175:     unresolvedItems: ReadonlyArray<UnresolvedObservabilityItemV1> = [],
+176:   ): Promise<ObservabilityCompletenessV1> {
+177:     return evaluateCompleteness(
+178:       this.#state,
+179:       pipelineRunId,
+180:       required,
+181:       admission,
+182:       missingRanges,
+183:       unresolvedItems,
+184:     );
+185:   }
+186:   async snapshot(): Promise<Readonly<DurableAttemptStoreSnapshot>> {
+187:     return this.#state.serial(async () => {
+188:       const state = await this.#state.readState();
+189:       await this.#state.reclaimExpiredEvidence(state);
+190:       return state;
+191:     });
+192:   }
+193: }
+194: export function createProducerClosure(
+195:   input: Omit<ProducerClosureV1, "closureDigest">,
+196: ): ProducerClosureV1 {
+197:   return {
+198:     ...structuredClone(input),
+199:     closureDigest: producerClosureDigest(input),
+200:   };
+201: }
+SOURCE skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts SHA256 5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285
+1: import crypto from 'node:crypto';
+2: import fs from 'node:fs/promises';
+3: import { constants, type Stats } from 'node:fs';
+4: import path from 'node:path';
+5: 
+6: const stamp = (value: Stats): string =>
+7:   `${value.dev}:${value.ino}:${value.size}:${value.mtimeMs}:${value.ctimeMs}`;
+8: 
+9: async function statPath(file: string): Promise<Stats> {
+10:   try { return await fs.lstat(file); }
+11:   catch (error) {
+12:     if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new Error('DURABLE_BLOB_NOT_FOUND');
+13:     throw error;
+14:   }
+15: }
+16: async function parentsOf(file: string): Promise<ReadonlyMap<string, string>> {
+17:   const parents = new Map<string, string>();
+18:   let directory = path.parse(file).root;
+19:   for (const segment of path.dirname(file).slice(directory.length).split(path.sep).filter(Boolean)) {
+20:     directory = path.join(directory, segment);
+21:     const parent = await statPath(directory);
+22:     if (!parent.isDirectory() || parent.isSymbolicLink()) throw new Error('DURABLE_BLOB_PATH_INVALID');
+23:     parents.set(directory, `${parent.dev}:${parent.ino}`);
+24:   }
+25:   return parents;
+26: }
+27: async function verifyParents(parents: ReadonlyMap<string, string>): Promise<void> {
+28:   // Observed identities reject changed/symlink parents, not race-proof path
+29:   // confinement against an adversarial host.
+30:   for (const [parentPath, identity] of parents) {
+31:     const parent = await fs.lstat(parentPath);
+32:     if (!parent.isDirectory() || parent.isSymbolicLink() || `${parent.dev}:${parent.ino}` !== identity) {
+33:       throw new Error('DURABLE_BLOB_PATH_CHANGED');
+34:     }
+35:   }
+36: }
+37: async function boundedBytes(handle: Awaited<ReturnType<typeof fs.open>>, opened: Stats, maximum: number): Promise<Buffer> {
+38:   if (!Number.isSafeInteger(opened.size) || opened.size < 0 || opened.size > maximum) {
+39:     throw new Error('DURABLE_BLOB_SIZE_EXCEEDED');
+40:   }
+41:   const bounded = Buffer.alloc(opened.size + 1);
+42:   let total = 0;
+43:   while (total < bounded.byteLength) {
+44:     const read = await handle.read(bounded, total, bounded.byteLength - total, total);
+45:     if (!read.bytesRead) break;
+46:     total += read.bytesRead;
+47:   }
+48:   if (total !== opened.size || stamp(await handle.stat()) !== stamp(opened)) throw new Error('DURABLE_BLOB_PATH_CHANGED');
+49:   return bounded.subarray(0, total);
+50: }
+51: /** The original FileDurableBlobStore.get reader, factored only for readability. */
+52: export async function readDurableBlob(file: string, digest: string, maximum: number): Promise<Buffer> {
+53:   const parents = await parentsOf(file), stat = await statPath(file);
+54:   if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('DURABLE_BLOB_PATH_INVALID');
+55:   const handle = await fs.open(file, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK);
+56:   try {
+57:     const opened = await handle.stat();
+58:     if (!opened.isFile() || stamp(opened) !== stamp(stat)) throw new Error('DURABLE_BLOB_PATH_CHANGED');
+59:     const bytes = await boundedBytes(handle, opened, maximum);
+60:     if (stamp(await fs.lstat(file)) !== stamp(opened)) throw new Error('DURABLE_BLOB_PATH_CHANGED');
+61:     await verifyParents(parents);
+62:     if (`sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}` !== digest) {
+63:       throw new Error('DURABLE_BLOB_INTEGRITY_FAILED');
+64:     }
+65:     return bytes;
+66:   } finally { await handle.close(); }
+67: }
+SOURCE skills/common/plugin-runtime/foundation/observability/durable-blobs.ts SHA256 5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea
+1: import crypto from 'node:crypto';
+2: import fs from 'node:fs/promises';
+3: import path from 'node:path';
+4: import { readDurableBlob } from './durable-blob-read.ts';
+5: import { ensureDirectoryDurable, withDurableStoreLock } from './durable-delivery.ts';
+6: 
+7: export interface DurableBlobStore {
+8:   put(bytes: Uint8Array): Promise<{
+9:     readonly digest: string;
+10:     readonly sizeBytes: number;
+11:   }>;
+12:   get(digest: string): Promise<Buffer>;
+13: }
+14: 
+15: const DIGEST = /^sha256:[a-f0-9]{64}$/;
+16: 
+17: function positiveInteger(value: number, code: string): void {
+18:   if (!Number.isSafeInteger(value) || value < 1) throw new Error(code);
+19: }
+20: 
+21: async function syncDirectory(directory: string): Promise<void> {
+22:   const handle = await fs.open(directory, "r");
+23:   try { await handle.sync(); } finally { await handle.close(); }
+24: }
+25: 
+26: export class FileDurableBlobStore implements DurableBlobStore {
+27:   readonly #root: string;
+28:   readonly #maximumBytes: number;
+29:   readonly #maximumTotalBytes: number | undefined;
+30: 
+31:   constructor(root: string, maximumBytes: number, maximumTotalBytes?: number) {
+32:     positiveInteger(maximumBytes, "DURABLE_BLOB_LIMIT_INVALID");
+33:     if (maximumTotalBytes !== undefined) positiveInteger(maximumTotalBytes, "DURABLE_BLOB_TOTAL_LIMIT_INVALID");
+34:     this.#maximumTotalBytes = maximumTotalBytes;
+35:     this.#root = path.resolve(root);
+36:     this.#maximumBytes = maximumBytes;
+37:   }
+38: 
+39:   #path(digest: string): string {
+40:     if (!DIGEST.test(digest)) throw new Error("DURABLE_BLOB_DIGEST_INVALID");
+41:     const hash = digest.slice("sha256:".length);
+42:     return path.join(this.#root, "blobs", "sha256", hash.slice(0, 2), hash.slice(2));
+43:   }
+44: 
+45:   async put(input: Uint8Array): Promise<{ readonly digest: string; readonly sizeBytes: number }> {
+46:     if (this.#maximumTotalBytes === undefined) return this.#put(input);
+47:     await ensureDirectoryDurable(this.#root);
+48:     return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));
+49:   }
+50: 
+51:   async #usedBytes(directory: string): Promise<number> {
+52:     let entries;
+53:     try { entries = await fs.readdir(directory, { withFileTypes: true }); }
+54:     catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return 0; throw error; }
+55:     let total = 0;
+56:     for (const entry of entries) {
+57:       const file = path.join(directory, entry.name);
+58:       if (entry.isSymbolicLink()) throw new Error('DURABLE_BLOB_PATH_INVALID');
+59:       if (entry.isDirectory()) total += await this.#usedBytes(file);
+60:       else if (entry.isFile()) total += (await fs.lstat(file)).size;
+61:       else throw new Error('DURABLE_BLOB_PATH_INVALID');
+62:       if (!Number.isSafeInteger(total) || total > this.#maximumTotalBytes!) throw new Error('DURABLE_BLOB_STORE_LIMIT_EXCEEDED');
+63:     }
+64:     return total;
+65:   }
+66: 
+67:   async #put(input: Uint8Array): Promise<{ readonly digest: string; readonly sizeBytes: number }> {
+68:     const bytes = Buffer.from(input);
+69:     if (bytes.byteLength > this.#maximumBytes) throw new Error("DURABLE_BLOB_SIZE_EXCEEDED");
+70:     const digest = `sha256:${crypto.createHash("sha256").update(bytes).digest("hex")}`;
+71:     const file = this.#path(digest);
+72:     try {
+73:       const existing = await this.get(digest);
+74:       if (!existing.equals(bytes)) throw new Error('DURABLE_BLOB_DIGEST_COLLISION');
+75:       return { digest, sizeBytes: bytes.byteLength };
+76:     } catch (error) {
+77:       if (!(error instanceof Error) || error.message !== 'DURABLE_BLOB_NOT_FOUND') throw error;
+78:     }
+79:     if (this.#maximumTotalBytes !== undefined
+80:       && await this.#usedBytes(path.join(this.#root, 'blobs')) + bytes.byteLength > this.#maximumTotalBytes) {
+81:       throw new Error('DURABLE_BLOB_STORE_LIMIT_EXCEEDED');
+82:     }
+83:     await ensureDirectoryDurable(path.dirname(file));
+84:     const temporary = `${file}.${process.pid}.${crypto.randomUUID()}.tmp`;
+85:     try {
+86:       const handle = await fs.open(temporary, "wx", 0o600);
+87:       try { await handle.writeFile(bytes); await handle.sync(); } finally { await handle.close(); }
+88:       try { await fs.link(temporary, file); }
+89:       catch (error) {
+90:         if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+91:         const stat = await fs.lstat(file);
+92:         if (!stat.isFile() || stat.isSymbolicLink()) throw new Error("DURABLE_BLOB_PATH_INVALID");
+93:         if (!Buffer.from(await fs.readFile(file)).equals(bytes)) throw new Error("DURABLE_BLOB_DIGEST_COLLISION");
+94:       }
+95:       await syncDirectory(path.dirname(file));
+96:     } finally {
+97:       await fs.unlink(temporary).catch(() => undefined);
+98:     }
+99:     return { digest, sizeBytes: bytes.byteLength };
+100:   }
+101: 
+102:   async get(digest: string): Promise<Buffer> {
+103:     return readDurableBlob(this.#path(digest), digest, this.#maximumBytes);
+104:   }
+105: }
+SOURCE skills/common/plugin-runtime/foundation/observability/durable-delivery.ts SHA256 5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0
+1: import { resolveAdmissionRetiredEntries, resolveAdmissionRetiredEntry, type AdmissionCompletionReference, type AdmissionRetiredEntry } from "./admission-retirement.ts";
+2: import { assertAdmissionReplay, readBoundedSnapshot } from "./replay-validation.ts";
+3: import fs from "node:fs/promises";
+4: import path from "node:path";
+5: import { createHash, randomUUID } from "node:crypto";
+6: import { spawn } from "node:child_process";
+7: import {
+8:   canonicalJson,
+9:   decodePipelineObservabilityContract,
+10:   producerRecordDigest,
+11:   validatePipelineObservabilityContract,
+12:   type AdmissionAcknowledgementV1,
+13:   type ProducerGapReportV1,
+14:   type ProducerRecordV1,
+15:   type UnresolvedObservabilityItemV1,
+16: } from "@kubeclaw/pipeline-observability-contract";
+17: 
+18: interface OutboxEntry {
+19:   record: ProducerRecordV1;
+20:   bytes: string;
+21:   acknowledged: boolean;
+22:   canonicalCursor: number | null;
+23: }
+24: interface OutboxState {
+25:   schemaVersion: "producer-outbox.v1";
+26:   entries: OutboxEntry[];
+27: }
+28: interface AdmissionEntry {
+29:   key: string;
+30:   record: ProducerRecordV1;
+31:   bytes: string;
+32:   canonicalCursor: number;
+33:   admittedAt: string;
+34: }
+35: export interface AdmittedRecordView {
+36:   record: ProducerRecordV1;
+37:   canonicalCursor: number;
+38:   admittedAt: string;
+39: }
+40: interface QuarantineEntry {
+41:   quarantineId: string;
+42:   receivedAt: string;
+43:   reason: string;
+44:   rawBase64: string;
+45: }
+46: interface QuarantineOverflow {
+47:   count: number;
+48:   lastReceivedAt: string;
+49:   lastReason: string;
+50:   lastRawDigest: string;
+51:   lastRawBytes: number;
+52: }
+53: export interface AdmissionState {
+54:   schemaVersion: "observability-admission-store.v1" | "observability-admission-store.v2";
+55:   retiredEntries?: AdmissionRetiredEntry[];
+56:   nextCursor: number;
+57:   entries: AdmissionEntry[];
+58:   quarantine: QuarantineEntry[];
+59:   quarantineOverflow: QuarantineOverflow | null;
+60:   gaps: ProducerGapReportV1[];
+61:   unresolvedItems: Array<
+62:     UnresolvedObservabilityItemV1 & { pipelineRunId: string }
+63:   >;
+64:   overflowUnresolvedItems: Array<
+65:     UnresolvedObservabilityItemV1 & { pipelineRunId: string }
+66:   >;
+67: }
+68: export interface ProducerOutboxLimits {
+69:   maximumRecords: number;
+70:   maximumBytes: number;
+71: }
+72: export interface AdmissionStoreLimits {
+73:   maximumIngressBytes: number;
+74:   maximumRecords: number;
+75:   maximumBytes: number;
+76:   maximumQuarantineRecords: number;
+77:   maximumQuarantineBytes: number;
+78: }
+79: export interface AdmissionResult {
+80:   acknowledgement: AdmissionAcknowledgementV1;
+81: }
+82: export interface AdmissionWithRecordsResult extends AdmissionResult {
+83:   records: ReadonlyArray<AdmittedRecordView>;
+84: }
+85: export interface AdmissionTailSnapshot {
+86:   records: ReadonlyArray<AdmittedRecordView>;
+87:   nextCursor: number;
+88: }
+89: 
+90: const EMPTY_OUTBOX: OutboxState = {
+91:   schemaVersion: "producer-outbox.v1",
+92:   entries: [],
+93: };
+94: const EMPTY_ADMISSION: AdmissionState = {
+95:   schemaVersion: "observability-admission-store.v1",
+96:   nextCursor: 1,
+97:   entries: [],
+98:   quarantine: [],
+99:   quarantineOverflow: null,
+100:   gaps: [],
+101:   unresolvedItems: [],
+102:   overflowUnresolvedItems: [],
+103: };
+104: const ADMISSION_METADATA_RESERVE = 1024;
+105: async function readAdmissionState(file: string, limits: AdmissionStoreLimits): Promise<AdmissionState> {
+106:   const state = await readDurableState(file, EMPTY_ADMISSION, limits.maximumBytes);
+107:   assertAdmissionReplay(state, limits);
+108:   return state;
+109: }
+110: 
+111: export async function readDurableState<T>(
+112:   file: string,
+113:   fallback: T,
+114:   maximumBytes?: number,
+115: ): Promise<T> {
+116:   try {
+117:     if (maximumBytes === undefined) return JSON.parse(await fs.readFile(file, "utf8")) as T;
+118:     return JSON.parse(await readBoundedSnapshot(file, maximumBytes)) as T;
+119:   } catch (error) {
+120:     if ((error as NodeJS.ErrnoException).code === "ENOENT")
+121:       return structuredClone(fallback);
+122:     throw error;
+123:   }
+124: }
+125: async function syncDirectory(directory: string): Promise<void> {
+126:   const handle = await fs.open(directory, "r");
+127:   try {
+128:     await handle.sync();
+129:   } finally {
+130:     await handle.close();
+131:   }
+132: }
+133: export async function ensureDirectoryDurable(directory: string): Promise<void> {
+134:   const resolved = path.resolve(directory);
+135:   const root = path.parse(resolved).root;
+136:   const parts = path.relative(root, resolved).split(path.sep).filter(Boolean);
+137:   let current = root;
+138:   for (const part of parts) {
+139:     current = path.join(current, part);
+140:     try {
+141:       const stat = await fs.lstat(current);
+142:       if (stat.isSymbolicLink())
+143:         throw new Error("OBSERVABILITY_STORE_PATH_SYMLINK");
+144:       if (!stat.isDirectory())
+145:         throw new Error("OBSERVABILITY_STORE_PATH_NOT_DIRECTORY");
+146:     } catch (error) {
+147:       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+148:       try {
+149:         await fs.mkdir(current);
+150:       } catch (mkdirError) {
+151:         if ((mkdirError as NodeJS.ErrnoException).code !== "EEXIST")
+152:           throw mkdirError;
+153:       }
+154:       const created = await fs.lstat(current);
+155:       if (created.isSymbolicLink())
+156:         throw new Error("OBSERVABILITY_STORE_PATH_SYMLINK");
+157:       if (!created.isDirectory())
+158:         throw new Error("OBSERVABILITY_STORE_PATH_NOT_DIRECTORY");
+159:       await syncDirectory(path.dirname(current));
+160:     }
+161:   }
+162: }
+163: export async function writeDurableState(
+164:   file: string,
+165:   value: unknown,
+166: ): Promise<void> {
+167:   await ensureDirectoryDurable(path.dirname(file));
+168:   const temporary = `${file}.${process.pid}.${randomUUID()}.tmp`;
+169:   let renamed = false;
+170:   try {
+171:     const handle = await fs.open(temporary, "wx", 0o600);
+172:     try {
+173:       await handle.writeFile(canonicalJson(value));
+174:       await handle.sync();
+175:     } finally {
+176:       await handle.close();
+177:     }
+178:     await fs.rename(temporary, file);
+179:     renamed = true;
+180:     await syncDirectory(path.dirname(file));
+181:   } finally {
+182:     if (!renamed) await fs.unlink(temporary).catch(() => undefined);
+183:   }
+184: }
+185: async function acquireKernelLock(
+186:   lockFile: string,
+187: ): Promise<() => Promise<void>> {
+188:   const child = spawn(
+189:     "/usr/bin/flock",
+190:     [
+191:       "--exclusive",
+192:       "--timeout",
+193:       "5",
+194:       lockFile,
+195:       "/bin/sh",
+196:       "-c",
+197:       "printf 'locked\\n'; exec /bin/cat >/dev/null",
+198:     ],
+199:     { stdio: ["pipe", "pipe", "pipe"] },
+200:   );
+201:   let error = "";
+202:   child.stderr?.on("data", (chunk: Buffer) => {
+203:     error += chunk.toString("utf8");
+204:   });
+205:   const exited = new Promise<number | null>((resolve, reject) => {
+206:     child.once("error", reject);
+207:     child.once("exit", resolve);
+208:   });
+209:   await new Promise<void>((resolve, reject) => {
+210:     let output = "";
+211:     child.stdout?.on("data", (chunk: Buffer) => {
+212:       output += chunk.toString("utf8");
+213:       if (output.includes("locked\n")) resolve();
+214:     });
+215:     child.once("error", reject);
+216:     child.once("exit", (code) => {
+217:       if (!output.includes("locked\n"))
+218:         reject(new Error(`OBSERVABILITY_STORE_LOCKED:${code}:${error.trim()}`));
+219:     });
+220:   });
+221:   return async () => {
+222:     child.stdin?.end();
+223:     const code = await exited;
+224:     if (code !== 0)
+225:       throw new Error(
+226:         `OBSERVABILITY_STORE_UNLOCK_FAILED:${code}:${error.trim()}`,
+227:       );
+228:   };
+229: }
+230: async function cleanupCrashArtifacts(
+231:   directory: string,
+232:   file: string,
+233: ): Promise<void> {
+234:   const basename = path.basename(file);
+235:   for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
+236:     if (
+237:       entry.isFile() &&
+238:       entry.name.startsWith(`${basename}.`) &&
+239:       entry.name.endsWith(".tmp")
+240:     )
+241:       await fs.unlink(path.join(directory, entry.name)).catch(() => undefined);
+242:   }
+243: }
+244: export async function withDurableStoreLock<T>(
+245:   file: string,
+246:   operation: () => Promise<T>,
+247: ): Promise<T> {
+248:   const directory = path.dirname(file);
+249:   await ensureDirectoryDurable(directory);
+250:   const lockFile = path.join(directory, ".write-lock");
+251:   const handle = await fs.open(lockFile, "a+", 0o600);
+252:   try {
+253:     const stat = await handle.stat();
+254:     if (!stat.isFile() || stat.nlink !== 1)
+255:       throw new Error("OBSERVABILITY_STORE_LOCK_FILE_INVALID");
+256:   } finally {
+257:     await handle.close();
+258:   }
+259:   let release: () => Promise<void>;
+260:   try {
+261:     release = await acquireKernelLock(lockFile);
+262:   } catch (error) {
+263:     throw new Error(
+264:       `OBSERVABILITY_STORE_LOCK_FAILED:${file}:${error instanceof Error ? error.message : String(error)}`,
+265:     );
+266:   }
+267:   try {
+268:     await cleanupCrashArtifacts(directory, file);
+269:     return await operation();
+270:   } finally {
+271:     await release();
+272:   }
+273: }
+274: function keyOf(record: ProducerRecordV1): string {
+275:   return [
+276:     record.producer.producerId,
+277:     record.producer.bootId,
+278:     record.producer.producerType,
+279:     record.correlation.pipelineRunId,
+280:     String(record.sequence),
+281:   ].join("|");
+282: }
+283: function validLimit(value: number): boolean {
+284:   return Number.isSafeInteger(value) && value > 0;
+285: }
+286: function validIdentityPart(value: unknown): value is string {
+287:   return (
+288:     typeof value === "string" &&
+289:     value.length >= 1 &&
+290:     value.length <= 256 &&
+291:     /^[A-Za-z0-9][A-Za-z0-9._:-]*$/.test(value)
+292:   );
+293: }
+294: function quarantineAttribution(
+295:   raw: Uint8Array | string,
+296: ): AdmissionState["unresolvedItems"][number] | null {
+297:   try {
+298:     const bytes = Buffer.from(raw);
+299:     const decoded = JSON.parse(bytes.toString("utf8")) as {
+300:       producer?: Record<string, unknown>;
+301:       correlation?: { pipelineRunId?: string };
+302:       recordId?: string;
+303:     };
+304:     if (
+305:       !decoded.producer ||
+306:       !validIdentityPart(decoded.producer.producerId) ||
+307:       !validIdentityPart(decoded.producer.bootId) ||
+308:       !validIdentityPart(decoded.producer.producerType) ||
+309:       !validIdentityPart(decoded.correlation?.pipelineRunId)
+310:     )
+311:       return null;
+312:     const producer = {
+313:       producerId: decoded.producer.producerId,
+314:       bootId: decoded.producer.bootId,
+315:       producerType: decoded.producer.producerType,
+316:     };
+317:     const rawDigest = createHash("sha256").update(bytes).digest("hex");
+318:     return {
+319:       itemId: `quarantine:${rawDigest}`,
+320:       kind: "quarantined-record",
+321:       producer,
+322:       subjectId: validIdentityPart(decoded.recordId)
+323:         ? decoded.recordId
+324:         : `record:${rawDigest}`,
+325:       reasonCode: "record-quarantined",
+326:       pipelineRunId: decoded.correlation.pipelineRunId,
+327:     };
+328:   } catch {
+329:     return null;
+330:   }
+331: }
+332: 
+333: export class FileProducerOutbox {
+334:   readonly #file: string;
+335:   readonly #limits: ProducerOutboxLimits;
+336:   #queue: Promise<unknown> = Promise.resolve();
+337:   constructor(directory: string, limits: ProducerOutboxLimits) {
+338:     if (!validLimit(limits.maximumRecords) || !validLimit(limits.maximumBytes))
+339:       throw new Error("OBSERVABILITY_OUTBOX_LIMIT_INVALID");
+340:     this.#file = path.join(directory, "outbox.json");
+341:     this.#limits = limits;
+342:   }
+343:   #serial<T>(operation: () => Promise<T>): Promise<T> {
+344:     const locked = () => withDurableStoreLock(this.#file, operation);
+345:     const result = this.#queue.then(locked, locked);
+346:     this.#queue = result.then(
+347:       () => undefined,
+348:       () => undefined,
+349:     );
+350:     return result;
+351:   }
+352:   async append(
+353:     unsigned: Omit<ProducerRecordV1, "recordDigest"> | ProducerRecordV1,
+354:   ): Promise<ProducerRecordV1> {
+355:     const input = structuredClone(unsigned);
+356:     const candidateRecord = {
+357:       ...input,
+358:       recordDigest: producerRecordDigest(input as ProducerRecordV1),
+359:     } as ProducerRecordV1;
+360:     const bytes = canonicalJson(candidateRecord);
+361:     const record = decodePipelineObservabilityContract(
+362:       "producerRecord",
+363:       bytes,
+364:     ) as ProducerRecordV1;
+365:     return this.#serial(async () => {
+366:       const state = await readDurableState(this.#file, EMPTY_OUTBOX);
+367:       const key = keyOf(record);
+368:       const existing = state.entries.find(
+369:         (entry) => keyOf(entry.record) === key,
+370:       );
+371:       if (existing) {
+372:         if (existing.record.recordDigest !== record.recordDigest)
+373:           throw new Error("OBSERVABILITY_OUTBOX_IDENTITY_CONFLICT");
+374:         return structuredClone(existing.record);
+375:       }
+376:       const candidate = {
+377:         ...state,
+378:         entries: [
+379:           ...state.entries,
+380:           { record, bytes, acknowledged: false, canonicalCursor: null },
+381:         ],
+382:       };
+383:       if (
+384:         state.entries.length >= this.#limits.maximumRecords ||
+385:         Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes
+386:       )
+387:         throw new Error("OBSERVABILITY_OUTBOX_FULL");
+388:       await writeDurableState(this.#file, candidate);
+389:       return structuredClone(record);
+390:     });
+391:   }
+392:   async pending(): Promise<ReadonlyArray<OutboxEntry>> {
+393:     return this.#serial(async () => {
+394:       const state = await readDurableState(this.#file, EMPTY_OUTBOX);
+395:       return state.entries
+396:         .filter((entry) => !entry.acknowledged)
+397:         .sort((left, right) => left.record.sequence - right.record.sequence);
+398:     });
+399:   }
+400:   async acknowledge(ack: AdmissionAcknowledgementV1): Promise<void> {
+401:     validatePipelineObservabilityContract("admissionAcknowledgement", ack);
+402:     const snapshot = JSON.parse(
+403:       canonicalJson(ack),
+404:     ) as AdmissionAcknowledgementV1;
+405:     await this.#serial(async () => {
+406:       const state = await readDurableState(this.#file, EMPTY_OUTBOX);
+407:       const entry = state.entries.find(
+408:         (candidate) =>
+409:           candidate.record.recordId === snapshot.recordId &&
+410:           keyOf(candidate.record) ===
+411:             [
+412:               snapshot.producer.producerId,
+413:               snapshot.producer.bootId,
+414:               snapshot.producer.producerType,
+415:               snapshot.pipelineRunId,
+416:               String(snapshot.sequence),
+417:             ].join("|"),
+418:       );
+419:       if (
+420:         !entry ||
+421:         entry.record.recordDigest !== snapshot.recordDigest ||
+422:         entry.record.producer.producerType !== snapshot.producer.producerType
+423:       )
+424:         throw new Error("OBSERVABILITY_ACK_MISMATCH");
+425:       entry.acknowledged = true;
+426:       entry.canonicalCursor = snapshot.canonicalCursor;
+427:       await writeDurableState(this.#file, state);
+428:     });
+429:   }
+430:   async compact(): Promise<number> {
+431:     return this.#serial(async () => {
+432:       const state = await readDurableState(this.#file, EMPTY_OUTBOX);
+433:       const before = state.entries.length;
+434:       state.entries = state.entries.filter((entry) => !entry.acknowledged);
+435:       await writeDurableState(this.#file, state);
+436:       return before - state.entries.length;
+437:     });
+438:   }
+439: }
+440: 
+441: export class FileObservabilityAdmissionStore {
+442:   readonly #file: string;
+443:   readonly #limits: AdmissionStoreLimits;
+444:   #queue: Promise<unknown> = Promise.resolve();
+445:   constructor(directory: string, limits: AdmissionStoreLimits) {
+446:     if (
+447:       Object.values(limits).some((value) => !validLimit(value)) ||
+448:       limits.maximumBytes <= ADMISSION_METADATA_RESERVE
+449:     )
+450:       throw new Error("OBSERVABILITY_ADMISSION_LIMIT_INVALID");
+451:     this.#file = path.join(directory, "admission.json");
+452:     this.#limits = limits;
+453:   }
+454:   storageDirectory(): string {
+455:     return path.dirname(this.#file);
+456:   }
+457:   #serial<T>(operation: () => Promise<T>): Promise<T> {
+458:     const locked = () => withDurableStoreLock(this.#file, operation);
+459:     const result = this.#queue.then(locked, locked);
+460:     this.#queue = result.then(
+461:       () => undefined,
+462:       () => undefined,
+463:     );
+464:     return result;
+465:   }
+466:   #reason(reason: string): string {
+467:     return reason.length <= 256
+468:       ? reason
+469:       : `${reason.slice(0, 180)}:sha256:${createHash("sha256").update(reason).digest("hex")}`;
+470:   }
+471:   async #recordOverflow(
+472:     state: AdmissionState,
+473:     raw: Uint8Array | string,
+474:     reason: string,
+475:     attributeToRun = true,
+476:   ): Promise<void> {
+477:     const attributed = attributeToRun ? quarantineAttribution(raw) : null;
+478:     if (attributed) {
+479:       const overflowItem = {
+480:         ...attributed,
+481:         itemId: `quarantine-overflow:${attributed.pipelineRunId}`,
+482:         subjectId: `quarantine-overflow:${attributed.pipelineRunId}`,
+483:         reasonCode: "quarantine-overflow",
+484:       };
+485:       const alreadyTracked = state.overflowUnresolvedItems.some(
+486:         (item) => item.itemId === overflowItem.itemId,
+487:       );
+488:       if (
+489:         !alreadyTracked &&
+490:         state.overflowUnresolvedItems.length >=
+491:           this.#limits.maximumQuarantineRecords
+492:       )
+493:         throw new Error("OBSERVABILITY_ADMISSION_FULL");
+494:       if (!alreadyTracked) state.overflowUnresolvedItems.push(overflowItem);
+495:     }
+496:     state.quarantineOverflow = {
+497:       count: (state.quarantineOverflow?.count ?? 0) + 1,
+498:       lastReceivedAt: new Date().toISOString(),
+499:       lastReason: this.#reason(reason),
+500:       lastRawDigest: `sha256:${createHash("sha256").update(raw).digest("hex")}`,
+501:       lastRawBytes:
+502:         typeof raw === "string" ? Buffer.byteLength(raw) : raw.byteLength,
+503:     };
+504:     if (Buffer.byteLength(canonicalJson(state)) > this.#limits.maximumBytes)
+505:       throw new Error("OBSERVABILITY_ADMISSION_FULL");
+506:     await writeDurableState(this.#file, state);
+507:   }
+508:   async #quarantine(
+509:     state: AdmissionState,
+510:     raw: Uint8Array,
+511:     reason: string,
+512:   ): Promise<void> {
+513:     const boundedReason = this.#reason(reason);
+514:     if (state.quarantine.length >= this.#limits.maximumQuarantineRecords) {
+515:       await this.#recordOverflow(state, raw, boundedReason);
+516:       return;
+517:     }
+518:     const encoded = Buffer.from(raw).toString("base64");
+519:     const attributed = quarantineAttribution(raw);
+520:     const candidate = {
+521:       ...state,
+522:       quarantine: [
+523:         ...state.quarantine,
+524:         {
+525:           quarantineId: `quarantine:${randomUUID()}`,
+526:           receivedAt: new Date().toISOString(),
+527:           reason: boundedReason,
+528:           rawBase64: encoded,
+529:         },
+530:       ],
+531:       unresolvedItems:
+532:         attributed &&
+533:         !state.unresolvedItems.some((item) => item.itemId === attributed.itemId)
+534:           ? [...state.unresolvedItems, attributed]
+535:           : state.unresolvedItems,
+536:     };
+537:     if (
+538:       Buffer.byteLength(canonicalJson(candidate.quarantine)) >
+539:         this.#limits.maximumQuarantineBytes ||
+540:       Buffer.byteLength(canonicalJson(candidate)) >
+541:         this.#limits.maximumBytes - ADMISSION_METADATA_RESERVE
+542:     ) {
+543:       await this.#recordOverflow(state, raw, boundedReason);
+544:       return;
+545:     }
+546:     await writeDurableState(this.#file, candidate);
+547:   }
+548:   async #rejectOversizedIngress(raw: Uint8Array | string): Promise<void> {
+549:     const inputBytes =
+550:       typeof raw === "string" ? Buffer.byteLength(raw) : raw.byteLength;
+551:     if (inputBytes <= this.#limits.maximumIngressBytes) return;
+552:     await this.#serial(async () => {
+553:       const state = await readAdmissionState(this.#file, this.#limits);
+554:       await this.#recordOverflow(
+555:         state,
+556:         raw,
+557:         "OBSERVABILITY_INGRESS_TOO_LARGE",
+558:         false,
+559:       );
+560:     });
+561:     throw new Error("OBSERVABILITY_INGRESS_TOO_LARGE");
+562:   }
+563:   async #retiredAcknowledgement(state:AdmissionState,key:string,recordDigest:string,bytes:Buffer):Promise<AdmissionAcknowledgementV1|null> {
+564:     const retired=state.retiredEntries?.find(entry=>entry.key===key);
+565:     if(!retired)return null;
+566:     if(retired.acknowledgement.recordDigest!==recordDigest) {
+567:       await this.#quarantine(state,bytes,"OBSERVABILITY_ADMISSION_IDENTITY_CONFLICT");
+568:       throw new Error("OBSERVABILITY_ADMISSION_IDENTITY_CONFLICT");
+569:     }
+570:     await resolveAdmissionRetiredEntry(retired);
+571:     return structuredClone(retired.acknowledgement);
+572:   }
+573:   async #admitUnlocked(
+574:     state: AdmissionState,
+575:     bytes: Buffer,
+576:   ): Promise<{
+577:     acknowledgement: AdmissionAcknowledgementV1;
+578:     state: AdmissionState;
+579:   }> {
+580:     let record: ProducerRecordV1;
+581:     try {
+582:       record = decodePipelineObservabilityContract(
+583:         "producerRecord",
+584:         bytes,
+585:       ) as ProducerRecordV1;
+586:     } catch (error) {
+587:       await this.#quarantine(
+588:         state,
+589:         bytes,
+590:         error instanceof Error ? error.message : "OBSERVABILITY_WIRE_INVALID",
+591:       );
+592:       throw error;
+593:     }
+594:     const key = keyOf(record);
+595:     const retired = await this.#retiredAcknowledgement(state,key,record.recordDigest,bytes);
+596:     if(retired)return {acknowledgement:retired,state};
+597:     const existing = state.entries.find((entry) => entry.key === key);
+598:     if (existing) {
+599:       if (existing.record.recordDigest !== record.recordDigest) {
+600:         await this.#quarantine(
+601:           state,
+602:           bytes,
+603:           "OBSERVABILITY_ADMISSION_IDENTITY_CONFLICT",
+604:         );
+605:         throw new Error("OBSERVABILITY_ADMISSION_IDENTITY_CONFLICT");
+606:       }
+607:       return {
+608:         acknowledgement: this.#ack(existing, "duplicate"),
+609:         state,
+610:       };
+611:     }
+612:     if (state.entries.length >= this.#limits.maximumRecords)
+613:       throw new Error("OBSERVABILITY_ADMISSION_FULL");
+614:     if (!Number.isSafeInteger(state.nextCursor) || state.nextCursor < 1)
+615:       throw new Error("OBSERVABILITY_CURSOR_EXHAUSTED");
+616:     const entry: AdmissionEntry = {
+617:       key,
+618:       record,
+619:       bytes: bytes.toString("utf8"),
+620:       canonicalCursor: state.nextCursor,
+621:       admittedAt: new Date().toISOString(),
+622:     };
+623:     const candidate = {
+624:       ...state,
+625:       nextCursor: state.nextCursor + 1,
+626:       entries: [...state.entries, entry],
+627:     };
+628:     if (
+629:       Buffer.byteLength(canonicalJson(candidate)) >
+630:       this.#limits.maximumBytes - ADMISSION_METADATA_RESERVE
+631:     )
+632:       throw new Error("OBSERVABILITY_ADMISSION_FULL");
+633:     await writeDurableState(this.#file, candidate);
+634:     return {
+635:       acknowledgement: this.#ack(entry, "admitted"),
+636:       state: candidate,
+637:     };
+638:   }
+639:   async #recordViews(state: AdmissionState): Promise<ReadonlyArray<AdmittedRecordView>> {
+640:     const retired = await resolveAdmissionRetiredEntries(state.retiredEntries ?? []);
+641:     return [...state.entries.map((entry) => ({
+642:       record: structuredClone(entry.record), canonicalCursor: entry.canonicalCursor, admittedAt: entry.admittedAt,
+643:     })),...retired].sort((left,right)=>left.canonicalCursor-right.canonicalCursor);
+644:   }
+645:   /** Caller holds the original attempt-store fence before acquiring this fence. */
+646:   async retireCompletion(input: {operationId:string;actor:string;source:AdmissionCompletionReference;recordDigest:string;authority:AdmissionRetiredEntry['authority']}, authorize:()=>Promise<void>): Promise<{newlyRetired:boolean;releasedBytes:number}> {
+647:     const scope=structuredClone(input);
+648:     return this.#serial(async()=>{
+649:       const state=await readAdmissionState(this.#file,this.#limits);
+650:       const prior=state.retiredEntries?.find(item=>item.operationId===scope.operationId);
+651:       if(prior) {
+652:         if(canonicalJson(prior.authority)!==canonicalJson(scope.authority) || prior.actor!==scope.actor || canonicalJson(prior.source)!==canonicalJson(scope.source) || prior.acknowledgement.recordDigest!==scope.recordDigest)throw new Error("OBSERVABILITY_RETIREMENT_OPERATION_CONFLICT");
+653:         await resolveAdmissionRetiredEntry(prior); await authorize();
+654:         return {newlyRetired:false,releasedBytes:0};
+655:       }
+656:       const entry=state.entries.find(item=>item.record.recordDigest===scope.recordDigest && item.record.correlation.pipelineRunId===scope.source.pipelineRunId);
+657:       if(!entry)throw new Error("OBSERVABILITY_RETIREMENT_RECORD_MISSING");
+658:       const retired:AdmissionRetiredEntry={key:entry.key,acknowledgement:this.#ack(entry,"duplicate"),source:scope.source,operationId:scope.operationId,actor:scope.actor,authority:scope.authority};
+659:       const views=await this.#recordViews(state);
+660:       if(views.filter(item=>item.record.correlation.pipelineRunId===scope.source.pipelineRunId && canonicalJson(item.record.producer)===canonicalJson(entry.record.producer)).length!==1)throw new Error("OBSERVABILITY_RETIREMENT_PRODUCER_NOT_CLOSED");
+661:       if([...state.gaps.filter(item=>item.pipelineRunId===scope.source.pipelineRunId && item.state!=="restored"),...state.unresolvedItems.filter(item=>item.pipelineRunId===scope.source.pipelineRunId),...state.overflowUnresolvedItems.filter(item=>item.pipelineRunId===scope.source.pipelineRunId)].length)throw new Error("OBSERVABILITY_RETIREMENT_INCOMPLETE");
+662:       const resolved=await resolveAdmissionRetiredEntry(retired);
+663:       if(canonicalJson(resolved.record)!==canonicalJson(entry.record))throw new Error("OBSERVABILITY_RETIREMENT_RECORD_CHANGED");
+664:       const candidate:AdmissionState={...state,schemaVersion:"observability-admission-store.v2",entries:state.entries.filter(item=>item!==entry),retiredEntries:[...(state.retiredEntries??[]),retired]};
+665:       assertAdmissionReplay(candidate,this.#limits);
+666:       const after=Buffer.byteLength(canonicalJson(candidate)),releasedBytes=Buffer.byteLength(canonicalJson(state))-after;
+667:       if(releasedBytes<=0 || after>this.#limits.maximumBytes)throw new Error("OBSERVABILITY_RETIREMENT_NO_CAPACITY_GAIN");
+668:       await authorize();
+669:       await writeDurableState(this.#file,candidate);
+670:       return {newlyRetired:true,releasedBytes};
+671:     });
+672:   }
+673:   async admit(raw: Uint8Array | string): Promise<AdmissionResult> {
+674:     await this.#rejectOversizedIngress(raw);
+675:     return this.#serial(async () => {
+676:       const bytes = Buffer.from(raw);
+677:       const admitted = await this.#admitUnlocked(
+678:         await readAdmissionState(this.#file, this.#limits),
+679:         bytes,
+680:       );
+681:       return { acknowledgement: admitted.acknowledgement };
+682:     });
+683:   }
+684:   async admitAndRead(
+685:     raw: Uint8Array | string,
+686:   ): Promise<AdmissionWithRecordsResult> {
+687:     await this.#rejectOversizedIngress(raw);
+688:     return this.#serial(async () => {
+689:       const admitted = await this.#admitUnlocked(
+690:         await readAdmissionState(this.#file, this.#limits),
+691:         Buffer.from(raw),
+692:       );
+693:       return {
+694:         acknowledgement: admitted.acknowledgement,
+695:         records: await this.#recordViews(admitted.state),
+696:       };
+697:     });
+698:   }
+699:   #ack(
+700:     entry: AdmissionEntry,
+701:     state: "admitted" | "duplicate",
+702:   ): AdmissionAcknowledgementV1 {
+703:     return {
+704:       schemaVersion: "admission-acknowledgement.v1",
+705:       recordId: entry.record.recordId,
+706:       producer: entry.record.producer,
+707:       pipelineRunId: entry.record.correlation.pipelineRunId,
+708:       sequence: entry.record.sequence,
+709:       state,
+710:       admittedAt: entry.admittedAt,
+711:       canonicalCursor: entry.canonicalCursor,
+712:       recordDigest: entry.record.recordDigest,
+713:     };
+714:   }
+715:   async snapshot(): Promise<Readonly<AdmissionState>> {
+716:     return this.#serial(() => readAdmissionState(this.#file, this.#limits));
+717:   }
+718:   async admittedRecords(): Promise<ReadonlyArray<AdmittedRecordView>> {
+719:     return this.#serial(async () => {
+720:       return this.#recordViews(await readAdmissionState(this.#file, this.#limits));
+721:     });
+722:   }
+723:   async admittedTail(
+724:     pipelineRunId: string,
+725:     fromCursor: number,
+726:   ): Promise<ReadonlyArray<AdmittedRecordView>> {
+727:     return (await this.admittedTailSnapshot(pipelineRunId, fromCursor)).records;
+728:   }
+729:   async admittedTailSnapshot(
+730:     pipelineRunId: string,
+731:     fromCursor: number,
+732:   ): Promise<AdmissionTailSnapshot> {
+733:     if (!Number.isSafeInteger(fromCursor) || fromCursor < 1)
+734:       throw new Error("OBSERVABILITY_CURSOR_INVALID");
+735:     return this.#serial(async () => {
+736:       const state = await readAdmissionState(this.#file, this.#limits);
+737:       const records = (await this.#recordViews(state))
+738:         .filter(
+739:           (entry) =>
+740:             entry.canonicalCursor >= fromCursor &&
+741:             entry.record.correlation.pipelineRunId === pipelineRunId,
+742:         )
+743:         .map((entry) => ({
+744:           record: structuredClone(entry.record),
+745:           canonicalCursor: entry.canonicalCursor,
+746:           admittedAt: entry.admittedAt,
+747:         }));
+748:       return { records, nextCursor: state.nextCursor };
+749:     });
+750:   }
+751:   async recordGap(gap: ProducerGapReportV1): Promise<void> {
+752:     validatePipelineObservabilityContract("gapReport", gap);
+753:     const snapshot = structuredClone(gap);
+754:     await this.#serial(async () => {
+755:       const state = await readAdmissionState(this.#file, this.#limits);
+756:       const existing = state.gaps.find(
+757:         (item) =>
+758:           item.pipelineRunId === snapshot.pipelineRunId &&
+759:           item.producer.producerId === snapshot.producer.producerId &&
+760:           item.producer.bootId === snapshot.producer.bootId &&
+761:           item.producer.producerType === snapshot.producer.producerType &&
+762:           item.fromSequence === snapshot.fromSequence &&
+763:           item.toSequence === snapshot.toSequence,
+764:       );
+765:       if (existing && canonicalJson(existing) === canonicalJson(snapshot))
+766:         return;
+767:       if (snapshot.state === "restored") {
+768:         if (!existing || existing.state === "restored")
+769:           throw new Error("OBSERVABILITY_GAP_RESTORATION_UNDECLARED");
+770:         const expectedCount = snapshot.toSequence - snapshot.fromSequence + 1;
+771:         const admitted = new Set(
+772:           (await this.#recordViews(state))
+773:             .filter(
+774:               (entry) =>
+775:                 entry.record.correlation.pipelineRunId ===
+776:                   snapshot.pipelineRunId &&
+777:                 entry.record.producer.producerId ===
+778:                   snapshot.producer.producerId &&
+779:                 entry.record.producer.bootId === snapshot.producer.bootId &&
+780:                 entry.record.producer.producerType ===
+781:                   snapshot.producer.producerType &&
+782:                 entry.record.sequence >= snapshot.fromSequence &&
+783:                 entry.record.sequence <= snapshot.toSequence,
+784:             )
+785:             .map((entry) => entry.record.sequence),
+786:         );
+787:         if (admitted.size !== expectedCount)
+788:           throw new Error("OBSERVABILITY_GAP_RESTORATION_UNPROVED");
+789:       }
+790:       const gaps = state.gaps.filter((item) => item !== existing);
+791:       const candidate = { ...state, gaps: [...gaps, snapshot] };
+792:       if (
+793:         Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes
+794:       )
+795:         throw new Error("OBSERVABILITY_ADMISSION_FULL");
+796:       await writeDurableState(this.#file, candidate);
+797:     });
+798:   }
+799:   async observabilityIssues(pipelineRunId: string): Promise<{
+800:     missingRanges: ProducerGapReportV1[];
+801:     unresolvedItems: UnresolvedObservabilityItemV1[];
+802:   }> {
+803:     return this.#serial(async () => {
+804:       const state = await readAdmissionState(this.#file, this.#limits);
+805:       return {
+806:         missingRanges: state.gaps
+807:           .filter(
+808:             (item) =>
+809:               item.pipelineRunId === pipelineRunId && item.state !== "restored",
+810:           )
+811:           .map((item) => structuredClone(item)),
+812:         unresolvedItems: [
+813:           ...state.unresolvedItems
+814:             .filter((item) => item.pipelineRunId === pipelineRunId)
+815:             .map(({ pipelineRunId: _pipelineRunId, ...item }) =>
+816:               structuredClone(item),
+817:             ),
+818:           ...state.overflowUnresolvedItems
+819:             .filter((item) => item.pipelineRunId === pipelineRunId)
+820:             .map(({ pipelineRunId: _pipelineRunId, ...item }) =>
+821:               structuredClone(item),
+822:             ),
+823:         ],
+824:       };
+825:     });
+826:   }
+827: }
+828: 
+829: export async function deliverPending(
+830:   outbox: FileProducerOutbox,
+831:   admission: FileObservabilityAdmissionStore,
+832: ): Promise<number> {
+833:   let delivered = 0;
+834:   for (const entry of await outbox.pending()) {
+835:     const { acknowledgement } = await admission.admit(entry.bytes);
+836:     await outbox.acknowledge(acknowledgement);
+837:     delivered += 1;
+838:   }
+839:   return delivered;
+840: }
+SOURCE skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts SHA256 b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a
+1: import fs from 'node:fs/promises';
+2: import { readDurableState } from './durable-delivery.ts';
+3: import { assertDurableRecordReplay, type DurableRecord, type DurableRecordState } from './record-retirement.ts';
+4: 
+5: /** Reject aliased writer namespaces before a caller acquires a second lock. */
+6: export async function assertDistinctStoreFiles(ownerFile: string, dependencyFile: string): Promise<void> {
+7:   if (ownerFile === dependencyFile) throw new Error('DURABLE_RECORD_RETAINED_STORE_ALIAS');
+8:   const [ownerPath, dependencyPath] = await Promise.all([fs.realpath(ownerFile), fs.realpath(dependencyFile)]);
+9:   if (ownerPath !== ownerFile || dependencyPath !== dependencyFile || ownerPath === dependencyPath) {
+10:     throw new Error('DURABLE_RECORD_RETAINED_STORE_ALIAS');
+11:   }
+12:   const [owner, dependency] = await Promise.all([fs.lstat(ownerPath), fs.lstat(dependencyPath)]);
+13:   if (!owner.isFile() || !dependency.isFile() || owner.nlink !== 1 || dependency.nlink !== 1
+14:     || owner.dev === dependency.dev && owner.ino === dependency.ino) {
+15:     throw new Error('DURABLE_RECORD_RETAINED_STORE_ALIAS');
+16:   }
+17: }
+18: 
+19: /** Read-owned clones while the caller holds this store's original writer fence. */
+20: export async function readStoreRecords<T>(file: string, maximumBytes: number, stream: string): Promise<readonly DurableRecord<T>[]> {
+21:   const state = await readDurableState<DurableRecordState>(file, { schemaVersion: 'pipeline-durable-record-store.v1', records: [] }, maximumBytes);
+22:   assertDurableRecordReplay(state);
+23:   return structuredClone(state.records.filter(record => record.stream === stream)) as DurableRecord<T>[];
+24: }
+25: 
+26: interface RetainedStoreFence<R> {
+27:   readonly ownerFile: string;
+28:   readonly retainedFile: string;
+29:   readonly owner: (operation: () => Promise<R>) => Promise<R>;
+30:   readonly retained: (operation: (records: readonly DurableRecord[]) => Promise<R>) => Promise<R>;
+31: }
+32: /** Fixed owner then dependency order; reject aliases before either nested acquisition. */
+33: export async function withRetainedStoreFence<R>(fence: RetainedStoreFence<R>,
+34:   operation: (records: readonly DurableRecord[]) => Promise<R>,
+35: ): Promise<R> {
+36:   await assertDistinctStoreFiles(fence.ownerFile, fence.retainedFile);
+37:   return fence.owner(async () => {
+38:     await assertDistinctStoreFiles(fence.ownerFile, fence.retainedFile);
+39:     return fence.retained(async records => {
+40:       await assertDistinctStoreFiles(fence.ownerFile, fence.retainedFile);
+41:       return operation(records);
+42:     });
+43:   });
+44: }
+SOURCE skills/common/plugin-runtime/foundation/observability/durable-records.ts SHA256 ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553
+1: export { FileDurableBlobStore, type DurableBlobStore } from './durable-blobs.ts';
+2: import { readStoreRecords, withRetainedStoreFence } from './durable-record-dependency.ts';
+3: import {assertDurableRecordReplay, assertRetirementIntent, payloadDigest, ownerValid, existingRecord,
+4:   type DurableRecord, type DurableRecordState, type RecordRetirementIntent, type RecordRetirement} from './record-retirement.ts';
+5: export {assertDurableRecordReplay} from './record-retirement.ts';
+6: export type {DurableRecord, DurableRecordState, RecordRetirementIntent, RecordRetirement, RecordTombstone} from './record-retirement.ts';
+7: import path from "node:path";
+8: import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";
+9: import {
+10:   readDurableState,
+11:   withDurableStoreLock,
+12:   writeDurableState,
+13: } from "./durable-delivery.ts";
+14: 
+15: export interface DurableRecordLimits {
+16:   readonly maximumRecords: number;
+17:   readonly maximumBytes: number;
+18:   readonly maximumRecordBytes: number;
+19: }
+20: 
+21: export interface DurableRecordStore {
+22:   append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{
+23:     readonly appended: boolean;
+24:     readonly record: DurableRecord<T>;
+25:   }>;
+26:   transition<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string, payload: T): Promise<DurableRecord<T>>;
+27:   read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>>;
+28: }
+29: 
+30: const EMPTY_STATE: DurableRecordState = {
+31:   schemaVersion: "pipeline-durable-record-store.v1",
+32:   records: [],
+33: };
+34: const IDENTITY = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/;
+35: const DIGEST = /^sha256:[a-f0-9]{64}$/;
+36: 
+37: function positiveInteger(value: number, code: string): void {
+38:   if (!Number.isSafeInteger(value) || value < 1) throw new Error(code);
+39: }
+40: 
+41: function identity(value: string, code: string): void {
+42:   if (!IDENTITY.test(value)) throw new Error(code);
+43: }
+44: 
+45: 
+46: export class FileDurableRecordStore implements DurableRecordStore {
+47:   readonly #file: string;
+48:   readonly #limits: DurableRecordLimits;
+49:   #queue: Promise<unknown> = Promise.resolve();
+50: 
+51:   constructor(root: string, limits: DurableRecordLimits) {
+52:     positiveInteger(limits.maximumRecords, "DURABLE_RECORD_LIMIT_INVALID");
+53:     positiveInteger(limits.maximumBytes, "DURABLE_RECORD_LIMIT_INVALID");
+54:     positiveInteger(limits.maximumRecordBytes, "DURABLE_RECORD_LIMIT_INVALID");
+55:     this.#file = path.join(path.resolve(root), "records", "store.json");
+56:     this.#limits = limits;
+57:   }
+58: 
+59:   #serial<T>(operation: () => Promise<T>): Promise<T> {
+60:     const locked = () => withDurableStoreLock(this.#file, operation);
+61:     const result = this.#queue.then(locked, locked);
+62:     this.#queue = result.then(() => undefined, () => undefined);
+63:     return result;
+64:   }
+65: 
+66:   async append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{
+67:     readonly appended: boolean;
+68:     readonly record: DurableRecord<T>;
+69:   }> {
+70:     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
+71:     identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");
+72:     if (owner !== undefined && !ownerValid(owner)) throw new Error("DURABLE_RECORD_OWNER_INVALID");
+73:     const snapshot = JSON.parse(canonicalJson(payload)) as T;
+74:     const digest = payloadDigest(snapshot);
+75:     if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)
+76:       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
+77:     return this.#serial(async () => {
+78:       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
+79:       assertDurableRecordReplay(state);
+80:       const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);
+81:       if (duplicate) return { appended: false, record: duplicate };
+82:       if (state.records.length >= this.#limits.maximumRecords)
+83:         throw new Error("DURABLE_RECORD_STORE_FULL");
+84:       const record: DurableRecord<T> = {
+85:         schemaVersion: owner === undefined ? "pipeline-durable-record.v1" : "pipeline-durable-record.v2",
+86:         ...(owner === undefined ? {} : { owner }),
+87:         stream,
+88:         sequence: state.records.filter((entry) => entry.stream === stream).length + (state.tombstones?.filter(entry => entry.stream === stream).length ?? 0) + 1,
+89:         idempotencyKey,
+90:         committedAt: new Date().toISOString(),
+91:         payloadDigest: digest,
+92:         payload: snapshot,
+93:       };
+94:       const candidate: DurableRecordState = owner === undefined ? { ...state, records: [...state.records, record] }
+95:         : { ...state, schemaVersion: 'pipeline-durable-record-store.v2', records: [...state.records, record], tombstones: state.tombstones ?? [], retirements: state.retirements ?? [] };
+96:       if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)
+97:         throw new Error("DURABLE_RECORD_STORE_FULL");
+98:       await writeDurableState(this.#file, candidate);
+99:       return { appended: true, record: structuredClone(record) };
+100:     });
+101:   }
+102: 
+103:   async read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>> {
+104:     return this.withRecords<T, ReadonlyArray<DurableRecord<T>>>(stream, async records => records);
+105:   }
+106: 
+107:   /** Domain owners may inspect records while holding this store's writer fence.
+108:    * Never reenter this store from operation; acquire other stores in a fixed order. */
+109:   async withRecords<T, R>(stream: string, operation: (records: ReadonlyArray<DurableRecord<T>>) => Promise<R>): Promise<R> {
+110:     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
+111:     return this.#serial(async () => operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream)));
+112:   }
+113: 
+114:   async retirements(stream: string): Promise<readonly RecordRetirement[]> {
+115:     identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+116:     return this.#serial(async () => {
+117:       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);
+118:       return structuredClone((state.retirements ?? []).filter(entry => entry.intent.stream === stream));
+119:     });
+120:   }
+121: 
+122:   /** Caller holds its domain fence; authorize runs again inside the real store writer fence. */
+123:   async retire(intentInput: RecordRetirementIntent, authorize: (records: readonly DurableRecord[]) => Promise<void>): Promise<RecordRetirement & { readonly newlyRetired: boolean; readonly releasedBytes: number }> {
+124:     const intent = JSON.parse(canonicalJson(intentInput)) as RecordRetirementIntent; assertRetirementIntent(intent);
+125:     const intentDigest = payloadDigest(intent);
+126:     return this.#serial(async () => {
+127:       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);
+128:       const previous = state.retirements?.find(item => item.intent.operationId === intent.operationId);
+129:       if (previous) {
+130:         if (previous.intentDigest !== intentDigest) throw new Error('DURABLE_RETIREMENT_CONFLICT');
+131:         await authorize([]);
+132:         return { ...structuredClone(previous), newlyRetired: false, releasedBytes: Number.parseInt(previous.releasedBytesHex,16) };
+133:       }
+134:       const selected = intent.records.map(item => {
+135:         const record = state.records.find(entry => entry.stream === intent.stream && entry.idempotencyKey === item.idempotencyKey);
+136:         if (!record || record.schemaVersion !== 'pipeline-durable-record.v2' || record.owner !== intent.owner
+137:           || record.payloadDigest !== item.payloadDigest) throw new Error('DURABLE_RETIREMENT_RECORD_CHANGED');
+138:         return record;
+139:       });
+140:       await authorize(structuredClone(selected));
+141:       const selectedIds = new Set(selected.map(record => record.idempotencyKey));
+142:       const retirement = { intent, intentDigest, releasedBytesHex: '0000000000000000' };
+143:       const candidate: DurableRecordState = {
+144:         schemaVersion: 'pipeline-durable-record-store.v2',
+145:         records: state.records.filter(record => record.stream !== intent.stream || !selectedIds.has(record.idempotencyKey)),
+146:         tombstones: [...state.tombstones ?? [], ...selected.map(record => {
+147:           const { payload: _payload, ...header } = record; return { ...header, retirementId: intent.operationId };
+148:         })], retirements: [...state.retirements ?? [], retirement],
+149:       };
+150:       const before = Buffer.byteLength(canonicalJson(state));
+151:       // Fixed-width hex avoids a self-referential decimal digit-count equation.
+152:       const releasedBytes = before - Buffer.byteLength(canonicalJson(candidate));
+153:       if (releasedBytes < 1) throw new Error('DURABLE_RETIREMENT_NO_SAVING');
+154:       retirement.releasedBytesHex = releasedBytes.toString(16).padStart(16,'0');
+155:       assertDurableRecordReplay(candidate);
+156:       if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes) throw new Error('DURABLE_RECORD_STORE_FULL');
+157:       await writeDurableState(this.#file, candidate);
+158:       return { ...structuredClone(retirement), newlyRetired: true, releasedBytes };
+159:     });
+160:   }
+161: 
+162:   async transition<T>(
+163:     stream: string,
+164:     idempotencyKey: string,
+165:     expectedPayloadDigest: string,
+166:     payload: T,
+167:     authorize?: (records: ReadonlyArray<DurableRecord>) => void,
+168:   ): Promise<DurableRecord<T>> {
+169:     const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);
+170:     return this.#serial(() => this.#transitionLocked(stream, idempotencyKey, expectedPayloadDigest, snapshot, digest, authorize));
+171:   }
+172: 
+173:   /** Hold the owner writer before its retained dependency writer through the
+174:    * original durable transition. Domain callers must use one fixed store order. */
+175:   async transitionWithRetainedStore<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string,
+176:     payload: T, retained: FileDurableRecordStore, retainedStream: string,
+177:     authorize: (records: ReadonlyArray<DurableRecord>, retainedRecords: ReadonlyArray<DurableRecord>) => void,
+178:   ): Promise<DurableRecord<T>> {
+179:     const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);
+180:     return this.#withRetainedStore(retained, retainedStream, retainedRecords =>
+181:       this.#transitionLocked(stream, idempotencyKey, expectedPayloadDigest, snapshot, digest,
+182:         records => authorize(records, retainedRecords)));
+183:   }
+184: 
+185:   /** Read-owned snapshots with the same fixed two-store fence as a retained transition. */
+186:   async withRetainedRecords<T, R>(stream: string, retained: FileDurableRecordStore, retainedStream: string,
+187:     operation: (records: readonly DurableRecord<T>[], retainedRecords: readonly DurableRecord[]) => Promise<R>,
+188:   ): Promise<R> {
+189:     identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+190:     return this.#withRetainedStore(retained, retainedStream, async records =>
+191:       operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream), records));
+192:   }
+193: 
+194:   #withRetainedStore<R>(retained: FileDurableRecordStore, stream: string, operation: (records: readonly DurableRecord[]) => Promise<R>): Promise<R> {
+195:     identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+196:     return withRetainedStoreFence({ ownerFile: this.#file, retainedFile: retained.#file,
+197:       owner: callback => this.#serial(callback), retained: callback => retained.withRecords(stream, callback) }, operation);
+198:   }
+199: 
+200:   #transitionCandidate<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string, payload: T): { snapshot: T; digest: string } {
+201:     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
+202:     identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");
+203:     if (!DIGEST.test(expectedPayloadDigest)) throw new Error("DURABLE_RECORD_DIGEST_INVALID");
+204:     const snapshot = JSON.parse(canonicalJson(payload)) as T;
+205:     const digest = payloadDigest(snapshot);
+206:     if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)
+207:       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
+208:     return { snapshot, digest };
+209:   }
+210: 
+211:   async #transitionLocked<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string,
+212:     snapshot: T, digest: string, authorize?: (records: ReadonlyArray<DurableRecord>) => void,
+213:   ): Promise<DurableRecord<T>> {
+214:       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
+215:       assertDurableRecordReplay(state);
+216:       const index = state.records.findIndex(
+217:         (record) => record.stream === stream && record.idempotencyKey === idempotencyKey,
+218:       );
+219:       if (index < 0) {
+220:         if (state.tombstones?.some(record => record.stream === stream && record.idempotencyKey === idempotencyKey)) throw new Error('DURABLE_RECORD_RETIRED');
+221:         throw new Error("DURABLE_RECORD_NOT_FOUND");
+222:       }
+223:       const existing = state.records[index];
+224:       if (!existing) throw new Error("DURABLE_RECORD_NOT_FOUND");
+225:       if (existing.payloadDigest !== expectedPayloadDigest)
+226:         throw new Error("DURABLE_RECORD_TRANSITION_CONFLICT");
+227:       const record: DurableRecord<T> = {
+228:         ...existing,
+229:         committedAt: new Date().toISOString(),
+230:         payloadDigest: digest,
+231:         payload: snapshot,
+232:       };
+233:       const next = [...state.records];
+234:       next[index] = record;
+235:       const candidate: DurableRecordState = { ...state, records: next };
+236:       if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)
+237:         throw new Error("DURABLE_RECORD_STORE_FULL");
+238:       // The domain fence is already held; the final check must not yield or
+239:       // reenter this store between its CAS comparison and durable write.
+240:       if (authorize?.(structuredClone(state.records)) !== undefined) throw new Error('DURABLE_RECORD_AUTHORIZATION_NOT_SYNCHRONOUS');
+241:       await writeDurableState(this.#file, candidate);
+242:       return structuredClone(record);
+243: 
+244:   }
+245: }
+246: 
+SOURCE skills/common/plugin-runtime/foundation/observability/hash-journal.ts SHA256 b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a
+1: import {createHash} from 'node:crypto';
+2: 
+3: export interface HashJournalRecord<T> {
+4:   readonly sequence: number;
+5:   readonly previousHash: string | null;
+6:   readonly hash: string;
+7:   readonly entry: T;
+8: }
+9: 
+10: /** The original append-journal wire hash. Parsing does not repair or write. */
+11: export function hashJournalRecord(sequence:number, previousHash:string|null, entry:unknown):string {
+12:   return `sha256:${createHash('sha256').update(JSON.stringify({sequence,previousHash,entry})).digest('hex')}`;
+13: }
+14: 
+15: export function parseHashJournal<T>(buffer:Buffer, file:string, precedingSequence=0, precedingHash:string|null=null):HashJournalRecord<T>[] {
+16:   if (!buffer.length) return [];
+17:   const text=buffer.toString('utf8');
+18:   if(!text.endsWith('\n'))throw new Error(`JOURNAL_RECORD_INCOMPLETE:${file}`);
+19:   const records:HashJournalRecord<T>[]=[];
+20:   for(const line of text.slice(0,-1).split('\n')) {
+21:     const sequence=precedingSequence+records.length+1;
+22:     if(!line.length)throw new Error(`JOURNAL_RECORD_EMPTY:${file}:${sequence}`);
+23:     const record=JSON.parse(line) as HashJournalRecord<T>;
+24:     const previousHash=records.at(-1)?.hash??precedingHash;
+25:     if(record.sequence!==sequence || record.previousHash!==previousHash)throw new Error(`JOURNAL_CHAIN_INVALID:${file}:${sequence}`);
+26:     if(record.hash!==hashJournalRecord(sequence,previousHash,record.entry))throw new Error(`JOURNAL_HASH_INVALID:${file}:${sequence}`);
+27:     records.push(record);
+28:   }
+29:   return records;
+30: }
+SOURCE skills/common/plugin-runtime/foundation/observability/record-retirement.ts SHA256 00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681
+1: import crypto from 'node:crypto';
+2: import {canonicalJson} from '@kubeclaw/pipeline-observability-contract';
+3: const IDENTITY = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/;
+4: const DIGEST = /^sha256:[a-f0-9]{64}$/;
+5: export interface DurableRecord<T = unknown> {
+6:   readonly schemaVersion: "pipeline-durable-record.v1" | "pipeline-durable-record.v2";
+7:   readonly owner?: string;
+8:   readonly stream: string;
+9:   readonly sequence: number;
+10:   readonly idempotencyKey: string;
+11:   readonly committedAt: string;
+12:   readonly payloadDigest: string;
+13:   readonly payload: T;
+14: }
+15: 
+16: export interface DurableRecordState {
+17:   readonly schemaVersion: "pipeline-durable-record-store.v1" | "pipeline-durable-record-store.v2";
+18:   readonly records: DurableRecord[];
+19:   readonly tombstones?: RecordTombstone[];
+20:   readonly retirements?: RecordRetirement[];
+21: }
+22: export interface RecordRetirementIntent {
+23:   readonly operationId: string;
+24:   readonly actor: string;
+25:   readonly owner: string;
+26:   readonly stream: string;
+27:   readonly records: readonly { readonly idempotencyKey: string; readonly payloadDigest: string }[];
+28:   readonly evidence: Readonly<Record<string, unknown>>;
+29: }
+30: export interface RecordRetirement {
+31:   readonly intent: RecordRetirementIntent;
+32:   readonly intentDigest: string;
+33:   readonly releasedBytesHex: string;
+34: }
+35: export interface RecordTombstone extends Omit<DurableRecord, 'payload'> {
+36:   readonly retirementId: string;
+37: }
+38: 
+39: export function payloadDigest(payload: unknown): string {
+40:   return `sha256:${crypto.createHash("sha256").update(canonicalJson(payload)).digest("hex")}`;
+41: }
+42: 
+43: export function ownerValid(owner: unknown): owner is string {
+44:   return typeof owner === 'string' && owner.length > 0 && owner.length <= 512 && !/[\u0000-\u001f\u007f]/u.test(owner);
+45: }
+46: function recordHeaderValid(record: Omit<DurableRecord, 'payload'>): boolean {
+47:   return (record.schemaVersion === 'pipeline-durable-record.v1' && record.owner === undefined
+48:     || record.schemaVersion === 'pipeline-durable-record.v2' && ownerValid(record.owner))
+49:     && IDENTITY.test(record.stream) && IDENTITY.test(record.idempotencyKey)
+50:     && Number.isSafeInteger(record.sequence) && record.sequence > 0
+51:     && typeof record.committedAt === 'string' && DIGEST.test(record.payloadDigest);
+52: }
+53: export function assertRetirementIntent(intent: RecordRetirementIntent): void {
+54:   if (!intent || Object.keys(intent).sort().join(',') !== 'actor,evidence,operationId,owner,records,stream'
+55:     || !IDENTITY.test(intent.operationId) || !ownerValid(intent.actor) || !ownerValid(intent.owner)
+56:     || !IDENTITY.test(intent.stream) || !Array.isArray(intent.records) || !intent.records.length
+57:     || !intent.evidence || typeof intent.evidence !== 'object' || Array.isArray(intent.evidence)) throw new Error('DURABLE_RETIREMENT_INTENT_INVALID');
+58:   assertRetirementSelection(intent.records);
+59: }
+60: function assertRetirementSelection(records: RecordRetirementIntent['records']): void {
+61:   const ids = new Set<string>();
+62:   for (const item of records) {
+63:     if (!item || Object.keys(item).sort().join(',') !== 'idempotencyKey,payloadDigest'
+64:       || !IDENTITY.test(item.idempotencyKey) || !DIGEST.test(item.payloadDigest) || ids.has(item.idempotencyKey)) throw new Error('DURABLE_RETIREMENT_INTENT_INVALID');
+65:     ids.add(item.idempotencyKey);
+66:   }
+67: }
+68: function assertStoreFormat(state: DurableRecordState): void {
+69:   if (!state || !Array.isArray(state.records)) throw new Error('DURABLE_RECORD_STORE_INVALID');
+70:   const v2 = state.schemaVersion === 'pipeline-durable-record-store.v2';
+71:   if (v2 ? !Array.isArray(state.tombstones) || !Array.isArray(state.retirements)
+72:     : state.schemaVersion !== 'pipeline-durable-record-store.v1' || state.tombstones !== undefined || state.retirements !== undefined) throw new Error('DURABLE_RECORD_STORE_INVALID');
+73:  }
+74: export function assertDurableRecordReplay(state: DurableRecordState): void {
+75:   assertStoreFormat(state);
+76:   for (const record of state.records) {
+77:     if (!recordHeaderValid(record) || !Object.hasOwn(record, 'payload') || payloadDigest(record.payload) !== record.payloadDigest) throw new Error('DURABLE_RECORD_STORE_INVALID');
+78:   }
+79:   assertRetiredRecords(state);
+80:   assertRecordSequences(state);
+81: }
+82: function assertRetiredRecords(state: DurableRecordState): void {
+83:   const retirements = new Map<string, RecordRetirement>();
+84:   for (const entry of state.retirements ?? []) {
+85:     assertRetirementIntent(entry.intent);
+86:     if (entry.intentDigest !== payloadDigest(entry.intent) || retirements.has(entry.intent.operationId)
+87:       || !/^[a-f0-9]{16}$/u.test(entry.releasedBytesHex) || !Number.isSafeInteger(Number.parseInt(entry.releasedBytesHex,16)) || Number.parseInt(entry.releasedBytesHex,16) < 1) throw new Error('DURABLE_RETIREMENT_INVALID');
+88:     retirements.set(entry.intent.operationId, entry);
+89:   }
+90:   for (const record of state.tombstones ?? []) assertTombstone(record, retirements);
+91:   for (const retirement of retirements.values()) {
+92:     if (state.tombstones!.filter(record => record.retirementId === retirement.intent.operationId).length !== retirement.intent.records.length) throw new Error('DURABLE_TOMBSTONE_INCOMPLETE');
+93:   }
+94: }
+95: function assertTombstone(record: RecordTombstone, retirements: Map<string, RecordRetirement>): void {
+96: 
+97:     const retirement = retirements.get(record.retirementId);
+98:     if (!recordHeaderValid(record) || record.schemaVersion !== 'pipeline-durable-record.v2' || Object.hasOwn(record, 'payload')
+99:       || !retirement || record.stream !== retirement.intent.stream || record.owner !== retirement.intent.owner
+100:       || !retirement.intent.records.some(item => item.idempotencyKey === record.idempotencyKey && item.payloadDigest === record.payloadDigest)) throw new Error('DURABLE_TOMBSTONE_INVALID');
+101:  }
+102: function assertRecordSequences(state: DurableRecordState): void {
+103:   const sequences = new Map<string, number>(); const identities = new Set<string>();
+104:   const v2 = state.schemaVersion === 'pipeline-durable-record-store.v2';
+105:   const activeSequences = new Map<string, number>();
+106:   for (const record of state.records) {
+107:     if (record.sequence <= (activeSequences.get(record.stream) ?? 0)) throw new Error('DURABLE_RECORD_SEQUENCE_INVALID');
+108:     activeSequences.set(record.stream, record.sequence);
+109:   }
+110:   const all = v2 ? [...state.records, ...state.tombstones!].sort((a,b) => a.sequence - b.sequence) : state.records;
+111:   for (const record of all) {
+112:     const expected = (sequences.get(record.stream) ?? 0) + 1;
+113:     if (record.sequence !== expected) throw new Error('DURABLE_RECORD_SEQUENCE_INVALID');
+114:     sequences.set(record.stream, record.sequence);
+115:     const key = `${record.stream}|${record.idempotencyKey}`;
+116:     if (identities.has(key)) throw new Error('DURABLE_RECORD_IDENTITY_DUPLICATE');
+117:     identities.add(key);
+118:   }
+119: }
+120: 
+121: export function existingRecord<T>(state: DurableRecordState, stream: string, idempotencyKey: string, digest: string, snapshot: T, owner?: string): DurableRecord<T> | undefined {
+122:       const existing = state.records.find(
+123:         (record) => record.stream === stream && record.idempotencyKey === idempotencyKey,
+124:       );
+125:       if (existing) {
+126:         if (existing.payloadDigest !== digest || (existing.schemaVersion === "pipeline-durable-record.v2" && existing.owner !== owner)) throw new Error("DURABLE_RECORD_IDEMPOTENCY_CONFLICT");
+127:         return structuredClone(existing) as DurableRecord<T>;
+128:       }
+129:       const retired = state.tombstones?.find(record => record.stream === stream && record.idempotencyKey === idempotencyKey);
+130:       if (retired) {
+131:         if (retired.payloadDigest !== digest || retired.owner !== owner) throw new Error('DURABLE_RECORD_IDEMPOTENCY_CONFLICT');
+132:         const { retirementId: _retirementId, ...header } = retired;
+133:         return { ...header, payload: snapshot } as DurableRecord<T>;
+134:       }
+135:       return undefined;
+136: }
+SOURCE skills/common/plugin-runtime/foundation/observability/replay-validation.ts SHA256 8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc
+1: import { assertAdmissionRetiredEntry } from './admission-retirement.ts';
+2: import fs from 'node:fs/promises';
+3: import {
+4:   canonicalJson,
+5:   decodePipelineObservabilityContract,
+6:   validatePipelineObservabilityContract,
+7: } from '@kubeclaw/pipeline-observability-contract';
+8: import type { AdmissionState, AdmissionStoreLimits } from './durable-delivery.ts';
+9: 
+10: export function replayAssert(condition: unknown, reason: string): asserts condition {
+11:   if (!condition) throw new Error(`OBSERVABILITY_REPLAY_INVALID:${reason}`);
+12: }
+13: export function replayObject(value: unknown, keys: readonly string[], reason: string): asserts value is Record<string, unknown> {
+14:   replayAssert(value !== null && typeof value === 'object' && !Array.isArray(value), reason);
+15:   replayAssert(Object.keys(value).length === keys.length && keys.every((key) => Object.hasOwn(value, key)), reason);
+16: }
+17: export function replayTimestamp(value: unknown): boolean {
+18:   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) && Number.isFinite(Date.parse(value));
+19: }
+20: export function replayIdentity(value: unknown): boolean {
+21:   return typeof value === 'string' && value.length > 0 && value.length <= 512;
+22: }
+23: export function replayUnique(keys: Set<string>, key: string, reason: string): void {
+24:   replayAssert(!keys.has(key), reason); keys.add(key);
+25: }
+26: export async function readBoundedSnapshot(file: string, maximumBytes: number): Promise<string> {
+27:   const handle = await fs.open(file, 'r');
+28:   try {
+29:     const stat = await handle.stat();
+30:     replayAssert(stat.isFile() && stat.size <= maximumBytes, 'snapshot-size');
+31:     const bytes = Buffer.alloc(stat.size);
+32:     let offset = 0;
+33:     while (offset < bytes.length) {
+34:       const read = await handle.read(bytes, offset, bytes.length - offset, offset);
+35:       replayAssert(read.bytesRead > 0, 'snapshot-truncated'); offset += read.bytesRead;
+36:     }
+37:     const extra = await handle.read(Buffer.alloc(1), 0, 1, offset);
+38:     replayAssert(extra.bytesRead === 0, 'snapshot-grew');
+39:     return bytes.toString('utf8');
+40:   } finally { await handle.close(); }
+41: }
+42: 
+43: function admissionEntry(entry: AdmissionState['entries'][number], cursor: number, keys: Set<string>, maximumIngressBytes: number): void {
+44:   replayObject(entry, ['key', 'record', 'bytes', 'canonicalCursor', 'admittedAt'], 'admission-entry');
+45:   validatePipelineObservabilityContract('producerRecord', entry.record);
+46:   replayAssert(typeof entry.bytes === 'string' && Buffer.byteLength(entry.bytes) <= maximumIngressBytes, 'admission-bytes');
+47:   const decoded = decodePipelineObservabilityContract('producerRecord', entry.bytes);
+48:   replayAssert(canonicalJson(decoded) === canonicalJson(entry.record), 'admission-wire-record-mismatch');
+49:   const { producer, correlation, sequence } = entry.record;
+50:   const key = [producer.producerId, producer.bootId, producer.producerType, correlation.pipelineRunId, String(sequence)].join('|');
+51:   replayAssert(entry.key === key && entry.canonicalCursor === cursor && replayTimestamp(entry.admittedAt), 'admission-identity-cursor');
+52:   replayUnique(keys, key, 'admission-duplicate-identity');
+53: }
+54: function admissionGaps(state: AdmissionState): void {
+55:   const keys = new Set<string>();
+56:   for (const gap of state.gaps) {
+57:     validatePipelineObservabilityContract('gapReport', gap);
+58:     replayUnique(keys, canonicalJson([gap.producer, gap.pipelineRunId, gap.fromSequence, gap.toSequence]), 'admission-gap-duplicate');
+59:     if (gap.state !== 'restored') continue;
+60:     const headers = [...state.entries.map(({record})=>record),...(state.retiredEntries??[]).map(({acknowledgement:a})=>({producer:a.producer,sequence:a.sequence,correlation:{pipelineRunId:a.pipelineRunId}}))];
+61:     const sequences = new Set(headers.filter(record => record.correlation.pipelineRunId === gap.pipelineRunId
+62:       && canonicalJson(record.producer) === canonicalJson(gap.producer)
+63:       && record.sequence >= gap.fromSequence && record.sequence <= gap.toSequence).map(record => record.sequence));
+64:     replayAssert(sequences.size === gap.toSequence - gap.fromSequence + 1, 'admission-gap-restoration');
+65:   }
+66: }
+67: function admissionIssues(state: AdmissionState): void {
+68:   admissionGaps(state);
+69:   for (const item of [...state.unresolvedItems, ...state.overflowUnresolvedItems]) {
+70:     replayObject(item, ['itemId', 'kind', 'producer', 'subjectId', 'reasonCode', 'pipelineRunId'], 'admission-unresolved-item');
+71:     replayAssert(replayIdentity(item.pipelineRunId), 'admission-unresolved-run');
+72:     const { pipelineRunId, ...unresolved } = item;
+73:     validatePipelineObservabilityContract('observabilityCompleteness', {
+74:       schemaVersion: 'observability-completeness.v1', pipelineRunId, state: 'partial', requiredClosureIds: [], admittedClosureIds: [],
+75:       missingClosureIds: [], missingRanges: [], unresolvedItems: [unresolved], evaluatedAt: '2026-01-01T00:00:00Z',
+76:     });
+77:   }
+78: }
+79: function admissionQuarantine(state: AdmissionState, limits: AdmissionStoreLimits): void {
+80:   replayAssert(state.quarantine.length <= limits.maximumQuarantineRecords && Buffer.byteLength(canonicalJson(state.quarantine)) <= limits.maximumQuarantineBytes, 'admission-quarantine-size');
+81:   for (const entry of state.quarantine) {
+82:     replayObject(entry, ['quarantineId', 'receivedAt', 'reason', 'rawBase64'], 'admission-quarantine');
+83:     replayAssert(replayIdentity(entry.quarantineId) && replayTimestamp(entry.receivedAt) && typeof entry.reason === 'string', 'admission-quarantine-metadata');
+84:     replayAssert(typeof entry.rawBase64 === 'string' && Buffer.from(entry.rawBase64, 'base64').toString('base64') === entry.rawBase64, 'admission-quarantine-bytes');
+85:   }
+86:   const overflow = state.quarantineOverflow;
+87:   if (overflow === null) return;
+88:   replayObject(overflow, ['count', 'lastReceivedAt', 'lastReason', 'lastRawDigest', 'lastRawBytes'], 'admission-overflow');
+89:   replayAssert(Number.isSafeInteger(overflow.count) && overflow.count > 0 && replayTimestamp(overflow.lastReceivedAt), 'admission-overflow-metadata');
+90:   replayAssert(typeof overflow.lastReason === 'string' && /^sha256:[a-f0-9]{64}$/.test(overflow.lastRawDigest) && Number.isSafeInteger(overflow.lastRawBytes) && overflow.lastRawBytes >= 0, 'admission-overflow-digest');
+91: }
+92: export function assertAdmissionReplay(state: AdmissionState, limits: AdmissionStoreLimits): void {
+93:   replayObject(state, ['schemaVersion', 'nextCursor', 'entries', 'quarantine', 'quarantineOverflow', 'gaps', 'unresolvedItems', 'overflowUnresolvedItems',...(state.schemaVersion === 'observability-admission-store.v2'?['retiredEntries']:[])], 'admission-envelope');
+94:   replayAssert(state.schemaVersion === 'observability-admission-store.v1' || state.schemaVersion === 'observability-admission-store.v2', 'admission-version');
+95:   for (const field of ['entries', 'quarantine', 'gaps', 'unresolvedItems', 'overflowUnresolvedItems'] as const) replayAssert(Array.isArray(state[field]), `admission-${field}`);
+96:   replayAssert(state.schemaVersion !== 'observability-admission-store.v2' || Array.isArray(state.retiredEntries),'admission-retired-entries');
+97:   const retired=state.retiredEntries??[];
+98:   replayAssert(state.entries.length <= limits.maximumRecords && state.nextCursor === state.entries.length + retired.length + 1, 'admission-next-cursor');
+99:   const keys = new Set<string>();
+100:   state.entries.forEach((entry, index) => {
+101:     admissionEntry(entry, state.schemaVersion==='observability-admission-store.v1'?index+1:entry.canonicalCursor, keys, limits.maximumIngressBytes);
+102:     replayAssert(index===0 || entry.canonicalCursor>state.entries[index-1]!.canonicalCursor,'admission-active-order');
+103:   });
+104:   const operations=new Set<string>();
+105:   for(const entry of retired){assertAdmissionRetiredEntry(entry);replayUnique(keys,entry.key,'admission-duplicate-identity');replayUnique(operations,entry.operationId,'admission-retirement-operation');}
+106:   const cursors=[...state.entries.map(entry=>entry.canonicalCursor),...retired.map(entry=>entry.acknowledgement.canonicalCursor)].sort((a,b)=>a-b);
+107:   replayAssert(cursors.every((cursor,index)=>cursor===index+1),'admission-cursor-coverage');
+108:   admissionQuarantine(state, limits); admissionIssues(state);
+109: }
+SOURCE skills/common/plugin-runtime/foundation/observability/wait-projection.ts SHA256 f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656
+1: import crypto from 'node:crypto';
+2: import path from 'node:path';
+3: import type { RetainedWaitResolver, RetainedWaitSource, WaitRequest } from '@kubeclaw/plugin-sdk';
+4: import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
+5: import { payloadDigest, type DurableRecord } from './record-retirement.ts';
+6: import type { FileDurableRecordStore } from './durable-records.ts';
+7: 
+8: type Payload = Readonly<Record<string, unknown>>;
+9: export interface WaitProjectionIntent {
+10:   readonly operationId: string;
+11:   readonly actor: string;
+12:   readonly waitRoot: string;
+13:   readonly deliveryRoot: string;
+14:   readonly operatorEffectKey: string;
+15:   readonly terminalPayloadDigest: string;
+16:   readonly source: RetainedWaitSource;
+17: }
+18: export interface WaitValueProjection {
+19:   readonly schemaVersion: 'wait-value-projected.v1';
+20:   readonly originalDigest: string;
+21:   readonly source: RetainedWaitSource;
+22:   readonly projection: {
+23:     readonly schemaVersion: 'wait-value-projection-receipt.v1';
+24:     readonly intent: WaitProjectionIntent;
+25:     readonly intentDigest: string;
+26:     readonly authorityDigest: string;
+27:     readonly releasedBytesHex: string;
+28:   };
+29: }
+30: const digest = (value: unknown): value is string => typeof value === 'string' && /^sha256:[a-f0-9]{64}$/u.test(value);
+31: const id = (value: unknown): value is string => typeof value === 'string' && value.length > 0 && value.length <= 256
+32:   && !/[\u0000-\u001f\u007f]/u.test(value);
+33: const shape = (value: unknown, keys: string): boolean => value !== null && typeof value === 'object'
+34:   && !Array.isArray(value) && Object.keys(value).sort().join(',') === keys;
+35: function fail(): never { throw new Error('WAIT_PROJECTION_AUTHORITY_REQUIRED'); }
+36: 
+37: export function assertRetainedWaitSource(source: RetainedWaitSource): void {
+38:   if (!shape(source, 'effectKey,effectsDigest,effectsPrefixBytes,eventsDigest,eventsPrefixBytes,inventoryLimits,originalPayloadDigest,rootIdentityDigest,runId,runJournalHead,schemaVersion,signalsDigest,signalsPrefixBytes,snapshotDigest,waitId')
+39:     || source.schemaVersion !== 'retained-core-wait-source.v1'
+40:     || ![source.runId, source.effectKey, source.waitId].every(id)
+41:     || ![source.eventsDigest, source.effectsDigest, source.originalPayloadDigest, source.rootIdentityDigest, source.runJournalHead,
+42:       source.signalsDigest, source.snapshotDigest].every(digest)
+43:     || ![source.eventsPrefixBytes, source.effectsPrefixBytes, source.signalsPrefixBytes].every(value => Number.isSafeInteger(value) && value > 0)
+44:     || !shape(source.inventoryLimits, 'maximumFiles,maximumSnapshotBytes,maximumTotalBytes')
+45:     || !Object.values(source.inventoryLimits).every(value => Number.isSafeInteger(value) && value > 0)
+46:     || source.waitId !== `wait:${crypto.createHash('sha256').update(source.effectKey).digest('hex')}`) fail();
+47: }
+48: export function assertWaitProjectionIntent(intent: WaitProjectionIntent): void {
+49:   if (!shape(intent, 'actor,deliveryRoot,operationId,operatorEffectKey,source,terminalPayloadDigest,waitRoot')
+50:     || ![intent.actor, intent.operationId, intent.operatorEffectKey].every(id)
+51:     || !digest(intent.terminalPayloadDigest)
+52:     || ![intent.waitRoot, intent.deliveryRoot].every(value => typeof value === 'string'
+53:       && path.isAbsolute(value) && path.resolve(value) === value)
+54:     || intent.waitRoot === intent.deliveryRoot) fail();
+55:   assertRetainedWaitSource(intent.source);
+56: }
+57: export function assertWaitProjection(value: WaitValueProjection, key: string): void {
+58:   if (!shape(value, 'originalDigest,projection,schemaVersion,source') || value.schemaVersion !== 'wait-value-projected.v1'
+59:     || !shape(value.projection, 'authorityDigest,intent,intentDigest,releasedBytesHex,schemaVersion')) fail();
+60:   assertRetainedWaitSource(value.source);
+61:   const receipt = value.projection;
+62:   assertWaitProjectionIntent(receipt.intent);
+63:   if (receipt.schemaVersion !== 'wait-value-projection-receipt.v1' || !digest(receipt.authorityDigest)
+64:     || receipt.intentDigest !== payloadDigest(receipt.intent) || payloadDigest(value.source) !== payloadDigest(receipt.intent.source)
+65:     || value.originalDigest !== value.source.originalPayloadDigest || key !== value.source.effectKey
+66:     || typeof receipt.releasedBytesHex !== 'string' || !/^[a-f0-9]{16}$/u.test(receipt.releasedBytesHex)
+67:     || !Number.isSafeInteger(Number.parseInt(receipt.releasedBytesHex, 16))
+68:     || Number.parseInt(receipt.releasedBytesHex, 16) < 1) fail();
+69: }
+70: /** Shared by the actual adapter and the operator authority reader. */
+71: export function resolveWaitValue(record: DurableRecord<Payload>, resolve?: RetainedWaitResolver): { schemaVersion: 'wait-value.v1'; wait: WaitRequest } {
+72:   if (record.payload.schemaVersion === 'wait-value.v1') return record.payload as { schemaVersion: 'wait-value.v1'; wait: WaitRequest };
+73:   const value = record.payload as unknown as WaitValueProjection;
+74:   assertWaitProjection(value, record.idempotencyKey);
+75:   if (!resolve) fail();
+76:   const wait = resolve(structuredClone(value.source));
+77:   const original = { schemaVersion: 'wait-value.v1' as const, wait };
+78:   if (wait.waitId !== value.source.waitId || payloadDigest(original) !== value.originalDigest) fail();
+79:   return original;
+80: }
+81: 
+82: /** Owner holds Run mutation ownership. This operation then holds Wait → Delivery. */
+83: export async function projectWaitValue(store: FileDurableRecordStore, deliveries: FileDurableRecordStore,
+84:   deliveryStream: string, intentInput: WaitProjectionIntent, authorityDigest: string, resolve: RetainedWaitResolver,
+85:   authorize: (waits: readonly DurableRecord[], receipts: readonly DurableRecord[]) => void,
+86: ): Promise<{ newlyProjected: boolean; releasedBytes: number }> {
+87:   const intent = structuredClone(intentInput);
+88:   assertWaitProjectionIntent(intent);
+89:   if (!digest(authorityDigest) || !deliveryStream.startsWith('notifications/')) fail();
+90:   const original = (await store.read<Payload>('waits/all')).find(record => record.idempotencyKey === intent.source.effectKey);
+91:   if (!original) fail();
+92:   const resolved = resolveWaitValue(original, resolve);
+93:   if (payloadDigest(resolved) !== intent.source.originalPayloadDigest) fail();
+94:   if (original.payload.schemaVersion === 'wait-value-projected.v1') {
+95:     return store.withRetainedRecords<Payload, { newlyProjected: boolean; releasedBytes: number }>('waits/all',
+96:       deliveries, deliveryStream, async (waits, receipts) => {
+97:         const current = waits.find(record => record.idempotencyKey === intent.source.effectKey);
+98:         if (!current || current.payload.schemaVersion !== 'wait-value-projected.v1') fail();
+99:         resolveWaitValue(current, resolve);
+100:         const value = current.payload as unknown as WaitValueProjection;
+101:         if (payloadDigest(value.projection.intent) !== payloadDigest(intent) || value.projection.authorityDigest !== authorityDigest) fail();
+102:         if (authorize(waits, receipts) !== undefined) fail();
+103:         return { newlyProjected: false, releasedBytes: 0 };
+104:       });
+105:   }
+106:   if (original.payloadDigest !== intent.source.originalPayloadDigest) fail();
+107:   const value: WaitValueProjection = { schemaVersion: 'wait-value-projected.v1', originalDigest: original.payloadDigest,
+108:     source: intent.source, projection: { schemaVersion: 'wait-value-projection-receipt.v1', intent,
+109:       intentDigest: payloadDigest(intent), authorityDigest, releasedBytesHex: '0000000000000000' } };
+110:   const replacement = { ...original, committedAt: '2000-01-01T00:00:00.000Z', payloadDigest: payloadDigest(value), payload: value };
+111:   const releasedBytes = Buffer.byteLength(canonicalJson(original)) - Buffer.byteLength(canonicalJson(replacement));
+112:   if (releasedBytes < 1) throw new Error('WAIT_PROJECTION_NO_NET_SAVINGS');
+113:   const retained = { ...value, projection: { ...value.projection, releasedBytesHex: releasedBytes.toString(16).padStart(16, '0') } };
+114:   await store.transitionWithRetainedStore('waits/all', intent.source.effectKey, original.payloadDigest, retained,
+115:     deliveries, deliveryStream, (waits, receipts) => {
+116:       if (payloadDigest(resolve(intent.source)) !== payloadDigest(resolved.wait)) fail();
+117:       if (authorize(waits, receipts) !== undefined) fail();
+118:     });
+119:   return { newlyProjected: true, releasedBytes };
+120: }

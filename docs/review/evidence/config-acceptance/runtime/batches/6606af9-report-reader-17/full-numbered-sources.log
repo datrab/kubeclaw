@@ -1,0 +1,930 @@
+SOURCE skills/nova/plugins/pipeline-review/src/evidence-adapter.ts SHA256 477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c
+1: import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
+2: import { readRunEvidence } from '@kubeclaw/nova-core';
+3: import { canonicalJson, sha256Text, type AdapterActivationContext, type AdapterInstance, type AdapterInvocation, type ArtifactRef } from '@kubeclaw/plugin-sdk';
+4: import { assertEvidenceSelection, verifySelectedArtifacts, sourceFact, buildEvidenceBundle, type EvidenceSelection } from './evidence-bundle.ts';
+5: 
+6: async function readArtifact(context: AdapterActivationContext, invocation: AdapterInvocation, ref: ArtifactRef) {
+7:   const response = await context.invoke('artifacts.read', { operation: 'get_json_bytes', resource: { type: 'artifact.object', canonicalId: ref.artifactId }, payload: { namespace: ref.namespace, digest: ref.digest, reference: ref } }, { signal: invocation.signal });
+8:   const bytes = verifiedArtifactJsonText(response, ref);
+9:   if (canonicalJson(response.artifact) !== canonicalJson(ref) || response.digest !== ref.digest || sha256Text(bytes) !== ref.digest
+10:     || response.sizeBytes !== ref.sizeBytes || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('REPORT_ARTIFACT_INTEGRITY_INVALID');
+11:   return response.value;
+12: }
+13: function artifactBudget(ref: ArtifactRef, total: number, maximum: number): void {
+14:   if (ref.mediaType !== 'application/json' || !Number.isSafeInteger(total) || total > maximum) throw new Error('REPORT_ARTIFACT_BUDGET_EXCEEDED');
+15: }
+16: export function activate(context: AdapterActivationContext): AdapterInstance {
+17:   const storageRoot = context.config.storageRoot;
+18:   const orchestratorIssuerId = context.config.orchestratorIssuerId;
+19:   const maximumJournalBytes = context.config.maximumJournalBytes;
+20:   const maximumArtifactBytes = context.config.maximumArtifactBytes;
+21:   const maximumBundleBytes = context.config.maximumBundleBytes;
+22:   if (typeof storageRoot !== 'string' || typeof orchestratorIssuerId !== 'string' || !orchestratorIssuerId
+23:     || [maximumJournalBytes, maximumArtifactBytes, maximumBundleBytes].some(value => !Number.isSafeInteger(value) || Number(value) < 1)) throw new Error('REPORT_READER_CONFIG_INVALID');
+24:   let stopped = false;
+25:   async function invoke(invocation: AdapterInvocation) {
+26:     if (!invocation.confidential) invocation.fence.assertCurrent();
+27:     if (stopped || invocation.signal.aborted) throw new Error('REPORT_READER_CANCELLED');
+28:     const request = invocation.request;
+29:     if (request.capability !== 'report.evidence.read' || request.operation !== 'snapshot' || request.resource.type !== 'pipeline.run') throw new Error('REPORT_READER_OPERATION_INVALID');
+30:     const selection = structuredClone(request.payload) as unknown as EvidenceSelection;
+31:     assertEvidenceSelection(selection);
+32:     if (request.resource.canonicalId !== selection.runId) throw new Error('REPORT_READER_RUN_MISMATCH');
+33:     const options = { storageRoot: storageRoot as string, orchestratorIssuerId: orchestratorIssuerId as string, maximumBytes: Number(maximumJournalBytes) };
+34:     const projection = readRunEvidence(selection, options);
+35:     verifySelectedArtifacts(projection, selection);
+36:     let total = 0; const facts = [];
+37:     for (const ref of selection.artifacts) {
+38:       total += ref.sizeBytes;
+39:       artifactBudget(ref,total,Number(maximumArtifactBytes));
+40:       facts.push(sourceFact(ref, await readArtifact(context,invocation,ref), selection, projection));
+41:     }
+42:     if(canonicalJson(readRunEvidence(selection, options))!==canonicalJson(projection))throw new Error('REPORT_SOURCE_CHANGED');
+43:     if (invocation.signal.aborted || stopped) throw new Error('REPORT_READER_CANCELLED');
+44:     const bundle = buildEvidenceBundle(projection, selection, facts);
+45:     if (Buffer.byteLength(canonicalJson(bundle)) > Number(maximumBundleBytes)) throw new Error('REPORT_BUNDLE_BUDGET_EXCEEDED');
+46:     return { bundle };
+47:   }
+48:   return { async ready() {}, invoke, async shutdown() { stopped = true; } };
+49: }
+SOURCE skills/nova/plugins/pipeline-review/src/evidence-bundle.ts SHA256 ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd
+1: import { canonicalJson, sha256Text, type ArtifactRef } from '@kubeclaw/plugin-sdk';
+2: import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract';
+3: import type { RunEvidenceProjection, RunEvidenceSelection } from '@kubeclaw/nova-core';
+4: 
+5: export interface EvidenceSelection extends RunEvidenceSelection {
+6:   readonly sourceStageId: string;
+7:   readonly sourceRevision: string;
+8:   readonly artifacts: readonly ArtifactRef[];
+9: }
+10: export function assertEvidenceSelection(value: EvidenceSelection): void {
+11:   if (!value || Object.keys(value).sort().join(',') !== 'artifacts,journalHead,runId,snapshotDigest,sourceRevision,sourceStageId'
+12:     || typeof value.runId !== 'string' || !value.runId || typeof value.sourceStageId !== 'string' || !value.sourceStageId
+13:     || !/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/u.test(value.sourceRevision)
+14:     || !Array.isArray(value.artifacts) || !value.artifacts.length || value.artifacts.length > 128
+15:     || new Set(value.artifacts.map(ref => canonicalJson(ref))).size !== value.artifacts.length) throw new Error('REPORT_SOURCE_SELECTION_INVALID');
+16: }
+17: export function verifySelectedArtifacts(projection: RunEvidenceProjection, selection: EvidenceSelection): void {
+18:   for (const ref of selection.artifacts) {
+19:     if (!projection.artifacts.some(candidate => canonicalJson(candidate) === canonicalJson(ref))) throw new Error('REPORT_ARTIFACT_NOT_IN_RUN');
+20:     const stage = projection.stages.find(stage => stage.stageId === ref.producer.stageId);
+21:     if (!stage || ref.producer.attemptNumber !== stage.attempts) throw new Error('REPORT_ARTIFACT_STALE_ATTEMPT');
+22:   }
+23: }
+24: function record(value: unknown): Record<string, any> {
+25:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('REPORT_SOURCE_CONTENT_INVALID');
+26:   return value as Record<string, any>;
+27: }
+28: function count(value: unknown): number {
+29:   if (!Number.isSafeInteger(value) || Number(value) < 0) throw new Error('REPORT_SOURCE_COUNT_INVALID');
+30:   return Number(value);
+31: }
+32: function testFact(ref: ArtifactRef, value: Record<string, any>, selection: EvidenceSelection, evidenceId: string) {
+33:     const decision = parseGateDecision(value);
+34:     if (decision.runId !== selection.runId || decision.coverage?.sourceRevision !== `git:${selection.sourceRevision}`
+35:       || decision.coverage.pipelineStageId !== ref.producer.stageId) throw new Error('REPORT_GATE_SOURCE_MISMATCH');
+36:     return { evidenceId, kind: 'tests', sourceRevision: selection.sourceRevision, state: decision.state,
+37:       nodes: decision.nodes.map(node => ({ nodeId: node.nodeId, effect: node.effect })),
+38:       coverage: decision.coverage.checks.map(check => ({ checkId: check.checkId, state: check.state })) };
+39: }
+40: export function sourceFact(ref: ArtifactRef, raw: unknown, selection: EvidenceSelection, projection: RunEvidenceProjection) {
+41:   const value = record(raw); const evidenceId = sha256Text(canonicalJson(ref));
+42:   const stage = projection.stages.find(stage => stage.stageId === ref.producer.stageId)!;
+43:   if (ref.namespace === 'kubeclaw.implementation-agent' && ref.producer.stageId === selection.sourceStageId
+44:     && stage.stageType === 'kubeclaw.agent.implementation') {
+45:     if (value.sourceRevision !== selection.sourceRevision || value.status !== 'ready_for_testing') throw new Error('REPORT_SOURCE_REVISION_MISMATCH');
+46:     return { evidenceId, kind: 'source', sourceRevision: selection.sourceRevision };
+47:   }
+48:   if (ref.namespace === 'kubeclaw.lint' && stage.stageType.startsWith('kubeclaw.lint.')) {
+49:     if (value.sourceRevision !== selection.sourceRevision) throw new Error('REPORT_SOURCE_REVISION_MISMATCH');
+50:     const summary = record(value.summary);
+51:     return { evidenceId, kind: 'lint', sourceRevision: selection.sourceRevision, toolsFailed: count(summary.tools_failed), blocking: count(summary.total_blocking) };
+52:   }
+53:   if (ref.namespace === 'kubeclaw.buster-quality-gate' && stage.stageType === 'kubeclaw.test.quality-evaluation' && ref.artifactId.includes(':decision:')) {
+54:     return testFact(ref, value, selection, evidenceId);
+55:   }
+56:   throw new Error('REPORT_SOURCE_KIND_UNSUPPORTED');
+57: }
+58: export function buildEvidenceBundle(projection: RunEvidenceProjection, selection: EvidenceSelection, facts: readonly ReturnType<typeof sourceFact>[]) {
+59:   if (facts.filter(fact => fact.kind === 'source').length !== 1) throw new Error('REPORT_SOURCE_ARTIFACT_REQUIRED');
+60:   const value = { schemaVersion: 'report-source-bundle.v1', target: { runId: selection.runId, journalHead: selection.journalHead,
+61:     snapshotDigest: selection.snapshotDigest, sourceStageId: selection.sourceStageId, sourceRevision: selection.sourceRevision },
+62:     pipelineId: projection.pipelineId, terminal: projection.terminal, eventCount: projection.eventCount, effectsHead:projection.effectsHead,
+63:     stages: projection.stages, attempts: projection.attempts, evidence: selection.artifacts.map(ref => ({ evidenceId: sha256Text(canonicalJson(ref)), artifact: ref })), facts,
+64:     coverage: { selectedArtifacts: selection.artifacts.length, totalCompletedArtifacts: projection.artifacts.length,
+65:       omittedArtifacts: projection.artifacts.filter(ref => !selection.artifacts.some(selected => canonicalJson(selected) === canonicalJson(ref)))
+66:         .map(ref => ({ artifact: ref, reason: 'not-selected' })),
+67:       omittedContentClasses: ['raw-logs', 'checkpoint-only-artifacts', 'prompts', 'registry-configuration', 'effect-payloads', 'credentials', 'unstructured-agent-claims'],
+68:       omissionEffect: 'not-exported-in-this-bundle; original-records-retained' }, narrativeStatus: 'draft-not-entailment-verified' };
+69:   return { ...value, digest: sha256Text(canonicalJson(value)) };
+70: }
+SOURCE skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json SHA256 905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "storageRoot",
+7:     "orchestratorIssuerId",
+8:     "maximumJournalBytes",
+9:     "maximumArtifactBytes",
+10:     "maximumBundleBytes"
+11:   ],
+12:   "properties": {
+13:     "storageRoot": {
+14:       "type": "string",
+15:       "minLength": 1
+16:     },
+17:     "orchestratorIssuerId": {
+18:       "type": "string",
+19:       "minLength": 1
+20:     },
+21:     "maximumJournalBytes": {
+22:       "type": "integer",
+23:       "minimum": 1
+24:     },
+25:     "maximumArtifactBytes": {
+26:       "type": "integer",
+27:       "minimum": 1
+28:     },
+29:     "maximumBundleBytes": {
+30:       "type": "integer",
+31:       "minimum": 1
+32:     }
+33:   }
+34: }
+SOURCE skills/nova/plugins/pipeline-review/plugin.json SHA256 113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab
+1: {
+2:   "id": "kubeclaw.pipeline-review",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "review",
+8:       "type": "kubeclaw.report.pipeline-review",
+9:       "module": "src/stage.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "runtime.dispatch",
+13:         "artifacts.write",
+14:         "report.evidence.read"
+15:       ],
+16:       "configSchema": "schemas/config.schema.json",
+17:       "inputSchema": "schemas/input.schema.json",
+18:       "resultSchema": "schemas/result.schema.json"
+19:     }
+20:   ],
+21:   "observers": [],
+22:   "adapters": [
+23:     {
+24:       "id": "evidence",
+25:       "module": "src/evidence-adapter.ts",
+26:       "export": "activate",
+27:       "providesCapabilities": [
+28:         "report.evidence.read"
+29:       ],
+30:       "requiredCapabilities": [
+31:         "artifacts.read"
+32:       ],
+33:       "configSchema": "schemas/evidence-config.schema.json"
+34:     }
+35:   ]
+36: }
+SOURCE skills/nova/core/state/read-run-evidence.ts SHA256 bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065
+1: import fs from 'node:fs';
+2: import path from 'node:path';
+3: import { canonicalJson, type ArtifactRef, type AttemptIdentity, type EffectRequest, type EffectReceipt, type RegistrationProvenance, type LifecycleEvent, type PipelineDefinition, type PluginDomainEvent, type StageAttempt, type StageResult } from '@kubeclaw/plugin-sdk';
+4: import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
+5: import { validEffectIdentity } from '../effects/identity.ts';
+6: import { runRoot } from '../execution/run-root.ts';
+7: import { assertRunSnapshot, type RunSnapshot } from '../execution/engine-snapshots.ts';
+8: import { recoverStageStates } from '../lifecycle/recovery.ts';
+9: import { parseJournalRecords, type JournalRecord } from './journal.ts';
+10: 
+11: export interface RunEvidenceSelection {
+12:   readonly runId: string;
+13:   readonly journalHead: string;
+14:   readonly snapshotDigest: string;
+15: }
+16: export interface RunEvidenceProjection extends RunEvidenceSelection {
+17:   readonly schemaVersion: 'run-evidence-projection.v1';
+18:   readonly pipelineId: string;
+19:   readonly terminal: string;
+20:   readonly eventCount: number;
+21:   readonly effectsHead: string | null;
+22:   readonly stages: readonly { readonly stageId: string; readonly stageType: string; readonly status: string; readonly attempts: number }[];
+23:   readonly attempts: readonly { readonly identity: AttemptIdentity; readonly outcome: StageResult['outcome']; readonly eventHash: string }[];
+24:   readonly artifacts: readonly ArtifactRef[];
+25: }
+26: interface ReadOptions {
+27:   readonly storageRoot: string;
+28:   readonly maximumBytes: number;
+29:   readonly orchestratorIssuerId: string;
+30: }
+31: function sameFile(a: fs.Stats, b: fs.Stats): boolean {
+32:   return a.dev === b.dev && a.ino === b.ino && a.size === b.size && a.mtimeMs === b.mtimeMs && a.ctimeMs === b.ctimeMs;
+33: }
+34: function readFile(file: string, maximumBytes: number): { bytes: Buffer; stat: fs.Stats } {
+35:   const descriptor = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
+36:   try {
+37:     const stat = fs.fstatSync(descriptor);
+38:     if (!stat.isFile() || stat.size > maximumBytes) throw new Error('RUN_EVIDENCE_FILE_OR_BUDGET_INVALID');
+39:     const bytes = Buffer.alloc(stat.size + 1);
+40:     let total = 0;
+41:     while (total < bytes.length) {
+42:       const count = fs.readSync(descriptor, bytes, total, bytes.length - total, total);
+43:       if (!count) break;
+44:       total += count;
+45:     }
+46:     if (total !== stat.size || !sameFile(stat, fs.fstatSync(descriptor))) throw new Error('RUN_EVIDENCE_CHANGED');
+47:     return { bytes: bytes.subarray(0, total), stat };
+48:   } finally { fs.closeSync(descriptor); }
+49: }
+50: function directories(root: string): Map<string, fs.Stats> {
+51:   const pinned = new Map<string, fs.Stats>();
+52:   let cursor = path.parse(root).root;
+53:   for (const component of root.slice(cursor.length).split(path.sep).filter(Boolean)) {
+54:     cursor = path.join(cursor, component);
+55:     const stat = fs.lstatSync(cursor);
+56:     if (!stat.isDirectory() || stat.isSymbolicLink()) throw new Error('RUN_EVIDENCE_ROOT_INVALID');
+57:     pinned.set(cursor, stat);
+58:   }
+59:   return pinned;
+60: }
+61: function checkedAttempt(entry: LifecycleEvent, runId: string, open: Map<string,AttemptIdentity>): StageAttempt {
+62:   const attempt=entry.payload.attempt as StageAttempt;
+63:   validateContractValue('stageAttempt',attempt);
+64:   if (attempt.identity.attemptId !== entry.identity.attemptId || attempt.identity.runId !== runId
+65:     || attempt.identity.stageId !== entry.identity.stageId || open.has(attempt.identity.attemptId)) throw new Error('RUN_EVIDENCE_ATTEMPT_INVALID');
+66:   return attempt;
+67: }
+68: interface EffectEvidence { request: EffectRequest; accepted: boolean; receipt?: EffectReceipt }
+69: function effectRecords(file: string, maximumBytes: number) {
+70:   const read=readFile(file,maximumBytes);
+71:   const records: JournalRecord<{type:string;request?:EffectRequest;receipt?:EffectReceipt}>[]=[];
+72:   parseJournalRecords(read.bytes,records,file);
+73:   const effects=new Map<string,EffectEvidence>();
+74:   for(const {entry} of records) {
+75:     if(entry.type==='requested') {
+76:       const request=entry.request!; if(request.schemaVersion!=='effect-request.v2'||!validEffectIdentity(request))throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
+77:       if(effects.has(request.idempotencyKey))throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
+78:       effects.set(request.idempotencyKey,{request,accepted:false});
+79:     } else completeEffectEntry(effects,entry);
+80:   }
+81:   if([...effects.values()].some(effect=>!effect.receipt))throw new Error('RUN_EVIDENCE_EFFECT_UNRESOLVED');
+82:   return {...read,head:records.at(-1)?.hash??null,effects};
+83: }
+84: function completeEffectEntry(effects: Map<string,EffectEvidence>, entry: {type:string;request?:EffectRequest;receipt?:EffectReceipt}): void {
+85:   const key=entry.request?.idempotencyKey??entry.receipt?.idempotencyKey;
+86:   const effect=effects.get(key!);
+87:   if(!effect||effect.receipt)throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
+88:   if(entry.type==='accepted') {
+89:     if(effect.accepted||canonicalJson(entry.request)!==canonicalJson(effect.request))throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
+90:     effect.accepted=true;return;
+91:   }
+92:   if(!['completed','completed-reference'].includes(entry.type)||!effect.accepted)throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
+93:   validateContractValue('effectReceipt',entry.receipt);
+94:   if(entry.receipt!.effectId!==effect.request.effectId)throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
+95:   effect.receipt=entry.receipt!;
+96: }
+97: function matchesAudit(event: LifecycleEvent, effect: EffectEvidence): boolean {
+98:   const request=effect.request;
+99:   if(event.payload.executionMode!=='durable')return false;
+100:   if(event.identity.runId!==request.attempt.runId||event.identity.stageId!==request.attempt.stageId
+101:     ||event.identity.attemptId!==request.attempt.attemptId)return false;
+102:   if(event.type==='effect.requested')return canonicalJson(event.payload)===canonicalJson({executionMode:'durable',capability:request.capability,operation:request.operation,resource:request.resource});
+103:   if(event.type==='effect.accepted')return effect.accepted;
+104:   const expected=effect.receipt!.status==='completed'?'effect.completed':'effect.failed';
+105:   return event.type===expected&&canonicalJson(event.payload.adapter)===canonicalJson(effect.receipt!.adapter);
+106: }
+107: function pinnedConfidentialProvider(requested: LifecycleEvent, completed: LifecycleEvent, registry: RunSnapshot['registry']): boolean {
+108:   const capability=requested.payload.capability;
+109:   if(typeof capability!=='string'||!Array.isArray(registry.selectedProviders))return false;
+110:   const selected=registry.selectedProviders as {capability:string;provider:RegistrationProvenance}[];
+111:   const provider=selected.find(entry=>entry.capability===capability)?.provider;
+112:   if(!provider)return false;
+113:   return canonicalJson(completed.payload.adapter)===canonicalJson({...provider.package.package,registrationId:provider.registrationId});
+114: }
+115: function confidentialAudit(events: readonly LifecycleEvent[], registry: RunSnapshot['registry']): boolean {
+116:   const requested=events.find(event=>event.type==='effect.requested');
+117:   const accepted=events.find(event=>event.type==='effect.accepted');
+118:   const completed=events.find(event=>event.type==='effect.completed'||event.type==='effect.failed');
+119:   if(events.length!==3||!requested||!accepted||!completed)return false;
+120:   if(events[0]!==requested||events[1]!==accepted||events[2]!==completed
+121:     ||events.some(event=>event.payload.executionMode!=='confidential'||canonicalJson(event.identity)!==canonicalJson(requested.identity)))return false;
+122:   if(!pinnedConfidentialProvider(requested,completed,registry))return false;
+123:   const resource=requested.payload.resource as Record<string,unknown>;
+124:   const result=completed.payload.result as Record<string,unknown>|undefined;
+125:   const error=completed.payload.error as Record<string,unknown>|undefined;
+126:   return resource?.canonicalId==='[confidential]'&&(result?.confidential===true||error?.code==='adapter.confidential_effect_failed');
+127: }
+128: function reconcileEffects(records: readonly JournalRecord<LifecycleEvent | PluginDomainEvent>[], effects: Map<string,EffectEvidence>, registry: RunSnapshot['registry']): void {
+129:   const byId=new Map([...effects.values()].map(effect=>[effect.request.effectId,effect]));
+130:   if(byId.size!==effects.size)throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
+131:   const audit=new Map<string,LifecycleEvent[]>();
+132:   for(const {entry} of records) {
+133:     if(entry.schemaVersion!=='lifecycle-event.v2'||!entry.type.startsWith('effect.'))continue;
+134:     const id=entry.identity.effectId!;
+135:     audit.set(id,[...(audit.get(id)??[]),entry]);
+136:   }
+137:   for(const [id,events] of audit) {
+138:     const effect=byId.get(id);
+139:     if(!effect) {
+140:       if(!confidentialAudit(events,registry))throw new Error('RUN_EVIDENCE_EFFECT_AUDIT_MISMATCH');
+141:     } else if(events.some(event=>!matchesAudit(event,effect)))throw new Error('RUN_EVIDENCE_EFFECT_AUDIT_MISMATCH');
+142:   }
+143:   for(const effect of effects.values()) {
+144:     if(effect.request.attempt.attemptId.startsWith('observer:'))continue;
+145:     const events=audit.get(effect.request.effectId)??[];
+146:     if(!events.some(event=>event.type==='effect.requested')||!events.some(event=>event.type==='effect.completed'||event.type==='effect.failed'))throw new Error('RUN_EVIDENCE_EFFECT_AUDIT_MISMATCH');
+147:   }
+148: }
+149: function inspectEffects(file: string, records: readonly JournalRecord<LifecycleEvent | PluginDomainEvent>[], maximumBytes: number, registry: RunSnapshot['registry']) {
+150:   if(!fs.existsSync(file)) {
+151:     reconcileEffects(records,new Map(),registry);return null;
+152:   }
+153:   const effects=effectRecords(file,maximumBytes);
+154:   reconcileEffects(records,effects.effects,registry);
+155:   if(!sameFile(effects.stat,fs.lstatSync(file)))throw new Error('RUN_EVIDENCE_CHANGED');
+156:   return effects.head;
+157: }
+158: function validateSelection(selection: RunEvidenceSelection, options: ReadOptions): void {
+159:   if (!Number.isSafeInteger(options.maximumBytes) || options.maximumBytes < 1) throw new Error('RUN_EVIDENCE_BUDGET_INVALID');
+160:   if (!path.isAbsolute(options.storageRoot) || !/^sha256:[a-f0-9]{64}$/u.test(selection.journalHead)
+161:     || !/^sha256:[a-f0-9]{64}$/u.test(selection.snapshotDigest)) throw new Error('RUN_EVIDENCE_SELECTION_INVALID');
+162: }
+163: function verifyDirectories(pinned: Map<string,fs.Stats>): void {
+164:   for (const [directory, stat] of pinned) {
+165:     const current = fs.lstatSync(directory);
+166:     if (!current.isDirectory() || stat.dev !== current.dev || stat.ino !== current.ino) throw new Error('RUN_EVIDENCE_CHANGED');
+167:   }
+168: }
+169: function attemptArtifacts(records: readonly JournalRecord<LifecycleEvent | PluginDomainEvent>[], runId: string) {
+170:   const open = new Map<string, AttemptIdentity>();
+171:   const attempts: RunEvidenceProjection['attempts'][number][] = [];
+172:   const artifacts: ArtifactRef[] = [];
+173:   for (const { entry, hash } of records) {
+174:     if (entry.identity.runId !== runId) throw new Error('RUN_EVIDENCE_RUN_MISMATCH');
+175:     if (entry.schemaVersion !== 'lifecycle-event.v2') continue;
+176:     validateContractValue('lifecycleEvent', entry);
+177:     if (entry.type === 'attempt.created') {
+178:       const attempt = checkedAttempt(entry,runId,open);
+179:       open.set(attempt.identity.attemptId, attempt.identity);
+180:     }
+181:     if (!['attempt.completed', 'attempt.cancelled', 'attempt.timed_out'].includes(entry.type)) continue;
+182:     const identity = open.get(entry.identity.attemptId!);
+183:     if (!identity || identity.stageId !== entry.identity.stageId) throw new Error('RUN_EVIDENCE_ATTEMPT_INVALID');
+184:     const result = entry.payload.result as StageResult;
+185:     validateContractValue('stageResult', result);
+186:     for (const artifact of result.artifacts) {
+187:       if (canonicalJson(artifact.producer) !== canonicalJson(identity)) throw new Error('RUN_EVIDENCE_ARTIFACT_OWNER_INVALID');
+188:       if (!artifacts.some(ref => canonicalJson(ref) === canonicalJson(artifact))) artifacts.push(artifact);
+189:     }
+190:     attempts.push({ identity, outcome: result.outcome, eventHash: hash });
+191:     open.delete(identity.attemptId);
+192:   }
+193:   if (open.size) throw new Error('RUN_EVIDENCE_ATTEMPT_UNFINISHED');
+194:   return { attempts, artifacts };
+195: }
+196: 
+197: /** Bounded, read-only projection of the original completed journal. Never repairs a tail. */
+198: export function readRunEvidence(input: RunEvidenceSelection, configured: ReadOptions): RunEvidenceProjection {
+199:   const selection = { runId: input.runId, journalHead: input.journalHead, snapshotDigest: input.snapshotDigest };
+200:   const options = structuredClone(configured);
+201:   validateSelection(selection,options);
+202:   directories(options.storageRoot);
+203:   const root = runRoot(options.storageRoot, selection.runId, { maximumLegacyBytes: options.maximumBytes });
+204:   const pinned = directories(root);
+205:   const eventsFile = path.join(root, 'events.jsonl'); const snapshotFile = path.join(root, 'run-snapshot.json');
+206:   const events = readFile(eventsFile, options.maximumBytes);
+207:   const snapshotRead = readFile(snapshotFile, options.maximumBytes - events.bytes.length);
+208:   const snapshot = JSON.parse(snapshotRead.bytes.toString()) as RunSnapshot; assertRunSnapshot(snapshot);
+209:   if(snapshot.registry.effectAuditVersion!=='coordinator-mode.v1')throw new Error('RUN_EVIDENCE_EFFECT_MODE_UNVERIFIABLE:historical snapshot predates coordinator mode evidence; automatic migration is unsupported');
+210:   if (snapshot.digest !== selection.snapshotDigest) throw new Error('RUN_EVIDENCE_SNAPSHOT_MISMATCH');
+211:   const records: JournalRecord<LifecycleEvent | PluginDomainEvent>[] = [];
+212:   parseJournalRecords(events.bytes, records, eventsFile);
+213:   if (!records.length || records.at(-1)!.hash !== selection.journalHead) throw new Error('RUN_EVIDENCE_HEAD_MISMATCH');
+214:   const terminal = records.filter(({ entry }) => entry.schemaVersion === 'lifecycle-event.v2' && entry.type.startsWith('run.')).at(-1)?.entry.type;
+215:   if (!terminal || !['run.succeeded', 'run.failed', 'run.cancelled'].includes(terminal)) throw new Error('RUN_EVIDENCE_NOT_COMPLETED');
+216:   const definition: PipelineDefinition = { schemaVersion: 'pipeline-definition.v2', id: snapshot.graph.pipelineId,
+217:     maxConcurrency: snapshot.graph.maxConcurrency, stages: [...snapshot.graph.nodes] as PipelineDefinition['stages'] };
+218:   validateContractValue('pipelineDefinition', definition);
+219:   const states = recoverStageStates(definition, records, selection.runId, options.orchestratorIssuerId);
+220:   const sources = attemptArtifacts(records, selection.runId);
+221:   if (!sameFile(events.stat, fs.lstatSync(eventsFile)) || !sameFile(snapshotRead.stat, fs.lstatSync(snapshotFile))) throw new Error('RUN_EVIDENCE_CHANGED');
+222:   verifyDirectories(pinned);
+223:   const effectsFile=path.join(root,'effects.jsonl');
+224:   const effectsHead=inspectEffects(effectsFile,records,options.maximumBytes-events.bytes.length-snapshotRead.bytes.length,snapshot.registry);
+225:   if (!sameFile(events.stat, fs.lstatSync(eventsFile)) || !sameFile(snapshotRead.stat, fs.lstatSync(snapshotFile))) throw new Error('RUN_EVIDENCE_CHANGED');
+226:   verifyDirectories(pinned);
+227:   return structuredClone({ schemaVersion: 'run-evidence-projection.v1', ...selection, pipelineId: definition.id, terminal,
+228:     eventCount: records.length, effectsHead, stages: definition.stages.map(stage => ({ stageId: stage.id, stageType: stage.type,
+229:       status: states.get(stage.id)!.status, attempts: states.get(stage.id)!.attemptNumber })), ...sources });
+230: }
+SOURCE skills/nova/core/execution/engine-snapshots.ts SHA256 50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd
+1: import crypto from 'node:crypto';
+2: import fs from 'node:fs';
+3: import path from 'node:path';
+4: import { CURRENT_RUNTIME_DISPATCH_PROFILE, CURRENT_REVIEW_CACHE_PROFILE, parseRuntimeDispatchProfile, parseReviewCacheProfile, portableJson, type RuntimeDispatchProfile, type ReviewCacheProfile, type AdministrativeReopenDecision, type PipelineDefinition, type ResumeSignal } from '@kubeclaw/plugin-sdk';
+5: import type { StageRuntimeState } from '../lifecycle/reducer.ts';
+6: import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
+7: import { ExecutionGraph, type ExecutionGraphSnapshot } from './graph.ts';
+8: import type { PreparedRuntime } from './engine-runtime.ts';
+9: 
+10: export function deepFreeze<T>(value: T): T {
+11:   if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value;
+12:   for (const nested of Object.values(value as Record<string, unknown>)) deepFreeze(nested); return Object.freeze(value);
+13: }
+14: export function canonicalJson(value: unknown): string {
+15:   if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
+16:   if (value && typeof value === 'object') return `{${Object.entries(value as Record<string, unknown>).sort(([a], [b]) => a.localeCompare(b)).map(([key, nested]) => `${JSON.stringify(key)}:${canonicalJson(nested)}`).join(',')}}`;
+17:   return JSON.stringify(value);
+18: }
+19: export function graphSnapshot(definition: PipelineDefinition, version?: ExecutionGraphSnapshot['schemaVersion']): ExecutionGraphSnapshot {
+20:   return ExecutionGraph.fromDefinition(definition).snapshot(definition.id, definition.maxConcurrency, version);
+21: }
+22: 
+23: interface PinnedPackage { readonly package: { readonly packageVersion: string; readonly contentDigest: string } }
+24: type PackageUpgrade = NonNullable<Extract<AdministrativeReopenDecision, { continuation: 'retry' | 'cancel' }>['packageUpgrades']>[number];
+25: export function recordedPackageUpgrades(decisions: readonly AdministrativeReopenDecision[]): readonly PackageUpgrade[] {
+26:   return decisions.flatMap((decision) => decision.continuation === 'retry' ? decision.packageUpgrades ?? [] : []);
+27: }
+28: export function verifyPinnedPackages(runRoot: string, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[] = []): void {
+29:   const stored = readRunSnapshot(runRoot).registry as unknown;
+30:   if (!stored || typeof stored !== 'object' || (stored as Record<string, unknown>).dependencyIdentityVersion !== 'parent-invocation.v1') throw new Error('RECOVERY_DEPENDENCY_IDENTITY_MISMATCH:drain existing runs with their original runtime; automatic migration is unsupported');
+31:   const packages = stored && typeof stored === 'object' && !Array.isArray(stored) ? (stored as { packages?: unknown }).packages : undefined;
+32:   if (!Array.isArray(packages)) throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
+33:   if (canonicalJson((stored as Record<string, unknown>).configuration) !== canonicalJson(runtime.configuration)) throw new Error('RECOVERY_RUNTIME_CONFIGURATION_MISMATCH');
+34:   const pinned = new Map<string, PinnedPackage>(); packages.forEach((value) => addPinnedPackage(value, pinned));
+35:   if (canonicalJson([...runtime.snapshot.packages.keys()].sort()) !== canonicalJson([...pinned.keys()].sort())) throw new Error('RECOVERY_PINNED_PACKAGE_SET_MISMATCH');
+36:   for (const pluginId of new Set(upgrades.map(({ pluginId }) => pluginId))) {
+37:     if (!pinned.has(pluginId)) throw new Error(`RECOVERY_PACKAGE_UPGRADE_UNKNOWN:${pluginId}`);
+38:   }
+39:   for (const [pluginId, provenance] of pinned) assertPinnedPackage(pluginId, provenance, runtime,
+40:     upgrades.filter((upgrade) => upgrade.pluginId === pluginId));
+41: }
+42: 
+43: function addPinnedPackage(value: unknown, pinned: Map<string, PinnedPackage>): void {
+44:   if (!Array.isArray(value) || value.length !== 2 || typeof value[0] !== 'string' || pinned.has(value[0])) throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
+45:   const provenance = value[1] as { package?: { packageVersion?: unknown; contentDigest?: unknown } } | null;
+46:   if (!provenance?.package || typeof provenance.package.packageVersion !== 'string' || typeof provenance.package.contentDigest !== 'string') throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
+47:   pinned.set(value[0], provenance as PinnedPackage);
+48: }
+49: function assertPinnedPackage(pluginId: string, provenance: PinnedPackage, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[]): void {
+50:   const current = runtime.snapshot.packages.get(pluginId); if (!current) throw new Error(`RECOVERY_PINNED_PACKAGE_MISSING:${pluginId}`);
+51:   let expected = { pluginId, apiVersion: current.provenance.package.apiVersion,
+52:     packageVersion: provenance.package.packageVersion, contentDigest: provenance.package.contentDigest };
+53:   for (const upgrade of upgrades) {
+54:     if (canonicalJson(upgrade.from) !== canonicalJson(expected) || upgrade.pluginId !== pluginId
+55:       || upgrade.to.pluginId !== pluginId || upgrade.to.apiVersion !== expected.apiVersion) {
+56:       throw new Error(`RECOVERY_PACKAGE_UPGRADE_MISMATCH:${pluginId}`);
+57:     }
+58:     expected = upgrade.to;
+59:   }
+60:   if (upgrades.length > 0) {
+61:     if (canonicalJson(current.provenance.package) !== canonicalJson(expected)) throw new Error(`RECOVERY_PACKAGE_UPGRADE_MISMATCH:${pluginId}`);
+62:     return;
+63:   }
+64:   if (current.provenance.package.packageVersion !== provenance.package.packageVersion) throw new Error(`RECOVERY_PINNED_PACKAGE_VERSION_MISMATCH:${pluginId}`);
+65:   if (current.provenance.package.contentDigest !== provenance.package.contentDigest) throw new Error(`RECOVERY_PINNED_PACKAGE_DIGEST_MISMATCH:${pluginId}`);
+66: }
+67: 
+68: export function verifyPinnedGraph(runRoot: string, definition: PipelineDefinition): ExecutionGraphSnapshot {
+69:   const stored = readRunSnapshot(runRoot).graph as ExecutionGraphSnapshot; const current = graphSnapshot(definition, stored.schemaVersion);
+70:   if (!['execution-graph-snapshot.v2', 'execution-graph-snapshot.v3'].includes(stored.schemaVersion)) throw new Error('RECOVERY_GRAPH_SNAPSHOT_INVALID');
+71:   if (stored.pipelineId !== current.pipelineId) throw new Error(`RECOVERY_PIPELINE_ID_MISMATCH:${stored.pipelineId}:${current.pipelineId}`);
+72:   if (stored.digest !== current.digest) throw new Error(`RECOVERY_GRAPH_DIGEST_MISMATCH:${stored.digest}:${current.digest}`); return current;
+73: }
+74: 
+75: interface RunSnapshotBase { readonly graph: ExecutionGraphSnapshot; readonly registry: Readonly<Record<string, unknown>>; readonly digest: string }
+76: export type RunSnapshot = RunSnapshotBase & (
+77:   { readonly schemaVersion: 'run-snapshot.v1' | 'run-snapshot.v2'; readonly runtimeDispatchProfile?: never; readonly reviewCacheProfile?: never }
+78:   | { readonly schemaVersion: 'run-snapshot.v3'; readonly runtimeDispatchProfile: RuntimeDispatchProfile; readonly reviewCacheProfile?: never }
+79:   | { readonly schemaVersion: 'run-snapshot.v4'; readonly runtimeDispatchProfile: RuntimeDispatchProfile; readonly reviewCacheProfile: ReviewCacheProfile }
+80: );
+81: function snapshotDigest(value: unknown, version: RunSnapshot['schemaVersion']): string {
+82:   if (!['run-snapshot.v1', 'run-snapshot.v2', 'run-snapshot.v3', 'run-snapshot.v4'].includes(version)) throw new Error('RUN_SNAPSHOT_VERSION_INVALID');
+83:   return `sha256:${crypto.createHash('sha256').update(version === 'run-snapshot.v1' ? canonicalJson(value) : portableJson(value)).digest('hex')}`;
+84: }
+85: export function assertRunSnapshot(snapshot: RunSnapshot): void {
+86:   const { digest, ...unsigned } = snapshot;
+87:   if (!['run-snapshot.v1', 'run-snapshot.v2', 'run-snapshot.v3', 'run-snapshot.v4'].includes(snapshot.schemaVersion)
+88:     || !['execution-graph-snapshot.v2', 'execution-graph-snapshot.v3'].includes(snapshot.graph?.schemaVersion)
+89:     || digest !== snapshotDigest(unsigned, snapshot.schemaVersion)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+90:   if (snapshot.schemaVersion === 'run-snapshot.v4') {
+91:     parseRuntimeDispatchProfile(snapshot.runtimeDispatchProfile); parseReviewCacheProfile(snapshot.reviewCacheProfile);
+92:     validateContractValue('runtimeRunSnapshotV4', snapshot);
+93:   }
+94:   else if (snapshot.schemaVersion === 'run-snapshot.v3') {
+95:     parseRuntimeDispatchProfile(snapshot.runtimeDispatchProfile); validateContractValue('runtimeRunSnapshot', snapshot);
+96:   }
+97:   else if (Object.hasOwn(snapshot, 'runtimeDispatchProfile')) throw new Error('RUN_SNAPSHOT_LEGACY_PROFILE_INVALID');
+98:   if (snapshot.schemaVersion !== 'run-snapshot.v4' && Object.hasOwn(snapshot, 'reviewCacheProfile')) throw new Error('RUN_SNAPSHOT_LEGACY_CACHE_PROFILE_INVALID');
+99: }
+100: export function readRunSnapshot(runRoot: string): RunSnapshot {
+101:   const snapshot = JSON.parse(fs.readFileSync(path.join(runRoot, 'run-snapshot.json'), 'utf8')) as RunSnapshot;
+102:   assertRunSnapshot(snapshot);
+103:   return snapshot;
+104: }
+105: export function writeRunSnapshots(runRoot: string, graph: ExecutionGraphSnapshot, registry: Readonly<Record<string, unknown>>): void {
+106:   if (['run-snapshot.json', 'graph-snapshot.json', 'registry-snapshot.json'].some((name) => fs.existsSync(path.join(runRoot, name)))) throw new Error(`RUN_ALREADY_EXISTS:${runRoot}`);
+107:   const unsigned = { schemaVersion: 'run-snapshot.v4' as const, graph, registry, runtimeDispatchProfile: CURRENT_RUNTIME_DISPATCH_PROFILE, reviewCacheProfile: CURRENT_REVIEW_CACHE_PROFILE };
+108:   const snapshot = { ...unsigned, digest: snapshotDigest(unsigned, unsigned.schemaVersion) };
+109:   assertRunSnapshot(snapshot);
+110:   const file = path.join(runRoot, 'run-snapshot.json');
+111:   const temporary = path.join(runRoot, `.snapshot-${crypto.randomUUID()}.tmp`);
+112:   const descriptor = fs.openSync(temporary, 'wx', 0o600);
+113:   try { fs.writeFileSync(descriptor, JSON.stringify(snapshot)); fs.fsyncSync(descriptor); }
+114:   finally { fs.closeSync(descriptor); }
+115:   try {
+116:     // Atomic no-replace publication: readers can never see half a snapshot pair.
+117:     fs.linkSync(temporary, file);
+118:     const directory = fs.openSync(runRoot, 'r');
+119:     try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
+120:   } finally { fs.unlinkSync(temporary); }
+121: }
+122: 
+123: export function frozenRegistryRecord(runtime: PreparedRuntime, definition: PipelineDefinition, graph: ExecutionGraphSnapshot): Readonly<Record<string, unknown>> {
+124:   const registrations = {
+125:     stages: [...runtime.snapshot.stages].map(([stageType, entry]) => ({ stageType, registration: entry.registration, provenance: entry.provenance })),
+126:     observers: [...runtime.snapshot.observers].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
+127:     adapters: [...runtime.snapshot.adapters].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
+128:   };
+129:   return Object.freeze({ effectAuditVersion: 'coordinator-mode.v1', dependencyIdentityVersion: 'parent-invocation.v1', configuration: runtime.configuration, apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,
+130:     enabledRegistrations: [...runtime.granted.enabledRegistrations].sort(), grants: [...runtime.granted.grants],
+131:     selectedProviders: [...runtime.granted.selectedProviders].map(([capability, entry]) => ({ capability, provider: entry.provenance })),
+132:     executionGraph: { pipelineId: graph.pipelineId, digest: graph.digest }, configuredStages: definition.stages.map((stage) => {
+133:       const owner = runtime.snapshot.stages.get(stage.type)!; return { stageId: stage.id, stageType: stage.type, owner: owner.provenance };
+134:     }) });
+135: }
+136: 
+137: export function validateSignal(wait: NonNullable<StageRuntimeState['wait']>, signal: ResumeSignal, waitCreatedAt: string): void {
+138:   validateContractValue('resumeSignal', signal);
+139:   if (signal.waitId !== wait.waitId) throw new Error(`WAIT_SIGNAL_MISMATCH:${signal.waitId}`);
+140:   if (signal.signalType !== wait.signalType) throw new Error(`WAIT_SIGNAL_TYPE_MISMATCH:${signal.signalType}`);
+141:   if (signal.issuer.type !== wait.authorizedIssuer.type || signal.issuer.id !== wait.authorizedIssuer.id) throw new Error(`WAIT_ISSUER_DENIED:${signal.issuer.type}:${signal.issuer.id}`);
+142:   if (wait.expiresAt !== null && Date.now() >= Date.parse(wait.expiresAt)) throw new Error(`WAIT_EXPIRED:${wait.waitId}`);
+143:   if (Date.parse(signal.issuedAt) < Date.parse(waitCreatedAt)) throw new Error(`WAIT_SIGNAL_STALE:${signal.signalId}`);
+144: }
+SOURCE skills/nova/core/execution/engine-runtime.ts SHA256 96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613
+1: import { resolveRetainedCoreWait } from '../state/wait-projection-reader.ts';
+2: import crypto from 'node:crypto';
+3: import path from 'node:path';
+4: import type { EffectRequest, LifecycleEvent, ObserverCheckpoint, PipelineDefinition, PluginDomainEvent } from '@kubeclaw/plugin-sdk';
+5: import { activateRegistry } from '@kubeclaw/plugin-foundation/registry/activation';
+6: import { buildRegistry } from '@kubeclaw/plugin-foundation/registry/build';
+7: import { resolveCapabilityGrants, type CapabilityPolicy } from '@kubeclaw/plugin-foundation/registry/capabilities';
+8: import { discoverPackages } from '@kubeclaw/plugin-foundation/registry/discovery';
+9: import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
+10: import { validateRuntimeRegistrationConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';
+11: import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
+12: import { FileEffectJournal } from '../effects/journal.ts';
+13: import { EffectCoordinator } from '../effects/coordinator.ts';
+14: import { FileResourceLockManager } from '../effects/locks.ts';
+15: import { FileJournal } from '../state/journal.ts';
+16: import { ObserverRuntime, type ObserverDeliveryRecord } from '../telemetry/observers.ts';
+17: import { AdapterRuntime } from './adapters.ts';
+18: 
+19: function nestedMap(value: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, unknown>>>>>>): ReadonlyMap<string, ReadonlyMap<string, Readonly<Record<string, unknown>>>> {
+20:   return new Map(Object.entries(value).map(([id, grants]) => [id, new Map(Object.entries(grants))]));
+21: }
+22: export function objectMap(value: Readonly<Record<string, Readonly<Record<string, unknown>>>>): ReadonlyMap<string, Readonly<Record<string, unknown>>> { return new Map(Object.entries(value)); }
+23: 
+24: export interface PreparedRuntime {
+25:   readonly configuration: Readonly<Record<string, unknown>>;
+26:   readonly snapshot: ReturnType<typeof buildRegistry>; readonly granted: ReturnType<typeof resolveCapabilityGrants>;
+27:   readonly activated: Awaited<ReturnType<typeof activateRegistry>>;
+28: }
+29: 
+30: export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition): Promise<PreparedRuntime> {
+31:   validateContractValue('pipelineDefinition', definition);
+32:   const packages = discoverPackages({ installationRoots: platform.installationRoots, trustPolicy: {
+33:     trustedBuiltinRoots: platform.trustedBuiltinRoots, allowedSourceDigests: new Map(Object.entries(platform.externalTrust.allowedSourceDigests)),
+34:     verifiedAttestations: new Map(Object.entries(platform.externalTrust.verifiedAttestations)), verifierId: 'kubeclaw-platform-v2',
+35:   } });
+36:   const snapshot = buildRegistry(packages); const enabled = enabledRegistrations(platform, definition, snapshot);
+37:   const policy: CapabilityPolicy = { enabledRegistrations: enabled, grants: nestedMap(platform.grants), providers: new Map(Object.entries(platform.providers)) };
+38:   const granted = resolveCapabilityGrants(snapshot, policy);
+39:   validateRuntimeRegistrationConfiguration(snapshot, granted.enabledRegistrations, {
+40:     stages: definition.stages.map((stage) => ({ type: stage.type, config: stage.config })), observers: objectMap(platform.observers), adapters: objectMap(platform.adapters),
+41:   });
+42:   return { configuration: { providers: platform.providers, grants: platform.grants, adapters: platform.adapters, activeAdapters: platform.activeAdapters, observers: platform.observers, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted, activated: await activateRegistry(snapshot, new Set(granted.grants.keys()), platform.isolation) };
+43: }
+44: 
+45: function enabledRegistrations(platform: PlatformConfig, definition: PipelineDefinition, snapshot: ReturnType<typeof buildRegistry>): Set<string> {
+46:   const enabled = new Set<string>(Object.keys(platform.observers)); platform.activeAdapters.forEach((id) => enabled.add(id));
+47:   for (const stage of definition.stages) {
+48:     const owner = snapshot.stages.get(stage.type); if (!owner) throw new Error(`PIPELINE_STAGE_OWNER_MISSING:${stage.type}`);
+49:     enabled.add(`${owner.package.manifest.id}:${owner.registration.id}`);
+50:   }
+51:   return enabled;
+52: }
+53: 
+54: function effectAppender(events: FileJournal<LifecycleEvent | PluginDomainEvent>): (type: 'effect.requested' | 'effect.accepted' | 'effect.completed' | 'effect.failed', request: EffectRequest, payload: Readonly<Record<string, unknown>>) => void {
+55:   return (type, request, payload) => {
+56:     if (request.attempt.attemptId.startsWith('observer:')) return;
+57:     events.appendSequenced((sequence) => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence,
+58:       type, identity: { runId: request.attempt.runId, stageId: request.attempt.stageId, attemptId: request.attempt.attemptId, effectId: request.effectId },
+59:       occurredAt: new Date().toISOString(), causationId: request.attempt.attemptId, payload }));
+60:   };
+61: }
+62: 
+63: function auditResult(result: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {
+64:   const serialized = Buffer.from(JSON.stringify(result));
+65:   if (serialized.length <= 16 * 1024) return result;
+66:   const contentDigest = `sha256:${crypto.createHash('sha256').update(serialized).digest('hex')}`;
+67:   return Object.freeze({
+68:     schemaVersion: 'effect-result-summary.v1',
+69:     contentDigest,
+70:     artifactRef: `effect-result:${contentDigest}`,
+71:     bytes: serialized.length,
+72:     externalized: true,
+73:   });
+74: }
+75: 
+76: export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): AdapterRuntime {
+77:   const append = effectAppender(events);
+78:   const effects = new EffectCoordinator(new FileEffectJournal(path.join(runRoot, 'effects.jsonl')), () => new Date(), {
+79:     requested: (request, executionMode) => append('effect.requested', request, { executionMode, capability: request.capability, operation: request.operation, resource: request.resource }),
+80:     accepted: (request, executionMode) => append('effect.accepted', request, { executionMode }),
+81:     completed: (request, receipt, executionMode) => append(receipt.status === 'completed' ? 'effect.completed' : 'effect.failed', request,
+82:       receipt.status === 'completed' ? { executionMode, adapter: receipt.adapter, result: auditResult(receipt.result ?? {}) } : { executionMode, adapter: receipt.adapter, error: receipt.error ?? {} }),
+83:   }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks')), platform.effectLockTtlMs);
+84:   return new AdapterRuntime({ granted: runtime.granted, activated: runtime.activated, configs: objectMap(platform.adapters), effects,
+85:     resolveRetainedWait: source => {
+86:       const waitRoot = platform.adapters?.['kubeclaw.wait-store:waits']?.root;
+87:       if (typeof waitRoot !== 'string') throw new Error('WAIT_RETAINED_CORE_EVIDENCE_INVALID');
+88:       return resolveRetainedCoreWait(source, { storageRoot: platform.storageRoot, waitRoot,
+89:         orchestratorIssuerId: platform.orchestratorIssuerId });
+90:     },
+91:     shutdownTimeoutMs: platform.shutdownTimeoutMs, emitDomainEvent: async (registration, type, identity, payload) => { events.appendSequenced((sequence) => ({
+92:       schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence, type,
+93:       producer: registration, identity, occurredAt: new Date().toISOString(), causationId: null, payload,
+94:     })); } });
+95: }
+96: 
+97: export async function drainObservers(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, adapters: AdapterRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): Promise<void> {
+98:   const observers = new ObserverRuntime({ registry: runtime.granted, activated: runtime.activated, adapters, events,
+99:     checkpoints: new FileJournal<ObserverCheckpoint>(path.join(runRoot, 'observer-checkpoints.jsonl')),
+100:     deliveries: new FileJournal<ObserverDeliveryRecord>(path.join(runRoot, 'observer-deliveries.jsonl')), configs: objectMap(platform.observers) });
+101:   await observers.drain();
+102: }
+103: 
+104: export function serializedObserverDrainer(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, adapters: AdapterRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): () => Promise<void> {
+105:   let pending = Promise.resolve(); return () => { pending = pending.then(() => drainObservers(platform, runRoot, runtime, adapters, events)); return pending; };
+106: }
+SOURCE skills/nova/core/execution/adapter-startup.ts SHA256 ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0
+1: import type { RetainedWaitSource } from '@kubeclaw/plugin-sdk';
+2: import type { AsyncLocalStorage } from 'node:async_hooks';
+3: import {portableJson, runtimeDispatchProfileFields} from '@kubeclaw/plugin-sdk';
+4: import fs from 'node:fs';
+5: import path from 'node:path';
+6: import type { AdapterActivationContext, AdapterCleanupContext, AdapterDependencyOptions, AdapterFactory, AdapterInstance, CapabilityInvocation, EventIdentity } from '@kubeclaw/plugin-sdk';
+7: import { validateContractValue, validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';
+8: import { isConfidentialCapability } from '@kubeclaw/plugin-foundation/registry/capabilities';
+9: import { authorizeCapabilityInvocation } from './authorization.ts';
+10: import type { AdapterRuntimeOptions } from './adapters.ts';
+11: import { AdapterInvocationPhase, type AdapterInvocationOwner } from './adapter-invocation-phase.ts';
+12: import { adapterOwner, requestDigest, shutdownLateAdapter, withAdapterStartupTimeout } from './adapter-support.ts';
+13: import {portableDependencyKey} from '../effects/dependency-identity.ts';
+14: 
+15: interface StartupOptions {
+16:   readonly runtime: AdapterRuntimeOptions; readonly invocationContext: AsyncLocalStorage<AdapterInvocationOwner>;
+17:   readonly stopping: () => boolean; readonly pendingControllers: Map<string, AbortController>; readonly pendingInstances: Map<string, AdapterInstance>;
+18:   readonly shutdown: (instance: AdapterInstance, signal: AbortSignal) => Promise<void>;
+19: }
+20: export interface StartedAdapters { readonly instances: Map<string, AdapterInstance>; readonly controllers: Map<string, AbortController> }
+21: 
+22: export class AdapterStarter {
+23:   readonly #options: StartupOptions; readonly #instances = new Map<string, AdapterInstance>(); readonly #controllers = new Map<string, AbortController>(); readonly #starting = new Set<string>();
+24:   constructor(options: StartupOptions) { this.#options = options; }
+25: 
+26:   async startAll(): Promise<StartedAdapters> {
+27:     try {
+28:       for (const [id] of this.#options.runtime.granted.snapshot.adapters) {
+29:         if (this.#options.runtime.granted.enabledRegistrations.has(id)) await this.#start(id);
+30:       }
+31:       if (this.#options.stopping()) throw new Error('ADAPTER_RUNTIME_STOPPING');
+32:       return { instances: this.#instances, controllers: this.#controllers };
+33:     } catch (error) { await this.#rollback(); throw error; }
+34:   }
+35: 
+36:   async #start(adapterId: string): Promise<AdapterInstance> {
+37:     const existing = this.#instances.get(adapterId); if (existing) return existing;
+38:     if (this.#starting.has(adapterId)) throw new Error(`ADAPTER_CYCLE:${adapterId}`); this.#starting.add(adapterId);
+39:     try {
+40:       const entry = this.#options.runtime.granted.snapshot.adapters.get(adapterId); const activated = this.#options.runtime.activated.adapters.get(adapterId);
+41:       if (!entry || !activated) throw new Error(`ADAPTER_NOT_ACTIVATED:${adapterId}`);
+42:       const lifecycle = new AbortController(); this.#controllers.set(adapterId, lifecycle); this.#options.pendingControllers.set(adapterId, lifecycle);
+43:       const config = this.#config(adapterId, entry.package.root, entry.registration.configSchema);
+44:       await this.#dependencies(adapterId, entry.registration.requiredCapabilities);
+45:       const context = this.#context(adapterId, lifecycle, entry.provenance, entry.package.manifest.id, config);
+46:       const raw = await this.#activate(adapterId, lifecycle, activated.execute as AdapterFactory, context);
+47:       const instance = this.#wrap(raw, lifecycle, adapterId); this.#instances.set(adapterId, instance); this.#options.pendingInstances.set(adapterId, instance);
+48:       await this.#ready(adapterId, instance, lifecycle); return instance;
+49:     } finally { this.#starting.delete(adapterId); }
+50:   }
+51: 
+52:   #config(adapterId: string, root: string, schema: string): Readonly<Record<string, unknown>> {
+53:     const config = this.#options.runtime.configs.get(adapterId) ?? Object.freeze({});
+54:     validateReferencedValue(fs.realpathSync(path.join(root, schema)), config, this.#options.runtime.granted.snapshot.schemas); return config;
+55:   }
+56: 
+57:   async #dependencies(adapterId: string, capabilities: readonly string[]): Promise<void> {
+58:     for (const capability of capabilities) {
+59:       const dependency = this.#options.runtime.granted.selectedProviders.get(capability);
+60:       if (!dependency) throw new Error(`ADAPTER_DEPENDENCY_MISSING:${adapterId}:${capability}`);
+61:       await this.#start(`${dependency.package.manifest.id}:${dependency.registration.id}`);
+62:     }
+63:   }
+64: 
+65:   #context(adapterId: string, lifecycle: AbortController, registration: AdapterActivationContext['registration'], pluginId: string, config: Readonly<Record<string, unknown>>): AdapterActivationContext {
+66:     const active = (): void => { if (lifecycle.signal.aborted) throw new Error(`ADAPTER_CONTEXT_REVOKED:${adapterId}`); };
+67:     const selectedWait = this.#options.runtime.granted.selectedProviders.get('signal.wait');
+68:     return Object.freeze({ registration, config,
+69:       ...(adapterId === 'kubeclaw.wait-store:waits' && selectedWait?.package.manifest.id === 'kubeclaw.wait-store'
+70:         && selectedWait.registration.id === 'waits' && this.#options.runtime.resolveRetainedWait ? {
+71:         resolveRetainedWait: (source: RetainedWaitSource) => {
+72:           active();
+73:           const wait = this.#options.runtime.resolveRetainedWait!(structuredClone(source));
+74:           active();
+75:           return wait;
+76:         },
+77:       } : {}),
+78:       emit: async (type: string, identity: EventIdentity, payload: Readonly<Record<string, unknown>>) => { active(); if (!type.startsWith(`plugin.${pluginId}.`)) throw new Error(`PLUGIN_EVENT_NAMESPACE_DENIED:${type}`);
+79:         await this.#options.runtime.emitDomainEvent(registration, type, identity, payload); active(); },
+80:       invoke: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, false, options),
+81:       invokeConfidential: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, true, options),
+82:       withCleanup: <T>(operation: (context: AdapterCleanupContext) => Promise<T>) => this.#cleanup(adapterId, lifecycle, active, operation),
+83:     });
+84:   }
+85: 
+86:   async #invokeDependency(adapterId: string, lifecycle: AbortController, active: () => void, capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>> {
+87:     portableJson(request);
+88:     request = structuredClone(request);
+89:     if (runtimeDispatchProfileFields(request, capability).runtimeDispatchProfile) validateContractValue('capabilityInvocation', request);
+90:     active(); const parent = this.#options.invocationContext.getStore();
+91:     parent?.phase.assertActive();
+92:     const deliveryId = dependencyDeliveryId(options, parent);
+93:     const signal = AbortSignal.any([lifecycle.signal, ...(parent ? [parent.signal] : []), ...(options?.signal ? [options.signal] : [])]);
+94:     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+95:     const grant = this.#options.runtime.granted.grants.get(adapterId)?.find((candidate) => candidate.capability === capability);
+96:     if (!grant) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`); authorizeCapabilityInvocation(grant, request);
+97:     const dependency = this.#options.runtime.granted.selectedProviders.get(capability); if (!dependency) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`);
+98:     const dependencyId = `${dependency.package.manifest.id}:${dependency.registration.id}`; const adapter = await this.#start(dependencyId);
+99:     const invocation = dependencyInvocation(adapterId, capability, request, parent, deliveryId);
+100:     const result = confidential || isConfidentialCapability(capability)
+101:       ? await this.#options.runtime.effects.invokeConfidential(adapter, adapterOwner(this.#options.runtime, dependencyId), invocation, signal)
+102:       : await this.#durable(adapter, dependencyId, invocation, signal);
+103:     active(); return result;
+104:   }
+105: 
+106:   async #durable(adapter: AdapterInstance, dependencyId: string, invocation: Parameters<AdapterRuntimeOptions['effects']['invoke']>[2], signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+107:     const receipt = await this.#options.runtime.effects.invoke(adapter, adapterOwner(this.#options.runtime, dependencyId), invocation, signal);
+108:     if (receipt.status !== 'completed') throw new Error(receipt.error?.message ?? 'adapter dependency failed'); return receipt.result ?? {};
+109:   }
+110: 
+111:   async #activate(adapterId: string, lifecycle: AbortController, factory: AdapterFactory, context: AdapterActivationContext): Promise<AdapterInstance> {
+112:     const operation = Promise.resolve().then(() => factory(context)); let timedOut = false;
+113:     try { return await withAdapterStartupTimeout(adapterId, 'activate', this.#options.runtime.shutdownTimeoutMs, () => operation, (error) => { timedOut = true; lifecycle.abort(error); }); }
+114:     catch (error) { if (timedOut) void operation.then((late) => shutdownLateAdapter(late, this.#options.runtime.shutdownTimeoutMs), () => undefined); throw error; }
+115:   }
+116: 
+117:   #wrap(raw: AdapterInstance, lifecycle: AbortController, adapterId: string): AdapterInstance {
+118:     return { ready: () => raw.ready(), invoke: async (invocation) => {
+119:       const signal = AbortSignal.any([invocation.signal, lifecycle.signal]);
+120:       const phase = new AdapterInvocationPhase(lifecycle.signal, this.#options.runtime.shutdownTimeoutMs);
+121:       const request = structuredClone(invocation.request);
+122:       try {
+123:         return await this.#options.invocationContext.run({ adapterId, phase, signal, request, confidential: invocation.confidential === true, attempt: request.attempt, executionKey: request.idempotencyKey },
+124:         () => raw.invoke({ ...invocation, signal }));
+125:       } finally { phase.close(); }
+126:     }, ...(raw.receipt ? { receipt: async (request) => {
+127:       request = structuredClone(request);
+128:       const phase = new AdapterInvocationPhase(lifecycle.signal, this.#options.runtime.shutdownTimeoutMs);
+129:       try {
+130:         phase.assertActive();
+131:         const result = await this.#options.invocationContext.run({ adapterId, phase, signal: lifecycle.signal, request, confidential: false, attempt: request.attempt, executionKey: request.idempotencyKey },
+132:           () => raw.receipt!(structuredClone(request)));
+133:         phase.assertActive();return result;
+134:       } finally { phase.close(); }
+135:     } } : {}), shutdown: (signal) => raw.shutdown(signal) };
+136:   }
+137: 
+138:   async #cleanup<T>(adapterId: string, lifecycle: AbortController, active: () => void,
+139:     operation: (context: AdapterCleanupContext) => Promise<T>): Promise<T> {
+140:     active();
+141:     const parent = this.#options.invocationContext.getStore();
+142:     if (!parent || parent.adapterId !== adapterId) throw new Error('ADAPTER_CLEANUP_INVOCATION_REQUIRED');
+143:     return parent.phase.cleanup(signal => {
+144:       const owner = { ...parent, signal };
+145:       const invoke = (capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions) =>
+146:         this.#options.invocationContext.run(owner, () => this.#invokeDependency(adapterId, lifecycle, active, capability, request, confidential, options));
+147:       const context: AdapterCleanupContext = Object.freeze({ signal,
+148:         invoke: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => invoke(capability, request, false, options),
+149:         invokeConfidential: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => invoke(capability, request, true, options),
+150:       });
+151:       return this.#options.invocationContext.run(owner, () => operation(context));
+152:     });
+153:   }
+154: 
+155:   async #ready(adapterId: string, instance: AdapterInstance, lifecycle: AbortController): Promise<void> {
+156:     if (this.#options.stopping() || lifecycle.signal.aborted) throw new Error('ADAPTER_RUNTIME_STOPPING');
+157:     try { await withAdapterStartupTimeout(adapterId, 'ready', this.#options.runtime.shutdownTimeoutMs, () => instance.ready(), (error) => lifecycle.abort(error)); }
+158:     catch (error) { await this.#teardownFailed(adapterId, instance, lifecycle, error); }
+159:     if (this.#options.stopping() || lifecycle.signal.aborted) throw new Error('ADAPTER_RUNTIME_STOPPING');
+160:   }
+161: 
+162:   async #teardownFailed(adapterId: string, instance: AdapterInstance, lifecycle: AbortController, error: unknown): Promise<never> {
+163:     lifecycle.abort(error); this.#instances.delete(adapterId); this.#controllers.delete(adapterId); this.#options.pendingInstances.delete(adapterId); this.#options.pendingControllers.delete(adapterId);
+164:     const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), this.#options.runtime.shutdownTimeoutMs);
+165:     try { await this.#options.shutdown(instance, controller.signal); }
+166:     catch { /* INTENTIONAL_NONCRITICAL(readiness_teardown_failed): Preserve the readiness failure after bounded teardown. */ }
+167:     finally { clearTimeout(timer); }
+168:     throw error;
+169:   }
+170: 
+171:   async #rollback(): Promise<void> {
+172:     this.#controllers.forEach((controller) => controller.abort(new Error('ADAPTER_ACTIVATION_ROLLED_BACK')));
+173:     const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), this.#options.runtime.shutdownTimeoutMs);
+174:     try { for (const instance of [...this.#instances.values()].reverse()) { try { await this.#options.shutdown(instance, controller.signal); }
+175:       catch { /* INTENTIONAL_NONCRITICAL(adapter_rollback_failed): Preserve activation failure while attempting rollback. */ } } }
+176:     finally { clearTimeout(timer); this.#starting.clear(); for (const id of this.#controllers.keys()) { this.#options.pendingControllers.delete(id); this.#options.pendingInstances.delete(id); } }
+177:   }
+178: }
+179: 
+180: function dependencyDeliveryId(options: AdapterDependencyOptions | undefined, parent: AdapterInvocationOwner | undefined): string | undefined {
+181:   const value = options?.deliveryId;
+182:   if (value !== undefined && (typeof value !== 'string' || !value.trim() || value.length > 512 || !parent)) throw new Error('ADAPTER_DELIVERY_OWNER_REQUIRED');
+183:   return value;
+184: }
+185: 
+186: function dependencyInvocation(adapterId: string, capability: string, request: CapabilityInvocation, parent: AdapterInvocationOwner | undefined, deliveryId: string | undefined) {
+187:   const attempt = parent?.attempt ?? { runId: `adapter:${adapterId}`, stageId: 'adapter-activation', attemptId: `adapter:${adapterId}`, attemptNumber: 1 };
+188:   const owner = parent ? `:parent:${requestDigest({ operation: 'owner', resource: { type: 'effect.key', canonicalId: parent.executionKey }, payload: { attempt: parent.attempt } })}` : '';
+189:   const dependencyParent = parent ? {request: parent.request, confidential: parent.confidential} : undefined;
+190:   const {key: idempotencyKey, scope} = portableDependencyKey(adapterId, capability, request, dependencyParent, deliveryId);
+191:   return { idempotencyKey, dependencyIdentity: {prefix: `adapter:${adapterId}:${capability}:`, suffix: owner, scope, currentKey: idempotencyKey,
+192:     ...(dependencyParent ? {parent: dependencyParent} : {})}, attempt, capability,
+193:     operation: request.operation, resource: request.resource, payload: request.payload, ...runtimeDispatchProfileFields(request), ...(deliveryId === undefined ? {} : { deliveryId }) };
+194: }
+SOURCE skills/nova/core/lifecycle/recovery.ts SHA256 5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8
+1: import type {
+2:   LifecycleEvent,
+3:   PipelineDefinition,
+4:   PluginDomainEvent,
+5: } from '@kubeclaw/plugin-sdk';
+6: import type { JournalRecord } from '../state/journal.ts';
+7: import type { StageRuntimeState } from './reducer.ts';
+8: import { FrozenMap } from '@kubeclaw/plugin-foundation/registry/frozen-map';
+9: import { applyRecoveryEvent, initialStageStates, resetInterruptedStages } from './recovery-state.ts';
+10: import { repairIdentityContexts } from './repair-projection.ts';
+11: 
+12: function deepFreeze<T>(value: T): T {
+13:   if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value;
+14:   for (const nested of Object.values(value as Record<string, unknown>)) deepFreeze(nested);
+15:   return Object.freeze(value);
+16: }
+17: 
+18: export function recoverStageStates(
+19:   definition: PipelineDefinition,
+20:   records: readonly JournalRecord<LifecycleEvent | PluginDomainEvent>[],
+21:   runId: string,
+22:   orchestratorIssuerId: string,
+23: ): ReadonlyMap<string, StageRuntimeState> {
+24:   const states = initialStageStates(definition);
+25:   const identities = repairIdentityContexts(records, runId);
+26:   for (const record of records) {
+27:     const event = record.entry;
+28:     if (event.schemaVersion !== 'lifecycle-event.v2' || event.identity.runId !== runId) continue;
+29:     applyRecoveryEvent(definition, states, event, orchestratorIssuerId, identities.get(event));
+30:   }
+31:   resetInterruptedStages(states);
+32:   return new FrozenMap(
+33:     [...states].map(([stageId, state]) => [stageId, deepFreeze(structuredClone(state))]),
+34:   );
+35: }
+36: 
+37: /** A wait projection may be missing after a committed attempt result. Fold the
+38:  * same reducer to recover its authoritative creation record and timestamp. */
+39: export function recoverWaitCreation(
+40:   definition: PipelineDefinition,
+41:   records: readonly JournalRecord<LifecycleEvent | PluginDomainEvent>[],
+42:   runId: string,
+43:   orchestratorIssuerId: string,
+44:   waitId: string,
+45: ): JournalRecord<LifecycleEvent | PluginDomainEvent> | undefined {
+46:   const states = initialStageStates(definition);
+47:   const identities = repairIdentityContexts(records, runId);
+48:   let created: JournalRecord<LifecycleEvent | PluginDomainEvent> | undefined;
+49:   for (const record of records) {
+50:     const event = record.entry;
+51:     if (event.schemaVersion !== 'lifecycle-event.v2' || event.identity.runId !== runId) continue;
+52:     const stageId = event.identity.stageId;
+53:     const previous = stageId ? states.get(stageId)?.wait?.waitId : undefined;
+54:     applyRecoveryEvent(definition, states, event, orchestratorIssuerId, identities.get(event));
+55:     if (stageId && previous !== waitId && states.get(stageId)?.wait?.waitId === waitId) created = record;
+56:   }
+57:   return created;
+58: }

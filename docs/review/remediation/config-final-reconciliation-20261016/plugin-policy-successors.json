@@ -1,0 +1,817 @@
+{
+  "scope": "Exact17 original secret-reference/observer policy source lanes, NOT implementation or acceptance",
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "counts": {
+    "SUPPLIED_SECRET_REFERENCE_CENTRAL_RECEIVING_OPEN": 2,
+    "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN": 15
+  },
+  "rows": [
+    {
+      "id": "RT-e6be3d6f3f229ce6",
+      "original": "D228#/rows/602",
+      "originalObjectSha256": "9c3ff62396eddf6768057216062bf562008d8ade0738c0387e4abd8a6082f864",
+      "class": "secret-reference",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-e6be3d6f3f229ce6-CONTRACT",
+        "RT-e6be3d6f3f229ce6-ALTERNATE",
+        "RT-e6be3d6f3f229ce6-BINDING",
+        "RT-e6be3d6f3f229ce6-MUTANT"
+      ],
+      "owner": "kubeclaw.secret-resolver",
+      "registration": "kubeclaw.secret-resolver:secrets",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "SUPPLIED_SECRET_REFERENCE_CENTRAL_RECEIVING_OPEN",
+      "originalField": "environment",
+      "currentAuthor": {
+        "platformPointer": "/adapters/kubeclaw.secret-resolver:secrets/environment"
+      },
+      "schema": {
+        "path": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+        "sha256": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629",
+        "pointer": "/properties/environment",
+        "fragmentSha256": "66cb8451afa578bfdaf385b6e68a1601cddd308ec68560162800193b36f0c792"
+      },
+      "activation": {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+        "anchor": "const names = Object.freeze({ ...(mapping as Record<string, string>) });",
+        "lines": [
+          6
+        ]
+      },
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+          "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+          "anchor": "const environmentName = names[request.resource.canonicalId];",
+          "lines": [
+            15
+          ]
+        },
+        {
+          "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+          "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+          "anchor": "const value = process.env[environmentName];",
+          "lines": [
+            17
+          ]
+        }
+      ],
+      "failure": {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+        "anchor": "SECRET_UNAVAILABLE:",
+        "lines": [
+          18
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selectedAdapterConfigurations(platform.adapters",
+        "lines": [
+          47
+        ]
+      }
+    },
+    {
+      "id": "RT-d67da1eec2fca55b",
+      "original": "D228#/rows/603",
+      "originalObjectSha256": "5281114cdf047776ed02286fe97ef439b41d1c9988e55b1a76a2929b6b8c1a82",
+      "class": "secret-reference",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-e6be3d6f3f229ce6-CONTRACT",
+        "RT-e6be3d6f3f229ce6-ALTERNATE",
+        "RT-e6be3d6f3f229ce6-BINDING",
+        "RT-e6be3d6f3f229ce6-MUTANT"
+      ],
+      "owner": "kubeclaw.secret-resolver",
+      "registration": "kubeclaw.secret-resolver:secrets",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "SUPPLIED_SECRET_REFERENCE_CENTRAL_RECEIVING_OPEN",
+      "originalField": "environment.{key}",
+      "currentAuthor": {
+        "platformPointer": "/adapters/kubeclaw.secret-resolver:secrets/environment"
+      },
+      "schema": {
+        "path": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+        "sha256": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629",
+        "pointer": "/properties/environment/additionalProperties",
+        "fragmentSha256": "56007490cb3143b47f7489787bfca09cb93fccb92b9d28f345878b13e7ad15b2"
+      },
+      "activation": {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+        "anchor": "const names = Object.freeze({ ...(mapping as Record<string, string>) });",
+        "lines": [
+          6
+        ]
+      },
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+          "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+          "anchor": "const environmentName = names[request.resource.canonicalId];",
+          "lines": [
+            15
+          ]
+        },
+        {
+          "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+          "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+          "anchor": "const value = process.env[environmentName];",
+          "lines": [
+            17
+          ]
+        }
+      ],
+      "failure": {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+        "anchor": "SECRET_UNAVAILABLE:",
+        "lines": [
+          18
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selectedAdapterConfigurations(platform.adapters",
+        "lines": [
+          47
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-SUBSCRIPTIONS",
+      "original": "D228#/rows/1415",
+      "originalObjectSha256": "c55adde9925b6d260b7494bbc4f48eff8dcbd2d26d7a6b6e0512413f127dc933",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-SUBSCRIPTIONS-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-SUBSCRIPTIONS-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-SUBSCRIPTIONS-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:ingester",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "subscriptions",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/0/subscriptions",
+        "valueSha256": "e4ed715b2b5f3d9c59f7040b000e00a4bde6d1cf304a50c00d49e922baf49256"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "!subscriptions.includes(event.type)",
+          "lines": [
+            86
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function ingest(",
+        "lines": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MODE",
+      "original": "D228#/rows/1416",
+      "originalObjectSha256": "31a64944bb5c23686f2806eb64510fa70ac8edeae75ff6ba07fcd4a7021ae516",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MODE-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MODE-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MODE-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:ingester",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.mode",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/0/failurePolicy/mode",
+        "valueSha256": "d0d30cdf76fb39872e5095c1ce43daffdb845a2204733a9c5b22fd4ba0bb46af"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "policy.mode === 'required'",
+          "lines": [
+            90
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function ingest(",
+        "lines": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MAXATTEMPTS",
+      "original": "D228#/rows/1417",
+      "originalObjectSha256": "25a09832254c387c88096e5a87697a2cce9024caec521635478b3aa8f6f73247",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MAXATTEMPTS-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MAXATTEMPTS-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MAXATTEMPTS-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:ingester",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.maxAttempts",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/0/failurePolicy/maxAttempts",
+        "valueSha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "prior >= policy.maxAttempts",
+          "lines": [
+            101
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function ingest(",
+        "lines": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-BACKOFFMS",
+      "original": "D228#/rows/1418",
+      "originalObjectSha256": "f98f2b99d4a36a428ab9d3f1c386682f32cf464c4724519aac330f18cbbf43a2",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-BACKOFFMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-BACKOFFMS-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-BACKOFFMS-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:ingester",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.backoffMs",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/0/failurePolicy/backoffMs",
+        "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "await this.#wait(policy.backoffMs)",
+          "lines": [
+            106
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function ingest(",
+        "lines": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-TIMEOUTMS",
+      "original": "D228#/rows/1419",
+      "originalObjectSha256": "eb5fd6c950ee9deb60d2ed16ce47b2cf8f799542744b1e23e5f6657f7facd46d",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-TIMEOUTMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-TIMEOUTMS-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-TIMEOUTMS-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:ingester",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.timeoutMs",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/0/failurePolicy/timeoutMs",
+        "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "sha256": "9ddcb2ab26128ebace762e1a8d34ac85bf28aa3c640d89b0ae08a0d07d010deb",
+          "anchor": "const timeoutMs = entry.registration.failurePolicy.timeoutMs;",
+          "lines": [
+            20
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function ingest(",
+        "lines": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-SUBSCRIPTIONS",
+      "original": "D228#/rows/1420",
+      "originalObjectSha256": "14fdee6569311f9689a1a83e953bce7d40b602f06899ee33ccb204b952b90278",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-SUBSCRIPTIONS-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-SUBSCRIPTIONS-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-SUBSCRIPTIONS-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:evidence",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "subscriptions",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/1/subscriptions",
+        "valueSha256": "5ab3eb71b19017d072a5303bcf93c015be5db0d076b152b4fb835098c4faf6f5"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "!subscriptions.includes(event.type)",
+          "lines": [
+            86
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function recordEvidence(",
+        "lines": [
+          25
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MODE",
+      "original": "D228#/rows/1421",
+      "originalObjectSha256": "54805314a4fb9a27bb22e26026f5610b3b8326660f005c713743046383557b18",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MODE-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MODE-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MODE-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:evidence",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.mode",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/1/failurePolicy/mode",
+        "valueSha256": "d0d30cdf76fb39872e5095c1ce43daffdb845a2204733a9c5b22fd4ba0bb46af"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "policy.mode === 'required'",
+          "lines": [
+            90
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function recordEvidence(",
+        "lines": [
+          25
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MAXATTEMPTS",
+      "original": "D228#/rows/1422",
+      "originalObjectSha256": "42b39b6354c444cf183bc6477968b2111dcfea8f666cab50059e682e5acb4170",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MAXATTEMPTS-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MAXATTEMPTS-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MAXATTEMPTS-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:evidence",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.maxAttempts",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/1/failurePolicy/maxAttempts",
+        "valueSha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "prior >= policy.maxAttempts",
+          "lines": [
+            101
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function recordEvidence(",
+        "lines": [
+          25
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-BACKOFFMS",
+      "original": "D228#/rows/1423",
+      "originalObjectSha256": "9dbdb8e6693b177d10ac777fb50e0c4218c5fef7c168df3b9b51448cdfb3c21e",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-BACKOFFMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-BACKOFFMS-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-BACKOFFMS-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:evidence",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.backoffMs",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/1/failurePolicy/backoffMs",
+        "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "await this.#wait(policy.backoffMs)",
+          "lines": [
+            106
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function recordEvidence(",
+        "lines": [
+          25
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-TIMEOUTMS",
+      "original": "D228#/rows/1424",
+      "originalObjectSha256": "11db67f1df2376e4fad128efdff192d73fa5edc0816b0feb7321d1a3c09f3dda",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-TIMEOUTMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-TIMEOUTMS-ALT",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-TIMEOUTMS-MUTANT"
+      ],
+      "owner": "kubeclaw.agent-observability",
+      "registration": "kubeclaw.agent-observability:evidence",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.timeoutMs",
+      "currentAuthor": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "pointer": "/observers/1/failurePolicy/timeoutMs",
+        "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "sha256": "9ddcb2ab26128ebace762e1a8d34ac85bf28aa3c640d89b0ae08a0d07d010deb",
+          "anchor": "const timeoutMs = entry.registration.failurePolicy.timeoutMs;",
+          "lines": [
+            20
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "anchor": "export async function recordEvidence(",
+        "lines": [
+          25
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-SUBSCRIPTIONS",
+      "original": "D228#/rows/1435",
+      "originalObjectSha256": "c78eb4045740490829d5cd59bbb9cd529bd6b463079b0455e9a9b3eaac67caa2",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-SUBSCRIPTIONS-MISSING",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-SUBSCRIPTIONS-ALT",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-SUBSCRIPTIONS-MUTANT"
+      ],
+      "owner": "kubeclaw.telemetry-observer",
+      "registration": "kubeclaw.telemetry-observer:telemetry",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "subscriptions",
+      "currentAuthor": {
+        "path": "skills/common/plugins/telemetry-observer/plugin.json",
+        "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+        "pointer": "/observers/0/subscriptions",
+        "valueSha256": "0798f5a311b47307ad033c1b2bd5c88036957fbfa9530ea460625f792d4accad"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "!subscriptions.includes(event.type)",
+          "lines": [
+            86
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+        "anchor": "export async function observe(",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MODE",
+      "original": "D228#/rows/1436",
+      "originalObjectSha256": "d8b1d4edd46f3f76a64b83fd2ec4fa1c0d78ba245a9a999e271058b5dc182a89",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MODE-MISSING",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MODE-ALT",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MODE-MUTANT"
+      ],
+      "owner": "kubeclaw.telemetry-observer",
+      "registration": "kubeclaw.telemetry-observer:telemetry",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.mode",
+      "currentAuthor": {
+        "path": "skills/common/plugins/telemetry-observer/plugin.json",
+        "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+        "pointer": "/observers/0/failurePolicy/mode",
+        "valueSha256": "d0d30cdf76fb39872e5095c1ce43daffdb845a2204733a9c5b22fd4ba0bb46af"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "policy.mode === 'required'",
+          "lines": [
+            90
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+        "anchor": "export async function observe(",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MAXATTEMPTS",
+      "original": "D228#/rows/1437",
+      "originalObjectSha256": "53ff94037fa8e1e1b0fa30f93624f3c3e98b129d7be48ab4e7b086ccc471a307",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MAXATTEMPTS-MISSING",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MAXATTEMPTS-ALT",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MAXATTEMPTS-MUTANT"
+      ],
+      "owner": "kubeclaw.telemetry-observer",
+      "registration": "kubeclaw.telemetry-observer:telemetry",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.maxAttempts",
+      "currentAuthor": {
+        "path": "skills/common/plugins/telemetry-observer/plugin.json",
+        "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+        "pointer": "/observers/0/failurePolicy/maxAttempts",
+        "valueSha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "prior >= policy.maxAttempts",
+          "lines": [
+            101
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+        "anchor": "export async function observe(",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-BACKOFFMS",
+      "original": "D228#/rows/1438",
+      "originalObjectSha256": "46f80e8739b391ba17d01712e15ac8be6cd41cb7c7a319a65a9193d96807af28",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-BACKOFFMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-BACKOFFMS-ALT",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-BACKOFFMS-MUTANT"
+      ],
+      "owner": "kubeclaw.telemetry-observer",
+      "registration": "kubeclaw.telemetry-observer:telemetry",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.backoffMs",
+      "currentAuthor": {
+        "path": "skills/common/plugins/telemetry-observer/plugin.json",
+        "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+        "pointer": "/observers/0/failurePolicy/backoffMs",
+        "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "await this.#wait(policy.backoffMs)",
+          "lines": [
+            106
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+        "anchor": "export async function observe(",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-TIMEOUTMS",
+      "original": "D228#/rows/1439",
+      "originalObjectSha256": "51ab7a7629223bbdacbb15f3c81fb5c0961cec36fed9ebe652fbf1e0f152c9d7",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-TIMEOUTMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-TIMEOUTMS-ALT",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-TIMEOUTMS-MUTANT"
+      ],
+      "owner": "kubeclaw.telemetry-observer",
+      "registration": "kubeclaw.telemetry-observer:telemetry",
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "originalField": "failurePolicy.timeoutMs",
+      "currentAuthor": {
+        "path": "skills/common/plugins/telemetry-observer/plugin.json",
+        "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+        "pointer": "/observers/0/failurePolicy/timeoutMs",
+        "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "sha256": "9ddcb2ab26128ebace762e1a8d34ac85bf28aa3c640d89b0ae08a0d07d010deb",
+          "anchor": "const timeoutMs = entry.registration.failurePolicy.timeoutMs;",
+          "lines": [
+            20
+          ]
+        }
+      ],
+      "entrypoint": {
+        "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+        "anchor": "export async function observe(",
+        "lines": [
+          24
+        ]
+      }
+    }
+  ],
+  "constraint": "All17 central receiving obligations remain OPEN. Secret bindings are references only; credential bytes stay external and ENV is read at invocation, not snapshotted. Observer policy remains manifest-authored, not a central Core author. Empty observer config shapes do not erase manifest policies. Source navigation is not effects/history/native or independent acceptance.",
+  "originalConfigurationCapture": {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+    "anchor": "configuration: runtime.configuration",
+    "lines": [
+      131
+    ]
+  },
+  "originalRegistrationCapture": {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+    "anchor": "registration: entry.registration",
+    "lines": [
+      127,
+      128,
+      129
+    ]
+  },
+  "recovery": {
+    "path": "skills/nova/core/execution/engine-run.ts",
+    "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+    "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+    "lines": [
+      66,
+      94
+    ]
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN"
+}

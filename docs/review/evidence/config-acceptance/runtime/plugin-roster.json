@@ -1,0 +1,931 @@
+[
+  {
+    "id": "kubeclaw.api-flow",
+    "path": "skills/buster/plugins/api-flow/plugin.json",
+    "sha256": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.api-flow:flow",
+        "type": null,
+        "contractId": "kubeclaw.api-flow@1",
+        "module": "skills/buster/plugins/api-flow/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/api-flow/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.axe",
+    "path": "skills/buster/plugins/axe/plugin.json",
+    "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.axe:axe",
+        "type": null,
+        "contractId": "kubeclaw.axe@1",
+        "module": "skills/buster/plugins/axe/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/axe/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.container-build",
+    "path": "skills/buster/plugins/container-build/plugin.json",
+    "sha256": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.container-build:buildkit",
+        "type": null,
+        "contractId": "kubeclaw.container-build@1",
+        "module": "skills/buster/plugins/container-build/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/container-build/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.coverage-budget",
+    "path": "skills/buster/plugins/coverage-budget/plugin.json",
+    "sha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.coverage-budget:lcov",
+        "type": null,
+        "contractId": "kubeclaw.coverage-budget@1",
+        "module": "skills/buster/plugins/coverage-budget/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/coverage-budget/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.demo-auth-smoke",
+    "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+    "sha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.demo-auth-smoke:session",
+        "type": null,
+        "contractId": "kubeclaw.demo-auth-smoke@1",
+        "module": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.direct-command",
+    "path": "skills/buster/plugins/direct-command/plugin.json",
+    "sha256": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.direct-command:command",
+        "type": null,
+        "contractId": "kubeclaw.direct-command@1",
+        "module": "skills/buster/plugins/direct-command/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/direct-command/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.http",
+    "path": "skills/buster/plugins/http/plugin.json",
+    "sha256": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.http:request",
+        "type": null,
+        "contractId": "kubeclaw.http@1",
+        "module": "skills/buster/plugins/http/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/http/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.junit-report",
+    "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+    "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77",
+    "registrations": []
+  },
+  {
+    "id": "kubeclaw.kubernetes-fixture",
+    "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+    "sha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.kubernetes-fixture:deployment",
+        "type": null,
+        "contractId": "kubeclaw.kubernetes-fixture@1",
+        "module": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.lighthouse",
+    "path": "skills/buster/plugins/lighthouse/plugin.json",
+    "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.lighthouse:lighthouse",
+        "type": null,
+        "contractId": "kubeclaw.lighthouse@1",
+        "module": "skills/buster/plugins/lighthouse/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/lighthouse/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.openapi",
+    "path": "skills/buster/plugins/openapi/plugin.json",
+    "sha256": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.openapi:operations",
+        "type": null,
+        "contractId": "kubeclaw.openapi@1",
+        "module": "skills/buster/plugins/openapi/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/openapi/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.playwright",
+    "path": "skills/buster/plugins/playwright/plugin.json",
+    "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.playwright:playwright",
+        "type": null,
+        "contractId": "kubeclaw.playwright@1",
+        "module": "skills/buster/plugins/playwright/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/playwright/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.security-providers",
+    "path": "skills/buster/plugins/security-providers/plugin.json",
+    "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.security-providers:headers",
+        "type": null,
+        "contractId": "kubeclaw.security-headers@1",
+        "module": "skills/buster/plugins/security-providers/src/headers.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/security-providers/schemas/headers.schema.json"
+      },
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.security-providers:dependency-trivy",
+        "type": null,
+        "contractId": "kubeclaw.dependency-scan-trivy@1",
+        "module": "skills/buster/plugins/security-providers/src/dependency.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/security-providers/schemas/dependency.schema.json"
+      },
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.security-providers:image-trivy",
+        "type": null,
+        "contractId": "kubeclaw.image-scan-trivy@1",
+        "module": "skills/buster/plugins/security-providers/src/image.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/security-providers/schemas/image.schema.json"
+      },
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.security-providers:kubernetes-policy",
+        "type": null,
+        "contractId": "kubeclaw.kubernetes-policy-security@1",
+        "module": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json"
+      },
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.security-providers:kubernetes-runtime",
+        "type": null,
+        "contractId": "kubeclaw.kubernetes-runtime-security@1",
+        "module": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.size-budget",
+    "path": "skills/buster/plugins/size-budget/plugin.json",
+    "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.size-budget:artifact",
+        "type": null,
+        "contractId": "kubeclaw.size-budget@1",
+        "module": "skills/buster/plugins/size-budget/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/size-budget/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.tailscale-exposure",
+    "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+    "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.tailscale-exposure:exposure",
+        "type": null,
+        "contractId": "kubeclaw.tailscale-exposure@1",
+        "module": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.visual",
+    "path": "skills/buster/plugins/visual/plugin.json",
+    "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90",
+    "registrations": [
+      {
+        "kind": "testProviders",
+        "id": "kubeclaw.visual:visual",
+        "type": null,
+        "contractId": "kubeclaw.visual@1",
+        "module": "skills/buster/plugins/visual/src/provider.js",
+        "export": "provider",
+        "schema": "skills/buster/plugins/visual/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.agent-observability",
+    "path": "skills/common/plugins/agent-observability/plugin.json",
+    "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+    "registrations": [
+      {
+        "kind": "observers",
+        "id": "kubeclaw.agent-observability:ingester",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/agent-observability/src/observers.ts",
+        "export": "ingest",
+        "schema": "skills/common/plugins/agent-observability/schemas/config.schema.json"
+      },
+      {
+        "kind": "observers",
+        "id": "kubeclaw.agent-observability:evidence",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/agent-observability/src/observers.ts",
+        "export": "recordEvidence",
+        "schema": "skills/common/plugins/agent-observability/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.artifact-store",
+    "path": "skills/common/plugins/artifact-store/plugin.json",
+    "sha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.artifact-store:artifact-store",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/artifact-store/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.command-runner",
+    "path": "skills/common/plugins/command-runner/plugin.json",
+    "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.command-runner:command",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/command-runner/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/command-runner/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.git-workspace",
+    "path": "skills/common/plugins/git-workspace/plugin.json",
+    "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.git-workspace:git",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/git-workspace/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.network-http",
+    "path": "skills/common/plugins/network-http/plugin.json",
+    "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.network-http:http",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/network-http/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/network-http/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.notification-observer",
+    "path": "skills/common/plugins/notification-observer/plugin.json",
+    "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+    "registrations": [
+      {
+        "kind": "observers",
+        "id": "kubeclaw.notification-observer:notifications",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/notification-observer/src/observer.ts",
+        "export": "observe",
+        "schema": "skills/common/plugins/notification-observer/schemas/config.schema.json"
+      },
+      {
+        "kind": "observers",
+        "id": "kubeclaw.notification-observer:preview-delivery",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/notification-observer/src/observer.ts",
+        "export": "deliverPreview",
+        "schema": "skills/common/plugins/notification-observer/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.openclaw-agent-events",
+    "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+    "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.openclaw-agent-events:source",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.operator-messaging",
+    "path": "skills/common/plugins/operator-messaging/plugin.json",
+    "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.operator-messaging:operator",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/operator-messaging/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.redis-transport",
+    "path": "skills/common/plugins/redis-transport/plugin.json",
+    "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.redis-transport:publisher",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "export": "activatePublisher",
+        "schema": "skills/common/plugins/redis-transport/schemas/config.schema.json"
+      },
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.redis-transport:telemetry",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "export": "activateTelemetry",
+        "schema": "skills/common/plugins/redis-transport/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.runtime-dispatch",
+    "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+    "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.runtime-dispatch:runtime",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json"
+      },
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.runtime-dispatch:openclaw",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.secret-resolver",
+    "path": "skills/common/plugins/secret-resolver/plugin.json",
+    "sha256": "c36463ec4caa7adc8334d5adc6ac362d8a6fa5763e9a3b1ff03bf044024ed347",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.secret-resolver:secrets",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/secret-resolver/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.state-store",
+    "path": "skills/common/plugins/state-store/plugin.json",
+    "sha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.state-store:state",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/state-store/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/state-store/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.telemetry-observer",
+    "path": "skills/common/plugins/telemetry-observer/plugin.json",
+    "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+    "registrations": [
+      {
+        "kind": "observers",
+        "id": "kubeclaw.telemetry-observer:telemetry",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "export": "observe",
+        "schema": "skills/common/plugins/telemetry-observer/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.telemetry-store",
+    "path": "skills/common/plugins/telemetry-store/plugin.json",
+    "sha256": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.telemetry-store:telemetry",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/telemetry-store/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.transport-publisher",
+    "path": "skills/common/plugins/transport-publisher/plugin.json",
+    "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.transport-publisher:publisher",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/transport-publisher/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.wait-store",
+    "path": "skills/common/plugins/wait-store/plugin.json",
+    "sha256": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.wait-store:waits",
+        "type": null,
+        "contractId": null,
+        "module": "skills/common/plugins/wait-store/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/common/plugins/wait-store/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.architecture-validator",
+    "path": "skills/nova/plugins/architecture-validator/plugin.json",
+    "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.architecture-validator:architecture",
+        "type": "kubeclaw.validate.architecture",
+        "contractId": null,
+        "module": "skills/nova/plugins/architecture-validator/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/architecture-validator/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.blueprint-sync",
+    "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+    "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.blueprint-sync:sync",
+        "type": "kubeclaw.generate.blueprint-sync",
+        "contractId": null,
+        "module": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.buster-quality-gate",
+    "path": "skills/nova/plugins/buster-quality-gate/plugin.json",
+    "sha256": "19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.buster-quality-gate:quality",
+        "type": "kubeclaw.test.quality-evaluation",
+        "contractId": null,
+        "module": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.case-study",
+    "path": "skills/nova/plugins/case-study/plugin.json",
+    "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.case-study:case-study",
+        "type": "kubeclaw.report.case-study",
+        "contractId": null,
+        "module": "skills/nova/plugins/case-study/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/case-study/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.delivery-lint",
+    "path": "skills/nova/plugins/delivery-lint/plugin.json",
+    "sha256": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.delivery-lint:delivery-lint",
+        "type": "kubeclaw.lint.delivery",
+        "contractId": null,
+        "module": "skills/nova/plugins/delivery-lint/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/delivery-lint/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.demo-handoff",
+    "path": "skills/nova/plugins/demo-handoff/plugin.json",
+    "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.demo-handoff:candidate",
+        "type": "kubeclaw.demo.candidate",
+        "contractId": null,
+        "module": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
+      },
+      {
+        "kind": "stages",
+        "id": "kubeclaw.demo-handoff:delivery",
+        "type": "kubeclaw.demo.delivery",
+        "contractId": null,
+        "module": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
+      },
+      {
+        "kind": "stages",
+        "id": "kubeclaw.demo-handoff:ready",
+        "type": "kubeclaw.demo.ready",
+        "contractId": null,
+        "module": "skills/nova/plugins/demo-handoff/src/ready.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
+      },
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.demo-handoff:handoff",
+        "type": null,
+        "contractId": null,
+        "module": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.human-approval",
+    "path": "skills/nova/plugins/human-approval/plugin.json",
+    "sha256": "a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.human-approval:approval",
+        "type": "kubeclaw.decision.human-approval",
+        "contractId": null,
+        "module": "skills/nova/plugins/human-approval/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/human-approval/schemas/config.schema.json"
+      },
+      {
+        "kind": "stages",
+        "id": "kubeclaw.human-approval:architecture-approval",
+        "type": "kubeclaw.decision.architecture-approval",
+        "contractId": null,
+        "module": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/human-approval/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.implementation-agent",
+    "path": "skills/nova/plugins/implementation-agent/plugin.json",
+    "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.implementation-agent:implementation",
+        "type": "kubeclaw.agent.implementation",
+        "contractId": null,
+        "module": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/implementation-agent/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.lint",
+    "path": "skills/nova/plugins/lint/plugin.json",
+    "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.lint:pre-check",
+        "type": "kubeclaw.lint.pre-check",
+        "contractId": null,
+        "module": "skills/nova/plugins/lint/src/stage.ts",
+        "export": "executePreCheck",
+        "schema": "skills/nova/plugins/lint/schemas/config.schema.json"
+      },
+      {
+        "kind": "stages",
+        "id": "kubeclaw.lint:full",
+        "type": "kubeclaw.lint.full",
+        "contractId": null,
+        "module": "skills/nova/plugins/lint/src/stage.ts",
+        "export": "executeFull",
+        "schema": "skills/nova/plugins/lint/schemas/config.schema.json"
+      },
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.lint:executor",
+        "type": null,
+        "contractId": null,
+        "module": "skills/nova/plugins/lint/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/nova/plugins/lint/schemas/adapter-config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.pipeline-review",
+    "path": "skills/nova/plugins/pipeline-review/plugin.json",
+    "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.pipeline-review:review",
+        "type": "kubeclaw.report.pipeline-review",
+        "contractId": null,
+        "module": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/pipeline-review/schemas/config.schema.json"
+      },
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.pipeline-review:evidence",
+        "type": null,
+        "contractId": null,
+        "module": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "export": "activate",
+        "schema": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.preflight-contract",
+    "path": "skills/nova/plugins/preflight-contract/plugin.json",
+    "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.preflight-contract:validate",
+        "type": "kubeclaw.validate.preflight-contract",
+        "contractId": null,
+        "module": "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/preflight-contract/schemas/config.schema.json"
+      },
+      {
+        "kind": "stages",
+        "id": "kubeclaw.preflight-contract:source",
+        "type": "kubeclaw.validate.source-preflight",
+        "contractId": null,
+        "module": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/preflight-contract/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.prism-design",
+    "path": "skills/nova/plugins/prism-design/plugin.json",
+    "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.prism-design:design",
+        "type": "kubeclaw.design.prism",
+        "contractId": null,
+        "module": "skills/nova/plugins/prism-design/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/prism-design/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.project-summary",
+    "path": "skills/nova/plugins/project-summary/plugin.json",
+    "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.project-summary:summary",
+        "type": "kubeclaw.report.project-summary",
+        "contractId": null,
+        "module": "skills/nova/plugins/project-summary/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/project-summary/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.remote-test-gate",
+    "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+    "sha256": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.remote-test-gate:plan",
+        "type": null,
+        "contractId": null,
+        "module": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json"
+      },
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.remote-test-gate:evidence",
+        "type": null,
+        "contractId": null,
+        "module": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "export": "activate",
+        "schema": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.repository-adapter",
+    "path": "skills/nova/plugins/repository-adapter/plugin.json",
+    "sha256": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+    "registrations": [
+      {
+        "kind": "adapters",
+        "id": "kubeclaw.repository-adapter:repository",
+        "type": null,
+        "contractId": null,
+        "module": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "export": "activate",
+        "schema": "skills/nova/plugins/repository-adapter/schemas/config.schema.json"
+      }
+    ]
+  },
+  {
+    "id": "kubeclaw.review",
+    "path": "skills/nova/plugins/review/plugin.json",
+    "sha256": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1",
+    "registrations": [
+      {
+        "kind": "stages",
+        "id": "kubeclaw.review:review",
+        "type": "kubeclaw.decision.review",
+        "contractId": null,
+        "module": "skills/nova/plugins/review/src/stage.ts",
+        "export": "execute",
+        "schema": "skills/nova/plugins/review/schemas/config.schema.json"
+      },
+      {
+        "kind": "stages",
+        "id": "kubeclaw.review:repository-audit",
+        "type": "kubeclaw.audit.repository-review",
+        "contractId": null,
+        "module": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+        "export": "executeRepositoryAudit",
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json"
+      },
+      {
+        "kind": "stages",
+        "id": "kubeclaw.review:repository-revalidation",
+        "type": "kubeclaw.audit.repository-review-revalidation",
+        "contractId": null,
+        "module": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+        "export": "executeRepositoryRevalidation",
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json"
+      }
+    ]
+  }
+]

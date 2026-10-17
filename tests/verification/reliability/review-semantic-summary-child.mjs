@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -14,9 +17,9 @@ import { buildSummary } from '../../../skills/nova/plugins/project-summary/src/s
 import { REVIEW_SEMANTIC_ENCODING } from '../../../skills/nova/plugins/review/src/review-semantics.ts';
 
 const [root, phase] = process.argv.slice(2);
-const adapter = activate({ config: { artifactRoot: path.join(root, 'artifacts') } });
-const coordinator = new EffectCoordinator(new FileEffectJournal(path.join(root, 'events.jsonl')), undefined, undefined,
-  new FileResourceLockManager(path.join(root, 'locks')), 300_000);
+const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') } });
+const coordinator = new EffectCoordinator(new FileEffectJournal(path.join(root, 'events.jsonl'), TEST_CORE_POLICY), undefined, undefined,
+  new FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition);
 const adapterOwner = { pluginId: 'kubeclaw.artifact-store', apiVersion: 'pipeline-plugin-v2', packageVersion: '1.0.0', contentDigest: `sha256:${'a'.repeat(64)}` };
 let sequence = 0;
 // Actual Core effect coordinator, disk journal and ArtifactStore. The other

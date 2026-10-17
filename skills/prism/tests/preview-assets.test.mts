@@ -1,3 +1,4 @@
+import { nativeBrowserPolicy } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -35,21 +36,21 @@ test('real stored image traverses HTTP with integrity, size, load and cancellati
   document.assets = { hero: { kind: 'image', artifact: artifact.artifactId, mediaType: 'image/png', role: 'hero', alt: 'Pixel' } };
   document.views.home!.root.children = [{ id: 'hero-image', type: 'image', props: { asset: 'hero' } }];
   try {
-    const assets = await loadPreviewAssets(document, new AbortController().signal);
+    const assets = await loadPreviewAssets(document, new AbortController().signal, nativeBrowserPolicy);
     assert.equal(assets.hero!.src, `data:image/png;base64,${png.toString('base64')}`);
     assert.match(previewDocument(document, 'home', 'default', 'wide', assets), /<img[^>]+alt="Pixel"/u);
     for (const [failure, message] of [['denied', /LOAD_FAILED:403/u], ['corrupt', /INTEGRITY_FAILED/u],
       ['declared-size', /SIZE_EXCEEDED/u], ['stream-size', /SIZE_EXCEEDED/u]] as const) {
-      mode = failure; await assert.rejects(loadPreviewAssets(document, new AbortController().signal), message);
+      mode = failure; await assert.rejects(loadPreviewAssets(document, new AbortController().signal, nativeBrowserPolicy), message);
     }
     mode = 'stall'; const controller = new AbortController();
-    const pending = loadPreviewAssets(document, controller.signal);
+    const pending = loadPreviewAssets(document, controller.signal, nativeBrowserPolicy);
     setTimeout(() => controller.abort(new Error('preview replaced')), 25);
     await assert.rejects(pending, /preview replaced/u);
     const before = contacts;
     const invalid = structuredClone(document);
     (invalid.assets.hero as Record<string, unknown>).mediaType = 'text/html';
-    await assert.rejects(loadPreviewAssets(invalid, new AbortController().signal), /METADATA_INVALID/u);
+    await assert.rejects(loadPreviewAssets(invalid, new AbortController().signal, nativeBrowserPolicy), /METADATA_INVALID/u);
     assert.equal(contacts, before);
   } finally {
     server.closeAllConnections(); await new Promise<void>((resolve) => server.close(() => resolve()));

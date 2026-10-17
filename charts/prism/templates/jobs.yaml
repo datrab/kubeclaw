@@ -26,7 +26,7 @@ spec:
         - name: bootstrap-database-roles
           image: {{ include "prism.imageRef" .Values.images.control | quote }}
           imagePullPolicy: {{ .Values.images.control.pullPolicy }}
-          command: ["node", "--experimental-strip-types", "skills/prism/server/bootstrap-database.ts"]
+          command: ["node", "--experimental-strip-types", "skills/packages/prism-engine/server/bootstrap-database.ts"]
           env:
             - name: ADMIN_DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: admin-url } }
@@ -44,7 +44,7 @@ spec:
         - name: migrate
           image: {{ include "prism.imageRef" .Values.images.control | quote }}
           imagePullPolicy: {{ .Values.images.control.pullPolicy }}
-          command: ["node", "--experimental-strip-types", "skills/prism/server/migrate.ts"]
+          command: ["node", "--experimental-strip-types", "skills/packages/prism-engine/server/migrate.ts"]
           env:
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: migrator-url } }

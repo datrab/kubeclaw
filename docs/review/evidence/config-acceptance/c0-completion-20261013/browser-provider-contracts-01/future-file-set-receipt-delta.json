@@ -1,0 +1,37 @@
+{
+  "baseFileSet": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/file-set-stand.json",
+    "sha256": "86d6d859729e00337869089d8cbfb64f2a9127843823077c0e64810fab4ca515"
+  },
+  "newBrowserOwnerFiles": [
+    {
+      "path": "stand/config/plugins/kubeclaw.axe.config.json",
+      "sha256": "8adcacb28c8923e6b5dc528ea7ba17573342dcb4823f1fe8559d9f1a2b668584"
+    },
+    {
+      "path": "stand/config/plugins/kubeclaw.lighthouse.config.json",
+      "sha256": "e61f45ecd72bfbaae5ebef256d997efdf9b533beef85382a1c9794343249c3bc"
+    },
+    {
+      "path": "stand/config/plugins/kubeclaw.playwright.config.json",
+      "sha256": "4c7ca44c6e28f1f9745090283a96b5e3b96235b7fffb99a6a17676c35d75134f"
+    },
+    {
+      "path": "stand/config/plugins/kubeclaw.visual.config.json",
+      "sha256": "67a65f2b427fd3dc2746a3fe027f3f80294a612ab5d42f87800aa3d114a33f81"
+    }
+  ],
+  "explicitRootComponentDelta": [
+    {
+      "path": "stand/config/pipeline.config.json",
+      "sha256": "44397d62d31bcb892b3b31c42d78de0d2b3951058312b26e0053b006f81557be"
+    },
+    {
+      "path": "stand/config/components/buster-engine.config.json",
+      "sha256": "8d03a05a2ff812d1232e36a56eae1e6bc916094c1a21c0b19a24234fe4546301"
+    }
+  ],
+  "newSchemaDirectory": "schemas/",
+  "futureReceivingAndReceiptRequirement": "One authenticated image-baked original author tree -> nofollow CONFIG capture -> whole v6 root/schema/allowner/allprofile semantic validation -> requested one scoped caller authorization -> read-only generated transport/codec/raw-root-vs-full-input/c3/reference digest/receipt -> registry/resolver/runner/native original context. New file-set/schema reader/delivery byte-shape/materializer decoder must explicitly incorporate this frozen extension; OLD43-member receipt cannot authenticate new files/root. No generation receipt minted or private root/default/currentlatest author admitted.",
+  "activation": "not implemented/not-run; exact fixed native author/profile/task grant/tool/version/baseline/deadline obligations OPEN"
+}

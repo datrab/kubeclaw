@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -39,7 +40,7 @@ await new Promise((resolve, reject) => {
   poll();
 });
 const contentionStartedAt = Date.now();
-new core.FileJournal(contendedJournalFile).append({ value: 'serialized' });
+new core.FileJournal(contendedJournalFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs).append({ value: 'serialized' });
 assert.ok(Date.now() - contentionStartedAt >= 50, 'journal append waits for a live writer');
 if (lockHolder.exitCode === null) {
   await new Promise((resolve, reject) => {
@@ -50,8 +51,8 @@ if (lockHolder.exitCode === null) {
 }
 
 const incrementalFile = path.join(root, 'incremental.jsonl');
-const incrementalLeft = new core.FileJournal(incrementalFile);
-const incrementalRight = new core.FileJournal(incrementalFile);
+const incrementalLeft = new core.FileJournal(incrementalFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+const incrementalRight = new core.FileJournal(incrementalFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 incrementalLeft.append({ writer: 'left', sequence: 1 });
 incrementalRight.append({ writer: 'right', sequence: 2 });
 incrementalLeft.append({ writer: 'left', sequence: 3 });
@@ -62,25 +63,25 @@ fs.writeFileSync(incrementalFile, validPrefix);
 assert.throws(() => incrementalLeft.refresh(), /JOURNAL_REWIND_OR_DIVERGENCE/,
   'a replaced or truncated journal cannot roll back an already observed chain');
 const sameSizeFile = path.join(root, 'same-size-tamper.jsonl');
-const sameSizeJournal = new core.FileJournal(sameSizeFile);
+const sameSizeJournal = new core.FileJournal(sameSizeFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 sameSizeJournal.append({ value: 'trusted' });
 const tampered = fs.readFileSync(sameSizeFile, 'utf8').replace('trusted', 'untrust');
 fs.writeFileSync(sameSizeFile, tampered);
 assert.throws(() => sameSizeJournal.refresh(), /JOURNAL_HASH_INVALID/,
   'same-size in-place journal tampering is detected without accepting a cached prefix');
 const tornFile = path.join(root, 'torn-tail.jsonl');
-const committedTornJournal = new core.FileJournal(tornFile);
+const committedTornJournal = new core.FileJournal(tornFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 committedTornJournal.append({ value: 'committed' });
 const committedTornBytes = fs.statSync(tornFile).size;
 fs.appendFileSync(tornFile, '{"sequence":2,"previousHash":"partial');
 assert.deepEqual(committedTornJournal.refresh().map(({ entry }) => entry.value), ['committed'],
   'an already-open reader also removes an unterminated crash-torn tail');
-const recoveredTornJournal = new core.FileJournal(tornFile);
+const recoveredTornJournal = new core.FileJournal(tornFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 assert.deepEqual(recoveredTornJournal.records().map(({ entry }) => entry.value), ['committed']);
 assert.equal(fs.statSync(tornFile).size, committedTornBytes,
   'restart truncates only an unterminated final append to the last commit marker');
 recoveredTornJournal.append({ value: 'after-recovery' });
-assert.deepEqual(new core.FileJournal(tornFile).records().map(({ entry }) => entry.value),
+assert.deepEqual(new core.FileJournal(tornFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().map(({ entry }) => entry.value),
   ['committed', 'after-recovery']);
 const attempt = {
   runId: 'run:phase7',
@@ -132,17 +133,17 @@ const adapter = {
 };
 const journalFile = path.join(root, 'effects.jsonl');
 const coordinator = new core.EffectCoordinator(
-  new core.FileEffectJournal(journalFile),
+  new core.FileEffectJournal(journalFile, TEST_CORE_POLICY),
   () => new Date('2026-07-28T00:00:00Z'),
   undefined,
-  new core.FileResourceLockManager(path.join(root, 'locks')), 300_000,
+  new core.FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000,
 );
 const first = await coordinator.invoke(adapter, owner, invocation, new AbortController().signal);
 const replay = await new core.EffectCoordinator(
-  new core.FileEffectJournal(journalFile),
+  new core.FileEffectJournal(journalFile, TEST_CORE_POLICY),
   () => new Date('2026-07-28T00:01:00Z'),
   undefined,
-  new core.FileResourceLockManager(path.join(root, 'locks')), 300_000,
+  new core.FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000,
 ).invoke(adapter, owner, invocation, new AbortController().signal);
 assert.equal(calls, 1, 'durable receipt prevents duplicate external execution');
 assert.equal(first.effectId, replay.effectId);
@@ -152,11 +153,11 @@ assert.equal(observedLock.resource.canonicalId, invocation.resource.canonicalId)
 
 let preDispatchNow = new Date('2026-07-28T01:00:00.000Z');
 const preDispatchLocks = new core.FileResourceLockManager(
-  path.join(root, 'pre-dispatch-renewal-locks'),
+  path.join(root, 'pre-dispatch-renewal-locks'), TEST_CORE_POLICY,
   () => preDispatchNow,
 );
 const preDispatchCoordinator = new core.EffectCoordinator(
-  new core.FileEffectJournal(path.join(root, 'pre-dispatch-renewal-effects.jsonl')),
+  new core.FileEffectJournal(path.join(root, 'pre-dispatch-renewal-effects.jsonl'), TEST_CORE_POLICY),
   () => preDispatchNow,
   {
     requested() {},
@@ -179,7 +180,7 @@ assert.deepEqual(preDispatchReceipt.result, { renewed: true },
   'the adapter starts with a full lease after durable pre-dispatch bookkeeping');
 
 const externalJournalFile = path.join(root, 'external-results', 'effects.jsonl');
-const externalJournal = new core.FileEffectJournal(externalJournalFile);
+const externalJournal = new core.FileEffectJournal(externalJournalFile, TEST_CORE_POLICY);
 const largeValue = `result-${'x'.repeat(128 * 1024)}`;
 const externalReceipt = {
   schemaVersion: 'effect-receipt.v2',
@@ -196,12 +197,12 @@ assert.equal(fs.readFileSync(externalJournalFile, 'utf8').includes(largeValue), 
 const externalizedFiles = fs.readdirSync(path.join(path.dirname(externalJournalFile), 'effect-results', 'sha256'),
   { recursive: true }).filter((entry) => String(entry).endsWith('.json'));
 assert.equal(externalizedFiles.length, 1);
-assert.deepEqual((await new core.FileEffectJournal(externalJournalFile)
+assert.deepEqual((await new core.FileEffectJournal(externalJournalFile, TEST_CORE_POLICY)
   .receipt(externalReceipt.idempotencyKey))?.result, externalReceipt.result,
   'a restarted process verifies and hydrates the content-addressed effect result');
 const sharedEffectFile = path.join(root, 'shared-effects.jsonl');
-const sharedEffectLeft = new core.FileEffectJournal(sharedEffectFile);
-const sharedEffectRight = new core.FileEffectJournal(sharedEffectFile);
+const sharedEffectLeft = new core.FileEffectJournal(sharedEffectFile, TEST_CORE_POLICY);
+const sharedEffectRight = new core.FileEffectJournal(sharedEffectFile, TEST_CORE_POLICY);
 const sharedRequest = { ...invocation, idempotencyKey: 'effect-key:cross-instance-acceptance' };
 await sharedEffectLeft.requested(sharedRequest);
 await sharedEffectRight.requested(sharedRequest);
@@ -325,8 +326,8 @@ await assert.rejects(
 );
 
 const lockRoot = path.join(root, 'contention');
-const leftLocks = new core.FileResourceLockManager(lockRoot);
-const rightLocks = new core.FileResourceLockManager(lockRoot);
+const leftLocks = new core.FileResourceLockManager(lockRoot, TEST_CORE_POLICY);
+const rightLocks = new core.FileResourceLockManager(lockRoot, TEST_CORE_POLICY);
 const held = leftLocks.acquire(invocation.resource, 'lease:left', 60_000);
 assert.throws(
   () => rightLocks.acquire(invocation.resource, 'lease:right', 60_000),
@@ -341,7 +342,7 @@ assert.ok(Date.parse(renewed.expiresAt) > Date.parse(next.expiresAt));
 rightLocks.release(next.lockId, 'lease:right');
 
 const provisionalRoot = path.join(root, 'provisional');
-const provisional = new core.FileResourceLockManager(provisionalRoot);
+const provisional = new core.FileResourceLockManager(provisionalRoot, TEST_CORE_POLICY);
 const abandoned = provisional.acquire(invocation.resource, 'lease:abandoned', 1);
 const activeDirectory = fs.readdirSync(provisionalRoot)
   .map((entry) => path.join(provisionalRoot, entry))
@@ -349,15 +350,15 @@ const activeDirectory = fs.readdirSync(provisionalRoot)
 fs.rmSync(path.join(activeDirectory, 'owner.json'));
 const old = new Date(Date.now() - 120_000);
 fs.utimesSync(activeDirectory, old, old);
-const recoveredLock = new core.FileResourceLockManager(provisionalRoot)
+const recoveredLock = new core.FileResourceLockManager(provisionalRoot, TEST_CORE_POLICY)
   .acquire(invocation.resource, 'lease:recovered', 60_000);
 assert.equal(recoveredLock.fencingToken, abandoned.fencingToken + 1);
-new core.FileResourceLockManager(provisionalRoot)
+new core.FileResourceLockManager(provisionalRoot, TEST_CORE_POLICY)
   .release(recoveredLock.lockId, 'lease:recovered');
 
 let leaseNow = new Date('2026-07-28T00:00:00Z');
 const expiringManager = new core.FileResourceLockManager(
-  path.join(root, 'expiry'),
+  path.join(root, 'expiry'), TEST_CORE_POLICY,
   () => leaseNow,
 );
 const expiring = expiringManager.acquire(invocation.resource, 'lease:expiry', 1_000);
@@ -367,7 +368,7 @@ assert.throws(
   /RESOURCE_LOCK_EXPIRED/,
 );
 assert.throws(
-  () => new core.FileResourceLockManager(path.join(root, 'expiry'))
+  () => new core.FileResourceLockManager(path.join(root, 'expiry'), TEST_CORE_POLICY)
     .acquire(invocation.resource, 'lease:replacement', 1_000),
   /RESOURCE_LOCKED/,
   'a live adapter execution boundary is not replaced while it unwinds',
@@ -403,7 +404,7 @@ const provenance = {
 const stateFile = path.join(root, 'plugin-state.jsonl');
 const state = new core.PluginStateJournal(
   stateFile,
-  provenance,
+  provenance, TEST_CORE_POLICY.journalAppendLockTimeoutMs,
   () => new Date('2026-07-28T00:00:00Z'),
 );
 const namespace = 'plugin.example.stage.main';
@@ -443,14 +444,14 @@ assert.throws(() => state.append({
   entryType: 'example.counter.incremented',
   payload: { amount: 1 },
 }), /PLUGIN_STATE_NAMESPACE_DENIED/, 'state writers are bound to one registration provenance');
-const restartedState = new core.PluginStateJournal(stateFile, provenance);
+const restartedState = new core.PluginStateJournal(stateFile, provenance, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 assert.equal(restartedState.project(
   namespace,
   0,
   (total, entry) => total + Number(entry.payload.amount),
 ), 2);
 assert.equal(restartedState.entries()[0].sequence, 1);
-const parallelState = new core.PluginStateJournal(stateFile, provenance);
+const parallelState = new core.PluginStateJournal(stateFile, provenance, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 parallelState.append({
   namespace,
   registration: provenance,
@@ -467,14 +468,14 @@ state.append({
   idempotencyKey: 'state-key:3',
   payload: { amount: 4 },
 });
-const concurrentReplay = new core.PluginStateJournal(stateFile, provenance);
+const concurrentReplay = new core.PluginStateJournal(stateFile, provenance, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 assert.deepEqual(concurrentReplay.entries().map(({ sequence }) => sequence), [1, 2, 3]);
 assert.equal(concurrentReplay.project(
   namespace,
   0,
   (total, entry) => total + Number(entry.payload.amount),
 ), 9);
-new core.FileJournal(stateFile).append({
+new core.FileJournal(stateFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs).append({
   ...stateEntry,
   entryId: 'state:corrupt-after-startup',
   sequence: 99,

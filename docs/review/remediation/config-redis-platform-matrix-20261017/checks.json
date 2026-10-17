@@ -1,0 +1,124 @@
+{
+  "negativeControls": [
+    {
+      "name": "original id",
+      "rejected": true,
+      "error": "'foreign'"
+    },
+    {
+      "name": "original original",
+      "rejected": true,
+      "error": "Residual drift: RT-407a6528409d44e3"
+    },
+    {
+      "name": "original originalObjectSha256",
+      "rejected": true,
+      "error": "Residual drift: RT-407a6528409d44e3"
+    },
+    {
+      "name": "original class",
+      "rejected": true,
+      "error": "Residual drift: RT-407a6528409d44e3"
+    },
+    {
+      "name": "original owner",
+      "rejected": true,
+      "error": "Redis original roster drift"
+    },
+    {
+      "name": "original caseIds",
+      "rejected": true,
+      "error": "Residual drift: RT-407a6528409d44e3"
+    },
+    {
+      "name": "omitted original field",
+      "rejected": true,
+      "error": "Redis original roster drift"
+    },
+    {
+      "name": "duplicate original field",
+      "rejected": true,
+      "error": "Redis original roster drift"
+    },
+    {
+      "name": "full roster fields loss",
+      "rejected": true,
+      "error": "Incomplete fields"
+    },
+    {
+      "name": "full roster cases loss",
+      "rejected": true,
+      "error": "Incomplete cases"
+    },
+    {
+      "name": "full roster requirements loss",
+      "rejected": true,
+      "error": "Incomplete requirements"
+    },
+    {
+      "name": "missing Redis schema url",
+      "rejected": true,
+      "error": "'url'"
+    },
+    {
+      "name": "missing Redis schema passwordSecret",
+      "rejected": true,
+      "error": "'passwordSecret'"
+    },
+    {
+      "name": "missing Redis schema streamPrefix",
+      "rejected": true,
+      "error": "'streamPrefix'"
+    },
+    {
+      "name": "missing Redis schema maxLen",
+      "rejected": true,
+      "error": "'maxLen'"
+    },
+    {
+      "name": "missing Redis schema dedupTtlMs",
+      "rejected": true,
+      "error": "'dedupTtlMs'"
+    },
+    {
+      "name": "missing Redis schema timeoutMs",
+      "rejected": true,
+      "error": "'timeoutMs'"
+    },
+    {
+      "name": "missing Redis registration 0",
+      "rejected": true,
+      "error": ""
+    },
+    {
+      "name": "wrong Redis receiver 0",
+      "rejected": true,
+      "error": "Redis actual receiver drift"
+    },
+    {
+      "name": "missing Redis registration 1",
+      "rejected": true,
+      "error": ""
+    },
+    {
+      "name": "wrong Redis receiver 1",
+      "rejected": true,
+      "error": "Redis actual receiver drift"
+    }
+  ],
+  "passed": 21,
+  "total": 21,
+  "restoredDeterministic": true,
+  "prior50RowsPreserved": true,
+  "newOriginalFields": 12,
+  "composedRows": 62,
+  "fullRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "integrityFailures": [],
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; author-run matrix controls, not independent review or original runtime proof"
+}

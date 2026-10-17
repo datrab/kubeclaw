@@ -1,0 +1,1166 @@
+{
+  "schemaVersion": "c0-question-definition.v1",
+  "sourceFreezeHistorical": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075",
+  "questions": [
+    {
+      "id": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "classification": "operator-policy/caller-owned store lock wait",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 185,
+              "text": "async function acquireKernelLock("
+            },
+            {
+              "line": 189,
+              "text": "    \"/usr/bin/flock\","
+            },
+            {
+              "line": 192,
+              "text": "      \"--timeout\","
+            },
+            {
+              "line": 193,
+              "text": "      \"5\","
+            },
+            {
+              "line": 195,
+              "text": "      \"/bin/sh\","
+            },
+            {
+              "line": 244,
+              "text": "export async function withDurableStoreLock<T>("
+            },
+            {
+              "line": 265,
+              "text": "    );"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "selection": "caller-specific existing author, never a new shared foundation/Core umbrella",
+        "ownerMap": "lock-owner-map.json",
+        "current": "shared helper hardcodes5; callers do not currently supply policy",
+        "target": "Existing caller owner selected by sole pipeline.config.json systementry; existingNova PlatformConfig is generatedimmutablepayload, neversecondeditableindex; see scaffold-c2-binding-definition.md",
+        "CoreNativeStores": "same existing worker-core component author proposed settings.runtime.native_store_lock_wait_seconds (copyverified13 unchanged); onlyactual Core ownership/nativejournal, not Nova/plugins/scaffold lock umbrella"
+      },
+      "supportedDomain": {
+        "currentLiteral": 5,
+        "target": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "unit": "seconds",
+        "reason": "Finite positive integer seconds accepted by real /usr/bin/flock --timeout. Reductions never extend kernel wait; no timers or physical capacity guessed. Zero is no-wait semantics and excluded from this bounded conservative proposal."
+      },
+      "definition": [
+        "Enumerate every direct helper call and every concrete storage constructor in all-storage-and-lock-callers.json. Indirect reusable classes receive caller policy, not registration-wide globals.",
+        "Same physical root/lock namespace has one author. Each operation captures its policy generation; a compatible independently valid new operation may useB while originalA holder keepsA. Differentauthor/root or incompatiblehistory rejects beforeeffect. Lifetime/supervisor locks inherit owned root policy, not request resource quota.",
+        "The project scaffold pair reader publishes progress.json/pipeline.json; it is NOT system CONFIG publication. Existing Nova PlatformConfig proposed projectScaffold policy owns its lock, not Delivery.",
+        "Real lock wait expiration rejects with OBSERVABILITY_STORE_LOCK_FAILED/LOCKED and leaves owner-held operation/state untouched. No break-lock/delete/automatic renewal.",
+        "Reusable Core/nativejournal roots inherit actual outer Prism/Buster owningpolicy; no samevalueglobalCoreauthor. Nova gate stores inherit standalone runtime orregistered remote-test-gate caller-specificauthor. See outerconstructorchains.",
+        "scaffold-c2-binding-definition.md supersedes preliminary independent --platform wording: solepipeline.config.json selects Nova; --platform is checkedgeneratedlocator only. All source/package/wrapper references retained. Proposed standaloneworkunit CLI migration is C2definition only.",
+        "add-owner-projections.py addscomplete existingBuster preparation+attempt store lock companions, same existingworker-core native lock companion, andsixcomplete currentregisteredstore configcompanions. This is distinct callerpolicy authoring, not one globalCore setting. SourceAPI publiclyinjected nativefixture and standalone/registeredNova gate physicalcompanions retain exact declaredexistingowner, never guesseddeploymentprofile."
+      ],
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "actualEvidence": [
+        "source-candidates-bce3f075/foundation-source-controls-attempt1.log#CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+        "kernel-projection-controls-attempt1.log#QC-KERNEL-WAIT-5",
+        "kernel-projection-controls-attempt1.log#QC-KERNEL-WAIT-1"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "classification": "operator formatter policy, NOT protocol constant",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-ADMISSION-REASON-LIMITS"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 466,
+              "text": "  #reason(reason: string): string {"
+            },
+            {
+              "line": 467,
+              "text": "    return reason.length <= 256"
+            },
+            {
+              "line": 469,
+              "text": "      : `${reason.slice(0, 180)}:sha256:${createHash(\"sha256\").update(reason).digest(\"hex\")}`;"
+            },
+            {
+              "line": 480,
+              "text": "        ...attributed,"
+            },
+            {
+              "line": 481,
+              "text": "        itemId: `quarantine-overflow:${attributed.pipelineRunId}`,"
+            },
+            {
+              "line": 499,
+              "text": "      lastReason: this.#reason(reason),"
+            }
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+          "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+          "lines": [
+            {
+              "line": 88,
+              "text": "  replayObject(overflow, ['count', 'lastReceivedAt', 'lastReason', 'lastRawDigest', 'lastRawBytes'], 'admission-overflow');"
+            },
+            {
+              "line": 90,
+              "text": "  replayAssert(typeof overflow.lastReason === 'string' && /^sha256:[a-f0-9]{64}$/.test(overflow.lastRawDigest) && Number.isSafeInteger(overflow.lastRawBytes) && overflow.lastRawBytes >= 0, 'admission-overflow-digest');"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "Buster": "existing buster-engine config settings.execution.stores.admission.reasonThresholdCodeUnits/reasonPrefixCodeUnits",
+        "Nova": "existing Nova PlatformConfig proposed observability.admission fields, NOT observers map",
+        "retirement": "persisted original admission scope fields; no new command quota"
+      },
+      "supportedDomain": {
+        "current": {
+          "threshold": 256,
+          "prefix": 180
+        },
+        "target": {
+          "threshold": {
+            "type": "integer",
+            "minimum": 72,
+            "maximum": 256
+          },
+          "prefix": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 180
+          },
+          "relation": "prefix+72<=threshold"
+        },
+        "unit": "UTF-16 code units; canonical JSON UTF-8 bytes computed separately",
+        "reason": "sha256 hex64 plus :sha256:8 gives72 suffix units; reductions bound existing formatting cost. Short path<=threshold, long path<=prefix+72. Prefix0 is genuinely safe slice(0,0), unlike tar slice(-0)."
+      },
+      "definition": [
+        "Shared library formatter must consume owning admission policy in both quarantine.reason and quarantineOverflow.lastReason. Hash entire original reason UTF-8, preserve deterministic SHA identity. Decoder only requires string today; target strict owner controls clipping, not wire digest/version.",
+        "At most6 UTF-8 canonical JSON bytes per UTF-16 unit, including control/lone-surrogate escape; do not confuse units with UTF-8 allocation limit.",
+        "Threshold and prefix form one coupled serializer-domain policy; reserve proof depends on threshold; target count/byte fields remain exact safe integers and reject count increment overflow."
+      ],
+      "caseIds": [
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ],
+      "actualEvidence": [
+        "current-reader-controls-attempt1.log#QC-ADMISSION-ATTRIBUTED-OVERFLOW",
+        "current-reader-controls-attempt1.log#QC-REASON-RESERVE-SERIALIZED-BOUND",
+        "current-formatter-control-attempt1.log#QC-REAL-LONG-REASON-FORMAT"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [
+        "CMP-buster-engine-execution.stores.admission.maximumBytes"
+      ],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "classification": "operator serialized headroom policy, current1024 unsafe universal guarantee",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-ADMISSION-METADATA-RESERVE"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 104,
+              "text": "const ADMISSION_METADATA_RESERVE = 1024;"
+            },
+            {
+              "line": 445,
+              "text": "  constructor(directory: string, limits: AdmissionStoreLimits) {"
+            },
+            {
+              "line": 448,
+              "text": "      limits.maximumBytes <= ADMISSION_METADATA_RESERVE"
+            },
+            {
+              "line": 504,
+              "text": "    if (Buffer.byteLength(canonicalJson(state)) > this.#limits.maximumBytes)"
+            },
+            {
+              "line": 541,
+              "text": "        this.#limits.maximumBytes - ADMISSION_METADATA_RESERVE"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "Buster": "existing buster-engine config settings.execution.stores.admission.reasonThresholdCodeUnits/reasonPrefixCodeUnits",
+        "Nova": "existing Nova PlatformConfig proposed observability.admission fields, NOT observers map",
+        "retirement": "persisted original admission scope fields; no new command quota",
+        "fields": "metadataReserveBytes alongside reason formatter in same admission author"
+      },
+      "supportedDomain": {
+        "currentLiteral": 1024,
+        "target": {
+          "type": "integer",
+          "minimum": "frozen canonical overflowGrowthCeiling(reasonThresholdCodeUnits)+actualversionedInlineBindingFieldGrowthBytes; validate actual candidate preeffect",
+          "maximum": "maximumBytes-emptyAdmissionSerializedBytes-1"
+        },
+        "witnesses": {
+          "A": 8192,
+          "B": 16384
+        },
+        "computed": {
+          "A": {
+            "itemBytes": 1745,
+            "overflowBytes": 1744,
+            "requiredIncrementalBytes": 3486
+          },
+          "B": {
+            "itemBytes": 1745,
+            "overflowBytes": 976,
+            "requiredIncrementalBytes": 2718
+          },
+          "sourceIdentityLimit": 256,
+          "JSONWorstPerUTF16Unit": 6,
+          "suffixUnits": 72,
+          "scope": "Exact real canonical serializer projection; not future formatter implementation or general capacity guarantee. One new attributed overflow item and null-to-object overflow replacement."
+        },
+        "relations": [
+          "reserve>=incrementalOverflowCeiling",
+          "maximumBytes>reserve+emptyAdmissionSerializedBytes",
+          "maximumQuarantineBytes<=maximumBytes-reserve",
+          "count and lastRawBytes safe integers; no count rollover",
+          "binding strictfixedschema, counted under same whole-storecap",
+          "missing/new/unbounded bindingheader version rejects until envelope proof is updated"
+        ],
+        "noGuessedCapacity": true
+      },
+      "definition": [
+        "Ceiling for ONE overflow transition is canonicalBytes(maxItem)+1+canonicalBytes(maxOverflow)-4. Identity strings bounded256 ASCII by real quarantineAttribution; item bytes1745. Null replacement removes4 bytes; array append costs at most1 comma. Dates24 ASCII; positive safe number serialization uses at most16decimal digits; reason worst6bytes/unit. A threshold256 =>3486 bytes; B threshold128=>2718.",
+        "Required reserve may be4096 or8192 (selected profiles), but1024 remains historical current code and is NOT admitted target preserving fake safety. Existing source may fail closed FULL for valid large attribution; original guarantees not waived.",
+        "Before any overflow persistence, calculate candidate actual canonical bytes and compare maximumBytes. Reserve only preallocates last possible overflow transition; finite distinct-run/count/ingress limits and explicit FULL remain, never guarantee unlimited progress or physical disk space. If state already includes overflow, replacement delta cannot exceed null-to-max transition.",
+        "Admission normal/quarantine admission must preserve this headroom; check all write paths including #admitUnlocked, recordGap, retirement/replay, not only #quarantine. Existing gap/unresolved count growth cannot spend reserved transition space silently.",
+        "Safe counter guard count>=MAX_SAFE rejects before increment without rewriting state. Worst-case threshold and bytes are validated using actual canonical serializer.",
+        "serialization-envelope-contract.json fixes all future inlinebinding fields/digests without arbitraryprofile-name limits. Its 525byte growth is charged under SAME existing cap and included in conservative reservefloor. Headergrowth cannot be excluded or silently extended.",
+        "8192/16384 replace preliminary4096/8192 completeprofilewitnesses; initialproposal/rawfailure andschema mistakes preserved under attempt1-definition-snapshot. Moreheadroom reduces usable payload, unapprovedbehaviorchange\u2014not extra capacity.",
+        "Predicates: quarantineAttribution validIdentityPart line286 requireslength1..256 + ASCII /^[A-Za-z0-9][A-Za-z0-9._:-]*$/ for producerId/bootId/producerType/pipelineRunId beforeprojection. No Unicodeidentifier assumption; reason UTF16 permitsescapes/lonesurrogates worst6bytes/unit. Every attributionfield inactual item1745bytes is included; rawrecordId isnotoverflowitemfield."
+      ],
+      "caseIds": [
+        "QC-ADMISSION-METADATA-RESERVE-VAL",
+        "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      ],
+      "actualEvidence": [
+        "current-reader-controls-attempt1.log#QC-REASON-RESERVE-SERIALIZED-BOUND",
+        "current-reader-controls-attempt1.log#QC-ADMISSION-ATTRIBUTED-OVERFLOW"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [
+        "CMP-buster-engine-execution.stores.admission.maximumBytes"
+      ],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "classification": "public-library existing-quota repair; no in-repository productive constructor demonstrated",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 111,
+              "text": "export async function readDurableState<T>("
+            },
+            {
+              "line": 114,
+              "text": "  maximumBytes?: number,"
+            },
+            {
+              "line": 117,
+              "text": "    if (maximumBytes === undefined) return JSON.parse(await fs.readFile(file, \"utf8\")) as T;"
+            },
+            {
+              "line": 366,
+              "text": "      const state = await readDurableState(this.#file, EMPTY_OUTBOX);"
+            },
+            {
+              "line": 394,
+              "text": "      const state = await readDurableState(this.#file, EMPTY_OUTBOX);"
+            },
+            {
+              "line": 406,
+              "text": "      const state = await readDurableState(this.#file, EMPTY_OUTBOX);"
+            },
+            {
+              "line": 432,
+              "text": "      const state = await readDurableState(this.#file, EMPTY_OUTBOX);"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "current": "caller-supplied ProducerOutboxLimits.maximumBytes remains sole existing API quota; all five repository constructors are tests",
+        "target": "same API quota, no four deployed setting authors, no new quota; external installed/dynamic caller roster genuine external input"
+      },
+      "supportedDomain": {
+        "maximumBytes": "existing positive safe integer API; bounded read uses exact already selected value",
+        "newKnob": false
+      },
+      "definition": [
+        "The four library read sites append366,pending394,acknowledge406,compact432 omit same #limits.maximumBytes. Repair supplies exact existing field to readDurableState/readBoundedSnapshot at ALL four sites.",
+        "Symbol/import/export/namespace/factory review: package.json exports ./observability/*; no barrel reexport or productive named/namespace use found in skills/scripts. Library function deliverPending receives an outbox parameter but no in-repo productive call factory constructs one. Five real constructors across two reliability tests are enumerated. External installed dynamic consumers cannot be disproved from repository; remain prerequisite, not invented current deploy instance.",
+        "Replay of oversized retained state fails snapshot-size before full allocation/JSON.parse; file/entries/ack history remain byte-for-byte intact. No compact-before-validate, migration deletion, clearing pending, or weaker max from current config.",
+        "Append and acknowledge validate contracts before lock as currently; capped read once inside lock precedes any state mutation. Same owner scope/generation bounds replay and write."
+      ],
+      "caseIds": [
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+      ],
+      "actualEvidence": [
+        "current-reader-controls-attempt1.log#QC-OUTBOX-FOUR-READ-SITES"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "classification": "latent public API optional-total bypass, ALL seven productive constructors already bounded",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+          "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+          "lines": [
+            {
+              "line": 32,
+              "text": "    positiveInteger(maximumBytes, \"DURABLE_BLOB_LIMIT_INVALID\");"
+            },
+            {
+              "line": 34,
+              "text": "    this.#maximumTotalBytes = maximumTotalBytes;"
+            },
+            {
+              "line": 46,
+              "text": "    if (this.#maximumTotalBytes === undefined) return this.#put(input);"
+            },
+            {
+              "line": 47,
+              "text": "    await ensureDirectoryDurable(this.#root);"
+            }
+          ]
+        },
+        {
+          "path": "skills/worker/core/worker/native-attempt-journal.ts",
+          "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+          "lines": [
+            {
+              "line": 35,
+              "text": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "current": "seven existing caller-specific quota authors; see blob-owner-map.json",
+        "target": "make maximumTotalBytes REQUIRED in existing API, preserve all seven existing selected quota fields; no new total quota"
+      },
+      "supportedDomain": {
+        "current": "maximumBytes positive safeinteger; optional maximumTotalBytes when supplied positive safeinteger",
+        "target": "both REQUIRED positive safeintegers; perblob<=total for complete operational profile; max individual buffer <=actual Buffer.constants.MAX_LENGTH and typed ingress limits",
+        "valuesNotCapacity": "8/16 and8/8 are disposable C0 API witnesses only; seven actual quotas remain unchanged"
+      },
+      "definition": [
+        "Every productive constructor supplies total: native fixture, prepared, historical, Nova remote dispatch/import, native attempt journal and artifact-store adapter. Review tests one omitted total are test-only; no current productiveunboundedinstance claim.",
+        "Mandatory total rejects omission before filesystem; existing blob-budget kernel lock serializes cumulative admission. Existing duplicate blob idempotently consumes no additional bytes; count actual retained blobs, not guessed available disk.",
+        "Retained over-budget tree rejects under original selected policy unchanged; new total cannot silently lower/delete/relabel existing retained objects. Mandatory API may break external/test consumer; roster+explicit author projection prerequisite, no fallback.",
+        "Seven means seven bounded nestedconstructor sites, NOT seven proven deployed instances: nativefixturejournal outerconstructor absent inrepo; historicalplan hasmaintenancecaller; Novaimport has standalone andregisteredadapter authors. outer-constructor-and-alias-chains.json preserves distinctions."
+      ],
+      "caseIds": [
+        "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+        "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+      ],
+      "actualEvidence": [
+        "current-reader-controls-attempt1.log#QC-BLOB-BOUND-A-B"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "classification": "operator diagnostic formatter",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+          "sha256": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+          "lines": [
+            {
+              "line": 13,
+              "text": "): Promise<void> {"
+            },
+            {
+              "line": 51,
+              "text": "      else if (code !== 0) reject(new Error(`BUSTER_REMOTE_TAR_FAILED:${code}:${terminationSignal ?? ''}:${stderr.toString('utf8').slice(-4096)}`));"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "path": "existing config/components/buster-engine.config.json",
+        "field": "settings.preparation.tarDiagnosticCodeUnits",
+        "currentPackaging": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "notAlias": "worker ownership diagnostic has distinct role/policy"
+      },
+      "supportedDomain": {
+        "currentLiteral": 4096,
+        "target": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "unit": "UTF-16 tail units",
+        "relation": "configured maximumTarStderrBytes independently bounds captured rawbytes; actual textunits<=captured bytes, diagnostic<=min(captureddecodedunits,selectedN); prefix error syntax excluded",
+        "reason": "Conservative reductions from current clipping bound. slice(-0) exposes whole text and is expressly excluded."
+      },
+      "definition": [
+        "Add required field to existing Buster preparation schema/loader/projection ArchivePreparationLimits/runTar; not second Coreauthor. Preserve actual tar stderrcapture bytecap and timeout; select generation before preparation claim.",
+        "Exact trailing diagnostic clipping differs materially A4096/B2048 for actual GNUtar overlongarchivepath; no fake stderr wrapper. Rawstderr may already be truncated from start by capture cap; diagnostic is suffix of thatcapturedbuffer, not guaranteed final childstderr."
+      ],
+      "caseIds": [
+        "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+        "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+        "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+      ],
+      "actualEvidence": [
+        "current-reader-controls-attempt1.log#QC-TAR-DIAGNOSTIC-REAL-GNU-TAR"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [
+        "CMP-buster-engine-preparation.maximumTarStderrBytes"
+      ],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "classification": "declared-unused operator field requiring actual-reader repair, separate generated provisioning",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/preparation-config.ts",
+          "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+          "lines": [
+            {
+              "line": 23,
+              "text": "  const launcher = '/usr/local/libexec/kubeclaw-native-worker-launcher';"
+            },
+            {
+              "line": 38,
+              "text": "    nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile), tarExecutable: '/usr/bin/tar' });"
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+          "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+          "lines": [
+            {
+              "line": 45,
+              "text": "        cgroupRoot: native.pool.cgroupRoot, tarExecutable: native.tarExecutable,"
+            },
+            {
+              "line": 46,
+              "text": "        trustedSourceAuthority: native.trustedSourceAuthority, sourceAttestationPublicKey: native.sourceAttestationPublicKey },"
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/preparation-command.ts",
+          "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+          "lines": [
+            {
+              "line": 44,
+              "text": "      BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES: String(settings.maximumInputBytes),"
+            },
+            {
+              "line": 45,
+              "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT: config.sourceRoot,"
+            },
+            {
+              "line": 48,
+              "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY: config.sourceAttestationPublicKey,"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "existing": "DLV-BUSTER-ENTRYPOINT-RUNTIME-TAREXECUTABLE runtime.tarExecutable sole declared field",
+        "canonicalTarget": "same existing Buster runtime config runtime.tarExecutable; make preparation-config consume it; do NOT introduce second preparation tarpath",
+        "delivery": "physical executable/image provisioning, not same-valuealias"
+      },
+      "supportedDomain": {
+        "current": "runtime.tarExecutable nonemptyvalidated UNUSED; preparation-config hardcodes /usr/bin/tar",
+        "target": "absolute executable regular file locator under captured image/provisioned immutable identity; canonicalrealpath/sha/deviceinode/mode/owner verification before claim/launch; no PATH resolution or fakewrapper",
+        "A": "/usr/bin/tar",
+        "B": "/opt/kubeclaw/tools/tar (genuine identical GNUtar copied into disposable image provisioned mode755 rootowned)"
+      },
+      "definition": [
+        "Current source producer chain preparation-config->supervisor->command assignedTar->host/source/archive carries hardcoded /usr/bin/tar; generatedruntime field does not affect it today. Preserve DLV declaredunused disposition.",
+        "Target uses sole runtime field selected with ownerprofile/imagebinding; delivery must provision genuine B binary and bind executable digest/imageidentity. No ambientPATH fallback. Existingsource trust/root safeguards remain; alternatepath not inferred installed."
+      ],
+      "caseIds": [
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+      ],
+      "actualEvidence": [
+        "current-reader-controls-attempt1.log#QC-TAR-DIAGNOSTIC-REAL-GNU-TAR"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-TAREXECUTABLE"
+      ],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "classification": "numeric parser representation/resource guard, NOT independently adjustable storage quota",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+          "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f",
+          "lines": [
+            {
+              "line": 4,
+              "text": "    const quantity = text(value, 'persistentVolumeClaim.storage', 64);"
+            },
+            {
+              "line": 18,
+              "text": "        : parsed[4] ? Number.parseInt(parsed[4].slice(1), 10) : 0;"
+            },
+            {
+              "line": 19,
+              "text": "    if (!Number.isSafeInteger(exponent) || Math.abs(exponent) > 63) {"
+            },
+            {
+              "line": 20,
+              "text": "        throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);"
+            },
+            {
+              "line": 26,
+              "text": "    if (numerator < 1n || numerator % denominator !== 0n) {"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "quota": "existing Buster clusterInvokers.kubernetesFixture maximumPersistentVolumeClaimBytes/maximumPersistentVolumeTotalBytes",
+        "newToggle": false,
+        "representation": "derived from bounded64unit syntax + selected existing byte quota; no separate exponent author"
+      },
+      "supportedDomain": {
+        "current": "explicit abs(exponent)<=63 literal parser subset, not Kubernetes fundamental63",
+        "target": "positive whole-byte exact BigInt, source text<=64, supportedSI suffixes; decimal exponent lexically compare derived interval before allocating power; e>=f-z for integrality; e<=f+digits(Q)-d (necessary coarse bound), then exact result<=Q; d=nonzero coefficientdecimaldigits,f=fractiondigits,z=coefficienttrailingzeros,Q=selectedmaximumClaimBytes",
+        "suffixConstants": "binaryKi..Ei powers10..60; SI n/u/m/k/K/M/G/T/P/E powers-9..18 are representation tables, not operatorlimits",
+        "nonoperatorReason": "Budgeting wholebytes exactly and bounding normalization work by already authored quota+inputlength; no guessed exponent maxima or physicalstoragecapacity"
+      },
+      "definition": [
+        "Current63 protects exponentiation complexity but incorrectly rejects representable wholebytes underquota. Target reject lexical huge exponents with derived bound before Number conversion/10**; no replacement universal63/64 knob.",
+        "Pinned upstream Kubernetes suffix/parser v0.34.1 uses signed64 exponent parse then int32 conversion; this is not an abs63 protocol. Pinned source comments and implementation differ on magnitude/precision; do not claim current master or old comments are stable universalrange. We intentionally support exact positive wholebytes subset needed by existing fixture quota, not all Kubernetes rounding/negative grammar.",
+        "Example . +55zeros+1e64 length61 =>100000000 bytes, safe within1Gi quota; current rejects. 1e63 may be parsed current but selected1Giquota mustdeny. Arbitrarilylarge exponent cannot normalize under existing shortmantissa and smallselectedquota.",
+        "Target support scientific representation and equivalentdecimal/binaryforms with identicalexact quota decisions; stateful replicas multiplication/total cumulative uses existingBigInt exact quotas."
+      ],
+      "caseIds": [
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      ],
+      "actualEvidence": [
+        "current-reader-controls-attempt1.log#QC-STORAGE-REPRESENTATION-CURRENT",
+        "kubernetes-quantity-v0.34.1.go.source",
+        "kubernetes-suffix-v0.34.1.go.source"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes"
+      ],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "classification": "generated measurement provenance/data contract; zero/one are identities/lower bounds NOT operator knobs",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+          "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+          "lines": [
+            {
+              "line": 212,
+              "text": "    try { facts = processFacts(this.#child.pid ?? -1); }"
+            },
+            {
+              "line": 253,
+              "text": "      cpuTimeMs: Math.max(this.#resources.cpuTimeMs, Number(reported.cpuTimeMs ?? 0)),"
+            },
+            {
+              "line": 254,
+              "text": "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, Number(reported.maximumMemoryBytes ?? 0)),"
+            },
+            {
+              "line": 255,
+              "text": "      maximumProcesses: Math.max(this.#resources.maximumProcesses, Number(reported.maximumProcesses ?? 1)),"
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+          "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c",
+          "lines": [
+            {
+              "line": 104,
+              "text": "      const measured = state.instance?.resources() ?? { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 0 };"
+            },
+            {
+              "line": 105,
+              "text": "      return { cpuTimeMs: Math.ceil(measured.cpuTimeMs ?? 0),"
+            },
+            {
+              "line": 106,
+              "text": "        maximumMemoryBytes: Math.ceil(measured.maximumMemoryBytes ?? 0),"
+            },
+            {
+              "line": 107,
+              "text": "        maximumProcesses: Math.ceil(measured.maximumProcesses ?? 0) };"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "producer": "real /proc owned process tree and provider-child process.resourceUsage/process.memoryUsage; existing Buster execution observation policy owns cadence only",
+        "consumer": "ProviderProcessSession->IsolatedLoadedProvider.resources->createRunnerProviderOperation.measure->WorkerAttemptExecutor budget/result"
+      },
+      "supportedDomain": {
+        "cpuTimeMs": "finite nonnegative safe exact or documented fractional measurement then ceil; process.resourceUsage microseconds/1000",
+        "memoryBytes": "finite nonnegative safeinteger RSS bytes; providerchild sampledpeak, procfs sampledtreeinstant maximum",
+        "processes": "positive integer observedtreecount for launched instance; prelaunch not-launched count0; initialized1 is only rootlowerbound not liveproof",
+        "missingFields": "CPU/memory0 neutralmax merge, processes1 rootlowerbound only after verifiedspawn; reject nonfinite/negative/unsafe reportedfields; missing/unavailable retained as provenance not silently observedzero"
+      },
+      "definition": [
+        "Actual child reports CPU and sampledmemory only, not maximumProcesses. Parent0 defaults are max-neutral for absent childfields and1 is lowerbound for knownlaunchedroot, not fallbackCONFIG. Parent realprocfs tree includesroot even disappeared; currentghostcount1 proves measurementvaliditygap.",
+        "Currentconstructor seeds0/0/1; #sample immediately+interval+resources; afterclose skips PIDreuse. IOerror fails/terminates but ENOENT disappears; vanishedtree yields0/0/1 no unavailablemarker. Reportedfields Number coercion currently can introduceNaN/Infinity/negative; target validated typedmeasurement snapshot required.",
+        "Registeredloader returns constructedisolatedprovider; pre-abort no-launch genuinely0. Abort afterconstruct may discardandthrow before assigningstate.instance, losing consumedmeasurement to runner0/0/0. Constructor/preinitializefail paths likewise distinguish launchattempt unavailable vs none. No-launch measure0 only if explicit lifecycle proves neverlaunched.",
+        "Target maintain durable launch/measurement provenance before spawnownership and expose snapshot even rejectedload/confirmeddisposal. Not-launched, observed, partial, unavailable statuses; unavailablecannot produce PASS budget satisfaction or inventedzero. Bind phase/attempt/claim/sourcegeneration; reuse PIDnotallowed. CPU sum session once byWeakSet; peakmemory/processes max acrosscleanupsession, no doubleaccounting.",
+        "Future actualshortlived/failedinitialize/cancel/recoveryclosed cases must usegenuinecompiled sandbox +actualprovider child package, not mocks or substitutedcounters; compiledlauncher absent here is explicit physical build prerequisite, not fakecounter waiver.",
+        "provider-measurement-definition.md supplies concrete launchreceipt/metricprovenance/disposal/recovery transitions and reuses strict existingV1 catch-to-undefined/resource-accounting rejection, not a new permissive measurementprotocol/toggle."
+      ],
+      "caseIds": [
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      ],
+      "actualEvidence": [
+        "current-reader-controls-attempt1.log#QC-PROVIDER-OBSERVATION-PROVENANCE"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed.",
+      "matchedApiObligations": [
+        {
+          "path": "docs/review/evidence/config-acceptance/components/worker-api-dispositions.json",
+          "sourceField": "WorkerAttemptOperationResources.cpuTimeMs",
+          "sourceLine": 57,
+          "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/worker-api-dispositions.json",
+          "sourceField": "WorkerAttemptOperationResources.maximumMemoryBytes",
+          "sourceLine": 58,
+          "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/worker-api-dispositions.json",
+          "sourceField": "WorkerAttemptOperationResources.maximumProcesses",
+          "sourceLine": 59,
+          "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/worker-api-dispositions.json",
+          "sourceField": "WorkerAttemptOperation.measure",
+          "sourceLine": 74,
+          "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+        }
+      ],
+      "matchedSchemaObligations": [
+        {
+          "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+          "id": "CMP-SCHEMA-0a7ecdd992fc63c9",
+          "definition": "workerAttemptResult",
+          "field": "/resources/cpuTimeMs",
+          "role": "buster-provider-v1 ONLY; no unavailablebudgetalias toPrismagentv2"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+          "id": "CMP-SCHEMA-bf3ad9229b1f6751",
+          "definition": "workerAttemptResult",
+          "field": "/resources/maximumMemoryBytes",
+          "role": "buster-provider-v1 ONLY; no unavailablebudgetalias toPrismagentv2"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+          "id": "CMP-SCHEMA-fed4ef3a00f23dba",
+          "definition": "workerAttemptResult",
+          "field": "/resources/maximumProcesses",
+          "role": "buster-provider-v1 ONLY; no unavailablebudgetalias toPrismagentv2"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+          "id": "CMP-SCHEMA-06ce658690ba2060",
+          "definition": "workerAttemptResult",
+          "field": "/resources/cpuTimeMs",
+          "role": "buster-provider-v1 ONLY; no unavailablebudgetalias toPrismagentv2"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+          "id": "CMP-SCHEMA-b04e870e097bf784",
+          "definition": "workerAttemptResult",
+          "field": "/resources/maximumMemoryBytes",
+          "role": "buster-provider-v1 ONLY; no unavailablebudgetalias toPrismagentv2"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+          "id": "CMP-SCHEMA-1dc9ca921c1774fd",
+          "definition": "workerAttemptResult",
+          "field": "/resources/maximumProcesses",
+          "role": "buster-provider-v1 ONLY; no unavailablebudgetalias toPrismagentv2"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+          "id": "CMP-SCHEMA-8a5f1f02eb1232b0",
+          "definition": "workerAttemptResult",
+          "field": "/resources/cpuTimeMs",
+          "role": "buster-provider-v1 ONLY; no unavailablebudgetalias toPrismagentv2"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+          "id": "CMP-SCHEMA-719f7b0480696b45",
+          "definition": "workerAttemptResult",
+          "field": "/resources/maximumMemoryBytes",
+          "role": "buster-provider-v1 ONLY; no unavailablebudgetalias toPrismagentv2"
+        }
+      ]
+    },
+    {
+      "id": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "lifecycle": {
+        "active": "historical-resolved-duplicate",
+        "requirementsPreserved": true,
+        "historicalSourcePath": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json"
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+          "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+          "lines": [
+            {
+              "line": 108,
+              "text": "    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', 32, SECRET_NAME);"
+            },
+            {
+              "line": 109,
+              "text": "    if (secretReferences.some((name) => !settings.secretReferences.has(name))) {"
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+          "sha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad",
+          "lines": [
+            {
+              "line": 27,
+              "text": "export function stringArray(value: unknown, label: string, maximum: number, pattern?: RegExp): string[] {"
+            },
+            {
+              "line": 28,
+              "text": "    if (!Array.isArray(value) || value.length > maximum"
+            },
+            {
+              "line": 29,
+              "text": "        || value.some((item) => typeof item !== 'string' || item.length < 1 || item.length > 253"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": "existing Buster allowedSecretReferences",
+      "handoff": "No generic samevaluealias: parent/delivery must append exact author/profile/domain/pairedfieldcase; no acceptance from sourceindex",
+      "caseIds": [],
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "lifecycle": {
+        "active": "external-author-definition-pending",
+        "requirementsPreserved": true,
+        "historicalSourcePath": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json"
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/prism/server/agent-routes.ts",
+          "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+          "lines": [
+            {
+              "line": 60,
+              "text": "  if (!input.projectId || input.designs?.length !== 3)"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": "parent Prism",
+      "handoff": "No generic samevaluealias: parent/delivery must append exact author/profile/domain/pairedfieldcase; no acceptance from sourceindex",
+      "caseIds": [],
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "lifecycle": {
+        "active": "external-author-definition-pending",
+        "requirementsPreserved": true,
+        "historicalSourcePath": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json"
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/prism/engine/worker-envelope.ts",
+          "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+          "lines": [
+            {
+              "line": 9,
+              "text": ""
+            },
+            {
+              "line": 10,
+              "text": "const engineContentDigest = prismEngineContentDigest()"
+            },
+            {
+              "line": 11,
+              "text": "  || sha256Digest({ engineId: \"prism-design-engine\", engineVersion: \"1.0.0\", development: true });"
+            }
+          ]
+        },
+        {
+          "path": "skills/prism/config/native-worker.ts",
+          "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+          "lines": [
+            {
+              "line": 7,
+              "text": "export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {"
+            },
+            {
+              "line": 8,
+              "text": "  const digest = environment.PRISM_ENGINE_CONTENT_DIGEST?.trim();"
+            },
+            {
+              "line": 9,
+              "text": "  if (environment.NODE_ENV === 'production' && !/^sha256:[a-f0-9]{64}$/u.test(digest ?? '')) {"
+            },
+            {
+              "line": 10,
+              "text": "    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');"
+            },
+            {
+              "line": 35,
+              "text": "  if (!/^sha256:[a-f0-9]{64}$/u.test(engineContentDigest ?? '')) throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": "parent Prism",
+      "handoff": "No generic samevaluealias: parent/delivery must append exact author/profile/domain/pairedfieldcase; no acceptance from sourceindex",
+      "caseIds": [],
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "lifecycle": {
+        "active": "external-author-definition-pending",
+        "requirementsPreserved": true,
+        "historicalSourcePath": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json"
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+          "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+          "lines": [
+            {
+              "line": 109,
+              "text": "    this.#environment = { PATH: process.env.PATH, KUBECONFIG: process.env.KUBECONFIG,"
+            },
+            {
+              "line": 110,
+              "text": "      KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,"
+            },
+            {
+              "line": 111,
+              "text": "      KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT };"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": "delivery exact rolebinding",
+      "handoff": "No generic samevaluealias: parent/delivery must append exact author/profile/domain/pairedfieldcase; no acceptance from sourceindex",
+      "caseIds": [],
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "lifecycle": {
+        "active": "external-author-definition-pending",
+        "requirementsPreserved": true,
+        "historicalSourcePath": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json"
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "lines": [
+            {
+              "line": 24,
+              "text": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 65536) {"
+            },
+            {
+              "line": 34,
+              "text": "  if (value?.schemaVersion !== 1 || value.role !== role || typeof value.nodeName !== 'string' || !value.nodeName"
+            },
+            {
+              "line": 35,
+              "text": "    || typeof value.policyDigest !== 'string' || !/^[a-f0-9]{64}$/u.test(value.policyDigest)) throw new Error('WORKER_NATIVE_POOL_POLICY_INVALID');"
+            }
+          ]
+        },
+        {
+          "path": "scripts/prepare-native-worker-pools.mjs",
+          "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+          "lines": [
+            {
+              "line": 14,
+              "text": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size > 65536) throw new Error('NATIVE_SETUP_POLICY_NOT_TRUSTED');"
+            },
+            {
+              "line": 27,
+              "text": "  if (pool.memoryBytes % 4096 || pool.cpuPeriodMicroseconds < 1000 || pool.cpuPeriodMicroseconds > 1000000"
+            },
+            {
+              "line": 28,
+              "text": "    || pool.cpuQuotaMicroseconds < 1000) throw new Error('NATIVE_SETUP_LIMIT_INVALID');"
+            },
+            {
+              "line": 74,
+              "text": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size > 4096) throw new Error('NATIVE_SETUP_RUNTIME_IDENTITY_NOT_TRUSTED');"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": "delivery exact rolebinding",
+      "handoff": "No generic samevaluealias: parent/delivery must append exact author/profile/domain/pairedfieldcase; no acceptance from sourceindex",
+      "caseIds": [],
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    },
+    {
+      "id": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "classification": "operator-policy/caller-owned store lock wait",
+      "historicalQuestion": {
+        "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-open-obligations.json",
+        "sha256": "9f320d39f2f1aea16d4e08cf09ab21d57f61c5c9c3e6c5dcb4ef70dd38a77a51",
+        "id": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT"
+      },
+      "lifecycle": {
+        "historical": "source-freeze question retained unchanged",
+        "active": "proposed-definition; independent review pending",
+        "requirementsPreserved": true
+      },
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 185,
+              "text": "async function acquireKernelLock("
+            },
+            {
+              "line": 189,
+              "text": "    \"/usr/bin/flock\","
+            },
+            {
+              "line": 192,
+              "text": "      \"--timeout\","
+            },
+            {
+              "line": 193,
+              "text": "      \"5\","
+            },
+            {
+              "line": 195,
+              "text": "      \"/bin/sh\","
+            },
+            {
+              "line": 244,
+              "text": "export async function withDurableStoreLock<T>("
+            },
+            {
+              "line": 265,
+              "text": "    );"
+            }
+          ]
+        }
+      ],
+      "soleAuthor": {
+        "selection": "caller-specific existing author, never a new shared foundation/Core umbrella",
+        "ownerMap": "lock-owner-map.json",
+        "current": "shared helper hardcodes5; callers do not currently supply policy",
+        "target": "Existing caller owner selected by sole pipeline.config.json systementry; existingNova PlatformConfig is generatedimmutablepayload, neversecondeditableindex; see scaffold-c2-binding-definition.md",
+        "CoreNativeStores": "same existing worker-core component author proposed settings.runtime.native_store_lock_wait_seconds (copyverified13 unchanged); onlyactual Core ownership/nativejournal, not Nova/plugins/scaffold lock umbrella"
+      },
+      "supportedDomain": {
+        "currentLiteral": 5,
+        "target": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "unit": "seconds",
+        "reason": "Finite positive integer seconds accepted by real /usr/bin/flock --timeout. Reductions never extend kernel wait; no timers or physical capacity guessed. Zero is no-wait semantics and excluded from this bounded conservative proposal."
+      },
+      "definition": [
+        "Enumerate every direct helper call and every concrete storage constructor in all-storage-and-lock-callers.json. Indirect reusable classes receive caller policy, not registration-wide globals.",
+        "Same physical root/lock namespace has one author. Each operation captures its policy generation; a compatible independently valid new operation may useB while originalA holder keepsA. Differentauthor/root or incompatiblehistory rejects beforeeffect. Lifetime/supervisor locks inherit owned root policy, not request resource quota.",
+        "The project scaffold pair reader publishes progress.json/pipeline.json; it is NOT system CONFIG publication. Existing Nova PlatformConfig proposed projectScaffold policy owns its lock, not Delivery.",
+        "Real lock wait expiration rejects with OBSERVABILITY_STORE_LOCK_FAILED/LOCKED and leaves owner-held operation/state untouched. No break-lock/delete/automatic renewal.",
+        "Reusable Core/nativejournal roots inherit actual outer Prism/Buster owningpolicy; no samevalueglobalCoreauthor. Nova gate stores inherit standalone runtime orregistered remote-test-gate caller-specificauthor. See outerconstructorchains.",
+        "scaffold-c2-binding-definition.md supersedes preliminary independent --platform wording: solepipeline.config.json selects Nova; --platform is checkedgeneratedlocator only. All source/package/wrapper references retained. Proposed standaloneworkunit CLI migration is C2definition only.",
+        "add-owner-projections.py addscomplete existingBuster preparation+attempt store lock companions, same existingworker-core native lock companion, andsixcomplete currentregisteredstore configcompanions. This is distinct callerpolicy authoring, not one globalCore setting. SourceAPI publiclyinjected nativefixture and standalone/registeredNova gate physicalcompanions retain exact declaredexistingowner, never guesseddeploymentprofile."
+      ],
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "actualEvidence": [
+        "source-candidates-bce3f075/foundation-source-controls-attempt1.log#CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+        "kernel-projection-controls-attempt1.log#QC-KERNEL-WAIT-5",
+        "kernel-projection-controls-attempt1.log#QC-KERNEL-WAIT-1"
+      ],
+      "claimLimits": "No C0 acceptance, approved implementation, deployment, physical capacity or F-EFFECT claim",
+      "relatedExistingSettingIds": [],
+      "aliasExplanation": "Relations/repair to existing quota or declaredunusedpath; NOT alias newoperatorformatters to same-value quotas. Newrequiredfields in ownexistingauthor explicitly proposed."
+    }
+  ],
+  "independentReview": "pending; author definitions do not accept C0",
+  "requirements": "original question IDs/obligations retained; per-caller ownership rather than new shared author"
+}

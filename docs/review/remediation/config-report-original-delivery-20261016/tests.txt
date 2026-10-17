@@ -1,0 +1,32 @@
+✔ default Runner and actual adapter consume maximumSourceBytes (585.216708ms)
+✔ default Runner and actual adapter consume maximumCases (537.38706ms)
+✔ default Runner and actual adapter consume maximumFindings (582.893552ms)
+✔ default Runner and actual adapter consume maximumCaseFindings (569.898166ms)
+✔ default Runner actual report process consumes maximumTimeoutMs (2951.008145ms)
+✔ default Runner actual report process consumes memoryBytes (918.479096ms)
+✔ default Runner actual report process consumes minimumCpuTimeMs (2614.498767ms)
+✔ default Runner actual report process consumes maximumOpenFiles (431.329515ms)
+{"originalMalformedPoliciesRejected":38,"chartGeneratorsPerNegative":2,"actualPackagedRoleBoots":4,"chartsPerDelivery":2,"nativeExecution":false}
+✔ both actual charts, packaged role boot and loader enforce shared report policy (38831.422793ms)
+✔ default Runner report child consumes minimumHeapMiB (623.541618ms)
+✔ default Runner report child consumes heapFraction (415.907204ms)
+✔ Runner rejects incoherent report runtimeMemoryReserveBytes before effects (6.615316ms)
+✔ Runner rejects incoherent report minimumOpenFiles before effects (5.717404ms)
+✔ report runtime requires minimumOpenFiles before directory effects (3.309513ms)
+✔ report runtime requires minimumHeapMiB before directory effects (0.803491ms)
+✔ report runtime requires heapFraction before directory effects (0.788409ms)
+✔ report runtime requires runtimeMemoryReserveBytes before directory effects (0.850581ms)
+✔ real report V8 heap consumes minimumHeapMiB (99.131434ms)
+✔ real report V8 heap consumes heapFraction (73.991982ms)
+✔ selected report descriptor floor gates actual process admission (39.814321ms)
+✔ report snapshot rejects incoherent ranges and remains immutable (0.294858ms)
+✔ selected runtime memory reserve gates the real adapter before spawn (40.575391ms)
+✔ direct adaptation enforces the selected ceiling and derived CPU floor (43.024612ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54795.99568

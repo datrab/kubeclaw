@@ -1,0 +1,24 @@
+[
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/check-boundary-materials.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root",
+    "scriptSha256": "63598f018ffa15b4f11798dd8aa4aebb812d97442e6f6beea1fa7327b65df0ff",
+    "exit": 0,
+    "stdoutSha256": "750e00ffab0f7c3a17b19c18bc330851de5d7780bd7f81bdfcc5f9c8517f0f40",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/check-current-api-return.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root",
+    "scriptSha256": "6c9768da50529328d6a36d9094ff7c4fb4a50220b512db3e2ef5bb12ac118866",
+    "exit": 0,
+    "stdoutSha256": "d0eb1ee007cd51a301aca4673e9d6922a0e3c63a24f5a86d146d188a4db300c8",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

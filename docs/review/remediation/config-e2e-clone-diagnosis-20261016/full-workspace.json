@@ -1,0 +1,21 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-timeout=90000",
+    "tests/verification/e2e/real-run-workspace.test.mjs"
+  ],
+  "seconds": 978.5377857685089,
+  "existingOriginalProcessTerminated": true,
+  "originalExitCode": null,
+  "completionSummary": {
+    "tests": 61,
+    "suites": 0,
+    "pass": 60,
+    "fail": 0,
+    "cancelled": 1,
+    "skipped": 0,
+    "todo": 0
+  },
+  "qualification": "Same original process continued after execution transport timeout. Full final summary required; original child exit status not available to replacement observer."
+}

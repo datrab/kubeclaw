@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {reviewSnapshotPaths} from './docs-review-snapshots.mjs';
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -6,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docsRoot = path.join(root, 'docs');
+const snapshots = reviewSnapshotPaths(root);
 
 const errors = [];
 
@@ -25,13 +27,14 @@ function walk(dir, predicate = () => true) {
 
 function activeMarkdownFiles() {
   return walk(docsRoot, (filePath) => filePath.endsWith('.md'))
-    .filter((filePath) => !rel(filePath).startsWith('docs/archive/'));
+    .filter((filePath) => !rel(filePath).startsWith('docs/archive/')
+      && !snapshots.has(rel(filePath)));
 }
 
 function checkLocalLinks(files) {
   const linkRe = /\[[^\]]*]\(([^)]+)\)/g;
   for (const file of files) {
-    const text = fs.readFileSync(file, 'utf8');
+    const text = fs.readFileSync(file, 'utf8').replace(/```[\s\S]*?```/g, '\n').replace(/<!--[\s\S]*?-->/g, '\n');
     let match;
     while ((match = linkRe.exec(text))) {
       let target = match[1].trim();
@@ -43,7 +46,7 @@ function checkLocalLinks(files) {
         target.startsWith('mailto:')
       ) continue;
       if (target.startsWith('<') && target.endsWith('>')) target = target.slice(1, -1);
-      target = target.split('#')[0];
+      target = target.split('#')[0].replace(/:\d+(:\d+)?$/, '');
       if (!target) continue;
       const resolved = path.resolve(path.dirname(file), decodeURI(target));
       if (rel(resolved).startsWith('docs/archive/')) continue;

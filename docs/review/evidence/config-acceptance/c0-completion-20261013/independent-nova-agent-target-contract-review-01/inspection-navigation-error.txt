@@ -1,0 +1,1 @@
+Initial read assumed native case-proposals object with cases member; actual collection is an array. Python TypeError, exit1. Corrected read supported actual array; conservation0 failures. No productive action or mutation.

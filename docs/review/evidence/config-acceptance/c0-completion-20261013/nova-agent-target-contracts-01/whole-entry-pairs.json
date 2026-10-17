@@ -1,0 +1,362 @@
+[
+  {
+    "fieldId": "RT-c0a779743e7384ba",
+    "side": "A",
+    "path": "future-entry-pairs/RT-c0a779743e7384ba/A/config/pipeline.config.json",
+    "sha256": "c4ed8b2f4aa7f3bf7ffd8bdd81744dcb8b9cf1eefecadae6602089c157a68eb2",
+    "selectedOwner": "config/plugins/kubeclaw.architecture-validator.config.json",
+    "selectedProfile": "RT-c0a779743e7384ba-A",
+    "selectedProfileSha256": "3d55002d06ef7a547269c4b3956bbed435e1b1c3b22b9bff1c0c3dc2634bac93",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-c0a779743e7384ba",
+    "side": "B",
+    "path": "future-entry-pairs/RT-c0a779743e7384ba/B/config/pipeline.config.json",
+    "sha256": "2ffa10b660a4ce9acfec844d722fd9586b39faa4cf334de835a26ece58b2050a",
+    "selectedOwner": "config/plugins/kubeclaw.architecture-validator.config.json",
+    "selectedProfile": "RT-c0a779743e7384ba-B",
+    "selectedProfileSha256": "345b170c7c47c007a23ad0e77b46150796557b5d3a1ef5fa433efcd55ad25ede",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-ae11bf913a6050c6",
+    "side": "A",
+    "path": "future-entry-pairs/RT-ae11bf913a6050c6/A/config/pipeline.config.json",
+    "sha256": "6471f81441b0daa3ceb3ef96548b2824a04e1ff560745be468a0bfe25536eff4",
+    "selectedOwner": "config/plugins/kubeclaw.architecture-validator.config.json",
+    "selectedProfile": "RT-ae11bf913a6050c6-A",
+    "selectedProfileSha256": "3d55002d06ef7a547269c4b3956bbed435e1b1c3b22b9bff1c0c3dc2634bac93",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-ae11bf913a6050c6",
+    "side": "B",
+    "path": "future-entry-pairs/RT-ae11bf913a6050c6/B/config/pipeline.config.json",
+    "sha256": "dfc43f5238750341000b7a9a959a3919619ef9ad09309cddf60c9be7e971f655",
+    "selectedOwner": "config/plugins/kubeclaw.architecture-validator.config.json",
+    "selectedProfile": "RT-ae11bf913a6050c6-B",
+    "selectedProfileSha256": "297f68cd6251e276f0f142e5059c386e8426483e190a08d320081af568033a47",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-34cb107ae059df42",
+    "side": "A",
+    "path": "future-entry-pairs/RT-34cb107ae059df42/A/config/pipeline.config.json",
+    "sha256": "efa0877e3a7fddc48e6b1a3d69f887c771859cb512568eb28ac586e243d0b54f",
+    "selectedOwner": "config/plugins/kubeclaw.implementation-agent.config.json",
+    "selectedProfile": "RT-34cb107ae059df42-A",
+    "selectedProfileSha256": "62a85407de685aaf810f5caf25f1b8878a8c83e058dd945dc8f3b18ea3ab63fc",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-34cb107ae059df42",
+    "side": "B",
+    "path": "future-entry-pairs/RT-34cb107ae059df42/B/config/pipeline.config.json",
+    "sha256": "6124ea2fd6afca149a36778c0e0abe243cecbc5f11be5de0a1848b15ac2ff78f",
+    "selectedOwner": "config/plugins/kubeclaw.implementation-agent.config.json",
+    "selectedProfile": "RT-34cb107ae059df42-B",
+    "selectedProfileSha256": "4e758affada7469bf803293df4b6b5676c59f8d1caada23230e06d8b810950b5",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-6442142673149854",
+    "side": "A",
+    "path": "future-entry-pairs/RT-6442142673149854/A/config/pipeline.config.json",
+    "sha256": "9da10e0c0d066360b6dc4ba965876579b149084c84b8c6df839605025bffd469",
+    "selectedOwner": "config/plugins/kubeclaw.implementation-agent.config.json",
+    "selectedProfile": "RT-6442142673149854-A",
+    "selectedProfileSha256": "62a85407de685aaf810f5caf25f1b8878a8c83e058dd945dc8f3b18ea3ab63fc",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-6442142673149854",
+    "side": "B",
+    "path": "future-entry-pairs/RT-6442142673149854/B/config/pipeline.config.json",
+    "sha256": "52fe9cba47c26457126c82ca1e80abc331a3c9d458ffcca379dea08a3e307c64",
+    "selectedOwner": "config/plugins/kubeclaw.implementation-agent.config.json",
+    "selectedProfile": "RT-6442142673149854-B",
+    "selectedProfileSha256": "87716cd6bffbec5004729ead97f74a83546db858b4d4251430fde28eff14ed56",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-2d37a257c3d7dd45",
+    "side": "A",
+    "path": "future-entry-pairs/RT-2d37a257c3d7dd45/A/config/pipeline.config.json",
+    "sha256": "f16068f8544fa5187b865e31e8d551c787c77b093df4f6332c7542fa1164d0db",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-2d37a257c3d7dd45-A",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-2d37a257c3d7dd45",
+    "side": "B",
+    "path": "future-entry-pairs/RT-2d37a257c3d7dd45/B/config/pipeline.config.json",
+    "sha256": "9ad710ff99e895815913d6dd203ccce2ba00ed4d7e8314e555556f759c8c6546",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-2d37a257c3d7dd45-B",
+    "selectedProfileSha256": "664daee455f178f69ab02d00778403ebf9f803c22b210ee5f0b1753c2507c079",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-4c1a2b66cdab7e18",
+    "side": "A",
+    "path": "future-entry-pairs/RT-4c1a2b66cdab7e18/A/config/pipeline.config.json",
+    "sha256": "5857d1c0553f1142458f8d0bf236901d7cae326d3755db64fa28c47e3e2c9ae9",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-4c1a2b66cdab7e18-A",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-4c1a2b66cdab7e18",
+    "side": "B",
+    "path": "future-entry-pairs/RT-4c1a2b66cdab7e18/B/config/pipeline.config.json",
+    "sha256": "08c24eb55951de9d7f858a89393083120f68672e803b1c1bf3226cdfc952e68f",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-4c1a2b66cdab7e18-B",
+    "selectedProfileSha256": "a295440798d8ade5b73ea3b52a0d76d60f83fadf43007c52428e480caa342624",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-8750f030bf25ecae",
+    "side": "A",
+    "path": "future-entry-pairs/RT-8750f030bf25ecae/A/config/pipeline.config.json",
+    "sha256": "e2004464d113a0ef0ba3360450b48c5202a36bf0a116bfcfd1ee38d386791e1f",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-8750f030bf25ecae-A",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-8750f030bf25ecae",
+    "side": "B",
+    "path": "future-entry-pairs/RT-8750f030bf25ecae/B/config/pipeline.config.json",
+    "sha256": "9d78d117dcd1c8078d8f877b1b284e5698fc515ec6ea8c7f1d2271c7378a362d",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-8750f030bf25ecae-B",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-96698b5568aba94d",
+    "side": "A",
+    "path": "future-entry-pairs/RT-96698b5568aba94d/A/config/pipeline.config.json",
+    "sha256": "0b7443ebbbff46e52d214a98bf066f25f77aa6ca09dab73f093fccb3e7820723",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-96698b5568aba94d-A",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-96698b5568aba94d",
+    "side": "B",
+    "path": "future-entry-pairs/RT-96698b5568aba94d/B/config/pipeline.config.json",
+    "sha256": "f031b5924ba059c3bd8fee874bb62f48c70a2f9f1accdf72ec127bc0719667f4",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-96698b5568aba94d-B",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-36accddb567c892f",
+    "side": "A",
+    "path": "future-entry-pairs/RT-36accddb567c892f/A/config/pipeline.config.json",
+    "sha256": "ee8af24a87fc6a079dabf6260127fd30a651bd4771b6b9aacea789b5c6731969",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-36accddb567c892f-A",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-36accddb567c892f",
+    "side": "B",
+    "path": "future-entry-pairs/RT-36accddb567c892f/B/config/pipeline.config.json",
+    "sha256": "a4509485ce06f6b7cac8f15e0e1a9e70fabf0070f24bd2b7aefe7d10727083ff",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-36accddb567c892f-B",
+    "selectedProfileSha256": "0e8334090998b727846b91d8fab4efaf2727d3452256f028434a9ebade9b8c2c",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-81d42184c1081430",
+    "side": "A",
+    "path": "future-entry-pairs/RT-81d42184c1081430/A/config/pipeline.config.json",
+    "sha256": "fcc13236e816891af7ded91a5e604e60393a4d9461b320d6823b9574ef880085",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-81d42184c1081430-A",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-81d42184c1081430",
+    "side": "B",
+    "path": "future-entry-pairs/RT-81d42184c1081430/B/config/pipeline.config.json",
+    "sha256": "75cd4e4bd7eac532fd8baac2e650019ec65f83c2cf889742d04d405be828a839",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-81d42184c1081430-B",
+    "selectedProfileSha256": "5bda167b158e922edd752dd564be6d5a1b4ef74535f228b1435dd4862130001b",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-41d93665317a7d07",
+    "side": "A",
+    "path": "future-entry-pairs/RT-41d93665317a7d07/A/config/pipeline.config.json",
+    "sha256": "c84a8713ed8ad6bca2b2f60543431450621be94ce4a231ba9edfea56785abfca",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-41d93665317a7d07-A",
+    "selectedProfileSha256": "405e174a5aa3ed2b642afc1652fc85fbb53df4712f31a259a00561edc0394a4a",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-41d93665317a7d07",
+    "side": "B",
+    "path": "future-entry-pairs/RT-41d93665317a7d07/B/config/pipeline.config.json",
+    "sha256": "8a27e73ba608e5200a024659144c7c1d1cab25b5541c7cdac49b0eb36e71e341",
+    "selectedOwner": "config/plugins/kubeclaw.pipeline-review.config.json",
+    "selectedProfile": "RT-41d93665317a7d07-B",
+    "selectedProfileSha256": "a18bb9b06466760777347ba77fc2d319002b1df914e2fff639629903a9d8c42d",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-8e39db110874a9d6",
+    "side": "A",
+    "path": "future-entry-pairs/RT-8e39db110874a9d6/A/config/pipeline.config.json",
+    "sha256": "5bce635771b1da8db27e8142ac5ff1f45802fce355c6203ba3c4e2a603e1a655",
+    "selectedOwner": "config/plugins/kubeclaw.prism-design.config.json",
+    "selectedProfile": "RT-8e39db110874a9d6-A",
+    "selectedProfileSha256": "11164a595ab9f4bb731709eaf35516842a6cf0cccbf0270a6a7a3f3b8a6a0960",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-8e39db110874a9d6",
+    "side": "B",
+    "path": "future-entry-pairs/RT-8e39db110874a9d6/B/config/pipeline.config.json",
+    "sha256": "4f46a7f594c163b0437fece52235dc8d79253c1aee1430f5dc1eff10250bd85f",
+    "selectedOwner": "config/plugins/kubeclaw.prism-design.config.json",
+    "selectedProfile": "RT-8e39db110874a9d6-B",
+    "selectedProfileSha256": "11164a595ab9f4bb731709eaf35516842a6cf0cccbf0270a6a7a3f3b8a6a0960",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-03fda24ef110ef33",
+    "side": "A",
+    "path": "future-entry-pairs/RT-03fda24ef110ef33/A/config/pipeline.config.json",
+    "sha256": "6fe4266f690c4a9b9634686947d3f7359c23192032b5dde2e802dd66bfea3784",
+    "selectedOwner": "config/plugins/kubeclaw.prism-design.config.json",
+    "selectedProfile": "RT-03fda24ef110ef33-A",
+    "selectedProfileSha256": "11164a595ab9f4bb731709eaf35516842a6cf0cccbf0270a6a7a3f3b8a6a0960",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-03fda24ef110ef33",
+    "side": "B",
+    "path": "future-entry-pairs/RT-03fda24ef110ef33/B/config/pipeline.config.json",
+    "sha256": "9bef922a91a4440a99bd3a40b4780593ac0fad78ab5dee7d86c860fed55e5266",
+    "selectedOwner": "config/plugins/kubeclaw.prism-design.config.json",
+    "selectedProfile": "RT-03fda24ef110ef33-B",
+    "selectedProfileSha256": "557bf8ca7486ee870c9ca0f24f3667f443f63af35e48c9a51d6b15c524ae2ce8",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-94d352d99db6b92d",
+    "side": "A",
+    "path": "future-entry-pairs/RT-94d352d99db6b92d/A/config/pipeline.config.json",
+    "sha256": "f5e5295a9563c7c284370d0d098e6d993867bc63796da7d91a636c1f1eeac014",
+    "selectedOwner": "config/plugins/kubeclaw.prism-design.config.json",
+    "selectedProfile": "RT-94d352d99db6b92d-A",
+    "selectedProfileSha256": "11164a595ab9f4bb731709eaf35516842a6cf0cccbf0270a6a7a3f3b8a6a0960",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-94d352d99db6b92d",
+    "side": "B",
+    "path": "future-entry-pairs/RT-94d352d99db6b92d/B/config/pipeline.config.json",
+    "sha256": "309def5febbd3dbca8aad83746f00cd973a703967909385c9f9b7991b957be0a",
+    "selectedOwner": "config/plugins/kubeclaw.prism-design.config.json",
+    "selectedProfile": "RT-94d352d99db6b92d-B",
+    "selectedProfileSha256": "f6536f48463f0dad7a13a80a322d808561d122b3e3276f14bd9412e19dba7b67",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-afddbf26c06e75cf",
+    "side": "A",
+    "path": "future-entry-pairs/RT-afddbf26c06e75cf/A/config/pipeline.config.json",
+    "sha256": "a1c9351eb64c084afa0ab0c8fa09ed8acebe6908571f90f7cd07680f23a4be4f",
+    "selectedOwner": "config/plugins/kubeclaw.prism-design.config.json",
+    "selectedProfile": "RT-afddbf26c06e75cf-A",
+    "selectedProfileSha256": "11164a595ab9f4bb731709eaf35516842a6cf0cccbf0270a6a7a3f3b8a6a0960",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-afddbf26c06e75cf",
+    "side": "B",
+    "path": "future-entry-pairs/RT-afddbf26c06e75cf/B/config/pipeline.config.json",
+    "sha256": "d9d778cc21d341648f1e90767953ebe5b241f0472674e744b74eddcd69b36fa8",
+    "selectedOwner": "config/plugins/kubeclaw.prism-design.config.json",
+    "selectedProfile": "RT-afddbf26c06e75cf-B",
+    "selectedProfileSha256": "3e0e9cd20c6eadd1af2ee0baef068d18abe6d1e18e3f0018dd1f8874d915fab3",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-2b6e3bc13743e80c",
+    "side": "A",
+    "path": "future-entry-pairs/RT-2b6e3bc13743e80c/A/config/pipeline.config.json",
+    "sha256": "1dc99294ec3802b58fe9c3d560f293364fbd85282b0cba3ea2f3c90183e54de5",
+    "selectedOwner": "config/plugins/kubeclaw.project-summary.config.json",
+    "selectedProfile": "RT-2b6e3bc13743e80c-A",
+    "selectedProfileSha256": "bd3de067d35bc6ad6b20ad5cef38c38205dbf72f8173f7e1d1e82285414d7a75",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-2b6e3bc13743e80c",
+    "side": "B",
+    "path": "future-entry-pairs/RT-2b6e3bc13743e80c/B/config/pipeline.config.json",
+    "sha256": "d05b9ef699f53380a51a8660ffa3a52f4b2189e1c05005272d16078e243b891b",
+    "selectedOwner": "config/plugins/kubeclaw.project-summary.config.json",
+    "selectedProfile": "RT-2b6e3bc13743e80c-B",
+    "selectedProfileSha256": "035566009501c33677e35639c8bbad8f1eeea10cdf1f115c8c856319a212f35c",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-0086141ada6be298",
+    "side": "A",
+    "path": "future-entry-pairs/RT-0086141ada6be298/A/config/pipeline.config.json",
+    "sha256": "2387433dc66e6f3e6ea3a3d08a179f9115f905c579fda8af2bc174b92ee6cbdf",
+    "selectedOwner": "config/plugins/kubeclaw.project-summary.config.json",
+    "selectedProfile": "RT-0086141ada6be298-A",
+    "selectedProfileSha256": "bd3de067d35bc6ad6b20ad5cef38c38205dbf72f8173f7e1d1e82285414d7a75",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-0086141ada6be298",
+    "side": "B",
+    "path": "future-entry-pairs/RT-0086141ada6be298/B/config/pipeline.config.json",
+    "sha256": "fc8343dc3a2c984df2f4e335cf13aee54306fa2e8f3dbdd97770b8d30f22282b",
+    "selectedOwner": "config/plugins/kubeclaw.project-summary.config.json",
+    "selectedProfile": "RT-0086141ada6be298-B",
+    "selectedProfileSha256": "0e83644bf5407095999750a3b6fd5e8fd38f5e0742878a80271da1a05e0efe3f",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-8152550972f10185",
+    "side": "A",
+    "path": "future-entry-pairs/RT-8152550972f10185/A/config/pipeline.config.json",
+    "sha256": "57224a11c7c28201d1d49f88f81de757f67f0d03c937f8291e0904e3d10ef931",
+    "selectedOwner": "config/plugins/kubeclaw.case-study.config.json",
+    "selectedProfile": "RT-8152550972f10185-A",
+    "selectedProfileSha256": "07ddb302741a6133e31230f122e6564c55de2171e3437258d0200342dc1ff6ad",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  },
+  {
+    "fieldId": "RT-8152550972f10185",
+    "side": "B",
+    "path": "future-entry-pairs/RT-8152550972f10185/B/config/pipeline.config.json",
+    "sha256": "7dfdada78709a2dba3433fd7fb96b6f67fb61fce7c7559bd07a3d5a0533450e5",
+    "selectedOwner": "config/plugins/kubeclaw.case-study.config.json",
+    "selectedProfile": "RT-8152550972f10185-B",
+    "selectedProfileSha256": "773627553d270726bd6c955b00d0684d11eee58d07abecfd410bb2a3d9b147e4",
+    "rootQualified": "Full source-definition future single-entry proposal only; does not pass unchanged current v7 schema or become a current installed root. Frozen v7 all six components/bindings/old selections retained."
+  }
+]

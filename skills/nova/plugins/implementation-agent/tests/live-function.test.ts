@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -65,21 +68,21 @@ try {
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const effectsPath = path.join(temporary, 'effects.jsonl');
   const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([
-    ['kubeclaw.runtime-dispatch:runtime',{targets:{forge:{endpoint:`${origin}/dispatch`,tokenSecret:'forge.agent'}}}],
-    ['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']}],
+    ['kubeclaw.runtime-dispatch:runtime',{ ...TEST_CORE_POLICY.httpDispatch,targets:{forge:{byteProfile:'standard', endpoint:`${origin}/dispatch`,tokenSecret:'forge.agent'}}}],
+    ['kubeclaw.network-http:http',{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']}],
     ['kubeclaw.secret-resolver:secrets',{environment:{'forge.agent':secret}}],
-    ['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(temporary,'artifacts')}],
+    ['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(temporary,'artifacts')}],
     ['kubeclaw.git-workspace:git',{allowedRepositoryRoots:[temporary],workspaceRoot:path.join(temporary,'worktrees'),
       gitExecutable:fs.realpathSync(execFileSync('sh',['-lc','command -v git'],{encoding:'utf8'}).trim()),
-      authorName:'KubeClaw Test',authorEmail:'test@kubeclaw.invalid',maxExecutionMs:5000,maxOutputBytes:65536,terminationGraceMs:100}],
-  ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager(), 300_000), shutdownTimeoutMs:1000, async emitDomainEvent(){} });
+      errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName:'KubeClaw Test',authorEmail:'test@kubeclaw.invalid',maxExecutionMs:5000,maxOutputBytes:65536,terminationGraceMs:100}],
+  ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition), shutdownTimeoutMs:1000, async emitDomainEvent(){} });
   await adapters.start();
   try {
-    const runner = new core.PipelineRunner({ definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:implementation',maxConcurrency:1,stages:[{
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:implementation',maxConcurrency:1,stages:[{
       id:'implementation',type:'kubeclaw.agent.implementation',dependsOn:[],config:{agent:'forge'},
       input:{runId:'run-1',moduleId:'api',attempt:1,task:'Implement API.',headBefore:'a'.repeat(40)},
       execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000},
-    }]}, registry:granted, activated, adapters, journal:new core.FileJournal(path.join(temporary,'events.jsonl')) });
+    }]}, registry:granted, activated, adapters, journal:new core.FileJournal(path.join(temporary,'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs) });
     assert.equal((await runner.run('run:implementation')).status,'succeeded');
     assert.equal(fs.readFileSync(path.join(agentWorkspace, 'src/api.ts'), 'utf8'), 'export const ready = true;\n');
     assert.equal(
@@ -101,20 +104,20 @@ try {
     execFileSync('git', ['-C', lockedRepository, 'commit', '-qm', 'base']);
     const headBefore = execFileSync('git', ['-C', lockedRepository, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
     workerWorkspace = path.join(temporary, 'worktrees', 'cleanup');
-    const cleanup = new core.PipelineRunner({ definition: { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:cleanup', maxConcurrency: 1, stages: [{
+    const cleanup = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition: { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:cleanup', maxConcurrency: 1, stages: [{
       id: 'implementation', type: 'kubeclaw.agent.implementation', dependsOn: [], config: { agent: 'forge' },
       input: { runId: 'stale-input', moduleId: 'api', attempt: 99, task: 'Implement API.', headBefore,
         workspace: { repositoryRoot: lockedRepository, workspacePath: workerWorkspace, branch: 'cleanup-work', baseRef: 'HEAD', mergeTarget: lockedRepository, commitMessage: 'Implement API' } },
       execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 10000 },
-    }] }, registry: granted, activated, adapters, journal: new core.FileJournal(path.join(temporary, 'cleanup-events.jsonl')) });
+    }] }, registry: granted, activated, adapters, journal: new core.FileJournal(path.join(temporary, 'cleanup-events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs) });
     const cleanupResult = await cleanup.run('run:cleanup');
-    assert.equal(cleanupResult.status, 'succeeded', new core.FileJournal(path.join(temporary, 'cleanup-events.jsonl')).records().filter(({ entry }) => entry.type === 'stage.blocked' || entry.type === 'stage.failed').map(({ entry }) => JSON.stringify(entry.payload.reason)).join('\n'));
+    assert.equal(cleanupResult.status, 'succeeded', new core.FileJournal(path.join(temporary, 'cleanup-events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().filter(({ entry }) => entry.type === 'stage.blocked' || entry.type === 'stage.failed').map(({ entry }) => JSON.stringify(entry.payload.reason)).join('\n'));
     const sourceRevision = execFileSync('git', ['-C', lockedRepository, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
     assert.notEqual(sourceRevision, headBefore);
     assert.equal(cleanupResult.stages.get('implementation')?.facts?.['implementation.source_revision'], sourceRevision);
     assert.equal(fs.readFileSync(path.join(lockedRepository, 'src/api.ts'), 'utf8'), 'export const ready = true;\n');
     assert.match(fs.readFileSync(effectsPath, 'utf8'), /implementation-cleanup.v1/);
-    const effects = new core.FileJournal(effectsPath).records().map(({ entry }) => entry);
+    const effects = new core.FileJournal(effectsPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().map(({ entry }) => entry);
     const removal = effects.find(entry => entry.type === 'requested' && entry.request.attempt.runId === 'run:cleanup' && entry.request.capability === 'git.workspace.remove');
     const removalReceipt = effects.find(entry => entry.type === 'completed' && entry.receipt.effectId === removal?.request.effectId)?.receipt;
     assert.equal(removalReceipt?.status, 'failed');
@@ -128,22 +131,22 @@ try {
     loseResponse = true;
     workerWorkspace = path.join(temporary, 'worktrees', 'uncertain');
     const uncertainEvents = path.join(temporary, 'uncertain-events.jsonl');
-    const uncertain = new core.PipelineRunner({ definition: { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:uncertain', maxConcurrency: 1, stages: [{
+    const uncertain = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition: { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:uncertain', maxConcurrency: 1, stages: [{
       id: 'implementation', type: 'kubeclaw.agent.implementation', dependsOn: [], config: { agent: 'forge' },
       input: { runId: 'stale-input', moduleId: 'api', attempt: 99, task: 'Implement API.', headBefore,
         workspace: { repositoryRoot: retainedRepository, workspacePath: workerWorkspace, branch: 'uncertain-work', baseRef: headBefore, mergeTarget: retainedRepository, commitMessage: 'Implement API' } },
       execution: { maxAttempts: 3, maxRemediationCycles: 0, timeoutMs: 10000 },
-    }] }, registry: granted, activated, adapters, journal: new core.FileJournal(uncertainEvents) });
+    }] }, registry: granted, activated, adapters, journal: new core.FileJournal(uncertainEvents, TEST_CORE_POLICY.journalAppendLockTimeoutMs) });
     const uncertainResult = await uncertain.run('run:uncertain');
     assert.equal(uncertainResult.status, 'blocked');
     assert.equal(uncertainResult.stages.get('implementation')?.attemptsUsed, 1);
     assert.equal(fs.readFileSync(path.join(workerWorkspace, 'src/api.ts'), 'utf8'), 'export const ready = true;\n');
     assert.match(execFileSync('git', ['-C', retainedRepository, 'worktree', 'list', '--porcelain'], { encoding: 'utf8' }), /uncertain-work/);
-    const uncertainRequests = new core.FileJournal(effectsPath).records().map(({ entry }) => entry)
+    const uncertainRequests = new core.FileJournal(effectsPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().map(({ entry }) => entry)
       .filter(entry => entry.type === 'requested' && entry.request.attempt.runId === 'run:uncertain');
     assert.equal(uncertainRequests.filter(entry => entry.request.capability === 'runtime.dispatch').length, 1);
     assert.equal(uncertainRequests.filter(entry => entry.request.capability === 'git.workspace.remove').length, 0);
-    const failedAttempt = new core.FileJournal(uncertainEvents).records().map(({ entry }) => entry).find(entry => entry.type === 'attempt.completed');
+    const failedAttempt = new core.FileJournal(uncertainEvents, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().map(({ entry }) => entry).find(entry => entry.type === 'attempt.completed');
     assert.equal(failedAttempt?.payload.result.reason.details.retainedWorkspace, workerWorkspace);
 
   } finally { await adapters.shutdown(); }

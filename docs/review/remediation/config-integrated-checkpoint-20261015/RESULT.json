@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-15T18:53:37.286663+00:00",
+  "sourceCommit": "dcbbad5fda1c3cde3b2745ec409fa814a98464be",
+  "command": [
+    "node",
+    "--test",
+    "tests/verification/reliability/nova-core-policy.test.mjs",
+    "tests/verification/reliability/nova-artifact-policy.test.mjs",
+    "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+    "tests/verification/reliability/nova-telemetry-policy.test.mjs",
+    "tests/verification/reliability/nova-delivery-policy.test.mjs",
+    "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+    "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+    "tests/verification/reliability/nova-http-policy.test.mjs"
+  ],
+  "exitCode": 0,
+  "log": "/home/node/.openclaw/workspace/kubeclaw-config-c0/tmp/config-integrated-checkpoint-20261015/combined.log",
+  "testIdentities": {
+    "tests/verification/reliability/nova-core-policy.test.mjs": "6aa8c7f0b747d430d9ee7d709ca2bc10baabbf055ab5a2a11a71886a76ae7a8c",
+    "tests/verification/reliability/nova-artifact-policy.test.mjs": "a2463bbb4f9438b116c946ea5991f2d0db3afbef94f617df718c9eb05caf57ee",
+    "tests/verification/reliability/nova-state-wait-policy.test.mjs": "4b65e49cde8acbfb3a5cd86e4d851f95f52cd0a7939df7a79ea5cd4a140e07fd",
+    "tests/verification/reliability/nova-telemetry-policy.test.mjs": "8f6efa08c2e10b8f5a7ea5efcd41d70204bddb4e585276b91d868a536e152fab",
+    "tests/verification/reliability/nova-delivery-policy.test.mjs": "41a793205468ad71a1f0464e4c1704c72e962eeda789456592d2c5f50dd714da",
+    "tests/verification/reliability/nova-dispatch-policy.test.mjs": "36c8796c6f63ea9350a61ea9906bf7ee39972485a3b3945e67443e8e4b2a4820",
+    "tests/verification/reliability/nova-target-timing-policy.test.mjs": "83c71916dc54a119664242b7152ddb5de7f29840507b6f32b6dcf0434603eb02",
+    "tests/verification/reliability/nova-http-policy.test.mjs": "73fe62e450fbe6f789946fa340f64e0f0a9508824dfa9766fb3145104392b0f5"
+  },
+  "qualification": "Integrated real consumer verification at pushed source checkpoint; overlaps earlier bounded suites; not fresh independent review or whole/native acceptance. No settings added. Original publisher localId failure remains open."
+}

@@ -1,0 +1,17 @@
+{
+  "skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts": "6d974101d4bac3c5226d68acf8a90485f38da799eb1229676bf6e6175db8ff29",
+  "skills/common/plugin-runtime/foundation/config/pipeline-v10-input-contract.json": "f140708503c761d5c2dc3fd777c03917191d1b37b3875d5a26282d530c16181a",
+  "tests/verification/reliability/pipeline-v10-input-set.test.mts": "63e0e198dd1f98d134acc6bb8ee5075c5b6986bbdda9f658e67f4ef1cca1b4dd",
+  "skills/common/plugin-runtime/foundation/config/pipeline-v10-input-set.ts": "f93a21177163226575241daffe829ff6222c488321f6736aa0463779b124b695",
+  "skills/common/plugin-runtime/foundation/config/pipeline-input-set.ts": "8d3e4e783c952306e67c6a083309e3d9da076386c774210afe74875541b500ab",
+  "skills/common/plugin-runtime/foundation/registry/configuration.ts": "9139b2ab9681ee545eb15eb89ba057032cd8a83759e291d3cf004b4df3516820",
+  "skills/common/plugin-runtime/foundation/registry/digest.ts": "139869726a7dee522896e8fd253c06a655a78dd1c945c13da1df9912cac7d574",
+  "skills/common/plugin-runtime/foundation/registry/types.ts": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+  "skills/nova/core/test-gates/resolver.ts": "dac5efd2eab0b45d6bea8c14b76715e8af84f8abc4b3fb68456db556ece4caa8",
+  "skills/nova/core/test-gates/types.ts": "490d0f528ee129c29d1065246967bddab40e5f88a8bfd095fc5167aa8a4a8ba5",
+  "docs/review/remediation/config-quality-service-selection-20261016/README.md": "69725ef3532fc0e527cde6056c6f6e0ea2aa6bfa342fadb31ed4ff87f6553988",
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/RECEIVING-AND-ORACLES.md": "97718a2c7c93ac51e7bb99e5dab800d16dd3e72bf91b6595d94725d4780defe3",
+  "skills/buster/engine/test-gates/budget-source-admission.ts": "31873ebff341cac33297c742149c1d6292b3b7d586a043b86c9803f73ec8a6a0",
+  "skills/buster/engine/test-gates/runner-attempt-preparation.ts": "25255b13b2d221714e41948f80c57224010032e491773493872d122a609715f6",
+  "contracts/pipeline-test-gate/v1/src/provider-policy.ts": "a5f934a07c570e22377c9aebd2454ebbe12ea37f4c97bbdd4205fad8227e2820"
+}

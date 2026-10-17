@@ -1,17 +1,19 @@
-import {controlPolicyFixture} from './fixtures/control-policy.mts';
-import { fileURLToPath } from 'node:url';
+import {publishedControlConfig} from './fixtures/published-config.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {loadControlCompositionConfig, loadControlServerConfig} from '../server/control-config.ts';
 
 const shared = {
-  SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)),
   PRISM_SESSION_SECRET: 'session-test', PRISM_INGRESS_SECRET: 'ingress-test',
   PRISM_INGESTION_SECRET: 'ingestion-test', PRISM_DISPATCH_SECRET: 'dispatch-test',
   PRISM_WORKER_SECRET: 'worker-test',
 };
 
-test('Control configuration preserves production listener and original non-SPIFFE service defaults', async () => {
+test('Control configuration preserves production listener and original non-SPIFFE service defaults', async t => {
+  const {capture, loadControlServerConfig: serverConfig, loadControlCompositionConfig: composition} = await publishedControlConfig(t);
+  const loadControlServerConfig = (env: NodeJS.ProcessEnv) => serverConfig(capture, env);
+  const loadControlCompositionConfig = (env: NodeJS.ProcessEnv) => composition(capture, env);
   const configuration = loadControlServerConfig(shared);
   assert.equal(configuration.workerUrl.href, 'http://prism-worker:8080/');
   assert.equal(configuration.controlInternalUrl.href, 'http://prism-control:8080/');
@@ -27,7 +29,9 @@ test('Control configuration preserves production listener and original non-SPIFF
   assert.throws(() => loadControlServerConfig({...shared, PORT: '28080'}), /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/);
 });
 
-test('Control trust configuration fails closed and keeps optional test-runner identity optional', () => {
+test('Control trust configuration fails closed and keeps optional test-runner identity optional', async t => {
+  const {capture, loadControlServerConfig: serverConfig} = await publishedControlConfig(t);
+  const loadControlServerConfig = (env: NodeJS.ProcessEnv) => serverConfig(capture, env);
   const configuration = {
     ...shared, WORKER_TRUST_SPIFFE_ENABLED: 'true',
     PRISM_TRUSTED_NOVA_SPIFFE_ID: 'spiffe://example.test/nova',
@@ -47,10 +51,15 @@ test('Control trust configuration fails closed and keeps optional test-runner id
   assert.throws(() => loadControlServerConfig({...shared, PRISM_SESSION_SECRET: ''}), /PRISM_SESSION_SECRET is required/);
 });
 
-test('Control service configuration is an owned startup snapshot, not mutable caller environment', t => {
-  const environment = {...shared, ...controlPolicyFixture(t, {studioPublicUrl: 'https://studio.example.test',
-    pipelinePreferenceSubject: `user-${'a'.repeat(24)}`}), PRISM_WORKER_URL: 'http://worker.example.test:8080'};
-  const loaded = loadControlServerConfig(environment);
+test('Control service configuration is an owned startup snapshot, not mutable caller environment', async t => {
+  const {author, capture, loadControlServerConfig} = await publishedControlConfig(t, {studioPublicUrl: 'https://studio.example.test',
+    pipelinePreferenceSubject: `user-${'a'.repeat(24)}`, workerUrl: 'http://worker.example.test:8080'});
+  const environment: NodeJS.ProcessEnv = {...shared};
+  const loaded = loadControlServerConfig(capture, environment);
+  const file = path.join(author, 'components/prism-control.config.json');
+  const changed = JSON.parse(fs.readFileSync(file, 'utf8'));
+  changed.profiles.standard.settings.workerUrl = 'http://changed.example.test';
+  fs.writeFileSync(file, JSON.stringify(changed));
   const oldStudio = process.env.PRISM_STUDIO_PUBLIC_URL, oldSubject = process.env.PRISM_PIPELINE_PREFERENCE_SUBJECT;
   t.after(() => {
     if (oldStudio === undefined) delete process.env.PRISM_STUDIO_PUBLIC_URL; else process.env.PRISM_STUDIO_PUBLIC_URL = oldStudio;
@@ -63,4 +72,13 @@ test('Control service configuration is an owned startup snapshot, not mutable ca
   assert.equal(loaded.workerUrl.href, 'http://worker.example.test:8080/');
   assert.equal(loaded.pipelinePreferenceSubject, `user-${'a'.repeat(24)}`);
   assert.equal(Object.isFrozen(loaded), true);
+  const next = await publishedControlConfig(t, {studioPublicUrl: 'https://next.example.test',
+    pipelinePreferenceSubject: `user-${'c'.repeat(24)}`, workerUrl: 'http://next-worker.example.test:8081'});
+  const nextLoaded = next.loadControlServerConfig(next.capture, shared);
+  assert.equal(nextLoaded.studioPublicUrl, 'https://next.example.test');
+  assert.equal(nextLoaded.workerUrl.href, 'http://next-worker.example.test:8081/');
+  assert.equal(nextLoaded.pipelinePreferenceSubject, `user-${'c'.repeat(24)}`);
+  assert.equal(loaded.studioPublicUrl, 'https://studio.example.test');
+  assert.equal(loaded.workerUrl.href, 'http://worker.example.test:8080/');
+  assert.equal(loaded.pipelinePreferenceSubject, `user-${'a'.repeat(24)}`);
 });

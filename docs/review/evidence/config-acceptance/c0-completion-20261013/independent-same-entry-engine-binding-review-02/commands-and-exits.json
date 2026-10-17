@@ -1,0 +1,67 @@
+{
+  "qualification": "Inspected existing finite collector, exact-function narrow controls and independent body/hash capture only; no productive module/native activation",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/capture.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/capture.stdout",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/capture.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "a8ea1b",
+      "toolCompletionChunk": "a8ea1b",
+      "scriptSha256": "90aa109d869746bcd9a2178d6f8934b0edb402c9bd1c38f9b36a5fa1e7d67253"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/check-correction.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/replay.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/replay.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "5014e4",
+      "toolCompletionChunk": "e55ea6",
+      "scriptSha256": "5b4d985620bdb662ef8f90e170fa7c7b201b0e5a3f23d008f8c13c2159712a67"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/probes.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/probes.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/probes.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "338870",
+      "toolCompletionChunk": "76f4da",
+      "scriptSha256": "36a0f86e2c46fa4655d49494198e7c8cdc798f2fc2a1a7b4a17f6ad360ed3588"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/closure-probes.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/closure-probes.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/closure-probes.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "9343d6",
+      "toolCompletionChunk": "e39665",
+      "scriptSha256": "9cac82da71e127389bd3b0dfddd211d5cd468efe95333ea2bdeb8fe4fe9722a5"
+    }
+  ],
+  "endPinCommand": "Python fresh SHA256 of each read-identities.json input and git rev-parse HEAD",
+  "readOnlyInspectionChunks": [
+    "44030f",
+    "40d2ee",
+    "4d1362",
+    "35a942",
+    "eb1745",
+    "c9b415"
+  ],
+  "tools": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c"
+}

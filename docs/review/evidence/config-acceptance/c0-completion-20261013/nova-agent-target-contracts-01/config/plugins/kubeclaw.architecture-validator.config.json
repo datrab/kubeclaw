@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.architecture-validator",
+  "instanceId": "fixture.architecture-validator",
+  "profiles": {
+    "A": {
+      "processing": {
+        "kubeclaw.architecture-validator:architecture": {
+          "agent": "case-target-a",
+          "agentRole": "architecture-diagnostic-A"
+        }
+      }
+    },
+    "RT-c0a779743e7384ba-A": {
+      "processing": {
+        "kubeclaw.architecture-validator:architecture": {
+          "agent": "case-target-a",
+          "agentRole": "architecture-diagnostic-A"
+        }
+      }
+    },
+    "RT-c0a779743e7384ba-B": {
+      "processing": {
+        "kubeclaw.architecture-validator:architecture": {
+          "agent": "case-target-b",
+          "agentRole": "architecture-diagnostic-A"
+        }
+      }
+    },
+    "RT-ae11bf913a6050c6-A": {
+      "processing": {
+        "kubeclaw.architecture-validator:architecture": {
+          "agent": "case-target-a",
+          "agentRole": "architecture-diagnostic-A"
+        }
+      }
+    },
+    "RT-ae11bf913a6050c6-B": {
+      "processing": {
+        "kubeclaw.architecture-validator:architecture": {
+          "agent": "case-target-a",
+          "agentRole": "architecture-diagnostic-B"
+        }
+      }
+    }
+  }
+}

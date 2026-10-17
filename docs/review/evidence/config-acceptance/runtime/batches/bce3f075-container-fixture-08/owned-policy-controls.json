@@ -1,0 +1,97 @@
+[
+  {
+    "setting": "RT-eb41e2cf5ad440a2",
+    "completeOwnedA": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "delete",
+        "seconds": 1800
+      },
+      "readinessTimeoutSeconds": 120
+    },
+    "completeOwnedB": {
+      "namespacePrefix": "stage",
+      "retention": {
+        "mode": "delete",
+        "seconds": 1800
+      },
+      "readinessTimeoutSeconds": 120
+    }
+  },
+  {
+    "setting": "RT-1ee19ae5cf389f34",
+    "completeOwnedA": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "delete",
+        "seconds": 1800
+      },
+      "readinessTimeoutSeconds": 120
+    },
+    "completeOwnedB": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "retain",
+        "seconds": 1800
+      },
+      "readinessTimeoutSeconds": 120
+    }
+  },
+  {
+    "setting": "RT-0d9d1844afc64a69",
+    "completeOwnedA": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "delete",
+        "seconds": 1800
+      },
+      "readinessTimeoutSeconds": 120
+    },
+    "completeOwnedB": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "retain",
+        "seconds": 1800
+      },
+      "readinessTimeoutSeconds": 120
+    }
+  },
+  {
+    "setting": "RT-dc1999676fe1f2dc",
+    "completeOwnedA": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "delete",
+        "seconds": 60
+      },
+      "readinessTimeoutSeconds": 120
+    },
+    "completeOwnedB": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "delete",
+        "seconds": 120
+      },
+      "readinessTimeoutSeconds": 120
+    }
+  },
+  {
+    "setting": "RT-b9c9d3bbf01598db",
+    "completeOwnedA": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "delete",
+        "seconds": 1800
+      },
+      "readinessTimeoutSeconds": 1
+    },
+    "completeOwnedB": {
+      "namespacePrefix": "test",
+      "retention": {
+        "mode": "delete",
+        "seconds": 1800
+      },
+      "readinessTimeoutSeconds": 2
+    }
+  }
+]

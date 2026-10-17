@@ -1,0 +1,447 @@
+{
+  "authorTask": "WCR06 AUTHOR additive correction02; independent01 review not self-acceptance",
+  "head": "d396d56ad1c92a82a3ebd8346eb6d4c5764db8da",
+  "tree": "f5b030f3f6b565bf0947eca0c61f1f9f4ef1757a",
+  "capturedAt": "2026-10-13T23:37:31.477711+00:00",
+  "inputs": [
+    {
+      "path": "charts/prism/templates/backup.yaml",
+      "sha256": "c7fdc0b9524672ae49179eb258f0144c09774a56b5eb74a31f1a597ff2e88e9e",
+      "bytes": 4442,
+      "snapshot": "frozen-inputs/c7fdc0b9524672ae49179eb258f0144c09774a56b5eb74a31f1a597ff2e88e9e.gz"
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "bytes": 3362,
+      "snapshot": "frozen-inputs/8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/README.md",
+      "sha256": "4f309ab797ac3e19cc9e75461732e51f87bb1f8339a9311c2383668aec71f341",
+      "bytes": 13710,
+      "snapshot": "frozen-inputs/4f309ab797ac3e19cc9e75461732e51f87bb1f8339a9311c2383668aec71f341.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/capability-activation-contract.json",
+      "sha256": "9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47",
+      "bytes": 5257,
+      "snapshot": "frozen-inputs/9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/future-case-joins.json",
+      "sha256": "740834b2c6c16e35f5db2bf987d614c5d794a8bd8c4f1f46348edef80428fb2c",
+      "bytes": 374111,
+      "snapshot": "frozen-inputs/740834b2c6c16e35f5db2bf987d614c5d794a8bd8c4f1f46348edef80428fb2c.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/whole-profile-index.json",
+      "sha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f",
+      "bytes": 54642,
+      "snapshot": "frozen-inputs/d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "sha256": "de6fe6290a9309ca3526661b0359d18d07930cf07b681e9bf4dd9058a106a3ce",
+      "bytes": 1202142,
+      "snapshot": "frozen-inputs/de6fe6290a9309ca3526661b0359d18d07930cf07b681e9bf4dd9058a106a3ce.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/future-case-corrections.json",
+      "sha256": "1b718e69686ec2cbada3d22b394b6a607a0097c1702b71f914c1da2507d0b6cd",
+      "bytes": 139664,
+      "snapshot": "frozen-inputs/1b718e69686ec2cbada3d22b394b6a607a0097c1702b71f914c1da2507d0b6cd.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-23/case-specifications.json",
+      "sha256": "260be4c1db9ac1c6bb2bc66ad8229b1a636c98371d78b7a3ff7e1f83b85653e8",
+      "bytes": 2645930,
+      "snapshot": "frozen-inputs/260be4c1db9ac1c6bb2bc66ad8229b1a636c98371d78b7a3ff7e1f83b85653e8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/actual-new-policy-map.json",
+      "sha256": "28337d0b43fe70ec7d6c7a489f031587a33b699c1e13752f87a023e05b5b39f9",
+      "bytes": 2149512,
+      "snapshot": "frozen-inputs/28337d0b43fe70ec7d6c7a489f031587a33b699c1e13752f87a023e05b5b39f9.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/contracts.json",
+      "sha256": "9af766e90c192bfa4cbb996920c299a2ff9cf51a85fa26777d4b17d16b09ee2d",
+      "bytes": 17116,
+      "snapshot": "frozen-inputs/9af766e90c192bfa4cbb996920c299a2ff9cf51a85fa26777d4b17d16b09ee2d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/exact-source-exceptions.json",
+      "sha256": "76d6a8e80067804216948fa41125056ed0e4162b6b1c2c067ddd7d64f756ec82",
+      "bytes": 160671,
+      "snapshot": "frozen-inputs/76d6a8e80067804216948fa41125056ed0e4162b6b1c2c067ddd7d64f756ec82.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/field-map.json",
+      "sha256": "222e14c24fc939577828ea5e69f5cd16919a74e494326dce97f6bd4986d49969",
+      "bytes": 26177012,
+      "snapshot": "frozen-inputs/222e14c24fc939577828ea5e69f5cd16919a74e494326dce97f6bd4986d49969.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+      "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+      "bytes": 344884,
+      "snapshot": "frozen-inputs/b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/identical-binding-patterns.json",
+      "sha256": "015c83a63511ed528dadf0e44d4f8fcde370950b5b59b77410d35c6ea71dd6ac",
+      "bytes": 1329719,
+      "snapshot": "frozen-inputs/015c83a63511ed528dadf0e44d4f8fcde370950b5b59b77410d35c6ea71dd6ac.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/manifest.json",
+      "sha256": "d69b86b1231d71275a2a7ff12c08e04829714b2e029058ab99c1c6b14a3510b9",
+      "bytes": 2331,
+      "snapshot": "frozen-inputs/d69b86b1231d71275a2a7ff12c08e04829714b2e029058ab99c1c6b14a3510b9.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/read-identities.json",
+      "sha256": "d23b743ef97cfb550e76c9a82192f0533d7612dbdad2cb8d3f9829018f22b7a3",
+      "bytes": 11341,
+      "snapshot": "frozen-inputs/d23b743ef97cfb550e76c9a82192f0533d7612dbdad2cb8d3f9829018f22b7a3.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/unit-applicability.json",
+      "sha256": "0816dfdf5399f219588e7b3e9cbc18981ee935601daf1f19bc57a13dc57cd75d",
+      "bytes": 8242,
+      "snapshot": "frozen-inputs/0816dfdf5399f219588e7b3e9cbc18981ee935601daf1f19bc57a13dc57cd75d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-field-activation-partition-review-01/README.md",
+      "sha256": "b3a4dc1072abe7383180d3404807308e5736413ce1863adec33f37d956919063",
+      "bytes": 12335,
+      "snapshot": "frozen-inputs/b3a4dc1072abe7383180d3404807308e5736413ce1863adec33f37d956919063.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/case-specifications.json",
+      "sha256": "4c06aa38e1df8f228c28a0ba0024065d771cc81af8cc59004cba36336aaf8814",
+      "bytes": 118982,
+      "snapshot": "frozen-inputs/4c06aa38e1df8f228c28a0ba0024065d771cc81af8cc59004cba36336aaf8814.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/contracts.json",
+      "sha256": "437eaf17b7790bc8b987e3eda8b59070b62f76cefb0a232dbad77182b41d6e02",
+      "bytes": 108998,
+      "snapshot": "frozen-inputs/437eaf17b7790bc8b987e3eda8b59070b62f76cefb0a232dbad77182b41d6e02.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/case-definitions.json",
+      "sha256": "2e52c3d591b1f130dabef11070ef9effbffa0da7cb524e57d5ad99f17af9c52a",
+      "bytes": 8691153,
+      "snapshot": "frozen-inputs/2e52c3d591b1f130dabef11070ef9effbffa0da7cb524e57d5ad99f17af9c52a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/correction-summary.json",
+      "sha256": "70e20aaf0ef985280738781f57010804a8047e1844c9b5bcf9cfc464bffe2a92",
+      "bytes": 357,
+      "snapshot": "frozen-inputs/70e20aaf0ef985280738781f57010804a8047e1844c9b5bcf9cfc464bffe2a92.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/field-definitions.json",
+      "sha256": "14b41dc58e4c136ff462e048e863a8ab95e9824581b2c84a4de19cbf26123d2a",
+      "bytes": 1377304,
+      "snapshot": "frozen-inputs/14b41dc58e4c136ff462e048e863a8ab95e9824581b2c84a4de19cbf26123d2a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/builtin-openclaw-C7-lQJ2Z.mjs",
+      "sha256": "97435362096a8903b3a01ee82869b55b4375c371db4be3bcc32b641a9074bcca",
+      "bytes": 930852,
+      "snapshot": "frozen-inputs/97435362096a8903b3a01ee82869b55b4375c371db4be3bcc32b641a9074bcca.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/get-reply-DN4OcavF.mjs",
+      "sha256": "ddacdea4bc3ea5e0fc10418e7c2688f76f97fe74358b03ba6d6c29ded4c51081",
+      "bytes": 310249,
+      "snapshot": "frozen-inputs/ddacdea4bc3ea5e0fc10418e7c2688f76f97fe74358b03ba6d6c29ded4c51081.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/timeout-Bjg7ga80.mjs",
+      "sha256": "fe0a9056d0a2e8d3e9f2eb87161064217b2043a619b15f5895a8129046736514",
+      "bytes": 1449,
+      "snapshot": "frozen-inputs/fe0a9056d0a2e8d3e9f2eb87161064217b2043a619b15f5895a8129046736514.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-robfig-cron-v3.0.1/parser.go",
+      "sha256": "3133fdf1d1865fb2e45a0a3362a4d780d97ec7cd975c8c31b1d580005e2c7cf6",
+      "bytes": 11337,
+      "snapshot": "frozen-inputs/3133fdf1d1865fb2e45a0a3362a4d780d97ec7cd975c8c31b1d580005e2c7cf6.gz"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992",
+      "bytes": 101612879,
+      "snapshot": "frozen-inputs/1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992.gz"
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a",
+      "bytes": 37907068,
+      "snapshot": "frozen-inputs/9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a.gz"
+    },
+    {
+      "path": "skills/prism/config/database-bootstrap.ts",
+      "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "bytes": 628,
+      "snapshot": "frozen-inputs/23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625.gz"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "bytes": 3841,
+      "snapshot": "frozen-inputs/c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6.gz"
+    },
+    {
+      "path": "skills/prism/control/agent-jobs.ts",
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "bytes": 8860,
+      "snapshot": "frozen-inputs/ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334.gz"
+    },
+    {
+      "path": "skills/prism/control/product-decisions.ts",
+      "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "bytes": 6951,
+      "snapshot": "frozen-inputs/65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2.gz"
+    },
+    {
+      "path": "skills/prism/control/session.ts",
+      "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+      "bytes": 1654,
+      "snapshot": "frozen-inputs/0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b.gz"
+    },
+    {
+      "path": "skills/prism/corpus/index.ts",
+      "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+      "bytes": 10549,
+      "snapshot": "frozen-inputs/99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343.gz"
+    },
+    {
+      "path": "skills/prism/engine/design-providers.ts",
+      "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+      "bytes": 5516,
+      "snapshot": "frozen-inputs/8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145.gz"
+    },
+    {
+      "path": "skills/prism/engine/execution-cache.ts",
+      "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+      "bytes": 3551,
+      "snapshot": "frozen-inputs/13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a.gz"
+    },
+    {
+      "path": "skills/prism/engine/index.ts",
+      "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+      "bytes": 5978,
+      "snapshot": "frozen-inputs/8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16.gz"
+    },
+    {
+      "path": "skills/prism/engine/render-operation.ts",
+      "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "bytes": 5941,
+      "snapshot": "frozen-inputs/63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501.gz"
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "bytes": 4476,
+      "snapshot": "frozen-inputs/56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941.gz"
+    },
+    {
+      "path": "skills/prism/server/agent-attempt.ts",
+      "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "bytes": 3188,
+      "snapshot": "frozen-inputs/3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8.gz"
+    },
+    {
+      "path": "skills/prism/server/agent-bridge.mjs",
+      "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "bytes": 2631,
+      "snapshot": "frozen-inputs/f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c.gz"
+    },
+    {
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "bytes": 3187,
+      "snapshot": "frozen-inputs/f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb.gz"
+    },
+    {
+      "path": "skills/prism/server/agent-process.ts",
+      "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+      "bytes": 2917,
+      "snapshot": "frozen-inputs/1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b.gz"
+    },
+    {
+      "path": "skills/prism/server/agent-routes.ts",
+      "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "bytes": 5706,
+      "snapshot": "frozen-inputs/55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17.gz"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "bytes": 4047,
+      "snapshot": "frozen-inputs/35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4.gz"
+    },
+    {
+      "path": "skills/prism/server/control-context.ts",
+      "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "bytes": 1742,
+      "snapshot": "frozen-inputs/2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02.gz"
+    },
+    {
+      "path": "skills/prism/server/control-http.ts",
+      "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1",
+      "bytes": 1484,
+      "snapshot": "frozen-inputs/df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1.gz"
+    },
+    {
+      "path": "skills/prism/server/control-server.ts",
+      "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3",
+      "bytes": 5065,
+      "snapshot": "frozen-inputs/079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3.gz"
+    },
+    {
+      "path": "skills/prism/server/corpus-routes.ts",
+      "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "bytes": 6909,
+      "snapshot": "frozen-inputs/3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf.gz"
+    },
+    {
+      "path": "skills/prism/server/ingestion.ts",
+      "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "bytes": 9159,
+      "snapshot": "frozen-inputs/bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717.gz"
+    },
+    {
+      "path": "skills/prism/server/internal-artifacts.ts",
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "bytes": 2865,
+      "snapshot": "frozen-inputs/16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8.gz"
+    },
+    {
+      "path": "skills/prism/server/internal-auth.ts",
+      "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+      "bytes": 2756,
+      "snapshot": "frozen-inputs/e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72.gz"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+      "bytes": 3215,
+      "snapshot": "frozen-inputs/d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56.gz"
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "sha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "bytes": 974,
+      "snapshot": "frozen-inputs/c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465.gz"
+    },
+    {
+      "path": "skills/prism/server/studio-request.ts",
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "bytes": 7553,
+      "snapshot": "frozen-inputs/efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb.gz"
+    },
+    {
+      "path": "skills/prism/server/studio.ts",
+      "sha256": "a80e34fc95dda763649f9f030df0410c327812b369ac15091f6ba09abda62a48",
+      "bytes": 397,
+      "snapshot": "frozen-inputs/a80e34fc95dda763649f9f030df0410c327812b369ac15091f6ba09abda62a48.gz"
+    },
+    {
+      "path": "skills/prism/server/worker-artifacts.ts",
+      "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950",
+      "bytes": 3604,
+      "snapshot": "frozen-inputs/01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950.gz"
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "bytes": 1949,
+      "snapshot": "frozen-inputs/f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e.gz"
+    },
+    {
+      "path": "tests/verification/live/prism-nova-production-e2e.mjs",
+      "sha256": "41cef571679f2b7b41981fa69f1e93de50f7b012a8465eca48bd89ae6f160919",
+      "bytes": 7771,
+      "snapshot": "frozen-inputs/41cef571679f2b7b41981fa69f1e93de50f7b012a8465eca48bd89ae6f160919.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/capability-activation-contract.json",
+      "sha256": "9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47",
+      "bytes": 5257,
+      "snapshot": "frozen-inputs/9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.403344+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/frozen-supersession.json",
+      "sha256": "6333028861c7bfa51963d7edce2c4b4ba52f74e38397a2f1fe2ce84d4304fb44",
+      "bytes": 1333,
+      "snapshot": "frozen-inputs/6333028861c7bfa51963d7edce2c4b4ba52f74e38397a2f1fe2ce84d4304fb44.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.403497+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/future-case-joins.json",
+      "sha256": "740834b2c6c16e35f5db2bf987d614c5d794a8bd8c4f1f46348edef80428fb2c",
+      "bytes": 374111,
+      "snapshot": "frozen-inputs/740834b2c6c16e35f5db2bf987d614c5d794a8bd8c4f1f46348edef80428fb2c.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.410271+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/registry-peer-reference-contract.json",
+      "sha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+      "bytes": 3889,
+      "snapshot": "frozen-inputs/d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.410430+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/registry-reference-case-oracles.json",
+      "sha256": "4a8ebba4730e0c1c2f203bb3c621f8f6a7ab16ced650fbf9fd5b38a7e40e3357",
+      "bytes": 66943,
+      "snapshot": "frozen-inputs/4a8ebba4730e0c1c2f203bb3c621f8f6a7ab16ced650fbf9fd5b38a7e40e3357.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.410956+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/source-target-supersession.json",
+      "sha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "bytes": 50948,
+      "snapshot": "frozen-inputs/5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.411576+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/whole-profile-index.json",
+      "sha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f",
+      "bytes": 54642,
+      "snapshot": "frozen-inputs/d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.412749+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/network-resource-association.json",
+      "sha256": "1ccc9cc881e0747d7095475443061e0b132d76ac9fa640b095bf12882007f342",
+      "bytes": 5180,
+      "snapshot": "frozen-inputs/1ccc9cc881e0747d7095475443061e0b132d76ac9fa640b095bf12882007f342.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.412906+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/scope.json",
+      "sha256": "52659d62290f08a20d035312d0cdbec529a7028502ef01554ad5caa81a91993c",
+      "bytes": 26709,
+      "snapshot": "frozen-inputs/52659d62290f08a20d035312d0cdbec529a7028502ef01554ad5caa81a91993c.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.413249+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/source-processing-adjudication.json",
+      "sha256": "65d35cf9079bcbd4b4b9dc408e2fc57ab1f7cc912c90c995451feec34b16e25a",
+      "bytes": 22821,
+      "snapshot": "frozen-inputs/65d35cf9079bcbd4b4b9dc408e2fc57ab1f7cc912c90c995451feec34b16e25a.gz",
+      "additionalCaptureAt": "2026-10-13T23:39:47.413597+00:00"
+    }
+  ],
+  "globalC0Accepted": false,
+  "implementationAuthorization": null,
+  "lastAdditionalCaptureAt": "2026-10-13T23:39:47.413601+00:00"
+}

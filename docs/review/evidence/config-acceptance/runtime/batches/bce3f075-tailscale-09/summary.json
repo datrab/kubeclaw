@@ -1,0 +1,66 @@
+{
+  "status": "stable source/current parser-helper definition milestone only; NOT ACCEPTED",
+  "rows": 1248,
+  "cases": 5219,
+  "caseResults": {
+    "not-run": 3907,
+    "passed": 1312
+  },
+  "batch09SchemaRows": 5,
+  "newNarrowDefinitionCases": 5,
+  "newFutureNotRunCases": 20,
+  "oldCaseBodiesUnchanged": 5194,
+  "immutableObservationReferenceOccurrences": 1149,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 77,
+  "remainingOriginalSupplementalSourceTracedRows": 197,
+  "originalCandidates": 4642,
+  "manualCandidateRecordsThisBatch": 88,
+  "manualCandidateRecordsCombined": 587,
+  "remainingUnreviewedCandidates": 4055,
+  "reviewedOpenCandidates": 95,
+  "unmatchedSourceObligations": [
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "lines": [
+        11,
+        13,
+        33,
+        43,
+        44,
+        45,
+        76,
+        77,
+        78,
+        100,
+        101
+      ],
+      "reason": "Original syntax roster omits owned retention defaultrelease, actual endpoint selector/ambiguous source and min invocation/time payload; exact contracts cover task/owned field distinction and proposed no duplicate/default. New source-candidate links explicit, no lexical global PASS.",
+      "sourceSha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "lines": [
+        35
+      ],
+      "reason": "OPEN final predecessor history64 exhaustion distinct processing guard; no truncation/clear recovery waiver. Shared schema/state/owner must be defined before adjustment.",
+      "sourceSha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "lines": [
+        208,
+        210,
+        214,
+        217,
+        234,
+        243,
+        245,
+        272
+      ],
+      "reason": "Actual kubectl RBAC firstcommand, request/source handoff checks, EACH original and transferred wait gets timeoutMs, superseded release before identity mismatch; current phase budgets/J lifetime not original whole module deadline proof.",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc"
+    }
+  ],
+  "remaining": "77 original schema consumers,197 original supplemental rows,4055 unreviewed candidates plus95 reviewed-open guards/authority/provenance. Current tailscale schema codepoints/NUL differ actual parser UTF16/NUL, duplicate endpoint names first-wins, ambient env snapshot perJ; owned wait phases each separate, not shared spentbudget proof. True controller/RBAC/Tailscale/leaseUID/checked producer/service/runtime/grants/credential revisions/generation and full historical admission/effects/evidence remain unrun; no fake fixtures prove these."
+}

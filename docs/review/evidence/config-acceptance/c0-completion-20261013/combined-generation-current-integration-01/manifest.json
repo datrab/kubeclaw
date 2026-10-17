@@ -1,0 +1,35 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "34a97128c80bee29f750847090c750897847a9c5d6372134a82fb9a4dbfa2dcd",
+      "bytes": 1965
+    },
+    {
+      "path": "adoption-contract.json",
+      "sha256": "1906adbf26bbd0a5bd7de65eb78264fcc421b609c2ec760b7a873c65b05a5980",
+      "bytes": 80537
+    },
+    {
+      "path": "commands-and-exits.json",
+      "sha256": "3fd47eba35f61d5d8daebd4938a88b7bcff8e5b2f5d9923f1e75ef0d1593395b",
+      "bytes": 682
+    },
+    {
+      "path": "root-integration-receipt.json",
+      "sha256": "01d01d68d4609d50b27f96cee3378713b27a6a625c72cc2339762640f463856a",
+      "bytes": 1279
+    },
+    {
+      "path": "structural.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "structural.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "bytes": 181
+    }
+  ],
+  "scope": "Frozen parent reference integration; actual canonical roots separately identified by raw before/after receipt"
+}

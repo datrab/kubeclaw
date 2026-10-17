@@ -1,0 +1,474 @@
+[
+  {
+    "profileId": "ax41-current",
+    "qualification": "exact pure actual policy/projection declarations only; NOT fullrenderer/install/host-capacity/grant/outputreceipt",
+    "projection": {
+      "selected": {
+        "schemaVersion": 1,
+        "nodeName": "ax41-production",
+        "runtime": {
+          "containerdVersion": "2.3.4-k3s1.36"
+        },
+        "systemReserve": {
+          "cpuMillicores": 1000,
+          "memoryBytes": 3221225472,
+          "tasks": 2048
+        },
+        "kubernetesReserve": {
+          "cpuMillicores": 500,
+          "memoryBytes": 536870912,
+          "tasks": 2048
+        },
+        "pools": {
+          "buster": {
+            "namespace": "kubeclaw",
+            "cpuMillicores": 1500,
+            "memoryBytes": 8589934592,
+            "tasks": 4096,
+            "maximumActiveScopes": 1
+          },
+          "prism": {
+            "namespace": "kubeclaw",
+            "cpuMillicores": 2000,
+            "memoryBytes": 17179869184,
+            "tasks": 2048,
+            "maximumActiveScopes": 1
+          }
+        }
+      },
+      "pools": {
+        "buster": {
+          "schemaVersion": 1,
+          "role": "buster",
+          "nodeName": "ax41-production",
+          "policyDigest": "b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af",
+          "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster",
+          "ownershipRoot": "/var/lib/kubeclaw/native/buster",
+          "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+          "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+          "maximumActiveScopes": 1,
+          "limits": {
+            "memoryBytes": 8589934592,
+            "tasks": 4096,
+            "cpuQuotaMicroseconds": 150000,
+            "cpuPeriodMicroseconds": 100000
+          }
+        },
+        "prism": {
+          "schemaVersion": 1,
+          "role": "prism",
+          "nodeName": "ax41-production",
+          "policyDigest": "b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af",
+          "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism",
+          "ownershipRoot": "/var/lib/kubeclaw/native/prism",
+          "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+          "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+          "maximumActiveScopes": 1,
+          "limits": {
+            "memoryBytes": 17179869184,
+            "tasks": 2048,
+            "cpuQuotaMicroseconds": 200000,
+            "cpuPeriodMicroseconds": 100000
+          }
+        }
+      },
+      "reservation": {
+        "systemReserved": {
+          "cpu": "4500m",
+          "memory": "28991029248",
+          "pid": "8192"
+        },
+        "kubeReserved": {
+          "cpu": "500m",
+          "memory": "536870912",
+          "pid": "2048"
+        }
+      },
+      "nri": {
+        "schemaVersion": 1,
+        "containerdVersion": "2.3.4-k3s1.36",
+        "roles": {
+          "buster": {
+            "namespace": "kubeclaw",
+            "container": "buster-v2-runtime",
+            "policyDigest": "b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af"
+          },
+          "prism": {
+            "namespace": "kubeclaw",
+            "container": "worker",
+            "policyDigest": "b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af"
+          }
+        }
+      },
+      "controls": {
+        "buster": {
+          "memory.max": "8589934592",
+          "memory.swap.max": "0",
+          "pids.max": "4096",
+          "cpu.max": "150000 100000"
+        },
+        "prism": {
+          "memory.max": "17179869184",
+          "memory.swap.max": "0",
+          "pids.max": "2048",
+          "cpu.max": "200000 100000"
+        }
+      },
+      "unitSource": "[Unit]\nDescription=KubeClaw native worker role pools\nBefore=k3s.service k3s-agent.service\nAfter=local-fs.target\n\n[Service]\nType=notify\nNotifyAccess=all\nSlice=kubeclaw.slice\nDelegate=cpu memory pids\nDelegateSubgroup=setup\nExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs /etc/kubeclaw/native-node-policy.json --serve\nNoNewPrivileges=yes\nUMask=0077\nTasksMax=infinity\nKillMode=control-group\nTimeoutStartSec=60\n\n[Install]\nWantedBy=multi-user.target\n"
+    }
+  },
+  {
+    "profileId": "source-model-A",
+    "qualification": "exact pure actual policy/projection declarations only; NOT fullrenderer/install/host-capacity/grant/outputreceipt",
+    "projection": {
+      "selected": {
+        "schemaVersion": 1,
+        "nodeName": "dlv-native-a",
+        "systemReserve": {
+          "cpuMillicores": 100,
+          "memoryBytes": 1048576,
+          "tasks": 16
+        },
+        "kubernetesReserve": {
+          "cpuMillicores": 100,
+          "memoryBytes": 1048576,
+          "tasks": 16
+        },
+        "pools": {
+          "buster": {
+            "namespace": "dlv-buster-a",
+            "cpuMillicores": 500,
+            "memoryBytes": 67108864,
+            "tasks": 32,
+            "maximumActiveScopes": 2
+          },
+          "prism": {
+            "namespace": "dlv-prism-a",
+            "cpuMillicores": 500,
+            "memoryBytes": 67108864,
+            "tasks": 32,
+            "maximumActiveScopes": 2
+          }
+        },
+        "runtime": {
+          "containerdVersion": "2.2.0"
+        }
+      },
+      "pools": {
+        "buster": {
+          "schemaVersion": 1,
+          "role": "buster",
+          "nodeName": "dlv-native-a",
+          "policyDigest": "614839c558e11a73e06221d1d42eb8454b7fa35b7f2462a1c0c3f256e2cc15b6",
+          "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster",
+          "ownershipRoot": "/var/lib/kubeclaw/native/buster",
+          "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+          "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+          "maximumActiveScopes": 2,
+          "limits": {
+            "memoryBytes": 67108864,
+            "tasks": 32,
+            "cpuQuotaMicroseconds": 50000,
+            "cpuPeriodMicroseconds": 100000
+          }
+        },
+        "prism": {
+          "schemaVersion": 1,
+          "role": "prism",
+          "nodeName": "dlv-native-a",
+          "policyDigest": "614839c558e11a73e06221d1d42eb8454b7fa35b7f2462a1c0c3f256e2cc15b6",
+          "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism",
+          "ownershipRoot": "/var/lib/kubeclaw/native/prism",
+          "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+          "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+          "maximumActiveScopes": 2,
+          "limits": {
+            "memoryBytes": 67108864,
+            "tasks": 32,
+            "cpuQuotaMicroseconds": 50000,
+            "cpuPeriodMicroseconds": 100000
+          }
+        }
+      },
+      "reservation": {
+        "systemReserved": {
+          "cpu": "1100m",
+          "memory": "135266304",
+          "pid": "80"
+        },
+        "kubeReserved": {
+          "cpu": "100m",
+          "memory": "1048576",
+          "pid": "16"
+        }
+      },
+      "nri": {
+        "schemaVersion": 1,
+        "containerdVersion": "2.2.0",
+        "roles": {
+          "buster": {
+            "namespace": "dlv-buster-a",
+            "container": "buster-v2-runtime",
+            "policyDigest": "614839c558e11a73e06221d1d42eb8454b7fa35b7f2462a1c0c3f256e2cc15b6"
+          },
+          "prism": {
+            "namespace": "dlv-prism-a",
+            "container": "worker",
+            "policyDigest": "614839c558e11a73e06221d1d42eb8454b7fa35b7f2462a1c0c3f256e2cc15b6"
+          }
+        }
+      },
+      "controls": {
+        "buster": {
+          "memory.max": "67108864",
+          "memory.swap.max": "0",
+          "pids.max": "32",
+          "cpu.max": "50000 100000"
+        },
+        "prism": {
+          "memory.max": "67108864",
+          "memory.swap.max": "0",
+          "pids.max": "32",
+          "cpu.max": "50000 100000"
+        }
+      },
+      "unitSource": "[Unit]\nDescription=KubeClaw native worker role pools\nBefore=k3s.service k3s-agent.service\nAfter=local-fs.target\n\n[Service]\nType=notify\nNotifyAccess=all\nSlice=kubeclaw.slice\nDelegate=cpu memory pids\nDelegateSubgroup=setup\nExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs /etc/kubeclaw/native-node-policy.json --serve\nNoNewPrivileges=yes\nUMask=0077\nTasksMax=infinity\nKillMode=control-group\nTimeoutStartSec=60\n\n[Install]\nWantedBy=multi-user.target\n"
+    }
+  },
+  {
+    "profileId": "source-model-B",
+    "qualification": "exact pure actual policy/projection declarations only; NOT fullrenderer/install/host-capacity/grant/outputreceipt",
+    "projection": {
+      "selected": {
+        "schemaVersion": 1,
+        "nodeName": "dlv-native-b",
+        "systemReserve": {
+          "cpuMillicores": 200,
+          "memoryBytes": 2097152,
+          "tasks": 32
+        },
+        "kubernetesReserve": {
+          "cpuMillicores": 200,
+          "memoryBytes": 2097152,
+          "tasks": 32
+        },
+        "pools": {
+          "buster": {
+            "namespace": "dlv-buster-b",
+            "cpuMillicores": 1000,
+            "memoryBytes": 134217728,
+            "tasks": 64,
+            "maximumActiveScopes": 4
+          },
+          "prism": {
+            "namespace": "dlv-prism-b",
+            "cpuMillicores": 1000,
+            "memoryBytes": 134217728,
+            "tasks": 64,
+            "maximumActiveScopes": 4
+          }
+        },
+        "runtime": {
+          "containerdVersion": "2.3.0"
+        }
+      },
+      "pools": {
+        "buster": {
+          "schemaVersion": 1,
+          "role": "buster",
+          "nodeName": "dlv-native-b",
+          "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100",
+          "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster",
+          "ownershipRoot": "/var/lib/kubeclaw/native/buster",
+          "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+          "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+          "maximumActiveScopes": 4,
+          "limits": {
+            "memoryBytes": 134217728,
+            "tasks": 64,
+            "cpuQuotaMicroseconds": 100000,
+            "cpuPeriodMicroseconds": 100000
+          }
+        },
+        "prism": {
+          "schemaVersion": 1,
+          "role": "prism",
+          "nodeName": "dlv-native-b",
+          "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100",
+          "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism",
+          "ownershipRoot": "/var/lib/kubeclaw/native/prism",
+          "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+          "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+          "maximumActiveScopes": 4,
+          "limits": {
+            "memoryBytes": 134217728,
+            "tasks": 64,
+            "cpuQuotaMicroseconds": 100000,
+            "cpuPeriodMicroseconds": 100000
+          }
+        }
+      },
+      "reservation": {
+        "systemReserved": {
+          "cpu": "2200m",
+          "memory": "270532608",
+          "pid": "160"
+        },
+        "kubeReserved": {
+          "cpu": "200m",
+          "memory": "2097152",
+          "pid": "32"
+        }
+      },
+      "nri": {
+        "schemaVersion": 1,
+        "containerdVersion": "2.3.0",
+        "roles": {
+          "buster": {
+            "namespace": "dlv-buster-b",
+            "container": "buster-v2-runtime",
+            "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100"
+          },
+          "prism": {
+            "namespace": "dlv-prism-b",
+            "container": "worker",
+            "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100"
+          }
+        }
+      },
+      "controls": {
+        "buster": {
+          "memory.max": "134217728",
+          "memory.swap.max": "0",
+          "pids.max": "64",
+          "cpu.max": "100000 100000"
+        },
+        "prism": {
+          "memory.max": "134217728",
+          "memory.swap.max": "0",
+          "pids.max": "64",
+          "cpu.max": "100000 100000"
+        }
+      },
+      "unitSource": "[Unit]\nDescription=KubeClaw native worker role pools\nBefore=k3s.service k3s-agent.service\nAfter=local-fs.target\n\n[Service]\nType=notify\nNotifyAccess=all\nSlice=kubeclaw.slice\nDelegate=cpu memory pids\nDelegateSubgroup=setup\nExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs /etc/kubeclaw/native-node-policy.json --serve\nNoNewPrivileges=yes\nUMask=0077\nTasksMax=infinity\nKillMode=control-group\nTimeoutStartSec=60\n\n[Install]\nWantedBy=multi-user.target\n"
+    }
+  },
+  {
+    "profileId": "ax41-coupled-request",
+    "qualification": "exact pure actual policy/projection declarations only; NOT fullrenderer/install/host-capacity/grant/outputreceipt",
+    "projection": {
+      "selected": {
+        "schemaVersion": 1,
+        "nodeName": "ax41-production",
+        "runtime": {
+          "containerdVersion": "2.3.4-k3s1.36"
+        },
+        "systemReserve": {
+          "cpuMillicores": 1000,
+          "memoryBytes": 3221225472,
+          "tasks": 2048
+        },
+        "kubernetesReserve": {
+          "cpuMillicores": 500,
+          "memoryBytes": 536870912,
+          "tasks": 2048
+        },
+        "pools": {
+          "buster": {
+            "namespace": "kubeclaw",
+            "cpuMillicores": 1500,
+            "memoryBytes": 8589934592,
+            "tasks": 4096,
+            "maximumActiveScopes": 2
+          },
+          "prism": {
+            "namespace": "kubeclaw",
+            "cpuMillicores": 2000,
+            "memoryBytes": 17179869184,
+            "tasks": 2048,
+            "maximumActiveScopes": 1
+          }
+        }
+      },
+      "pools": {
+        "buster": {
+          "schemaVersion": 1,
+          "role": "buster",
+          "nodeName": "ax41-production",
+          "policyDigest": "361be39c38e42e24590bed46f133b16d535244da713e9909d6930213f2c49553",
+          "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster",
+          "ownershipRoot": "/var/lib/kubeclaw/native/buster",
+          "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+          "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+          "maximumActiveScopes": 2,
+          "limits": {
+            "memoryBytes": 8589934592,
+            "tasks": 4096,
+            "cpuQuotaMicroseconds": 150000,
+            "cpuPeriodMicroseconds": 100000
+          }
+        },
+        "prism": {
+          "schemaVersion": 1,
+          "role": "prism",
+          "nodeName": "ax41-production",
+          "policyDigest": "361be39c38e42e24590bed46f133b16d535244da713e9909d6930213f2c49553",
+          "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism",
+          "ownershipRoot": "/var/lib/kubeclaw/native/prism",
+          "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+          "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+          "maximumActiveScopes": 1,
+          "limits": {
+            "memoryBytes": 17179869184,
+            "tasks": 2048,
+            "cpuQuotaMicroseconds": 200000,
+            "cpuPeriodMicroseconds": 100000
+          }
+        }
+      },
+      "reservation": {
+        "systemReserved": {
+          "cpu": "4500m",
+          "memory": "28991029248",
+          "pid": "8192"
+        },
+        "kubeReserved": {
+          "cpu": "500m",
+          "memory": "536870912",
+          "pid": "2048"
+        }
+      },
+      "nri": {
+        "schemaVersion": 1,
+        "containerdVersion": "2.3.4-k3s1.36",
+        "roles": {
+          "buster": {
+            "namespace": "kubeclaw",
+            "container": "buster-v2-runtime",
+            "policyDigest": "361be39c38e42e24590bed46f133b16d535244da713e9909d6930213f2c49553"
+          },
+          "prism": {
+            "namespace": "kubeclaw",
+            "container": "worker",
+            "policyDigest": "361be39c38e42e24590bed46f133b16d535244da713e9909d6930213f2c49553"
+          }
+        }
+      },
+      "controls": {
+        "buster": {
+          "memory.max": "8589934592",
+          "memory.swap.max": "0",
+          "pids.max": "4096",
+          "cpu.max": "150000 100000"
+        },
+        "prism": {
+          "memory.max": "17179869184",
+          "memory.swap.max": "0",
+          "pids.max": "2048",
+          "cpu.max": "200000 100000"
+        }
+      },
+      "unitSource": "[Unit]\nDescription=KubeClaw native worker role pools\nBefore=k3s.service k3s-agent.service\nAfter=local-fs.target\n\n[Service]\nType=notify\nNotifyAccess=all\nSlice=kubeclaw.slice\nDelegate=cpu memory pids\nDelegateSubgroup=setup\nExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs /etc/kubeclaw/native-node-policy.json --serve\nNoNewPrivileges=yes\nUMask=0077\nTasksMax=infinity\nKillMode=control-group\nTimeoutStartSec=60\n\n[Install]\nWantedBy=multi-user.target\n"
+    }
+  }
+]

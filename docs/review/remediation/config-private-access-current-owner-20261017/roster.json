@@ -1,0 +1,20 @@
+{
+  "fields": {
+    "required": 2409,
+    "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+    "unchanged": true,
+    "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json"
+  },
+  "cases": {
+    "required": 6845,
+    "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+    "unchanged": true,
+    "path": "docs/review/remediation/config-final-reconciliation-20261016/cases.json"
+  },
+  "requirements": {
+    "required": 50,
+    "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+    "unchanged": true,
+    "path": "docs/review/remediation/config-final-reconciliation-20261016/requirements.json"
+  }
+}

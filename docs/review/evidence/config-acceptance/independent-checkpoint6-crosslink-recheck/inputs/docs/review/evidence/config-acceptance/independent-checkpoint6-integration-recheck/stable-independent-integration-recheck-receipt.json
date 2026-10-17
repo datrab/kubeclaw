@@ -1,0 +1,28 @@
+{
+  "status": "stable independent bounded integration recheck; 2 actionable guard gaps",
+  "noGlobalC0Verdict": true,
+  "authorOrRootWrites": false,
+  "reportSha256": "51b4c445fa41016bd5522a1d3c14cee9e8f1b18fe183e2c187a7415e11d82aec",
+  "freezeSha256": "f3c5f668a2bfbdab22f25efb23a75f0216247bf344cd5fcd8b0d3a0076bc7c61",
+  "artifacts": {
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/README.md": "653634fa1a7f6aa60186f64c8594a0f39b02c1b8d51e0e8608a5c0ed1ac78fbd",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/check-guards.py": "4b69073a3fbc3c2622e2465403024de8f0ad822fbb2164e200c88446dd168006",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/check-matrix-negatives.py": "1c0d9c9d12eef0d5f67989dff456dc1b98c5d2c61f7493d8aa195cdf08962d7e",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/check-native-helper-reference-gap.py": "e71bbdc784031f0946ddfe0d3d32e3fb7af30d5816292141cf95ef241ba97da6",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/end-input-integrity.json": "bfd371bb0d94f4c132e95273fd9c41a166391d4ccc8c21455822d78eefd2ee03",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/finish-review.py": "33f56bc5f69881f4b7d4bf679ade6937b174b0b779e48496bf1b1001f2f85c47",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/guard-controls.json": "393580323532574f0cf7d8b7aa494c32a440b6b298ee7110176a6beb4b4235c6",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/guard-controls.log": "ee3f46cbc7d0ac59968a14dcaeb38a191402c4888a59382e27d3c2e5ad13fbe6",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/independent-integration-recheck.json": "51b4c445fa41016bd5522a1d3c14cee9e8f1b18fe183e2c187a7415e11d82aec",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/input-freeze.json": "f3c5f668a2bfbdab22f25efb23a75f0216247bf344cd5fcd8b0d3a0076bc7c61",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/matrix-negative-controls.json": "d674eb14d66a112a4eabb2d260e17b49dcb82e4b0b06a58fc4c2af52c257977f",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/matrix-negative-controls.log": "5909974f4da0f8cdd51769e39c4d14913c6cbe373a23f7c43a056e795354c333",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/native-helper-reference-gap.json": "76b5ac06f4a9e97e351f1a32af70d4e452cda95d67013a4db58c6e0a64ce558b",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/native-helper-reference-gap.log": "0b596d6aa566c52a74e638086934cb2976904820ede6ab23671946469fac5829",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/replayed-core-guards.log": "8729e8a321db0cda38c0b8dfd9426f5b3251dbaab4d4e19fba810e88fd8ccd84",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/replayed-native-conservation.log": "cd9a8815e5ff6f878ac71a55f6d70eb044a840d0714e169f259320ed206c7409",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/replayed-strict.log": "f56666e3f3c2da56dcd2323c79f92f915d1ebb79ad02f7d984f35f844b711db4",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/replayed-structural.log": "d5c78f7619fcbb41f645f893d968f5f8f3c132d89906ec3871b6f94ca6667ce8",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/virtual-matrix-input-adaptation.py": "998cb010bbb8504f661c7b345a9dadb2f9384f8033469ead754a7af34c20f3d0"
+  }
+}

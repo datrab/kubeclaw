@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-17T00:45:19.263618+00:00",
+  "status": "EXACT_32_PLATFORM_BOUNDARY_MATRIX_RESOLVED_RECEIVING_REMAINS_OPEN",
+  "matrixCommit": "8ed1a319a2cd9363b48b30e57269ac620fa19405",
+  "matrixRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-platform-boundaries-20261017",
+  "productionSourceChanged": false,
+  "matrixRows": 32,
+  "rootPathRows": 6,
+  "admissionTargetRows": 26,
+  "checks": {
+    "negativeControlsRejected": 10,
+    "negativeControlsTotal": 10,
+    "restoredDeterministic": true,
+    "fullRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    },
+    "integrityFailures": 0
+  },
+  "qualification": "Executable source-navigation matrix closeout, NOT production implementation or restored/full runtime proof. Current32 selected platform author/delivery/history joins remain OPEN; no invented Core scalar pointer, secret bytes or grant/authority changes. Container joins do not close variant children.",
+  "concreteConstraints": [
+    "Actual platform.adapters clone supplies roots, allowlists, event hooks, endpoint/secret references; central Core scalar owner does not author these fields.",
+    "Registry snapshot retains configuration, but recovery receives supplied platform again and restores specific selected profiles only; not full retained root/allowlist/target closure.",
+    "Existing network method/header schema+reader defaults and operator format=json remain explicit source residuals; no new policy author or behavior change.",
+    "QB-R02 authentic producer/source/build/baseline and original inputStore reservation/accounting/sealed-version/publication API still absent; activation fence unchanged."
+  ],
+  "independentReview": "OPEN: CONFIG active/recent reviewers0; current tool discovery native spawn/reviewer absent; unchanged same-surface EROFS not retried.",
+  "originalCasesNewlyAccepted": 0,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "fullC0C6Complete": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged: genuine isolated Linux Docker/UID1000/GID1000/delegated writable cgroup, sufficient genuinely root-trusted archive storage, isolated migrated real PostgreSQL.",
+  "writerLock": "SAME nonblocking, released on each bounded command exit; no parent followup"
+}

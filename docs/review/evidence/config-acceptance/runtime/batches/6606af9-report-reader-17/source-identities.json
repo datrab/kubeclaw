@@ -1,0 +1,11 @@
+{
+  "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+  "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+  "skills/nova/plugins/pipeline-review/plugin.json": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+  "skills/nova/core/state/read-run-evidence.ts": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+  "skills/nova/core/execution/engine-snapshots.ts": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+  "skills/nova/core/execution/engine-runtime.ts": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+  "skills/nova/core/execution/adapter-startup.ts": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+  "skills/nova/core/lifecycle/recovery.ts": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8"
+}

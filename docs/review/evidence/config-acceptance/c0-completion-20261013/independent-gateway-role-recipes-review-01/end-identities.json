@@ -1,0 +1,60 @@
+{
+  "recordedAt": "2026-10-14T04:31:54.633328+00:00",
+  "head": "beda27eb69ce409ac37fe075edd4686980e39fd3",
+  "initialFrozenInputCount": 741,
+  "initialToEndDrift": [],
+  "authorManifestSHA256": "22b3fd6e45fba53c103f74c0b73bcd1b823906fa9daccbad3a7b6fdd85b864a0",
+  "authorArtifactCount": 103,
+  "authorArtifactMismatch": [],
+  "authorReadCount": 66,
+  "authorReadMismatch": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "expected": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "actual": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "expected": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "actual": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d"
+    }
+  ],
+  "canonicalMetadataIndependentComparison": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-semantic-inventory.json",
+      "beforeV7SHA256": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "currentEndSHA256": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387",
+      "changedRootProperties": [
+        "currentCombinedDefinitionGeneration"
+      ],
+      "allOtherRootPropertiesExact": true,
+      "originalArrayCounts": {
+        "rows": 2409
+      },
+      "originalArraysExact": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json",
+      "beforeV7SHA256": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "currentEndSHA256": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d",
+      "changedRootProperties": [
+        "currentCombinedDefinitionGeneration"
+      ],
+      "allOtherRootPropertiesExact": true,
+      "originalArrayCounts": {
+        "cases": 6845,
+        "requirements": 50
+      },
+      "originalArraysExact": true
+    }
+  ],
+  "original70FieldBodiesMismatch": [],
+  "original75CaseBodiesMismatch": [],
+  "priorGatewayWholeOwnerObjectsMismatch": [],
+  "priorBusterContextByteExact": true,
+  "nodeExecutableSHA256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+  "collectorSHA256": "424cca2c172d77bf7efe7cf7489838d6b5abad217382cbe7bb081114e16a54a3",
+  "productiveCasesExecuted": 0,
+  "globalC0Accepted": false,
+  "candidateV8AdoptionAcceptedByReview": false
+}

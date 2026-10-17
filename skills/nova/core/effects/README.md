@@ -50,7 +50,10 @@ cleanup must be reconciled explicitly; expiry alone never authorizes stealing
 a lock from a still-running owner.
 
 Migration of direct callers keeps the existing argument order:
-`new EffectCoordinator(journal, undefined, undefined, locks, 300_000)`.
-The last value is an explicit caller policy, not a constructor default. Missing,
+`new EffectCoordinator(journal, undefined, undefined, locks, 300_000, corePolicy.resourceAcquisition)`.
+The TTL and contention timeout/poll interval are explicit captured caller policies,
+not constructor defaults. Production passes the retained selected Core policy;
+original tests select their explicit central fixture policy. The coordinator copies
+the contention policy on construction; later caller mutation cannot replace it. Missing,
 nonpositive or non-safe-integer TTL values throw `EFFECT_LOCK_TTL_INVALID` before
 an effect can request or acquire a resource lease.

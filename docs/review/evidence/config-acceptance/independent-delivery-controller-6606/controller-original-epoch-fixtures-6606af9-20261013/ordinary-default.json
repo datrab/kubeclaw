@@ -1,0 +1,91 @@
+{
+  "definitionOnly": true,
+  "authorityResolution": "future-required-not-authenticated; synthetic data, no original-A/API/grant/native proof",
+  "legacyMode": "ordinary-default",
+  "originalPolicy": {
+    "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/A.json",
+    "sha256": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d"
+  },
+  "epoch": {
+    "schemaVersion": "dlv-controller-policy-epoch.v1",
+    "leaseIdentity": {
+      "apiGroup": "kubeclaw.forgestack.ai",
+      "apiVersion": "v1alpha1",
+      "plural": "busternamespaceleases",
+      "controllerNamespace": "dlv-controller-a",
+      "controllerNamespaceUID": "synthetic-controller-ns-A",
+      "name": "dlv-lease-a",
+      "uid": "synthetic-lease-UID-A",
+      "generation": 1,
+      "originalCreationTimestamp": "2030-01-01T00:00:00Z",
+      "initialImmutableSpecDigest": "sha256:257d8b18ebc29f65bdc29193024b0156161573b26500331358fe90c74d9d8a5d",
+      "initialFullSpecDigest": "sha256:b8a43a04807f713b57e9fe9999bd498f2e083ef67733e80a6f4ff5bd395c59b6"
+    },
+    "policyConfig": {
+      "sourceRevision": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "authorPointer": "charts/kubeclaw/values.yaml#/profiles/A/settings/busterNamespaceBroker/controller/policy",
+      "materializedPolicyRef": "originalA-controller-policy.json",
+      "materializedPolicySha256": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d",
+      "originalAuthorReceiptRef": "future-authenticated-original-A-delivery-receipt",
+      "originalBinaryReceiptRef": "future-exact-controller-binary-and-Go-stdlib-receipt",
+      "originalOCIReceiptRef": "future-exact-controller-OCI-platform-receipt"
+    },
+    "initialTTL": {
+      "source": "original-author-default",
+      "requestedSeconds": 7200,
+      "originalDefaultSeconds": 7200,
+      "originalMaximumSeconds": 86400,
+      "effectiveSeconds": 7200,
+      "initialExpiresAt": "2030-01-01T02:00:00Z"
+    },
+    "authoritySnapshot": {
+      "namespaceName": "dlv-a-work",
+      "namespaceUID": "synthetic-owned-namespace-UID-A",
+      "allowedPrefix": "dlv-a",
+      "access": [
+        {
+          "subject": "dlv-controller-a/agent-buster",
+          "modes": [
+            "tester",
+            "deployer"
+          ]
+        }
+      ],
+      "sourceSecretSelectors": [
+        "dlv-source-a"
+      ],
+      "finalizer": "kubeclaw.forgestack.ai/buster-namespace-cleanup",
+      "secretRoleName": "agent-buster-controller-secrets",
+      "deployerRoleName": "agent-buster-namespace-deployer",
+      "testerRoleName": "agent-buster-namespace-tester"
+    },
+    "runtimeAuthority": {
+      "APIOrigin": "https://127.0.0.1:18443",
+      "clusterIdentityRef": "future-authentic-API-cluster-A",
+      "controllerSAUID": "future-controller-SA-UID-A",
+      "apiGrantReceiptRef": "future-original-A-api-rbac-secret-tokenreview-grant",
+      "CAProviderRef": "future-original-A-CA-trust-lineage",
+      "tokenProviderRef": "future-original-A-rotating-token-provider-lineage",
+      "readyProducer": "system:serviceaccount:dlv-controller-a:agent-nova",
+      "readyAudience": "dlv-ready-a",
+      "readyTLSProviderRef": "dlv-ready-tls-a",
+      "productProducer": "system:serviceaccount:dlv-controller-a:prism-control",
+      "productAudience": "dlv-product-a",
+      "productIssuer": "dlv-human-authority-a",
+      "productPublicTrustRef": "dlv-ed25519-issuer-a",
+      "productActors": [
+        "dlv-operator-a"
+      ]
+    }
+  },
+  "storedLifecycle": {
+    "ready": null,
+    "productReceipts": [],
+    "cleanup": null
+  },
+  "newProcessProfile": {
+    "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/B.json",
+    "sha256": "67f26310eb5a89cd4ec736d9a690a50dd0f50ac359e89b651a449aae9b0f3a94"
+  },
+  "futureExpected": "resolve originalA authenticated receipt or fail POLICY_EPOCH_UNRECOVERABLE; no latestB TTL/access/issuer/provider/finalizer/deadline. These reference strings are not authorization."
+}

@@ -1,0 +1,75 @@
+skills/nova/plugins/review/src/review-semantic-flow.ts:55:  const overLimit = echo.value.proposedFindings.length > policy.policy.limits.maxProposals;
+skills/nova/plugins/review/src/stage.ts:277:  const preflight = preflightReviewInput(input, policy.policy.limits.maxBundleBytes);
+skills/nova/plugins/review/src/review-preparation.ts:47:  const generated = policy.policy.simplification.enabled
+skills/nova/plugins/review/src/review-preparation.ts:64:  if (bytes > policy.policy.limits.maxBundleBytes) {
+skills/nova/plugins/review/src/review-preparation.ts:86:    for (let depth = 1; depth <= policy.policy.limits.maxDependencyDepth; depth += 1) {
+skills/nova/plugins/review/src/review-governor.ts:74:  const governor = policy.policy.governor;
+skills/nova/plugins/review/src/review-governor.ts:148:    fileLimit: safeLimit(baseline.changedFileCount, values.policy.policy.governor.fileGrowthMultiplier,
+skills/nova/plugins/review/src/review-governor.ts:149:      values.policy.policy.governor.absoluteFileAllowance),
+skills/nova/plugins/review/src/review-governor.ts:150:    nonTestLocLimit: safeLimit(baseline.nonTestLoc, values.policy.policy.governor.nonTestLocGrowthMultiplier,
+skills/nova/plugins/review/src/review-governor.ts:151:      values.policy.policy.governor.absoluteNonTestLocAllowance),
+skills/nova/plugins/review/src/review-context-authority.ts:27:    limits: resolvedPolicy.policy.limits,
+skills/nova/plugins/review/src/review-context-authority.ts:28:    limitDigest: sha256Text(canonicalJson(resolvedPolicy.policy.limits)),
+skills/nova/plugins/review/src/protocol.ts:41:      blocking: resolved.policy.blocking, simplification: resolved.policy.simplification,
+skills/nova/plugins/review/src/review-repair-batch.ts:70:  const displayed = eligible.slice(0, policy.policy.limits.maxRootCauses);
+skills/nova/plugins/review/src/review-repair-batch.ts:72:    total + Math.min(findings.length, policy.policy.limits.maxInstancesPerCluster)
+skills/nova/plugins/review/src/review-repair-batch.ts:81:      batchCluster(cluster, findings, policy.policy.limits.maxInstancesPerCluster)
+skills/nova/plugins/review/src/simplification-manifest.ts:45:  if (!input.policy.policy.simplification.enabled) return undefined;
+skills/nova/plugins/review/src/review-policy-parser.ts:216:    policy.scope.outsideScope,
+skills/nova/plugins/review/src/review-policy-parser.ts:217:    policy.scope.unknownScope,
+skills/nova/plugins/review/src/review-policy-parser.ts:218:    policy.verification.insufficientFindingEvidence,
+skills/nova/plugins/review/src/review-policy-parser.ts:220:  if (usesFollowUp && Math.min(policy.followUp.retainedPriorities.length, policy.followUp.maxItems) === 0) {
+skills/nova/plugins/review/src/review-policy-parser.ts:227:    policy.simplification.enabledRules.length,
+skills/nova/plugins/review/src/review-policy-parser.ts:228:    policy.simplification.maxRecommendations,
+skills/nova/plugins/review/src/review-policy-parser.ts:230:  const configured = policy.simplification.enabledRules.length + policy.simplification.maxRecommendations > 0;
+skills/nova/plugins/review/src/review-policy-parser.ts:231:  if (policy.simplification.enabled && !hasCapacity) {
+skills/nova/plugins/review/src/review-policy-parser.ts:234:  if (!policy.simplification.enabled && configured) {
+skills/nova/plugins/review/src/review-policy-parser.ts:240:  if (policy.limits.maxContextBytes > policy.limits.maxBundleBytes) {
+skills/nova/plugins/review/src/review-policy-parser.ts:243:  if (policy.limits.maxContextFileBytes > policy.limits.maxContextBytes) {
+skills/nova/plugins/review/src/review-policy-parser.ts:246:  if (policy.limits.maxInitialContextFiles >= policy.limits.maxContextFiles) {
+skills/nova/plugins/review/src/review-policy-parser.ts:249:  if (policy.limits.maxInitialContextBytes >= policy.limits.maxContextBytes) {
+skills/nova/plugins/review/src/review-report-builder.ts:101:  if (finding.simplification && input.policy.policy.simplification.enabled
+skills/nova/plugins/review/src/review-report-builder.ts:102:    && input.policy.policy.limits.maxAdvisories > 0 && input.policy.policy.simplification.maxRecommendations > 0) {
+skills/nova/plugins/review/src/review-report-builder.ts:105:  if (input.policy.policy.followUp.retainedPriorities.includes(finding.priority)) {
+skills/nova/plugins/review/src/review-report-builder.ts:147:    input.policy.policy.limits.maxAdvisories, input.policy.policy.simplification.maxRecommendations,
+skills/nova/plugins/review/src/review-report-builder.ts:152:    follow_up: input.policy.policy.followUp.maxItems,
+skills/nova/plugins/review/src/review-evaluation-metadata.ts:68:    'review.simplification_registry': resolved.policy.simplification.registryVersion,
+skills/nova/plugins/review/src/review-evaluation-metadata.ts:69:    'review.semantic_verifier': resolved.policy.verification.semanticVerifier,
+skills/nova/plugins/review/src/review-evaluation-metadata.ts:75:    'review.simplification_enabled': resolved.policy.simplification.enabled,
+skills/nova/plugins/review/src/review-evaluation-metadata.ts:76:    'review.simplification_enabled_rule_count': resolved.policy.simplification.enabledRules.length,
+skills/nova/plugins/review/src/review-evaluation-metadata.ts:77:    'review.simplification_minimum_confidence': resolved.policy.simplification.minimumConfidence,
+skills/nova/plugins/review/src/review-cluster-ranking.ts:25:  const ranking = policy.policy.ranking;
+skills/nova/plugins/review/src/review-reduction-state.ts:203:  return value.registryVersion === resolved.policy.simplification.registryVersion
+skills/nova/plugins/review/src/review-reduction-state.ts:204:    && value.enabledRuleCount === resolved.policy.simplification.enabledRules.length
+skills/nova/plugins/review/src/review-reduction-state.ts:205:    && value.minimumConfidence === resolved.policy.simplification.minimumConfidence;
+skills/nova/plugins/review/src/review-stage-verification.ts:49:  if (!policy.policy.simplification.enabled) {
+skills/nova/plugins/review/src/review-stage-verification.ts:88:  if (parsed.value.registryVersion !== policy.policy.simplification.registryVersion) {
+skills/nova/plugins/review/src/review-stage-verification.ts:95:      enabledRuleCount: policy.policy.simplification.enabledRules.length,
+skills/nova/plugins/review/src/review-stage-verification.ts:96:      minimumConfidence: policy.policy.simplification.minimumConfidence,
+skills/nova/plugins/review/src/review-stage-verification.ts:153:  const overLimit = output.proposedFindings.length > policy.policy.limits.maxProposals;
+skills/nova/plugins/review/src/review-stage-verification.ts:242:    mode: policy.policy.verification.semanticVerifier,
+skills/nova/plugins/review/src/simplification-miner.ts:100:  const enabled = new Set(input.policy.policy.simplification.enabledRules);
+skills/nova/plugins/review/src/simplification-miner.ts:101:  const minimum = CONFIDENCE_RANK[input.policy.policy.simplification.minimumConfidence];
+skills/nova/plugins/review/src/simplification-miner.ts:123:  if (!input.policy.policy.simplification.enabled) return { candidates: [], diagnostics: [] };
+skills/nova/plugins/review/src/review-slicing.ts:116:  const limits = policy.policy.limits;
+skills/nova/plugins/review/src/review-verdict-policy.ts:42:  const action = policy.policy.verification.insufficientFindingEvidence;
+skills/nova/plugins/review/src/review-context-candidates.ts:215:  const limits = policy.policy.limits;
+skills/nova/plugins/review/src/review-reducer.ts:20:  if (!policy.blocking.requireDirectEvidence || finding.evidenceStrength === 'direct') return undefined;
+skills/nova/plugins/review/src/review-reducer.ts:21:  const action = policy.verification.insufficientFindingEvidence;
+skills/nova/plugins/review/src/review-reducer.ts:28:  if (finding.scopeRelation === 'outside') return policy.scope.outsideScope;
+skills/nova/plugins/review/src/review-reducer.ts:29:  const action = policy.scope.unknownScope;
+skills/nova/plugins/review/src/review-reducer.ts:36:  if (!policy.blocking.priorities.includes(finding.priority)) return 'follow_up';
+skills/nova/plugins/review/src/review-reducer.ts:37:  if (!policy.blocking.categories.includes(finding.category)) return 'follow_up';
+skills/nova/plugins/review/src/review-reducer.ts:38:  if (!policy.scope.retainPreExisting && finding.changeRelation === 'pre_existing') return 'ignore';
+skills/nova/plugins/review/src/review-reducer.ts:39:  if (policy.blocking.requireIntroducedByDiff && finding.changeRelation !== 'introduced') {
+skills/nova/plugins/review/src/review-reducer.ts:182:  if (input.resolvedPolicy.policy.verification.unverifiedRequirement === 'orchestrator_required') {
+skills/nova/plugins/review/src/review-proposal-preflight.ts:99:  const verifierPriority = policy.verification.semanticVerifier === 'p0-only'
+skills/nova/plugins/review/src/review-proposal-preflight.ts:101:    : policy.blocking.priorities.includes(proposal.finding.priority);
+skills/nova/plugins/review/src/review-proposal-preflight.ts:104:    policy.verification.semanticVerifier !== 'disabled',
+skills/nova/plugins/review/src/review-proposal-preflight.ts:105:    policy.blocking.categories.includes(proposal.finding.category),
+skills/nova/plugins/review/src/review-proposal-preflight.ts:107:    !policy.blocking.requireDirectEvidence || proposal.finding.evidenceStrength === 'direct',
+skills/nova/plugins/review/src/review-proposal-preflight.ts:109:    !policy.blocking.requireIntroducedByDiff || proposal.changeRelation === 'introduced',
+skills/nova/plugins/review/src/review-proposal-preflight.ts:138:  if (candidates.some((candidate) => candidate && !proof.policy.simplification.enabledRules.includes(candidate.ruleId))) {
+skills/nova/plugins/review/src/review-proposal-preflight.ts:157:  if (!proof.policy.simplification.enabled) return [`${label} cites Simplification candidates while Simplification is disabled`];
+skills/nova/plugins/review/src/review-proposal-preflight.ts:292:  const overLimit = parsed.proposedFindings.length > policy.policy.limits.maxProposals;
+skills/nova/plugins/review/src/repository-audit-stage.ts:691:    if (parsed.reviewProfile.enabledLenses.includes('simplification') && !policy.policy.simplification.enabled) {

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py", line 138, in <module>
+    raise ValueError('Prism control roster overlap/drift')
+ValueError: Prism control roster overlap/drift

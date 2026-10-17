@@ -1,0 +1,146 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "6ca5545209f91543f1af33f75764e2d4a08a3e9a74610e0db68a086366befd5e",
+      "byteLength": 3727
+    },
+    {
+      "path": "actual-root-end-conservation.json",
+      "sha256": "bee464801e84face0bfefc8fae9dd84d1ec85b88bb09ae386fe19a6dfca951bb",
+      "byteLength": 13423
+    },
+    {
+      "path": "adoption-contract.json",
+      "sha256": "859985287e41a4c6dd4c721e87081788f68cea46319a138c610f60e76ab3e5db",
+      "byteLength": 399485
+    },
+    {
+      "path": "before-raw-prefix-structural.command.json",
+      "sha256": "30da2fa1e66462a36b13f0ce7a84e4775ec93a3108ccb1903df99b712e7ccf76",
+      "byteLength": 3535
+    },
+    {
+      "path": "before-raw-prefix-structural.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteLength": 0
+    },
+    {
+      "path": "before-raw-prefix-structural.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "byteLength": 181
+    },
+    {
+      "path": "commands-and-exits.json",
+      "sha256": "3c5fcf6899086a5c98563b4ab840a90bf2988176b63ec7eede7f2551fd87f2d7",
+      "byteLength": 9840
+    },
+    {
+      "path": "end-input-identities.json",
+      "sha256": "5da5ea70200e642f88c9400fdc7d509531da60c5429e4b4838ef7d5cd07f0830",
+      "byteLength": 13376
+    },
+    {
+      "path": "freeze-current-roots.py",
+      "sha256": "69f4fed685a3115d57862b37ca31e4dedbd5912ebcbd282a60f780f20da8be57",
+      "byteLength": 3527
+    },
+    {
+      "path": "freeze.command.json",
+      "sha256": "c075d2efad7ec99aab7577882ab6a9c47d5e5dc63e8d9c1bd834796ab56032f8",
+      "byteLength": 385
+    },
+    {
+      "path": "freeze.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteLength": 0
+    },
+    {
+      "path": "freeze.stdout.json",
+      "sha256": "9251404a333bebded0e59d6dcb496ad637f38baa7f8eda3da1d6105ef1694fc7",
+      "byteLength": 170
+    },
+    {
+      "path": "input-identities.json",
+      "sha256": "1f19a23579f0c8b684d038135a2ec8be71c46c43d943423f02c3291c10602b60",
+      "byteLength": 13196
+    },
+    {
+      "path": "integrate-references.py",
+      "sha256": "f1816fe24b1430c9197b3af6717c3f88ba038e52926f36aa726e7c01f04bfe42",
+      "byteLength": 11568
+    },
+    {
+      "path": "integration.command.json",
+      "sha256": "4446b6763e0c6c28c0a74ed5c8c70988bdbc09ff22431bcb9645842bbec6bc72",
+      "byteLength": 479
+    },
+    {
+      "path": "integration.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteLength": 0
+    },
+    {
+      "path": "integration.stdout.json",
+      "sha256": "231182ffc23b165b9e15a240d46ac841e698a05d05f5464d58e4bf1612fc27bf",
+      "byteLength": 986
+    },
+    {
+      "path": "raw-prefix-conservation.json",
+      "sha256": "da1045d76c107691aaaf731986a6c5232b5a298ee3a9c6eb2a1bf0e0c9f5ff01",
+      "byteLength": 928
+    },
+    {
+      "path": "root-integration-receipt.json",
+      "sha256": "b75f798dbf575a254382483d2e86b20ab4e14bcef2e7b5cd7621fddd78c1e3a6",
+      "byteLength": 1973
+    },
+    {
+      "path": "scoped-original-ID-roster.json",
+      "sha256": "44d022f121702415401e38174588857e5e7b6e2cc3a2a7b3a96be50b3bbc1af0",
+      "byteLength": 782094
+    },
+    {
+      "path": "source-coordinate-annotation.json",
+      "sha256": "9d11055bc4bbd4b4126d7e67aa5abbf28e0430c68b4f95f17207768c1a216519",
+      "byteLength": 1285
+    },
+    {
+      "path": "structural.command.json",
+      "sha256": "27a4f07233d3536080dee9f7d4f771d67abe2f4f0c38c768de4cd3b8980244fb",
+      "byteLength": 4056
+    },
+    {
+      "path": "structural.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteLength": 0
+    },
+    {
+      "path": "structural.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "byteLength": 181
+    }
+  ],
+  "actualRootHashes": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "beforeSha256": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "afterSha256": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "beforeSha256": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "afterSha256": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d"
+    }
+  ],
+  "scope": {
+    "uniqueFields": 392,
+    "uniqueCases": 1744,
+    "partialFieldScopeCases": 4
+  },
+  "referenceOnly": true,
+  "freshIndependentActualRootReferenceReviewRequired": true,
+  "nativeActivationAllowed": false,
+  "globalC0Accepted": false,
+  "implementationAuthorization": null
+}

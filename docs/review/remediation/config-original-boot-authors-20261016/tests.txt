@@ -1,0 +1,42 @@
+✔ readonly packaged-reader core verifies complete receipts and installed code readback (746.279991ms)
+✔ self-consistent hashes do not validate a two-field fake package manifest (507.498871ms)
+✔ changed installed code and additional unreceipted code files reject (508.979539ms)
+✔ stale expected generation cannot admit changed profile content (560.374056ms)
+✔ writable files and escaping expected-receipt atomic-writer target reject (443.975797ms)
+✔ inventory retains early file observations until all members have been read (496.74937ms)
+✔ package observations remain alive until boot capture is branded (525.88058ms)
+✔ self-consistent receipts reject nonexistent facade and open metadata records (439.066163ms)
+✔ an off-tree reader copy cannot borrow a genuine installed package receipt (715.512102ms)
+✔ expected-delivery alias replacement during boot rejects, next boot validates the selected receipt (622.811665ms)
+✔ real Prism role package readback drives all service caller compositions (13205.968011ms)
+▶ real Buster role binds parent and child to the same runtime service and owner profile
+  ✖ full inert original archive restoration (requires sufficient trusted storage) (3867.942632ms)
+✖ real Buster role binds parent and child to the same runtime service and owner profile (46597.396687ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 11
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60066.638881
+
+✖ failing tests:
+
+test at tests/verification/reliability/pipeline-role-readback.test.mjs:836:11
+✖ full inert original archive restoration (requires sufficient trusted storage) (3867.942632ms)
+  Error: ENOSPC: no space left on device, write
+      at Object.writeSync (node:fs:977:3)
+      at Object.writeFileSync (node:fs:2502:26)
+      at restoreBusterSourceClosure (file:///tmp/pipeline-buster-role-2m1HyS/role/skills/packages/plugin-foundation/config/buster-source-replay.mjs:86:16)
+      at Module.materializeBusterBootSourceArchive (file:///tmp/pipeline-buster-role-2m1HyS/role/skills/packages/plugin-foundation/config/pipeline-boot.mjs:404:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-role-readback.test.mjs:846:25)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-role-readback.test.mjs:836:11) {
+    errno: -28,
+    syscall: 'write',
+    code: 'ENOSPC'
+  }

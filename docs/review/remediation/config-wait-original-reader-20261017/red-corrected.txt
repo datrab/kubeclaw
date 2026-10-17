@@ -1,0 +1,20 @@
+✖ original projected Wait resolves through actual Core adapter despite a relocated current B wait root (8076.303073ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8797.149516
+
+✖ failing tests:
+
+test at tests/verification/reliability/wait-value-projection.test.mjs:356:1
+✖ original projected Wait resolves through actual Core adapter despite a relocated current B wait root (8076.303073ms)
+  Error: EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:032bcd5736b25f4d257a8479d5bdf52528ec5a17a8d36aeb64f8dc6fff8de1a4:WAIT_RETAINED_CORE_EVIDENCE_INVALID
+      at AdapterRuntime.invoke (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapters.ts:66:13)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/wait-value-projection.test.mjs:371:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

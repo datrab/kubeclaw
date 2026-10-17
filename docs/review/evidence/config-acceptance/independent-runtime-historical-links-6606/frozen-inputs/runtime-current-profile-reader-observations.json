@@ -1,0 +1,710 @@
+{
+  "passed": 87,
+  "results": [
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING",
+      "sourceField": "DEFAULTS.fast.tokenizerEncoding",
+      "currentActualValue": "o200k_base",
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXFILES",
+      "sourceField": "DEFAULTS.fast.componentBudget.maxFiles",
+      "currentActualValue": 60,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXBYTES",
+      "sourceField": "DEFAULTS.fast.componentBudget.maxBytes",
+      "currentActualValue": 400000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXTOKENS",
+      "sourceField": "DEFAULTS.fast.componentBudget.maxTokens",
+      "currentActualValue": 86000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXFILES",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxFiles",
+      "currentActualValue": 400,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXBYTES",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxBytes",
+      "currentActualValue": 900000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXTOKENS",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxTokens",
+      "currentActualValue": 80000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXRELATIONS",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxRelations",
+      "currentActualValue": 600,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXSLICES",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxSlices",
+      "currentActualValue": 200,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXPRIMARYJOBS",
+      "sourceField": "DEFAULTS.fast.maxPrimaryJobs",
+      "currentActualValue": 75,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTEXPANSIONJOBS",
+      "sourceField": "DEFAULTS.fast.maxContextExpansionJobs",
+      "currentActualValue": 12,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXVERIFICATIONJOBS",
+      "sourceField": "DEFAULTS.fast.maxVerificationJobs",
+      "currentActualValue": 8,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXINPUTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.fast.maxInputTokensPerJob",
+      "currentActualValue": 120000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.fast.maxContextTokensPerJob",
+      "currentActualValue": 128000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXPROMPTBYTESPERJOB",
+      "sourceField": "DEFAULTS.fast.maxPromptBytesPerJob",
+      "currentActualValue": 900000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXINITIALINPUTTOKENS",
+      "sourceField": "DEFAULTS.fast.maxInitialInputTokens",
+      "currentActualValue": 6500000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "sourceField": "DEFAULTS.fast.maxContextExpansionInputTokens",
+      "currentActualValue": 750000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXVERIFICATIONINPUTTOKENS",
+      "sourceField": "DEFAULTS.fast.maxVerificationInputTokens",
+      "currentActualValue": 750000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXTOTALINPUTTOKENS",
+      "sourceField": "DEFAULTS.fast.maxTotalInputTokens",
+      "currentActualValue": 8000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXOUTPUTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.fast.maxOutputTokensPerJob",
+      "currentActualValue": 6000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXESTIMATEDCOSTUSD",
+      "sourceField": "DEFAULTS.fast.maxEstimatedCostUsd",
+      "currentActualValue": 100,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXWALLTIMESECONDS",
+      "sourceField": "DEFAULTS.fast.maxWallTimeSeconds",
+      "currentActualValue": 3600,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-ESTIMATEDSECONDSPERJOB",
+      "sourceField": "DEFAULTS.fast.estimatedSecondsPerJob",
+      "currentActualValue": 120,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-INPUTUSDPERMILLIONTOKENS",
+      "sourceField": "DEFAULTS.fast.inputUsdPerMillionTokens",
+      "currentActualValue": 10,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-OUTPUTUSDPERMILLIONTOKENS",
+      "sourceField": "DEFAULTS.fast.outputUsdPerMillionTokens",
+      "currentActualValue": 30,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-CONCURRENCY",
+      "sourceField": "DEFAULTS.fast.concurrency",
+      "currentActualValue": 8,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXRETRIES",
+      "sourceField": "DEFAULTS.fast.maxRetries",
+      "currentActualValue": 1,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-MAXRETRYATTEMPTSPERPHASE",
+      "sourceField": "DEFAULTS.fast.maxRetryAttemptsPerPhase",
+      "currentActualValue": 4,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-FAST-ENABLEDLENSES",
+      "sourceField": "DEFAULTS.fast.enabledLenses",
+      "currentActualValue": [
+        "contracts",
+        "security",
+        "lifecycle"
+      ],
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-TOKENIZERENCODING",
+      "sourceField": "DEFAULTS.standard.tokenizerEncoding",
+      "currentActualValue": "o200k_base",
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXFILES",
+      "sourceField": "DEFAULTS.standard.componentBudget.maxFiles",
+      "currentActualValue": 60,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXBYTES",
+      "sourceField": "DEFAULTS.standard.componentBudget.maxBytes",
+      "currentActualValue": 400000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXTOKENS",
+      "sourceField": "DEFAULTS.standard.componentBudget.maxTokens",
+      "currentActualValue": 86000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXFILES",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxFiles",
+      "currentActualValue": 400,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXBYTES",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxBytes",
+      "currentActualValue": 900000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXTOKENS",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxTokens",
+      "currentActualValue": 80000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXRELATIONS",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxRelations",
+      "currentActualValue": 600,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXSLICES",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxSlices",
+      "currentActualValue": 200,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXPRIMARYJOBS",
+      "sourceField": "DEFAULTS.standard.maxPrimaryJobs",
+      "currentActualValue": 500,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTEXPANSIONJOBS",
+      "sourceField": "DEFAULTS.standard.maxContextExpansionJobs",
+      "currentActualValue": 100,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXVERIFICATIONJOBS",
+      "sourceField": "DEFAULTS.standard.maxVerificationJobs",
+      "currentActualValue": 100,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXINPUTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.standard.maxInputTokensPerJob",
+      "currentActualValue": 120000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.standard.maxContextTokensPerJob",
+      "currentActualValue": 128000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXPROMPTBYTESPERJOB",
+      "sourceField": "DEFAULTS.standard.maxPromptBytesPerJob",
+      "currentActualValue": 900000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXINITIALINPUTTOKENS",
+      "sourceField": "DEFAULTS.standard.maxInitialInputTokens",
+      "currentActualValue": 25000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "sourceField": "DEFAULTS.standard.maxContextExpansionInputTokens",
+      "currentActualValue": 50000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXVERIFICATIONINPUTTOKENS",
+      "sourceField": "DEFAULTS.standard.maxVerificationInputTokens",
+      "currentActualValue": 50000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXTOTALINPUTTOKENS",
+      "sourceField": "DEFAULTS.standard.maxTotalInputTokens",
+      "currentActualValue": 50000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXOUTPUTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.standard.maxOutputTokensPerJob",
+      "currentActualValue": 6000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXESTIMATEDCOSTUSD",
+      "sourceField": "DEFAULTS.standard.maxEstimatedCostUsd",
+      "currentActualValue": 650,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXWALLTIMESECONDS",
+      "sourceField": "DEFAULTS.standard.maxWallTimeSeconds",
+      "currentActualValue": 28800,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-ESTIMATEDSECONDSPERJOB",
+      "sourceField": "DEFAULTS.standard.estimatedSecondsPerJob",
+      "currentActualValue": 120,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-INPUTUSDPERMILLIONTOKENS",
+      "sourceField": "DEFAULTS.standard.inputUsdPerMillionTokens",
+      "currentActualValue": 10,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-OUTPUTUSDPERMILLIONTOKENS",
+      "sourceField": "DEFAULTS.standard.outputUsdPerMillionTokens",
+      "currentActualValue": 30,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-CONCURRENCY",
+      "sourceField": "DEFAULTS.standard.concurrency",
+      "currentActualValue": 10,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXRETRIES",
+      "sourceField": "DEFAULTS.standard.maxRetries",
+      "currentActualValue": 2,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-MAXRETRYATTEMPTSPERPHASE",
+      "sourceField": "DEFAULTS.standard.maxRetryAttemptsPerPhase",
+      "currentActualValue": 20,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-STANDARD-ENABLEDLENSES",
+      "sourceField": "DEFAULTS.standard.enabledLenses",
+      "currentActualValue": [
+        "architecture",
+        "contracts",
+        "security",
+        "lifecycle",
+        "resilience",
+        "deployment",
+        "simplification"
+      ],
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-TOKENIZERENCODING",
+      "sourceField": "DEFAULTS.deep.tokenizerEncoding",
+      "currentActualValue": "o200k_base",
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXFILES",
+      "sourceField": "DEFAULTS.deep.componentBudget.maxFiles",
+      "currentActualValue": 30,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXBYTES",
+      "sourceField": "DEFAULTS.deep.componentBudget.maxBytes",
+      "currentActualValue": 220000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXTOKENS",
+      "sourceField": "DEFAULTS.deep.componentBudget.maxTokens",
+      "currentActualValue": 90000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXFILES",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxFiles",
+      "currentActualValue": 100,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXBYTES",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxBytes",
+      "currentActualValue": 480000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXTOKENS",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxTokens",
+      "currentActualValue": 110000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXRELATIONS",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxRelations",
+      "currentActualValue": 100,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXSLICES",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxSlices",
+      "currentActualValue": 32,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXPRIMARYJOBS",
+      "sourceField": "DEFAULTS.deep.maxPrimaryJobs",
+      "currentActualValue": 2000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTEXPANSIONJOBS",
+      "sourceField": "DEFAULTS.deep.maxContextExpansionJobs",
+      "currentActualValue": 250,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXVERIFICATIONJOBS",
+      "sourceField": "DEFAULTS.deep.maxVerificationJobs",
+      "currentActualValue": 250,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXINPUTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.deep.maxInputTokensPerJob",
+      "currentActualValue": 120000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.deep.maxContextTokensPerJob",
+      "currentActualValue": 128000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXPROMPTBYTESPERJOB",
+      "sourceField": "DEFAULTS.deep.maxPromptBytesPerJob",
+      "currentActualValue": 900000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXINITIALINPUTTOKENS",
+      "sourceField": "DEFAULTS.deep.maxInitialInputTokens",
+      "currentActualValue": 50000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "sourceField": "DEFAULTS.deep.maxContextExpansionInputTokens",
+      "currentActualValue": 100000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXVERIFICATIONINPUTTOKENS",
+      "sourceField": "DEFAULTS.deep.maxVerificationInputTokens",
+      "currentActualValue": 100000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXTOTALINPUTTOKENS",
+      "sourceField": "DEFAULTS.deep.maxTotalInputTokens",
+      "currentActualValue": 100000000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXOUTPUTTOKENSPERJOB",
+      "sourceField": "DEFAULTS.deep.maxOutputTokensPerJob",
+      "currentActualValue": 6000,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXESTIMATEDCOSTUSD",
+      "sourceField": "DEFAULTS.deep.maxEstimatedCostUsd",
+      "currentActualValue": 1300,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXWALLTIMESECONDS",
+      "sourceField": "DEFAULTS.deep.maxWallTimeSeconds",
+      "currentActualValue": 86400,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-ESTIMATEDSECONDSPERJOB",
+      "sourceField": "DEFAULTS.deep.estimatedSecondsPerJob",
+      "currentActualValue": 150,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-INPUTUSDPERMILLIONTOKENS",
+      "sourceField": "DEFAULTS.deep.inputUsdPerMillionTokens",
+      "currentActualValue": 10,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-OUTPUTUSDPERMILLIONTOKENS",
+      "sourceField": "DEFAULTS.deep.outputUsdPerMillionTokens",
+      "currentActualValue": 30,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-CONCURRENCY",
+      "sourceField": "DEFAULTS.deep.concurrency",
+      "currentActualValue": 4,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXRETRIES",
+      "sourceField": "DEFAULTS.deep.maxRetries",
+      "currentActualValue": 2,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-MAXRETRYATTEMPTSPERPHASE",
+      "sourceField": "DEFAULTS.deep.maxRetryAttemptsPerPhase",
+      "currentActualValue": 40,
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    },
+    {
+      "setting": "RT-REPOSITORY-GRADE-DEEP-ENABLEDLENSES",
+      "sourceField": "DEFAULTS.deep.enabledLenses",
+      "currentActualValue": [
+        "architecture",
+        "contracts",
+        "security",
+        "lifecycle",
+        "resilience",
+        "deployment",
+        "simplification"
+      ],
+      "observed": "actualexported currentDEFAULTS grade resolution only; taskoverrides/operatorauthor/modelAPI/contextphysicalcapacity notaccepted"
+    }
+  ],
+  "profiles": {
+    "fast": {
+      "schemaVersion": "repository-review-profile.v1",
+      "grade": "fast",
+      "mode": "execute",
+      "scope": {
+        "kind": "repository"
+      },
+      "allowedPrefixes": [
+        "."
+      ],
+      "tokenizerEncoding": "o200k_base",
+      "componentBudget": {
+        "maxFiles": 60,
+        "maxBytes": 400000,
+        "maxTokens": 86000
+      },
+      "boundaryBudget": {
+        "maxFiles": 400,
+        "maxBytes": 900000,
+        "maxTokens": 80000,
+        "maxRelations": 600,
+        "maxSlices": 200
+      },
+      "maxPrimaryJobs": 75,
+      "maxContextExpansionJobs": 12,
+      "maxVerificationJobs": 8,
+      "maxInputTokensPerJob": 120000,
+      "maxContextTokensPerJob": 128000,
+      "maxPromptBytesPerJob": 900000,
+      "maxInitialInputTokens": 6500000,
+      "maxContextExpansionInputTokens": 750000,
+      "maxVerificationInputTokens": 750000,
+      "maxTotalInputTokens": 8000000,
+      "maxOutputTokensPerJob": 6000,
+      "maxEstimatedCostUsd": 100,
+      "maxWallTimeSeconds": 3600,
+      "estimatedSecondsPerJob": 120,
+      "inputUsdPerMillionTokens": 10,
+      "outputUsdPerMillionTokens": 30,
+      "concurrency": 8,
+      "maxRetries": 1,
+      "maxRetryAttemptsPerPhase": 4,
+      "enabledLenses": [
+        "contracts",
+        "security",
+        "lifecycle"
+      ],
+      "digest": "sha256:d1026cd33eab80fd096a372c8c4729a8f0b0212d967587789aa3d9af9359e319"
+    },
+    "standard": {
+      "schemaVersion": "repository-review-profile.v1",
+      "grade": "standard",
+      "mode": "execute",
+      "scope": {
+        "kind": "repository"
+      },
+      "allowedPrefixes": [
+        "."
+      ],
+      "tokenizerEncoding": "o200k_base",
+      "componentBudget": {
+        "maxFiles": 60,
+        "maxBytes": 400000,
+        "maxTokens": 86000
+      },
+      "boundaryBudget": {
+        "maxFiles": 400,
+        "maxBytes": 900000,
+        "maxTokens": 80000,
+        "maxRelations": 600,
+        "maxSlices": 200
+      },
+      "maxPrimaryJobs": 500,
+      "maxContextExpansionJobs": 100,
+      "maxVerificationJobs": 100,
+      "maxInputTokensPerJob": 120000,
+      "maxContextTokensPerJob": 128000,
+      "maxPromptBytesPerJob": 900000,
+      "maxInitialInputTokens": 25000000,
+      "maxContextExpansionInputTokens": 50000000,
+      "maxVerificationInputTokens": 50000000,
+      "maxTotalInputTokens": 50000000,
+      "maxOutputTokensPerJob": 6000,
+      "maxEstimatedCostUsd": 650,
+      "maxWallTimeSeconds": 28800,
+      "estimatedSecondsPerJob": 120,
+      "inputUsdPerMillionTokens": 10,
+      "outputUsdPerMillionTokens": 30,
+      "concurrency": 10,
+      "maxRetries": 2,
+      "maxRetryAttemptsPerPhase": 20,
+      "enabledLenses": [
+        "architecture",
+        "contracts",
+        "security",
+        "lifecycle",
+        "resilience",
+        "deployment",
+        "simplification"
+      ],
+      "digest": "sha256:e95d4bd1a831d7e15054535680a60aea5fbc029b0f482648bb134f79acc878b5"
+    },
+    "deep": {
+      "schemaVersion": "repository-review-profile.v1",
+      "grade": "deep",
+      "mode": "execute",
+      "scope": {
+        "kind": "repository"
+      },
+      "allowedPrefixes": [
+        "."
+      ],
+      "tokenizerEncoding": "o200k_base",
+      "componentBudget": {
+        "maxFiles": 30,
+        "maxBytes": 220000,
+        "maxTokens": 90000
+      },
+      "boundaryBudget": {
+        "maxFiles": 100,
+        "maxBytes": 480000,
+        "maxTokens": 110000,
+        "maxRelations": 100,
+        "maxSlices": 32
+      },
+      "maxPrimaryJobs": 2000,
+      "maxContextExpansionJobs": 250,
+      "maxVerificationJobs": 250,
+      "maxInputTokensPerJob": 120000,
+      "maxContextTokensPerJob": 128000,
+      "maxPromptBytesPerJob": 900000,
+      "maxInitialInputTokens": 50000000,
+      "maxContextExpansionInputTokens": 100000000,
+      "maxVerificationInputTokens": 100000000,
+      "maxTotalInputTokens": 100000000,
+      "maxOutputTokensPerJob": 6000,
+      "maxEstimatedCostUsd": 1300,
+      "maxWallTimeSeconds": 86400,
+      "estimatedSecondsPerJob": 150,
+      "inputUsdPerMillionTokens": 10,
+      "outputUsdPerMillionTokens": 30,
+      "concurrency": 4,
+      "maxRetries": 2,
+      "maxRetryAttemptsPerPhase": 40,
+      "enabledLenses": [
+        "architecture",
+        "contracts",
+        "security",
+        "lifecycle",
+        "resilience",
+        "deployment",
+        "simplification"
+      ],
+      "digest": "sha256:5ddd1208a1713dd18752bb6dcfc0b7cca32865e47782feb8d13932acd10404a3"
+    }
+  },
+  "sourceSha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+  "source": "skills/nova/plugins/review/src/repository-review-profile.ts",
+  "scriptSha256": "5d962fdab178f3a8092ff0b396c611f1788e8af81c0d1546e85e567b3dd02e88",
+  "packageLockSha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+  "node": "v24.21.0",
+  "scope": "Read-only exact current exported profile resolver controls; no productive dispatch/compiler/plan/run/API or targetsemanticacceptance"
+}

@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -70,23 +73,24 @@ try {
   const adapters = new core.AdapterRuntime({
     granted, activated,
     configs: new Map([
-      ['kubeclaw.repository-adapter:repository', { repositoryRoot: temporary }],
-      ['kubeclaw.runtime-dispatch:runtime', { targets: {
-        architect: { endpoint: `${origin}/dispatch`, tokenSecret: 'architecture.agent' },
+      ['kubeclaw.repository-adapter:repository', {...ARTIFACT_TEST_CORE_POLICY.repositoryRead, repositoryRoot: temporary }],
+      ['kubeclaw.runtime-dispatch:runtime', { ...TEST_CORE_POLICY.httpDispatch, targets: {
+        architect: { byteProfile:'standard', endpoint: `${origin}/dispatch`, tokenSecret: 'architecture.agent' },
       } }],
       ['kubeclaw.network-http:http', {
+        ...TEST_CORE_POLICY.networkHttp,
         allowedOrigins: [origin], allowedMethods: ['POST'],
         allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'],
       }],
       ['kubeclaw.secret-resolver:secrets', { environment: { 'architecture.agent': secretName } }],
-      ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
+      ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(temporary, 'artifacts') }],
     ]),
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs: 1000, async emitDomainEvent() {},
   });
   await adapters.start();
   try {
-    const runner = new core.PipelineRunner({
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2', id: 'pipeline:architecture', maxConcurrency: 1,
         stages: [{
@@ -95,7 +99,7 @@ try {
           execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000 },
         }],
       },
-      registry: granted, activated, adapters, journal: new core.FileJournal(path.join(temporary, 'events.jsonl')),
+      registry: granted, activated, adapters, journal: new core.FileJournal(path.join(temporary, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     });
     const result = await runner.run('run:architecture');
     assert.equal(result.status, 'succeeded');

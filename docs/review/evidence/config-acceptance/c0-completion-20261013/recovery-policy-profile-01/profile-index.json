@@ -1,0 +1,193 @@
+{
+  "soleOwnerFile": "my-values/infra/postgresql-recovery.yaml",
+  "existingScalarLeaves": 13,
+  "existingGroupedTopLevelSettings": 9,
+  "addedActualLiteralLeaves": 10,
+  "completeProfileCount": 24,
+  "pairs": [
+    {
+      "field": "backupIntervalMinutes",
+      "pointer": "/profiles/B-backupIntervalMinutes/settings/backupIntervalMinutes",
+      "profileId": "B-backupIntervalMinutes",
+      "A": "A",
+      "Bvalue": 10,
+      "result": "not-run"
+    },
+    {
+      "field": "verificationIntervalMinutes",
+      "pointer": "/profiles/B-verificationIntervalMinutes/settings/verificationIntervalMinutes",
+      "profileId": "B-verificationIntervalMinutes",
+      "A": "A",
+      "Bvalue": 4,
+      "result": "not-run"
+    },
+    {
+      "field": "maximumAgeSeconds",
+      "pointer": "/profiles/B-maximumAgeSeconds/settings/maximumAgeSeconds",
+      "profileId": "B-maximumAgeSeconds",
+      "A": "A",
+      "Bvalue": 7100,
+      "result": "not-run"
+    },
+    {
+      "field": "maximumDurationSeconds",
+      "pointer": "/profiles/B-maximumDurationSeconds/settings/maximumDurationSeconds",
+      "profileId": "B-maximumDurationSeconds",
+      "A": "A",
+      "Bvalue": 1799,
+      "result": "not-run"
+    },
+    {
+      "field": "verificationDeadlineSeconds",
+      "pointer": "/profiles/B-verificationDeadlineSeconds/settings/verificationDeadlineSeconds",
+      "profileId": "B-verificationDeadlineSeconds",
+      "A": "A",
+      "Bvalue": 899,
+      "result": "not-run"
+    },
+    {
+      "field": "maximumBackupBytes",
+      "pointer": "/profiles/B-maximumBackupBytes/settings/maximumBackupBytes",
+      "profileId": "B-maximumBackupBytes",
+      "A": "A",
+      "Bvalue": 16777216,
+      "result": "not-run"
+    },
+    {
+      "field": "maximumRetainedBytes",
+      "pointer": "/profiles/B-maximumRetainedBytes/settings/maximumRetainedBytes",
+      "profileId": "B-maximumRetainedBytes",
+      "A": "A",
+      "Bvalue": 95563022336,
+      "result": "not-run"
+    },
+    {
+      "field": "persistence.size",
+      "pointer": "/profiles/B-persistence-size/settings/persistence/size",
+      "profileId": "B-persistence-size",
+      "A": "A",
+      "Bvalue": "101Gi",
+      "result": "not-run"
+    },
+    {
+      "field": "persistence.storageClass",
+      "pointer": "/profiles/B-persistence-storageClass/settings/persistence/storageClass",
+      "profileId": "B-persistence-storageClass",
+      "A": "A",
+      "Bvalue": "fixture-retain",
+      "result": "not-run"
+    },
+    {
+      "field": "resources.requests.cpu",
+      "pointer": "/profiles/B-resources-requests-cpu/settings/resources/requests/cpu",
+      "profileId": "B-resources-requests-cpu",
+      "A": "A",
+      "Bvalue": "300m",
+      "result": "not-run"
+    },
+    {
+      "field": "resources.requests.memory",
+      "pointer": "/profiles/B-resources-requests-memory/settings/resources/requests/memory",
+      "profileId": "B-resources-requests-memory",
+      "A": "A",
+      "Bvalue": "320Mi",
+      "result": "not-run"
+    },
+    {
+      "field": "resources.limits.cpu",
+      "pointer": "/profiles/B-resources-limits-cpu/settings/resources/limits/cpu",
+      "profileId": "B-resources-limits-cpu",
+      "A": "A",
+      "Bvalue": "1500m",
+      "result": "not-run"
+    },
+    {
+      "field": "resources.limits.memory",
+      "pointer": "/profiles/B-resources-limits-memory/settings/resources/limits/memory",
+      "profileId": "B-resources-limits-memory",
+      "A": "A",
+      "Bvalue": "2Gi",
+      "result": "not-run"
+    },
+    {
+      "field": "reserveBytes",
+      "pointer": "/profiles/B-reserveBytes/settings/reserveBytes",
+      "profileId": "B-reserveBytes",
+      "A": "A",
+      "Bvalue": 68157440,
+      "result": "not-run"
+    },
+    {
+      "field": "killAfterSeconds",
+      "pointer": "/profiles/B-killAfterSeconds/settings/killAfterSeconds",
+      "profileId": "B-killAfterSeconds",
+      "A": "A",
+      "Bvalue": 14,
+      "result": "not-run"
+    },
+    {
+      "field": "connectionTimeoutSeconds",
+      "pointer": "/profiles/B-connectionTimeoutSeconds/settings/connectionTimeoutSeconds",
+      "profileId": "B-connectionTimeoutSeconds",
+      "A": "A",
+      "Bvalue": 14,
+      "result": "not-run"
+    },
+    {
+      "field": "tocMaximumBytes",
+      "pointer": "/profiles/B-tocMaximumBytes/settings/tocMaximumBytes",
+      "profileId": "B-tocMaximumBytes",
+      "A": "A",
+      "Bvalue": 66059264,
+      "result": "not-run"
+    },
+    {
+      "field": "metadataMaximumBytesExclusive",
+      "pointer": "/profiles/B-metadataMaximumBytesExclusive/settings/metadataMaximumBytesExclusive",
+      "profileId": "B-metadataMaximumBytesExclusive",
+      "A": "A",
+      "Bvalue": 65535,
+      "result": "not-run"
+    },
+    {
+      "field": "checksumIndexMaximumBytesExclusive",
+      "pointer": "/profiles/B-checksumIndexMaximumBytesExclusive/settings/checksumIndexMaximumBytesExclusive",
+      "profileId": "B-checksumIndexMaximumBytesExclusive",
+      "A": "A",
+      "Bvalue": 1023,
+      "result": "not-run"
+    },
+    {
+      "field": "cronJobDeadlineOverheadSeconds",
+      "pointer": "/profiles/B-cronJobDeadlineOverheadSeconds/settings/cronJobDeadlineOverheadSeconds",
+      "profileId": "B-cronJobDeadlineOverheadSeconds",
+      "A": "A",
+      "Bvalue": 61,
+      "result": "not-run"
+    },
+    {
+      "field": "successfulJobsHistoryLimit",
+      "pointer": "/profiles/B-successfulJobsHistoryLimit/settings/successfulJobsHistoryLimit",
+      "profileId": "B-successfulJobsHistoryLimit",
+      "A": "A",
+      "Bvalue": 4,
+      "result": "not-run"
+    },
+    {
+      "field": "failedJobsHistoryLimit",
+      "pointer": "/profiles/B-failedJobsHistoryLimit/settings/failedJobsHistoryLimit",
+      "profileId": "B-failedJobsHistoryLimit",
+      "A": "A",
+      "Bvalue": 11,
+      "result": "not-run"
+    },
+    {
+      "field": "temporaryDirectorySize",
+      "pointer": "/profiles/B-temporaryDirectorySize/settings/temporaryDirectorySize",
+      "profileId": "B-temporaryDirectorySize",
+      "A": "A",
+      "Bvalue": "257Mi",
+      "result": "not-run"
+    }
+  ]
+}

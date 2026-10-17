@@ -1,0 +1,18 @@
+{
+  "time": "2026-10-14T00:17:15.736126+00:00",
+  "HEAD": "19b1da7f75f51a05a16e25a7ce3d5421768f7c3a",
+  "original49BodyAndCaseHistoryErrors": [],
+  "original6CaseBodyHistoryErrors": [],
+  "allOriginal49IDsConserved": true,
+  "capturedInputDrift": [],
+  "snapshotRoundtripErrors": [],
+  "actualFinalLocalExit": 0,
+  "localObservationReport": "local-definition-observations.json",
+  "semanticReview": "pending fresh independent source reviewer",
+  "wholeC0Accepted": false,
+  "implementationAuthorization": null,
+  "qualification": "Source/body identity and pure definition observations only; original/native/API/role/provenance/effect/lease semantic acceptance not claimed.",
+  "lastTime": "2026-10-14T00:26:00.810679+00:00",
+  "actualFinalLocalObservations": 56,
+  "sourceCoordinateAddition": "same Chart readiness.port literal sites; no new canonical IDs or source/domain metadata promotion"
+}

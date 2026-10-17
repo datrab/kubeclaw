@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -84,10 +87,11 @@ try {
     granted,
     activated,
     configs: new Map([
-      ['kubeclaw.runtime-dispatch:runtime', {
-        targets: { gate: { endpoint: `${origin}/dispatch`, tokenSecret: 'gate.agent' } },
+      ['kubeclaw.runtime-dispatch:runtime', { ...TEST_CORE_POLICY.httpDispatch,
+        targets: { gate: { byteProfile:'standard', endpoint: `${origin}/dispatch`, tokenSecret: 'gate.agent' } },
       }],
       ['kubeclaw.network-http:http', {
+        ...TEST_CORE_POLICY.networkHttp,
         allowedOrigins: [origin],
         allowedMethods: ['POST', 'GET', 'DELETE'],
         allowedHeaders: [
@@ -101,10 +105,10 @@ try {
         environment: { 'gate.agent': secret, 'buster.worker': secret,
           'buster.source-private-key': sourceKeyEnvironment },
       }],
-      ['kubeclaw.artifact-store:artifact-store', {
+      ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY,
         artifactRoot: path.join(temporary, 'artifacts'),
       }],
-      ['kubeclaw.remote-test-gate:plan', {
+      ['kubeclaw.remote-test-gate:plan', {gateLimits: TEST_CORE_POLICY.remoteTestGate,
         endpoint: origin,
         authentication: 'bearer',
         tokenSecret: 'buster.worker',
@@ -115,17 +119,17 @@ try {
       }],
     ]),
     effects: new core.EffectCoordinator(
-      new core.FileEffectJournal(effectsPath),
+      new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY),
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(), 300_000,
+      new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition,
     ),
     shutdownTimeoutMs: 1_000,
     async emitDomainEvent() {},
   });
   await adapters.start();
   try {
-    assert.throws(() => new core.PipelineRunner({
+    assert.throws(() => new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: 'pipeline:buster-quality',
@@ -154,7 +158,7 @@ try {
       registry: granted,
       activated,
       adapters,
-      journal: new core.FileJournal(path.join(temporary, 'events.jsonl')),
+      journal: new core.FileJournal(path.join(temporary, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     }), /schema/);
     assert.equal(contacts, 0, 'caller-owned evidence must fail before any external contact');
 

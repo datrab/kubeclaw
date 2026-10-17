@@ -1,0 +1,14 @@
+{
+  "task": "Validate the fixture architecture without making changes.",
+  "architecture": {
+    "component": "fixture"
+  },
+  "source": {
+    "projectId": "fixture-project",
+    "repositoryRoot": "/fixture/repository",
+    "architectureRef": "fixture-architecture",
+    "paths": [
+      "docs/architecture.md"
+    ]
+  }
+}

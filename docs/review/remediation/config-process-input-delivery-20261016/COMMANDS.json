@@ -1,0 +1,64 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/buster-process-input-parity.test.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 0.62,
+    "log": "before.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/deployment/buster-process-input-parity.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 0.03,
+    "log": "syntax.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/buster-process-input-parity.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 29.92,
+    "log": "after.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "seconds": 2.76,
+    "log": "roster.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.22,
+    "log": "diff.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/deployment/buster-process-input-parity.test.mjs",
+      "tests/verification/contracts/buster-process-input-policy.test.mjs",
+      "tests/verification/contracts/buster-process-input-callers.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 40.27,
+    "log": "final.txt"
+  }
+]

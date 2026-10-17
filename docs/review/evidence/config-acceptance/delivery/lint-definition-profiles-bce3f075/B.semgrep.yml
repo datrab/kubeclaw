@@ -1,0 +1,6 @@
+rules:
+  - id: delivery-b
+    languages: [javascript]
+    severity: WARNING
+    message: Delivery fixture finding
+    pattern: console.log($X)

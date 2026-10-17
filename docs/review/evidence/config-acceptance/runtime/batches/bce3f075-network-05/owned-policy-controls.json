@@ -1,0 +1,68 @@
+[
+  {
+    "setting": "RT-b8eb5e344f496d7c",
+    "provider": "api-flow",
+    "completeOwnedA": {
+      "requestTimeoutMs": 50,
+      "maximumResponseBytes": 2048,
+      "maximumSteps": 3
+    },
+    "completeOwnedB": {
+      "requestTimeoutMs": 500,
+      "maximumResponseBytes": 2048,
+      "maximumSteps": 3
+    }
+  },
+  {
+    "setting": "RT-98a5849759145124",
+    "provider": "api-flow",
+    "completeOwnedA": {
+      "requestTimeoutMs": 1000,
+      "maximumResponseBytes": 32,
+      "maximumSteps": 3
+    },
+    "completeOwnedB": {
+      "requestTimeoutMs": 1000,
+      "maximumResponseBytes": 2048,
+      "maximumSteps": 3
+    }
+  },
+  {
+    "setting": "RT-6e292c3c6f492f07",
+    "provider": "api-flow",
+    "completeOwnedA": {
+      "requestTimeoutMs": 1000,
+      "maximumResponseBytes": 2048,
+      "maximumSteps": 1
+    },
+    "completeOwnedB": {
+      "requestTimeoutMs": 1000,
+      "maximumResponseBytes": 2048,
+      "maximumSteps": 3
+    }
+  },
+  {
+    "setting": "RT-6b6f0761a77de324",
+    "provider": "http",
+    "completeOwnedA": {
+      "maximumResponseBytes": 32,
+      "requestTimeoutMs": 1000
+    },
+    "completeOwnedB": {
+      "maximumResponseBytes": 2048,
+      "requestTimeoutMs": 1000
+    }
+  },
+  {
+    "setting": "RT-6a3cdfc223a3c24b",
+    "provider": "http",
+    "completeOwnedA": {
+      "maximumResponseBytes": 2048,
+      "requestTimeoutMs": 50
+    },
+    "completeOwnedB": {
+      "maximumResponseBytes": 2048,
+      "requestTimeoutMs": 500
+    }
+  }
+]

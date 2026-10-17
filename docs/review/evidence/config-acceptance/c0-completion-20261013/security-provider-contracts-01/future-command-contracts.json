@@ -1,0 +1,122 @@
+{
+  "qualification": "FUTURE original actual-provider/native-command contracts only; no tools/network/npm/CLI/provider/native/API/credentials/Eval executed",
+  "sourcePins": {
+    "skills/buster/engine/test-gates/security-scan-runtime.ts": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9",
+    "skills/buster/engine/test-gates/kubernetes-runtime-security.ts": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+    "scripts/scan-runtime-images.sh": "c0eaacd1d6553ff5f1c01c0bdf888f0ea3af160ae0fa7cb819a6025076b0d684"
+  },
+  "requiredToolReceipts": {
+    "trivy": {
+      "sourceExpectedVersion": "0.74.0",
+      "actualExecutableVersion": null,
+      "identity": "original realpath/executable bytes/package/image receipt; source installer version gate is not proof of installed scanner"
+    },
+    "kubectl": {
+      "actualVersion": null,
+      "identity": "original role/controller/executable receipt, not guessed semantic version"
+    }
+  },
+  "actions": [
+    {
+      "provider": "headers",
+      "capability": "network.http",
+      "operation": "request",
+      "resource": "network.url canonical original signed endpoint+each actual task path",
+      "payload": {
+        "method": "GET",
+        "timeoutMs": "selected processing.requestTimeoutMs",
+        "maximumResponseBytes": "selected processing.maximumResponseBytes (source currently constant65536)",
+        "responseHeaders": "unique resolved selected rule headers"
+      },
+      "positive": "Same real authenticated canonical HTTP deployment/source response under explicit port80 whole stand. Web/HTTPS source pair requires authentic matching deployment producer absent inspected current canonical path; no public-endpoint schema relabel.",
+      "negative": "wrong scheme/port/method/grant/fixture expiry pre-effect; redirect initial1/followup0; decoded response size after initial request"
+    },
+    {
+      "provider": "dependency-trivy",
+      "capability": "security.scan",
+      "operation": "dependency",
+      "executable": "<original authenticated trivyExecutable>",
+      "args": [
+        "fs",
+        "--scanners",
+        "vuln",
+        "--format",
+        "json",
+        "--quiet",
+        "--skip-db-update",
+        "--skip-java-db-update",
+        "--offline-scan",
+        "--skip-version-check",
+        "--disable-telemetry",
+        "--timeout",
+        "<ceil(nativeClampedMs/1000)>s",
+        "<contained actual projectDirectory>"
+      ],
+      "negative": "outside root/path/database missing/stale/drift/tool unsupported; no npm audit or dummy Trivy substitute"
+    },
+    {
+      "provider": "image-trivy",
+      "capability": "security.scan",
+      "operation": "image",
+      "executable": "<original authenticated trivyExecutable>",
+      "args": [
+        "image",
+        "--image-src",
+        "remote",
+        "--scanners",
+        "vuln",
+        "--format",
+        "json",
+        "--quiet",
+        "--skip-db-update",
+        "--skip-java-db-update",
+        "--offline-scan",
+        "--skip-version-check",
+        "--disable-telemetry",
+        "--timeout",
+        "<ceil(nativeClampedMs/1000)>s",
+        "<original immutable image@sha256 digest>"
+      ],
+      "registry": "exact allowed original prefix/digest; original paired HTTPS auth env/ref and optional worker CA. Ephemeral DOCKER_CONFIG only actual authorized runtime; --cacert before target when matching access. HTTP lab image unsupported; no credential supplied/read here."
+    },
+    {
+      "provider": "kubernetes-policy",
+      "capability": "security.scan",
+      "operation": "kubernetes-policy",
+      "executable": "<original authenticated trivyExecutable>",
+      "args": [
+        "config",
+        "--format",
+        "json",
+        "--quiet",
+        "--skip-check-update",
+        "--skip-version-check",
+        "--disable-telemetry",
+        "--misconfig-scanners",
+        "kubernetes",
+        "--timeout",
+        "<ceil(nativeClampedMs/1000)>s",
+        "<actual digest-matching regular checked manifest>"
+      ],
+      "noOfflineFlag": "actual config source intentionally lacks --offline-scan; update paths disabled separately"
+    },
+    {
+      "provider": "kubernetes-runtime",
+      "capability": "kubernetes.runtime-security",
+      "operation": "inspect",
+      "executable": "<original authenticated kubectlExecutable>",
+      "args": [
+        "get",
+        "busternamespaceleases.<captured leaseApiGroup>",
+        "<original leaseName>",
+        "-n",
+        "<original controllerNamespace>",
+        "-o",
+        "json"
+      ],
+      "observer": "actual fresh original controller snapshot with lease spec/status namespace, image/manifest digest, accounting/pod/service counts/resultDigest; remaining deadline no reset",
+      "negative": "wrong source/grant/namespace/manifest before kubectl; stale/invalid/digest mismatch/timeout after actual poll"
+    }
+  ],
+  "timing": "1000/2000 source scan/runtime params under unchanged native caps. Native actual-clock timeout outcome requires genuine fixed task/controller witness; neither argv difference nor pure arithmetic proves wall-time effect. Original requirements OPEN/not-run. Headers20/40 under fixed actual delayed endpoint definition likewise not available proof."
+}

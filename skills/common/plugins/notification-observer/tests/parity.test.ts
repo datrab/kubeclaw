@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -35,7 +36,7 @@ for (const type of notification.subscriptions) {
       identity: { runId: 'run:1', stageId: 'stage:1' },
       payload: {},
     },
-  });
+  }, TEST_CORE_POLICY.notificationPresentation.maxMessageChars, TEST_CORE_POLICY.notificationPresentation);
   assert.equal(projected.severity, labels.get(type)[0], type);
   assert.equal(projected.title, labels.get(type)[1], type);
   assert.equal(projected.summary, labels.get(type)[1], type);
@@ -51,7 +52,7 @@ assert.equal(lifecycleNotification({
     identity: { runId: 'run:1' },
     payload: { summary: long },
   },
-}, 256).summary, `${'x'.repeat(255)}…`);
+}, 256, TEST_CORE_POLICY.notificationPresentation).summary, `${'x'.repeat(255)}…`);
 
 let calls = 0;
 await observe({
@@ -82,7 +83,7 @@ const preview = previewNotification({
       },
     },
   },
-});
+}, TEST_CORE_POLICY.notificationPresentation);
 assert.doesNotMatch(JSON.stringify(preview), /must-not-survive/);
 
 console.log(JSON.stringify({ ok: true, plugin: manifest.id, suite: 'parity' }));

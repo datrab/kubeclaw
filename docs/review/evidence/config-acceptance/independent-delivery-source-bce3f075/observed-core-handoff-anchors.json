@@ -1,0 +1,433 @@
+{
+  "scope": "Collateral observed Core row anchors only; other Core author work not frozen/accepted by this delivery review",
+  "rows": [
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES",
+      "owner": "worker-core",
+      "instanceScope": "per owned worker service/attempt or runtime as specified",
+      "profileScope": [
+        "complete selected worker-core profile; role-generated inputs where declared"
+      ],
+      "class": "operator-setting",
+      "source": {
+        "path": "skills/worker/core/worker/native-pool-policy.ts",
+        "field": "stat.size > 65536",
+        "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+      },
+      "currentValue": 65536,
+      "default": "literal in code",
+      "precedence": "File input resource ceiling; root/no-follow/mode invariants fixed independently.",
+      "type": "integer",
+      "unit": "bytes",
+      "supportedDomain": {
+        "currentCodeDomain": "literal-only for numeric; existing optional retention API omitted=>true but six actual projections recorded",
+        "proposedValidatorDomain": {
+          "type": "integer",
+          "minimum": 32768,
+          "maximum": 65536
+        },
+        "semanticRelations": [
+          "Actual reader comparisons and lower-cap positive controls in docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+          "Started/history/retry uses captured generation; no current-policy fill",
+          "Journal payload/diagnostic/record/state/total exact coupled projection; routing epoch S/R-stable; retention requires actual writer/claim phase compatibility"
+        ],
+        "status": "justified bounded adjustable target definition; new CONFIG projection not implemented; fresh independent recheck pending"
+      },
+      "reader": {
+        "productiveCallerChain": [
+          "skills/prism/config/native-worker.ts",
+          "skills/buster/engine/test-gates/preparation-config.ts",
+          "skills/worker/core/worker/native-pool-policy.ts",
+          "scripts/prepare-native-worker-pools.mjs"
+        ],
+        "verifiedBoundary": "WORKER_NATIVE_POOL_POLICY_NOT_TRUSTED before JSON parse",
+        "traceStatus": "code-traced; independent review pending"
+      },
+      "schema": {
+        "path": "skills/worker/core/worker/native-pool-policy.ts",
+        "kind": "actual TypeScript/C validation where no JSON settings schema exists",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "proposedRequiredDomain": {
+          "type": "integer",
+          "minimum": 32768,
+          "maximum": 65536
+        }
+      },
+      "validationErrorContract": "WORKER_NATIVE_POOL_POLICY_NOT_TRUSTED before JSON parse",
+      "targetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.pool_file_bytes",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "activationScope": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. File input resource ceiling; root/no-follow/mode invariants fixed independently.",
+      "profileEvalSuitability": "Separate fixed-generation service/run experiment for operator settings; protocol/generated/task records are not arbitrary tuning knobs.",
+      "migrationAction": "Required sole Core author + typed validated immutable projection into every named actual consumer; bounded meaningful A/B target domain {\"type\": \"integer\", \"minimum\": 32768, \"maximum\": 65536}. docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "requirementIds": [
+        "D17",
+        "D20",
+        "D22",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D"
+      ],
+      "caseIds": [
+        "CMP-WCORE-POOL-FILE-BYTES-VAL",
+        "CMP-WCORE-POOL-FILE-BYTES-EFFECT",
+        "CMP-C0-CORE-POOL-SIZE-POSITIVE",
+        "CMP-C0-CORE-POOL-SIZE-EXCESS",
+        "CMP-WCORE-POOL-FILE-BYTES-PROJECTION",
+        "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+        "CMP-C0-CORE-ADJUSTABLE-POOL-32768",
+        "CMP-C0-CORE-ADJUSTABLE-POOL-49152"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/components/worker-residual-source-read.log",
+        "docs/review/evidence/config-acceptance/components/core-policy-domains.md",
+        "docs/review/evidence/config-acceptance/components/core-domain-source-read.log",
+        "docs/review/evidence/config-acceptance/components/core-domain-definition-attempt2.log"
+      ],
+      "status": "source-traced adjustable-domain/consumer proposal, independent recheck pending",
+      "aliasOfSettingIds": [],
+      "domainDefinition": "docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "candidateDispositions": [
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "currentMember": "stat.size > 65536",
+          "reason": "Trusted root/no-write/nofollow regular FD stat/read bound65536 before JSON. Host producer owns capacities; not kernel readback proof. Immutable trusted publication required, no expanded Buffer/string safety inferred."
+        },
+        {
+          "path": "scripts/prepare-native-worker-pools.mjs",
+          "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+          "currentMember": "Named direct alias/underlying bound in exact numbered source",
+          "reason": "Trusted root/no-write/nofollow regular FD stat/read bound65536 before JSON. Host producer owns capacities; not kernel readback proof. Immutable trusted publication required, no expanded Buffer/string safety inferred."
+        }
+      ],
+      "matchedApiObligations": [
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.schemaVersion",
+          "sourceLine": 6,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.role",
+          "sourceLine": 7,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.nodeName",
+          "sourceLine": 8,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.policyDigest",
+          "sourceLine": 9,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.cgroupRoot",
+          "sourceLine": 10,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.ownershipRoot",
+          "sourceLine": 11,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.nodeIdentityFile",
+          "sourceLine": 12,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.runtimeIdentityFile",
+          "sourceLine": 13,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.maximumActiveScopes",
+          "sourceLine": 14,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        },
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sourceField": "NativeWorkerPoolPolicy.limits",
+          "sourceLine": 15,
+          "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "relation": "Related accepted input/generated state or supplied API constrained by this policy, NOT independently authored replacement setting"
+        }
+      ],
+      "matchedSchemaObligations": [],
+      "relatedC0CaseIds": [
+        "CMP-C0-CORE-POOL-SIZE-POSITIVE",
+        "CMP-C0-CORE-POOL-SIZE-EXCESS"
+      ],
+      "historicalDomainProposals": [
+        {
+          "checkpoint": "40cf24e77388bced59475ece9651c9c94d848368",
+          "domain": {
+            "currentCodeDomain": {
+              "kind": "literal-only; no adjustable CONFIG/API parameter",
+              "value": 65536
+            },
+            "proposedValidatorDomain": {
+              "type": "integer",
+              "const": 65536
+            },
+            "definitionStatus": "closed finite value-preserving numeric/explicit boolean profile definition; no unknown bounds; widening not included in bounded migration",
+            "readerRelationships": "Trusted root/no-write/nofollow regular FD stat/read bound65536 before JSON. Host producer owns capacities; not kernel readback proof. Immutable trusted publication required, no expanded Buffer/string safety inferred.",
+            "defaultProhibition": "Required selected owner field with no code/ENV/schema default; const restricts domain but is not replacement author/default."
+          },
+          "lifecycle": "superseded",
+          "reason": "ICD001 preservation-only const domain cannot discharge adjustable requirement"
+        }
+      ],
+      "historicalCaseIds": []
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+      "owner": "worker-core",
+      "instanceScope": "per owned worker service/attempt or runtime as specified",
+      "profileScope": [
+        "complete selected worker-core profile; role-generated inputs where declared"
+      ],
+      "class": "operator-setting",
+      "source": {
+        "path": "skills/worker/core/worker/native-runtime-identity.ts",
+        "field": "stat.size > 4096",
+        "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e"
+      },
+      "currentValue": 4096,
+      "default": "literal in code",
+      "precedence": "Bounded host identity input; kernel boot/ns identity not operator author.",
+      "type": "integer",
+      "unit": "bytes",
+      "supportedDomain": {
+        "currentCodeDomain": "literal-only for numeric; existing optional retention API omitted=>true but six actual projections recorded",
+        "proposedValidatorDomain": {
+          "type": "integer",
+          "minimum": 2048,
+          "maximum": 4096
+        },
+        "semanticRelations": [
+          "Actual reader comparisons and lower-cap positive controls in docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+          "Started/history/retry uses captured generation; no current-policy fill",
+          "Journal payload/diagnostic/record/state/total exact coupled projection; routing epoch S/R-stable; retention requires actual writer/claim phase compatibility"
+        ],
+        "status": "justified bounded adjustable target definition; new CONFIG projection not implemented; fresh independent recheck pending"
+      },
+      "reader": {
+        "productiveCallerChain": [
+          "skills/prism/config/native-worker.ts",
+          "skills/buster/engine/test-gates/preparation-config.ts",
+          "skills/worker/core/worker/native-runtime-identity.ts",
+          "scripts/prepare-native-worker-pools.mjs"
+        ],
+        "verifiedBoundary": "WORKER_NATIVE_RUNTIME_IDENTITY_NOT_TRUSTED before parse/kernel compare",
+        "traceStatus": "code-traced; independent review pending"
+      },
+      "schema": {
+        "path": "skills/worker/core/worker/native-runtime-identity.ts",
+        "kind": "actual TypeScript/C validation where no JSON settings schema exists",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "proposedRequiredDomain": {
+          "type": "integer",
+          "minimum": 2048,
+          "maximum": 4096
+        }
+      },
+      "validationErrorContract": "WORKER_NATIVE_RUNTIME_IDENTITY_NOT_TRUSTED before parse/kernel compare",
+      "targetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.runtime_identity_file_bytes",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "activationScope": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Bounded host identity input; kernel boot/ns identity not operator author.",
+      "profileEvalSuitability": "Separate fixed-generation service/run experiment for operator settings; protocol/generated/task records are not arbitrary tuning knobs.",
+      "migrationAction": "Required sole Core author + typed validated immutable projection into every named actual consumer; bounded meaningful A/B target domain {\"type\": \"integer\", \"minimum\": 2048, \"maximum\": 4096}. docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "requirementIds": [
+        "D17",
+        "D20",
+        "D22",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D"
+      ],
+      "caseIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-VAL",
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-EFFECT",
+        "CMP-C0-CORE-RUNTIME-SIZE-POSITIVE",
+        "CMP-C0-CORE-RUNTIME-SIZE-EXCESS",
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-PROJECTION",
+        "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+        "CMP-C0-CORE-ADJUSTABLE-RUNTIME-2048",
+        "CMP-C0-CORE-ADJUSTABLE-RUNTIME-3072"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/components/worker-residual-source-read.log",
+        "docs/review/evidence/config-acceptance/components/core-policy-domains.md",
+        "docs/review/evidence/config-acceptance/components/core-domain-source-read.log",
+        "docs/review/evidence/config-acceptance/components/core-domain-definition-attempt2.log"
+      ],
+      "status": "source-traced adjustable-domain/consumer proposal, independent recheck pending",
+      "aliasOfSettingIds": [],
+      "domainDefinition": "docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "candidateDispositions": [
+        {
+          "path": "skills/worker/core/worker/native-runtime-identity.ts",
+          "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+          "currentMember": "stat.size > 4096",
+          "reason": "Root/nofollow regular bound4096 before parsing; compare genuine local boot/ns readback. Host prepare mirrored guard delivery obligation, not second Core writer."
+        },
+        {
+          "path": "scripts/prepare-native-worker-pools.mjs",
+          "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+          "currentMember": "Named direct alias/underlying bound in exact numbered source",
+          "reason": "Root/nofollow regular bound4096 before parsing; compare genuine local boot/ns readback. Host prepare mirrored guard delivery obligation, not second Core writer."
+        }
+      ],
+      "matchedApiObligations": [],
+      "matchedSchemaObligations": [],
+      "relatedC0CaseIds": [
+        "CMP-C0-CORE-RUNTIME-SIZE-POSITIVE",
+        "CMP-C0-CORE-RUNTIME-SIZE-EXCESS"
+      ],
+      "historicalDomainProposals": [
+        {
+          "checkpoint": "40cf24e77388bced59475ece9651c9c94d848368",
+          "domain": {
+            "currentCodeDomain": {
+              "kind": "literal-only; no adjustable CONFIG/API parameter",
+              "value": 4096
+            },
+            "proposedValidatorDomain": {
+              "type": "integer",
+              "const": 4096
+            },
+            "definitionStatus": "closed finite value-preserving numeric/explicit boolean profile definition; no unknown bounds; widening not included in bounded migration",
+            "readerRelationships": "Root/nofollow regular bound4096 before parsing; compare genuine local boot/ns readback. Host prepare mirrored guard delivery obligation, not second Core writer.",
+            "defaultProhibition": "Required selected owner field with no code/ENV/schema default; const restricts domain but is not replacement author/default."
+          },
+          "lifecycle": "superseded",
+          "reason": "ICD001 preservation-only const domain cannot discharge adjustable requirement"
+        }
+      ],
+      "historicalCaseIds": []
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+      "owner": "worker-core",
+      "instanceScope": "per owned worker service/attempt or runtime as specified",
+      "profileScope": [
+        "complete selected worker-core profile; role-generated inputs where declared"
+      ],
+      "class": "generated-binding",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "limits.cpuPeriodMicroseconds",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+      },
+      "currentValue": 100000,
+      "default": "explicit constant/derived binding/task input as recorded",
+      "precedence": "producer fixed CFS period; adjustable cadence candidate belongs host author not WorkerCore",
+      "type": "string/integer by exact field",
+      "unit": "microseconds",
+      "supportedDomain": {
+        "type": "string/integer by exact field",
+        "constraints": "positive safe pool ints; quota>=1000; period1000..1000000; normalized absolute nonroot paths; digest64hex; schema1/correct role"
+      },
+      "reader": {
+        "productiveCallerChain": [
+          "scripts/native-worker-node-policy.mjs",
+          "skills/prism/config/native-worker.ts",
+          "skills/buster/engine/test-gates/preparation-config.ts",
+          "skills/worker/core/worker/native-pool-policy.ts",
+          "skills/worker/core/worker/native-resource-pool.ts",
+          "skills/worker/core/worker/resource-reservations.ts"
+        ],
+        "verifiedBoundary": "pool validate -> WORKER_NATIVE_POOL_POLICY_*; real cgroup readback -> WORKER_NATIVE_POOL_LIMIT_MISMATCH:<file>; identity mismatch fences readiness",
+        "traceStatus": "code-traced; independent review pending"
+      },
+      "schema": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "kind": "actual TypeScript/C validation where no JSON settings schema exists",
+        "domain": {
+          "type": "string/integer by exact field",
+          "constraints": "positive safe pool ints; quota>=1000; period1000..1000000; normalized absolute nonroot paths; digest64hex; schema1/correct role"
+        }
+      },
+      "validationErrorContract": "pool validate -> WORKER_NATIVE_POOL_POLICY_*; real cgroup readback -> WORKER_NATIVE_POOL_LIMIT_MISMATCH:<file>; identity mismatch fences readiness",
+      "targetAuthorRef": {
+        "owner": "existing host POLICY_YAML producer; immutable projection never core writer",
+        "aliasOf": [],
+        "unresolvedAuthority": "fixed paths/period require delivery producer classification"
+      },
+      "activationScope": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "producer fixed CFS period; adjustable cadence candidate belongs host author not WorkerCore"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. producer fixed CFS period; adjustable cadence candidate belongs host author not WorkerCore",
+      "profileEvalSuitability": "Separate fixed-generation service/run experiment for operator settings; protocol/generated/task records are not arbitrary tuning knobs.",
+      "migrationAction": "C3/C4 proposal only; sole author required before productive construction where configurable. Protocol constants stay justified; generated aliases remain read-only. No D18 execution refactor now.",
+      "requirementIds": [
+        "D17",
+        "D20",
+        "D22",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D"
+      ],
+      "caseIds": [
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/components/worker-residual-source-read.log"
+      ],
+      "status": "review-pending",
+      "aliasOfSettingIds": []
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "skills/prism/tests/swarm-input-limit.test.mts",
+    "skills/prism/tests/swarm-native-settings.test.mts",
+    "skills/prism/tests/swarm-resource-operation.test.mts",
+    "skills/prism/tests/swarm-resource-policy.test.mts",
+    "skills/prism/tests/swarm-result-journal.test.mts",
+    "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "skills/prism/tests/swarm-supervisor-consumers.test.mts"
+  ],
+  "NODE_ENV": "test",
+  "exitCode": 0,
+  "elapsedSeconds": 318.68
+}

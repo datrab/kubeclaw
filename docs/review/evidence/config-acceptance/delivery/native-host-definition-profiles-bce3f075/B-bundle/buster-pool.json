@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "role": "buster",
+  "nodeName": "dlv-native-b",
+  "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100",
+  "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster",
+  "ownershipRoot": "/var/lib/kubeclaw/native/buster",
+  "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+  "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+  "maximumActiveScopes": 4,
+  "limits": {
+    "memoryBytes": 134217728,
+    "tasks": 64,
+    "cpuQuotaMicroseconds": 100000,
+    "cpuPeriodMicroseconds": 100000
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/proposals/config-c0/project-compiler-policy-author.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "projectCompiler"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "project-compiler-policy-author.v1"
+    },
+    "projectCompiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repairBudget",
+        "reviewRepair",
+        "execution",
+        "executionGroups"
+      ],
+      "properties": {
+        "repairBudget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "categories",
+            "maximumOrchestratorOrders"
+          ],
+          "properties": {
+            "categories": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "lint",
+                "test"
+              ],
+              "properties": {
+                "lint": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "test": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              }
+            },
+            "maximumOrchestratorOrders": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "reviewRepair": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "disabled"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode",
+                "maximumOrders"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "enabled"
+                },
+                "maximumOrders": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              }
+            }
+          ]
+        },
+        "execution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maxTechnicalRetries",
+            "timeoutMs"
+          ],
+          "properties": {
+            "maxTechnicalRetries": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "timeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "executionGroups": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cumulative",
+            "source",
+            "demo"
+          ],
+          "properties": {
+            "cumulative": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "timeoutMs"
+              ],
+              "properties": {
+                "timeoutMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                }
+              }
+            },
+            "source": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "timeoutMs"
+              ],
+              "properties": {
+                "timeoutMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                }
+              }
+            },
+            "demo": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "timeoutMs"
+              ],
+              "properties": {
+                "timeoutMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                }
+              }
+            }
+          },
+          "$comment": "C0 WFINAL-02 correction: separate helper groups preserve current cumulative/source/demo timeout policies; module execution.timeoutMs does not imply these helpers."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "axeViolation": {
+    "id": "image-alt",
+    "impact": "critical",
+    "help": "Source-defined missing image alternate text",
+    "nodes": [
+      {
+        "target": [
+          "#case"
+        ]
+      }
+    ]
+  },
+  "lighthouseReports": [
+    {
+      "categories": {
+        "performance": {
+          "score": 0.85
+        },
+        "seo": {
+          "score": 0.8,
+          "auditRefs": [
+            {
+              "id": "meta-description"
+            }
+          ]
+        },
+        "best-practices": {
+          "score": 1,
+          "auditRefs": []
+        }
+      },
+      "audits": {
+        "largest-contentful-paint": {
+          "numericValue": 2500
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0.2
+        },
+        "total-blocking-time": {
+          "numericValue": 100
+        },
+        "meta-description": {
+          "score": 0,
+          "scoreDisplayMode": "numeric",
+          "title": "Document lacks a meta description"
+        }
+      }
+    },
+    {
+      "categories": {
+        "performance": {
+          "score": 0.8
+        },
+        "seo": {
+          "score": 0.8,
+          "auditRefs": [
+            {
+              "id": "meta-description"
+            }
+          ]
+        },
+        "best-practices": {
+          "score": 1,
+          "auditRefs": []
+        }
+      },
+      "audits": {
+        "largest-contentful-paint": {
+          "numericValue": 2500
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0.2
+        },
+        "total-blocking-time": {
+          "numericValue": 100
+        },
+        "meta-description": {
+          "score": 0,
+          "scoreDisplayMode": "numeric",
+          "title": "Document lacks a meta description"
+        }
+      }
+    },
+    {
+      "categories": {
+        "performance": {
+          "score": 0.95
+        },
+        "seo": {
+          "score": 0.8,
+          "auditRefs": [
+            {
+              "id": "meta-description"
+            }
+          ]
+        },
+        "best-practices": {
+          "score": 1,
+          "auditRefs": []
+        }
+      },
+      "audits": {
+        "largest-contentful-paint": {
+          "numericValue": 2500
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0.2
+        },
+        "total-blocking-time": {
+          "numericValue": 100
+        },
+        "meta-description": {
+          "score": 0,
+          "scoreDisplayMode": "numeric",
+          "title": "Document lacks a meta description"
+        }
+      }
+    },
+    {
+      "categories": {
+        "performance": {
+          "score": 1
+        },
+        "seo": {
+          "score": 0.8,
+          "auditRefs": [
+            {
+              "id": "meta-description"
+            }
+          ]
+        },
+        "best-practices": {
+          "score": 1,
+          "auditRefs": []
+        }
+      },
+      "audits": {
+        "largest-contentful-paint": {
+          "numericValue": 2500
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0.2
+        },
+        "total-blocking-time": {
+          "numericValue": 100
+        },
+        "meta-description": {
+          "score": 0,
+          "scoreDisplayMode": "numeric",
+          "title": "Document lacks a meta description"
+        }
+      }
+    },
+    {
+      "categories": {
+        "performance": {
+          "score": 0.99
+        },
+        "seo": {
+          "score": 0.8,
+          "auditRefs": [
+            {
+              "id": "meta-description"
+            }
+          ]
+        },
+        "best-practices": {
+          "score": 1,
+          "auditRefs": []
+        }
+      },
+      "audits": {
+        "largest-contentful-paint": {
+          "numericValue": 2500
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0.2
+        },
+        "total-blocking-time": {
+          "numericValue": 100
+        },
+        "meta-description": {
+          "score": 0,
+          "scoreDisplayMode": "numeric",
+          "title": "Document lacks a meta description"
+        }
+      }
+    }
+  ],
+  "playwrightReport": {
+    "stats": {},
+    "suites": [
+      {
+        "title": "home.spec.ts",
+        "specs": [
+          {
+            "title": "project-owned assertion",
+            "tests": [
+              {
+                "projectName": "real-chromium",
+                "status": "expected",
+                "results": [
+                  {
+                    "status": "passed"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "title": "independent test continues",
+            "tests": [
+              {
+                "projectName": "real-chromium",
+                "status": "expected",
+                "results": [
+                  {
+                    "status": "passed"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "title": "project-owned skip",
+            "tests": [
+              {
+                "projectName": "real-chromium",
+                "status": "skipped",
+                "results": [
+                  {
+                    "status": "skipped"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "visualDiffPercent": 0.25,
+  "qualification": "Source assessment definitions, not genuine provider/native responses or output artifacts"
+}

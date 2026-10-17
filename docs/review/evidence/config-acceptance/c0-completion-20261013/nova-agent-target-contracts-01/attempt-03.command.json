@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/check-definition.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "exitCode": 0,
+  "stdout": "attempt-03.stdout.log",
+  "stderr": "attempt-03.stderr.log"
+}

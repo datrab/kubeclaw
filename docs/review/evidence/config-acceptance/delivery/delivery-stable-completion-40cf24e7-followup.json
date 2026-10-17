@@ -1,0 +1,77 @@
+{
+  "authorTask": "/root/delivery_closure",
+  "scope": "delivery evidence only; stable meaningful batch following pushed40cf24e7; no productive/test/host edits, image/API/runtime run, commit or acceptance",
+  "completedAtUtc": "2026-10-12T21:33:01.563176+00:00",
+  "headCommit": "40cf24e77388bced59475ece9651c9c94d848368",
+  "parentCheckpointObligation": "Parent owns consolidation/full dirty patch and untracked identity manifest, independent NOT ACCEPTED review and authorized commit/push. Child will not mutate delivery files after this receipt absent new instruction. Prior delivery-stable-completion.json is preserved as historical batch receipt.",
+  "completedSemanticBatch": [
+    "Exact pinned primary VAP/Binding plus strict canonical recursive CRD definition; $ref-only alias, all21 Buster whole documents and three decisive malformed CRD controls; no permissive replacement or skip.",
+    "Six actual Buster gateway CPU/memory/ephemeral-storage member author projections; whole-map precedence, scheduler/CRI vs disk eviction boundary, distinct complete A/B and partial-map counterexample.",
+    "Fifteen actual Buster Docker ARG consumer/source/domain/override/hash/platform/lock/native-revision contracts; actual unchanged44 version projections verified, not image builds."
+  ],
+  "currentDefinitionObservations": {
+    "passed": 29
+  },
+  "resourceProjectionComparisons": {
+    "passed": 132
+  },
+  "separateActualVersionProjection": "DLV-C0-BUSTER-BUILD-VERSION-PROJECTION-CHECK: exit0, checked44/changed[], inputs4/locks5",
+  "caseSpecifications": 102,
+  "implementationResults": {
+    "not-run": 102
+  },
+  "remainingSemanticRows": 392,
+  "remainingExactGapCategories": {
+    "source-traced": 339,
+    "source-traced-validation-expansion-open": 122,
+    "source-traced-pinned-consumer": 69,
+    "source-traced-declared-unused": 1,
+    "source-traced-external-validator-blocked": 5,
+    "source-traced-buildstep-domain-open": 71,
+    "source-traced-template-domains-open": 188,
+    "source-traced-k8s-validation-open": 5,
+    "source-traced-external-tailnet-reader-open": 1
+  },
+  "remainingExactGaps": [
+    "open-row-backlog.json retains exact392 row IDs; remaining non-Ops Chart domains/aliases/native downstream policies188, other image ARG domains71, runtime/platform/transport expansions122, exact Codex parser5, Ops API/namespace/network/Tailscale fields5, tailnet consumer1.",
+    "Gateway map header still open for arbitrary extended-resource/hugepage/claims members and strict selected-owner/default-removal obligations; six configured members alone do not close map domain.",
+    "Pinned Kubernetes reader/schema releases are not actual deployed apiserver/feature-gate/admission/CSI/node/Secret identities. CPUquota and disk eviction need correlated native policies/stats/layout/live probes.",
+    "Docker unavailable; default-deny context excludes Buster COPY dependencies. Real amd64/arm64 baseline builds/download/hash/installed receipts/native revision effects precede negative mutants; baked ENV/UID/caps/launch/APT retry/error/expiry literals and other platform images still open.",
+    "Exact proposed per-field harness/profile/negative diagnostic/runtime observer expansion, source duplication/caller activation checks, immutable execution identities, remote capability and independent C0 reviewer remain required. All102 implementation cases not-run."
+  ],
+  "artifacts": [
+    "pinned-schema-aliases.json",
+    "materialize-pinned-schema-alias.py",
+    "pinned-schema-aliases/",
+    "pinned-kubernetes-json-schema/",
+    "kubernetes-source-acquisitions.json",
+    "kubernetes-boundary-definition.json",
+    "kubernetes-boundary-definition/",
+    "c0-kubernetes-boundary-cases.json",
+    "export-current-definition-cases.py",
+    "refine-kubernetes-boundaries.py",
+    "refine-buster-build-inputs.py",
+    "buster-build-source-observations.json",
+    "buster-build-version-projection-check.json",
+    "buster-build-version-projection-check.txt",
+    "c0-buster-build-definition-cases.json",
+    "inventory-fragment.json",
+    "proposed-cases.json",
+    "open-row-backlog.json",
+    "semantic-closure-verification.json",
+    "snapshots/pr40cf24e7-kubernetes-boundary/",
+    "snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/",
+    "README.md"
+  ],
+  "consistencyVerification": {
+    "result": "passed",
+    "issues": [],
+    "checks": [
+      "setting/case/source/test/raw identity and links",
+      "exact immutable strict primary canonical definition and $ref-only alias identity",
+      "rootJSON parse and evidencePythonAST",
+      "node --check collect-delivery.cjs"
+    ],
+    "scope": "consistency only; C0 INCOMPLETE/NOT ACCEPTED"
+  }
+}

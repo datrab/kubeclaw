@@ -1,0 +1,3086 @@
+[
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 7,
+    "text": "const EXPECT_KEYS = new Set(['status', 'contentType', 'bodyContains', 'json', 'minimumMessages', 'messageContains']);",
+    "context": [
+      "const STEP_KEYS = new Set(['id', 'protocol', 'method', 'path', 'headers', 'body', 'messages', 'timeoutMs', 'expect', 'extract']);",
+      "const EXPECT_KEYS = new Set(['status', 'contentType', 'bodyContains', 'json', 'minimumMessages', 'messageContains']);",
+      "const FLOW_KEYS = new Set(['schemaVersion', 'variables', 'setup', 'steps', 'cleanup']);",
+      "const IDENTIFIER = /^[a-z][a-z0-9-]{0,63}$/u;"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 15,
+    "text": "function integer(value, fallback, minimum, maximum, code) { const result = value ?? fallback; if (!Number.isSafeInteger(result) || result < minimum || result > maximum) throw new Error(code); return result; }",
+    "context": [
+      "function exact(value, keys, code) { const result = object(value, code); if (Object.keys(result).some((key) => !keys.has(key))) throw new Error(code); return result; }",
+      "function integer(value, fallback, minimum, maximum, code) { const result = value ?? fallback; if (!Number.isSafeInteger(result) || result < minimum || result > maximum) throw new Error(code); return result; }",
+      "function map(value, code, maximum = 32) { const result = object(value ?? {}, code); if (Object.keys(result).length > maximum) throw new Error(code); return result; }",
+      "function inside(root, relative, code) {"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 16,
+    "text": "function map(value, code, maximum = 32) { const result = object(value ?? {}, code); if (Object.keys(result).length > maximum) throw new Error(code); return result; }",
+    "context": [
+      "function integer(value, fallback, minimum, maximum, code) { const result = value ?? fallback; if (!Number.isSafeInteger(result) || result < minimum || result > maximum) throw new Error(code); return result; }",
+      "function map(value, code, maximum = 32) { const result = object(value ?? {}, code); if (Object.keys(result).length > maximum) throw new Error(code); return result; }",
+      "function inside(root, relative, code) {",
+      "  if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error(code);"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 29,
+    "text": "  if (inputs.length > 1) throw new Error('API_FLOW_INPUT_INVALID');",
+    "context": [
+      "  const inputs = invocation.inputs.filter((input) => ['deployment', 'endpoint'].includes(input.name));",
+      "  if (inputs.length > 1) throw new Error('API_FLOW_INPUT_INVALID');",
+      "  if (config.url !== undefined && inputs.length) throw new Error('API_FLOW_TARGET_AMBIGUOUS');",
+      "  if (config.url !== undefined) return String(config.url);"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 48,
+    "text": "  const bytes = fs.readFileSync(inside(fs.realpathSync(repository), config.flowFile, 'API_FLOW_FILE_DENIED'));",
+    "context": [
+      "  if (!repository.startsWith(`${workspace}${path.sep}`)) throw new Error('API_FLOW_WORKSPACE_INVALID');",
+      "  const bytes = fs.readFileSync(inside(fs.realpathSync(repository), config.flowFile, 'API_FLOW_FILE_DENIED'));",
+      "  if (bytes.byteLength > 1_048_576) throw new Error('API_FLOW_FILE_TOO_LARGE');",
+      "  let flow; try { flow = JSON.parse(bytes.toString('utf8')); } catch { throw new Error('API_FLOW_FILE_INVALID'); }"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 49,
+    "text": "  if (bytes.byteLength > 1_048_576) throw new Error('API_FLOW_FILE_TOO_LARGE');",
+    "context": [
+      "  const bytes = fs.readFileSync(inside(fs.realpathSync(repository), config.flowFile, 'API_FLOW_FILE_DENIED'));",
+      "  if (bytes.byteLength > 1_048_576) throw new Error('API_FLOW_FILE_TOO_LARGE');",
+      "  let flow; try { flow = JSON.parse(bytes.toString('utf8')); } catch { throw new Error('API_FLOW_FILE_INVALID'); }",
+      "  exact(flow, FLOW_KEYS, 'API_FLOW_FILE_INVALID'); if (flow.schemaVersion !== 'kubeclaw.api-flow.v1') throw new Error('API_FLOW_VERSION_UNSUPPORTED'); return flow;"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 57,
+    "text": "  const method = String(step.method ?? 'GET').toUpperCase(); if (step.protocol === 'websocket' ? step.method !== undefined : !METHODS.has(method)) throw new Error('API_FLOW_METHOD_INVALID');",
+    "context": [
+      "  seen.add(step.id); if (step.protocol !== undefined && step.protocol !== 'websocket') throw new Error('API_FLOW_PROTOCOL_INVALID');",
+      "  const method = String(step.method ?? 'GET').toUpperCase(); if (step.protocol === 'websocket' ? step.method !== undefined : !METHODS.has(method)) throw new Error('API_FLOW_METHOD_INVALID');",
+      "  if (typeof step.path !== 'string' || !step.path.startsWith('/') || step.path.startsWith('//') || /[\\r\\n#]/u.test(step.path) || step.path.length > 2048) throw new Error('API_FLOW_PATH_INVALID');",
+      "  const headers = map(step.headers, 'API_FLOW_HEADERS_INVALID');"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 58,
+    "text": "  if (typeof step.path !== 'string' || !step.path.startsWith('/') || step.path.startsWith('//') || /[\\r\\n#]/u.test(step.path) || step.path.length > 2048) throw new Error('API_FLOW_PATH_INVALID');",
+    "context": [
+      "  const method = String(step.method ?? 'GET').toUpperCase(); if (step.protocol === 'websocket' ? step.method !== undefined : !METHODS.has(method)) throw new Error('API_FLOW_METHOD_INVALID');",
+      "  if (typeof step.path !== 'string' || !step.path.startsWith('/') || step.path.startsWith('//') || /[\\r\\n#]/u.test(step.path) || step.path.length > 2048) throw new Error('API_FLOW_PATH_INVALID');",
+      "  const headers = map(step.headers, 'API_FLOW_HEADERS_INVALID');",
+      "  if (Object.entries(headers).some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name) || typeof content !== 'string' || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) throw new Error('API_FLOW_HEADERS_INVALID');"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 60,
+    "text": "  if (Object.entries(headers).some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name) || typeof content !== 'string' || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) throw new Error('API_FLOW_HEADERS_INVALID');",
+    "context": [
+      "  const headers = map(step.headers, 'API_FLOW_HEADERS_INVALID');",
+      "  if (Object.entries(headers).some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name) || typeof content !== 'string' || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) throw new Error('API_FLOW_HEADERS_INVALID');",
+      "  if (step.timeoutMs !== undefined) integer(step.timeoutMs, null, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID');",
+      "  if (step.messages !== undefined && (!Array.isArray(step.messages) || step.messages.length > 64)) throw new Error('API_FLOW_MESSAGES_INVALID');"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 61,
+    "text": "  if (step.timeoutMs !== undefined) integer(step.timeoutMs, null, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID');",
+    "context": [
+      "  if (Object.entries(headers).some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name) || typeof content !== 'string' || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) throw new Error('API_FLOW_HEADERS_INVALID');",
+      "  if (step.timeoutMs !== undefined) integer(step.timeoutMs, null, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID');",
+      "  if (step.messages !== undefined && (!Array.isArray(step.messages) || step.messages.length > 64)) throw new Error('API_FLOW_MESSAGES_INVALID');",
+      "  const expect = exact(step.expect ?? {}, EXPECT_KEYS, 'API_FLOW_EXPECT_INVALID');"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 62,
+    "text": "  if (step.messages !== undefined && (!Array.isArray(step.messages) || step.messages.length > 64)) throw new Error('API_FLOW_MESSAGES_INVALID');",
+    "context": [
+      "  if (step.timeoutMs !== undefined) integer(step.timeoutMs, null, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID');",
+      "  if (step.messages !== undefined && (!Array.isArray(step.messages) || step.messages.length > 64)) throw new Error('API_FLOW_MESSAGES_INVALID');",
+      "  const expect = exact(step.expect ?? {}, EXPECT_KEYS, 'API_FLOW_EXPECT_INVALID');",
+      "  const httpAssertions = ['status', 'contentType', 'bodyContains', 'json'];"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 63,
+    "text": "  const expect = exact(step.expect ?? {}, EXPECT_KEYS, 'API_FLOW_EXPECT_INVALID');",
+    "context": [
+      "  if (step.messages !== undefined && (!Array.isArray(step.messages) || step.messages.length > 64)) throw new Error('API_FLOW_MESSAGES_INVALID');",
+      "  const expect = exact(step.expect ?? {}, EXPECT_KEYS, 'API_FLOW_EXPECT_INVALID');",
+      "  const httpAssertions = ['status', 'contentType', 'bodyContains', 'json'];",
+      "  const websocketAssertions = ['minimumMessages', 'messageContains'];"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 65,
+    "text": "  const websocketAssertions = ['minimumMessages', 'messageContains'];",
+    "context": [
+      "  const httpAssertions = ['status', 'contentType', 'bodyContains', 'json'];",
+      "  const websocketAssertions = ['minimumMessages', 'messageContains'];",
+      "  if (step.protocol === 'websocket') {",
+      "    if (step.method !== undefined || step.body !== undefined || step.extract !== undefined"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 74,
+    "text": "  if (expect.minimumMessages !== undefined) integer(expect.minimumMessages, null, 1, 64, 'API_FLOW_EXPECT_INVALID');",
+    "context": [
+      "  for (const key of ['contentType', 'bodyContains', 'messageContains']) if (expect[key] !== undefined && typeof expect[key] !== 'string') throw new Error('API_FLOW_EXPECT_INVALID');",
+      "  if (expect.minimumMessages !== undefined) integer(expect.minimumMessages, null, 1, 64, 'API_FLOW_EXPECT_INVALID');",
+      "  for (const selector of Object.keys(map(expect.json, 'API_FLOW_EXPECT_INVALID'))) if (!SELECTOR.test(selector)) throw new Error('API_FLOW_SELECTOR_INVALID');",
+      "  for (const [name, selector] of Object.entries(map(step.extract, 'API_FLOW_EXTRACT_INVALID'))) if (!VARIABLE.test(name) || typeof selector !== 'string' || !SELECTOR.test(selector)) throw new Error('API_FLOW_EXTRACT_INVALID');"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 79,
+    "text": "function validateFlow(flow, maximumSteps) {",
+    "context": [
+      "}",
+      "function validateFlow(flow, maximumSteps) {",
+      "  const groups = [['setup', flow.setup ?? []], ['steps', flow.steps], ['cleanup', flow.cleanup ?? []]];",
+      "  if (groups.some(([, items]) => !Array.isArray(items))) throw new Error('API_FLOW_STEPS_INVALID');"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 80,
+    "text": "  const groups = [['setup', flow.setup ?? []], ['steps', flow.steps], ['cleanup', flow.cleanup ?? []]];",
+    "context": [
+      "function validateFlow(flow, maximumSteps) {",
+      "  const groups = [['setup', flow.setup ?? []], ['steps', flow.steps], ['cleanup', flow.cleanup ?? []]];",
+      "  if (groups.some(([, items]) => !Array.isArray(items))) throw new Error('API_FLOW_STEPS_INVALID');",
+      "  const count = groups.reduce((sum, [, items]) => sum + items.length, 0); if (count < 1 || count > maximumSteps) throw new Error('API_FLOW_STEP_LIMIT_EXCEEDED');"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 82,
+    "text": "  const count = groups.reduce((sum, [, items]) => sum + items.length, 0); if (count < 1 || count > maximumSteps) throw new Error('API_FLOW_STEP_LIMIT_EXCEEDED');",
+    "context": [
+      "  if (groups.some(([, items]) => !Array.isArray(items))) throw new Error('API_FLOW_STEPS_INVALID');",
+      "  const count = groups.reduce((sum, [, items]) => sum + items.length, 0); if (count < 1 || count > maximumSteps) throw new Error('API_FLOW_STEP_LIMIT_EXCEEDED');",
+      "  const variables = map(flow.variables, 'API_FLOW_VARIABLES_INVALID', 64);",
+      "  if (Object.entries(variables).some(([name, value]) => !VARIABLE.test(name) || !['string', 'number', 'boolean'].includes(typeof value))) throw new Error('API_FLOW_VARIABLES_INVALID');"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 106,
+    "text": "    if ((expect.minimumMessages ?? 1) > response.messageCount) result.push('The WebSocket returned too few messages.');",
+    "context": [
+      "  if (websocket) {",
+      "    if ((expect.minimumMessages ?? 1) > response.messageCount) result.push('The WebSocket returned too few messages.');",
+      "    if (expect.messageContains !== undefined && !response.messages?.some((message) => String(message).includes(expect.messageContains))) result.push('No WebSocket message contained the declared text.');",
+      "    return result;"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 124,
+    "text": "  const config = object(invocation.configuration.values, 'API_FLOW_CONFIG_INVALID'); const flow = validateFlow(readFlow(invocation, context, config), integer(config.maximumSteps, 64, 1, 256, 'API_FLOW_STEP_LIMIT_INVALID'));",
+    "context": [
+      "export function provider() { return { async execute(invocation, context) {",
+      "  const config = object(invocation.configuration.values, 'API_FLOW_CONFIG_INVALID'); const flow = validateFlow(readFlow(invocation, context, config), integer(config.maximumSteps, 64, 1, 256, 'API_FLOW_STEP_LIMIT_INVALID'));",
+      "  const base = endpoint(invocation, config); const records = []; let executedMainSteps = 0;",
+      "  const execution = { failed: false, error: undefined };"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 128,
+    "text": "    try { return await context.invoke('network.http', request); }",
+    "context": [
+      "  async function invoke(request) {",
+      "    try { return await context.invoke('network.http', request); }",
+      "    catch (error) { if (!execution.failed) { execution.failed = true; execution.error = error; } throw error; }",
+      "  }"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 137,
+    "text": "      const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');",
+    "context": [
+      "    try {",
+      "      const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');",
+      "      if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+      "      else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 138,
+    "text": "      if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+    "context": [
+      "      const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');",
+      "      if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+      "      else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });",
+      "      context.signal.throwIfAborted();"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 139,
+    "text": "      else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });",
+    "context": [
+      "      if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+      "      else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });",
+      "      context.signal.throwIfAborted();",
+      "      if (group === 'steps') executedMainSteps += 1;"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 142,
+    "text": "      const stepFailures = failures(step.expect ?? {}, response, step.protocol === 'websocket');",
+    "context": [
+      "      if (group === 'steps') executedMainSteps += 1;",
+      "      const stepFailures = failures(step.expect ?? {}, response, step.protocol === 'websocket');",
+      "      if (!stepFailures.length && step.extract) { let body; try { body = JSON.parse(response.body); } catch { stepFailures.push('The response body was not valid JSON for extraction.'); } if (body !== undefined) for (const [name, selector] of Object.entries(step.extract)) { const value = byPath(body, selector); if (value === undefined) stepFailures.push(`Extraction ${name} did not find ${selector}.`); else flow.variables[name] = String(value); } }",
+      "      records.push({ id: step.id, state: stepFailures.length ? 'failed' : 'passed', status: response.status ?? null, durationMs: Date.now() - started, failures: stepFailures });"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 144,
+    "text": "      records.push({ id: step.id, state: stepFailures.length ? 'failed' : 'passed', status: response.status ?? null, durationMs: Date.now() - started, failures: stepFailures });",
+    "context": [
+      "      if (!stepFailures.length && step.extract) { let body; try { body = JSON.parse(response.body); } catch { stepFailures.push('The response body was not valid JSON for extraction.'); } if (body !== undefined) for (const [name, selector] of Object.entries(step.extract)) { const value = byPath(body, selector); if (value === undefined) stepFailures.push(`Extraction ${name} did not find ${selector}.`); else flow.variables[name] = String(value); } }",
+      "      records.push({ id: step.id, state: stepFailures.length ? 'failed' : 'passed', status: response.status ?? null, durationMs: Date.now() - started, failures: stepFailures });",
+      "    } catch (error) { context.signal.throwIfAborted(); if (execution.failed) continue; const message = error instanceof Error ? error.message : String(error); if (group === 'steps' && message.startsWith('API_FLOW_VARIABLE_MISSING:')) records.push({ id: step.id, state: 'skipped', status: null, durationMs: Date.now() - started, failures: [] }); else records.push({ id: step.id, state: 'failed', status: null, durationMs: Date.now() - started, failures: [message] }); }",
+      "  }"
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 10,
+    "text": "function integer(value, fallback, minimum, maximum, code) {",
+    "context": [
+      "",
+      "function integer(value, fallback, minimum, maximum, code) {",
+      "  const resolved = value ?? fallback;",
+      "  if (!Number.isSafeInteger(resolved) || resolved < minimum || resolved > maximum) throw new Error(code);"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 11,
+    "text": "  const resolved = value ?? fallback;",
+    "context": [
+      "function integer(value, fallback, minimum, maximum, code) {",
+      "  const resolved = value ?? fallback;",
+      "  if (!Number.isSafeInteger(resolved) || resolved < minimum || resolved > maximum) throw new Error(code);",
+      "  return resolved;"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 17,
+    "text": "  const resolved = value ?? '/';",
+    "context": [
+      "function pathValue(value) {",
+      "  const resolved = value ?? '/';",
+      "  if (typeof resolved !== 'string' || resolved.length > 2048 || !resolved.startsWith('/') || resolved.startsWith('//')",
+      "    || /[\\r\\n#]/u.test(resolved)) throw new Error('HTTP_CONFIG_PATH_INVALID');"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 18,
+    "text": "  if (typeof resolved !== 'string' || resolved.length > 2048 || !resolved.startsWith('/') || resolved.startsWith('//')",
+    "context": [
+      "  const resolved = value ?? '/';",
+      "  if (typeof resolved !== 'string' || resolved.length > 2048 || !resolved.startsWith('/') || resolved.startsWith('//')",
+      "    || /[\\r\\n#]/u.test(resolved)) throw new Error('HTTP_CONFIG_PATH_INVALID');",
+      "  return resolved;"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 24,
+    "text": "  if (typeof value !== 'string' || value.length > 2048) throw new Error('HTTP_CONFIG_URL_INVALID');",
+    "context": [
+      "function parsedBase(value, allowPath) {",
+      "  if (typeof value !== 'string' || value.length > 2048) throw new Error('HTTP_CONFIG_URL_INVALID');",
+      "  let url;",
+      "  try { url = new URL(value); } catch { throw new Error('HTTP_CONFIG_URL_INVALID'); }"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 44,
+    "text": "  if (inputs.length > 1 || inputs.some((input) => input.kind !== 'value'",
+    "context": [
+      "  const inputs = invocation.inputs.filter((input) => input.name === 'deployment');",
+      "  if (inputs.length > 1 || inputs.some((input) => input.kind !== 'value'",
+      "    || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1')) throw new Error('HTTP_INPUT_INVALID');",
+      "  const endpointInputs = invocation.inputs.filter((input) => input.name === 'endpoint');"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 47,
+    "text": "  if (endpointInputs.length > 1 || endpointInputs.some((input) => input.kind !== 'value'",
+    "context": [
+      "  const endpointInputs = invocation.inputs.filter((input) => input.name === 'endpoint');",
+      "  if (endpointInputs.length > 1 || endpointInputs.some((input) => input.kind !== 'value'",
+      "    || input.schemaId !== 'kubeclaw.public-endpoint-fixture@1')) throw new Error('HTTP_INPUT_INVALID');",
+      "  if (inputs.length && endpointInputs.length) throw new Error('HTTP_TARGET_AMBIGUOUS');"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 59,
+    "text": "  if (!Array.isArray(value.endpoints) || value.endpoints.length < 1 || value.endpoints.length > 32) {",
+    "context": [
+      "  const value = object(inputs[0].value, 'HTTP_INPUT_INVALID');",
+      "  if (!Array.isArray(value.endpoints) || value.endpoints.length < 1 || value.endpoints.length > 32) {",
+      "    throw new Error('HTTP_INPUT_ENDPOINTS_INVALID');",
+      "  }"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 88,
+    "text": "  const method = value.method ?? 'GET';",
+    "context": [
+      "  } else throw new Error('HTTP_TARGET_REQUIRED');",
+      "  const method = value.method ?? 'GET';",
+      "  if (!['GET', 'HEAD'].includes(method)) throw new Error('HTTP_CONFIG_METHOD_INVALID');",
+      "  const accept = value.accept ?? '*/*';"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 90,
+    "text": "  const accept = value.accept ?? '*/*';",
+    "context": [
+      "  if (!['GET', 'HEAD'].includes(method)) throw new Error('HTTP_CONFIG_METHOD_INVALID');",
+      "  const accept = value.accept ?? '*/*';",
+      "  if (typeof accept !== 'string' || accept.length < 1 || accept.length > 512 || /[\\r\\n]/u.test(accept)) {",
+      "    throw new Error('HTTP_CONFIG_ACCEPT_INVALID');"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 91,
+    "text": "  if (typeof accept !== 'string' || accept.length < 1 || accept.length > 512 || /[\\r\\n]/u.test(accept)) {",
+    "context": [
+      "  const accept = value.accept ?? '*/*';",
+      "  if (typeof accept !== 'string' || accept.length < 1 || accept.length > 512 || /[\\r\\n]/u.test(accept)) {",
+      "    throw new Error('HTTP_CONFIG_ACCEPT_INVALID');",
+      "  }"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 94,
+    "text": "  const expectedStatuses = value.expectedStatuses ?? null;",
+    "context": [
+      "  }",
+      "  const expectedStatuses = value.expectedStatuses ?? null;",
+      "  if (expectedStatuses !== null && (!Array.isArray(expectedStatuses) || expectedStatuses.length < 1",
+      "    || expectedStatuses.length > 32 || new Set(expectedStatuses).size !== expectedStatuses.length"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 96,
+    "text": "    || expectedStatuses.length > 32 || new Set(expectedStatuses).size !== expectedStatuses.length",
+    "context": [
+      "  if (expectedStatuses !== null && (!Array.isArray(expectedStatuses) || expectedStatuses.length < 1",
+      "    || expectedStatuses.length > 32 || new Set(expectedStatuses).size !== expectedStatuses.length",
+      "    || expectedStatuses.some((status) => !Number.isSafeInteger(status) || status < 100 || status > 599))) {",
+      "    throw new Error('HTTP_CONFIG_STATUSES_INVALID');"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 100,
+    "text": "  const expectedText = value.expectedText ?? null;",
+    "context": [
+      "  }",
+      "  const expectedText = value.expectedText ?? null;",
+      "  if (expectedText !== null && (typeof expectedText !== 'string' || expectedText.length < 1 || expectedText.length > 4096",
+      "    || method === 'HEAD')) throw new Error('HTTP_CONFIG_EXPECTED_TEXT_INVALID');"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 101,
+    "text": "  if (expectedText !== null && (typeof expectedText !== 'string' || expectedText.length < 1 || expectedText.length > 4096",
+    "context": [
+      "  const expectedText = value.expectedText ?? null;",
+      "  if (expectedText !== null && (typeof expectedText !== 'string' || expectedText.length < 1 || expectedText.length > 4096",
+      "    || method === 'HEAD')) throw new Error('HTTP_CONFIG_EXPECTED_TEXT_INVALID');",
+      "  const expectedContentType = value.expectedContentType ?? null;"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 103,
+    "text": "  const expectedContentType = value.expectedContentType ?? null;",
+    "context": [
+      "    || method === 'HEAD')) throw new Error('HTTP_CONFIG_EXPECTED_TEXT_INVALID');",
+      "  const expectedContentType = value.expectedContentType ?? null;",
+      "  if (expectedContentType !== null && (typeof expectedContentType !== 'string' || expectedContentType.length > 128",
+      "    || !/^[a-z0-9!#$&^_.+-]+\\/[a-z0-9!#$&^_.+-]+$/u.test(expectedContentType))) {"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 104,
+    "text": "  if (expectedContentType !== null && (typeof expectedContentType !== 'string' || expectedContentType.length > 128",
+    "context": [
+      "  const expectedContentType = value.expectedContentType ?? null;",
+      "  if (expectedContentType !== null && (typeof expectedContentType !== 'string' || expectedContentType.length > 128",
+      "    || !/^[a-z0-9!#$&^_.+-]+\\/[a-z0-9!#$&^_.+-]+$/u.test(expectedContentType))) {",
+      "    throw new Error('HTTP_CONFIG_CONTENT_TYPE_INVALID');"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 106,
+    "text": "    throw new Error('HTTP_CONFIG_CONTENT_TYPE_INVALID');",
+    "context": [
+      "    || !/^[a-z0-9!#$&^_.+-]+\\/[a-z0-9!#$&^_.+-]+$/u.test(expectedContentType))) {",
+      "    throw new Error('HTTP_CONFIG_CONTENT_TYPE_INVALID');",
+      "  }",
+      "  const path = pathValue(value.path ?? defaultPath);"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 108,
+    "text": "  const path = pathValue(value.path ?? defaultPath);",
+    "context": [
+      "  }",
+      "  const path = pathValue(value.path ?? defaultPath);",
+      "  return { url: new URL(path, `${base}/`).href, method, accept, expectedStatuses, expectedText,",
+      "    expectedContentType, maximumResponseBytes: integer(value.maximumResponseBytes, 1_048_576, 1, 16_777_216,"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 110,
+    "text": "    expectedContentType, maximumResponseBytes: integer(value.maximumResponseBytes, 1_048_576, 1, 16_777_216,",
+    "context": [
+      "  return { url: new URL(path, `${base}/`).href, method, accept, expectedStatuses, expectedText,",
+      "    expectedContentType, maximumResponseBytes: integer(value.maximumResponseBytes, 1_048_576, 1, 16_777_216,",
+      "      'HTTP_CONFIG_RESPONSE_LIMIT_INVALID'),",
+      "    requestTimeoutMs: integer(value.requestTimeoutMs, 10_000, 1, 300_000, 'HTTP_CONFIG_TIMEOUT_INVALID') };"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 112,
+    "text": "    requestTimeoutMs: integer(value.requestTimeoutMs, 10_000, 1, 300_000, 'HTTP_CONFIG_TIMEOUT_INVALID') };",
+    "context": [
+      "      'HTTP_CONFIG_RESPONSE_LIMIT_INVALID'),",
+      "    requestTimeoutMs: integer(value.requestTimeoutMs, 10_000, 1, 300_000, 'HTTP_CONFIG_TIMEOUT_INVALID') };",
+      "}",
+      ""
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 124,
+    "text": "  const contentType = response.headers?.['content-type'] ?? null;",
+    "context": [
+      "  const textPassed = config.expectedText === null || response.body.includes(config.expectedText);",
+      "  const contentType = response.headers?.['content-type'] ?? null;",
+      "  const contentTypePassed = config.expectedContentType === null || contentType === config.expectedContentType;",
+      "  const findings = ["
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 147,
+    "text": "  if (!['HTTP_REQUEST_FAILED', 'HTTP_REQUEST_TIMEOUT'].includes(code)) throw error;",
+    "context": [
+      "  const code = error instanceof Error ? error.message.split(':', 1)[0] : 'HTTP_REQUEST_FAILED';",
+      "  if (!['HTTP_REQUEST_FAILED', 'HTTP_REQUEST_TIMEOUT'].includes(code)) throw error;",
+      "  return { schemaVersion: 'provider-result.v1', outcome: 'failed', summary: code === 'HTTP_REQUEST_TIMEOUT'",
+      "    ? 'The HTTP request timed out.' : 'The HTTP target was not reachable.',"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 148,
+    "text": "  return { schemaVersion: 'provider-result.v1', outcome: 'failed', summary: code === 'HTTP_REQUEST_TIMEOUT'",
+    "context": [
+      "  if (!['HTTP_REQUEST_FAILED', 'HTTP_REQUEST_TIMEOUT'].includes(code)) throw error;",
+      "  return { schemaVersion: 'provider-result.v1', outcome: 'failed', summary: code === 'HTTP_REQUEST_TIMEOUT'",
+      "    ? 'The HTTP request timed out.' : 'The HTTP target was not reachable.',",
+      "    counts: { total: 1, passed: 0, failed: 1, skipped: 0 }, findings: [{ id: `http:${invocation.testIdentity}:request`, severity: 'high',"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 151,
+    "text": "      message: code === 'HTTP_REQUEST_TIMEOUT' ? 'The HTTP request timed out.' : 'The HTTP request failed before a response arrived.',",
+    "context": [
+      "    counts: { total: 1, passed: 0, failed: 1, skipped: 0 }, findings: [{ id: `http:${invocation.testIdentity}:request`, severity: 'high',",
+      "      message: code === 'HTTP_REQUEST_TIMEOUT' ? 'The HTTP request timed out.' : 'The HTTP request failed before a response arrived.',",
+      "      rule: code === 'HTTP_REQUEST_TIMEOUT' ? 'http.timeout' : 'http.connection' }],",
+      "    metrics: [], evidenceFiles: [], reports: [], outputs: [], exitCode: null, signal: null,"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 152,
+    "text": "      rule: code === 'HTTP_REQUEST_TIMEOUT' ? 'http.timeout' : 'http.connection' }],",
+    "context": [
+      "      message: code === 'HTTP_REQUEST_TIMEOUT' ? 'The HTTP request timed out.' : 'The HTTP request failed before a response arrived.',",
+      "      rule: code === 'HTTP_REQUEST_TIMEOUT' ? 'http.timeout' : 'http.connection' }],",
+      "    metrics: [], evidenceFiles: [], reports: [], outputs: [], exitCode: null, signal: null,",
+      "    providerDetails: details({ url: config.url, method: config.method, errorCode: code }) };"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 162,
+    "text": "      const response = await context.invoke('network.http', { operation: 'request',",
+    "context": [
+      "    try {",
+      "      const response = await context.invoke('network.http', { operation: 'request',",
+      "        resource: { type: 'network.url', canonicalId: config.url }, payload: { method: config.method,",
+      "          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 164,
+    "text": "          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),",
+    "context": [
+      "        resource: { type: 'network.url', canonicalId: config.url }, payload: { method: config.method,",
+      "          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),",
+      "          maximumResponseBytes: config.maximumResponseBytes } });",
+      "      const checked = object(response, 'HTTP_RESPONSE_INVALID');"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 165,
+    "text": "          maximumResponseBytes: config.maximumResponseBytes } });",
+    "context": [
+      "          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),",
+      "          maximumResponseBytes: config.maximumResponseBytes } });",
+      "      const checked = object(response, 'HTTP_RESPONSE_INVALID');",
+      "      if (!Number.isSafeInteger(checked.status) || typeof checked.body !== 'string'"
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 9,
+    "text": "  if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('OPENAPI_FILE_DENIED');",
+    "context": [
+      "function inside(root, relative) {",
+      "  if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('OPENAPI_FILE_DENIED');",
+      "  const candidate = path.resolve(root, relative); if (!candidate.startsWith(`${root}${path.sep}`)) throw new Error('OPENAPI_FILE_DENIED');",
+      "  let real;"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 10,
+    "text": "  const candidate = path.resolve(root, relative); if (!candidate.startsWith(`${root}${path.sep}`)) throw new Error('OPENAPI_FILE_DENIED');",
+    "context": [
+      "  if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('OPENAPI_FILE_DENIED');",
+      "  const candidate = path.resolve(root, relative); if (!candidate.startsWith(`${root}${path.sep}`)) throw new Error('OPENAPI_FILE_DENIED');",
+      "  let real;",
+      "  try { real = fs.realpathSync(candidate); } catch { throw new Error('OPENAPI_FILE_DENIED'); }"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 12,
+    "text": "  try { real = fs.realpathSync(candidate); } catch { throw new Error('OPENAPI_FILE_DENIED'); }",
+    "context": [
+      "  let real;",
+      "  try { real = fs.realpathSync(candidate); } catch { throw new Error('OPENAPI_FILE_DENIED'); }",
+      "  try { if (!real.startsWith(`${root}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error('OPENAPI_FILE_DENIED'); }",
+      "  catch { throw new Error('OPENAPI_FILE_DENIED'); }"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 13,
+    "text": "  try { if (!real.startsWith(`${root}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error('OPENAPI_FILE_DENIED'); }",
+    "context": [
+      "  try { real = fs.realpathSync(candidate); } catch { throw new Error('OPENAPI_FILE_DENIED'); }",
+      "  try { if (!real.startsWith(`${root}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error('OPENAPI_FILE_DENIED'); }",
+      "  catch { throw new Error('OPENAPI_FILE_DENIED'); }",
+      "  return real;"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 14,
+    "text": "  catch { throw new Error('OPENAPI_FILE_DENIED'); }",
+    "context": [
+      "  try { if (!real.startsWith(`${root}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error('OPENAPI_FILE_DENIED'); }",
+      "  catch { throw new Error('OPENAPI_FILE_DENIED'); }",
+      "  return real;",
+      "}"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 37,
+    "text": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+    "context": [
+      "  if (!schema?.$ref) return schema;",
+      "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+      "  if (typeof schema.$ref !== 'string' || !schema.$ref.startsWith('#/')) throw new Error('OPENAPI_EXTERNAL_REF_DENIED');",
+      "  if (seen.has(schema.$ref)) throw new Error('OPENAPI_SCHEMA_REF_CYCLE'); seen.add(schema.$ref);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 38,
+    "text": "  if (typeof schema.$ref !== 'string' || !schema.$ref.startsWith('#/')) throw new Error('OPENAPI_EXTERNAL_REF_DENIED');",
+    "context": [
+      "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+      "  if (typeof schema.$ref !== 'string' || !schema.$ref.startsWith('#/')) throw new Error('OPENAPI_EXTERNAL_REF_DENIED');",
+      "  if (seen.has(schema.$ref)) throw new Error('OPENAPI_SCHEMA_REF_CYCLE'); seen.add(schema.$ref);",
+      "  let found = spec; for (const part of schema.$ref.slice(2).split('/').map(decodePointer)) {"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 56,
+    "text": "  if (typeof source !== 'string' || source.length > 256 || /[()|]/u.test(source)",
+    "context": [
+      "function safePattern(source) {",
+      "  if (typeof source !== 'string' || source.length > 256 || /[()|]/u.test(source)",
+      "    || /\\\\(?:[1-9]|k<)/u.test(source)) throw new Error('OPENAPI_SCHEMA_PATTERN_UNSAFE');",
+      "  const unbounded = source.match(/(?<!\\\\)[*+]/gu)?.length ?? 0;"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 58,
+    "text": "  const unbounded = source.match(/(?<!\\\\)[*+]/gu)?.length ?? 0;",
+    "context": [
+      "    || /\\\\(?:[1-9]|k<)/u.test(source)) throw new Error('OPENAPI_SCHEMA_PATTERN_UNSAFE');",
+      "  const unbounded = source.match(/(?<!\\\\)[*+]/gu)?.length ?? 0;",
+      "  if (unbounded > 1) throw new Error('OPENAPI_SCHEMA_PATTERN_UNSAFE');",
+      "  for (const match of source.matchAll(/(?<!\\\\)\\{(\\d+)(?:,(\\d*))?\\}/gu)) {"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 70,
+    "text": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+    "context": [
+      "  if (rawSchema === false) return [`${label} is denied by the schema.`];",
+      "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+      "  const schema = resolveSchema(spec, rawSchema);",
+      "  if (schema === true) return []; if (schema === false) return [`${label} is denied by the schema.`];"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 78,
+    "text": "  if (Array.isArray(schema.anyOf) && !schema.anyOf.some((child) => schemaFailures(value, child, label, spec, depth + 1).length === 0)) failures.push(`${label} does not match any allowed schema.`);",
+    "context": [
+      "  if (Array.isArray(schema.allOf)) for (const child of schema.allOf) failures.push(...schemaFailures(value, child, label, spec, depth + 1));",
+      "  if (Array.isArray(schema.anyOf) && !schema.anyOf.some((child) => schemaFailures(value, child, label, spec, depth + 1).length === 0)) failures.push(`${label} does not match any allowed schema.`);",
+      "  if (Array.isArray(schema.oneOf) && schema.oneOf.filter((child) => schemaFailures(value, child, label, spec, depth + 1).length === 0).length !== 1) failures.push(`${label} must match exactly one allowed schema.`);",
+      "  if (schema.not !== undefined && schemaFailures(value, schema.not, label, spec, depth + 1).length === 0) failures.push(`${label} matches a denied schema.`);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 79,
+    "text": "  if (Array.isArray(schema.oneOf) && schema.oneOf.filter((child) => schemaFailures(value, child, label, spec, depth + 1).length === 0).length !== 1) failures.push(`${label} must match exactly one allowed schema.`);",
+    "context": [
+      "  if (Array.isArray(schema.anyOf) && !schema.anyOf.some((child) => schemaFailures(value, child, label, spec, depth + 1).length === 0)) failures.push(`${label} does not match any allowed schema.`);",
+      "  if (Array.isArray(schema.oneOf) && schema.oneOf.filter((child) => schemaFailures(value, child, label, spec, depth + 1).length === 0).length !== 1) failures.push(`${label} must match exactly one allowed schema.`);",
+      "  if (schema.not !== undefined && schemaFailures(value, schema.not, label, spec, depth + 1).length === 0) failures.push(`${label} matches a denied schema.`);",
+      "  const actual = Array.isArray(value) ? 'array' : value === null ? 'null' : Number.isInteger(value) ? 'integer' : typeof value;"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 85,
+    "text": "    if (Number.isSafeInteger(schema.minLength) && value.length < schema.minLength) failures.push(`${label} is shorter than allowed.`);",
+    "context": [
+      "  if (typeof value === 'string') {",
+      "    if (Number.isSafeInteger(schema.minLength) && value.length < schema.minLength) failures.push(`${label} is shorter than allowed.`);",
+      "    if (Number.isSafeInteger(schema.maxLength) && value.length > schema.maxLength) failures.push(`${label} is longer than allowed.`);",
+      "    if (typeof schema.pattern === 'string' && !safePattern(schema.pattern).test(value)) failures.push(`${label} does not match the declared pattern.`);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 86,
+    "text": "    if (Number.isSafeInteger(schema.maxLength) && value.length > schema.maxLength) failures.push(`${label} is longer than allowed.`);",
+    "context": [
+      "    if (Number.isSafeInteger(schema.minLength) && value.length < schema.minLength) failures.push(`${label} is shorter than allowed.`);",
+      "    if (Number.isSafeInteger(schema.maxLength) && value.length > schema.maxLength) failures.push(`${label} is longer than allowed.`);",
+      "    if (typeof schema.pattern === 'string' && !safePattern(schema.pattern).test(value)) failures.push(`${label} does not match the declared pattern.`);",
+      "    if (schema.format === 'uuid' && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu.test(value)) failures.push(`${label} is not a UUID.`);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 103,
+    "text": "    if (Number.isSafeInteger(schema.maxItems) && value.length > schema.maxItems) failures.push(`${label} has too many items.`);",
+    "context": [
+      "    if (Number.isSafeInteger(schema.minItems) && value.length < schema.minItems) failures.push(`${label} has too few items.`);",
+      "    if (Number.isSafeInteger(schema.maxItems) && value.length > schema.maxItems) failures.push(`${label} has too many items.`);",
+      "    if (schema.uniqueItems && value.some((item, index) => value.slice(0, index).some((prior) => same(item, prior)))) {",
+      "      failures.push(`${label} has duplicate items.`);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 115,
+    "text": "    const additionalKeys = Object.keys(value).filter((key) => !Object.prototype.hasOwnProperty.call(schema.properties ?? {}, key));",
+    "context": [
+      "    if (schema.properties) for (const [key, child] of Object.entries(schema.properties)) if (Object.prototype.hasOwnProperty.call(value, key)) failures.push(...schemaFailures(value[key], child, `${label}.${key}`, spec, depth + 1));",
+      "    const additionalKeys = Object.keys(value).filter((key) => !Object.prototype.hasOwnProperty.call(schema.properties ?? {}, key));",
+      "    if (schema.additionalProperties === false) for (const key of additionalKeys) failures.push(`${label}.${key} is not allowed.`);",
+      "    else if (schema.additionalProperties && typeof schema.additionalProperties === 'object') {"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 116,
+    "text": "    if (schema.additionalProperties === false) for (const key of additionalKeys) failures.push(`${label}.${key} is not allowed.`);",
+    "context": [
+      "    const additionalKeys = Object.keys(value).filter((key) => !Object.prototype.hasOwnProperty.call(schema.properties ?? {}, key));",
+      "    if (schema.additionalProperties === false) for (const key of additionalKeys) failures.push(`${label}.${key} is not allowed.`);",
+      "    else if (schema.additionalProperties && typeof schema.additionalProperties === 'object') {",
+      "      for (const key of additionalKeys) failures.push(...schemaFailures(value[key], schema.additionalProperties,"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 146,
+    "text": "      for (const raw of [...(resolvedPathItem.parameters ?? []), ...(operation.parameters ?? [])]) {",
+    "context": [
+      "      const parameters = new Map();",
+      "      for (const raw of [...(resolvedPathItem.parameters ?? []), ...(operation.parameters ?? [])]) {",
+      "        const parameter = resolveSchema(spec, raw); const location = String(parameter.in); const name = String(parameter.name);",
+      "        parameters.set(`${location}\\0${location === 'header' ? name.toLowerCase() : name}`, raw);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 154,
+    "text": "  const failures = []; const supplied = { path: selected.pathParameters ?? {}, query: selected.query ?? {}, header: selected.headers ?? {} };",
+    "context": [
+      "function validateParameters(found, selected, spec) {",
+      "  const failures = []; const supplied = { path: selected.pathParameters ?? {}, query: selected.query ?? {}, header: selected.headers ?? {} };",
+      "  const declared = { path: new Set(), query: new Set(), header: new Set() };",
+      "  for (const raw of found.parameters) {"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 182,
+    "text": "  const rule = operation.responses?.[String(status)] ?? operation.responses?.[range] ?? operation.responses?.default ?? null;",
+    "context": [
+      "  const range = `${Math.floor(Number(status) / 100)}XX`;",
+      "  const rule = operation.responses?.[String(status)] ?? operation.responses?.[range] ?? operation.responses?.default ?? null;",
+      "  return rule === null ? null : resolveSchema(spec, rule);",
+      "}"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 193,
+    "text": "  const bytes = fs.readFileSync(inside(fs.realpathSync(repositoryPath), config.specFile)); if (bytes.byteLength > 4_194_304) throw new Error('OPENAPI_FILE_TOO_LARGE');",
+    "context": [
+      "  const repositoryPath = path.resolve(workspace, invocation.workspace.repository); if (!repositoryPath.startsWith(`${workspace}${path.sep}`)) throw new Error('OPENAPI_WORKSPACE_INVALID');",
+      "  const bytes = fs.readFileSync(inside(fs.realpathSync(repositoryPath), config.specFile)); if (bytes.byteLength > 4_194_304) throw new Error('OPENAPI_FILE_TOO_LARGE');",
+      "  let spec; try { spec = JSON.parse(bytes.toString('utf8')); } catch { throw new Error('OPENAPI_FILE_INVALID'); }",
+      "  if (typeof spec?.openapi !== 'string' || !/^3\\.[01]\\./u.test(spec.openapi)) throw new Error('OPENAPI_VERSION_UNSUPPORTED');"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 196,
+    "text": "  const catalog = operations(spec); const explicit = Array.isArray(config.operations) ? config.operations : []; const tags = new Set(config.tags ?? []);",
+    "context": [
+      "  if (typeof spec?.openapi !== 'string' || !/^3\\.[01]\\./u.test(spec.openapi)) throw new Error('OPENAPI_VERSION_UNSUPPORTED');",
+      "  const catalog = operations(spec); const explicit = Array.isArray(config.operations) ? config.operations : []; const tags = new Set(config.tags ?? []);",
+      "  const explicitIds = new Set(explicit.map((item) => item.operationId));",
+      "  const tagged = [...catalog.entries()].filter(([operationId, found]) => !explicitIds.has(operationId)"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 199,
+    "text": "    && (found.operation.tags ?? []).some((tag) => tags.has(tag))).map(([operationId]) => ({ operationId }));",
+    "context": [
+      "  const tagged = [...catalog.entries()].filter(([operationId, found]) => !explicitIds.has(operationId)",
+      "    && (found.operation.tags ?? []).some((tag) => tags.has(tag))).map(([operationId]) => ({ operationId }));",
+      "  const selections = [...explicit, ...tagged]",
+      "    .sort((left, right) => Number(Boolean(left.cleanup)) - Number(Boolean(right.cleanup)));"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 202,
+    "text": "  if (!selections.length) throw new Error('OPENAPI_SELECTION_EMPTY'); if (selections.length > 128) throw new Error('OPENAPI_SELECTION_LIMIT_EXCEEDED');",
+    "context": [
+      "    .sort((left, right) => Number(Boolean(left.cleanup)) - Number(Boolean(right.cleanup)));",
+      "  if (!selections.length) throw new Error('OPENAPI_SELECTION_EMPTY'); if (selections.length > 128) throw new Error('OPENAPI_SELECTION_LIMIT_EXCEEDED');",
+      "  const base = endpoint(invocation, config); const records = [];",
+      "  const execution = { failed: false, error: undefined };"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 206,
+    "text": "    try { return await context.invoke('network.http', request); }",
+    "context": [
+      "  async function invoke(request) {",
+      "    try { return await context.invoke('network.http', request); }",
+      "    catch (error) { if (!execution.failed) { execution.failed = true; execution.error = error; } throw error; }",
+      "  }"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 215,
+    "text": "    let route = found.route; for (const [name, value] of Object.entries(selected.pathParameters ?? {})) route = route.replace(`{${name}}`, encodeURIComponent(String(value)));",
+    "context": [
+      "    const found = catalog.get(selected.operationId); if (!found) throw new Error(`OPENAPI_OPERATION_NOT_FOUND:${selected.operationId}`);",
+      "    let route = found.route; for (const [name, value] of Object.entries(selected.pathParameters ?? {})) route = route.replace(`{${name}}`, encodeURIComponent(String(value)));",
+      "    if (/\\{[^}]+\\}/u.test(route)) throw new Error(`OPENAPI_PATH_PARAMETER_MISSING:${selected.operationId}`);",
+      "    const baseUrl = new URL(base); const url = new URL(route, `${base}/`);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 219,
+    "text": "    for (const [name, value] of Object.entries(selected.query ?? {})) url.searchParams.set(name, String(value));",
+    "context": [
+      "    if (url.origin !== baseUrl.origin) throw new Error('OPENAPI_PATH_INVALID');",
+      "    for (const [name, value] of Object.entries(selected.query ?? {})) url.searchParams.set(name, String(value));",
+      "    const requestBody = found.operation.requestBody ? resolveSchema(spec, found.operation.requestBody) : null;",
+      "    const requestMedia = requestBody?.content?.['application/json'];"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 224,
+    "text": "    if (selected.body !== undefined && Object.keys(selected.headers ?? {}).some((name) => name.toLowerCase() === 'content-type')) {",
+    "context": [
+      "    failures.push(...validateParameters(found, selected, spec));",
+      "    if (selected.body !== undefined && Object.keys(selected.headers ?? {}).some((name) => name.toLowerCase() === 'content-type')) {",
+      "      failures.push('The content-type request header is provider-controlled.');",
+      "    }"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 231,
+    "text": "      const responseRules = Object.values(found.operation.responses ?? {}).map((entry) => resolveSchema(spec, entry));",
+    "context": [
+      "    if (!failures.length) {",
+      "      const responseRules = Object.values(found.operation.responses ?? {}).map((entry) => resolveSchema(spec, entry));",
+      "      const responseHeaders = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.headers ?? {}))",
+      "        .map((name) => name.toLowerCase()))];"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 232,
+    "text": "      const responseHeaders = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.headers ?? {}))",
+    "context": [
+      "      const responseRules = Object.values(found.operation.responses ?? {}).map((entry) => resolveSchema(spec, entry));",
+      "      const responseHeaders = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.headers ?? {}))",
+      "        .map((name) => name.toLowerCase()))];",
+      "      const acceptedTypes = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.content ?? {})))];"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 234,
+    "text": "      const acceptedTypes = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.content ?? {})))];",
+    "context": [
+      "        .map((name) => name.toLowerCase()))];",
+      "      const acceptedTypes = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.content ?? {})))];",
+      "      response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url.href }, payload: { method: found.method.toUpperCase(), headers: { ...(selected.headers ?? {}), ...(acceptedTypes.length ? { accept: acceptedTypes.join(', ') } : {}), ...(selected.body === undefined ? {} : { 'content-type': 'application/json' }) }, responseHeaders, body: selected.body === undefined ? undefined : JSON.stringify(selected.body), timeoutMs: Math.min(config.requestTimeoutMs ?? 10_000, invocation.timeoutMs), maximumResponseBytes: config.maximumResponseBytes ?? 1_048_576 } });",
+      "      context.signal.throwIfAborted();"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 235,
+    "text": "      response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url.href }, payload: { method: found.method.toUpperCase(), headers: { ...(selected.headers ?? {}), ...(acceptedTypes.length ? { accept: acceptedTypes.join(', ') } : {}), ...(selected.body === undefined ? {} : { 'content-type': 'application/json' }) }, responseHeaders, body: selected.body === undefined ? undefined : JSON.stringify(selected.body), timeoutMs: Math.min(config.requestTimeoutMs ?? 10_000, invocation.timeoutMs), maximumResponseBytes: config.maximumResponseBytes ?? 1_048_576 } });",
+    "context": [
+      "      const acceptedTypes = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.content ?? {})))];",
+      "      response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url.href }, payload: { method: found.method.toUpperCase(), headers: { ...(selected.headers ?? {}), ...(acceptedTypes.length ? { accept: acceptedTypes.join(', ') } : {}), ...(selected.body === undefined ? {} : { 'content-type': 'application/json' }) }, responseHeaders, body: selected.body === undefined ? undefined : JSON.stringify(selected.body), timeoutMs: Math.min(config.requestTimeoutMs ?? 10_000, invocation.timeoutMs), maximumResponseBytes: config.maximumResponseBytes ?? 1_048_576 } });",
+      "      context.signal.throwIfAborted();",
+      "      const rule = responseRule(spec, found.operation, response.status); if (!rule) failures.push(`Status ${response.status} is not documented.`);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 249,
+    "text": "      for (const [name, rawHeader] of Object.entries(rule?.headers ?? {})) {",
+    "context": [
+      "      }",
+      "      for (const [name, rawHeader] of Object.entries(rule?.headers ?? {})) {",
+      "        const header = resolveSchema(spec, rawHeader); const value = response.headers?.[name.toLowerCase()];",
+      "        if (header.required && !value) failures.push(`Required response header ${name} is missing.`);"
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 47,
+    "text": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+    "context": [
+      "  if (raw === undefined || typeof raw === 'boolean') return;",
+      "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+      "  if (!object(raw)) invalid();",
+      "  shape(raw, spec);"
+    ],
+    "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 3,
+    "text": "function positiveInteger(value: unknown, label: string, fallback: number): number {",
+    "context": [
+      "",
+      "function positiveInteger(value: unknown, label: string, fallback: number): number {",
+      "  const resolved = value ?? fallback;",
+      "  if (!Number.isSafeInteger(resolved) || Number(resolved) < 1) throw new Error(`NETWORK_CONFIG_INVALID:${label}`);"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 4,
+    "text": "  const resolved = value ?? fallback;",
+    "context": [
+      "function positiveInteger(value: unknown, label: string, fallback: number): number {",
+      "  const resolved = value ?? fallback;",
+      "  if (!Number.isSafeInteger(resolved) || Number(resolved) < 1) throw new Error(`NETWORK_CONFIG_INVALID:${label}`);",
+      "  return Number(resolved);"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 13,
+    "text": "  readonly maxRequestBytes: number;",
+    "context": [
+      "  readonly headers: ReadonlySet<string>;",
+      "  readonly maxRequestBytes: number;",
+      "  readonly maxResponseBytes: number;",
+      "  readonly timeoutMs: number;"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 14,
+    "text": "  readonly maxResponseBytes: number;",
+    "context": [
+      "  readonly maxRequestBytes: number;",
+      "  readonly maxResponseBytes: number;",
+      "  readonly timeoutMs: number;",
+      "}"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 19,
+    "text": "  const origins = config.allowedOrigins;",
+    "context": [
+      "function parseConfig(config: Readonly<Record<string, unknown>>): NetworkConfig {",
+      "  const origins = config.allowedOrigins;",
+      "  if (!Array.isArray(origins) || !origins.every((value) => typeof value === 'string')) {",
+      "    throw new Error('allowedOrigins is required');"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 21,
+    "text": "    throw new Error('allowedOrigins is required');",
+    "context": [
+      "  if (!Array.isArray(origins) || !origins.every((value) => typeof value === 'string')) {",
+      "    throw new Error('allowedOrigins is required');",
+      "  }",
+      "  const rawHeaders = config.allowedHeaders ?? ['accept', 'content-type', 'idempotency-key'];"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 23,
+    "text": "  const rawHeaders = config.allowedHeaders ?? ['accept', 'content-type', 'idempotency-key'];",
+    "context": [
+      "  }",
+      "  const rawHeaders = config.allowedHeaders ?? ['accept', 'content-type', 'idempotency-key'];",
+      "  if (!Array.isArray(rawHeaders) || rawHeaders.some((item) => typeof item !== 'string')) {",
+      "    throw new Error('NETWORK_CONFIG_INVALID:allowedHeaders');"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 25,
+    "text": "    throw new Error('NETWORK_CONFIG_INVALID:allowedHeaders');",
+    "context": [
+      "  if (!Array.isArray(rawHeaders) || rawHeaders.some((item) => typeof item !== 'string')) {",
+      "    throw new Error('NETWORK_CONFIG_INVALID:allowedHeaders');",
+      "  }",
+      "  return {"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 29,
+    "text": "    methods: new Set((config.allowedMethods as string[] | undefined ?? ['GET']).map((method) => method.toUpperCase())),",
+    "context": [
+      "    origins: new Set(origins.map((origin) => new URL(origin).origin)),",
+      "    methods: new Set((config.allowedMethods as string[] | undefined ?? ['GET']).map((method) => method.toUpperCase())),",
+      "    headers: new Set(rawHeaders.map((item) => item.toLowerCase())),",
+      "    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576),"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 31,
+    "text": "    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576),",
+    "context": [
+      "    headers: new Set(rawHeaders.map((item) => item.toLowerCase())),",
+      "    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576),",
+      "    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576),",
+      "    timeoutMs: positiveInteger(config.timeoutMs, 'timeoutMs', 30_000),"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 32,
+    "text": "    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576),",
+    "context": [
+      "    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576),",
+      "    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576),",
+      "    timeoutMs: positiveInteger(config.timeoutMs, 'timeoutMs', 30_000),",
+      "  };"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 37,
+    "text": "function requestHeaders(value: unknown, allowed: ReadonlySet<string>): Record<string, string> {",
+    "context": [
+      "",
+      "function requestHeaders(value: unknown, allowed: ReadonlySet<string>): Record<string, string> {",
+      "  if (value !== undefined && (!value || typeof value !== 'object' || Array.isArray(value))) {",
+      "    throw new Error('NETWORK_HEADERS_INVALID');"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 42,
+    "text": "  for (const [name, headerValue] of Object.entries(value as Record<string, unknown> | undefined ?? {})) {",
+    "context": [
+      "  const headers: Record<string, string> = {};",
+      "  for (const [name, headerValue] of Object.entries(value as Record<string, unknown> | undefined ?? {})) {",
+      "    const normalized = name.toLowerCase();",
+      "    if (!allowed.has(normalized) || typeof headerValue !== 'string' || /[\\r\\n]/.test(headerValue)) {"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 44,
+    "text": "    if (!allowed.has(normalized) || typeof headerValue !== 'string' || /[\\r\\n]/.test(headerValue)) {",
+    "context": [
+      "    const normalized = name.toLowerCase();",
+      "    if (!allowed.has(normalized) || typeof headerValue !== 'string' || /[\\r\\n]/.test(headerValue)) {",
+      "      throw new Error(`NETWORK_HEADER_DENIED:${normalized}`);",
+      "    }"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 45,
+    "text": "      throw new Error(`NETWORK_HEADER_DENIED:${normalized}`);",
+    "context": [
+      "    if (!allowed.has(normalized) || typeof headerValue !== 'string' || /[\\r\\n]/.test(headerValue)) {",
+      "      throw new Error(`NETWORK_HEADER_DENIED:${normalized}`);",
+      "    }",
+      "    headers[normalized] = headerValue;"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 68,
+    "text": "      throw new Error(timedOut ? 'NETWORK_TIMEOUT' : 'ADAPTER_CANCELLED', { cause: requestSignal.reason });",
+    "context": [
+      "      const timedOut = timeout.aborted && requestSignal.reason === timeout.reason;",
+      "      throw new Error(timedOut ? 'NETWORK_TIMEOUT' : 'ADAPTER_CANCELLED', { cause: requestSignal.reason });",
+      "    }",
+      "    throw error;"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 77,
+    "text": "    if (response.status >= 300 && response.status < 400) throw new Error('NETWORK_REDIRECT_DENIED');",
+    "context": [
+      "  try {",
+      "    if (response.status >= 300 && response.status < 400) throw new Error('NETWORK_REDIRECT_DENIED');",
+      "    const declared = Number(response.headers.get('content-length') ?? 0);",
+      "    if (declared > maximum) throw new Error('NETWORK_RESPONSE_SIZE_EXCEEDED');"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 78,
+    "text": "    const declared = Number(response.headers.get('content-length') ?? 0);",
+    "context": [
+      "    if (response.status >= 300 && response.status < 400) throw new Error('NETWORK_REDIRECT_DENIED');",
+      "    const declared = Number(response.headers.get('content-length') ?? 0);",
+      "    if (declared > maximum) throw new Error('NETWORK_RESPONSE_SIZE_EXCEEDED');",
+      "    const chunks: Uint8Array[] = [];"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 113,
+    "text": "      if (request.capability !== 'network.http' || request.operation !== 'request') {",
+    "context": [
+      "      if (!confidential) fence.assertCurrent();",
+      "      if (request.capability !== 'network.http' || request.operation !== 'request') {",
+      "        throw new Error('NETWORK_OPERATION_UNSUPPORTED');",
+      "      }"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 118,
+    "text": "      if (!config.origins.has(url.origin)) throw new Error(`NETWORK_ORIGIN_DENIED:${url.origin}`);",
+    "context": [
+      "      const url = new URL(request.resource.canonicalId);",
+      "      if (!config.origins.has(url.origin)) throw new Error(`NETWORK_ORIGIN_DENIED:${url.origin}`);",
+      "      if (url.username || url.password) throw new Error('NETWORK_CREDENTIALS_DENIED');",
+      "      const method = typeof request.payload.method === 'string' ? request.payload.method.toUpperCase() : 'GET';"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 119,
+    "text": "      if (url.username || url.password) throw new Error('NETWORK_CREDENTIALS_DENIED');",
+    "context": [
+      "      if (!config.origins.has(url.origin)) throw new Error(`NETWORK_ORIGIN_DENIED:${url.origin}`);",
+      "      if (url.username || url.password) throw new Error('NETWORK_CREDENTIALS_DENIED');",
+      "      const method = typeof request.payload.method === 'string' ? request.payload.method.toUpperCase() : 'GET';",
+      "      if (!config.methods.has(method)) throw new Error(`NETWORK_METHOD_DENIED:${method}`);"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 121,
+    "text": "      if (!config.methods.has(method)) throw new Error(`NETWORK_METHOD_DENIED:${method}`);",
+    "context": [
+      "      const method = typeof request.payload.method === 'string' ? request.payload.method.toUpperCase() : 'GET';",
+      "      if (!config.methods.has(method)) throw new Error(`NETWORK_METHOD_DENIED:${method}`);",
+      "      const headers = requestHeaders(request.payload.headers, config.headers);",
+      "      const body = request.payload.body === undefined ? undefined : JSON.stringify(request.payload.body);"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 124,
+    "text": "      if (body && Buffer.byteLength(body, 'utf8') > config.maxRequestBytes) throw new Error('NETWORK_REQUEST_SIZE_EXCEEDED');",
+    "context": [
+      "      const body = request.payload.body === undefined ? undefined : JSON.stringify(request.payload.body);",
+      "      if (body && Buffer.byteLength(body, 'utf8') > config.maxRequestBytes) throw new Error('NETWORK_REQUEST_SIZE_EXCEEDED');",
+      "      const { response, text, contentType } = await performRequest(url, method, headers, body, signal, config.timeoutMs, config.maxResponseBytes);",
+      "      return {"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 125,
+    "text": "      const { response, text, contentType } = await performRequest(url, method, headers, body, signal, config.timeoutMs, config.maxResponseBytes);",
+    "context": [
+      "      if (body && Buffer.byteLength(body, 'utf8') > config.maxRequestBytes) throw new Error('NETWORK_REQUEST_SIZE_EXCEEDED');",
+      "      const { response, text, contentType } = await performRequest(url, method, headers, body, signal, config.timeoutMs, config.maxResponseBytes);",
+      "      return {",
+      "        status: response.status,"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "line": 129,
+    "text": "          'content-type': contentType ?? null,",
+    "context": [
+      "        headers: {",
+      "          'content-type': contentType ?? null,",
+      "          'docker-content-digest': response.headers.get('docker-content-digest'),",
+      "        },"
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 10,
+    "text": "const DENIED_HEADERS = new Set(['connection', 'content-length', 'host', 'proxy-authorization', 'transfer-encoding', 'upgrade']);",
+    "context": [
+      "const METHODS = new Set(['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT']);",
+      "const DENIED_HEADERS = new Set(['connection', 'content-length', 'host', 'proxy-authorization', 'transfer-encoding', 'upgrade']);",
+      "",
+      "export interface NetworkHttpCapabilityInvokerOptions {"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 13,
+    "text": "  readonly allowedOrigins: readonly string[];",
+    "context": [
+      "export interface NetworkHttpCapabilityInvokerOptions {",
+      "  readonly allowedOrigins: readonly string[];",
+      "  readonly allowedHostSuffixes: readonly string[];",
+      "  readonly allowedPorts: readonly number[];"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 14,
+    "text": "  readonly allowedHostSuffixes: readonly string[];",
+    "context": [
+      "  readonly allowedOrigins: readonly string[];",
+      "  readonly allowedHostSuffixes: readonly string[];",
+      "  readonly allowedPorts: readonly number[];",
+      "  readonly maximumResponseBytes: number;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 15,
+    "text": "  readonly allowedPorts: readonly number[];",
+    "context": [
+      "  readonly allowedHostSuffixes: readonly string[];",
+      "  readonly allowedPorts: readonly number[];",
+      "  readonly maximumResponseBytes: number;",
+      "  readonly maximumRequestBytes?: number;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 16,
+    "text": "  readonly maximumResponseBytes: number;",
+    "context": [
+      "  readonly allowedPorts: readonly number[];",
+      "  readonly maximumResponseBytes: number;",
+      "  readonly maximumRequestBytes?: number;",
+      "  readonly maximumExecutionMs: number;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 18,
+    "text": "  readonly maximumExecutionMs: number;",
+    "context": [
+      "  readonly maximumRequestBytes?: number;",
+      "  readonly maximumExecutionMs: number;",
+      "  readonly allowedMethods?: readonly string[];",
+      "  readonly allowedRequestHeaders?: readonly string[];"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 19,
+    "text": "  readonly allowedMethods?: readonly string[];",
+    "context": [
+      "  readonly maximumExecutionMs: number;",
+      "  readonly allowedMethods?: readonly string[];",
+      "  readonly allowedRequestHeaders?: readonly string[];",
+      "  readonly allowWebSocket?: boolean;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 20,
+    "text": "  readonly allowedRequestHeaders?: readonly string[];",
+    "context": [
+      "  readonly allowedMethods?: readonly string[];",
+      "  readonly allowedRequestHeaders?: readonly string[];",
+      "  readonly allowWebSocket?: boolean;",
+      "  readonly registryHealth?: RegistryHealthOptions;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 47,
+    "text": "function requestHeaders(value: unknown, allowed: ReadonlySet<string>, closeConnection = true): Record<string, string> {",
+    "context": [
+      "",
+      "function requestHeaders(value: unknown, allowed: ReadonlySet<string>, closeConnection = true): Record<string, string> {",
+      "  if (value === undefined) return {",
+      "    ...(allowed.has('accept') ? { accept: '*/*' } : {}),"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 49,
+    "text": "    ...(allowed.has('accept') ? { accept: '*/*' } : {}),",
+    "context": [
+      "  if (value === undefined) return {",
+      "    ...(allowed.has('accept') ? { accept: '*/*' } : {}),",
+      "    ...(closeConnection ? { connection: 'close' } : {}),",
+      "  };"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 54,
+    "text": "  if (entries.length > 32 || entries.some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name)",
+    "context": [
+      "  const entries = Object.entries(value as Record<string, unknown>);",
+      "  if (entries.length > 32 || entries.some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name)",
+      "    || DENIED_HEADERS.has(name.toLowerCase()) || !allowed.has(name.toLowerCase()) || typeof content !== 'string'",
+      "    || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) {"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 55,
+    "text": "    || DENIED_HEADERS.has(name.toLowerCase()) || !allowed.has(name.toLowerCase()) || typeof content !== 'string'",
+    "context": [
+      "  if (entries.length > 32 || entries.some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name)",
+      "    || DENIED_HEADERS.has(name.toLowerCase()) || !allowed.has(name.toLowerCase()) || typeof content !== 'string'",
+      "    || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) {",
+      "    throw new Error('HTTP_REQUEST_HEADER_DENIED');"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 56,
+    "text": "    || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) {",
+    "context": [
+      "    || DENIED_HEADERS.has(name.toLowerCase()) || !allowed.has(name.toLowerCase()) || typeof content !== 'string'",
+      "    || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) {",
+      "    throw new Error('HTTP_REQUEST_HEADER_DENIED');",
+      "  }"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 57,
+    "text": "    throw new Error('HTTP_REQUEST_HEADER_DENIED');",
+    "context": [
+      "    || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) {",
+      "    throw new Error('HTTP_REQUEST_HEADER_DENIED');",
+      "  }",
+      "  return { ...Object.fromEntries(entries.map(([name, content]) => [name.toLowerCase(), String(content)])),"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 65,
+    "text": "  if (!Array.isArray(value) || value.length > 32 || value.some((name) => typeof name !== 'string'",
+    "context": [
+      "  if (value === undefined) return Object.freeze(['content-type']);",
+      "  if (!Array.isArray(value) || value.length > 32 || value.some((name) => typeof name !== 'string'",
+      "    || !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name)",
+      "    || (DENIED_HEADERS.has(name.toLowerCase()) && name.toLowerCase() !== 'content-length'))) {"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 67,
+    "text": "    || (DENIED_HEADERS.has(name.toLowerCase()) && name.toLowerCase() !== 'content-length'))) {",
+    "context": [
+      "    || !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name)",
+      "    || (DENIED_HEADERS.has(name.toLowerCase()) && name.toLowerCase() !== 'content-length'))) {",
+      "    throw new Error('HTTP_RESPONSE_HEADERS_INVALID');",
+      "  }"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 76,
+    "text": "  const allowed = new Set(['method', 'headers', 'body', 'messages', 'minimumMessages', 'timeoutMs', 'maximumResponseBytes', 'responseHeaders']);",
+    "context": [
+      "  const payload = value as Record<string, unknown>;",
+      "  const allowed = new Set(['method', 'headers', 'body', 'messages', 'minimumMessages', 'timeoutMs', 'maximumResponseBytes', 'responseHeaders']);",
+      "  if (Object.keys(payload).some((key) => !allowed.has(key))) throw new Error('HTTP_REQUEST_PAYLOAD_UNKNOWN_FIELD');",
+      "  return payload;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 77,
+    "text": "  if (Object.keys(payload).some((key) => !allowed.has(key))) throw new Error('HTTP_REQUEST_PAYLOAD_UNKNOWN_FIELD');",
+    "context": [
+      "  const allowed = new Set(['method', 'headers', 'body', 'messages', 'minimumMessages', 'timeoutMs', 'maximumResponseBytes', 'responseHeaders']);",
+      "  if (Object.keys(payload).some((key) => !allowed.has(key))) throw new Error('HTTP_REQUEST_PAYLOAD_UNKNOWN_FIELD');",
+      "  return payload;",
+      "}"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 88,
+    "text": "  timeoutMs: number, maximumResponseBytes: number, maximumRequestBytes: number,",
+    "context": [
+      "async function websocket(url: URL, payload: Record<string, unknown>, signal: AbortSignal,",
+      "  timeoutMs: number, maximumResponseBytes: number, maximumRequestBytes: number,",
+      "  allowedHeaders: ReadonlySet<string>): Promise<Readonly<Record<string, unknown>>> {",
+      "  const messages = payload.messages ?? [];"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 89,
+    "text": "  allowedHeaders: ReadonlySet<string>): Promise<Readonly<Record<string, unknown>>> {",
+    "context": [
+      "  timeoutMs: number, maximumResponseBytes: number, maximumRequestBytes: number,",
+      "  allowedHeaders: ReadonlySet<string>): Promise<Readonly<Record<string, unknown>>> {",
+      "  const messages = payload.messages ?? [];",
+      "  if (!Array.isArray(messages) || messages.length > 64 || messages.some((item) => typeof item !== 'string'"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 90,
+    "text": "  const messages = payload.messages ?? [];",
+    "context": [
+      "  allowedHeaders: ReadonlySet<string>): Promise<Readonly<Record<string, unknown>>> {",
+      "  const messages = payload.messages ?? [];",
+      "  if (!Array.isArray(messages) || messages.length > 64 || messages.some((item) => typeof item !== 'string'",
+      "    || Buffer.byteLength(item) > maximumRequestBytes)"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 91,
+    "text": "  if (!Array.isArray(messages) || messages.length > 64 || messages.some((item) => typeof item !== 'string'",
+    "context": [
+      "  const messages = payload.messages ?? [];",
+      "  if (!Array.isArray(messages) || messages.length > 64 || messages.some((item) => typeof item !== 'string'",
+      "    || Buffer.byteLength(item) > maximumRequestBytes)",
+      "    || messages.reduce((total, item) => total + Buffer.byteLength(String(item)), 0) > maximumRequestBytes) {"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 96,
+    "text": "  const minimumMessages = positiveInteger(payload.minimumMessages ?? 1, 'HTTP_WEBSOCKET_MINIMUM_INVALID', 64);",
+    "context": [
+      "  }",
+      "  const minimumMessages = positiveInteger(payload.minimumMessages ?? 1, 'HTTP_WEBSOCKET_MINIMUM_INVALID', 64);",
+      "  const wsUrl = new URL(url.href); wsUrl.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';",
+      "  const startedAt = Date.now();"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 102,
+    "text": "      headers: requestHeaders(payload.headers, allowedHeaders, false),",
+    "context": [
+      "    const socket = new WebSocket(wsUrl, {",
+      "      headers: requestHeaders(payload.headers, allowedHeaders, false),",
+      "      maxPayload: maximumResponseBytes,",
+      "    });"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 103,
+    "text": "      maxPayload: maximumResponseBytes,",
+    "context": [
+      "      headers: requestHeaders(payload.headers, allowedHeaders, false),",
+      "      maxPayload: maximumResponseBytes,",
+      "    });",
+      "    const finish = (error?: Error): void => {"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 112,
+    "text": "    const timer = setTimeout(() => finish(new Error('HTTP_REQUEST_TIMEOUT')), timeoutMs);",
+    "context": [
+      "    const abort = (): void => finish(new Error('HTTP_REQUEST_CANCELLED'));",
+      "    const timer = setTimeout(() => finish(new Error('HTTP_REQUEST_TIMEOUT')), timeoutMs);",
+      "    signal.addEventListener('abort', abort, { once: true });",
+      "    socket.on('open', () => { for (const message of messages) socket.send(message); if (minimumMessages === 0) finish(); });"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 114,
+    "text": "    socket.on('open', () => { for (const message of messages) socket.send(message); if (minimumMessages === 0) finish(); });",
+    "context": [
+      "    signal.addEventListener('abort', abort, { once: true });",
+      "    socket.on('open', () => { for (const message of messages) socket.send(message); if (minimumMessages === 0) finish(); });",
+      "    socket.on('message', (data) => {",
+      "      const value = String(data); total += Buffer.byteLength(value);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 117,
+    "text": "      if (total > maximumResponseBytes) { finish(new Error('HTTP_RESPONSE_SIZE_EXCEEDED')); return; }",
+    "context": [
+      "      const value = String(data); total += Buffer.byteLength(value);",
+      "      if (total > maximumResponseBytes) { finish(new Error('HTTP_RESPONSE_SIZE_EXCEEDED')); return; }",
+      "      received.push(value); if (received.length >= minimumMessages) finish();",
+      "    });"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 118,
+    "text": "      received.push(value); if (received.length >= minimumMessages) finish();",
+    "context": [
+      "      if (total > maximumResponseBytes) { finish(new Error('HTTP_RESPONSE_SIZE_EXCEEDED')); return; }",
+      "      received.push(value); if (received.length >= minimumMessages) finish();",
+      "    });",
+      "    socket.on('error', (error) => finish(new Error(`HTTP_REQUEST_FAILED:${error.name}`)));"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 121,
+    "text": "    socket.on('close', () => received.length >= minimumMessages",
+    "context": [
+      "    socket.on('error', (error) => finish(new Error(`HTTP_REQUEST_FAILED:${error.name}`)));",
+      "    socket.on('close', () => received.length >= minimumMessages",
+      "      ? finish() : finish(new Error('HTTP_WEBSOCKET_MESSAGES_MISSING')));",
+      "  });"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 151,
+    "text": "  readonly #allowedOrigins: ReadonlySet<string>;",
+    "context": [
+      "export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvoker {",
+      "  readonly #allowedOrigins: ReadonlySet<string>;",
+      "  readonly #allowedHostSuffixes: readonly string[];",
+      "  readonly #allowedPorts: ReadonlySet<number>;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 152,
+    "text": "  readonly #allowedHostSuffixes: readonly string[];",
+    "context": [
+      "  readonly #allowedOrigins: ReadonlySet<string>;",
+      "  readonly #allowedHostSuffixes: readonly string[];",
+      "  readonly #allowedPorts: ReadonlySet<number>;",
+      "  readonly #maximumResponseBytes: number;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 153,
+    "text": "  readonly #allowedPorts: ReadonlySet<number>;",
+    "context": [
+      "  readonly #allowedHostSuffixes: readonly string[];",
+      "  readonly #allowedPorts: ReadonlySet<number>;",
+      "  readonly #maximumResponseBytes: number;",
+      "  readonly #maximumRequestBytes: number;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 154,
+    "text": "  readonly #maximumResponseBytes: number;",
+    "context": [
+      "  readonly #allowedPorts: ReadonlySet<number>;",
+      "  readonly #maximumResponseBytes: number;",
+      "  readonly #maximumRequestBytes: number;",
+      "  readonly #maximumExecutionMs: number;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 156,
+    "text": "  readonly #maximumExecutionMs: number;",
+    "context": [
+      "  readonly #maximumRequestBytes: number;",
+      "  readonly #maximumExecutionMs: number;",
+      "  readonly #allowedMethods: ReadonlySet<string>;",
+      "  readonly #allowedRequestHeaders: ReadonlySet<string>;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 157,
+    "text": "  readonly #allowedMethods: ReadonlySet<string>;",
+    "context": [
+      "  readonly #maximumExecutionMs: number;",
+      "  readonly #allowedMethods: ReadonlySet<string>;",
+      "  readonly #allowedRequestHeaders: ReadonlySet<string>;",
+      "  readonly #allowWebSocket: boolean;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 158,
+    "text": "  readonly #allowedRequestHeaders: ReadonlySet<string>;",
+    "context": [
+      "  readonly #allowedMethods: ReadonlySet<string>;",
+      "  readonly #allowedRequestHeaders: ReadonlySet<string>;",
+      "  readonly #allowWebSocket: boolean;",
+      "  readonly #registryHealth: RegistryHealthAccess | undefined;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 164,
+    "text": "    this.#allowedOrigins = new Set(options.allowedOrigins.map(canonicalOrigin));",
+    "context": [
+      "    this.#registryHealth = options.registryHealth ? new RegistryHealthAccess(options.registryHealth) : undefined;",
+      "    this.#allowedOrigins = new Set(options.allowedOrigins.map(canonicalOrigin));",
+      "    this.#allowedHostSuffixes = Object.freeze(options.allowedHostSuffixes.map(canonicalSuffix));",
+      "    this.#allowedPorts = new Set(options.allowedPorts.map((port) => positiveInteger(port, 'HTTP_RUNTIME_PORT_INVALID', 65_535)));"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 165,
+    "text": "    this.#allowedHostSuffixes = Object.freeze(options.allowedHostSuffixes.map(canonicalSuffix));",
+    "context": [
+      "    this.#allowedOrigins = new Set(options.allowedOrigins.map(canonicalOrigin));",
+      "    this.#allowedHostSuffixes = Object.freeze(options.allowedHostSuffixes.map(canonicalSuffix));",
+      "    this.#allowedPorts = new Set(options.allowedPorts.map((port) => positiveInteger(port, 'HTTP_RUNTIME_PORT_INVALID', 65_535)));",
+      "    this.#maximumResponseBytes = positiveInteger(options.maximumResponseBytes, 'HTTP_RUNTIME_RESPONSE_LIMIT_INVALID');"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 166,
+    "text": "    this.#allowedPorts = new Set(options.allowedPorts.map((port) => positiveInteger(port, 'HTTP_RUNTIME_PORT_INVALID', 65_535)));",
+    "context": [
+      "    this.#allowedHostSuffixes = Object.freeze(options.allowedHostSuffixes.map(canonicalSuffix));",
+      "    this.#allowedPorts = new Set(options.allowedPorts.map((port) => positiveInteger(port, 'HTTP_RUNTIME_PORT_INVALID', 65_535)));",
+      "    this.#maximumResponseBytes = positiveInteger(options.maximumResponseBytes, 'HTTP_RUNTIME_RESPONSE_LIMIT_INVALID');",
+      "    this.#maximumRequestBytes = positiveInteger(options.maximumRequestBytes ?? options.maximumResponseBytes,"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 167,
+    "text": "    this.#maximumResponseBytes = positiveInteger(options.maximumResponseBytes, 'HTTP_RUNTIME_RESPONSE_LIMIT_INVALID');",
+    "context": [
+      "    this.#allowedPorts = new Set(options.allowedPorts.map((port) => positiveInteger(port, 'HTTP_RUNTIME_PORT_INVALID', 65_535)));",
+      "    this.#maximumResponseBytes = positiveInteger(options.maximumResponseBytes, 'HTTP_RUNTIME_RESPONSE_LIMIT_INVALID');",
+      "    this.#maximumRequestBytes = positiveInteger(options.maximumRequestBytes ?? options.maximumResponseBytes,",
+      "      'HTTP_RUNTIME_REQUEST_LIMIT_INVALID');"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 168,
+    "text": "    this.#maximumRequestBytes = positiveInteger(options.maximumRequestBytes ?? options.maximumResponseBytes,",
+    "context": [
+      "    this.#maximumResponseBytes = positiveInteger(options.maximumResponseBytes, 'HTTP_RUNTIME_RESPONSE_LIMIT_INVALID');",
+      "    this.#maximumRequestBytes = positiveInteger(options.maximumRequestBytes ?? options.maximumResponseBytes,",
+      "      'HTTP_RUNTIME_REQUEST_LIMIT_INVALID');",
+      "    this.#maximumExecutionMs = positiveInteger(options.maximumExecutionMs, 'HTTP_RUNTIME_EXECUTION_LIMIT_INVALID', MAX_TIMER_MS);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 170,
+    "text": "    this.#maximumExecutionMs = positiveInteger(options.maximumExecutionMs, 'HTTP_RUNTIME_EXECUTION_LIMIT_INVALID', MAX_TIMER_MS);",
+    "context": [
+      "      'HTTP_RUNTIME_REQUEST_LIMIT_INVALID');",
+      "    this.#maximumExecutionMs = positiveInteger(options.maximumExecutionMs, 'HTTP_RUNTIME_EXECUTION_LIMIT_INVALID', MAX_TIMER_MS);",
+      "    const methods = options.allowedMethods ?? ['GET', 'HEAD'];",
+      "    if (!methods.length || methods.some((method) => !METHODS.has(method))) throw new Error('HTTP_RUNTIME_METHOD_POLICY_INVALID');"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 171,
+    "text": "    const methods = options.allowedMethods ?? ['GET', 'HEAD'];",
+    "context": [
+      "    this.#maximumExecutionMs = positiveInteger(options.maximumExecutionMs, 'HTTP_RUNTIME_EXECUTION_LIMIT_INVALID', MAX_TIMER_MS);",
+      "    const methods = options.allowedMethods ?? ['GET', 'HEAD'];",
+      "    if (!methods.length || methods.some((method) => !METHODS.has(method))) throw new Error('HTTP_RUNTIME_METHOD_POLICY_INVALID');",
+      "    this.#allowedMethods = new Set(methods);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 173,
+    "text": "    this.#allowedMethods = new Set(methods);",
+    "context": [
+      "    if (!methods.length || methods.some((method) => !METHODS.has(method))) throw new Error('HTTP_RUNTIME_METHOD_POLICY_INVALID');",
+      "    this.#allowedMethods = new Set(methods);",
+      "    const headers = (options.allowedRequestHeaders ?? ['accept']).map((name) => name.toLowerCase());",
+      "    if (headers.some((name) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/u.test(name)"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 174,
+    "text": "    const headers = (options.allowedRequestHeaders ?? ['accept']).map((name) => name.toLowerCase());",
+    "context": [
+      "    this.#allowedMethods = new Set(methods);",
+      "    const headers = (options.allowedRequestHeaders ?? ['accept']).map((name) => name.toLowerCase());",
+      "    if (headers.some((name) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/u.test(name)",
+      "      || DENIED_HEADERS.has(name))) throw new Error('HTTP_RUNTIME_HEADER_POLICY_INVALID');"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 176,
+    "text": "      || DENIED_HEADERS.has(name))) throw new Error('HTTP_RUNTIME_HEADER_POLICY_INVALID');",
+    "context": [
+      "    if (headers.some((name) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/u.test(name)",
+      "      || DENIED_HEADERS.has(name))) throw new Error('HTTP_RUNTIME_HEADER_POLICY_INVALID');",
+      "    this.#allowedRequestHeaders = new Set(headers);",
+      "    this.#allowWebSocket = options.allowWebSocket === true;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 177,
+    "text": "    this.#allowedRequestHeaders = new Set(headers);",
+    "context": [
+      "      || DENIED_HEADERS.has(name))) throw new Error('HTTP_RUNTIME_HEADER_POLICY_INVALID');",
+      "    this.#allowedRequestHeaders = new Set(headers);",
+      "    this.#allowWebSocket = options.allowWebSocket === true;",
+      "    if (this.#allowedOrigins.size === 0 && this.#allowedHostSuffixes.length === 0) throw new Error('HTTP_RUNTIME_TARGET_POLICY_REQUIRED');"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 179,
+    "text": "    if (this.#allowedOrigins.size === 0 && this.#allowedHostSuffixes.length === 0) throw new Error('HTTP_RUNTIME_TARGET_POLICY_REQUIRED');",
+    "context": [
+      "    this.#allowWebSocket = options.allowWebSocket === true;",
+      "    if (this.#allowedOrigins.size === 0 && this.#allowedHostSuffixes.length === 0) throw new Error('HTTP_RUNTIME_TARGET_POLICY_REQUIRED');",
+      "    if (this.#allowedPorts.size === 0) throw new Error('HTTP_RUNTIME_PORT_POLICY_REQUIRED');",
+      "  }"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 180,
+    "text": "    if (this.#allowedPorts.size === 0) throw new Error('HTTP_RUNTIME_PORT_POLICY_REQUIRED');",
+    "context": [
+      "    if (this.#allowedOrigins.size === 0 && this.#allowedHostSuffixes.length === 0) throw new Error('HTTP_RUNTIME_TARGET_POLICY_REQUIRED');",
+      "    if (this.#allowedPorts.size === 0) throw new Error('HTTP_RUNTIME_PORT_POLICY_REQUIRED');",
+      "  }",
+      ""
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 185,
+    "text": "  #target(value: string, inputs?: readonly ResolvedInputV1[]): Readonly<{ url: URL; exactOrigin: boolean }> {",
+    "context": [
+      "",
+      "  #target(value: string, inputs?: readonly ResolvedInputV1[]): Readonly<{ url: URL; exactOrigin: boolean }> {",
+      "    let url: URL;",
+      "    try { url = new URL(value); } catch { throw new Error('HTTP_REQUEST_URL_INVALID'); }"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 191,
+    "text": "    if (!registryHealth && !this.#allowedPorts.has(port)) throw new Error(`HTTP_REQUEST_PORT_DENIED:${port}`);",
+    "context": [
+      "    const registryHealth = this.#isRegistryHealth(url);",
+      "    if (!registryHealth && !this.#allowedPorts.has(port)) throw new Error(`HTTP_REQUEST_PORT_DENIED:${port}`);",
+      "    const hostname = url.hostname.toLowerCase();",
+      "    const suffixAllowed = this.#allowedHostSuffixes.some((suffix) => hostname.endsWith(suffix)"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 193,
+    "text": "    const suffixAllowed = this.#allowedHostSuffixes.some((suffix) => hostname.endsWith(suffix)",
+    "context": [
+      "    const hostname = url.hostname.toLowerCase();",
+      "    const suffixAllowed = this.#allowedHostSuffixes.some((suffix) => hostname.endsWith(suffix)",
+      "      && hostname.length > suffix.length);",
+      "    const configuredExactOrigin = registryHealth || this.#allowedOrigins.has(url.origin);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 194,
+    "text": "      && hostname.length > suffix.length);",
+    "context": [
+      "    const suffixAllowed = this.#allowedHostSuffixes.some((suffix) => hostname.endsWith(suffix)",
+      "      && hostname.length > suffix.length);",
+      "    const configuredExactOrigin = registryHealth || this.#allowedOrigins.has(url.origin);",
+      "    if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 195,
+    "text": "    const configuredExactOrigin = registryHealth || this.#allowedOrigins.has(url.origin);",
+    "context": [
+      "      && hostname.length > suffix.length);",
+      "    const configuredExactOrigin = registryHealth || this.#allowedOrigins.has(url.origin);",
+      "    if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);",
+      "    const exactOrigin = configuredExactOrigin || fixtureOrigins(inputs ?? []).has(url.origin);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 196,
+    "text": "    if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);",
+    "context": [
+      "    const configuredExactOrigin = registryHealth || this.#allowedOrigins.has(url.origin);",
+      "    if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);",
+      "    const exactOrigin = configuredExactOrigin || fixtureOrigins(inputs ?? []).has(url.origin);",
+      "    return Object.freeze({ url, exactOrigin });"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 197,
+    "text": "    const exactOrigin = configuredExactOrigin || fixtureOrigins(inputs ?? []).has(url.origin);",
+    "context": [
+      "    if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);",
+      "    const exactOrigin = configuredExactOrigin || fixtureOrigins(inputs ?? []).has(url.origin);",
+      "    return Object.freeze({ url, exactOrigin });",
+      "  }"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 198,
+    "text": "    return Object.freeze({ url, exactOrigin });",
+    "context": [
+      "    const exactOrigin = configuredExactOrigin || fixtureOrigins(inputs ?? []).has(url.origin);",
+      "    return Object.freeze({ url, exactOrigin });",
+      "  }",
+      ""
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 210,
+    "text": "    if (capability !== 'network.http' || !['request', 'websocket'].includes(request?.operation)",
+    "context": [
+      "    inputs?: readonly ResolvedInputV1[]): Promise<Readonly<Record<string, unknown>>> {",
+      "    if (capability !== 'network.http' || !['request', 'websocket'].includes(request?.operation)",
+      "      || request?.resource?.type !== 'network.url' || typeof request?.resource?.canonicalId !== 'string') {",
+      "      throw new Error('HTTP_CAPABILITY_REQUEST_INVALID');"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 215,
+    "text": "    signal = fixtureAuthoritySignal(inputs ?? [], signal);",
+    "context": [
+      "    if (signal.aborted) throw new Error('HTTP_REQUEST_CANCELLED');",
+      "    signal = fixtureAuthoritySignal(inputs ?? [], signal);",
+      "    const { url, exactOrigin } = this.#target(request.resource.canonicalId, inputs);",
+      "    const payload = exactPayload(request.payload); const registryHeaders = this.#registryHealth?.headers(url, request.operation, payload);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 216,
+    "text": "    const { url, exactOrigin } = this.#target(request.resource.canonicalId, inputs);",
+    "context": [
+      "    signal = fixtureAuthoritySignal(inputs ?? [], signal);",
+      "    const { url, exactOrigin } = this.#target(request.resource.canonicalId, inputs);",
+      "    const payload = exactPayload(request.payload); const registryHeaders = this.#registryHealth?.headers(url, request.operation, payload);",
+      "    if (request.operation === 'websocket') {"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 219,
+    "text": "      if (!this.#allowWebSocket) throw new Error('HTTP_WEBSOCKET_DENIED');",
+    "context": [
+      "    if (request.operation === 'websocket') {",
+      "      if (!this.#allowWebSocket) throw new Error('HTTP_WEBSOCKET_DENIED');",
+      "      if (!exactOrigin) throw new Error('HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED');",
+      "      if (!this.#allowedMethods.has('GET')) throw new Error('HTTP_REQUEST_METHOD_DENIED:GET');"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 220,
+    "text": "      if (!exactOrigin) throw new Error('HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED');",
+    "context": [
+      "      if (!this.#allowWebSocket) throw new Error('HTTP_WEBSOCKET_DENIED');",
+      "      if (!exactOrigin) throw new Error('HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED');",
+      "      if (!this.#allowedMethods.has('GET')) throw new Error('HTTP_REQUEST_METHOD_DENIED:GET');",
+      "      const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 221,
+    "text": "      if (!this.#allowedMethods.has('GET')) throw new Error('HTTP_REQUEST_METHOD_DENIED:GET');",
+    "context": [
+      "      if (!exactOrigin) throw new Error('HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED');",
+      "      if (!this.#allowedMethods.has('GET')) throw new Error('HTTP_REQUEST_METHOD_DENIED:GET');",
+      "      const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,",
+      "        'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 222,
+    "text": "      const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,",
+    "context": [
+      "      if (!this.#allowedMethods.has('GET')) throw new Error('HTTP_REQUEST_METHOD_DENIED:GET');",
+      "      const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,",
+      "        'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);",
+      "      const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 223,
+    "text": "        'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);",
+    "context": [
+      "      const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,",
+      "        'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);",
+      "      const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,",
+      "        'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 224,
+    "text": "      const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,",
+    "context": [
+      "        'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);",
+      "      const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,",
+      "        'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);",
+      "      return websocket(url, payload, signal, timeoutMs, maximumResponseBytes, this.#maximumRequestBytes,"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 225,
+    "text": "        'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);",
+    "context": [
+      "      const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,",
+      "        'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);",
+      "      return websocket(url, payload, signal, timeoutMs, maximumResponseBytes, this.#maximumRequestBytes,",
+      "        this.#allowedRequestHeaders);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 226,
+    "text": "      return websocket(url, payload, signal, timeoutMs, maximumResponseBytes, this.#maximumRequestBytes,",
+    "context": [
+      "        'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);",
+      "      return websocket(url, payload, signal, timeoutMs, maximumResponseBytes, this.#maximumRequestBytes,",
+      "        this.#allowedRequestHeaders);",
+      "    }"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 227,
+    "text": "        this.#allowedRequestHeaders);",
+    "context": [
+      "      return websocket(url, payload, signal, timeoutMs, maximumResponseBytes, this.#maximumRequestBytes,",
+      "        this.#allowedRequestHeaders);",
+      "    }",
+      "    const method = typeof payload.method === 'string' ? payload.method.toUpperCase() : 'GET';"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 230,
+    "text": "    if (!METHODS.has(method) || !this.#allowedMethods.has(method)) throw new Error(`HTTP_REQUEST_METHOD_DENIED:${method}`);",
+    "context": [
+      "    const method = typeof payload.method === 'string' ? payload.method.toUpperCase() : 'GET';",
+      "    if (!METHODS.has(method) || !this.#allowedMethods.has(method)) throw new Error(`HTTP_REQUEST_METHOD_DENIED:${method}`);",
+      "    if (!exactOrigin) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${method}:${url.origin}`);",
+      "    const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 231,
+    "text": "    if (!exactOrigin) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${method}:${url.origin}`);",
+    "context": [
+      "    if (!METHODS.has(method) || !this.#allowedMethods.has(method)) throw new Error(`HTTP_REQUEST_METHOD_DENIED:${method}`);",
+      "    if (!exactOrigin) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${method}:${url.origin}`);",
+      "    const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,",
+      "      'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 232,
+    "text": "    const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,",
+    "context": [
+      "    if (!exactOrigin) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${method}:${url.origin}`);",
+      "    const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,",
+      "      'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);",
+      "    const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 233,
+    "text": "      'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);",
+    "context": [
+      "    const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,",
+      "      'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);",
+      "    const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,",
+      "      'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 234,
+    "text": "    const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,",
+    "context": [
+      "      'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);",
+      "    const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,",
+      "      'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);",
+      "    const returnedHeaders = responseHeaderNames(payload.responseHeaders);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 235,
+    "text": "      'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);",
+    "context": [
+      "    const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,",
+      "      'HTTP_REQUEST_RESPONSE_LIMIT_INVALID', this.#maximumResponseBytes);",
+      "    const returnedHeaders = responseHeaderNames(payload.responseHeaders);",
+      "    const timeout = AbortSignal.timeout(timeoutMs);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 244,
+    "text": "      const permittedHeaders = this.#allowedRequestHeaders;",
+    "context": [
+      "        : requestBody(payload.body, this.#maximumRequestBytes);",
+      "      const permittedHeaders = this.#allowedRequestHeaders;",
+      "      response = await fetch(url, { method, headers: { ...requestHeaders(payload.headers, permittedHeaders), ...registryHeaders },",
+      "        ...(body === undefined ? {} : { body }), redirect: 'manual', signal: combined });"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 247,
+    "text": "      if (response.status >= 300 && response.status < 400) throw new Error('HTTP_RESPONSE_REDIRECT_DENIED');",
+    "context": [
+      "        ...(body === undefined ? {} : { body }), redirect: 'manual', signal: combined });",
+      "      if (response.status >= 300 && response.status < 400) throw new Error('HTTP_RESPONSE_REDIRECT_DENIED');",
+      "      const bytes = await this.#responseBytes(response, { method, maximumBytes: maximumResponseBytes,",
+      "        signal: combined, registryHealth: Boolean(registryHeaders) });"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 248,
+    "text": "      const bytes = await this.#responseBytes(response, { method, maximumBytes: maximumResponseBytes,",
+    "context": [
+      "      if (response.status >= 300 && response.status < 400) throw new Error('HTTP_RESPONSE_REDIRECT_DENIED');",
+      "      const bytes = await this.#responseBytes(response, { method, maximumBytes: maximumResponseBytes,",
+      "        signal: combined, registryHealth: Boolean(registryHeaders) });",
+      "      return Object.freeze({"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 253,
+    "text": "          name === 'content-type' ? response.headers.get(name)?.split(';', 1)[0]?.trim().toLowerCase() ?? null",
+    "context": [
+      "        headers: Object.freeze(Object.fromEntries(returnedHeaders.map((name) => [name,",
+      "          name === 'content-type' ? response.headers.get(name)?.split(';', 1)[0]?.trim().toLowerCase() ?? null",
+      "            : response.headers.get(name)]))),",
+      "        body: bytes.toString('utf8'),"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 262,
+    "text": "    signal = fixtureAuthoritySignal(inputs ?? [], signal);",
+    "context": [
+      "      if (signal.aborted) throw new Error('HTTP_REQUEST_CANCELLED');",
+      "    signal = fixtureAuthoritySignal(inputs ?? [], signal);",
+      "      if (timeout.aborted) throw new Error('HTTP_REQUEST_TIMEOUT');",
+      "      if (error instanceof Error && error.message.startsWith('HTTP_')) throw error;"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "line": 263,
+    "text": "      if (timeout.aborted) throw new Error('HTTP_REQUEST_TIMEOUT');",
+    "context": [
+      "    signal = fixtureAuthoritySignal(inputs ?? [], signal);",
+      "      if (timeout.aborted) throw new Error('HTTP_REQUEST_TIMEOUT');",
+      "      if (error instanceof Error && error.message.startsWith('HTTP_')) throw error;",
+      "      throw new Error(`HTTP_REQUEST_FAILED:${error instanceof Error ? error.name : 'unknown'}`);"
+    ],
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 31,
+    "text": "          maximumExecutionMs: integer(directCommandSource.maximumExecutionMs, 'directCommand.maximumExecutionMs'),",
+    "context": [
+      "          maximumOutputBytes: integer(directCommandSource.maximumOutputBytes, 'directCommand.maximumOutputBytes'),",
+      "          maximumExecutionMs: integer(directCommandSource.maximumExecutionMs, 'directCommand.maximumExecutionMs'),",
+      "          maximumProcesses: integer(directCommandSource.maximumProcesses, 'directCommand.maximumProcesses'),",
+      "          maximumMemoryBytes: integer(directCommandSource.maximumMemoryBytes, 'directCommand.maximumMemoryBytes'),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 57,
+    "text": "          allowedPlatforms: stringArray(containerBuildSource.allowedPlatforms, 'containerBuild.allowedPlatforms'),",
+    "context": [
+      "          repositoryPrefix: String(containerBuildSource.repositoryPrefix),",
+      "          allowedPlatforms: stringArray(containerBuildSource.allowedPlatforms, 'containerBuild.allowedPlatforms'),",
+      "          allowedBuildArguments: optionalStringArray(",
+      "            containerBuildSource.allowedBuildArguments,"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 58,
+    "text": "          allowedBuildArguments: optionalStringArray(",
+    "context": [
+      "          allowedPlatforms: stringArray(containerBuildSource.allowedPlatforms, 'containerBuild.allowedPlatforms'),",
+      "          allowedBuildArguments: optionalStringArray(",
+      "            containerBuildSource.allowedBuildArguments,",
+      "            'containerBuild.allowedBuildArguments',"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 59,
+    "text": "            containerBuildSource.allowedBuildArguments,",
+    "context": [
+      "          allowedBuildArguments: optionalStringArray(",
+      "            containerBuildSource.allowedBuildArguments,",
+      "            'containerBuild.allowedBuildArguments',",
+      "          ),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 60,
+    "text": "            'containerBuild.allowedBuildArguments',",
+    "context": [
+      "            containerBuildSource.allowedBuildArguments,",
+      "            'containerBuild.allowedBuildArguments',",
+      "          ),",
+      "          maximumLogBytes: integer(containerBuildSource.maximumLogBytes, 'containerBuild.maximumLogBytes'),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 63,
+    "text": "          maximumExecutionMs: integer(containerBuildSource.maximumExecutionMs, 'containerBuild.maximumExecutionMs'),",
+    "context": [
+      "          maximumLogBytes: integer(containerBuildSource.maximumLogBytes, 'containerBuild.maximumLogBytes'),",
+      "          maximumExecutionMs: integer(containerBuildSource.maximumExecutionMs, 'containerBuild.maximumExecutionMs'),",
+      "          maximumManifestBytes: integer(",
+      "            containerBuildSource.maximumManifestBytes,"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 93,
+    "text": "          allowedOrigins: optionalStringArray(networkHttpSource.allowedOrigins, 'networkHttp.allowedOrigins'),",
+    "context": [
+      "              }),",
+      "          allowedOrigins: optionalStringArray(networkHttpSource.allowedOrigins, 'networkHttp.allowedOrigins'),",
+      "          allowedHostSuffixes: optionalStringArray(",
+      "            networkHttpSource.allowedHostSuffixes,"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 94,
+    "text": "          allowedHostSuffixes: optionalStringArray(",
+    "context": [
+      "          allowedOrigins: optionalStringArray(networkHttpSource.allowedOrigins, 'networkHttp.allowedOrigins'),",
+      "          allowedHostSuffixes: optionalStringArray(",
+      "            networkHttpSource.allowedHostSuffixes,",
+      "            'networkHttp.allowedHostSuffixes',"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 95,
+    "text": "            networkHttpSource.allowedHostSuffixes,",
+    "context": [
+      "          allowedHostSuffixes: optionalStringArray(",
+      "            networkHttpSource.allowedHostSuffixes,",
+      "            'networkHttp.allowedHostSuffixes',",
+      "          ),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 96,
+    "text": "            'networkHttp.allowedHostSuffixes',",
+    "context": [
+      "            networkHttpSource.allowedHostSuffixes,",
+      "            'networkHttp.allowedHostSuffixes',",
+      "          ),",
+      "          allowedPorts: integerArray(networkHttpSource.allowedPorts, 'networkHttp.allowedPorts', 65_535),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 98,
+    "text": "          allowedPorts: integerArray(networkHttpSource.allowedPorts, 'networkHttp.allowedPorts', 65_535),",
+    "context": [
+      "          ),",
+      "          allowedPorts: integerArray(networkHttpSource.allowedPorts, 'networkHttp.allowedPorts', 65_535),",
+      "          maximumResponseBytes: integer(networkHttpSource.maximumResponseBytes, 'networkHttp.maximumResponseBytes'),",
+      "          maximumExecutionMs: integer(networkHttpSource.maximumExecutionMs, 'networkHttp.maximumExecutionMs'),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 99,
+    "text": "          maximumResponseBytes: integer(networkHttpSource.maximumResponseBytes, 'networkHttp.maximumResponseBytes'),",
+    "context": [
+      "          allowedPorts: integerArray(networkHttpSource.allowedPorts, 'networkHttp.allowedPorts', 65_535),",
+      "          maximumResponseBytes: integer(networkHttpSource.maximumResponseBytes, 'networkHttp.maximumResponseBytes'),",
+      "          maximumExecutionMs: integer(networkHttpSource.maximumExecutionMs, 'networkHttp.maximumExecutionMs'),",
+      "          ...(networkHttpSource.maximumRequestBytes === undefined"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 100,
+    "text": "          maximumExecutionMs: integer(networkHttpSource.maximumExecutionMs, 'networkHttp.maximumExecutionMs'),",
+    "context": [
+      "          maximumResponseBytes: integer(networkHttpSource.maximumResponseBytes, 'networkHttp.maximumResponseBytes'),",
+      "          maximumExecutionMs: integer(networkHttpSource.maximumExecutionMs, 'networkHttp.maximumExecutionMs'),",
+      "          ...(networkHttpSource.maximumRequestBytes === undefined",
+      "            ? {}"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 106,
+    "text": "          ...(networkHttpSource.allowedMethods === undefined",
+    "context": [
+      "              }),",
+      "          ...(networkHttpSource.allowedMethods === undefined",
+      "            ? {}",
+      "            : {"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 109,
+    "text": "                allowedMethods: stringArray(networkHttpSource.allowedMethods, 'networkHttp.allowedMethods'),",
+    "context": [
+      "            : {",
+      "                allowedMethods: stringArray(networkHttpSource.allowedMethods, 'networkHttp.allowedMethods'),",
+      "              }),",
+      "          ...(networkHttpSource.allowedRequestHeaders === undefined"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 111,
+    "text": "          ...(networkHttpSource.allowedRequestHeaders === undefined",
+    "context": [
+      "              }),",
+      "          ...(networkHttpSource.allowedRequestHeaders === undefined",
+      "            ? {}",
+      "            : {"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 114,
+    "text": "                allowedRequestHeaders: stringArray(",
+    "context": [
+      "            : {",
+      "                allowedRequestHeaders: stringArray(",
+      "                  networkHttpSource.allowedRequestHeaders,",
+      "                  'networkHttp.allowedRequestHeaders',"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 115,
+    "text": "                  networkHttpSource.allowedRequestHeaders,",
+    "context": [
+      "                allowedRequestHeaders: stringArray(",
+      "                  networkHttpSource.allowedRequestHeaders,",
+      "                  'networkHttp.allowedRequestHeaders',",
+      "                ),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 116,
+    "text": "                  'networkHttp.allowedRequestHeaders',",
+    "context": [
+      "                  networkHttpSource.allowedRequestHeaders,",
+      "                  'networkHttp.allowedRequestHeaders',",
+      "                ),",
+      "              }),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 134,
+    "text": "          allowedRegistryPrefixes: stringArray(",
+    "context": [
+      "          trivyExecutable: path.resolve(directory, String(securityScanSource.trivyExecutable)),",
+      "          allowedRegistryPrefixes: stringArray(",
+      "            securityScanSource.allowedRegistryPrefixes,",
+      "            'securityScan.allowedRegistryPrefixes',"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 135,
+    "text": "            securityScanSource.allowedRegistryPrefixes,",
+    "context": [
+      "          allowedRegistryPrefixes: stringArray(",
+      "            securityScanSource.allowedRegistryPrefixes,",
+      "            'securityScan.allowedRegistryPrefixes',",
+      "          ),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 136,
+    "text": "            'securityScan.allowedRegistryPrefixes',",
+    "context": [
+      "            securityScanSource.allowedRegistryPrefixes,",
+      "            'securityScan.allowedRegistryPrefixes',",
+      "          ),",
+      "          maximumExecutionMs: integer(securityScanSource.maximumExecutionMs, 'securityScan.maximumExecutionMs'),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "line": 138,
+    "text": "          maximumExecutionMs: integer(securityScanSource.maximumExecutionMs, 'securityScan.maximumExecutionMs'),",
+    "context": [
+      "          ),",
+      "          maximumExecutionMs: integer(securityScanSource.maximumExecutionMs, 'securityScan.maximumExecutionMs'),",
+      "          maximumOutputBytes: integer(securityScanSource.maximumOutputBytes, 'securityScan.maximumOutputBytes'),",
+      "          cacheDirectory: path.resolve(directory, String(securityScanSource.cacheDirectory)),"
+    ],
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 11,
+    "text": "function browserSources(value: Config, allowedCapabilities: ReadonlySet<string>) {",
+    "context": [
+      "",
+      "function browserSources(value: Config, allowedCapabilities: ReadonlySet<string>) {",
+      "  const browserAxeSource = capabilitySource(",
+      "    value,"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 15,
+    "text": "    allowedCapabilities.has('browser.axe'),",
+    "context": [
+      "    'browserAxe',",
+      "    allowedCapabilities.has('browser.axe'),",
+      "    'BUSTER_BROWSER_AXE_CONFIG_REQUIRED',",
+      "  );"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 21,
+    "text": "    allowedCapabilities.has('browser.lighthouse'),",
+    "context": [
+      "    'browserLighthouse',",
+      "    allowedCapabilities.has('browser.lighthouse'),",
+      "    'BUSTER_BROWSER_LIGHTHOUSE_CONFIG_REQUIRED',",
+      "  );"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 27,
+    "text": "    allowedCapabilities.has('browser.visual'),",
+    "context": [
+      "    'browserVisual',",
+      "    allowedCapabilities.has('browser.visual'),",
+      "    'BUSTER_BROWSER_VISUAL_CONFIG_REQUIRED',",
+      "  );"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 33,
+    "text": "    allowedCapabilities.has('browser.playwright'),",
+    "context": [
+      "    'browserPlaywright',",
+      "    allowedCapabilities.has('browser.playwright'),",
+      "    'BUSTER_BROWSER_PLAYWRIGHT_CONFIG_REQUIRED',",
+      "  );"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 37,
+    "text": "    typeof browserPlaywrightSource?.cgroupRoot === 'string' && browserPlaywrightSource.cgroupRoot.length > 0",
+    "context": [
+      "  const browserPlaywrightCgroup =",
+      "    typeof browserPlaywrightSource?.cgroupRoot === 'string' && browserPlaywrightSource.cgroupRoot.length > 0",
+      "      ? browserPlaywrightSource.cgroupRoot",
+      "      : undefined;"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 50,
+    "text": "function commandSources(value: Config, allowedCapabilities: ReadonlySet<string>, environment: NodeJS.ProcessEnv) {",
+    "context": [
+      "",
+      "function commandSources(value: Config, allowedCapabilities: ReadonlySet<string>, environment: NodeJS.ProcessEnv) {",
+      "  const directCommandSource = capabilitySource(",
+      "    value,"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 54,
+    "text": "    allowedCapabilities.has('command.execute'),",
+    "context": [
+      "    'directCommand',",
+      "    allowedCapabilities.has('command.execute'),",
+      "    'BUSTER_DIRECT_COMMAND_CONFIG_REQUIRED',",
+      "  );"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 58,
+    "text": "    typeof directCommandSource?.cgroupRoot === 'string' && directCommandSource.cgroupRoot.length > 0",
+    "context": [
+      "  const directCommandCgroup =",
+      "    typeof directCommandSource?.cgroupRoot === 'string' && directCommandSource.cgroupRoot.length > 0",
+      "      ? directCommandSource.cgroupRoot",
+      "      : undefined;"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 68,
+    "text": "    allowedCapabilities.has('container.build'),",
+    "context": [
+      "    'containerBuild',",
+      "    allowedCapabilities.has('container.build'),",
+      "    'BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED',",
+      "  );"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 91,
+    "text": "  allowedCapabilities: ReadonlySet<string>,",
+    "context": [
+      "  value: Config,",
+      "  allowedCapabilities: ReadonlySet<string>,",
+      "  environment: NodeJS.ProcessEnv,",
+      ") {"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 94,
+    "text": "  const command = commandSources(value, allowedCapabilities, environment);",
+    "context": [
+      ") {",
+      "  const command = commandSources(value, allowedCapabilities, environment);",
+      "  for (const key of ['kubernetesFixture', 'tailscaleExposure', 'kubernetesRuntimeSecurity']) {",
+      "    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 98,
+    "text": "  const kubernetesFixtureEnabled = allowedCapabilities.has('kubernetes.fixture');",
+    "context": [
+      "  }",
+      "  const kubernetesFixtureEnabled = allowedCapabilities.has('kubernetes.fixture');",
+      "  const tailscaleExposureEnabled = allowedCapabilities.has('kubernetes.exposure');",
+      "  const networkHttpSource = capabilitySource("
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 99,
+    "text": "  const tailscaleExposureEnabled = allowedCapabilities.has('kubernetes.exposure');",
+    "context": [
+      "  const kubernetesFixtureEnabled = allowedCapabilities.has('kubernetes.fixture');",
+      "  const tailscaleExposureEnabled = allowedCapabilities.has('kubernetes.exposure');",
+      "  const networkHttpSource = capabilitySource(",
+      "    value,"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 103,
+    "text": "    allowedCapabilities.has('network.http'),",
+    "context": [
+      "    'networkHttp',",
+      "    allowedCapabilities.has('network.http'),",
+      "    'BUSTER_NETWORK_HTTP_CONFIG_REQUIRED',",
+      "  );"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 106,
+    "text": "  const browser = browserSources(value, allowedCapabilities);",
+    "context": [
+      "  );",
+      "  const browser = browserSources(value, allowedCapabilities);",
+      "  const securityScanSource = capabilitySource(",
+      "    value,"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 110,
+    "text": "    allowedCapabilities.has('security.scan'),",
+    "context": [
+      "    'securityScan',",
+      "    allowedCapabilities.has('security.scan'),",
+      "    'BUSTER_SECURITY_SCAN_CONFIG_REQUIRED',",
+      "  );"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "line": 113,
+    "text": "  const kubernetesRuntimeSecurityEnabled = allowedCapabilities.has('kubernetes.runtime-security');",
+    "context": [
+      "  );",
+      "  const kubernetesRuntimeSecurityEnabled = allowedCapabilities.has('kubernetes.runtime-security');",
+      "  return {",
+      "    ...command,"
+    ],
+    "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+    "line": 18,
+    "text": "  readonly allowedCapabilities: ReadonlySet<string>;",
+    "context": [
+      "export interface BusterCapabilityRuntimeOptions {",
+      "  readonly allowedCapabilities: ReadonlySet<string>;",
+      "  readonly directCommand?: Omit<DirectCommandCapabilityInvokerOptions, 'workspaceRoot'>;",
+      "  readonly containerBuild?: Omit<ContainerBuildCapabilityInvokerOptions, 'workspaceRoot'>;"
+    ],
+    "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+    "line": 40,
+    "text": "    if (!options.allowedCapabilities.has(capability)) return undefined;",
+    "context": [
+      "  const add = <T extends TestProviderCapabilityInvoker>(capability: string, create: () => T): T | undefined => {",
+      "    if (!options.allowedCapabilities.has(capability)) return undefined;",
+      "    const invoker = create(); routes.set(capability, invoker); return invoker;",
+      "  };"
+    ],
+    "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+    "line": 54,
+    "text": "  add('network.http', () => new NetworkHttpCapabilityInvoker(",
+    "context": [
+      "    { ...required(options.tailscaleExposure, 'BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED'), processInputPolicy }));",
+      "  add('network.http', () => new NetworkHttpCapabilityInvoker(",
+      "    required(options.networkHttp, 'BUSTER_NETWORK_HTTP_CONFIG_REQUIRED')));",
+      "  add('browser.axe', () => new BrowserAxeCapabilityInvoker("
+    ],
+    "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+    "line": 39,
+    "text": "    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2147483647) throw new Error('TEST_PROVIDER_CAPABILITY_DRAIN_TIMEOUT_INVALID');",
+    "context": [
+      "  async drain(timeoutMs: number): Promise<void> {",
+      "    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2147483647) throw new Error('TEST_PROVIDER_CAPABILITY_DRAIN_TIMEOUT_INVALID');",
+      "    let timer: NodeJS.Timeout | undefined;",
+      "    try {"
+    ],
+    "sha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+    "line": 44,
+    "text": "        new Promise<never>((_resolve, reject) => { timer = setTimeout(() => reject(new Error('TEST_PROVIDER_CAPABILITY_DRAIN_TIMEOUT')), timeoutMs); }),",
+    "context": [
+      "        Promise.allSettled([...this.#pending.values()].map(({ operation }) => operation)),",
+      "        new Promise<never>((_resolve, reject) => { timer = setTimeout(() => reject(new Error('TEST_PROVIDER_CAPABILITY_DRAIN_TIMEOUT')), timeoutMs); }),",
+      "      ]);",
+      "    } finally { clearTimeout(timer); }"
+    ],
+    "sha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 36,
+    "text": "function providerWorkspace(workspaceRootValue: string, allowed: ProviderInvocationV1['workspace']) {",
+    "context": [
+      "",
+      "function providerWorkspace(workspaceRootValue: string, allowed: ProviderInvocationV1['workspace']) {",
+      "    const workspaceRoot = fs.realpathSync(workspaceRootValue);",
+      "    const repository = path.resolve(workspaceRoot, allowed.repository);"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 38,
+    "text": "    const repository = path.resolve(workspaceRoot, allowed.repository);",
+    "context": [
+      "    const workspaceRoot = fs.realpathSync(workspaceRootValue);",
+      "    const repository = path.resolve(workspaceRoot, allowed.repository);",
+      "    const scratch = path.resolve(workspaceRoot, allowed.scratch);",
+      "    const evidence = path.resolve(workspaceRoot, allowed.evidence);"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 39,
+    "text": "    const scratch = path.resolve(workspaceRoot, allowed.scratch);",
+    "context": [
+      "    const repository = path.resolve(workspaceRoot, allowed.repository);",
+      "    const scratch = path.resolve(workspaceRoot, allowed.scratch);",
+      "    const evidence = path.resolve(workspaceRoot, allowed.evidence);",
+      "    for (const item of [repository, scratch, evidence]) {"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 40,
+    "text": "    const evidence = path.resolve(workspaceRoot, allowed.evidence);",
+    "context": [
+      "    const scratch = path.resolve(workspaceRoot, allowed.scratch);",
+      "    const evidence = path.resolve(workspaceRoot, allowed.evidence);",
+      "    for (const item of [repository, scratch, evidence]) {",
+      "      if (!item.startsWith(`${workspaceRoot}${path.sep}`)) throw new Error('TEST_PROVIDER_WORKSPACE_FORBIDDEN');"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 95,
+    "text": "      // when a provider is allowed to publish only a few artifacts.",
+    "context": [
+      "      // needs a stable descriptor floor for its loader, IPC, and runtime internals even",
+      "      // when a provider is allowed to publish only a few artifacts.",
+      "      String(Math.max(this.#policy.provider.minimumOpenFiles, invocation.limits.artifactFiles + this.#policy.provider.artifactFileDescriptorReserve)), process.execPath,",
+      "      `--max-old-space-size=${Math.max(this.#policy.provider.minimumHeapMiB, Math.floor(invocation.limits.memoryBytes / (1024 * 1024) * this.#policy.provider.heapFraction))}`,"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 107,
+    "text": "      if (this.#protocolBytes > this.#policy.provider.maximumProtocolBytes) { this.#protocolFailure ??= new Error('TEST_PROVIDER_PROTOCOL_LIMIT'); this.#fail(this.#protocolFailure); void this.terminate().catch((error) => this.#fail(error instanceof Error ? error : new Error(String(error)))); }",
+    "context": [
+      "      this.#protocolBytes += chunk.byteLength;",
+      "      if (this.#protocolBytes > this.#policy.provider.maximumProtocolBytes) { this.#protocolFailure ??= new Error('TEST_PROVIDER_PROTOCOL_LIMIT'); this.#fail(this.#protocolFailure); void this.terminate().catch((error) => this.#fail(error instanceof Error ? error : new Error(String(error)))); }",
+      "    });",
+      "    this.#lines = readline.createInterface({ input: this.#child.stdout, crlfDelay: Infinity });"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 169,
+    "text": "    this.#termination ??= this.#terminate();",
+    "context": [
+      "  terminate(): Promise<void> {",
+      "    this.#termination ??= this.#terminate();",
+      "    return this.#termination;",
+      "  }"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 182,
+    "text": "        catch (cause) { signalFailure ??= new Error('TEST_PROVIDER_SIGNAL_FAILED', { cause }); }",
+    "context": [
+      "        try { signalProvider(this.#child, value); }",
+      "        catch (cause) { signalFailure ??= new Error('TEST_PROVIDER_SIGNAL_FAILED', { cause }); }",
+      "      };",
+      "      const force = setTimeout(() => signal('SIGKILL'), this.#policy.provider.terminationGraceMs);"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 185,
+    "text": "      const bound = setTimeout(() => { signal('SIGKILL'); reject(new Error('TEST_PROVIDER_TERMINATION_TIMEOUT')); }, this.#policy.provider.terminationTimeoutMs);",
+    "context": [
+      "      const force = setTimeout(() => signal('SIGKILL'), this.#policy.provider.terminationGraceMs);",
+      "      const bound = setTimeout(() => { signal('SIGKILL'); reject(new Error('TEST_PROVIDER_TERMINATION_TIMEOUT')); }, this.#policy.provider.terminationTimeoutMs);",
+      "      this.#child.once('close', () => {",
+      "        clearTimeout(force); clearTimeout(bound);"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 191,
+    "text": "      catch (cause) { signalFailure ??= new Error('TEST_PROVIDER_ABORT_SEND_FAILED', { cause }); signal('SIGKILL'); }",
+    "context": [
+      "      try { this.#send({ kind: 'abort', reason: 'TEST_PROVIDER_TERMINATED' }); signal('SIGTERM'); }",
+      "      catch (cause) { signalFailure ??= new Error('TEST_PROVIDER_ABORT_SEND_FAILED', { cause }); signal('SIGKILL'); }",
+      "    });",
+      "    // Only confirmed process closure reaches this bounded drain. A signal"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 212,
+    "text": "    try { facts = processFacts(this.#child.pid ?? -1); }",
+    "context": [
+      "    let facts: ReturnType<typeof processFacts>;",
+      "    try { facts = processFacts(this.#child.pid ?? -1); }",
+      "    catch (cause) {",
+      "      this.#fail(new Error('TEST_PROVIDER_OBSERVATION_FAILED', { cause }));"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 238,
+    "text": "      this.#capabilities.cancel(message.id, new Error(String(message.reason ?? 'TEST_PROVIDER_CAPABILITY_CANCELLED')));",
+    "context": [
+      "    if (message.kind === 'capability-abort' && typeof message.id === 'string') {",
+      "      this.#capabilities.cancel(message.id, new Error(String(message.reason ?? 'TEST_PROVIDER_CAPABILITY_CANCELLED')));",
+      "      return;",
+      "    }"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 253,
+    "text": "      cpuTimeMs: Math.max(this.#resources.cpuTimeMs, Number(reported.cpuTimeMs ?? 0)),",
+    "context": [
+      "    if (reported) this.#resources = {",
+      "      cpuTimeMs: Math.max(this.#resources.cpuTimeMs, Number(reported.cpuTimeMs ?? 0)),",
+      "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, Number(reported.maximumMemoryBytes ?? 0)),",
+      "      maximumProcesses: Math.max(this.#resources.maximumProcesses, Number(reported.maximumProcesses ?? 1)),"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 254,
+    "text": "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, Number(reported.maximumMemoryBytes ?? 0)),",
+    "context": [
+      "      cpuTimeMs: Math.max(this.#resources.cpuTimeMs, Number(reported.cpuTimeMs ?? 0)),",
+      "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, Number(reported.maximumMemoryBytes ?? 0)),",
+      "      maximumProcesses: Math.max(this.#resources.maximumProcesses, Number(reported.maximumProcesses ?? 1)),",
+      "    };"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 255,
+    "text": "      maximumProcesses: Math.max(this.#resources.maximumProcesses, Number(reported.maximumProcesses ?? 1)),",
+    "context": [
+      "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, Number(reported.maximumMemoryBytes ?? 0)),",
+      "      maximumProcesses: Math.max(this.#resources.maximumProcesses, Number(reported.maximumProcesses ?? 1)),",
+      "    };",
+      "  }"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 307,
+    "text": "    if (this.#initialized === null) this.#initializationFailure ??= error;",
+    "context": [
+      "    // Preserve that failure without preventing cleanup after an execution error.",
+      "    if (this.#initialized === null) this.#initializationFailure ??= error;",
+      "    const initializeReject = this.#initializeReject; const resultReject = this.#resultReject; const cleanupReject = this.#cleanupReject;",
+      "    this.#clearInitialize(); this.#clearResult(); this.#clearCleanup();"
+    ],
+    "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "finding": "SEEB-R01-01",
+  "normativeBase": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01",
+  "rootVersion": "pipeline-entry.v7",
+  "physicalAuthorsRootSchemasProfilesCasesChanged": false,
+  "onlySemanticDelta": "Construct Security helper per admission with the supplied current owner; reuse unchanged source-extracted owner/entry/header/resource functions. Selected read-only reference view uses same admitted owner policy/digest.",
+  "noNewRootOrWriter": true,
+  "allGenerationBeforeEveryScope": true,
+  "GatewayBrowser": "OUTSCOPE; no latest adoption",
+  "freshIndependentReviewRequired": true
+}

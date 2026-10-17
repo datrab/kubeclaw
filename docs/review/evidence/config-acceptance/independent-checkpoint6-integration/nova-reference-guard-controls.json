@@ -1,0 +1,62 @@
+{
+  "scope": "Actual parent integration/reference helper docs controls; no Runtime/Core semantics or globalacceptance",
+  "observations": [
+    {
+      "id": "current-bounded-nova-nonacceptance-identity-positive",
+      "passed": true
+    },
+    {
+      "id": "reject-globalC0Accepted",
+      "passed": true
+    },
+    {
+      "id": "reject-rowOrRuntimeAcceptanceInferred",
+      "passed": true
+    },
+    {
+      "id": "reject-input-drift:docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/independent-review.json",
+      "passed": true
+    },
+    {
+      "id": "reject-input-drift:docs/review/evidence/config-acceptance/independent-nova-carrier-recheck-20261013/independent-recheck.json",
+      "passed": true
+    },
+    {
+      "id": "reject-input-drift:docs/review/evidence/config-acceptance/author/nova-carrier-01-correction-20261013.json",
+      "passed": true
+    },
+    {
+      "id": "reject-input-drift:docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "passed": true
+    },
+    {
+      "id": "restored-nova-positive",
+      "passed": true
+    },
+    {
+      "id": "actual-immutable-observation-positive",
+      "passed": true
+    },
+    {
+      "id": "observation-artifact-hash-negative",
+      "passed": true
+    },
+    {
+      "id": "observation-value-hash-negative",
+      "passed": true
+    },
+    {
+      "id": "observation-escape-negative",
+      "passed": true
+    },
+    {
+      "id": "observation-absent-pointer-negative",
+      "passed": true
+    },
+    {
+      "id": "observation-restored-positive",
+      "passed": true
+    }
+  ],
+  "passed": 14
+}

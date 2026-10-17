@@ -1,0 +1,13 @@
+{
+  "passed": 1,
+  "sourcePriorHash": "b0ed32250e101e7f8872c4a5b0ef793daaa44543ea0810cc69247fd192124c7c",
+  "targetPrior": {
+    "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-full-other-run-bound-target-state.json",
+    "sizeBytes": 3547,
+    "sha256": "9abcbf37dd83415425de05bc199e632e32f472fb2f08be2b1ac531885ee75027"
+  },
+  "negativeInput": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}  ",
+  "positiveOriginalOtherInput": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:other\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:03ef5a04f880bdf701e35e6a998195f5c30e896ef6d4f1cb26c9c700f3af5a2f\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}  ",
+  "originalSelectedQuarantineRecords": 1,
+  "observed": "Current real store rejects second distinct run attributed overflow FULL and unchanged, not targetpolicyprojection/acceptance"
+}

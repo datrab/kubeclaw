@@ -1,0 +1,38 @@
+{
+  "reviewer": "/root/workload_correction_recheck_18",
+  "verdict": "bounded-corrections-verified",
+  "findings": {
+    "W17-001": "corrected-source-definition-verified",
+    "W17-002": "corrected-source-definition-verified"
+  },
+  "globalC0Accepted": false,
+  "nativeAcceptance": false,
+  "implementationAuthorization": null,
+  "remaining": "Review17 schema/profile/case/binding/external-native gates remain open",
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-correction-18/REPORT.md",
+      "sha256": "8623ea8e4c0a8d2d43b7ca7cea355d3ce7381dfd68f475a4060a4b30cbab9bfa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-correction-18/check.py",
+      "sha256": "db3ee2b790d775165a9889e9b2f8f0d6da4a0a95b12b6ac15f07c3e48e8f6e92"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-correction-18/check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-correction-18/check.stdout",
+      "sha256": "43ef3d667a0bbee7f37c3d7f8a04786dabf226587d36fdd9a0db66dda760c0db"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-correction-18/checks.json",
+      "sha256": "43ef3d667a0bbee7f37c3d7f8a04786dabf226587d36fdd9a0db66dda760c0db"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-correction-18/input-identities.json",
+      "sha256": "9836cdfa9eae39bc7124b67329b115b970f33f2afdb922139bd830f7269c4f79"
+    }
+  ]
+}

@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -103,11 +106,11 @@ export async function verifyQualityProviderRuntime(options: {
     granted,
     activated,
     configs: new Map([
-      ['kubeclaw.repository-adapter:repository', { repositoryRoot: temporary }],
-      ['kubeclaw.runtime-dispatch:runtime', {
-        targets: { gate: { endpoint: `${origin}/dispatch`, tokenSecret: 'gate.agent' } },
+      ['kubeclaw.repository-adapter:repository', { ...TEST_CORE_POLICY.repositoryRead, repositoryRoot: temporary }],
+      ['kubeclaw.runtime-dispatch:runtime', { ...TEST_CORE_POLICY.httpDispatch,
+        targets: { gate: { byteProfile:'standard', endpoint: `${origin}/dispatch`, tokenSecret: 'gate.agent' } },
       }],
-      ['kubeclaw.network-http:http', {
+      ['kubeclaw.network-http:http', { ...TEST_CORE_POLICY.networkHttp,
         allowedOrigins: [origin],
         allowedMethods: ['POST', 'GET', 'DELETE'],
         allowedHeaders: [
@@ -121,10 +124,11 @@ export async function verifyQualityProviderRuntime(options: {
         environment: { 'gate.agent': secret, 'buster.worker': secret,
           'buster.source-private-key': sourceKeyEnvironment },
       }],
-      ['kubeclaw.artifact-store:artifact-store', {
+      ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY,
         artifactRoot: path.join(options.stateRoot, 'artifacts'),
       }],
       ['kubeclaw.remote-test-gate:plan', {
+        gateLimits: TEST_CORE_POLICY.remoteTestGate,
         endpoint: endpoint,
         authentication: 'bearer',
         tokenSecret: 'buster.worker',
@@ -135,17 +139,17 @@ export async function verifyQualityProviderRuntime(options: {
       }],
     ]),
     effects: new core.EffectCoordinator(
-      new core.FileEffectJournal(effectsPath),
+      new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY),
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(), 300_000,
+      new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition,
     ),
     shutdownTimeoutMs: 1_000,
     async emitDomainEvent() {},
   });
   await adapters.start();
   try {
-    const runner = new core.PipelineRunner({
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2', id: 'quality-real-provider', maxConcurrency: 1,
         stages: [{ id: 'preflight', type: 'kubeclaw.validate.preflight-contract', dependsOn: [], config: {},
@@ -159,7 +163,7 @@ export async function verifyQualityProviderRuntime(options: {
           execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 45000 } }],
       }, registry: granted, activated, adapters,
       orchestratorIssuerId: 'quality-proof',
-      journal: new core.FileJournal(path.join(options.stateRoot, 'events.jsonl')),
+      journal: new core.FileJournal(path.join(options.stateRoot, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     });
     const result = await runner.run(runId);
     const events = fs.readFileSync(path.join(options.stateRoot, 'events.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line).entry);

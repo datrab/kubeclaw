@@ -1,0 +1,745 @@
+{
+  "scope": "nine actual MCPlistener/namespace/auth/origin fields with exact currentreader/Chartaliases and fulltargetmanageddefinition; no listen/network/Secretfile/native/accountAPI actions",
+  "fields": [
+    {
+      "settingId": "DLV-OPS-MCP-PORT",
+      "field": "PORT",
+      "profileCoordinate": "settings.PORT",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "semantic": "source Number accepts integer0ephemeral incl whitespace/coercion; targetpositive canonicalregistered listenerport coherentCodexclient/healthprobes, no explicit0 ornativefallback."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": null,
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "PORT",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 11,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": null,
+      "nativeOracle": "future real selected HTTPserverlistens exact A/B with portcoherence, authenticated initialize/listtools works; occupiedport/setupneversemanticnegative. Currentcfg0accepted is sourcecounterexample, targetbeforelistenreject.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-HOST",
+      "field": "HOST",
+      "profileCoordinate": "settings.HOST",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "const": "127.0.0.1",
+          "scope": "currenttrusted samePodOps topology only; not fundamentalinvariant for all MCP deployments; remotebinding requires explicit different traced transport/TLS/credential/grants design"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": null,
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "HOST",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 13,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": null,
+      "nativeOracle": "actual selected loopback listener inaccessible as unintended remote route, nativeHOSI/addressbinding/readback; fixedchosenstringnotproof PodNetworkPolicy/provideraccess.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-OPS-LOCAL-ONLY",
+      "field": "OPS_LOCAL_ONLY",
+      "profileCoordinate": "settings.OPS_LOCAL_ONLY",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "const": true,
+          "scope": "sameactual loopback topology, generated ENV1\u2014not arbitrary stringfalse/default; no role/task author"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": null,
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "OPS_LOCAL_ONLY",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 14,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": null,
+      "nativeOracle": "nativeexact sourceflag1+HOST127guard; targettypedtrue only currenttopology, badcoercedstrings reject beforebind; localhostdifferentthan127 actualsourceguard.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-OPS-DEFAULT-NAMESPACE",
+      "field": "OPS_DEFAULT_NAMESPACE",
+      "profileCoordinate": "settings.OPS_DEFAULT_NAMESPACE",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+          "minLength": 1,
+          "maxLength": 63,
+          "semantic": "exactsource namespace grammar and selected actualRBAC/API/PodServiceAccount binding. No user/task namespace override bypasses enum/grants."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-OPS-POD-DEFAULTNAMESPACE",
+          "source": {
+            "path": "charts/ops-pod/values.yaml",
+            "field": "defaultNamespace",
+            "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+            "line": 29,
+            "lineKind": "exact YAML field/inline author line",
+            "valuePath": "defaultNamespace"
+          },
+          "meaning": "actual current producer exact field; readonly runtime projection, no second namespace/RBAC/provider writer"
+        },
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "OPS_DEFAULT_NAMESPACE",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 5,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-OPS-POD-DEFAULTNAMESPACE",
+        "source": {
+          "path": "charts/ops-pod/values.yaml",
+          "field": "defaultNamespace",
+          "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+          "line": 29,
+          "lineKind": "exact YAML field/inline author line",
+          "valuePath": "defaultNamespace"
+        },
+        "meaning": "actual current producer exact field; readonly runtime projection, no second namespace/RBAC/provider writer"
+      },
+      "nativeOracle": "actualtoolnamespace argument omitted\u2192selecteddefault through z.enum; capturedenum/bodyURLs exactencode, invalid/foreignnamespace rejectedbeforeAPI call; realRBAC denial boundary separate.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-ARGOCD-NAMESPACE",
+      "field": "ARGOCD_NAMESPACE",
+      "profileCoordinate": "settings.ARGOCD_NAMESPACE",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+          "minLength": 1,
+          "maxLength": 63,
+          "semantic": "exactsource namespace grammar and selected actualRBAC/API/PodServiceAccount binding. No user/task namespace override bypasses enum/grants."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-OPS-POD-ARGONAMESPACE",
+          "source": {
+            "path": "charts/ops-pod/values.yaml",
+            "field": "argoNamespace",
+            "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+            "line": 28,
+            "lineKind": "exact YAML field/inline author line",
+            "valuePath": "argoNamespace"
+          },
+          "meaning": "actual current producer exact field; readonly runtime projection, no second namespace/RBAC/provider writer"
+        },
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "ARGOCD_NAMESPACE",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 17,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-OPS-POD-ARGONAMESPACE",
+        "source": {
+          "path": "charts/ops-pod/values.yaml",
+          "field": "argoNamespace",
+          "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+          "line": 28,
+          "lineKind": "exact YAML field/inline author line",
+          "valuePath": "argoNamespace"
+        },
+        "meaning": "actual current producer exact field; readonly runtime projection, no second namespace/RBAC/provider writer"
+      },
+      "nativeOracle": "actual Argo tool fixed confignamespace in encodedAPI path; not general enumauthorization. Selected API provider mustgrant actualgroup/name/query, source.stringnotgrantproof.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-OPS-ALLOWED-NAMESPACES",
+      "field": "OPS_ALLOWED_NAMESPACES",
+      "profileCoordinate": "settings.OPS_ALLOWED_NAMESPACES",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+            "minLength": 1,
+            "maxLength": 63
+          },
+          "semantic": "targettypedarray emittedCSV canonical no empty/trim/wildcard; source.split comma doesNOTtrim, Set dedup and requiresdefault included. Native z.enum captured once serverconstruction and pertoolnamespaceargs; actualRBACintersection distinct. Argo constant used separate tool, not assumedinthisenum."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-OPS-POD-RBAC-NAMESPACES",
+          "source": {
+            "path": "charts/ops-pod/values.yaml",
+            "field": "rbac.namespaces",
+            "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+            "line": 24,
+            "valuePath": "rbac.namespaces",
+            "lineKind": "exact YAML field/inline author line"
+          },
+          "meaning": "actual current producer exact field; readonly runtime projection, no second namespace/RBAC/provider writer"
+        },
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "OPS_ALLOWED_NAMESPACES",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 5,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-OPS-POD-RBAC-NAMESPACES",
+        "source": {
+          "path": "charts/ops-pod/values.yaml",
+          "field": "rbac.namespaces",
+          "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+          "line": 24,
+          "valuePath": "rbac.namespaces",
+          "lineKind": "exact YAML field/inline author line"
+        },
+        "meaning": "actual current producer exact field; readonly runtime projection, no second namespace/RBAC/provider writer"
+      },
+      "nativeOracle": "actual pertool z.enum selectedmembers at startup+typedrequiredarraydefaultincluded; spaces/trailingcomma unknown failcurrentparser. MutationBnewenum cannotretargetexistingA tools; no arbitrary task namespace beyond capturedactualgrants.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-OPS-MCP-BEARER-TOKEN-FILE",
+      "field": "OPS_MCP_BEARER_TOKEN_FILE",
+      "profileCoordinate": "readonlyBindings.OPS_MCP_BEARER_TOKEN_FILE",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "object",
+          "required": [
+            "path",
+            "providerRef",
+            "namespace",
+            "revision",
+            "protocol",
+            "rotation",
+            "requiredAPIClientSeparation"
+          ],
+          "semantic": "selected trusted same mounted projectedSecret provider reference; actual auth reopens path eachrequest allowing K8s atomicsymlinks. Keyset/protocolvalidation URLsafe32..512, read514bytes rejects514, header>519 rejects (512+Bearer7). These are actual selectedauthformat/byteguards not alias toother64KiB storelimits. Native startup read beforelisten and ready() repeatedly; no authfile inodefreeze or silentdisable."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-OPS-POD-BEARERSECRET",
+          "source": {
+            "path": "charts/ops-pod/values.yaml",
+            "field": "bearerSecret",
+            "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+            "line": 6,
+            "lineKind": "exact YAML field/inline author line",
+            "valuePath": "bearerSecret"
+          },
+          "meaning": "actual current producer exact field; readonly runtime projection, no second namespace/RBAC/provider writer"
+        },
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "OPS_MCP_BEARER_TOKEN_FILE",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 20,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-OPS-POD-BEARERSECRET",
+        "source": {
+          "path": "charts/ops-pod/values.yaml",
+          "field": "bearerSecret",
+          "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+          "line": 6,
+          "lineKind": "exact YAML field/inline author line",
+          "valuePath": "bearerSecret"
+        },
+        "meaning": "actual current producer exact field; readonly runtime projection, no second namespace/RBAC/provider writer"
+      },
+      "nativeOracle": "future scoped provider file initialvalid beforelisten\u2192/healthz200\u2192authenticatedMCP nativeinitialize; rotate sameprovider acceptedforserver but existingCodex ENV stale401; missing/invalidrotatedfile\u2192503health+401request, no fallback. Log authorizedlabelonly; no token/hash.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-OPS-MCP-BEARER-TOKEN",
+      "field": "OPS_MCP_BEARER_TOKEN",
+      "profileCoordinate": "readonlyBindings.OPS_MCP_BEARER_TOKEN",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "object",
+          "required": [
+            "disposition",
+            "requiredAbsent"
+          ],
+          "properties": {
+            "disposition": {
+              "const": "removedinlineauthority"
+            },
+            "requiredAbsent": {
+              "const": true
+            }
+          },
+          "semantic": "targetno inlineENVsecret writer; use sole providerref. Current accepts exact one file/inline token, rejectsboth; tokenbytes never evidence. Absence of both fails beforelisten, removalnot no-authsetting."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": null,
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "OPS_MCP_BEARER_TOKEN",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 20,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": null,
+      "nativeOracle": "current pure exactly-one guard failure alreadyretained; target rejects any inlineENV equal/different beforelisten; positive solefileprovider, removalcannot silentlydisableauth.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-MCP-ALLOWED-ORIGINS",
+      "field": "MCP_ALLOWED_ORIGINS",
+      "profileCoordinate": "settings.MCP_ALLOWED_ORIGINS",
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+          "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+          "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+          "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+        }
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "canonicalHttpOrigin": true
+          },
+          "semantic": "existingserver compares exact origin strings afterauth. NativeemptySetallowsany; missingOriginallowed. Targetexplicitsameactual intendedclientoriginpolicy, no wildcard/null/prose origin; empty requiresexplicit different reviewed no-browser policy ratherthan fallback. Origin is not credential/grant."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "primaryAuthorAlias": null,
+        "activation": "S captured selected server configuration/namespace enum/origins/listener; R capturedprovider/grants/Pod/client credential refs. Tokenfile currentreopens provider everyrequest, Codex ENV once atspawn; Bpublicationdoesnotretarget A auth/nativecleanup, revocation remainsfailclosed/uncertain."
+      },
+      "source": {
+        "path": "tools/ops-mcp/src/config.mjs",
+        "field": "MCP_ALLOWED_ORIGINS",
+        "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+        "line": 21,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryAuthorAlias": null,
+      "nativeOracle": "actual authenticated /mcp request with exact allowedOrigin passes; otherorigin403 onlyafterauth, badtoken401 first; missingOrigin nativepasses; emptySet currentallallowed counterexample. /healthz auth.ready independentoforigin, no clientgrantproof.",
+      "sourceReaders": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        }
+      ],
+      "firstCurrentBoundary": "see reader source",
+      "negativeCases": [
+        "missing/unknown/type/domain/correlations/old equal+different ENV source beforelisten",
+        "actual auth/origin/namespace/nativeAPI key/grant boundaries keptdistinct",
+        "Bmutation retargetingAcapturednamespace/client/provider/recoverycleanup prohibited; actualrevocationfailclosed/uncertainty notnewLatestpermission"
+      ],
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "priorState": "original complete A server/client/Pod/API/MCPprovider/grants/source/enum/origin/cleanup refs captured; parent universal contract explicitly pending"
+    }
+  ],
+  "profiles": {
+    "A": {
+      "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/A.json",
+      "sha256": "2ffdfc1f6e1c50c326c63fc42eb9d798673c61dac2a685dd0e72058d360935f4",
+      "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+    },
+    "B": {
+      "path": "docs/review/evidence/config-acceptance/delivery/ops-service-target-profiles-20261013/B.json",
+      "sha256": "8c31640cbad5686d10a4fbdbfc959aeb1a3da61b4ed0f9ef13d3d5492cca24c1",
+      "scope": "complete proposed managedservice definition+refs, not nativecfg ENVbytes/file/provider/deployedRBAC acceptance; C3 materializes typedaliases"
+    }
+  },
+  "remaining": "MCP server tool/pagination/output/Hubble additional literalpolicies need exact same-owner definitions; native protocol/provider/APIgrant/SDK/image fixtures futureinputs, not current sourceacceptance"
+}

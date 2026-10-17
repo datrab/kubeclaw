@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-17T02:39:46.774302+00:00",
+  "status": "ORIGINAL_HISTORICAL_IMPORT_CENTRAL_OWNER_MIGRATED_NATIVE_CHOWN_BLOCKED",
+  "sourceCommit": "d6432166ba852bed5f7f5921affb36b0195c727b",
+  "verifiedRemoteHead": "d6432166ba852bed5f7f5921affb36b0195c727b",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-historical-import-current-owner-20261017",
+  "change": "Original full/compacted historical-import test now reads complete current central pipeline owners and actual Buster runtime tuple through production captureSwarmSettings. Old chart-local author removed. Original maximumActivePreparations=1 fixture contrast and all producer/import/record/wire/accounting/immutability/UID/negative assertions preserved. Added strict original history test compilation scope.",
+  "checks": {
+    "strictTypecheck": true,
+    "diffCheck": true,
+    "originalImport": {
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "exitCode": 1,
+      "failure": "EPERM chown at actual root->GID1003 import directory setup; current central owner capture executed before failure. setpriv/import assertions not reached."
+    }
+  },
+  "originalRoster": {
+    "fields": {
+      "required": 2409,
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+      "topLevelType": "list"
+    },
+    "cases": {
+      "required": 6845,
+      "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+      "topLevelType": "list"
+    },
+    "requirements": {
+      "required": 50,
+      "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+      "topLevelType": "list"
+    }
+  },
+  "originalCasesNewlyAccepted": 0,
+  "originalResultsChanged": false,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "independentReview": "OPEN: no native spawn/reviewer callable in current ALL_TOOLS discovery, CONFIG subagents0, parent terminal. No new reviewer result; unchanged recorded same-surface app-server EROFS not retried. Author compiler/source input migration is not independent/native acceptance.",
+  "QB_R02_constraint": {
+    "preparation": "runner-attempt-preparation.ts invocationInputs reads actual latest original producer AttemptResultV1 but projects only ArtifactRefV1 into ProviderInvocationV1. No original source/build/baseline receipt association or inputStore receiver exists in TestPlanRunnerOptions.",
+    "store": "artifacts.ts EvidenceStore.store only publishes output artifacts. PreparationSourceLedger reserves staged wire/source extraction, not linked provider input artifacts; it cannot be relabeled as an inputStore artifact reservation/validity API.",
+    "decision": "Keep BUDGET_SOURCE_RECEIPT_REQUIRED at runner/loader/session. No fake receipt from metadata, task/ENV/CLI/private root, parallel ledger or output writer. Required ABI is defined; genuine original store integration remains source work, not missing design approval."
+  },
+  "externalOwner": "Raven",
+  "resumeCondition": "Original history filesystem-import test needs genuine isolated root CHOWN and SETUID/SETGID authority for UID/GID1003. Full gates additionally need Docker UID/GID1000 delegated writable cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL. No spoof/skips/assertion weakening.",
+  "nextAction": "Continue genuine QB-R02 source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and authenticated coordinated sole-root/boot/Nova receiving without denied-v10 promotion. Remaining native-preparation fixture legacy SWARM_CONFIG/flat-author reads require coordinated real guest input migration; do not fake boot receipts. Do not repeat unchanged chown/native failures or component aggregate.",
+  "writerLock": "SAME nonblocking shared lock acquired for mutations and commits; released at command exit",
+  "noHistoricalFollowup": true
+}

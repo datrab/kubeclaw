@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -7,7 +9,7 @@ import { activate } from '../../../skills/common/plugins/artifact-store/src/adap
 import { execute } from '../../../skills/nova/plugins/human-approval/src/architecture-approval.ts';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'architecture-approval-'));
-const adapter = activate({ config: { artifactRoot: root } } as AdapterActivationContext);
+const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: root } } as AdapterActivationContext);
 const producer = { runId: 'architecture:run', stageId: 'architecture', attemptNumber: 1, attemptId: 'architecture:1' };
 const input = { summary: 'Review architecture findings before Forge.', artifactId: 'architecture-validation', namespace: 'kubeclaw.architecture-validator' };
 let sequence = 0;
@@ -36,7 +38,7 @@ try {
     explanation: 'The operator must accept this documented tradeoff.', remediation: 'Record the decision.' };
   const risk = await write({ verdict: 'passed', findings: [finding], checkedFiles: ['design.md'], summary: 'Risk requires approval.' });
   const riskContext = (reason?: string, issuerId = 'operator:test') => ({ ...context([risk]), contract: {
-    ...context([risk]).contract, config: { target: 'operators', issuerId: 'operator:test' },
+    ...context([risk]).contract, config: { target: 'operators', issuerId: 'operator:test', timeoutMinutes: ARTIFACT_TEST_CORE_POLICY.humanApproval.defaultTimeoutMinutes },
     guidance: { decision: 'approved', issuer: { type: 'operator', id: issuerId }, ...(reason === undefined ? {} : { reason }) },
   } }) as unknown as PluginInvocationContext;
   await assert.rejects(() => execute(input, riskContext()), /ARCHITECTURE_APPROVAL_REASON_REQUIRED/);

@@ -1,0 +1,13 @@
+✔ actual emitted role verifies exact installed files, both selections and native parent/child handoff (5825.864694ms)
+✔ extra/missing/mutated installed bytes and wrong parent receipt reject; restored original generation works (9914.611857ms)
+✔ real full kubeclaw chart uses exact transported parent receipt and no old source mounts/ENV (1765.752542ms)
+✔ immutable release transports exact Buster image metadata; missing/cross-commit receipt cannot be synthesized (3.385828ms)
+✔ external proof harness resolves installed role dependencies without changing installed file identity (3191.054ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26061.60131

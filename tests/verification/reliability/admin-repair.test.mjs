@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -16,7 +17,7 @@ const definition = { schemaVersion: 'pipeline-definition.v2', id: 'test:admin-tr
 ] };
 function platform(root) {
   const fixture = path.resolve('tests/fixtures/plugin-system-v2');
-  return { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [fixture], trustedBuiltinRoots: [fixture],
+  return {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [fixture], trustedBuiltinRoots: [fixture],
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},
     storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 5000, orchestratorIssuerId: 'nova',
     administrativeDecisionIssuers: [{ type: 'administrator', id: 'admin:test' }] };
@@ -34,7 +35,7 @@ test('authorized ancestor repair reruns every original graph approval and siblin
     const result = await reopenBlockedPipelineV2(config, definition, decision, value => value.actor);
     assert.equal(result.status, 'succeeded');
     for (const id of ['source', 'review', 'approval', 'sibling', 'gate']) assert.equal(result.stages.get(id).attemptsUsed, 2, `${id} must rerun after source repair`);
-    const journal = new FileJournal(path.join(runRoot(config.storageRoot, runId), 'events.jsonl'));
+    const journal = new FileJournal(path.join(runRoot(config.storageRoot, runId), 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     const records = journal.records();
     const intent = records.find(({ entry }) => entry.type === 'stage.waiting' && entry.payload.repairRequest)?.entry;
     assert.ok(intent); assert.deepEqual(intent.payload.repairRequest.invalidatedStageIds, ['approval', 'gate', 'review', 'sibling']);
@@ -81,7 +82,7 @@ for (const rejected of [false, true]) {
       const final = await resumePipelineV2(fixture.platform, fixture.definition, runId, resolve(wait, 'approved', 'new'));
       assert.equal(final.status, 'succeeded');
       assert.equal(final.stages.get(decision.stageId).remediationCyclesUsed, 1);
-      const events = new FileJournal(path.join(runRoot(fixture.platform.storageRoot, runId), 'events.jsonl')).records();
+      const events = new FileJournal(path.join(runRoot(fixture.platform.storageRoot, runId), 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
       const intent = events.find(({ entry }) => entry.type === 'stage.waiting' && entry.payload.repairRequest).entry.payload.repairRequest;
       assert.equal(intent.requesterResult.outcome, 'blocked');
       assert.equal(intent.requesterResult.reason.code, rejected ? 'approval.rejected' : 'test.administrative_review_required');
@@ -95,7 +96,7 @@ test('administrative journal and repair projection crash prefixes converge witho
     const config = platform(root); const runId = 'run:admin-prefix'; const decision = authorization(runId);
     await runPipelineV2(config, definition, runId);
     const directory = runRoot(config.storageRoot, runId); const file = path.join(directory, 'events.jsonl');
-    const initialLength = new FileJournal(file).records().length;
+    const initialLength = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().length;
     await reopenBlockedPipelineV2(config, definition, decision, value => value.actor);
     const lines = fs.readFileSync(file, 'utf8').trim().split('\n'); const entries = lines.map(line => JSON.parse(line).entry);
     const intent = entries.findIndex(event => event.type === 'stage.waiting' && event.payload.repairRequest);
@@ -107,7 +108,7 @@ test('administrative journal and repair projection crash prefixes converge witho
       const copied = runRoot(branchConfig.storageRoot, runId); fs.mkdirSync(path.dirname(copied), { recursive: true });
       fs.cpSync(directory, copied, { recursive: true });
       fs.writeFileSync(path.join(copied, 'events.jsonl'), `${lines.slice(0, prefix + 1).join('\n')}\n`);
-      const recovered = recoverStageStates(definition, new FileJournal(path.join(copied, 'events.jsonl')).records(), runId, 'nova');
+      const recovered = recoverStageStates(definition, new FileJournal(path.join(copied, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records(), runId, 'nova');
       if (prefix >= intent) for (const id of ['review', 'approval', 'sibling']) {
         assert.equal(recovered.get(id).status, 'pending'); assert.equal(recovered.get(id).facts, undefined); assert.equal(recovered.get(id).continuationGuidance, undefined);
       }
@@ -115,7 +116,7 @@ test('administrative journal and repair projection crash prefixes converge witho
       assert.equal(result.status, 'succeeded', `prefix ${prefix}`);
       for (const id of ['review', 'approval', 'sibling']) assert.equal(result.stages.get(id).attemptsUsed, 2, `${id} at prefix ${prefix}`);
       assert.equal(result.stages.get('gate').remediationCyclesUsed, 1);
-      const projected = new FileJournal(path.join(copied, 'events.jsonl')).records();
+      const projected = new FileJournal(path.join(copied, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
       assert.equal(projected.filter(({ entry }) => entry.type === 'stage.waiting' && entry.payload.repairRequest).length, 1);
     }
   } finally { fs.rmSync(root, { recursive: true, force: true }); }

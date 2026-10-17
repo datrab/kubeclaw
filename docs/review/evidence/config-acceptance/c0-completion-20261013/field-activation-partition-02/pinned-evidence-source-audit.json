@@ -1,0 +1,28 @@
+{
+  "allArchivedOriginalSourceRows": [
+    {
+      "id": "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+      "source": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/timeout-Bjg7ga80.mjs",
+      "sha256": "fe0a9056d0a2e8d3e9f2eb87161064217b2043a619b15f5895a8129046736514",
+      "entireSourceRead": true,
+      "oldContract": "review-quality-module",
+      "documentedCurrent": {
+        "current": "native reply/run start resolves current runtime config and per-run override; selected timeout then passed to run",
+        "target": "R/M explicit run deadline profile selected before dispatch and stored durable deadline; later config does not reset started budget",
+        "nativeCurrent": "48h default only if author absent; NOT Discord inboundWorker12h field"
+      }
+    },
+    {
+      "id": "DLV-PRISM-BACKUP-CONTROLLER-TIMEZONE",
+      "source": "docs/review/evidence/config-acceptance/delivery/pinned-robfig-cron-v3.0.1/parser.go",
+      "sha256": "3133fdf1d1865fb2e45a0a3362a4d780d97ec7cd975c8c31b1d580005e2c7cf6",
+      "entireSourceRead": true,
+      "oldContract": "review-quality-module",
+      "documentedCurrent": {
+        "current": "controller process timezone when native parser selects schedule; existing Chart cannot select explicit zone",
+        "target": "S future CronJob schedule generation; R already created Jobs/deadlines unchanged; fixed Eval selected timezone bound"
+      }
+    }
+  ],
+  "qualification": "All two docs-sourced originals independently traced to actual native consumer; no Nova review plugin classification from archive path."
+}

@@ -1,0 +1,52 @@
+{
+  "qualification": "future closed SAME ROOT existing Chart consumer-discriminator extension only; NOT admitted by current v6/same-entry02 schema; no parallel root,7th component or generic loader",
+  "existingRoot": "config/pipeline.config.json",
+  "existingSchema": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/schemas/pipeline-entry.schema.json",
+    "sha256": "85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e",
+    "currentConsumer": "namespace-controller"
+  },
+  "existingReceipt": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/generation-receipt-stand.json",
+    "sha256": "90f969aa646fef434424b4877ca3fdc92c2bdf430a0fb2e66b160aefaf27266d",
+    "codec": "same-entry-input-generation.v1; raw-rootSHA distinct from full input-generation digest; generated outputs outside author tree"
+  },
+  "proposedNextClosedDeploymentSelectionArm": {
+    "role": "buster",
+    "deploymentInstanceId": "agent-buster",
+    "ownerPath": "charts/kubeclaw/values.yaml",
+    "profileId": "local-A",
+    "consumer": "openclaw-gateway",
+    "serviceInstanceId": "agent-buster-gateway"
+  },
+  "versionRule": "Parent material root integration assigns one next coordinated version/schema after frozen independent Gateway and same-entry02 review; no simultaneous v6-controller/gateway fork acceptance. This fragment is not a new physical root.",
+  "sameChartJoin": "controller and gateway bound to same existing Chart owner/profile/deployment generation; gateway branch-A/B source stands map to local-A/B, no independent flat --values/--set/ENV/PVC author. Complete full Chart source composition remains explicit later local work, not an external-input excuse.",
+  "sourcePrimaryAliases": {
+    "memory.remote.baseUrl": "same selected Chart profiles/<selected>/settings/litellm/endpoint; generated managed projection only",
+    "agents.defaults.model": "same selected Chart settings/agent/model primary/fallback; 70-field catalogue conditional Astra derives from it",
+    "memorySecretLocator": "same Chart/my-values litellm existingSecret/existingSecretKey; native SecretRef source/provider/id stay supported locator tuple, values never CONFIG",
+    "role": "current helper agent-<agentRole>, existing Nova/Buster/Prism source role-specific plugins, not Release.Name metadata"
+  },
+  "proposedMaterializerInputs": [
+    "one existing same-entry root receipt + image-baked C1 whole author/source tree no-follow capture",
+    "same full selected existing Chart deployment profile/branch and original endpoint/agent/model/auth/plugin/command/channel source authors",
+    "native exact OpenClaw/source/schema/SDK/model/agent/harness/tool/skill rosters/architecture/image receipts",
+    "original provider/credential locator/access/issuer/backend revision-retention receipts, never actual key bytes or key hashes"
+  ],
+  "proposedOutputs": [
+    "existing init ConfigMap /init-config/openclaw.json selected secret-free refs only",
+    "existing /config/openclaw.json normal config path exposed by existing /home/node/.openclaw mount; readonly declared policy/source generation, with native writable state separately captured",
+    "same existing Deployment/SecretRef env transport/port/client routes and source-derived CLI transport",
+    "existing native startup/config-validity/doctor migration receipt only after whole C1 source and original effect/credential grants; no early code/secret/native import before that gate"
+  ],
+  "bootstrapDelta": "same embedded Config Setup boundary, not second private loader: verified explicit selected source replaces every managed69 leaf and conditional omission; remove dormant inboundWorker; derive credential triple and providers from selected original refs; reject missing/unknown/retired managed authors even equal; no persistent policy overlay/default or hardcoded env ref. Required native full schema/SecretRef/provider/harness validators must execute from already-admitted exact image, not partial C0 substitute.",
+  "C1CurrentVsProposed": "current code first copies/PVC merges, early doctor mutates configured plugin state and launches native CLI; source cuts do not implement immutable epoch/generation/source/trust proof. All new bootstrap/mount/materializer/decoder and original run receipt association remains PROPOSED.",
+  "localDefinitionIntegrationTasks": [
+    "after independent Gateway review compose full existing Chart profiles including controller/recovery/other existing branches without duplicate authors or source alias changes",
+    "explicit fresh root/schema/discriminator/file-set/case preservation join; keep Source-author-C1 finalized source roster and pending Security separate until frozen/read/reviewed",
+    "approved later source-specific same-bootstrap full69/native snapshot/doctor/mount/CFG epoch implementation; preserve native status/history and current supported data migration semantics"
+  ],
+  "originalFirstRecovery": "original service/run/session/agent/model/config/source/grants/credential provider revision/deadline/cleanup receipts before B; native Latest reads must become captured same original authority, not per-module hot-M config. Missing old reader/source/provider retention denies new/retry side effects; no budget/claim/PVC/history/secret/age reset.",
+  "generatedManagedPointer": "/profiles/local-A/settings/gatewayOpenClaw",
+  "proposedArmSchema": "gateway-service-selection.proposed.schema.json, fragment only; existing v6/root not changed"
+}

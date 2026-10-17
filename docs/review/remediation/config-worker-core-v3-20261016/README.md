@@ -1,0 +1,9 @@
+# WorkerCore v3 implementation checkpoint
+
+The sole selected owner is now component-v3, independently from the still-denied v10 candidate. Complete original captures reach all six named constructors, real native journal/ownership admission and replay, file readers, drain cadence, supervisor-fenced immutable routing epochs, and scaffold publication. Existing component-v2 / no-selection APIs keep their original behavior; no current-value completion of historical captures.
+
+Four Buster retention roles remain explicitly false because those consumers own no full-log writer/claim phase; a true activation now fails at policy receiving. The two real Prism writers remain adjustable. Standalone scaffold selection is explicit: `--worker-core-file <absolute worker-core.config.json> --worker-core-profile <profile>`; both flags are required together. Publications retain their original full capture and content/policy generation identity; later readers do not reopen the current owner.
+
+38 focused tests, 5 scaffold tests, both genuine installed-role source checks, the original executor contract, five typechecks, and both chart projection checks passed. Independent autoreview is clean for the exact final source manifest after fixing two accepted P2 findings. The reviewer could inspect supplied complete source, not execute independently.
+
+**Not full acceptance:** the first unfiltered role run failed the full inert archive restore with ENOSPC on `/dev`. A later supported-environment role run explicitly excludes that named required subtest; its two passing parent checks are not a native or whole-suite PASS. Root-backed alternatives are read-only; writable workspace paths have untrusted ancestry. No trust check, kernel/UID evidence, test assertion or acceptance gate was weakened. Full original matrix, isolated native/archive infrastructure and integrated independent C6 acceptance remain open. No deployment, main merge or paid Evals.

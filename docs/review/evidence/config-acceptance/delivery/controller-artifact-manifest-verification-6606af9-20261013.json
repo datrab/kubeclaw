@@ -1,0 +1,8 @@
+{
+  "method": "fresh complete file-set and SHA256 byte comparison after manifest write",
+  "manifestSha256": "5839b311fe39fa4eae5c7ae96fdb87488ab4e19e301513426c1456460774aac7",
+  "files": 1881,
+  "issues": [],
+  "result": "passed",
+  "acceptance": "NOT ACCEPTED; artifact identity only"
+}

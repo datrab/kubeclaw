@@ -342,8 +342,8 @@
     "secrets": 932,
     "tailscale": 1023,
     "infra": 1113,
-    "agents": 1475,
-    "smoke": 1600,
-    "teardown": 2829
+    "agents": 1483,
+    "smoke": 1611,
+    "teardown": 2840
   }
 }

@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -11,7 +14,7 @@ import { FileJournal } from '../../../skills/nova/core/state/journal.ts';
 import { runRoot } from '../../../skills/nova/core/execution/run-root.ts';
 import { activate as evidenceAdapter } from '../../../skills/nova/plugins/pipeline-review/src/evidence-adapter.ts';
 import { activate as artifactAdapter } from '../../../skills/common/plugins/artifact-store/src/adapter.ts';
-import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, sha256Text } from '@kubeclaw/plugin-sdk';
 import type { EvidenceSelection } from '../../../skills/nova/plugins/pipeline-review/src/evidence-bundle.ts';
 
 // Real Git/Core source producers and original artifact reads. No model factuality claim.
@@ -28,7 +31,7 @@ test('historical report source authority rejects foreign, stale, missing and cha
     const roots=['common','nova'].map(role=>path.resolve('skills',role,'plugins'));
     const registry=buildRegistry(discoverPackages({installationRoots:roots,trustPolicy:{trustedBuiltinRoots:roots,allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'report-evidence-test'}}));
     const unavailable=async()=>{throw new Error('UNEXPECTED_TEST_DEPENDENCY');};
-    const store = artifactAdapter({config:{artifactRoot:path.join(root,'artifacts')},registration:registry.adapters.get('kubeclaw.artifact-store:artifact-store')!.provenance,
+    const store = artifactAdapter({config:{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')},registration:registry.adapters.get('kubeclaw.artifact-store:artifact-store')!.provenance,
       invoke:unavailable,invokeConfidential:unavailable,emit:unavailable});
     const config = { storageRoot:path.join(root,'history-a/state'),orchestratorIssuerId:'nova',maximumJournalBytes:16*1024*1024,maximumArtifactBytes:4*1024*1024,maximumBundleBytes:4*1024*1024 };
     const owner = {runId:'run:report',stageId:'report',attemptId:'attempt:report',attemptNumber:1};
@@ -115,7 +118,7 @@ test('historical report source authority rejects foreign, stale, missing and cha
       const effects=effectBytes.toString().trimEnd().split('\n').map(line=>JSON.parse(line).entry);
       const request=effects.find(entry=>entry.type==='requested'&&entry.request.capability!=='secrets.read'
         &&events.some(event=>event.type==='effect.completed'&&event.identity.effectId===entry.request.effectId))!.request;
-      const rewrite=(file:string,entries:unknown[])=>{fs.unlinkSync(file);const journal=new FileJournal<unknown>(file);for(const entry of entries)journal.append(entry);return journal.records().at(-1)!.hash;};
+      const rewrite=(file:string,entries:unknown[])=>{fs.unlinkSync(file);const journal=new FileJournal<unknown>(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);for(const entry of entries)journal.append(entry);return journal.records().at(-1)!.hash;};
       try {
         for(const event of events.filter(event=>event.identity.effectId===request.effectId)) {
           if(event.type==='effect.requested')event.payload.resource.canonicalId='[confidential]';
@@ -133,14 +136,14 @@ test('historical report source authority rejects foreign, stale, missing and cha
       const options={storageRoot:config.storageRoot,maximumBytes:config.maximumJournalBytes,orchestratorIssuerId:'nova'};
       try {
         const snapshot=JSON.parse(originalSnapshot.toString());delete snapshot.registry.effectAuditVersion;
-        const {digest:_old,...unsigned}=snapshot;snapshot.digest=sha256Text(canonicalJson(unsigned));
+        const {digest:_old,...unsigned}=snapshot;snapshot.digest=sha256Text(snapshot.schemaVersion === 'run-snapshot.v1' ? canonicalJson(unsigned) : portableJson(unsigned));
         fs.writeFileSync(snapshotFile,JSON.stringify(snapshot));
         assert.throws(()=>readRunEvidence({...first,snapshotDigest:snapshot.digest},options),/EFFECT_MODE_UNVERIFIABLE/);
         fs.writeFileSync(snapshotFile,originalSnapshot);
         const entries=originalEvents.toString().trimEnd().split('\n').map(line=>JSON.parse(line).entry);
         const accepted=entries.find(event=>event.type==='effect.accepted'&&event.payload.executionMode==='durable');
         assert.ok(accepted);accepted.payload.executionMode='confidential';
-        fs.unlinkSync(eventsFile);const journal=new FileJournal<unknown>(eventsFile);for(const entry of entries)journal.append(entry);
+        fs.unlinkSync(eventsFile);const journal=new FileJournal<unknown>(eventsFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs);for(const entry of entries)journal.append(entry);
         assert.throws(()=>readRunEvidence({...first,journalHead:journal.records().at(-1)!.hash},options),/EFFECT_AUDIT_MISMATCH/);
       } finally {fs.writeFileSync(snapshotFile,originalSnapshot);fs.writeFileSync(eventsFile,originalEvents);}
     });

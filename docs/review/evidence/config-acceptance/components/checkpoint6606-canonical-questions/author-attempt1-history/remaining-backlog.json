@@ -1,0 +1,3921 @@
+{
+  "canonicalOwnerAliases": [
+    {
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "aliases": [
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/0"
+          },
+          "source": {
+            "path": "skills/common/plugins/state-store/src/adapter.ts",
+            "line": 35,
+            "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+            "sourceText": "  const store = new FileDurableRecordStore(configured, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/1"
+          },
+          "source": {
+            "path": "skills/common/plugins/wait-store/src/adapter.ts",
+            "line": 207,
+            "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+            "sourceText": "  const store = new FileDurableRecordStore(root, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/2"
+          },
+          "source": {
+            "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+            "line": 14,
+            "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+            "sourceText": "  const store = new FileDurableRecordStore(root, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/3"
+          },
+          "source": {
+            "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+            "line": 69,
+            "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+            "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/4"
+          },
+          "source": {
+            "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+            "line": 197,
+            "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+            "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/5"
+          },
+          "source": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "line": 168,
+            "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+            "sourceText": "  const records = new FileDurableRecordStore(configured, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/6"
+          },
+          "source": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "line": 173,
+            "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+            "sourceText": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/7"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+            "line": 104,
+            "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+            "sourceText": "  await withDurableStoreLock(pointer,async()=>{"
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "soleentry selectedNova projectScaffold.lockWaitSeconds ->checkedgeneratedprojection->requiredpublishJsonPair policy argument",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/8"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+            "line": 48,
+            "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/9"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+            "line": 344,
+            "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/10"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+            "line": 458,
+            "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/11"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+            "line": 53,
+            "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+            "sourceText": "      withDurableStoreLock(this.file, async () => {"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/12"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+            "line": 60,
+            "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/13"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 32,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/14"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 35,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/15"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 51,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/16"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 124,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/17"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 165,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/18"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 75,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/19"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 82,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    await withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/20"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 98,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/21"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 104,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/22"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 134,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/23"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 179,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/24"
+          },
+          "source": {
+            "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+            "line": 45,
+            "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+            "sourceText": "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});"
+          },
+          "ownerCompanion": "DemoHandoff",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/DemoHandoff"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/25"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-result-import.ts",
+            "line": 100,
+            "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/26"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-result-import.ts",
+            "line": 103,
+            "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/27"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+            "line": 24,
+            "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/28"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+            "line": 25,
+            "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/29"
+          },
+          "source": {
+            "path": "skills/nova/core/observability/reconciler.ts",
+            "line": 384,
+            "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+            "sourceText": "    attemptStore: new FileDurableAttemptStore("
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/30"
+          },
+          "source": {
+            "path": "skills/nova/core/observability/reconciler.ts",
+            "line": 388,
+            "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+            "sourceText": "    admissionStore: new FileObservabilityAdmissionStore("
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/31"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 46,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/32"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 47,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/33"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 89,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/34"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 185,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/35"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 234,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/39"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 31,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/40"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 34,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/41"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 125,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/42"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 71,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/43"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 72,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/44"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 93,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/45"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 155,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/46"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 173,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/47"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 191,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock,"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/48"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 238,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/54"
+          },
+          "source": {
+            "path": "scripts/retire-wait-value.mjs",
+            "line": 94,
+            "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+            "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/55"
+          },
+          "source": {
+            "path": "scripts/retire-wait-value.mjs",
+            "line": 95,
+            "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+            "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/56"
+          },
+          "source": {
+            "path": "scripts/retire-telemetry.mjs",
+            "line": 49,
+            "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+            "sourceText": "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/57"
+          },
+          "source": {
+            "path": "scripts/retire-operator-request.mjs",
+            "line": 65,
+            "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+            "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/58"
+          },
+          "source": {
+            "path": "scripts/retire-operator-request.mjs",
+            "line": 66,
+            "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+            "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/59"
+          },
+          "source": {
+            "path": "scripts/retire-admission.mjs",
+            "line": 53,
+            "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+            "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/60"
+          },
+          "source": {
+            "path": "scripts/retire-admission.mjs",
+            "line": 54,
+            "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+            "sourceText": "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/61"
+          },
+          "source": {
+            "path": "scripts/retire-attempt-result.mjs",
+            "line": 59,
+            "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+            "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        }
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "aliases": [
+        {
+          "owner": "Nova platform + each authentic retirement-original policy",
+          "field": {
+            "Buster": "existing buster-engine config settings.execution.stores.admission.reasonThresholdCodeUnits/reasonPrefixCodeUnits",
+            "Nova": "existing Nova PlatformConfig proposed observability.admission fields, NOT observers map",
+            "retirement": "CURRENT local operator command-supplied limits without verified immutable original-policy equality; TARGET original captured policy lookup and equality, no new command author/latest. See retirement-binding-contract.json."
+          },
+          "reason": "same original Nova/caller author extension; not Buster alias. Parent carrier/task partition and authentic legacy manifest/quota binding remain independently open.",
+          "definition": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+            "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+          }
+        }
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "aliases": [
+        {
+          "owner": "Nova platform + each authentic retirement-original policy",
+          "field": {
+            "Buster": "existing buster-engine config settings.execution.stores.admission.reasonThresholdCodeUnits/reasonPrefixCodeUnits",
+            "Nova": "existing Nova PlatformConfig proposed observability.admission fields, NOT observers map",
+            "retirement": "CURRENT local operator command-supplied limits without verified immutable original-policy equality; TARGET original captured policy lookup and equality, no new command author/latest. See retirement-binding-contract.json.",
+            "fields": "metadataReserveBytes alongside reason formatter in same admission author"
+          },
+          "reason": "same original Nova/caller author extension; not Buster alias. Parent carrier/task partition and authentic legacy manifest/quota binding remain independently open.",
+          "definition": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+            "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+          }
+        }
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "aliases": [
+        {
+          "owner": "parent Prism",
+          "sourceHandoff": {
+            "primary": "AUTH-PRISM-DESIGN-CARDINALITY",
+            "owner": "parentPrism",
+            "status": "parentproposed2/3 and originalA3 preserved; boundedreviews notglobalbusiness/runtimeacceptance"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "aliases": [
+        {
+          "owner": "parent Prism",
+          "sourceHandoff": {
+            "primary": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY",
+            "deliveryAlias": "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION",
+            "status": "OCI vs syntheticcode/currentnotinstalledproof; authentic provider physicalprerequisite; openPrismspoolquota remains explicit"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "aliases": [
+        {
+          "owner": "delivery exact rolebinding",
+          "sourceHandoff": {
+            "primaryIds": [
+              "DLV-BUSTER-KUBERNETES-CAPTURE-PATH",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBECONFIG",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-HOST",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-PORT"
+            ],
+            "caseId": "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE",
+            "owner": "delivery existingBuster role injections; originalModule cleanup/grant parenthandoff stillunsettled",
+            "status": "frozen exactproposed definition not selfaccepted"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "aliases": [
+        {
+          "owner": "delivery exact rolebinding",
+          "sourceHandoff": {
+            "caseIds": [
+              "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+              "DLV-CASE-NATIVE-HOST-ACTIVATION",
+              "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+            ],
+            "periodPrimary": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+            "owner": "delivery hostpolicy/DLS exactrole; no equalvaluealias",
+            "status": "frozen proposed Hversion/poolmaintenance/render projections; authentic host observation futureprerequisite"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ]
+    }
+  ],
+  "remainingExactSourceLinkCandidateIds": [
+    "SRC-ae3c2b0bb81275f6",
+    "SRC-eac5ec66c49e4c61",
+    "SRC-4531f56429cdcc26",
+    "SRC-fa5d875cf1fc1453",
+    "SRC-e95d781b7945c3ca",
+    "SRC-fd03cb740079506d",
+    "SRC-ea5d74692fd5fcdd",
+    "SRC-3b4dfcac94af3ad0",
+    "SRC-13c8327678d63641",
+    "SRC-c63f4f93fa7cdd5c",
+    "SRC-a9734a7cd38b3ac8",
+    "SRC-b56d3dbbda2be12a",
+    "SRC-e6907369daeea5f0",
+    "SRC-bd47d110c9c2cd08",
+    "SRC-a366c6559124018b",
+    "SRC-2ca0c163bfd57e6a",
+    "SRC-ebf7b04f4d29d2a2",
+    "SRC-afb46a862af2aba2",
+    "SRC-2c2ac88045e1466a",
+    "SRC-0df3219425694d32",
+    "SRC-aef6e7039a2275ee",
+    "SRC-67c430e72eaac66f",
+    "SRC-57cb00ca4eabc545",
+    "SRC-8a4e8d06736d60dd",
+    "SRC-86dc939a3781a657",
+    "SRC-06bc4d6b59e26c57",
+    "SRC-0c6cc12a9bfa267b",
+    "SRC-45fad50cc81d0e1a",
+    "SRC-716b739be4cecd45",
+    "SRC-e93f46c40ecb090f",
+    "SRC-b58330b11bc9937c",
+    "SRC-a30bde8e6768aa0d",
+    "SRC-09ce1b9ee65a642f",
+    "SRC-d2d674b2b40f10c8",
+    "SRC-23680b82df66c3c2",
+    "SRC-e38d58ab93751d52",
+    "SRC-bf75aadf6f1293e4",
+    "SRC-b126090f88def1b4",
+    "SRC-925663eccdd8ca24",
+    "SRC-3d8c10cd3713dd96",
+    "SRC-5f56fb930b1db9a2",
+    "SRC-a2bc5af12212cb25",
+    "SRC-b96a9744111b14ce",
+    "SRC-2883067f9ab4249e",
+    "SRC-47379f36070f2752",
+    "SRC-c6e04c71405ea187",
+    "SRC-28c50f1677549875",
+    "SRC-058e8d124a42aca6",
+    "SRC-d78ed9bf7703d9db",
+    "SRC-bd9aa0bcc31729c1",
+    "SRC-54fc721bedaa2ebc",
+    "SRC-d004f9836608bece",
+    "SRC-72d335e10b820a27",
+    "SRC-e1a35f2f2665334e",
+    "SRC-96de922579951934",
+    "SRC-24837b2d52dfe6f5",
+    "SRC-eab2072be2b585ce",
+    "SRC-6b44fa4d110882a8",
+    "SRC-cebd8bd3836afb11",
+    "SRC-befd3c7370a11202",
+    "SRC-9a7aefc8d73b406d",
+    "SRC-b1088ee4dd750b49",
+    "SRC-ecf1191a92f7ac14",
+    "SRC-bfd8bded54369d2e",
+    "SRC-abe6cfb036a517fc",
+    "SRC-25b674c5951feeca",
+    "SRC-abccb40a80c45648",
+    "SRC-e4ce93fa6cd2747d",
+    "SRC-2ce070c768a2b0e8",
+    "SRC-fe1009d6b8b14c88",
+    "SRC-88a5fbf34f91bed8",
+    "SRC-0d33b13504e38b24",
+    "SRC-8bfc399763998b4c",
+    "SRC-d33473dc99087f40",
+    "SRC-b2fd2eed68fc8499",
+    "SRC-5d2ec71a4ea32efa",
+    "SRC-a62b54240319d289",
+    "SRC-4258e62d8a34b29d",
+    "SRC-b3b94b8d3628c480",
+    "SRC-0e01a2f843fe37d7",
+    "SRC-83330731971e5f0a",
+    "SRC-59e89167ca222c2b",
+    "SRC-6bf9bec8e1c06c3f",
+    "SRC-8ccea5db81b7101c",
+    "SRC-74bd9239727c09f3",
+    "SRC-fd39947ce0fe0cc9",
+    "SRC-859661f1f5a6a785",
+    "SRC-a2e584e5db17ae52",
+    "SRC-4a4cdcf07f2e1b3b",
+    "SRC-620121bb5df2f18e",
+    "SRC-23833936c3377d20",
+    "SRC-34c835946ebf0782",
+    "SRC-b9c7e6b9d1779731",
+    "SRC-be1f522cbcf691c9",
+    "SRC-0a77ad44b1e87434",
+    "SRC-ec134829e8b29209",
+    "SRC-2170d3e66372156d",
+    "SRC-d212f3cd6c619741",
+    "SRC-c8614077f94aaf70",
+    "SRC-cbff79476941c576",
+    "SRC-9aaa84d05cd8be66",
+    "SRC-f1be2b701f82139d",
+    "SRC-cd6f11f4082c27ad",
+    "SRC-dc9d749fd80f3a84",
+    "SRC-d2c8b245fc16de40",
+    "SRC-5698b9cdad20b0be",
+    "SRC-b6fc8e9f68982731",
+    "SRC-70fdc98f19cfe10a",
+    "SRC-43e0e6ddb20f0fb5",
+    "SRC-9b38bba0ebcc3821",
+    "SRC-87b32477aa6abe16",
+    "SRC-3b71838781ea05b6",
+    "SRC-3ef6ecdd17b3f6d8",
+    "SRC-28bb582fccb15f7c",
+    "SRC-7078496041f224a0",
+    "SRC-7c4c5e3f0ca3c41e",
+    "SRC-e5feb65589ec7af0",
+    "SRC-519142f63673302b",
+    "SRC-2c39d7f3be8130eb",
+    "SRC-d49770db38195393",
+    "SRC-d467d1cd37b298fc",
+    "SRC-ba4568baf2b6ef56",
+    "SRC-1ee36c685e859ffa",
+    "SRC-b45b27c86a3c5cfb",
+    "SRC-2022d0d54da25078",
+    "SRC-cb09086485698f55",
+    "SRC-116affb3b350e15a",
+    "SRC-c815af3b24cce619",
+    "SRC-3dacdc920b4b8002",
+    "SRC-dfd3a1f52d32d40a",
+    "SRC-08ea0e8ace39f33b",
+    "SRC-1b819e804b2e8faa",
+    "SRC-fa29ca0a467c48bd",
+    "SRC-096ef92070df1fa8",
+    "SRC-3907e2d7f1390afb",
+    "SRC-6f27e6e52ba950f8",
+    "SRC-0eadfecd2c27060f",
+    "SRC-599b07870c8c7654",
+    "SRC-94ff89847bbcb4e0",
+    "SRC-35f7f18425df66f9",
+    "SRC-d04b5fc1bb208287",
+    "SRC-c286a9f658b21268",
+    "SRC-4a2cf19b3aa2c391",
+    "SRC-862b83f012d64140",
+    "SRC-8bf957ebc10f600a",
+    "SRC-8766b784ee7487d8",
+    "SRC-b57683d8ac670e5d",
+    "SRC-a99a4992a126c0b9",
+    "SRC-7119f2851338f385",
+    "SRC-0de0d9c3f8fbc906",
+    "SRC-c6c0948d8c4b6b48",
+    "SRC-20c70f3fd494c58c",
+    "SRC-b193bfd2ffc0c320",
+    "SRC-87358c16cdc36c8a",
+    "SRC-62d78821cbf4bd1d",
+    "SRC-d9fd0efbd9cf68bd",
+    "SRC-aecac365bd373fa9",
+    "SRC-ac078bf9d0eecfa0",
+    "SRC-ea1ddfba056572b4",
+    "SRC-bf699516193d6c9f",
+    "SRC-82af1509f38a894a",
+    "SRC-805d4f665975c421",
+    "SRC-aa884bff8eba5b96",
+    "SRC-ae67329937fd8a1e",
+    "SRC-214fea2dbfc104cb",
+    "SRC-2d356aa81f8f34ff",
+    "SRC-fd4049ab9278c1e0",
+    "SRC-f194ccb22b94637d",
+    "SRC-cfff30686540aa69",
+    "SRC-d283bb55a6092fec",
+    "SRC-6b5ef1c80f5ac2e9",
+    "SRC-7d3934227f2cfa67",
+    "SRC-4996f782bc71c950",
+    "SRC-1f0a8cbdbc4ffb31",
+    "SRC-166acb5a3f4c2ab0",
+    "SRC-af5ae5a05edaa748",
+    "SRC-8b0135addc6a9b1e",
+    "SRC-55807d8f7f6cb59c",
+    "SRC-ea1e2994eda8b5a5",
+    "SRC-50db0bb8f354221b",
+    "SRC-23640ac883bf9dc0",
+    "SRC-73ca5d7ad239d65b",
+    "SRC-bda78358b57366e5",
+    "SRC-9226c54ad3aee68f",
+    "SRC-d677e3fbcc64bcd3",
+    "SRC-30919356cbec0b84",
+    "SRC-acaf56bd39f027ec",
+    "SRC-43f3b8eb88584fb6",
+    "SRC-fe287ccc71df17f7",
+    "SRC-ac253a3d2b9490d6",
+    "SRC-bf70688059df48a3",
+    "SRC-891f02df5d8c4477",
+    "SRC-14ad8b366536ef1a",
+    "SRC-9f32b0817e6597dd",
+    "SRC-477415f339127f25",
+    "SRC-0fb1ffc5eddb2a55",
+    "SRC-16e794b54b07b306",
+    "SRC-3fbace29c5e4fa53",
+    "SRC-04606702712e341c",
+    "SRC-0106e0bd6f086178",
+    "SRC-81560edf8d36e960",
+    "SRC-d94f4787cc9e68cf",
+    "SRC-8b25151c7d0f2202",
+    "SRC-01154a8c05c55248",
+    "SRC-94806c076960ced7",
+    "SRC-31451ea55cafbf04",
+    "SRC-418e998336930558",
+    "SRC-6d37c3d7ed42bf3d",
+    "SRC-629f4ce41bb89fee",
+    "SRC-9848c97c9319cd1d",
+    "SRC-be24b2094a6da316",
+    "SRC-26b849bed2e1ac82",
+    "SRC-3b38fdd30b9a8036",
+    "SRC-8845bb2071984c12",
+    "SRC-6a45c343c830ad4a",
+    "SRC-4535ebc89579c7b7",
+    "SRC-526d02216524240a",
+    "SRC-e05b38090f34ff81",
+    "SRC-790ac7e299c2d55a",
+    "SRC-e75cae6fdcc63e28",
+    "SRC-9cf8ad491c1f3a5c",
+    "SRC-545ecfc86f0702cf",
+    "SRC-47e0c4fd4f76889f",
+    "SRC-b9f6a435e00c0fa2",
+    "SRC-ea84bc1c2d836125",
+    "SRC-31641e93e7865725",
+    "SRC-142875ea931d5795",
+    "SRC-ed05ea582daff991",
+    "SRC-dde8027d19c20b83",
+    "SRC-2afc5e94daececc1",
+    "SRC-dc19554a1cdb3bb0",
+    "SRC-d69ada69f496a6ea",
+    "SRC-d86487174362afac",
+    "SRC-db437b262a98f396",
+    "SRC-6ed149a6e34f97d8",
+    "SRC-0a1a9c1b10d780f2",
+    "SRC-8eff0e7db9070eb1",
+    "SRC-790c76e6db047dbf",
+    "SRC-375093b34ae75cd5",
+    "SRC-0e7a51994d1670a4",
+    "SRC-4d522db8cdcf2525",
+    "SRC-ed4026ce0a337133",
+    "SRC-b49b0c6f3fd6f08f",
+    "SRC-42a54e5aa54bc2e2",
+    "SRC-78266eed579db3ac",
+    "SRC-77666e8d573e539f",
+    "SRC-3d9fc188843967bb",
+    "SRC-64836c32641aa30e",
+    "SRC-759e59761caf0b54",
+    "SRC-a774825b85f328b2",
+    "SRC-f39b03a94638fde4",
+    "SRC-c1772e8ad9fa7fe6",
+    "SRC-fe0987726db15a77",
+    "SRC-77c68274abfda3c3",
+    "SRC-611c4d0ef9294877",
+    "SRC-cb6d9f408cf2c9ed",
+    "SRC-4a582db71f8984d7",
+    "SRC-08c9cf0fdb6030f9",
+    "SRC-ec66de2a111f0567",
+    "SRC-ca412d0b6544afc3",
+    "SRC-4cb8292ff2e24a20",
+    "SRC-0eb6ca8260f8f271",
+    "SRC-0a077a99f48fbcc5",
+    "SRC-cdff78592ae8749a",
+    "SRC-75d0defccb80ab98",
+    "SRC-7ccbf43780027d0b",
+    "SRC-c48c1477f36c11f6",
+    "SRC-014d4a4976c2ba85",
+    "SRC-3f6b8b091ade4908",
+    "SRC-1ce1951bfa05d36d",
+    "SRC-4c373d144f3743d1",
+    "SRC-f901c91203d57aab",
+    "SRC-ed4f999b7f142b54",
+    "SRC-67d83deca6729842",
+    "SRC-2d05dd1b5adb77e4",
+    "SRC-a62703fc52f9a662",
+    "SRC-45b1fdf5c8d77e62",
+    "SRC-e9e18bac52eb2285",
+    "SRC-5f7b89865ed2cc26",
+    "SRC-8cad79519574579e",
+    "SRC-e07c9dcd7ecbe49f",
+    "SRC-4c23d7ef3fb55bae",
+    "SRC-88f88fde5ab10b00",
+    "SRC-f9272123b7cafe14",
+    "SRC-01c0f6c824b0ff25",
+    "SRC-8c22058043bd151f",
+    "SRC-7e67476db2307572",
+    "SRC-1d0b843a0f5629f2",
+    "SRC-654961fc48c44609",
+    "SRC-836196fdfbecdce3",
+    "SRC-be8fbea2f6ce3923",
+    "SRC-282e7f7715476d58",
+    "SRC-dabd102b437395bc",
+    "SRC-1f4ff952a2dcc81e",
+    "SRC-f701602b57ead940",
+    "SRC-3e6c22d148b46430",
+    "SRC-4dc7095c6be2bcdb",
+    "SRC-e83db8691db60683",
+    "SRC-66e3a01f103d44da",
+    "SRC-a6a58ba1b1cbd129",
+    "SRC-73767cf7460c20df",
+    "SRC-23640ef4e0914eaf",
+    "SRC-20694205835fde32",
+    "SRC-0cc51cfe0e243c49",
+    "SRC-8eb2f1e2842447fd",
+    "SRC-9ba3fab4ec77fbcd",
+    "SRC-8e55ccda2ed8857e",
+    "SRC-e69cf598ff8883c4",
+    "SRC-c4294dbce2ee4aa9",
+    "SRC-865dc29bb467bafe",
+    "SRC-e9be333bdc4c1abc",
+    "SRC-f619769837c71b89",
+    "SRC-df9227288f5bd80b",
+    "SRC-2dbee8341df75969",
+    "SRC-ebaef02dfd0fcb98",
+    "SRC-25051db94acba4fc",
+    "SRC-9e9a9c24533035b8",
+    "SRC-eb42c3ce5d292b85",
+    "SRC-16f5157d14b2d3c4",
+    "SRC-9621195abd1d4474",
+    "SRC-06a218a5a44b5061",
+    "SRC-4ee6a515c1fcc4a8",
+    "SRC-3fbbbd117c7a6e95",
+    "SRC-5ecb0f15fcb19fa5",
+    "SRC-cdd7c2ffce41847c",
+    "SRC-f2d1ae24430e3cd4",
+    "SRC-c886801fe4cfc248",
+    "SRC-7089e7467662cb64",
+    "SRC-e13443f53a6e2d4d",
+    "SRC-1c4840adc3f93971",
+    "SRC-7d10158188e1db4d",
+    "SRC-67c122eaaace79a7",
+    "SRC-675ddd34b1013ae9",
+    "SRC-abbdc860a79a8269",
+    "SRC-5a2e1b54929b36c7",
+    "SRC-93513f5b112665e1",
+    "SRC-29a8f02f7461157b",
+    "SRC-7a915b0216394970",
+    "SRC-e87161f2a6008389",
+    "SRC-ffdc6bc1a4cec013",
+    "SRC-8f1d534f297dcfe8",
+    "SRC-03659f0dc9342d00",
+    "SRC-d88b17fcaac96b00",
+    "SRC-b11e0f489d48593a",
+    "SRC-13ef5cc7106cebc2",
+    "SRC-93c2f70a6aaa6319",
+    "SRC-5084835a0d081624",
+    "SRC-4e525c9e1e243f08",
+    "SRC-b97f15ee33b31b14",
+    "SRC-04a4078b2d1cc83d",
+    "SRC-d8cbe02101255c1f",
+    "SRC-56805e3962d5c52d",
+    "SRC-348a4063f5bd6103",
+    "SRC-628457064f7871b1",
+    "SRC-7593bbfd19a1d46f",
+    "SRC-674dfeae952e6eca",
+    "SRC-a58329f17339cf97",
+    "SRC-466c7c74976b9587",
+    "SRC-f58d6e5c7fee53c4",
+    "SRC-443ccee508bcea58",
+    "SRC-58896c928ee511e9",
+    "SRC-f46605686423f326",
+    "SRC-de90ebd965e87d88",
+    "SRC-4697fad3e8faeb44",
+    "SRC-982fbea74962c22a",
+    "SRC-7d21714bd9c0c3c0",
+    "SRC-c9a3ee1856722184",
+    "SRC-5a86d88ea3024390",
+    "SRC-b694464d9ec1e726",
+    "SRC-e3e643f388dc0cb0",
+    "SRC-91910217b57b4275",
+    "SRC-caccd385c4e2c876",
+    "SRC-bf86c866d808592f",
+    "SRC-b94da28120c68621",
+    "SRC-25bb40263b0296fe",
+    "SRC-3e53155d606640f5",
+    "SRC-7ba3e88a75b95621",
+    "SRC-3b81b023d064ae8b",
+    "SRC-15c42026b36c9a18",
+    "SRC-74d2325ec991d2e3",
+    "SRC-a02d3cac20621947",
+    "SRC-58ffab67735afe8b",
+    "SRC-1931bc5a84df3718",
+    "SRC-5600662f0e1f842b",
+    "SRC-a5d1ff7ff13488aa",
+    "SRC-602ddc0d109cf50a",
+    "SRC-1dbde30779be8fe2",
+    "SRC-989fc2473e01654f",
+    "SRC-c26c2810ec2f5019",
+    "SRC-0172d6dcddf29553",
+    "SRC-dc85aa3456f5a874",
+    "SRC-b5493397341fe3fb",
+    "SRC-49562f947f248d7f",
+    "SRC-327bfdeedfd9c08c",
+    "SRC-2617b4553ef6dd6e",
+    "SRC-25b1b95f35caa399",
+    "SRC-551f0b0fb6d44a99",
+    "SRC-2bea64adda70ee07",
+    "SRC-f263a441dd795298",
+    "SRC-c5b61df3b590e791",
+    "SRC-d9a391d62a9e6b8c",
+    "SRC-3b2596d2eae21d03",
+    "SRC-0a449e0bd933eda2",
+    "SRC-e6b610772da5a371",
+    "SRC-292bf9de42d77b67",
+    "SRC-01cdab25b1db3db7",
+    "SRC-e8b95204067631f0",
+    "SRC-b9a35ac5bbce3254",
+    "SRC-06372b4297e144c8",
+    "SRC-37a0847cc87d136d",
+    "SRC-6926920601bc37ef",
+    "SRC-8c5c8fac6ee0be91",
+    "SRC-ec582ad4d28d9ff3",
+    "SRC-fcffd55d68e02479",
+    "SRC-d5436865bf8eb5b2",
+    "SRC-c0f2420fa7b072cf",
+    "SRC-6d5be07b0dcbbbf8",
+    "SRC-374e1258cddcc4a7",
+    "SRC-528a504677c211b8",
+    "SRC-98a91b2b0545e6cb",
+    "SRC-26525235cbc6177a",
+    "SRC-fff62ee4de9e7934",
+    "SRC-311802bd5e89ae75",
+    "SRC-1c1f97132f460355",
+    "SRC-f2b8e0002872fd70",
+    "SRC-e856f3fb5437db77",
+    "SRC-dfa8160d248b31bb",
+    "SRC-afc16d307d3eb62f",
+    "SRC-d3ac7a88d84f6b8d",
+    "SRC-cec085405e00d5cb",
+    "SRC-3438f18c295a1d68",
+    "SRC-dbefdba673dd37c6",
+    "SRC-6b3e3635d2ec6d31",
+    "SRC-5da5fa64f60ab4c5",
+    "SRC-dd3dcec81bd9a28e",
+    "SRC-c53938bbec12ca03",
+    "SRC-0c1d8490c504ffaa",
+    "SRC-1eedd5c2e30af05e",
+    "SRC-451178566fc7ff16",
+    "SRC-24d01e98e333920e",
+    "SRC-f4cd031089b07c9c",
+    "SRC-4f58c6ad77818479",
+    "SRC-1e1012941a593bfa",
+    "SRC-2ae5a4d10c20660f",
+    "SRC-245741866afb4eb6",
+    "SRC-7ddb589060577d68",
+    "SRC-272416e40657dca1",
+    "SRC-f81c94704e06471c",
+    "SRC-5f9628e24d963f0c",
+    "SRC-1022ceb1737c2638",
+    "SRC-df66e9231ea78e16",
+    "SRC-7d1be834789bd7bf",
+    "SRC-0d1dbb37d651b1cd",
+    "SRC-68a8ec96a281bec3",
+    "SRC-dda7f770de1338a0",
+    "SRC-ea4e355ae00e5ae4",
+    "SRC-e2f326ad0ad538e3",
+    "SRC-f3f50e439ce22267",
+    "SRC-04d9dda82066151a",
+    "SRC-b1cc3b530be5da27",
+    "SRC-c3b8de4c47a46267",
+    "SRC-de7f4aa4b5103fea",
+    "SRC-6631775096e34c7d",
+    "SRC-2036b66484fd2436",
+    "SRC-9b56d5cc930f8e4b",
+    "SRC-d1122ece2f992647",
+    "SRC-2f85a21575eabbdf",
+    "SRC-e3fad972ec148c79",
+    "SRC-a91748cfb60cf922",
+    "SRC-0475b04a141d3bc8",
+    "SRC-e236eb1337bed662",
+    "SRC-b57ca54c3e30d6b2",
+    "SRC-821f387b1e2de57c",
+    "SRC-0e0b07cf31af1868",
+    "SRC-5c557402403e7a20",
+    "SRC-f20cee7515d114ea",
+    "SRC-09c97ff96be7efe5",
+    "SRC-e4ae06ef0a1d62ea",
+    "SRC-444433569b4d4a1f",
+    "SRC-630c4a0b6f335f10",
+    "SRC-b4bba74ff5cc1e22",
+    "SRC-feb3da9a73d25a2a",
+    "SRC-08f18f9d46dddd87",
+    "SRC-9eaf0f5ede614233",
+    "SRC-a3cffedb1ec53771",
+    "SRC-05d0545a3970da98",
+    "SRC-1287dce5c582add3",
+    "SRC-c953d236b32412e8",
+    "SRC-07f4019880385e8f",
+    "SRC-8e00691c1409eab0",
+    "SRC-2b44fdf5a0a7aac9",
+    "SRC-8709dc35b778d3ac",
+    "SRC-6b690ef52295d9c3",
+    "SRC-9e261d1015dacf17",
+    "SRC-535da97831b9df0c",
+    "SRC-23c710064d4ea839",
+    "SRC-3e74751313297432",
+    "SRC-4dab2ca3ce284c34",
+    "SRC-c062a869af192e28",
+    "SRC-d40f3e6f10e06ceb",
+    "SRC-e4e14cb8655a0bf1",
+    "SRC-80cf56b15cb580b1",
+    "SRC-e11066a8ef0e3fc4",
+    "SRC-6c421b9b8ec8d1b0",
+    "SRC-ab2f28887e77d3dd",
+    "SRC-2ad4ec6de326e66b",
+    "SRC-257787ce215004b5",
+    "SRC-1c9cb3b640e9757f",
+    "SRC-c95308cb2dd7d861",
+    "SRC-6037839b22d63e77",
+    "SRC-4a6f689a7e0e6112",
+    "SRC-27d25df16b94fdee",
+    "SRC-52d41ccc4368e150",
+    "SRC-b40d49dfd3bec2e0",
+    "SRC-d4530214dee11bee",
+    "SRC-9506931c4e71f415",
+    "SRC-d5759b8e5029c08e",
+    "SRC-f5ea47ec7d2e74bd",
+    "SRC-ac5bf6c29bfa78b0",
+    "SRC-ce1fd7ba55275dfb",
+    "SRC-09d7e7746f087e08",
+    "SRC-5a07b237025ac0b3",
+    "SRC-b2c3824121456362",
+    "SRC-9a8629c5180b7b1a",
+    "SRC-42d1aa1fdc56a06f",
+    "SRC-08404fcd77fe7077",
+    "SRC-330a94ab4ed5dd7e",
+    "SRC-182b813bc2dc7897",
+    "SRC-b4bf51c9a5799e46",
+    "SRC-9eb8a17f0d729047",
+    "SRC-85e48f43afac7650",
+    "SRC-06d4b335a8a70787",
+    "SRC-f1e59f2fc4a9f558",
+    "SRC-540e62b74777e6fd",
+    "SRC-bf465151d6d9b7ab",
+    "SRC-b5ed690d1a6ec5ce",
+    "SRC-f71b1d5fedce9d83",
+    "SRC-a4e75f3a47f9b3a2",
+    "SRC-069335cb1952c607",
+    "SRC-48f8acec24802c22",
+    "SRC-d25308c619d57c6b",
+    "SRC-b4038dc86f113a1c",
+    "SRC-8f0216fe4e1b8c1a",
+    "SRC-3120db85f0e5682c",
+    "SRC-aa898fce8c1850b3",
+    "SRC-f0ecb81646d26a7c",
+    "SRC-cd7cac477bae280d",
+    "SRC-27ee2c73d724c458",
+    "SRC-27e1dcd36966c604",
+    "SRC-81e45e64f6596466",
+    "SRC-f5f3ecf280fcfdac",
+    "SRC-5917a45ee2920cac",
+    "SRC-c77389b0fd0592a1",
+    "SRC-8de5194670e9dedc",
+    "SRC-f1d07e5dcc376e0a",
+    "SRC-90488d9e0fd926b3",
+    "SRC-8ca0cd28b077f59c",
+    "SRC-9caf55b3e71ed611",
+    "SRC-49d61e5acc463681",
+    "SRC-3ad358f52bffa450",
+    "SRC-e4f0c7fc46e4730a",
+    "SRC-5be6f8f142e0cfda",
+    "SRC-6e16cb07fa9819f5",
+    "SRC-9969b3bf66938ce3",
+    "SRC-726b92d2911dfdee",
+    "SRC-6ae94c7762944284",
+    "SRC-9a9b77ee1590e66b",
+    "SRC-58a80cde54779d63",
+    "SRC-553387064086e454",
+    "SRC-39b381816ddae022",
+    "SRC-c8ff2640677caa41",
+    "SRC-1920caa63543428c",
+    "SRC-e125def9cea530a1",
+    "SRC-ac4c5a1eb485df5a",
+    "SRC-cbd7f9deb27f8694",
+    "SRC-a35a835384719b9a",
+    "SRC-e15ebc1c5696f51d",
+    "SRC-9173a2763ad9bde1",
+    "SRC-5166b2496d7e9468",
+    "SRC-ff1f81583703afe7",
+    "SRC-55d1f78ee096959c",
+    "SRC-e22deed16e6ac632",
+    "SRC-6104517ed4453834",
+    "SRC-ca161e568453c909",
+    "SRC-b38076567f6672f4",
+    "SRC-f5712bc3f0834f66",
+    "SRC-9ad85e3d5bef1a7e",
+    "SRC-471e631f038c4c52",
+    "SRC-9994e79e9e483856",
+    "SRC-5e15e2e6713c7e21",
+    "SRC-7a03ed42592ebd7b",
+    "SRC-ee22630c87312b7c",
+    "SRC-037d0c0960b03aaf",
+    "SRC-fca8b96af7cb4cd2",
+    "SRC-c4ec5df43751d664",
+    "SRC-2e21f6266db92de8",
+    "SRC-3a32221094cd9e20",
+    "SRC-759a23bc3619f4ed",
+    "SRC-f7838a280ad9dbb5",
+    "SRC-510805d92c25323d",
+    "SRC-de3f7cd797a2fdce",
+    "SRC-ddf8f3ba2ddffc61",
+    "SRC-a7119e1d2b8b83df",
+    "SRC-da3254959fe21e13",
+    "SRC-a72d3e961e476904",
+    "SRC-58f505fed75a7928",
+    "SRC-3f88702c68b969ed",
+    "SRC-068c0287bcd2b721",
+    "SRC-ea58b468e24f98de",
+    "SRC-db59047bb86af641",
+    "SRC-e8935af34c4ae3b1",
+    "SRC-ba702dd108c2bed0",
+    "SRC-e8fbbf0185799034",
+    "SRC-db782f0478cab61e",
+    "SRC-77893649b77a281b",
+    "SRC-5e3f59557f4f4780",
+    "SRC-97a53d39269895b0",
+    "SRC-91245555e03c499e",
+    "SRC-9e708001cb63aca1",
+    "SRC-1c91ff05e17fe187",
+    "SRC-610b3b1cb352f15d",
+    "SRC-436387ffa5c55f09",
+    "SRC-f2142a88c33aa834",
+    "SRC-9dfbef7b81f461eb",
+    "SRC-c0bf9f2a03c5627a",
+    "SRC-4f7fe0a234dbfad4",
+    "SRC-37f418839d9131e5",
+    "SRC-ea30101feb901659",
+    "SRC-ce2287097211465c",
+    "SRC-ff058c3dd15e5d6e",
+    "SRC-2c59381243fef67b",
+    "SRC-37ee0b5a23b037b5",
+    "SRC-f7bb90ed0290602c",
+    "SRC-e6d2b8350a8e5901",
+    "SRC-b3942c0f2a0634bc",
+    "SRC-1a7318969a288d13",
+    "SRC-21e11a3e5a90762a",
+    "SRC-5356bfa3418165c8",
+    "SRC-433f367e5a897c99",
+    "SRC-421020d42bae9ce1",
+    "SRC-8e1da2e8365afa9b",
+    "SRC-32bffbb9777ebefd",
+    "SRC-2c53a6584b709d50",
+    "SRC-394271cca7131b1c",
+    "SRC-ea04fd6098ff2dc0",
+    "SRC-3144933f17a07e33",
+    "SRC-17f26fdc5445e00b",
+    "SRC-18b9323280f1f865",
+    "SRC-0dbd7bad54971939",
+    "SRC-512408dd2dc6442e",
+    "SRC-2932508b1ff1f8ba",
+    "SRC-b0b3ce27f16e9ff4",
+    "SRC-db0e4b61308dfc9a",
+    "SRC-a14dcee3a0534e23",
+    "SRC-eae0884048431a50",
+    "SRC-dd7a58a4b4c53099",
+    "SRC-5ef8a9512d78244d",
+    "SRC-f6541f01147d56a4",
+    "SRC-998e4337fe1b5ed5",
+    "SRC-29c40abfb5307947",
+    "SRC-5057afd007ea9b45",
+    "SRC-003505f0efcb8697",
+    "SRC-cb463d309b5ed7e2",
+    "SRC-cae456a60aa940b3",
+    "SRC-25f1e0fa3a6f40ce",
+    "SRC-e3b8ad199a74889f",
+    "SRC-145704fcf51a5513",
+    "SRC-2bd856f83ed88b80",
+    "SRC-722f1ba95a1210a0",
+    "SRC-17d5fcd8a814a331",
+    "SRC-52e7db6020ee17b8",
+    "SRC-b64f82c72b2d58e1",
+    "SRC-3995b80886887fbf",
+    "SRC-f8e41d6dc172a3e2",
+    "SRC-23d250d9639136c7",
+    "SRC-0d2c19a18f4015ef",
+    "SRC-d953506d63394446",
+    "SRC-6955cd4f7dc6aa23",
+    "SRC-6c4b095ff783fe64",
+    "SRC-6e8181fce04ee3bf",
+    "SRC-2857f1b074efd757",
+    "SRC-b6e8b1075ab02bcc",
+    "SRC-80659c3b214373c3",
+    "SRC-38805bca1fdedc93",
+    "SRC-a7eb61dcc47ebe59",
+    "SRC-e770b25bb1564fd3",
+    "SRC-04cf804bbbf2db96",
+    "SRC-c0cd0ed1f2b5e30d",
+    "SRC-032dd538a3d3400f",
+    "SRC-66e0805d964d53f7",
+    "SRC-86b36c68d2ab4b88",
+    "SRC-17a8827c747b6256",
+    "SRC-0a709a75b71546c4",
+    "SRC-13913e3327db814b",
+    "SRC-2487a4df51129e0f",
+    "SRC-8ff13cf03cbc0a8c",
+    "SRC-f8de696722f1ed2f",
+    "SRC-9e9a90d755b162b4",
+    "SRC-101b633feec34072",
+    "SRC-ca17605b386b126f",
+    "SRC-fad63d4497327eed",
+    "SRC-c8ff3627495a823a",
+    "SRC-adf63c9ea152ab3a",
+    "SRC-b4331910b4f04bb0",
+    "SRC-44d284df0b248d0a",
+    "SRC-f064b5b0f3a9ea80",
+    "SRC-6b5bb50667d5d0e2",
+    "SRC-46e8725d2a00830e",
+    "SRC-e891f1a0d21af047",
+    "SRC-940c9ab5e214a1ee",
+    "SRC-e0f4a25ae3b6d0d8",
+    "SRC-6ed2400f9d6d023f",
+    "SRC-ae1bd04ec7628e44",
+    "SRC-9bc761478b9ab78d",
+    "SRC-4fd46d0279e397e3",
+    "SRC-ff5a267f92d4e5e6",
+    "SRC-ffbf0ecf8c5bb071",
+    "SRC-3d4b13f35d5047d9",
+    "SRC-06a6b7498b74f001",
+    "SRC-13e5abf09f1c3557",
+    "SRC-2eb75a0f54e39f7b",
+    "SRC-6c12bed1751db81b",
+    "SRC-3bfcb27ec1357e90",
+    "SRC-692105883fe13823",
+    "SRC-df42d7c32c1f4307",
+    "SRC-9da9efd9497737de",
+    "SRC-3a605c9f5777683d",
+    "SRC-7586ccdb0bdd49fa",
+    "SRC-bf4b0631278899b6",
+    "SRC-073d60209c7e4adf",
+    "SRC-c75a0395991d21c3",
+    "SRC-abacf9fad03ddcff",
+    "SRC-74b000493be28392",
+    "SRC-9da491f28a8a5881",
+    "SRC-d78166fb7deb57bc",
+    "SRC-12e34f65b0f87857",
+    "SRC-55fa766533dde5d9",
+    "SRC-f42bc42915757b8c",
+    "SRC-abf528985985df75",
+    "SRC-473b2c2d0c901e96",
+    "SRC-d3eb9e043a675702",
+    "SRC-cf014765ec79b165",
+    "SRC-c4e5b39c1c8515e5",
+    "SRC-278b7b70e4c73209",
+    "SRC-abc98e17f1c533bb",
+    "SRC-79b29132bfc5d0f4",
+    "SRC-b27736608a121883",
+    "SRC-199db468c085f1c0",
+    "SRC-c57df26eedac16be",
+    "SRC-9df9b3065ce1420b",
+    "SRC-bdc2887cbfc8242f",
+    "SRC-443329bce0375641",
+    "SRC-85809285474a4ac8",
+    "SRC-08240b1fce6110c1",
+    "SRC-4c640cf9d4c1eb73",
+    "SRC-30896594413b4af0",
+    "SRC-f41ac0af95b281ea",
+    "SRC-3f781e5c16124122",
+    "SRC-fc38776378f8a4b5",
+    "SRC-ba4191aa9af0b654",
+    "SRC-25e9db965ea6d063",
+    "SRC-887c1261ccf4fa4e",
+    "SRC-27df0c4c2ee9e4cd",
+    "SRC-089196e64af3cee0",
+    "SRC-25e885e93ee7c8bd",
+    "SRC-403484b0bad79c60",
+    "SRC-0ea9b4e771b3771d",
+    "SRC-c20a833f21f37bb9",
+    "SRC-ec0b76c8cc1eec6b",
+    "SRC-f87603a39e97a0d9",
+    "SRC-e12e25944a754797",
+    "SRC-51a65d1427ebc9b0",
+    "SRC-3f5c487a33f05203",
+    "SRC-68826ef672da80cc",
+    "SRC-dbff871f83eec03e",
+    "SRC-ab7fb2ece8b0c161",
+    "SRC-f87b87539ad03f94",
+    "SRC-de8e60c3df2839bd",
+    "SRC-1ed2e9390fc2639c",
+    "SRC-b05762211813c77d",
+    "SRC-cb60022121d93242",
+    "SRC-860f567ae6a4820c",
+    "SRC-7175b5f01788a2e4",
+    "SRC-e4742ab1f165af38",
+    "SRC-658cbe7c82d62fa1",
+    "SRC-f9396e3a20be95ec",
+    "SRC-b9cdace5821b15b3",
+    "SRC-15f8bf26c9b0d9df",
+    "SRC-40ff218aa2c34d3a",
+    "SRC-8b76282dcb2e4c90",
+    "SRC-ddf39d12ea3ee5d2",
+    "SRC-4f8c8a4d19440f36",
+    "SRC-d4ff3975cafe2b4d",
+    "SRC-1d2d62990956ba29",
+    "SRC-333e22a759079c75",
+    "SRC-4fbf0a5caf987b5c",
+    "SRC-433f8946f438f6c9",
+    "SRC-0fa9d027dec58a7b",
+    "SRC-2a3d0ae32539f67e",
+    "SRC-f7899ba75892e7a7",
+    "SRC-072941ee6a016e5d",
+    "SRC-ce3b026db4001994",
+    "SRC-638142dddcb14546",
+    "SRC-7c60a3eb8ecf792b",
+    "SRC-757689b5eeb0a41b",
+    "SRC-49a32f4ec37ee090",
+    "SRC-025fc773bfeb0b9d",
+    "SRC-07e86313d34c6b3c",
+    "SRC-c6f9307229a4a6e7",
+    "SRC-0b390a7785b0f417",
+    "SRC-6d9d05dc85ff2b9e",
+    "SRC-45c8719cc3d15afe",
+    "SRC-a4e66a5929796a4c",
+    "SRC-e732ba7d29653400",
+    "SRC-586cc5e2c98284a3",
+    "SRC-af2d197472378a62",
+    "SRC-b2a7af646734faf2",
+    "SRC-67fe5b3d3cf6a515",
+    "SRC-12abfa84b2b3a771",
+    "SRC-5ae189374a38d2a6",
+    "SRC-a422431e3d723866",
+    "SRC-5032e9ec4eadff56",
+    "SRC-cd5cd4671d651eba",
+    "SRC-89b4527554553eb5",
+    "SRC-91aec4969d1f6739",
+    "SRC-fd5fa0187bc506e5",
+    "SRC-bc29d7404e11fcf1",
+    "SRC-66a08bbe0c213d0e",
+    "SRC-e7e1f845e4c1e3cc",
+    "SRC-37fdb51162f320a7",
+    "SRC-c288cf95ed130752",
+    "SRC-076aecf0d5cf3400",
+    "SRC-5b0c916578adda85",
+    "SRC-6aded341a1358075",
+    "SRC-2c54783b91e6f209",
+    "SRC-0155e1471859cd2a",
+    "SRC-b921122197b15eb9",
+    "SRC-e847245f613d6525",
+    "SRC-bd89428ef03ec943",
+    "SRC-1170bc2ffc3afacb",
+    "SRC-e7a5ed529a370b70",
+    "SRC-9c59d0db61e1afdb",
+    "SRC-463acf32db6e8c58",
+    "SRC-a86fba22a69cb1ef",
+    "SRC-519077a3ebe5c9b4",
+    "SRC-f04ed058ffd11587",
+    "SRC-11899b03d029875b",
+    "SRC-b956f8f75494e355",
+    "SRC-fab6139992582ef4",
+    "SRC-c702be421b6a4d47",
+    "SRC-8d64c41475547f76",
+    "SRC-9d28ceb2e637b331",
+    "SRC-5a1069610e832da4",
+    "SRC-ad868aca41ab9209",
+    "SRC-057dd581840df417",
+    "SRC-16c695d5a53159a4",
+    "SRC-bf477250cd111003",
+    "SRC-53d7a7f144f0b3b7",
+    "SRC-b06e7a28a571a1e7",
+    "SRC-345def18539e4b2d",
+    "SRC-6a3e94914e2d1b04",
+    "SRC-9a0dc1cdb0722f31",
+    "SRC-41b0d4c1daa4b9af",
+    "SRC-e8b7b530163056e1",
+    "SRC-db56fb96f8e84d34",
+    "SRC-234659e2cabaaeda",
+    "SRC-c721aa6b54342022",
+    "SRC-565adba41794c7d4",
+    "SRC-e178d34d2d73060d",
+    "SRC-ddb7058c4ac02993",
+    "SRC-ebb98e163c64073b",
+    "SRC-162b9814de404bf8",
+    "SRC-577746cc0182c0a9",
+    "SRC-a083bd8f3e711f45",
+    "SRC-13c0f0006234179d",
+    "SRC-6624dc295b21f55e",
+    "SRC-0a01c6232d6a1fdb",
+    "SRC-2819f40fd8258530",
+    "SRC-b48056232ce55ea6",
+    "SRC-4bd63a1d82c15b1a",
+    "SRC-f53af7bf2d091851",
+    "SRC-a66d385355de2d30",
+    "SRC-1f5ab4dff870eaf8",
+    "SRC-43ba2dd81a2cac17",
+    "SRC-2dfe7ed8b2ddf55e",
+    "SRC-a931c4213cc81658",
+    "SRC-f2b8774c5425b55c",
+    "SRC-589fa7fb739558b3",
+    "SRC-4e37faedd20d2335",
+    "SRC-4033fafc09361e79",
+    "SRC-cec446bfb1c64b13",
+    "SRC-7d987be6ebbc7ef6",
+    "SRC-db1825d613f6f25e",
+    "SRC-dadc25b58450e022",
+    "SRC-0363a344263c669a",
+    "SRC-22b854560dd82e4a",
+    "SRC-25d7854bb43f478f",
+    "SRC-d9e91ca1113b6b9f",
+    "SRC-dae530609c70c474",
+    "SRC-ea95054fbc039220",
+    "SRC-5ea21ab355bb6b0d",
+    "SRC-d811f631c2ef1984",
+    "SRC-6e13e7fd4f3ae071",
+    "SRC-c0345bf1c9684c93",
+    "SRC-c99c67286dd7d23c",
+    "SRC-ae9077c5691aad33",
+    "SRC-d21f538a4da88478",
+    "SRC-aedb82b8db5dcc75",
+    "SRC-5cadb9587d36389e",
+    "SRC-75532cc46b1776cb",
+    "SRC-e5cc854519bcce68",
+    "SRC-6c06740c15b07c29",
+    "SRC-8407226c60f10d27",
+    "SRC-215e5e38a15bbd36",
+    "SRC-20213ca646eae7bd",
+    "SRC-8cb60ba0bccab766",
+    "SRC-3783a6a4bbcdf099",
+    "SRC-e3a776a5690f9105",
+    "SRC-388092ab36fac805",
+    "SRC-9a9000f395f57ba1",
+    "SRC-7e767e2528963a37",
+    "SRC-8c7e556ab96d6c56",
+    "SRC-900a37078b8fd2f1",
+    "SRC-bd7cc0c439f874b0",
+    "SRC-4f11ee4b97dc4de6",
+    "SRC-958880f59e300761",
+    "SRC-563dd6c4482ae625",
+    "SRC-43a887614906eb73",
+    "SRC-ef8e3d90f589527c",
+    "SRC-67f39a869939f3c5",
+    "SRC-02be49461a7f9d24",
+    "SRC-e2cf3a3ab9f8be4c",
+    "SRC-753ab5e26271d690",
+    "SRC-3c5b8a798de7eb6f",
+    "SRC-f3dd6a8f9befadfe",
+    "SRC-8b9c709482d4d8b6",
+    "SRC-e1f8902573d409ce",
+    "SRC-1073e165faf71063",
+    "SRC-569587422bab6d11",
+    "SRC-24d744e2cdebe023",
+    "SRC-09618cdbe54ab116",
+    "SRC-db8bf43aac4761fa",
+    "SRC-2af3fbd6a1ebaef3",
+    "SRC-28ceefe39b44d231",
+    "SRC-8b7f9f2a023b9924",
+    "SRC-75936e6ac6674cac",
+    "SRC-798400b8c3cdca1b",
+    "SRC-11c2fd058da400f3",
+    "SRC-99f93e221be79c37",
+    "SRC-40c66dfd204dbda3",
+    "SRC-48567cd8e37c3991",
+    "SRC-cc5df7d1c5e9ec0b",
+    "SRC-45e9b5fdcb9299dd",
+    "SRC-65271c7b8e2e8cb7",
+    "SRC-4f003e55ed1e9fc7",
+    "SRC-e00652c126285566",
+    "SRC-76f100c242e56634",
+    "SRC-bd297991df284978",
+    "SRC-043fca2d3e19964f",
+    "SRC-59b2eff2e5b097bc",
+    "SRC-4d60c1d43749d0ab",
+    "SRC-3c41e1cc4c626ee7",
+    "SRC-ebc23d5b6e48ed89",
+    "SRC-fb57d6b2bc4f60a8",
+    "SRC-cad1b0d2630a4fa7",
+    "SRC-9d5a8c8121d9fcb9",
+    "SRC-c55018ccd3791ff7",
+    "SRC-0ed42eb6d8c6e6c5",
+    "SRC-b67be506e3dd1172",
+    "SRC-b92b7879dec69e9e",
+    "SRC-67ef603549d06ed4",
+    "SRC-b9711b156605d972",
+    "SRC-7c383d94189423bc",
+    "SRC-5d7c077a0938474d",
+    "SRC-8050cd0fb2bfefbf",
+    "SRC-9ca16f596b6c5911",
+    "SRC-a1c4ae6c1f665e60",
+    "SRC-4025be0bbdb3b61f",
+    "SRC-324af3f8b73ff826",
+    "SRC-273d6999aa8a40cb",
+    "SRC-9206f5b0e791cafc",
+    "SRC-5d62bcf95bf01148",
+    "SRC-ab2f26b6abf77031",
+    "SRC-dabd973fb42f7d2a",
+    "SRC-5781ae5a36cb2589",
+    "SRC-8de141c54180a53a",
+    "SRC-ea92047a430bb6aa",
+    "SRC-3e61a8ba02216192",
+    "SRC-a92a6ed48f0cd4d4",
+    "SRC-1f2b58ac76896c8d",
+    "SRC-bec35546ed3b3371",
+    "SRC-8dc016986defd637",
+    "SRC-29a892b8a02d2ebc",
+    "SRC-ec2080fb30900565",
+    "SRC-ea3aa8e999a37471",
+    "SRC-231f1e1781c7e183",
+    "SRC-b558ee8b4a90be96",
+    "SRC-2bbe297fbd671488",
+    "SRC-d560048a43241868",
+    "SRC-e52ed28d5b77b99f",
+    "SRC-49eebea3e1122439",
+    "SRC-0f52f2b957de8dd4",
+    "SRC-c3cedfa8ad068f58",
+    "SRC-7745d7976f115a02",
+    "SRC-9971723e0d800983",
+    "SRC-966dbc9c6a63479c",
+    "SRC-ad3158c95b5e0afe",
+    "SRC-185348206703934c",
+    "SRC-b3c75cbdb5b31212",
+    "SRC-2f9273a912a76a99",
+    "SRC-194fd9647e2bce6d",
+    "SRC-b3dacfdee4a70218",
+    "SRC-a89d4020e331c518",
+    "SRC-306b7dfdbbed2d03",
+    "SRC-d20273c300a0e9ad",
+    "SRC-de0f6b8fe89f1e5e",
+    "SRC-87e29fb6d732b32c",
+    "SRC-ff6f26c86cdbe7f6",
+    "SRC-a58dddaf184c1961",
+    "SRC-b3dc6d47dd0189cf",
+    "SRC-4c1491d31d6020a9",
+    "SRC-8946ab12f10a6290",
+    "SRC-889aabf9313bd7e1",
+    "SRC-714c42853fb7b3ee"
+  ],
+  "perSource": [
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "unresolvedCandidateIds": [
+        "SRC-ae3c2b0bb81275f6",
+        "SRC-eac5ec66c49e4c61",
+        "SRC-4531f56429cdcc26",
+        "SRC-fa5d875cf1fc1453",
+        "SRC-e95d781b7945c3ca",
+        "SRC-fd03cb740079506d",
+        "SRC-ea5d74692fd5fcdd",
+        "SRC-3b4dfcac94af3ad0",
+        "SRC-13c8327678d63641",
+        "SRC-c63f4f93fa7cdd5c",
+        "SRC-a9734a7cd38b3ac8",
+        "SRC-b56d3dbbda2be12a",
+        "SRC-e6907369daeea5f0",
+        "SRC-bd47d110c9c2cd08",
+        "SRC-a366c6559124018b",
+        "SRC-2ca0c163bfd57e6a"
+      ]
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ebf7b04f4d29d2a2",
+        "SRC-afb46a862af2aba2",
+        "SRC-2c2ac88045e1466a",
+        "SRC-0df3219425694d32",
+        "SRC-aef6e7039a2275ee",
+        "SRC-67c430e72eaac66f"
+      ]
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "unresolvedCandidateIds": [
+        "SRC-57cb00ca4eabc545",
+        "SRC-8a4e8d06736d60dd",
+        "SRC-86dc939a3781a657",
+        "SRC-06bc4d6b59e26c57",
+        "SRC-0c6cc12a9bfa267b",
+        "SRC-45fad50cc81d0e1a",
+        "SRC-716b739be4cecd45",
+        "SRC-e93f46c40ecb090f",
+        "SRC-b58330b11bc9937c",
+        "SRC-a30bde8e6768aa0d",
+        "SRC-09ce1b9ee65a642f"
+      ]
+    },
+    {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "unresolvedCandidateIds": [
+        "SRC-d2d674b2b40f10c8",
+        "SRC-23680b82df66c3c2",
+        "SRC-e38d58ab93751d52",
+        "SRC-bf75aadf6f1293e4",
+        "SRC-b126090f88def1b4",
+        "SRC-925663eccdd8ca24",
+        "SRC-3d8c10cd3713dd96",
+        "SRC-5f56fb930b1db9a2"
+      ]
+    },
+    {
+      "path": "scripts/prepare-native-worker-pools.mjs",
+      "unresolvedCandidateIds": [
+        "SRC-a2bc5af12212cb25",
+        "SRC-b96a9744111b14ce",
+        "SRC-2883067f9ab4249e",
+        "SRC-47379f36070f2752",
+        "SRC-c6e04c71405ea187",
+        "SRC-28c50f1677549875",
+        "SRC-058e8d124a42aca6",
+        "SRC-d78ed9bf7703d9db",
+        "SRC-bd9aa0bcc31729c1",
+        "SRC-54fc721bedaa2ebc",
+        "SRC-d004f9836608bece",
+        "SRC-72d335e10b820a27",
+        "SRC-e1a35f2f2665334e",
+        "SRC-96de922579951934",
+        "SRC-24837b2d52dfe6f5",
+        "SRC-eab2072be2b585ce",
+        "SRC-6b44fa4d110882a8",
+        "SRC-cebd8bd3836afb11",
+        "SRC-befd3c7370a11202",
+        "SRC-9a7aefc8d73b406d",
+        "SRC-b1088ee4dd750b49",
+        "SRC-ecf1191a92f7ac14",
+        "SRC-bfd8bded54369d2e",
+        "SRC-abe6cfb036a517fc",
+        "SRC-25b674c5951feeca",
+        "SRC-abccb40a80c45648"
+      ]
+    },
+    {
+      "path": "scripts/updates/release-configuration.mjs",
+      "unresolvedCandidateIds": [
+        "SRC-e4ce93fa6cd2747d",
+        "SRC-2ce070c768a2b0e8",
+        "SRC-fe1009d6b8b14c88",
+        "SRC-88a5fbf34f91bed8",
+        "SRC-0d33b13504e38b24"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/remote-plan-cli.ts",
+      "unresolvedCandidateIds": [
+        "SRC-8bfc399763998b4c"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "unresolvedCandidateIds": [
+        "SRC-d33473dc99087f40",
+        "SRC-b2fd2eed68fc8499"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "unresolvedCandidateIds": [
+        "SRC-5d2ec71a4ea32efa",
+        "SRC-a62b54240319d289",
+        "SRC-4258e62d8a34b29d",
+        "SRC-b3b94b8d3628c480",
+        "SRC-0e01a2f843fe37d7"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "unresolvedCandidateIds": [
+        "SRC-83330731971e5f0a",
+        "SRC-59e89167ca222c2b"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "unresolvedCandidateIds": [
+        "SRC-6bf9bec8e1c06c3f",
+        "SRC-8ccea5db81b7101c"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-pods.ts",
+      "unresolvedCandidateIds": [
+        "SRC-74bd9239727c09f3",
+        "SRC-fd39947ce0fe0cc9",
+        "SRC-859661f1f5a6a785",
+        "SRC-a2e584e5db17ae52",
+        "SRC-4a4cdcf07f2e1b3b",
+        "SRC-620121bb5df2f18e",
+        "SRC-23833936c3377d20",
+        "SRC-34c835946ebf0782",
+        "SRC-b9c7e6b9d1779731"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "unresolvedCandidateIds": [
+        "SRC-be1f522cbcf691c9",
+        "SRC-0a77ad44b1e87434",
+        "SRC-ec134829e8b29209",
+        "SRC-2170d3e66372156d",
+        "SRC-d212f3cd6c619741",
+        "SRC-c8614077f94aaf70",
+        "SRC-cbff79476941c576",
+        "SRC-9aaa84d05cd8be66"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "unresolvedCandidateIds": [
+        "SRC-f1be2b701f82139d",
+        "SRC-cd6f11f4082c27ad",
+        "SRC-dc9d749fd80f3a84",
+        "SRC-d2c8b245fc16de40",
+        "SRC-5698b9cdad20b0be",
+        "SRC-b6fc8e9f68982731",
+        "SRC-70fdc98f19cfe10a"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "unresolvedCandidateIds": [
+        "SRC-43e0e6ddb20f0fb5",
+        "SRC-9b38bba0ebcc3821",
+        "SRC-87b32477aa6abe16",
+        "SRC-3b71838781ea05b6",
+        "SRC-3ef6ecdd17b3f6d8",
+        "SRC-28bb582fccb15f7c",
+        "SRC-7078496041f224a0",
+        "SRC-7c4c5e3f0ca3c41e",
+        "SRC-e5feb65589ec7af0",
+        "SRC-519142f63673302b",
+        "SRC-2c39d7f3be8130eb",
+        "SRC-d49770db38195393",
+        "SRC-d467d1cd37b298fc",
+        "SRC-ba4568baf2b6ef56",
+        "SRC-1ee36c685e859ffa",
+        "SRC-b45b27c86a3c5cfb"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "unresolvedCandidateIds": [
+        "SRC-2022d0d54da25078",
+        "SRC-cb09086485698f55",
+        "SRC-116affb3b350e15a",
+        "SRC-c815af3b24cce619",
+        "SRC-3dacdc920b4b8002",
+        "SRC-dfd3a1f52d32d40a",
+        "SRC-08ea0e8ace39f33b",
+        "SRC-1b819e804b2e8faa",
+        "SRC-fa29ca0a467c48bd"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "unresolvedCandidateIds": [
+        "SRC-096ef92070df1fa8",
+        "SRC-3907e2d7f1390afb"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "unresolvedCandidateIds": [
+        "SRC-6f27e6e52ba950f8",
+        "SRC-0eadfecd2c27060f",
+        "SRC-599b07870c8c7654",
+        "SRC-94ff89847bbcb4e0",
+        "SRC-35f7f18425df66f9",
+        "SRC-d04b5fc1bb208287",
+        "SRC-c286a9f658b21268",
+        "SRC-4a2cf19b3aa2c391",
+        "SRC-862b83f012d64140",
+        "SRC-8bf957ebc10f600a",
+        "SRC-8766b784ee7487d8",
+        "SRC-b57683d8ac670e5d",
+        "SRC-a99a4992a126c0b9",
+        "SRC-7119f2851338f385"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "unresolvedCandidateIds": [
+        "SRC-0de0d9c3f8fbc906",
+        "SRC-c6c0948d8c4b6b48",
+        "SRC-20c70f3fd494c58c",
+        "SRC-b193bfd2ffc0c320",
+        "SRC-87358c16cdc36c8a",
+        "SRC-62d78821cbf4bd1d",
+        "SRC-d9fd0efbd9cf68bd",
+        "SRC-aecac365bd373fa9",
+        "SRC-ac078bf9d0eecfa0",
+        "SRC-ea1ddfba056572b4",
+        "SRC-bf699516193d6c9f"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+      "unresolvedCandidateIds": [
+        "SRC-82af1509f38a894a",
+        "SRC-805d4f665975c421",
+        "SRC-aa884bff8eba5b96",
+        "SRC-ae67329937fd8a1e",
+        "SRC-214fea2dbfc104cb",
+        "SRC-2d356aa81f8f34ff",
+        "SRC-fd4049ab9278c1e0",
+        "SRC-f194ccb22b94637d",
+        "SRC-cfff30686540aa69",
+        "SRC-d283bb55a6092fec",
+        "SRC-6b5ef1c80f5ac2e9",
+        "SRC-7d3934227f2cfa67"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+      "unresolvedCandidateIds": [
+        "SRC-4996f782bc71c950",
+        "SRC-1f0a8cbdbc4ffb31",
+        "SRC-166acb5a3f4c2ab0",
+        "SRC-af5ae5a05edaa748",
+        "SRC-8b0135addc6a9b1e",
+        "SRC-55807d8f7f6cb59c",
+        "SRC-ea1e2994eda8b5a5",
+        "SRC-50db0bb8f354221b",
+        "SRC-23640ac883bf9dc0"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+      "unresolvedCandidateIds": [
+        "SRC-73ca5d7ad239d65b",
+        "SRC-bda78358b57366e5",
+        "SRC-9226c54ad3aee68f",
+        "SRC-d677e3fbcc64bcd3",
+        "SRC-30919356cbec0b84",
+        "SRC-acaf56bd39f027ec",
+        "SRC-43f3b8eb88584fb6",
+        "SRC-fe287ccc71df17f7",
+        "SRC-ac253a3d2b9490d6",
+        "SRC-bf70688059df48a3",
+        "SRC-891f02df5d8c4477",
+        "SRC-14ad8b366536ef1a",
+        "SRC-9f32b0817e6597dd",
+        "SRC-477415f339127f25"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+      "unresolvedCandidateIds": [
+        "SRC-0fb1ffc5eddb2a55",
+        "SRC-16e794b54b07b306",
+        "SRC-3fbace29c5e4fa53",
+        "SRC-04606702712e341c",
+        "SRC-0106e0bd6f086178",
+        "SRC-81560edf8d36e960",
+        "SRC-d94f4787cc9e68cf",
+        "SRC-8b25151c7d0f2202"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "unresolvedCandidateIds": [
+        "SRC-01154a8c05c55248",
+        "SRC-94806c076960ced7",
+        "SRC-31451ea55cafbf04",
+        "SRC-418e998336930558"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-command.ts",
+      "unresolvedCandidateIds": [
+        "SRC-6d37c3d7ed42bf3d"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "unresolvedCandidateIds": [
+        "SRC-629f4ce41bb89fee",
+        "SRC-9848c97c9319cd1d",
+        "SRC-be24b2094a6da316",
+        "SRC-26b849bed2e1ac82",
+        "SRC-3b38fdd30b9a8036",
+        "SRC-8845bb2071984c12",
+        "SRC-6a45c343c830ad4a",
+        "SRC-4535ebc89579c7b7",
+        "SRC-526d02216524240a",
+        "SRC-e05b38090f34ff81",
+        "SRC-790ac7e299c2d55a",
+        "SRC-e75cae6fdcc63e28",
+        "SRC-9cf8ad491c1f3a5c",
+        "SRC-545ecfc86f0702cf"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-execution.ts",
+      "unresolvedCandidateIds": [
+        "SRC-47e0c4fd4f76889f",
+        "SRC-b9f6a435e00c0fa2",
+        "SRC-ea84bc1c2d836125",
+        "SRC-31641e93e7865725",
+        "SRC-142875ea931d5795"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-gate.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ed05ea582daff991",
+        "SRC-dde8027d19c20b83",
+        "SRC-2afc5e94daececc1",
+        "SRC-dc19554a1cdb3bb0",
+        "SRC-d69ada69f496a6ea",
+        "SRC-d86487174362afac"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-header.ts",
+      "unresolvedCandidateIds": [
+        "SRC-db437b262a98f396",
+        "SRC-6ed149a6e34f97d8",
+        "SRC-0a1a9c1b10d780f2",
+        "SRC-8eff0e7db9070eb1",
+        "SRC-790c76e6db047dbf",
+        "SRC-375093b34ae75cd5",
+        "SRC-0e7a51994d1670a4",
+        "SRC-4d522db8cdcf2525",
+        "SRC-ed4026ce0a337133",
+        "SRC-b49b0c6f3fd6f08f",
+        "SRC-42a54e5aa54bc2e2",
+        "SRC-78266eed579db3ac",
+        "SRC-77666e8d573e539f",
+        "SRC-3d9fc188843967bb",
+        "SRC-64836c32641aa30e",
+        "SRC-759e59761caf0b54",
+        "SRC-a774825b85f328b2"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+      "unresolvedCandidateIds": [
+        "SRC-f39b03a94638fde4",
+        "SRC-c1772e8ad9fa7fe6",
+        "SRC-fe0987726db15a77",
+        "SRC-77c68274abfda3c3",
+        "SRC-611c4d0ef9294877",
+        "SRC-cb6d9f408cf2c9ed",
+        "SRC-4a582db71f8984d7",
+        "SRC-08c9cf0fdb6030f9"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host-channel.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ec66de2a111f0567"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ca412d0b6544afc3",
+        "SRC-4cb8292ff2e24a20",
+        "SRC-0eb6ca8260f8f271",
+        "SRC-0a077a99f48fbcc5",
+        "SRC-cdff78592ae8749a",
+        "SRC-75d0defccb80ab98",
+        "SRC-7ccbf43780027d0b",
+        "SRC-c48c1477f36c11f6",
+        "SRC-014d4a4976c2ba85",
+        "SRC-3f6b8b091ade4908",
+        "SRC-1ce1951bfa05d36d",
+        "SRC-4c373d144f3743d1",
+        "SRC-f901c91203d57aab"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ed4f999b7f142b54",
+        "SRC-67d83deca6729842",
+        "SRC-2d05dd1b5adb77e4",
+        "SRC-a62703fc52f9a662",
+        "SRC-45b1fdf5c8d77e62",
+        "SRC-e9e18bac52eb2285",
+        "SRC-5f7b89865ed2cc26",
+        "SRC-8cad79519574579e",
+        "SRC-e07c9dcd7ecbe49f",
+        "SRC-4c23d7ef3fb55bae",
+        "SRC-88f88fde5ab10b00",
+        "SRC-f9272123b7cafe14",
+        "SRC-01c0f6c824b0ff25",
+        "SRC-8c22058043bd151f",
+        "SRC-7e67476db2307572",
+        "SRC-1d0b843a0f5629f2",
+        "SRC-654961fc48c44609",
+        "SRC-836196fdfbecdce3",
+        "SRC-be8fbea2f6ce3923",
+        "SRC-282e7f7715476d58",
+        "SRC-dabd102b437395bc",
+        "SRC-1f4ff952a2dcc81e",
+        "SRC-f701602b57ead940",
+        "SRC-3e6c22d148b46430",
+        "SRC-4dc7095c6be2bcdb",
+        "SRC-e83db8691db60683",
+        "SRC-66e3a01f103d44da",
+        "SRC-a6a58ba1b1cbd129",
+        "SRC-73767cf7460c20df",
+        "SRC-23640ef4e0914eaf",
+        "SRC-20694205835fde32",
+        "SRC-0cc51cfe0e243c49",
+        "SRC-8eb2f1e2842447fd",
+        "SRC-9ba3fab4ec77fbcd",
+        "SRC-8e55ccda2ed8857e",
+        "SRC-e69cf598ff8883c4",
+        "SRC-c4294dbce2ee4aa9",
+        "SRC-865dc29bb467bafe",
+        "SRC-e9be333bdc4c1abc",
+        "SRC-f619769837c71b89",
+        "SRC-df9227288f5bd80b",
+        "SRC-2dbee8341df75969"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ebaef02dfd0fcb98",
+        "SRC-25051db94acba4fc",
+        "SRC-9e9a9c24533035b8",
+        "SRC-eb42c3ce5d292b85",
+        "SRC-16f5157d14b2d3c4",
+        "SRC-9621195abd1d4474",
+        "SRC-06a218a5a44b5061",
+        "SRC-4ee6a515c1fcc4a8",
+        "SRC-3fbbbd117c7a6e95",
+        "SRC-5ecb0f15fcb19fa5",
+        "SRC-cdd7c2ffce41847c",
+        "SRC-f2d1ae24430e3cd4",
+        "SRC-c886801fe4cfc248",
+        "SRC-7089e7467662cb64",
+        "SRC-e13443f53a6e2d4d",
+        "SRC-1c4840adc3f93971",
+        "SRC-7d10158188e1db4d",
+        "SRC-67c122eaaace79a7",
+        "SRC-675ddd34b1013ae9",
+        "SRC-abbdc860a79a8269",
+        "SRC-5a2e1b54929b36c7",
+        "SRC-93513f5b112665e1",
+        "SRC-29a8f02f7461157b",
+        "SRC-7a915b0216394970",
+        "SRC-e87161f2a6008389",
+        "SRC-ffdc6bc1a4cec013"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "unresolvedCandidateIds": [
+        "SRC-8f1d534f297dcfe8",
+        "SRC-03659f0dc9342d00",
+        "SRC-d88b17fcaac96b00",
+        "SRC-b11e0f489d48593a",
+        "SRC-13ef5cc7106cebc2",
+        "SRC-93c2f70a6aaa6319",
+        "SRC-5084835a0d081624"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-parent-channel.ts",
+      "unresolvedCandidateIds": [
+        "SRC-4e525c9e1e243f08",
+        "SRC-b97f15ee33b31b14",
+        "SRC-04a4078b2d1cc83d",
+        "SRC-d8cbe02101255c1f",
+        "SRC-56805e3962d5c52d"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-recovery.ts",
+      "unresolvedCandidateIds": [
+        "SRC-348a4063f5bd6103",
+        "SRC-628457064f7871b1",
+        "SRC-7593bbfd19a1d46f",
+        "SRC-674dfeae952e6eca",
+        "SRC-a58329f17339cf97",
+        "SRC-466c7c74976b9587",
+        "SRC-f58d6e5c7fee53c4",
+        "SRC-443ccee508bcea58",
+        "SRC-58896c928ee511e9",
+        "SRC-f46605686423f326",
+        "SRC-de90ebd965e87d88",
+        "SRC-4697fad3e8faeb44"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "unresolvedCandidateIds": [
+        "SRC-982fbea74962c22a"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "unresolvedCandidateIds": [
+        "SRC-7d21714bd9c0c3c0",
+        "SRC-c9a3ee1856722184",
+        "SRC-5a86d88ea3024390",
+        "SRC-b694464d9ec1e726",
+        "SRC-e3e643f388dc0cb0",
+        "SRC-91910217b57b4275",
+        "SRC-caccd385c4e2c876"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "unresolvedCandidateIds": [
+        "SRC-bf86c866d808592f",
+        "SRC-b94da28120c68621",
+        "SRC-25bb40263b0296fe",
+        "SRC-3e53155d606640f5",
+        "SRC-7ba3e88a75b95621",
+        "SRC-3b81b023d064ae8b",
+        "SRC-15c42026b36c9a18"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "unresolvedCandidateIds": [
+        "SRC-74d2325ec991d2e3",
+        "SRC-a02d3cac20621947"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "unresolvedCandidateIds": [
+        "SRC-58ffab67735afe8b",
+        "SRC-1931bc5a84df3718",
+        "SRC-5600662f0e1f842b"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "unresolvedCandidateIds": [
+        "SRC-a5d1ff7ff13488aa",
+        "SRC-602ddc0d109cf50a",
+        "SRC-1dbde30779be8fe2",
+        "SRC-989fc2473e01654f",
+        "SRC-c26c2810ec2f5019",
+        "SRC-0172d6dcddf29553",
+        "SRC-dc85aa3456f5a874",
+        "SRC-b5493397341fe3fb",
+        "SRC-49562f947f248d7f",
+        "SRC-327bfdeedfd9c08c",
+        "SRC-2617b4553ef6dd6e",
+        "SRC-25b1b95f35caa399",
+        "SRC-551f0b0fb6d44a99",
+        "SRC-2bea64adda70ee07",
+        "SRC-f263a441dd795298",
+        "SRC-c5b61df3b590e791",
+        "SRC-d9a391d62a9e6b8c",
+        "SRC-3b2596d2eae21d03",
+        "SRC-0a449e0bd933eda2",
+        "SRC-e6b610772da5a371",
+        "SRC-292bf9de42d77b67"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "unresolvedCandidateIds": [
+        "SRC-01cdab25b1db3db7",
+        "SRC-e8b95204067631f0",
+        "SRC-b9a35ac5bbce3254",
+        "SRC-06372b4297e144c8",
+        "SRC-37a0847cc87d136d",
+        "SRC-6926920601bc37ef",
+        "SRC-8c5c8fac6ee0be91",
+        "SRC-ec582ad4d28d9ff3",
+        "SRC-fcffd55d68e02479",
+        "SRC-d5436865bf8eb5b2",
+        "SRC-c0f2420fa7b072cf",
+        "SRC-6d5be07b0dcbbbf8",
+        "SRC-374e1258cddcc4a7",
+        "SRC-528a504677c211b8",
+        "SRC-98a91b2b0545e6cb",
+        "SRC-26525235cbc6177a"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "unresolvedCandidateIds": [
+        "SRC-fff62ee4de9e7934",
+        "SRC-311802bd5e89ae75",
+        "SRC-1c1f97132f460355",
+        "SRC-f2b8e0002872fd70",
+        "SRC-e856f3fb5437db77",
+        "SRC-dfa8160d248b31bb",
+        "SRC-afc16d307d3eb62f",
+        "SRC-d3ac7a88d84f6b8d",
+        "SRC-cec085405e00d5cb",
+        "SRC-3438f18c295a1d68",
+        "SRC-dbefdba673dd37c6",
+        "SRC-6b3e3635d2ec6d31",
+        "SRC-5da5fa64f60ab4c5",
+        "SRC-dd3dcec81bd9a28e",
+        "SRC-c53938bbec12ca03",
+        "SRC-0c1d8490c504ffaa",
+        "SRC-1eedd5c2e30af05e",
+        "SRC-451178566fc7ff16",
+        "SRC-24d01e98e333920e",
+        "SRC-f4cd031089b07c9c",
+        "SRC-4f58c6ad77818479",
+        "SRC-1e1012941a593bfa"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "unresolvedCandidateIds": [
+        "SRC-2ae5a4d10c20660f",
+        "SRC-245741866afb4eb6"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "unresolvedCandidateIds": [
+        "SRC-7ddb589060577d68",
+        "SRC-272416e40657dca1",
+        "SRC-f81c94704e06471c",
+        "SRC-5f9628e24d963f0c",
+        "SRC-1022ceb1737c2638",
+        "SRC-df66e9231ea78e16",
+        "SRC-7d1be834789bd7bf"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-setup.ts",
+      "unresolvedCandidateIds": [
+        "SRC-0d1dbb37d651b1cd",
+        "SRC-68a8ec96a281bec3",
+        "SRC-dda7f770de1338a0",
+        "SRC-ea4e355ae00e5ae4",
+        "SRC-e2f326ad0ad538e3",
+        "SRC-f3f50e439ce22267",
+        "SRC-04d9dda82066151a",
+        "SRC-b1cc3b530be5da27",
+        "SRC-c3b8de4c47a46267",
+        "SRC-de7f4aa4b5103fea"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "unresolvedCandidateIds": [
+        "SRC-6631775096e34c7d",
+        "SRC-2036b66484fd2436"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "unresolvedCandidateIds": [
+        "SRC-9b56d5cc930f8e4b",
+        "SRC-d1122ece2f992647",
+        "SRC-2f85a21575eabbdf",
+        "SRC-e3fad972ec148c79",
+        "SRC-a91748cfb60cf922",
+        "SRC-0475b04a141d3bc8",
+        "SRC-e236eb1337bed662",
+        "SRC-b57ca54c3e30d6b2",
+        "SRC-821f387b1e2de57c"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "unresolvedCandidateIds": [
+        "SRC-0e0b07cf31af1868",
+        "SRC-5c557402403e7a20",
+        "SRC-f20cee7515d114ea",
+        "SRC-09c97ff96be7efe5",
+        "SRC-e4ae06ef0a1d62ea",
+        "SRC-444433569b4d4a1f",
+        "SRC-630c4a0b6f335f10",
+        "SRC-b4bba74ff5cc1e22",
+        "SRC-feb3da9a73d25a2a",
+        "SRC-08f18f9d46dddd87",
+        "SRC-9eaf0f5ede614233",
+        "SRC-a3cffedb1ec53771",
+        "SRC-05d0545a3970da98",
+        "SRC-1287dce5c582add3",
+        "SRC-c953d236b32412e8",
+        "SRC-07f4019880385e8f",
+        "SRC-8e00691c1409eab0",
+        "SRC-2b44fdf5a0a7aac9",
+        "SRC-8709dc35b778d3ac",
+        "SRC-6b690ef52295d9c3",
+        "SRC-9e261d1015dacf17",
+        "SRC-535da97831b9df0c",
+        "SRC-23c710064d4ea839",
+        "SRC-3e74751313297432",
+        "SRC-4dab2ca3ce284c34",
+        "SRC-c062a869af192e28",
+        "SRC-d40f3e6f10e06ceb",
+        "SRC-e4e14cb8655a0bf1",
+        "SRC-80cf56b15cb580b1",
+        "SRC-e11066a8ef0e3fc4",
+        "SRC-6c421b9b8ec8d1b0",
+        "SRC-ab2f28887e77d3dd",
+        "SRC-2ad4ec6de326e66b",
+        "SRC-257787ce215004b5",
+        "SRC-1c9cb3b640e9757f",
+        "SRC-c95308cb2dd7d861",
+        "SRC-6037839b22d63e77",
+        "SRC-4a6f689a7e0e6112",
+        "SRC-27d25df16b94fdee",
+        "SRC-52d41ccc4368e150",
+        "SRC-b40d49dfd3bec2e0",
+        "SRC-d4530214dee11bee",
+        "SRC-9506931c4e71f415",
+        "SRC-d5759b8e5029c08e",
+        "SRC-f5ea47ec7d2e74bd",
+        "SRC-ac5bf6c29bfa78b0"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ce1fd7ba55275dfb",
+        "SRC-09d7e7746f087e08",
+        "SRC-5a07b237025ac0b3",
+        "SRC-b2c3824121456362"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "unresolvedCandidateIds": [
+        "SRC-9a8629c5180b7b1a",
+        "SRC-42d1aa1fdc56a06f",
+        "SRC-08404fcd77fe7077",
+        "SRC-330a94ab4ed5dd7e",
+        "SRC-182b813bc2dc7897"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "unresolvedCandidateIds": [
+        "SRC-b4bf51c9a5799e46",
+        "SRC-9eb8a17f0d729047",
+        "SRC-85e48f43afac7650",
+        "SRC-06d4b335a8a70787",
+        "SRC-f1e59f2fc4a9f558",
+        "SRC-540e62b74777e6fd",
+        "SRC-bf465151d6d9b7ab"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "unresolvedCandidateIds": [
+        "SRC-b5ed690d1a6ec5ce",
+        "SRC-f71b1d5fedce9d83",
+        "SRC-a4e75f3a47f9b3a2",
+        "SRC-069335cb1952c607",
+        "SRC-48f8acec24802c22",
+        "SRC-d25308c619d57c6b",
+        "SRC-b4038dc86f113a1c",
+        "SRC-8f0216fe4e1b8c1a",
+        "SRC-3120db85f0e5682c",
+        "SRC-aa898fce8c1850b3",
+        "SRC-f0ecb81646d26a7c",
+        "SRC-cd7cac477bae280d",
+        "SRC-27ee2c73d724c458",
+        "SRC-27e1dcd36966c604",
+        "SRC-81e45e64f6596466",
+        "SRC-f5f3ecf280fcfdac",
+        "SRC-5917a45ee2920cac",
+        "SRC-c77389b0fd0592a1",
+        "SRC-8de5194670e9dedc",
+        "SRC-f1d07e5dcc376e0a",
+        "SRC-90488d9e0fd926b3",
+        "SRC-8ca0cd28b077f59c",
+        "SRC-9caf55b3e71ed611",
+        "SRC-49d61e5acc463681",
+        "SRC-3ad358f52bffa450",
+        "SRC-e4f0c7fc46e4730a",
+        "SRC-5be6f8f142e0cfda",
+        "SRC-6e16cb07fa9819f5",
+        "SRC-9969b3bf66938ce3",
+        "SRC-726b92d2911dfdee",
+        "SRC-6ae94c7762944284",
+        "SRC-9a9b77ee1590e66b",
+        "SRC-58a80cde54779d63",
+        "SRC-553387064086e454",
+        "SRC-39b381816ddae022",
+        "SRC-c8ff2640677caa41",
+        "SRC-1920caa63543428c",
+        "SRC-e125def9cea530a1",
+        "SRC-ac4c5a1eb485df5a",
+        "SRC-cbd7f9deb27f8694",
+        "SRC-a35a835384719b9a",
+        "SRC-e15ebc1c5696f51d",
+        "SRC-9173a2763ad9bde1",
+        "SRC-5166b2496d7e9468",
+        "SRC-ff1f81583703afe7",
+        "SRC-55d1f78ee096959c",
+        "SRC-e22deed16e6ac632",
+        "SRC-6104517ed4453834",
+        "SRC-ca161e568453c909",
+        "SRC-b38076567f6672f4",
+        "SRC-f5712bc3f0834f66",
+        "SRC-9ad85e3d5bef1a7e",
+        "SRC-471e631f038c4c52",
+        "SRC-9994e79e9e483856",
+        "SRC-5e15e2e6713c7e21",
+        "SRC-7a03ed42592ebd7b",
+        "SRC-ee22630c87312b7c",
+        "SRC-037d0c0960b03aaf",
+        "SRC-fca8b96af7cb4cd2",
+        "SRC-c4ec5df43751d664",
+        "SRC-2e21f6266db92de8",
+        "SRC-3a32221094cd9e20",
+        "SRC-759a23bc3619f4ed",
+        "SRC-f7838a280ad9dbb5",
+        "SRC-510805d92c25323d",
+        "SRC-de3f7cd797a2fdce",
+        "SRC-ddf8f3ba2ddffc61",
+        "SRC-a7119e1d2b8b83df",
+        "SRC-da3254959fe21e13",
+        "SRC-a72d3e961e476904",
+        "SRC-58f505fed75a7928",
+        "SRC-3f88702c68b969ed",
+        "SRC-068c0287bcd2b721",
+        "SRC-ea58b468e24f98de",
+        "SRC-db59047bb86af641",
+        "SRC-e8935af34c4ae3b1",
+        "SRC-ba702dd108c2bed0",
+        "SRC-e8fbbf0185799034",
+        "SRC-db782f0478cab61e",
+        "SRC-77893649b77a281b",
+        "SRC-5e3f59557f4f4780",
+        "SRC-97a53d39269895b0",
+        "SRC-91245555e03c499e",
+        "SRC-9e708001cb63aca1",
+        "SRC-1c91ff05e17fe187",
+        "SRC-610b3b1cb352f15d",
+        "SRC-436387ffa5c55f09",
+        "SRC-f2142a88c33aa834",
+        "SRC-9dfbef7b81f461eb",
+        "SRC-c0bf9f2a03c5627a",
+        "SRC-4f7fe0a234dbfad4",
+        "SRC-37f418839d9131e5",
+        "SRC-ea30101feb901659",
+        "SRC-ce2287097211465c",
+        "SRC-ff058c3dd15e5d6e",
+        "SRC-2c59381243fef67b",
+        "SRC-37ee0b5a23b037b5",
+        "SRC-f7bb90ed0290602c",
+        "SRC-e6d2b8350a8e5901",
+        "SRC-b3942c0f2a0634bc",
+        "SRC-1a7318969a288d13",
+        "SRC-21e11a3e5a90762a",
+        "SRC-5356bfa3418165c8",
+        "SRC-433f367e5a897c99",
+        "SRC-421020d42bae9ce1"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "unresolvedCandidateIds": [
+        "SRC-8e1da2e8365afa9b"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "unresolvedCandidateIds": [
+        "SRC-32bffbb9777ebefd",
+        "SRC-2c53a6584b709d50",
+        "SRC-394271cca7131b1c",
+        "SRC-ea04fd6098ff2dc0",
+        "SRC-3144933f17a07e33",
+        "SRC-17f26fdc5445e00b",
+        "SRC-18b9323280f1f865",
+        "SRC-0dbd7bad54971939",
+        "SRC-512408dd2dc6442e",
+        "SRC-2932508b1ff1f8ba",
+        "SRC-b0b3ce27f16e9ff4",
+        "SRC-db0e4b61308dfc9a",
+        "SRC-a14dcee3a0534e23"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "unresolvedCandidateIds": [
+        "SRC-eae0884048431a50",
+        "SRC-dd7a58a4b4c53099",
+        "SRC-5ef8a9512d78244d",
+        "SRC-f6541f01147d56a4"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "unresolvedCandidateIds": [
+        "SRC-998e4337fe1b5ed5",
+        "SRC-29c40abfb5307947",
+        "SRC-5057afd007ea9b45"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "unresolvedCandidateIds": [
+        "SRC-003505f0efcb8697",
+        "SRC-cb463d309b5ed7e2",
+        "SRC-cae456a60aa940b3",
+        "SRC-25f1e0fa3a6f40ce",
+        "SRC-e3b8ad199a74889f",
+        "SRC-145704fcf51a5513",
+        "SRC-2bd856f83ed88b80"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "unresolvedCandidateIds": [
+        "SRC-722f1ba95a1210a0",
+        "SRC-17d5fcd8a814a331",
+        "SRC-52e7db6020ee17b8"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "unresolvedCandidateIds": [
+        "SRC-b64f82c72b2d58e1",
+        "SRC-3995b80886887fbf",
+        "SRC-f8e41d6dc172a3e2",
+        "SRC-23d250d9639136c7",
+        "SRC-0d2c19a18f4015ef",
+        "SRC-d953506d63394446",
+        "SRC-6955cd4f7dc6aa23",
+        "SRC-6c4b095ff783fe64",
+        "SRC-6e8181fce04ee3bf"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "unresolvedCandidateIds": [
+        "SRC-2857f1b074efd757",
+        "SRC-b6e8b1075ab02bcc",
+        "SRC-80659c3b214373c3",
+        "SRC-38805bca1fdedc93",
+        "SRC-a7eb61dcc47ebe59",
+        "SRC-e770b25bb1564fd3",
+        "SRC-04cf804bbbf2db96",
+        "SRC-c0cd0ed1f2b5e30d"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "unresolvedCandidateIds": [
+        "SRC-032dd538a3d3400f",
+        "SRC-66e0805d964d53f7",
+        "SRC-86b36c68d2ab4b88",
+        "SRC-17a8827c747b6256"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "unresolvedCandidateIds": [
+        "SRC-0a709a75b71546c4"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "unresolvedCandidateIds": [
+        "SRC-13913e3327db814b",
+        "SRC-2487a4df51129e0f",
+        "SRC-8ff13cf03cbc0a8c",
+        "SRC-f8de696722f1ed2f",
+        "SRC-9e9a90d755b162b4",
+        "SRC-101b633feec34072",
+        "SRC-ca17605b386b126f",
+        "SRC-fad63d4497327eed",
+        "SRC-c8ff3627495a823a"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "unresolvedCandidateIds": [
+        "SRC-adf63c9ea152ab3a",
+        "SRC-b4331910b4f04bb0",
+        "SRC-44d284df0b248d0a",
+        "SRC-f064b5b0f3a9ea80",
+        "SRC-6b5bb50667d5d0e2"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "unresolvedCandidateIds": [
+        "SRC-46e8725d2a00830e",
+        "SRC-e891f1a0d21af047",
+        "SRC-940c9ab5e214a1ee",
+        "SRC-e0f4a25ae3b6d0d8",
+        "SRC-6ed2400f9d6d023f",
+        "SRC-ae1bd04ec7628e44",
+        "SRC-9bc761478b9ab78d",
+        "SRC-4fd46d0279e397e3",
+        "SRC-ff5a267f92d4e5e6",
+        "SRC-ffbf0ecf8c5bb071",
+        "SRC-3d4b13f35d5047d9",
+        "SRC-06a6b7498b74f001",
+        "SRC-13e5abf09f1c3557",
+        "SRC-2eb75a0f54e39f7b",
+        "SRC-6c12bed1751db81b",
+        "SRC-3bfcb27ec1357e90",
+        "SRC-692105883fe13823",
+        "SRC-df42d7c32c1f4307"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "unresolvedCandidateIds": [
+        "SRC-9da9efd9497737de",
+        "SRC-3a605c9f5777683d",
+        "SRC-7586ccdb0bdd49fa"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "unresolvedCandidateIds": [
+        "SRC-bf4b0631278899b6",
+        "SRC-073d60209c7e4adf",
+        "SRC-c75a0395991d21c3",
+        "SRC-abacf9fad03ddcff",
+        "SRC-74b000493be28392",
+        "SRC-9da491f28a8a5881",
+        "SRC-d78166fb7deb57bc",
+        "SRC-12e34f65b0f87857",
+        "SRC-55fa766533dde5d9"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "unresolvedCandidateIds": [
+        "SRC-f42bc42915757b8c",
+        "SRC-abf528985985df75"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "unresolvedCandidateIds": [
+        "SRC-473b2c2d0c901e96",
+        "SRC-d3eb9e043a675702",
+        "SRC-cf014765ec79b165",
+        "SRC-c4e5b39c1c8515e5",
+        "SRC-278b7b70e4c73209",
+        "SRC-abc98e17f1c533bb",
+        "SRC-79b29132bfc5d0f4",
+        "SRC-b27736608a121883",
+        "SRC-199db468c085f1c0",
+        "SRC-c57df26eedac16be",
+        "SRC-9df9b3065ce1420b",
+        "SRC-bdc2887cbfc8242f",
+        "SRC-443329bce0375641",
+        "SRC-85809285474a4ac8",
+        "SRC-08240b1fce6110c1",
+        "SRC-4c640cf9d4c1eb73",
+        "SRC-30896594413b4af0",
+        "SRC-f41ac0af95b281ea",
+        "SRC-3f781e5c16124122",
+        "SRC-fc38776378f8a4b5",
+        "SRC-ba4191aa9af0b654",
+        "SRC-25e9db965ea6d063",
+        "SRC-887c1261ccf4fa4e"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "unresolvedCandidateIds": [
+        "SRC-27df0c4c2ee9e4cd",
+        "SRC-089196e64af3cee0",
+        "SRC-25e885e93ee7c8bd",
+        "SRC-403484b0bad79c60",
+        "SRC-0ea9b4e771b3771d"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "unresolvedCandidateIds": [
+        "SRC-c20a833f21f37bb9",
+        "SRC-ec0b76c8cc1eec6b",
+        "SRC-f87603a39e97a0d9",
+        "SRC-e12e25944a754797",
+        "SRC-51a65d1427ebc9b0",
+        "SRC-3f5c487a33f05203",
+        "SRC-68826ef672da80cc",
+        "SRC-dbff871f83eec03e",
+        "SRC-ab7fb2ece8b0c161",
+        "SRC-f87b87539ad03f94",
+        "SRC-de8e60c3df2839bd",
+        "SRC-1ed2e9390fc2639c",
+        "SRC-b05762211813c77d",
+        "SRC-cb60022121d93242",
+        "SRC-860f567ae6a4820c",
+        "SRC-7175b5f01788a2e4",
+        "SRC-e4742ab1f165af38",
+        "SRC-658cbe7c82d62fa1",
+        "SRC-f9396e3a20be95ec",
+        "SRC-b9cdace5821b15b3",
+        "SRC-15f8bf26c9b0d9df",
+        "SRC-40ff218aa2c34d3a",
+        "SRC-8b76282dcb2e4c90"
+      ]
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ddf39d12ea3ee5d2",
+        "SRC-4f8c8a4d19440f36",
+        "SRC-d4ff3975cafe2b4d",
+        "SRC-1d2d62990956ba29",
+        "SRC-333e22a759079c75",
+        "SRC-4fbf0a5caf987b5c",
+        "SRC-433f8946f438f6c9",
+        "SRC-0fa9d027dec58a7b",
+        "SRC-2a3d0ae32539f67e",
+        "SRC-f7899ba75892e7a7",
+        "SRC-072941ee6a016e5d"
+      ]
+    },
+    {
+      "path": "skills/prism/config/resource-policy.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ce3b026db4001994",
+        "SRC-638142dddcb14546",
+        "SRC-7c60a3eb8ecf792b",
+        "SRC-757689b5eeb0a41b",
+        "SRC-49a32f4ec37ee090"
+      ]
+    },
+    {
+      "path": "skills/prism/control/agent-jobs.ts",
+      "unresolvedCandidateIds": [
+        "SRC-025fc773bfeb0b9d",
+        "SRC-07e86313d34c6b3c",
+        "SRC-c6f9307229a4a6e7",
+        "SRC-0b390a7785b0f417",
+        "SRC-6d9d05dc85ff2b9e",
+        "SRC-45c8719cc3d15afe",
+        "SRC-a4e66a5929796a4c",
+        "SRC-e732ba7d29653400"
+      ]
+    },
+    {
+      "path": "skills/prism/control/native-operation-store.ts",
+      "unresolvedCandidateIds": [
+        "SRC-586cc5e2c98284a3",
+        "SRC-af2d197472378a62",
+        "SRC-b2a7af646734faf2",
+        "SRC-67fe5b3d3cf6a515",
+        "SRC-12abfa84b2b3a771",
+        "SRC-5ae189374a38d2a6"
+      ]
+    },
+    {
+      "path": "skills/prism/control/worker-operation-transport.ts",
+      "unresolvedCandidateIds": [
+        "SRC-a422431e3d723866"
+      ]
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "unresolvedCandidateIds": [
+        "SRC-5032e9ec4eadff56"
+      ]
+    },
+    {
+      "path": "skills/prism/server/agent-attempt.ts",
+      "unresolvedCandidateIds": [
+        "SRC-cd5cd4671d651eba",
+        "SRC-89b4527554553eb5"
+      ]
+    },
+    {
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "unresolvedCandidateIds": [
+        "SRC-91aec4969d1f6739",
+        "SRC-fd5fa0187bc506e5",
+        "SRC-bc29d7404e11fcf1",
+        "SRC-66a08bbe0c213d0e",
+        "SRC-e7e1f845e4c1e3cc",
+        "SRC-37fdb51162f320a7"
+      ]
+    },
+    {
+      "path": "skills/prism/server/agent-routes.ts",
+      "unresolvedCandidateIds": [
+        "SRC-c288cf95ed130752"
+      ]
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "unresolvedCandidateIds": [
+        "SRC-076aecf0d5cf3400",
+        "SRC-5b0c916578adda85",
+        "SRC-6aded341a1358075",
+        "SRC-2c54783b91e6f209",
+        "SRC-0155e1471859cd2a",
+        "SRC-b921122197b15eb9",
+        "SRC-e847245f613d6525",
+        "SRC-bd89428ef03ec943",
+        "SRC-1170bc2ffc3afacb",
+        "SRC-e7a5ed529a370b70",
+        "SRC-9c59d0db61e1afdb"
+      ]
+    },
+    {
+      "path": "skills/prism/server/dispatch-route.ts",
+      "unresolvedCandidateIds": [
+        "SRC-463acf32db6e8c58",
+        "SRC-a86fba22a69cb1ef",
+        "SRC-519077a3ebe5c9b4",
+        "SRC-f04ed058ffd11587"
+      ]
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "unresolvedCandidateIds": [
+        "SRC-11899b03d029875b"
+      ]
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "unresolvedCandidateIds": [
+        "SRC-b956f8f75494e355",
+        "SRC-fab6139992582ef4"
+      ]
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "unresolvedCandidateIds": [
+        "SRC-c702be421b6a4d47",
+        "SRC-8d64c41475547f76",
+        "SRC-9d28ceb2e637b331"
+      ]
+    },
+    {
+      "path": "skills/prism/server/worker-operation.ts",
+      "unresolvedCandidateIds": [
+        "SRC-5a1069610e832da4",
+        "SRC-ad868aca41ab9209",
+        "SRC-057dd581840df417"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "unresolvedCandidateIds": [
+        "SRC-16c695d5a53159a4",
+        "SRC-bf477250cd111003",
+        "SRC-53d7a7f144f0b3b7",
+        "SRC-b06e7a28a571a1e7",
+        "SRC-345def18539e4b2d",
+        "SRC-6a3e94914e2d1b04",
+        "SRC-9a0dc1cdb0722f31",
+        "SRC-41b0d4c1daa4b9af",
+        "SRC-e8b7b530163056e1",
+        "SRC-db56fb96f8e84d34",
+        "SRC-234659e2cabaaeda",
+        "SRC-c721aa6b54342022",
+        "SRC-565adba41794c7d4",
+        "SRC-e178d34d2d73060d",
+        "SRC-ddb7058c4ac02993",
+        "SRC-ebb98e163c64073b",
+        "SRC-162b9814de404bf8",
+        "SRC-577746cc0182c0a9",
+        "SRC-a083bd8f3e711f45",
+        "SRC-13c0f0006234179d",
+        "SRC-6624dc295b21f55e",
+        "SRC-0a01c6232d6a1fdb",
+        "SRC-2819f40fd8258530",
+        "SRC-b48056232ce55ea6"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "unresolvedCandidateIds": [
+        "SRC-4bd63a1d82c15b1a",
+        "SRC-f53af7bf2d091851",
+        "SRC-a66d385355de2d30",
+        "SRC-1f5ab4dff870eaf8",
+        "SRC-43ba2dd81a2cac17",
+        "SRC-2dfe7ed8b2ddf55e",
+        "SRC-a931c4213cc81658"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-executor.ts",
+      "unresolvedCandidateIds": [
+        "SRC-f2b8774c5425b55c",
+        "SRC-589fa7fb739558b3",
+        "SRC-4e37faedd20d2335",
+        "SRC-4033fafc09361e79",
+        "SRC-cec446bfb1c64b13"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "unresolvedCandidateIds": [
+        "SRC-7d987be6ebbc7ef6",
+        "SRC-db1825d613f6f25e",
+        "SRC-dadc25b58450e022",
+        "SRC-0363a344263c669a",
+        "SRC-22b854560dd82e4a",
+        "SRC-25d7854bb43f478f",
+        "SRC-d9e91ca1113b6b9f",
+        "SRC-dae530609c70c474",
+        "SRC-ea95054fbc039220"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+      "unresolvedCandidateIds": [
+        "SRC-5ea21ab355bb6b0d",
+        "SRC-d811f631c2ef1984",
+        "SRC-6e13e7fd4f3ae071",
+        "SRC-c0345bf1c9684c93",
+        "SRC-c99c67286dd7d23c",
+        "SRC-ae9077c5691aad33"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "unresolvedCandidateIds": [
+        "SRC-d21f538a4da88478",
+        "SRC-aedb82b8db5dcc75",
+        "SRC-5cadb9587d36389e",
+        "SRC-75532cc46b1776cb",
+        "SRC-e5cc854519bcce68",
+        "SRC-6c06740c15b07c29",
+        "SRC-8407226c60f10d27",
+        "SRC-215e5e38a15bbd36",
+        "SRC-20213ca646eae7bd",
+        "SRC-8cb60ba0bccab766",
+        "SRC-3783a6a4bbcdf099",
+        "SRC-e3a776a5690f9105",
+        "SRC-388092ab36fac805",
+        "SRC-9a9000f395f57ba1",
+        "SRC-7e767e2528963a37",
+        "SRC-8c7e556ab96d6c56",
+        "SRC-900a37078b8fd2f1",
+        "SRC-bd7cc0c439f874b0",
+        "SRC-4f11ee4b97dc4de6",
+        "SRC-958880f59e300761"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-control-channel.ts",
+      "unresolvedCandidateIds": [
+        "SRC-563dd6c4482ae625",
+        "SRC-43a887614906eb73",
+        "SRC-ef8e3d90f589527c",
+        "SRC-67f39a869939f3c5",
+        "SRC-02be49461a7f9d24"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "unresolvedCandidateIds": [
+        "SRC-e2cf3a3ab9f8be4c",
+        "SRC-753ab5e26271d690",
+        "SRC-3c5b8a798de7eb6f",
+        "SRC-f3dd6a8f9befadfe",
+        "SRC-8b9c709482d4d8b6",
+        "SRC-e1f8902573d409ce"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-output-spool.ts",
+      "unresolvedCandidateIds": [
+        "SRC-1073e165faf71063",
+        "SRC-569587422bab6d11",
+        "SRC-24d744e2cdebe023"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-owned-children.ts",
+      "unresolvedCandidateIds": [
+        "SRC-09618cdbe54ab116",
+        "SRC-db8bf43aac4761fa",
+        "SRC-2af3fbd6a1ebaef3",
+        "SRC-28ceefe39b44d231",
+        "SRC-8b7f9f2a023b9924"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "unresolvedCandidateIds": [
+        "SRC-75936e6ac6674cac",
+        "SRC-798400b8c3cdca1b"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-output.ts",
+      "unresolvedCandidateIds": [
+        "SRC-11c2fd058da400f3"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "unresolvedCandidateIds": [
+        "SRC-99f93e221be79c37"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "unresolvedCandidateIds": [
+        "SRC-40c66dfd204dbda3",
+        "SRC-48567cd8e37c3991",
+        "SRC-cc5df7d1c5e9ec0b"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "unresolvedCandidateIds": [
+        "SRC-45e9b5fdcb9299dd",
+        "SRC-65271c7b8e2e8cb7",
+        "SRC-4f003e55ed1e9fc7"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-result.ts",
+      "unresolvedCandidateIds": [
+        "SRC-e00652c126285566",
+        "SRC-76f100c242e56634"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-runtime-identity.ts",
+      "unresolvedCandidateIds": [
+        "SRC-bd297991df284978",
+        "SRC-043fca2d3e19964f",
+        "SRC-59b2eff2e5b097bc"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "unresolvedCandidateIds": [
+        "SRC-4d60c1d43749d0ab",
+        "SRC-3c41e1cc4c626ee7",
+        "SRC-ebc23d5b6e48ed89",
+        "SRC-fb57d6b2bc4f60a8",
+        "SRC-cad1b0d2630a4fa7",
+        "SRC-9d5a8c8121d9fcb9",
+        "SRC-c55018ccd3791ff7",
+        "SRC-0ed42eb6d8c6e6c5",
+        "SRC-b67be506e3dd1172",
+        "SRC-b92b7879dec69e9e",
+        "SRC-67ef603549d06ed4",
+        "SRC-b9711b156605d972",
+        "SRC-7c383d94189423bc",
+        "SRC-5d7c077a0938474d",
+        "SRC-8050cd0fb2bfefbf"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "unresolvedCandidateIds": [
+        "SRC-9ca16f596b6c5911",
+        "SRC-a1c4ae6c1f665e60",
+        "SRC-4025be0bbdb3b61f",
+        "SRC-324af3f8b73ff826",
+        "SRC-273d6999aa8a40cb",
+        "SRC-9206f5b0e791cafc"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-capacity.ts",
+      "unresolvedCandidateIds": [
+        "SRC-5d62bcf95bf01148"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-children.ts",
+      "unresolvedCandidateIds": [
+        "SRC-ab2f26b6abf77031",
+        "SRC-dabd973fb42f7d2a",
+        "SRC-5781ae5a36cb2589",
+        "SRC-8de141c54180a53a",
+        "SRC-ea92047a430bb6aa",
+        "SRC-3e61a8ba02216192",
+        "SRC-a92a6ed48f0cd4d4",
+        "SRC-1f2b58ac76896c8d",
+        "SRC-bec35546ed3b3371"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-state.ts",
+      "unresolvedCandidateIds": [
+        "SRC-8dc016986defd637",
+        "SRC-29a892b8a02d2ebc",
+        "SRC-ec2080fb30900565",
+        "SRC-ea3aa8e999a37471",
+        "SRC-231f1e1781c7e183",
+        "SRC-b558ee8b4a90be96",
+        "SRC-2bbe297fbd671488",
+        "SRC-d560048a43241868",
+        "SRC-e52ed28d5b77b99f",
+        "SRC-49eebea3e1122439",
+        "SRC-0f52f2b957de8dd4",
+        "SRC-c3cedfa8ad068f58",
+        "SRC-7745d7976f115a02",
+        "SRC-9971723e0d800983"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "unresolvedCandidateIds": [
+        "SRC-966dbc9c6a63479c",
+        "SRC-ad3158c95b5e0afe",
+        "SRC-185348206703934c",
+        "SRC-b3c75cbdb5b31212",
+        "SRC-2f9273a912a76a99",
+        "SRC-194fd9647e2bce6d",
+        "SRC-b3dacfdee4a70218",
+        "SRC-a89d4020e331c518",
+        "SRC-306b7dfdbbed2d03",
+        "SRC-d20273c300a0e9ad",
+        "SRC-de0f6b8fe89f1e5e",
+        "SRC-87e29fb6d732b32c",
+        "SRC-ff6f26c86cdbe7f6",
+        "SRC-a58dddaf184c1961"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "unresolvedCandidateIds": [
+        "SRC-b3dc6d47dd0189cf"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/resource-reservations.ts",
+      "unresolvedCandidateIds": [
+        "SRC-4c1491d31d6020a9",
+        "SRC-8946ab12f10a6290",
+        "SRC-889aabf9313bd7e1"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/trust.ts",
+      "unresolvedCandidateIds": [
+        "SRC-714c42853fb7b3ee"
+      ]
+    }
+  ],
+  "externalPhysicalInputs": [
+    "genuine immutable alternate GNU tar installed identity under existing/usr grants",
+    "actual full installed compiled provider sandbox/role/grants and measurement process observations",
+    "authentic original legacy owner/profile/policy/source/grant/accounted metadata manifest store; absence blocks",
+    "actual external/dynamic public outbox/blob callers",
+    "actual nativehost controller/page/node readbacks"
+  ],
+  "parentSeamsOpen": [
+    "universal SDK modulecarrier, taskpartition and authenticated original closure ordering",
+    "Prism input spool/store quotas",
+    "infra701 source coordinates"
+  ],
+  "notWaived": [
+    "original22 required cases allNOTRUN",
+    "verifiedCore13 original profiles/domain/source obligations unchanged",
+    "all97+55 inputs/historical failures unchanged",
+    "fresh independent whole173-source semantic review"
+  ]
+}

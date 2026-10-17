@@ -1,0 +1,74 @@
+[
+  {
+    "path": "charts/kubeclaw/values.yaml",
+    "sha256": "1778bdd0dcdef3f637b9201a3e600be6d5bb0e0c804185a4e9be9a1005c13226"
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "sha256": "7615ed9ef94068cc1e19f052bc65713b5ccb18be2671f33233039ff862835e3b"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+    "sha256": "982e66d75e5dbd4ab7e52d1fedbe5c68015849e4ddfb1c59947bb107686cab5e"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+    "sha256": "7ffcadc506d3a1d6961b586e516de6a8d516de216d96e1266def09fc732862d6"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+    "sha256": "66e348bbdc1aa38068096c5eb3e0044206aebb28d9b4807708321d63338c333f"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+    "sha256": "6f3ccf5e1e4ce3d120bea6a730b5c6dd132497ef42bebea6b4fb5d2482399617"
+  },
+  {
+    "path": "tests/verification/deployment/agent-observer-policy.test.mjs",
+    "sha256": "3b6cce6b8ddfdbc89fbffe1da0c3fc0eb5b788a945ef084a7490982a30576a82"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+    "sha256": "7ffcadc506d3a1d6961b586e516de6a8d516de216d96e1266def09fc732862d6"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+    "sha256": "67444a5a791b2e408b53f3d166afce85937131890aba036b0037e42d9c78c774"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
+    "sha256": "58976e1ae44055663149b4cd830f593e2fdebb41705413c88f99e858722cbab0"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts",
+    "sha256": "02a054facf3ca13ab0d875b1380c52a585362d96d5138b842f7bd026a03fcf6b"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/plugin-api.ts",
+    "sha256": "848f5e17e9b474c8e7b27908d0ed65a1600cba50c4e6633c4108eb4f5bbd1581"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
+    "sha256": "cc49831a1ff6eef51642fd47a0e4a1d00d6ad6bb6337c09f709d7cfd5a5f46da"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/hook-values.ts",
+    "sha256": "7514c3213f914e60b91e5139e6c624c7c289fdc26b1351786a8ee287caeaa911"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+    "sha256": "4957fc2f8b2dab174f7aaa7cac5ddc94ae42ea3cf83caf2b414553396a0b5719"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+    "sha256": "8f974830cf10d931410d6bd1f23b4782aa8988b96baba13f4172a3b9f85d4a5d"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+    "sha256": "66e348bbdc1aa38068096c5eb3e0044206aebb28d9b4807708321d63338c333f"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts",
+    "sha256": "63ff685537b415cbe5a67c4b8d4ada42241ef2187fc278ec75ec403855763ac8"
+  }
+]

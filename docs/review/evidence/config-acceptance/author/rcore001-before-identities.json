@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/review/remediation/config-acceptance-matrix.json",
+    "snapshot": "docs/review/evidence/config-acceptance/author/rcore001-before-config-acceptance-matrix.json.gz",
+    "sha256": "04f2a2700077a07507f219ade647111a3eb0674e6a61f42c2df85a483e1ca582",
+    "gzipSha256": "adc9db552fe4a9e9f73f5f29c3dfe842c8df3e3f237013f514695996a000b1a2"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/author/consolidate.py",
+    "snapshot": "docs/review/evidence/config-acceptance/author/rcore001-before-consolidate.py.gz",
+    "sha256": "57b4354dca07dfc7fb8987d1adaea0612cf4f9a31e741e86d057e756050fe871",
+    "gzipSha256": "ca00500568534277661618ff4af51481e6eddcbbdd4e4c3417870983f2cb46fb"
+  }
+]

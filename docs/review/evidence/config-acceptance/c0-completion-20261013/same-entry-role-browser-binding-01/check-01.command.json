@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "node",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "exitCode": 1,
+  "elapsedSeconds": 1.1226637363433838,
+  "scriptStartSha256": "73a86291e641ff7d033e103300ead1ff4a55c53b55be9a3c1e8deb998d945bf9",
+  "scriptEndSha256": "73a86291e641ff7d033e103300ead1ff4a55c53b55be9a3c1e8deb998d945bf9"
+}

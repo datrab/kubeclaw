@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-17T03:06:30.747166+00:00",
+  "status": "CONTROL_INSTALLED_PROCESS_TRANSPORT_SOURCE_IMPLEMENTED_GUEST_EXECUTION_OPEN",
+  "sourceCommit": "4e7c5b866f00699d11ba67b1dffac71ba77786be",
+  "verifiedRemoteHead": "4e7c5b866f00699d11ba67b1dffac71ba77786be",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-control-installed-process-20261017",
+  "change": "Original three Control production-process cases use real complete source author -> actual role build -> materializer/publisher -> system generation/atomic expected receipt -> fixed installed role paths -> unchanged control.ts. Explicit isolated test guest and actual root required; exclusive directory reservation refuses any existing installation and retains files until child exit. Whole installed package and relative aliases copied unchanged. Legacy policy ENV removed; same failed-stderr setup and all original health/422/sink availability/snapshot assertions retained. No production policy/source/default/entrypoint change.",
+  "checks": {
+    "authenticPublicationProfiles": 2,
+    "sourceConservation": true,
+    "originalSelectedConsumer": true,
+    "actualEntrypointMutationRejectedAndRestoredPositive": true,
+    "strictPrismTypecheck": true,
+    "moduleSyntax": true,
+    "diffCheck": true,
+    "isolatedGuestAdmissionDenialBeforePublication": true
+  },
+  "originalProcessGate": {
+    "status": "NOT_RUN_NOT_VERIFIED",
+    "originalCases": 3,
+    "reason": "No explicit isolated writable guest; current environment has no capabilities, Docker or delegated writable cgroup. Guard denies before touching fixed system paths; this scheduled run never installed into /app, /etc or /run. Actual fixed-path copy/process/HTTP/sink lifecycle therefore remains unverified.",
+    "resume": "On genuine isolated root-owned test guest with absent /app/prism, /etc/kubeclaw/config and /run/pipeline-delivery, run PRISM_NATIVE_ISOLATED_TEST_POOL=true node --test --test-concurrency=1 skills/prism/tests/control-listener.test.mts. Do not set flag on shared/production host."
+  },
+  "independentReview": "OPEN: no callable native spawn/reviewer/collaboration tools in current ALL_TOOLS; CONFIG subagents0 and parent terminal. No fresh independent report. Known same-surface EROFS not replayed. Author publication controls do not establish independent/native acceptance.",
+  "originalRoster": {
+    "fields": {
+      "required": 2409,
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+      "unchanged": true
+    },
+    "cases": {
+      "required": 6845,
+      "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+      "unchanged": true
+    },
+    "requirements": {
+      "required": 50,
+      "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+      "unchanged": true
+    }
+  },
+  "sourceSha256": {
+    "skills/prism/tests/fixtures/published-process.mjs": "eaadb640729b4838e715f69da2be1af3cb24a915c21584dbab8a1977c0387bd1",
+    "skills/prism/tests/fixtures/published-process.d.mts": "7fca8e95e1dacb28f9c5627ebe553e246f84a13b081970ad28c0f8753a716f4e",
+    "skills/prism/tests/control-listener.test.mts": "c0652150bef8606dbc0ea4cf26c435a96f87219cb37a55d5711d3f0c227047d5"
+  },
+  "originalCasesNewlyAccepted": 0,
+  "originalResultsChanged": false,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Use genuine installed transport for remaining original Worker subprocess fixtures with central controlInternalUrl and full coupled selected profiles; preserve actual native process assertions. Complete genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed original bytes/publication and coordinated sole-root/all-profile/schema/file-set boot+Nova receiving. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 activation; independent/full original/history/native/archive C0-C6 gates OPEN.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Isolated Linux Docker UID/GID1000/delegated writable cgroup/native launcher pool; isolated writable root guest for fixed-path process transport; sufficient genuinely root-trusted archive storage and migrated PostgreSQL; original history CHOWN SETUID/SETGID1003 authority. No spoof, synthetic receipts or skipped acceptance.",
+  "writerLock": "SAME shared nonblocking repository writer lock for mutations/checkpoints; released at bounded command exit",
+  "noHistoricalFollowup": true
+}

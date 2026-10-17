@@ -1,0 +1,313 @@
+npm notice run verify:config:components
+npm notice run tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts
+✔ Studio loads authored operator values and keeps installation inputs outside JSON (10328.427525ms)
+✔ Studio rejects retired PORT="" (5007.11126ms)
+✔ Studio rejects retired PORT="8080" (4795.968353ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="" (4923.391657ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="8080" (4757.707921ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="" (4985.234994ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080" (4801.278768ms)
+✔ Studio rejects invalid port through original shared validation (27256.312038ms)
+✔ Studio rejects invalid controlTimeoutMs through original shared validation (27191.388331ms)
+✔ Studio rejects invalid controlUrl through original shared validation (64579.467131ms)
+✔ Studio rejects unknown settings and invalid startup terminates before serving (8807.780451ms)
+✔ production Studio Docker environment does not reintroduce a retired author (5256.951334ms)
+✔ actual Studio survives refused Control and malformed URL with explicit responses (6421.199658ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (6191.373348ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (6740.952792ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (6419.968073ms)
+✔ actual Studio bounds upstream empty-body wait and remains healthy (6406.497149ms)
+✔ actual Studio bounds upstream partial-body wait and remains healthy (6369.174529ms)
+✔ actual Studio cancels upstream streaming when the client disconnects (6138.339012ms)
+✔ authored Studio timeout 150 reaches the live proxy and startup snapshot (6350.485522ms)
+✔ authored Studio timeout 600 reaches the live proxy and startup snapshot (7012.108785ms)
+✔ missing Studio ingress secret retains 503 proxy response and static availability (6079.78269ms)
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (31.636476ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (3.09883ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (2.754131ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (2.292359ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (2.150096ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (2.030792ms)
+✔ CC1 Control artifactRoot rejects undefined (2.115354ms)
+✔ CC1 Control artifactRoot rejects null (1.901179ms)
+✔ CC1 Control artifactRoot rejects "" (1.983021ms)
+✔ CC1 Control artifactRoot rejects "/" (2.010762ms)
+✔ CC1 Control artifactRoot rejects "relative" (1.840378ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (14.308779ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (5.286236ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (4.833745ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (1.92384ms)
+✔ CC1 Control artifactRoot rejects 1 (1.861998ms)
+✔ CC1 Control studioPublicUrl rejects undefined (1.92963ms)
+✔ CC1 Control studioPublicUrl rejects null (1.859628ms)
+✔ CC1 Control studioPublicUrl rejects "" (2.024262ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (2.279149ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (1.911349ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (1.96517ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (1.842097ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (1.849868ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (1.848978ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (1.885598ms)
+✔ CC1 Control studioPublicUrl rejects 1 (4.690071ms)
+✔ CC1 strict Control object (2.012351ms)
+✔ CC1 strict Control object (1.837437ms)
+✔ CC1 strict Control object (1.853928ms)
+✔ CC1 strict Control object (1.843387ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (1.631902ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (1.439828ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (1.389756ms)
+✔ CC2 authored Control snapshot survives file mutation (15.564101ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-input-limit.test.mts (606.942942ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-native-settings.test.mts (612.425664ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-resource-operation.test.mts (354.734373ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-resource-policy.test.mts (577.573115ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-result-journal.test.mts (599.287076ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-supervisor-config.test.mts (583.651982ms)
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:11:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/swarm-supervisor-consumers.test.mts:14:34
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts (563.362669ms)
+✔ CB01 real probe reservation overflows and recovers while work remains active (60.508319ms)
+✔ CB02 actual TCP connection limit rejects the next socket and reopens after release (10.774488ms)
+✔ CB03 original Node body deadline sends 408 without shortening its checking interval (30009.056335ms)
+✔ CW01 canonical author values reach the selected worker consumer view (5047.326722ms)
+✔ CW02 every alternate author value reaches the actual consumer (4946.488984ms)
+✔ CW03 unknown key at entry (3284.896798ms)
+✔ CW03 unknown key at prism-worker (3338.845819ms)
+✔ CW03 unknown key at prism-worker.settings (3283.37158ms)
+✔ CW03 unknown key at prism-worker.settings.ingress (3298.10856ms)
+✔ CW04 port rejects 3 (3380.870963ms)
+✔ CW04 port rejects null (3586.231858ms)
+✔ CW04 port rejects -1 (3404.38133ms)
+✔ CW04 port rejects 0 (4160.801599ms)
+✔ CW04 port rejects 1.5 (3631.519927ms)
+✔ CW04 port rejects 2147483648 (3344.814417ms)
+✔ CW04 port rejects undefined (3483.257766ms)
+✔ CW04 maximumActiveRequests rejects 3 (3260.69933ms)
+✔ CW04 maximumActiveRequests rejects null (3261.007719ms)
+✔ CW04 maximumActiveRequests rejects -1 (3412.439353ms)
+✔ CW04 maximumActiveRequests rejects 0 (3420.07824ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (3638.023429ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (3759.237214ms)
+✔ CW04 maximumActiveRequests rejects undefined (3317.735953ms)
+✔ CW04 maximumProbeRequests rejects 3 (3574.454301ms)
+✔ CW04 maximumProbeRequests rejects null (3549.55619ms)
+✔ CW04 maximumProbeRequests rejects -1 (3326.325656ms)
+✔ CW04 maximumProbeRequests rejects 0 (3499.209033ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (3293.884011ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (3391.526518ms)
+✔ CW04 maximumProbeRequests rejects undefined (3781.620545ms)
+✔ CW04 maximumConnections rejects 3 (3554.782838ms)
+✔ CW04 maximumConnections rejects null (3359.387322ms)
+✔ CW04 maximumConnections rejects -1 (3759.413914ms)
+✔ CW04 maximumConnections rejects 0 (3388.657627ms)
+✔ CW04 maximumConnections rejects 1.5 (3371.30314ms)
+✔ CW04 maximumConnections rejects 2147483648 (3536.030417ms)
+✔ CW04 maximumConnections rejects undefined (3319.870925ms)
+✔ CW04 requestTimeoutMs rejects 3 (3515.15096ms)
+✔ CW04 requestTimeoutMs rejects null (3866.252532ms)
+✔ CW04 requestTimeoutMs rejects -1 (3303.243257ms)
+✔ CW04 requestTimeoutMs rejects 0 (3497.506506ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (3467.459043ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (3345.5541ms)
+✔ CW04 requestTimeoutMs rejects undefined (3551.579441ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (3473.746005ms)
+✔ CW04 shutdownTimeoutMs rejects null (3267.456007ms)
+✔ CW04 shutdownTimeoutMs rejects -1 (3580.883609ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (4337.30732ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (3338.042729ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (3364.018219ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (3562.925277ms)
+✔ CW04 maximumInputBytes rejects 3 (3345.642997ms)
+✔ CW04 maximumInputBytes rejects null (3382.661881ms)
+✔ CW04 maximumInputBytes rejects -1 (3463.442374ms)
+✔ CW04 maximumInputBytes rejects 0 (3405.387548ms)
+✔ CW04 maximumInputBytes rejects 1.5 (4414.861934ms)
+✔ CW04 maximumInputBytes rejects 2147483648 (3454.022083ms)
+✔ CW04 maximumInputBytes rejects undefined (3366.284971ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (5853.674753ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (4805.14582ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (5212.0007ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (5214.064525ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (5320.52488ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES (4859.446003ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES (5097.326107ms)
+✔ CW06 rejects unsupported profile (3339.424523ms)
+✔ CW06 rejects unsupported features (3483.949499ms)
+✔ CW06 rejects unsupported tuning (3483.525539ms)
+✔ CW06 rejects unsupported overrides (3990.83613ms)
+✔ CW07 missing or broken authorship never falls back to defaults (6161.067037ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (3466.536682ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (3813.527369ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (4901.743879ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (5021.582139ms)
+✔ actual Buster chart binds both authored admission profiles and rejects retired ENV authors (12689.599491ms)
+✖ actual service CLI rejects inherited retired ENV before opening its parent channel (1.595171ms)
+✔ prism package contains the complete canonical bundle and shared validator (5704.601696ms)
+✔ kubeclaw package contains the complete canonical bundle and shared validator (196.461726ms)
+✔ prism: each component changes real rollout checksum; omitted checksum is detected (6307.602664ms)
+✔ kubeclaw: each component changes real rollout checksum; omitted checksum is detected (11535.979374ms)
+✔ prism: real archive missing a required component fails the complete delivery oracle (1366.010944ms)
+✔ kubeclaw: real archive missing a required component fails the complete delivery oracle (3437.856949ms)
+✔ Buster image COPY contains all authored files; removing one source fails the same structural oracle (1.131059ms)
+✔ prism: worker-core AJV/Helm integer-boundary parity (414.298953ms)
+✔ kubeclaw: worker-core AJV/Helm integer-boundary parity (135.062383ms)
+
+Interrupted while running:
+
+⚠ tests/verification/deployment/prism-swarm-config.test.mjs (tests/verification/deployment/prism-swarm-config.test.mjs:1:1)
+✖ tests/verification/deployment/prism-swarm-config.test.mjs (8463.074971ms)
+✖ tests/verification/reliability/config-component-bundle.test.mts
+✖ tests/verification/reliability/config-component-generation.test.mjs
+ℹ tests 152
+ℹ suites 0
+ℹ pass 141
+ℹ fail 8
+ℹ cancelled 3
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 598100.030835
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-input-limit.test.mts:1:1
+✖ skills/prism/tests/swarm-input-limit.test.mts (606.942942ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-native-settings.test.mts:1:1
+✖ skills/prism/tests/swarm-native-settings.test.mts (612.425664ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-resource-operation.test.mts:1:1
+✖ skills/prism/tests/swarm-resource-operation.test.mts (354.734373ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-resource-policy.test.mts:1:1
+✖ skills/prism/tests/swarm-resource-policy.test.mts (577.573115ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-result-journal.test.mts:1:1
+✖ skills/prism/tests/swarm-result-journal.test.mts (599.287076ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-config.test.mts (583.651982ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts (563.362669ms)
+  'test failed'
+
+test at tests/verification/deployment/buster-admission-render.test.mjs:48:1
+✖ actual service CLI rejects inherited retired ENV before opening its parent channel (1.595171ms)
+  AssertionError [ERR_ASSERTION]: this unprivileged CLI proof uses its real service identity
+  
+  0 !== 1000
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/buster-admission-render.test.mjs:49:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:1:1
+✖ tests/verification/deployment/prism-swarm-config.test.mjs (8463.074971ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/reliability/config-component-bundle.test.mts:1:1
+✖ tests/verification/reliability/config-component-bundle.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/reliability/config-component-generation.test.mjs:1:1
+✖ tests/verification/reliability/config-component-generation.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'

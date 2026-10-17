@@ -1,0 +1,80 @@
+{
+  "at": "2026-10-16T13:05:24.193270+00:00",
+  "fieldId": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+  "owner": "charts/kubeclaw/values.yaml#/busterNamespaceBroker/controller/policy/httpClientTimeoutSeconds",
+  "originalValue": 60,
+  "change": "Strict selected deployment policy captured before real trusted Kubernetes TLS client creation; local60-second default removed; zero/overflow cannot become unlimited. Actual TLS A timeout/B successful response and capture after owner deletion tested.",
+  "verification": [
+    {
+      "command": [
+        "gofmt",
+        "-w",
+        "cmd/buster-namespace-controller/controller-policy.go",
+        "cmd/buster-namespace-controller/main.go",
+        "cmd/buster-namespace-controller/main_test.go",
+        "cmd/buster-namespace-controller/controller-policy_test.go"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-api-timeout-20261016/check-0.txt"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-json",
+        "./cmd/buster-namespace-controller"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-api-timeout-20261016/check-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/deployment/buster-central-delivery.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-api-timeout-20261016/check-2.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-api-timeout-20261016/check-3.txt"
+    },
+    {
+      "command": [
+        "gofmt",
+        "-w",
+        "cmd/buster-namespace-controller/controller-policy_test.go"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-api-timeout-20261016/delivery-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/deployment/buster-central-delivery.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-api-timeout-20261016/delivery-1.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-api-timeout-20261016/delivery-2.txt"
+    }
+  ],
+  "independentAcceptance": "OPEN; fresh reviewer unavailable; recorded EROFS not retried",
+  "writerLock": "same shared nonblocking; released on process exit",
+  "nextAction": "Independent controller review and remaining eight main.go candidate reconciliation; no all-repository completeness claim.",
+  "delivery": "Real chart A/B6/12-second API policies parsed by actual Go loader; exact ConfigMap/mount and rollout checks passed."
+}

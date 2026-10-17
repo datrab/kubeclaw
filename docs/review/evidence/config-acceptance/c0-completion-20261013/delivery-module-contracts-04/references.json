@@ -1,0 +1,22 @@
+{
+  "frozenPriorProposal": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-03/README.md",
+    "sha256": "971b5ae8023868892446d058bdb683aa776d64d0b6d335489fbaeed1a6fc16ce"
+  },
+  "frozenPriorOverlay": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-03/active-contract-overlay.json",
+    "sha256": "0a86812b374ad9b95376790a1051143127807fcdbced3bc8fa932780a9822250"
+  },
+  "rejectedReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-delivery-module-contract-review-03/README.md",
+    "sha256": "ef0ba39e60132c897245b5d55485b8cddeffb2b0f2dcf8db5c4ecd4fb64b04d6"
+  },
+  "originalCases": [
+    "C5-COMPLETE-LEASE-LOSS",
+    "C5-COMPLETE-MUTATION",
+    "CMP-C5-BIND"
+  ],
+  "originalCaseLifecycleUnchanged": true,
+  "globalC0Accepted": false,
+  "implementationAuthorization": null
+}

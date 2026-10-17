@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -11,7 +13,7 @@ const { FileDurableRecordStore } = await import('@kubeclaw/plugin-foundation/obs
 const attempt = { runId: 'run:test', stageId: 'stage:test', attemptId: 'attempt:test', attemptNumber: 1 };
 const adapter = activate({
   registration: {},
-  config: { artifactRoot: temporary, maxArtifactBytes: 1024 },
+  config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: temporary, maxArtifactBytes: 1024 },
   async emit() {},
   async invoke() { throw new Error('unexpected dependency'); },
 });
@@ -119,7 +121,7 @@ try {
   const boundedRoot = path.join(temporary, 'bounded');
   const bounded = activate({
     registration: {},
-    config: {
+    config: { ...TEST_ARTIFACT_STORE_POLICY,
       artifactRoot: boundedRoot,
       maxArtifactBytes: 1024,
       maximumRecords: 1,

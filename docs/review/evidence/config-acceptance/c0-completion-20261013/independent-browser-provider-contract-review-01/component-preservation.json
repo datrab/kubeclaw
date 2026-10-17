@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "owner": "prism-worker.config.json",
+      "existingProfilesExact": true,
+      "allNonprofilePropertiesExact": true,
+      "newProfiles": []
+    },
+    {
+      "owner": "worker-core.config.json",
+      "existingProfilesExact": true,
+      "allNonprofilePropertiesExact": true,
+      "newProfiles": []
+    },
+    {
+      "owner": "prism-studio.config.json",
+      "existingProfilesExact": true,
+      "allNonprofilePropertiesExact": true,
+      "newProfiles": []
+    },
+    {
+      "owner": "buster-engine.config.json",
+      "existingProfilesExact": true,
+      "allNonprofilePropertiesExact": true,
+      "newProfiles": [
+        "browser-source-A"
+      ]
+    },
+    {
+      "owner": "prism-control.config.json",
+      "existingProfilesExact": true,
+      "allNonprofilePropertiesExact": true,
+      "newProfiles": []
+    },
+    {
+      "owner": "prism-execution.config.json",
+      "existingProfilesExact": true,
+      "allNonprofilePropertiesExact": true,
+      "newProfiles": []
+    }
+  ]
+}

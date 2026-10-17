@@ -1,0 +1,45 @@
+{
+  "rows": 832,
+  "sources": 330,
+  "duplicateIds": 0,
+  "statuses": {
+    "source-traced": 742,
+    "source-traced-declared-unused": 16,
+    "source-traced-pinned-consumer": 74
+  },
+  "openSemanticRows": 832,
+  "caseSpecifications": 204,
+  "caseResults": {
+    "not-run": 204
+  },
+  "danglingCaseIds": [],
+  "acceptance": "C0 INCOMPLETE; static source-traced statuses are not independent acceptance or runtime PASS",
+  "requiredRemaining": "field domains/dispositions across remaining chart/ARG/runtime/script surfaces; exact case harness/profile gaps; C0 reviewer; no implementation approval",
+  "openSemanticRowsMeaning": "all rows still unaccepted; source-traced is not target semantic closure",
+  "settingRows": 832,
+  "sourceFiles": 330,
+  "status": "C0 incremental source/target/case definitions; NOT ACCEPTED; remaining semantic per-field obligations explicit",
+  "futureImplementationResults": {
+    "not-run": 204
+  },
+  "targetDomainCoverage": {
+    "definedProposalRows": 602,
+    "missingByOwner": {
+      "openclaw-agent-observer": 17,
+      "openclaw-prism": 1,
+      "role-package-nova": 7,
+      "role-package-prism": 7,
+      "role-package-buster": 7,
+      "delivery": 6,
+      "chart-kubeclaw": 104,
+      "chart-prism": 34,
+      "chart-ops-pod": 14,
+      "chart-gitops": 8,
+      "ops-deployer": 15,
+      "native-delivery-projection": 10
+    },
+    "meaning": "proposal presence not domain completeness/native positive/independent review/acceptance"
+  },
+  "currentInventorySha256": "9d339998171fc352cda8199123ca3a0c2e0c41c2e0692084d2b1cc9c42e588a8",
+  "currentCasesSha256": "746fe7ed15c113da3d6e07613f4b9eace83275a493efb1f6df8c4bd7580c9d57"
+}

@@ -1,0 +1,138 @@
+{
+  "reviewer": "/root/core_schema_closure; notauthorofparenttwohandoffs",
+  "scope": [
+    "AUTH-PRISM-DESIGN-CARDINALITY",
+    "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY"
+  ],
+  "frozenStand": "bce3f075156a86be345821499c04628cb35c2762",
+  "verdict": "SOURCE_CLASSIFICATIONS_AND_NARROW_CONTROLS_VERIFIED; TARGET_DEFINITION_COMPLETENESS_NOT_ACCEPTED",
+  "findings": [
+    {
+      "id": "PPRISM001",
+      "severity": "blocking-C0-definition",
+      "title": "Count closure is not yet defined at the first durable round admission boundary",
+      "target": "AUTH-PRISM-DESIGN-CARDINALITY / proposal.activation.selectedCount and FUTURE case",
+      "sources": [
+        {
+          "path": "skills/prism/server/dispatch-route.ts",
+          "lines": [
+            52,
+            59
+          ]
+        },
+        {
+          "path": "skills/prism/server/direction-routes.ts",
+          "lines": [
+            111,
+            125
+          ]
+        },
+        {
+          "path": "skills/prism/control/design-generations.ts",
+          "lines": [
+            22,
+            27,
+            40
+          ]
+        },
+        {
+          "path": "skills/prism/control/agent-admission.ts",
+          "lines": [
+            6,
+            12
+          ]
+        },
+        {
+          "path": "skills/prism/control/agent-jobs.ts",
+          "lines": [
+            20,
+            24,
+            25
+          ]
+        }
+      ],
+      "observation": "Bothproductive admissions commit startDesignRound inone transaction, then enqueueAgentJob inanother. Proposal names M/J job.request/configclosure beforedispatch, but no concrete originalcount/policyreference shape/capturepoint in first design_round/start_digest, retryoriginal count when publication/crash happens betweenstages, or exact agreement withclient/job/tool. This is a definition gap, not request to implement transactionsnow.",
+      "requiredDefinition": "Define first acceptedround policy/count/reference typedshape and idempotencydigest; derive job/prompt/result/client expectedCount ONLY from that retainedroundclosure. Define samekey across A->B, crash afterroundbeforejob, historicalcompleted-nojob, missinglegacybinding failbeforeeffects, explicitthree-design architecture/request vsnewB eligibility/conflict; exactsubcases/oracles, not generic eligible B.",
+      "businessDomainVerdict": "2..3 is defensible source-based candidate, not current supportedworkflow or arbitrary universalcapacity. Existingmateriality/document guards remain unchanged andA3 must nevercomplete with2. A6business acceptance and implementationapproval notgranted."
+    },
+    {
+      "id": "PPRISM002",
+      "severity": "source-description-correction",
+      "title": "Fresh supervisor profile equality must not be described as dedicated-host or unconditional recovery identity verification",
+      "target": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY.reader/productiveCallerChain",
+      "sources": [
+        {
+          "path": "skills/prism/server/native-worker-execution.ts",
+          "lines": [
+            23,
+            25,
+            40,
+            42
+          ]
+        },
+        {
+          "path": "skills/prism/server/native-worker-host.ts",
+          "lines": [
+            12,
+            21,
+            24,
+            27
+          ]
+        },
+        {
+          "path": "skills/prism/config/native-worker.ts",
+          "lines": [
+            14,
+            21,
+            34,
+            35
+          ]
+        },
+        {
+          "path": "skills/prism/server/worker-operation.ts",
+          "lines": [
+            39,
+            40
+          ]
+        }
+      ],
+      "observation": "Equality against current importedprismNativeWorkerProfile occurs only !recovered. Dedicatedhost has no importedinstalledprofile equality; nativePrismHostConfig doesnotreadenginedigest, hostvalidatesdeclared envelope andconstructs genericexecutor. Hashes anddeclaredschemavalidity cannot authenticate installed OCI/package bytes. No recoveredbusinesslaunch was executed or overclaimed byreviewer.",
+      "requiredDefinition": "Correct currentreader trace to freshsupervisorcomparison, separate recoveredjournal/history checks and absent hostinstalledidentitycheck. Specify exact targetrealidentity/recovery guard in futurecase without claiming currentguard exists."
+    },
+    {
+      "id": "PPRISM003",
+      "severity": "blocking-C0-definition",
+      "title": "Target image/code/config provenance tuple and its binding/recovery cases remain unspecified",
+      "target": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY targetvalidation/targetAuthorRef/caseIds and DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION handoff",
+      "sources": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "lines": [
+            78,
+            88
+          ]
+        },
+        {
+          "path": "skills/prism/engine/worker-envelope.ts",
+          "lines": [
+            10,
+            17,
+            25,
+            42
+          ]
+        },
+        {
+          "path": "skills/prism/config/native-worker.ts",
+          "lines": [
+            7,
+            8,
+            9
+          ]
+        }
+      ],
+      "observation": "Current OCI versus syntheticdevelopment classification/alias is correct. Target only says explicitdelivered role/image/code/config identitytuple andgrants/compatibility beforedispatch; no typedfieldset/exactproducers/provenance verifier/reference semantics or futurecase specs. Only linkedcase is current4syntax/profileimport controls; these cannotcover declaredF-BIND/F-DELIVERY originalgeneration/image/grants mismatch recovery/Eval.",
+      "requiredDefinition": "Define tuple fields separately (OCIroleimage vsenginepackagedcontent/source/schema/config), soleexistingproducers/selectedauthor aliases, originalcapture/hash/compatibility rules andmissinghistory behavior. Add exactproposedcases withfullinputs/priorstate/realverifier oracles for compatibleA/B, mismatchedOCI/code/config/role/grants, syntheticdev forbiddenproduction, crash/replay/retry/fixedEval. Keepcurrentopaquecontrol narrow; no need executeimage/host/C1 in C0."
+    }
+  ],
+  "excluded": "AllCoreauthored artifacts/questionbatch, completeparenttrust/deliverytargets andglobalC0; thisisnotfreshwholeC0review"
+}

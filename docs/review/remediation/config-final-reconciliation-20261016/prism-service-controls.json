@@ -1,0 +1,47 @@
+{
+  "controls": [
+    {
+      "control": "foreign-id",
+      "rejected": true,
+      "error": "Unknown/duplicate service field: UNKNOWN"
+    },
+    {
+      "control": "hash-drift",
+      "rejected": true,
+      "error": "Original reference/hash drift: AUTH-PRISM-BRIDGE-PORT"
+    },
+    {
+      "control": "classification-drift",
+      "rejected": true,
+      "error": "Original object/class/owner drift: AUTH-PRISM-BRIDGE-PORT"
+    },
+    {
+      "control": "owner-drift",
+      "rejected": true,
+      "error": "Original object/class/owner drift: AUTH-PRISM-BRIDGE-PORT"
+    },
+    {
+      "control": "case-drift",
+      "rejected": true,
+      "error": "Original case join drift: AUTH-PRISM-BRIDGE-PORT"
+    },
+    {
+      "control": "original-reference-drift",
+      "rejected": true,
+      "error": "Original reference/hash drift: AUTH-PRISM-BRIDGE-PORT"
+    },
+    {
+      "control": "duplicate-id",
+      "rejected": true,
+      "error": "Unknown/duplicate service field: AUTH-PRISM-BRIDGE-PORT"
+    },
+    {
+      "control": "missing-alternate-profile-leaf",
+      "rejected": true,
+      "error": "'pollIntervalMs'"
+    }
+  ],
+  "restoredPositive": "PASS",
+  "deterministicReplay": true,
+  "qualification": "Matrix integrity only; zero runtime/native/history cases executed"
+}

@@ -1,0 +1,116 @@
+{
+  "at": "2026-10-17T06:02:22.485553+00:00",
+  "status": "ORIGINAL_WAIT_READER_FIXED_FULL_ACCEPTANCE_OPEN",
+  "sourceCommit": "b4aaa02980687682dc36f410f2413d7338e720cd",
+  "sourceRemoteVerified": true,
+  "productionSourceChanged": true,
+  "evidence": "docs/review/remediation/config-wait-original-reader-20261017",
+  "change": "Core retained Wait resolver uses the same restored adapterConfigurations root as actual adapter activation, never current Platform B root. Original source/snapshot/journal/provider/projection admission stays unchanged.",
+  "fixtureRepair": "Existing original operator-retention fixture omitted mandatory maximumRecordBytes; preserve all fixture limits and add the explicit TEST_CORE_POLICY.operatorMessagingStore spread. No production default/schema relaxation.",
+  "checks": {
+    "targetedOriginalWaitAndTamperPassed": 3,
+    "targetedOriginalWaitAndTamperTotal": 3,
+    "audienceAndActualStateWaitPassed": 6,
+    "audienceAndActualStateWaitTotal": 6,
+    "skipped": 0,
+    "strictNovaTypecheck": true,
+    "diffCheck": true,
+    "originalSnapshotAndStoreBytesUnchanged": true,
+    "noBStoreCreated": true,
+    "originalAudienceAndShutdownRevocationPreserved": true,
+    "completeWaitFile": {
+      "at": "2026-10-17T06:09:11.612466+00:00",
+      "status": "COMPLETE_WAIT_FILE_VERIFIED_IN_BOUNDED_GROUPS_NOT_FULL_ACCEPTANCE",
+      "sourceCommit": "b4aaa02980687682dc36f410f2413d7338e720cd",
+      "sourceHashesVerifiedUnchanged": true,
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "partitionEvidence": [
+        {
+          "log": "targeted.txt",
+          "passed": 3,
+          "sha256": "cf657ef54e9da62cab61ef97f0aabd5b45debe6c9027f7bf273f591115499068"
+        },
+        {
+          "log": "quota-fence.txt",
+          "passed": 2,
+          "sha256": "7ccd93138ecf043bf2daff675adaac77a8f69d43d7492e8c1f0cebe39e244f11"
+        },
+        {
+          "log": "crash-atomicity.txt",
+          "passed": 2,
+          "sha256": "7a4221a785fc6f310a34be3c4340f987185ae169fd17b22f64e05308211607e3"
+        },
+        {
+          "log": "authority-replay.txt",
+          "passed": 3,
+          "sha256": "9c129015c510ecde975a260fade27633c6046b9ad7376669999cadd389a025df"
+        }
+      ],
+      "caseNames": [
+        "real terminal approval projects Wait bytes, uses actual Core-owned adapter reader and keeps late duplicate identity",
+        "retained original prefix mutation, truncation and same-byte inode replacement fail without rewriting the projected Wait",
+        "original projected Wait resolves through actual Core adapter despite a relocated current B wait root",
+        "fixed real Wait byte quota admits original Core work only after measured savings and record quota is unchanged",
+        "real separate delivery writer fence blocks Wait commit and late original writers retain the accepted receipt",
+        "actual SIGKILL before-rename leaves one atomic Wait state and retry never reinflates original bytes",
+        "actual SIGKILL after-rename leaves one atomic Wait state and retry never reinflates original bytes",
+        "wrong source/receipt identities, aliased/reversed domains and changed intent cannot authorize Wait replacement",
+        "a small original Wait cannot fund projection metadata and remains byte-identical",
+        "the existing operator projection receipt replays after Wait projection using the original logical Wait digest"
+      ],
+      "newlyExecutedTests": 7,
+      "previouslyVerifiedTests": 3,
+      "productionSourceChangedThisTurn": false,
+      "independentReview": "OPEN: latest actual same-engine admission HTTP429, no report",
+      "fullC0C6Complete": false,
+      "requiredScope": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "qualification": "Complete local Wait file only. Exact 10 distinct cases, immutable source hashes across all four groups. Does not replace independent/native/history/archive acceptance. Previous timed-out run retained as NOT PASS."
+    }
+  },
+  "beforeFix": "red-corrected.txt actual activated original adapter rejects original projection with WAIT_RETAINED_CORE_EVIDENCE_INVALID after B root relocation. red.txt preserves initial missing fixture leaf.",
+  "executionSurfaceRecovery": "Combined focused run exceeded dynamic exec 90-second lifetime: 13 passes/1 cancellation; NOT PASS. Actual processes exited and lock was free. Recovered with bounded changed-path commands: targeted.txt 3/3 and audience-state.txt 6/6, no skips/cancellations. Full wait-value suite remains NOT VERIFIED at this stand. Subsequent bounded quota/fence 2/2, actual SIGKILL 2/2 and authority/replay 3/3 now complete all 10 unique file tests with targeted3/3 at identical source hashes; 0 failures/skips/cancellations. Independent/full acceptance stays OPEN.",
+  "qualityBoundary": {
+    "currentRoot": "config/pipeline.config.json pipeline-entry.v3; createPipelineGenerationReceipt rootSchemaVersion pipeline-entry.v3; PipelineBootCapture/selectionReceipt contain six component captures, not authenticated selected plugin map",
+    "currentReceiver": "inspectPipelineV10QualityServiceSelection returns selectedProviderPolicies with installedSourceAuthorizationVerified=false, callerAuthorizationVerified=false, activationAllowed=false. Nova ResolveTestPlanInput selectedProviderPolicies remains optional historical ABI. No productive v3 caller supplies it.",
+    "neededImplementation": "Coordinate the SAME approved root/schema/all-profile/file-set/source closure/generation/service/image/package receipt/delivery and original reader, then derive complete policies from authenticated original boot into actual Nova resolver. Do not promote denied v10 or fake receipts.",
+    "inputStore": "runner-attempt-preparation.invocationInputs has ArtifactRefV1 from producer AttemptResultV1, no authenticated sourceRevision/buildDigest/originalInputReceiptDigest/baseline association/storeVersion or inputStore-owned reservations/validity/publication lifecycle. Need actual producer/result/source receipt joins and same original store accounting/sealed bytes/fences before provider execution. Keep BUDGET_SOURCE_RECEIPT_REQUIRED."
+  },
+  "independentReview": {
+    "status": "OPEN",
+    "nativeReviewerToolsDiscovered": [],
+    "activeConfigSubagents": 0,
+    "latestExistingActualOutput": "/home/node/.openclaw/workspace/tmp/config-quality-integration-review-20261017/retry-process.txt",
+    "observedFailure": "ERROR: exceeded retry limit, last status: 429 Too Many Requests",
+    "newReviewClaimed": false,
+    "unchangedAdmissionRetry": false
+  },
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "originalIdsAndResultsChanged": false
+  },
+  "originalCasesNewlyAccepted": 0,
+  "productiveQualityBootImplemented": false,
+  "sealedInputStoreImplemented": false,
+  "fullC0C6Complete": false,
+  "remainingWork": "Coordinated sole central root/profile/schema/generation/delivery -> actual Quality map; original inputStore-owned sealed producer/source/build/baseline/accounting/publication fence; full original field/history/native/independent gates remain OPEN.",
+  "externalBlockers": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Same-engine independent reviewer availability; suitable isolated Linux Docker actual UID/GID1000 delegated writable cgroup/native pool, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL.",
+  "writerLock": "SAME nonblocking lock acquired on each bounded source/test/commit; released on process exit",
+  "historicalFollowupDispatched": false,
+  "sourceHashes": {
+    "skills/nova/core/execution/engine-runtime.ts": "613740c4e36784d043e26649768b4ec4863c99e130a4ad43f13c3a09a49d1a76",
+    "tests/verification/reliability/wait-value-projection.test.mjs": "0b096a837b06c8c98aa0abc0002fa43e584ed2f209cca4367d4cfc834bc89ff1",
+    "tests/verification/reliability/operator-retention-authority-fixture.test.mjs": "77af11ac6288c059985efa5098fc7a502dc16bd336916810e44805e67a7802f8"
+  }
+}

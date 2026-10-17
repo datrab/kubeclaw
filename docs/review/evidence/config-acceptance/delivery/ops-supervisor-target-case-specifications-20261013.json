@@ -1,0 +1,492 @@
+{
+  "scope": "nine actual existing Python timing fields, same Ops deployment author/completeA/B policy/oracles; no socket, child/native/account action",
+  "fields": [
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-CONTROLSOCKETPROBETIMEOUTSECONDS",
+      "field": "controlSocketProbeTimeoutSeconds",
+      "profileCoordinate": "supervisor.controlSocketProbeTimeoutSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "controlSocketProbeTimeoutSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 39
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 39,
+        "operation": "control_ready socket.settimeout"
+      },
+      "nativeOracle": "real AF_UNIX connect timeout/refused/live listener under captured trusted socket identity; socket file alone never PASS; IOException handling returns false. Future isolated actual native Codex ready control before negative; no fake plain UNIX fixture proves Codex pairing/relay.",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-CONTROLSTARTUPTIMEOUTSECONDS",
+      "field": "controlStartupTimeoutSeconds",
+      "profileCoordinate": "supervisor.controlStartupTimeoutSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "controlStartupTimeoutSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 45
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 45,
+        "operation": "wait_for_control default deadline"
+      },
+      "nativeOracle": "monotonic deadline measured, positive fast daemon before A deadline first, then controlled actual daemon ready after A deadline but before B deadline (B is twice A); readiness signal+child.poll bothrequired; deadline failure enters real stoppingcleanup, never records pairingVerifiedtrue",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-CONTROLSTARTUPPOLLSECONDS",
+      "field": "controlStartupPollSeconds",
+      "profileCoordinate": "supervisor.controlStartupPollSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "controlStartupPollSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 50
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 50,
+        "operation": "wait_for_control stop.wait"
+      },
+      "nativeOracle": "actual stop.wait interval gates retry while deadline unchanged; stop event interrupts promptly; socket probe latency bounded and counted independently, no resetdeadline perpoll",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-CONTROLCOMMANDTIMEOUTSECONDS",
+      "field": "controlCommandTimeoutSeconds",
+      "profileCoordinate": "supervisor.controlCommandTimeoutSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "controlCommandTimeoutSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 53
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 53,
+        "operation": "run_control default child.wait"
+      },
+      "nativeOracle": "run_control controlled native control command finishing within selected budget returns actualcode, overbudget kills+waits returns124; process identity/exit/drainobserved no lost child global handle",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-LOGINSTATUSTIMEOUTSECONDS",
+      "field": "loginStatusTimeoutSeconds",
+      "profileCoordinate": "supervisor.loginStatusTimeoutSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "loginStatusTimeoutSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 91
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 91,
+        "operation": "main run_control login status timeout"
+      },
+      "nativeOracle": "actual codex login status -quiet timeout budget applies perattempt; unauthenticated fixture exitsnonzero and remainswaitingforlogin; no account success invented; run_control consumesTimeoutExpired and returns124, outerexcept alone does notprove path",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-LOGINRETRYWAITSECONDS",
+      "field": "loginRetryWaitSeconds",
+      "profileCoordinate": "supervisor.loginRetryWaitSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "loginRetryWaitSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 95
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 95,
+        "operation": "main no login stop.wait"
+      },
+      "nativeOracle": "failedlogin\u2192actual stop.wait delay before newstatuscall, stopinterrupts; no remote/account request constructed by pure C0; credentialaccountstate kept onPVC while new daemonpolicy loads",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-CONTROLHEALTHPOLLSECONDS",
+      "field": "controlHealthPollSeconds",
+      "profileCoordinate": "supervisor.controlHealthPollSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "controlHealthPollSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 106
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 106,
+        "operation": "main active process health stop.wait"
+      },
+      "nativeOracle": "actual childpoll and real control_ready health condition eachloop; periodicstatuspairingVerifiedfalse, listenerloss\u2192stop child; no relay/pairing acceptance from localready",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-CONTROLTERMINATIONTIMEOUTSECONDS",
+      "field": "controlTerminationTimeoutSeconds",
+      "profileCoordinate": "supervisor.controlTerminationTimeoutSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "controlTerminationTimeoutSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 115
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 115,
+        "operation": "main finally child.wait then kill"
+      },
+      "nativeOracle": "actual terminate\u2192wait selecteddeadline\u2192kill\u2192wait reap, whole process tree belongs originalA; preserve authPVC; signals/native stopfixture required, no mocked handle acceptance as actual termination",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-SUPERVISOR-RESTARTWAITSECONDS",
+      "field": "restartWaitSeconds",
+      "profileCoordinate": "supervisor.restartWaitSeconds",
+      "targetDomain": {
+        "domain": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "unit": "seconds",
+          "finite": true,
+          "maximumFrom": "captured actual selected Python/platform supported socket/Event/Popen/monotonic primitive range; target must reject oversize/overflow before calls, not silent clamp",
+          "correlations": [
+            "startupPoll<=startupTimeout",
+            "probeTimeout<=startupTimeout",
+            "stop and termination budget inside actual Pod shutdown grace/drain policy"
+          ]
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new selectedsupervisor/daemon generation; preserve A process/command deadline/account/PVC/socket/runtime/provider and originalcleanuprefs during Bpublication. This is daemon timing policy, not business workflow lease/claim/retry or Core alias."
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/A.json",
+          "sha256": "0b8453a1338e312df0a4c57e5f17ef1b1c07499af11c8a48a9b8b50e507bd974"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-supervisor-target-profiles-20261013/B.json",
+          "sha256": "b0f65e4118bc26724e42ee3f5fa5597fef81a5d8c422cc0bf3e44d081e93bd6c"
+        }
+      },
+      "source": {
+        "path": "ops/pod/supervisor.py",
+        "field": "restartWaitSeconds",
+        "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+        "line": 121
+      },
+      "actualReader": {
+        "path": "ops/pod/supervisor.py",
+        "line": 121,
+        "operation": "main exited daemon stop.wait"
+      },
+      "nativeOracle": "after actual child reap recordsremote-process-exited then stop.wait selectedbudget; B newdaemononly, oldAstop/cleanup before new child; retrynever changes account/runtime refs",
+      "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+      "negativeCases": [
+        "missing/unknown/type/nonfinite/zero/negative/unsupportedprimitiveoverflow",
+        "invalid crossfield timer/shutdown relation",
+        "old equal+different source literal/ENV/projection as competingauthor before spawn",
+        "actual daemon/socket/account fixture unavailable is setup, not semanticnegativekill"
+      ],
+      "priorState": "nonempty selected originaldaemonA PID/start identity/nativepolicy/account/PVC/tokenprovider/command state; B admitteddaemon only after Aoriginalstop/reap as required; universalparent originalModule/grants/cleanup refs pending",
+      "firstCurrentBoundary": "timeout kills child and returns 124 (run_control), waits retry; termination timeout escalates child.kill",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before daemon/credential/socket/git/native effects, proposed futureloader"
+    }
+  ],
+  "remaining": "exact future selected Python/runtime support receipts and shared Pod shutdown-policy alias/source identity required; no numeric-equality Core ownership claim"
+}

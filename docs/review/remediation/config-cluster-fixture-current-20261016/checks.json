@@ -1,0 +1,42 @@
+[
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/contracts/tsconfig.buster-cluster-policy.json"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-cluster-fixture-current-20261016/checks-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+      "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-cluster-fixture-current-20261016/checks-1.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-cluster-fixture-current-20261016/checks-2.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-cluster-fixture-current-20261016/checks-3.txt"
+  }
+]

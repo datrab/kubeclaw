@@ -1,6 +1,6 @@
 import { historicalChannelLimits } from './preparation-historical-channel.ts';
 import { assertHistoricalImportDescriptor, type HistoricalImportDescriptor } from './preparation-historical-reference.ts';
-import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { executeNativeWorkerAttempt, type NativeWorkerControlChannel } from '@kubeclaw/worker-core';
 import type { WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
 import { assertPreparationSlot } from './preparation-slots.ts';

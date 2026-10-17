@@ -2,7 +2,7 @@ import { randomBytes } from 'node:crypto';
 import { nativeSourceCleanupOperation, workerAttemptSpecDigest, workerProfileDigest } from '@kubeclaw/worker-core';
 import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3,
   type WorkerAttemptResultV3, type WorkerProfileV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { preparationEnvelope, preparationProfile } from './preparation-envelope.ts';
 import { preparationDigest } from './preparation-header.ts';
 import { assertPreparationCleanupEffects, type PreparationCleanupEffects } from './preparation-cleanup-binding.ts';

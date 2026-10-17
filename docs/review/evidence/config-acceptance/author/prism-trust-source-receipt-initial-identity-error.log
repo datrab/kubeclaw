@@ -1,0 +1,3 @@
+Metadata capture attempt failed after the unchanged test command passed74/74.
+AssertionError: charts/kubeclaw/files/config/swarm-components.schema.json
+Cause: git blob for a tracked symlink is its link target, not dereferenced schema bytes. Test/source inputs not changed; corrected capture records both identities.

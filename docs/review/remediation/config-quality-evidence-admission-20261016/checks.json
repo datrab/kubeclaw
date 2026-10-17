@@ -1,0 +1,58 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-evidence-snapshot.test.mts",
+      "tests/verification/reliability/worker-deadline.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.2,
+    "log": "docs/review/remediation/config-quality-evidence-admission-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/verification/integration/direct-command-output-contract.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.15,
+    "log": "docs/review/remediation/config-quality-evidence-admission-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/buster/engine/test-gates/artifacts.ts",
+      "tests/verification/reliability/buster-evidence-snapshot.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.02,
+    "log": "docs/review/remediation/config-quality-evidence-admission-20261016/check-2.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.06,
+    "log": "docs/review/remediation/config-quality-evidence-admission-20261016/check-3.txt"
+  }
+]

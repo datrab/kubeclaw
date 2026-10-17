@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-17T02:49:39.340604+00:00",
+  "status": "ORIGINAL_PRIVATE_ACCESS_5_OF_5_PASS_LIVE_RECEIVER_MIGRATED_NOT_LIVE_ACCEPTANCE",
+  "sourceCommit": "bc133bb3ca1483843168e94c097ab642ea7adcde",
+  "sourceRemoteVerified": true,
+  "verifiedRemoteHead": "bc133bb3ca1483843168e94c097ab642ea7adcde",
+  "evidence": "docs/review/remediation/config-private-access-current-owner-20261017",
+  "change": "Original private-access contract now uses actual whole-profile Prism chart generator and its selected release/namespace, not legacy chart-local facade. Live Tailscale contract captures full central file-set and actual Buster runtime tuple through production loader and typed cluster decoder. Original private-access and live effect assertions unchanged; no live invocation or deployment.",
+  "checks": {
+    "originalPrivateAccess": {
+      "passed": 5,
+      "total": 5,
+      "failed": 0,
+      "skipped": 0
+    },
+    "strictClusterPolicyTypecheck": true,
+    "diffCheck": true
+  },
+  "originalRoster": {
+    "fields": {
+      "required": 2409,
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+      "unchanged": true,
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json"
+    },
+    "cases": {
+      "required": 6845,
+      "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+      "unchanged": true,
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/cases.json"
+    },
+    "requirements": {
+      "required": 50,
+      "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+      "unchanged": true,
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/requirements.json"
+    }
+  },
+  "sourceSha256": {
+    "tests/verification/contracts/infra-private-access.test.mjs": "a5b94828881f45abea63161389c2b675d6b557c308c755463f00becff8b4b72d",
+    "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts": "fd47fcdff682757fa215189e97d9c6738fa069967c0941eed297c028b9adcac7"
+  },
+  "originalCasesNewlyAccepted": 0,
+  "originalResultsChanged": false,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "independentReview": "OPEN: no callable native spawn/reviewer/collaboration tool discovered, CONFIG subagents0, parent done. No new independent report. Recorded unchanged app-server EROFS not retried; author checks do not constitute independent/native acceptance.",
+  "liveGate": "NOT RUN; real authorized isolated Kubernetes/Tailscale lease, service and external HTTPS endpoint remain required. Helm render/source typecheck are not live effect proof. Existing explicit live input guard and all original prepare/request/release assertions preserved.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Original history filesystem-import test needs genuine isolated root CHOWN and SETUID/SETGID authority for UID/GID1003. Full gates additionally need Docker UID/GID1000 delegated writable cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL. No spoof/skips/assertion weakening. Native preparation guest additionally needs original exact capability mask0x1e1, trusted native case parent and launcher/node/pool inputs; SWARM_CONFIG locator now names complete current central pipeline authors, not retired flat chart author.",
+  "QB_R02_constraint": {
+    "preparation": "runner-attempt-preparation.ts invocationInputs reads actual latest original producer AttemptResultV1 but projects only ArtifactRefV1 into ProviderInvocationV1. No original source/build/baseline receipt association or inputStore receiver exists in TestPlanRunnerOptions.",
+    "store": "artifacts.ts EvidenceStore.store only publishes output artifacts. PreparationSourceLedger reserves staged wire/source extraction, not linked provider input artifacts; it cannot be relabeled as an inputStore artifact reservation/validity API.",
+    "decision": "Keep BUDGET_SOURCE_RECEIPT_REQUIRED at runner/loader/session. No fake receipt from metadata, task/ENV/CLI/private root, parallel ledger or output writer. Required ABI is defined; genuine original store integration remains source work, not missing design approval."
+  },
+  "nextAction": "Continue genuine QB-R02 original producer/source/build/baseline association and inputStore reservation/accounting/sealed snapshot/publication; coordinated authenticated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 unchanged. Required independent/full original/history/native/archive/C0-C6 gates OPEN. Native preparation source fixtures now use current central authors; real guest provisioning/manifests must deliver the same complete file-set. Do not replay unchanged green suites or native infrastructure failures.",
+  "writerLock": "SAME nonblocking repository lock acquired for each bounded mutation/check/commit; released on process exit",
+  "noHistoricalFollowup": true,
+  "baseline": "before.txt4/5 failed at genuine selected release identity; first migration tests.txt4/5 required absolute locator, corrected.txt5/5. Raw failures retained."
+}

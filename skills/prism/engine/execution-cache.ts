@@ -3,11 +3,6 @@ export interface EngineCacheLimits {
   readonly maximumCompletedEntries: number;
   readonly maximumCompletedBytes: number;
 }
-export const DEFAULT_ENGINE_CACHE_LIMITS: EngineCacheLimits = Object.freeze({
-  maximumInFlight: 4,
-  maximumCompletedEntries: 32,
-  maximumCompletedBytes: 16 * 1024 * 1024,
-});
 type Pending<T> = { fingerprint: string; result: Promise<T>; owner: AbortSignal | undefined };
 type Completed = { fingerprint: string; serialized: string; bytes: number };
 
@@ -18,7 +13,7 @@ export class EngineExecutionCache<T> {
   readonly #completed = new Map<string, Completed>();
   #completedBytes = 0;
 
-  constructor(limits: EngineCacheLimits = DEFAULT_ENGINE_CACHE_LIMITS) {
+  constructor(limits: EngineCacheLimits) {
     for (const value of [limits.maximumInFlight, limits.maximumCompletedEntries, limits.maximumCompletedBytes]) {
       if (!Number.isSafeInteger(value) || value < 1) throw new Error('PRISM_ENGINE_CACHE_LIMIT_INVALID');
     }

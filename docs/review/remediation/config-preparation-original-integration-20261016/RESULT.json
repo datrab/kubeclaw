@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-16T23:04:28.399850+00:00",
+  "status": "ORIGINAL_PREPARATION_AND_READINESS_16_OF_16_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "8a9d421dc3c1f4e1fc38bcace52e6a46be7241e7",
+  "verifiedRemoteHead": "8a9d421dc3c1f4e1fc38bcace52e6a46be7241e7",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-preparation-original-integration-20261016",
+  "change": "Four original preparation/readiness suites now load complete current raw central authors, validate all profiles and capture actual buster-runtime consumed-owner tuple. Real preparation ledger reservations/record quota, extraction coordination and original-header recovery decoder tests preserved. Readiness malformed policy and exact boundary values reach real selected file loader plus direct validator, not retired facade. No new production defaults, synthetic boot receipt, source/store receipt, grants or denied-v10 activation.",
+  "checks": {
+    "originalTests": {
+      "total": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "strictTypecheck": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "fullAcceptance": "OPEN"
+    }
+  },
+  "sourceHashes": {
+    "tests/verification/reliability/buster-preparation-ledger.test.mts": "3d968d7959604f29345b57cf46354e269affb9e4957dbb311cd7fb4a7bf81213",
+    "tests/verification/reliability/buster-preparation-identities.test.mts": "dce30e3b46925153cc4bc013ba2d7e02bb710b1b11797ad1d3dd5ac5427ecd74",
+    "tests/verification/reliability/buster-extraction-concurrency.test.mts": "7fff7a43f787d9a70a5ba94bc3f5d22a4dd369c8cfba4b207b3c2f93e8fafeb4",
+    "tests/verification/reliability/buster-readiness-config.test.mts": "675d821ffb4738511505432823e40d36ad1e4ece2254d49710cbb110a462d4bc"
+  },
+  "retainedFailure": "before.txt: original suites failed at retired SWARM_CONFIG full facade before exercising their original obligations; after.txt16/16 all original assertions retained.",
+  "independentReview": "OPEN: no callable native reviewer/spawn tool in fresh discovery; CONFIG subagents0, parent done, no new reviewer output. Existing same-surface app-server EROFS unchanged, not retried. Author tests are not independent/native acceptance.",
+  "QB_R02_constraint": {
+    "actualBoundary": "runner-attempt-preparation.invocationInputs retains original AttemptResultV1 but projects only ResolvedInputV1.artifact metadata. artifacts.ts EvidenceStore exposes only store(attemptId,evidenceRoot,declaration,maximumBytes,signal); FileEvidenceStore publishes digest/size/storageUrl. No inputStore-owned reserve/seal/storeVersion/prepublication validity API at this boundary.",
+    "required": "Continue genuine original prepared source/build/producer/baseline association and existing input-store ownership/reservation/accounting through sealed input and publication. Do not invent receipt fields from task metadata, a private store author or parallel ledger. Defined contract is not missing design approval.",
+    "activationFence": "BUDGET_SOURCE_RECEIPT_REQUIRED retained unchanged."
+  },
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "remainingOriginalConsumers": [
+    "tests/verification/reliability/buster-admission-config.test.mts",
+    "tests/fixtures/test-gate/buster-readiness-profile.mts",
+    "tests/verification/reliability/buster-readiness-consumer.test.mts",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts"
+  ],
+  "nextAction": "Continue original admission/readiness/shutdown fixtures through same complete selected owner; no full-facade reconstruction. Complete genuine QB-R02 and authenticated sole-root/boot+Nova receiving without denied-v10 promotion; independent complete-source/original/history/native/archive/fullC0-C6 OPEN.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped gates.",
+  "writerLock": "SAME nonblocking shared lock; released at script exit",
+  "noHistoricalFollowup": true
+}

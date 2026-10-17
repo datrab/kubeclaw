@@ -1,0 +1,758 @@
+{
+  "qualification": "Immutable actual source coordinates/associated original IDs; source-count not global coverage closure. No invented canonical candidateIDs or native claims",
+  "members": [
+    {
+      "path": "skills/buster/plugins/axe/src/provider.js",
+      "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+      "sourceField": "readProfiles262144 bytes/custom32 and source BUILTIN full business profiles",
+      "processingDisposition": "Current policy import/provenance processing byte/count guards. New sole captured owner replaces import author; whole-owner CONFIG byte admission remains original C1/C4 delivery obligation, not a new provider file-size mock or protocolconstant exclusion.",
+      "associatedOriginalIds": [
+        "RT-6053515db8e5f294"
+      ],
+      "futureCases": "not-run",
+      "exactSourceCoordinates": [
+        {
+          "line": 31,
+          "text": "  const selected = config.endpointName === undefined ? value.endpoints[0]",
+          "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+            "path": "skills/buster/plugins/axe/src/provider.js",
+            "line": 31,
+            "text": "  const selected = config.endpointName === undefined ? value.endpoints[0]"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 38,
+          "text": "    const bytes = fs.readFileSync(inside(repository, config.profileFile)); if (bytes.byteLength > 262144) throw new Error('AXE_PROFILE_FILE_TOO_LARGE');",
+          "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+            "path": "skills/buster/plugins/axe/src/provider.js",
+            "line": 38,
+            "text": "    const bytes = fs.readFileSync(inside(repository, config.profileFile)); if (bytes.byteLength > 262144) throw new Error('AXE_PROFILE_FILE_TOO_LARGE');"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 42,
+          "text": "    if (Object.keys(custom).length > 32) throw new Error('AXE_PROFILE_LIMIT_EXCEEDED');",
+          "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+            "path": "skills/buster/plugins/axe/src/provider.js",
+            "line": 42,
+            "text": "    if (Object.keys(custom).length > 32) throw new Error('AXE_PROFILE_LIMIT_EXCEEDED');"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 53,
+          "text": "  const selected = config.profiles ?? ['desktop', 'mobile'];",
+          "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+            "path": "skills/buster/plugins/axe/src/provider.js",
+            "line": 53,
+            "text": "  const selected = config.profiles ?? ['desktop', 'mobile'];"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 76,
+          "text": "    combinations, tags: config.tags ?? ['wcag2a', 'wcag2aa'], exclude: config.exclude ?? [], timeoutMs: config.timeoutMs ?? 30000,",
+          "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+            "path": "skills/buster/plugins/axe/src/provider.js",
+            "line": 76,
+            "text": "    combinations, tags: config.tags ?? ['wcag2a', 'wcag2aa'], exclude: config.exclude ?? [], timeoutMs: config.timeoutMs ?? 30000,"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        }
+      ],
+      "associatedOriginalCaseRefs": [
+        {
+          "id": "RT-6053515db8e5f294-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6053515db8e5f294-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6053515db8e5f294-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6053515db8e5f294-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6053515db8e5f294-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6053515db8e5f294-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "artifact": "case-definitions.json"
+        }
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/src/provider.js",
+      "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+      "sourceField": "settings262144 bytes/all32 profiles/budgets, native throughput>=1 vs currentfile>0",
+      "processingDisposition": "Current file-processing guards preserved in disposable source projections. Captured complete owned profile/budget maps required all-member validation; partial/null-budget choices retained. Exact native-context throughput compatibility locally checked.",
+      "associatedOriginalIds": [
+        "RT-b8fe49d2862e13fe"
+      ],
+      "futureCases": "not-run",
+      "exactSourceCoordinates": [
+        {
+          "line": 31,
+          "text": "  if (bytes.byteLength > 262144) throw new Error('LIGHTHOUSE_SETTINGS_FILE_TOO_LARGE');",
+          "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+            "path": "skills/buster/plugins/lighthouse/src/provider.js",
+            "line": 31,
+            "text": "  if (bytes.byteLength > 262144) throw new Error('LIGHTHOUSE_SETTINGS_FILE_TOO_LARGE');"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 37,
+          "text": "  if (profileNames.length < 1 || profileNames.length > 32",
+          "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+            "path": "skills/buster/plugins/lighthouse/src/provider.js",
+            "line": 37,
+            "text": "  if (profileNames.length < 1 || profileNames.length > 32"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 47,
+          "text": "      || !bounded(throttling.rttMs, 0, 5000) || !bounded(throttling.throughputKbps, Number.MIN_VALUE, 1000000)",
+          "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+            "path": "skills/buster/plugins/lighthouse/src/provider.js",
+            "line": 47,
+            "text": "      || !bounded(throttling.rttMs, 0, 5000) || !bounded(throttling.throughputKbps, Number.MIN_VALUE, 1000000)"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 53,
+          "text": "  if (budgetNames.length > 32 || budgetNames.some((name) => !/^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/u.test(name))) {",
+          "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+            "path": "skills/buster/plugins/lighthouse/src/provider.js",
+            "line": 53,
+            "text": "  if (budgetNames.length > 32 || budgetNames.some((name) => !/^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/u.test(name))) {"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 87,
+          "text": "  const runCount = config.runs ?? (config.purpose === 'performance' ? 3 : 1);",
+          "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+            "path": "skills/buster/plugins/lighthouse/src/provider.js",
+            "line": 87,
+            "text": "  const runCount = config.runs ?? (config.purpose === 'performance' ? 3 : 1);"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 104,
+          "text": "      const representative = scores.indexOf(median(scores)); const representativeReport = reports[representative].report;",
+          "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+            "path": "skills/buster/plugins/lighthouse/src/provider.js",
+            "line": 104,
+            "text": "      const representative = scores.indexOf(median(scores)); const representativeReport = reports[representative].report;"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        }
+      ],
+      "associatedOriginalCaseRefs": [
+        {
+          "id": "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-b8fe49d2862e13fe-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-b8fe49d2862e13fe-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-b8fe49d2862e13fe-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-b8fe49d2862e13fe-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-b8fe49d2862e13fe-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-b8fe49d2862e13fe-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        }
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/visual/src/provider.js",
+      "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+      "sourceField": "jsonFile1MiB/profilemap32/manifestentries128/baseline64MiB/memoryrgba/selected3+1",
+      "processingDisposition": "Real task baseline import size/count/hash/memory/file predicates remain task source/native admission, never approved browser provenance. Byte caps are actual source processing guards, not blanket protocol invariants; effective baseline=min64MiB,originalartifactBytes; target validated via exact source helper. Native byte/evidence policy migration original obligations OPEN.",
+      "associatedOriginalIds": [
+        "RT-7055bd224779ebc9"
+      ],
+      "futureCases": "not-run",
+      "exactSourceCoordinates": [
+        {
+          "line": 21,
+          "text": "  if (bytes.byteLength > 1024 * 1024) throw new Error(`${code}_TOO_LARGE`);",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 21,
+            "text": "  if (bytes.byteLength > 1024 * 1024) throw new Error(`${code}_TOO_LARGE`);"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 46,
+          "text": "  if (!width || !height || width > 16384 || height > 16384 || width * height > Math.floor(maximumDecodedBytes / 4)) {",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 46,
+            "text": "  if (!width || !height || width > 16384 || height > 16384 || width * height > Math.floor(maximumDecodedBytes / 4)) {"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 85,
+          "text": "  if (!Array.isArray(document.entries) || !document.entries.length || document.entries.length > 128) throw new Error('VISUAL_MANIFEST_INVALID');",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 85,
+            "text": "  if (!Array.isArray(document.entries) || !document.entries.length || document.entries.length > 128) throw new Error('VISUAL_MANIFEST_INVALID');"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 100,
+          "text": "    const stat = fs.statSync(baseline); const maximumBytes = Math.min(64 * 1024 * 1024, limits.artifactBytes);",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 100,
+            "text": "    const stat = fs.statSync(baseline); const maximumBytes = Math.min(64 * 1024 * 1024, limits.artifactBytes);"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 134,
+          "text": "  if ((config.targets.length * 3) + 1 > invocation.limits.artifactFiles) throw new Error('VISUAL_EVIDENCE_FILE_LIMIT_EXCEEDED');",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 134,
+            "text": "  if ((config.targets.length * 3) + 1 > invocation.limits.artifactFiles) throw new Error('VISUAL_EVIDENCE_FILE_LIMIT_EXCEEDED');"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 165,
+          "text": "    const uncertain = result.diffPercent > policy.maximumDifferencePercent",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 165,
+            "text": "    const uncertain = result.diffPercent > policy.maximumDifferencePercent"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 166,
+          "text": "      && result.diffPercent <= policy.maximumDifferencePercent + policy.uncertaintyMarginPercent;",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 166,
+            "text": "      && result.diffPercent <= policy.maximumDifferencePercent + policy.uncertaintyMarginPercent;"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 167,
+          "text": "    const passed = result.diffPercent <= policy.maximumDifferencePercent; if (!passed) failed += 1;",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 167,
+            "text": "    const passed = result.diffPercent <= policy.maximumDifferencePercent; if (!passed) failed += 1;"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 174,
+          "text": "      message: `${entry.id}: ${result.diffPercent.toFixed(4)}% differs from maximum ${policy.maximumDifferencePercent}%${uncertain ? '; explicit agent review is not configured, so the result fails safely' : ''}` });",
+          "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+            "path": "skills/buster/plugins/visual/src/provider.js",
+            "line": 174,
+            "text": "      message: `${entry.id}: ${result.diffPercent.toFixed(4)}% differs from maximum ${policy.maximumDifferencePercent}%${uncertain ? '; explicit agent review is not configured, so the result fails safely' : ''}` });"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        }
+      ],
+      "associatedOriginalCaseRefs": [
+        {
+          "id": "RT-7055bd224779ebc9-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-7055bd224779ebc9-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-7055bd224779ebc9-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-7055bd224779ebc9-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-7055bd224779ebc9-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-7055bd224779ebc9-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "artifact": "case-definitions.json"
+        }
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/playwright/src/provider.js",
+      "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+      "sourceField": "workers fallback4/invocation processes minus4/default600000vsabsentinvocation",
+      "processingDisposition": "Exact source worker headroom4 is processing resource-reservation source obligation; no fake C3 native process grant/core budget alias. Original worker/config/host-resource budget refinement still OPEN outside original105 cut; numeric source coords preserved.",
+      "associatedOriginalIds": [
+        "RT-fbdecaab60720898"
+      ],
+      "futureCases": "not-run",
+      "exactSourceCoordinates": [
+        {
+          "line": 50,
+          "text": "    const minimumExecuted = Math.max(mode === 'blocking' ? 1 : 0, config.minimumExecutedTests ?? 1);",
+          "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+            "path": "skills/buster/plugins/playwright/src/provider.js",
+            "line": 50,
+            "text": "    const minimumExecuted = Math.max(mode === 'blocking' ? 1 : 0, config.minimumExecutedTests ?? 1);"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 51,
+          "text": "    if (passed + failed < minimumExecuted) findings.push(finding('coverage', 'Required execution', `Expected at least ${minimumExecuted} executed tests; observed ${passed + failed}.`));",
+          "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+            "path": "skills/buster/plugins/playwright/src/provider.js",
+            "line": 51,
+            "text": "    if (passed + failed < minimumExecuted) findings.push(finding('coverage', 'Required execution', `Expected at least ${minimumExecuted} executed tests; observed ${passed + failed}.`));"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 67,
+          "text": "  const workers = Math.max(1, Math.min(Number.isSafeInteger(config.workers) ? config.workers : 4, Math.max(1, invocation.limits.processes - 4)));",
+          "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+            "path": "skills/buster/plugins/playwright/src/provider.js",
+            "line": 67,
+            "text": "  const workers = Math.max(1, Math.min(Number.isSafeInteger(config.workers) ? config.workers : 4, Math.max(1, invocation.limits.processes - 4)));"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 70,
+          "text": "    timeoutMs: Math.min(config.timeoutMs ?? invocation.timeoutMs, invocation.timeoutMs), limits: {",
+          "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+            "path": "skills/buster/plugins/playwright/src/provider.js",
+            "line": 70,
+            "text": "    timeoutMs: Math.min(config.timeoutMs ?? invocation.timeoutMs, invocation.timeoutMs), limits: {"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 73,
+          "text": "      maximumResultBytes: Math.min(Number.MAX_SAFE_INTEGER, invocation.limits.artifactBytes * 2 + invocation.limits.logBytes),",
+          "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+            "path": "skills/buster/plugins/playwright/src/provider.js",
+            "line": 73,
+            "text": "      maximumResultBytes: Math.min(Number.MAX_SAFE_INTEGER, invocation.limits.artifactBytes * 2 + invocation.limits.logBytes),"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        }
+      ],
+      "associatedOriginalCaseRefs": [
+        {
+          "id": "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fbdecaab60720898-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fbdecaab60720898-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fbdecaab60720898-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fbdecaab60720898-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fbdecaab60720898-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fbdecaab60720898-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        }
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+      "sourceSha256": "a7af35a6b7df314129cf9150c3d44d2017c2bf47b9e529ef1ff6962129966b75",
+      "sourceField": "profile throttling throughput minimum1/current fileminimum>0; perrun timer",
+      "processingDisposition": "Native capability accepted domain/context constraint, no arbitrary cap and no broadened native limits; original parent/caller context deadline separate.",
+      "associatedOriginalIds": [
+        "RT-c245ed3eed7a76c8"
+      ],
+      "futureCases": "not-run",
+      "exactSourceCoordinates": [],
+      "associatedOriginalCaseRefs": [
+        {
+          "id": "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-c245ed3eed7a76c8-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-c245ed3eed7a76c8-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-c245ed3eed7a76c8-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-c245ed3eed7a76c8-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-c245ed3eed7a76c8-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-c245ed3eed7a76c8-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        }
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+      "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+      "sourceField": "includeAA true/dimension mismatchdiff100/capture decoded extent*DPR/resultbyte reserve4096",
+      "processingDisposition": "Actual native comparison/capture semantics require genuine images/runtime; fixed implementation method selections NOT treated as demonstrated configurable effect. Original source-author/global coverage remains open, identities/associated cases retained.",
+      "associatedOriginalIds": [
+        "RT-e747f65a9f069ccd",
+        "RT-9bc4832efb4988b7",
+        "RT-fe646415d23cc642",
+        "RT-6e3cc348f44734f5"
+      ],
+      "futureCases": "not-run",
+      "exactSourceCoordinates": [
+        {
+          "line": 47,
+          "text": "    || width * height > Math.floor(maximumDecodedBytes / 4)) throw new Error('BROWSER_VISUAL_DECODED_IMAGE_LIMIT_EXCEEDED');",
+          "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+            "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+            "line": 47,
+            "text": "    || width * height > Math.floor(maximumDecodedBytes / 4)) throw new Error('BROWSER_VISUAL_DECODED_IMAGE_LIMIT_EXCEEDED');"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 51,
+          "text": "  const result = Buffer.alloc(width * height * 4);",
+          "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+            "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+            "line": 51,
+            "text": "  const result = Buffer.alloc(width * height * 4);"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 119,
+          "text": "    integer(options.maximumResultBytes, 'BROWSER_VISUAL_RESULT_LIMIT_INVALID', 1024, 256 * 1024 * 1024);",
+          "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+            "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+            "line": 119,
+            "text": "    integer(options.maximumResultBytes, 'BROWSER_VISUAL_RESULT_LIMIT_INVALID', 1024, 256 * 1024 * 1024);"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 120,
+          "text": "    integer(options.maximumScreenshotBytes, 'BROWSER_VISUAL_SCREENSHOT_LIMIT_INVALID', 1024, 64 * 1024 * 1024);",
+          "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+            "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+            "line": 120,
+            "text": "    integer(options.maximumScreenshotBytes, 'BROWSER_VISUAL_SCREENSHOT_LIMIT_INVALID', 1024, 64 * 1024 * 1024);"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 144,
+          "text": "        if (width * height > Math.floor(this.#options.maximumResultBytes / 4)) throw new Error('BROWSER_VISUAL_DECODED_IMAGE_LIMIT_EXCEEDED');",
+          "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+            "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+            "line": 144,
+            "text": "        if (width * height > Math.floor(this.#options.maximumResultBytes / 4)) throw new Error('BROWSER_VISUAL_DECODED_IMAGE_LIMIT_EXCEEDED');"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        },
+        {
+          "line": 149,
+          "text": "        width, height, diffCount: width * height, diffPercent: 100,",
+          "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+          "oldScannerExactCoordinateRecords": [],
+          "immutableIdentity": {
+            "sourceSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+            "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+            "line": 149,
+            "text": "        width, height, diffCount: width * height, diffPercent: 100,"
+          },
+          "candidateGap": "No exact old scanner record; additive source definition obligation associated with real original IDs/cases, no invented candidate ID/global coverage acceptance"
+        }
+      ],
+      "associatedOriginalCaseRefs": [
+        {
+          "id": "RT-6e3cc348f44734f5-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6e3cc348f44734f5-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6e3cc348f44734f5-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6e3cc348f44734f5-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6e3cc348f44734f5-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-6e3cc348f44734f5-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-9bc4832efb4988b7-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-9bc4832efb4988b7-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-9bc4832efb4988b7-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-9bc4832efb4988b7-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-9bc4832efb4988b7-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-9bc4832efb4988b7-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-e747f65a9f069ccd-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-e747f65a9f069ccd-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-e747f65a9f069ccd-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-e747f65a9f069ccd-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-e747f65a9f069ccd-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-e747f65a9f069ccd-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fe646415d23cc642-BROWSER04-ALTERNATE",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fe646415d23cc642-BROWSER04-BINDING",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fe646415d23cc642-BROWSER04-CONTRACT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fe646415d23cc642-BROWSER04-DEFINITION",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fe646415d23cc642-BROWSER04-MUTANT",
+          "artifact": "case-definitions.json"
+        },
+        {
+          "id": "RT-fe646415d23cc642-CURRENT-SCHEMA-FIELD",
+          "artifact": "case-definitions.json"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+  "maximumRecordBytes": "Currentpayload canonicalJSON byteLength checked against65536 beforewrapping asDurableRecord; NOT complete encodedrecordincludingmetadata.",
+  "maximumBytes": "Whole encodedcandidate store state cap67108864 includes retainedrecords/cursors/metadata; constructor itself onlypositiveintegers andpath storage, nofiles.",
+  "maximumRecords": "10000 retainedrecord count separate from payload/wholebytes; actualretirement/quarantine/recovery semantics source review remainsOPEN.",
+  "ownership": "Actualexistingdemo adapter constructor passes these literals; no guessed Core/shared/other samevaluealias. Full proposedexistingowner fields/domains/correlatedprofiles/source/branch/rawquota controls+cases remain required."
+}

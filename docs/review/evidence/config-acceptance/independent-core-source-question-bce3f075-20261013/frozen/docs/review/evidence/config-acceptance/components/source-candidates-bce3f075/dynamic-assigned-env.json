@@ -1,0 +1,143 @@
+{
+  "readsites": [
+    {
+      "readerFile": "skills/buster/engine/test-gates/preparation-host.ts",
+      "sha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+      "computedReaderLine": 28,
+      "literalCallerExpansions": [],
+      "producer": {
+        "path": "skills/buster/engine/test-gates/preparation-command.ts",
+        "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+        "member": "preparationCommand.environment",
+        "literalAssignments": [
+          {
+            "line": 44,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES: String(settings.maximumInputBytes),"
+          },
+          {
+            "line": 45,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT: config.sourceRoot,"
+          },
+          {
+            "line": 46,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_TAR: config.tarExecutable,"
+          },
+          {
+            "line": 47,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY: config.trustedSourceAuthority,"
+          },
+          {
+            "line": 48,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY: config.sourceAttestationPublicKey,"
+          }
+        ]
+      },
+      "scope": "Current trustedgenerated env transported fromselected settings/original source binding; no new childauthor; real tar hardcodedvsdeclaredunused difference preserved"
+    },
+    {
+      "readerFile": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+      "sha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+      "computedReaderLine": 14,
+      "literalCallerExpansions": [
+        {
+          "name": "BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES",
+          "callerLine": 20,
+          "callerText": "  const maximum = Number(assigned('BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES'));"
+        },
+        {
+          "name": "BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT",
+          "callerLine": 62,
+          "callerText": "  const sourceRoot = assigned('BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT');"
+        },
+        {
+          "name": "BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY",
+          "callerLine": 80,
+          "callerText": "        descriptor, settings, trustedSourceAuthority: assigned('BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY'),"
+        },
+        {
+          "name": "BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY",
+          "callerLine": 81,
+          "callerText": "        sourceAttestationPublicKey: assigned('BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY'),"
+        }
+      ],
+      "producer": {
+        "path": "skills/buster/engine/test-gates/preparation-command.ts",
+        "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+        "member": "preparationCommand.environment",
+        "literalAssignments": [
+          {
+            "line": 44,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES: String(settings.maximumInputBytes),"
+          },
+          {
+            "line": 45,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT: config.sourceRoot,"
+          },
+          {
+            "line": 46,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_TAR: config.tarExecutable,"
+          },
+          {
+            "line": 47,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY: config.trustedSourceAuthority,"
+          },
+          {
+            "line": 48,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY: config.sourceAttestationPublicKey,"
+          }
+        ]
+      },
+      "scope": "Current trustedgenerated env transported fromselected settings/original source binding; no new childauthor; real tar hardcodedvsdeclaredunused difference preserved"
+    },
+    {
+      "readerFile": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+      "sha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+      "computedReaderLine": 11,
+      "literalCallerExpansions": [
+        {
+          "name": "BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES",
+          "callerLine": 56,
+          "callerText": "  const maximumBytes = Number(assigned('BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES'));"
+        },
+        {
+          "name": "BUSTER_PREPARATION_ASSIGNED_CLEANUP",
+          "callerLine": 58,
+          "callerText": "  const encoded = assigned('BUSTER_PREPARATION_ASSIGNED_CLEANUP');"
+        },
+        {
+          "name": "BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT",
+          "callerLine": 79,
+          "callerText": "      await removeOwnedData(assigned('BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT'), effects,"
+        }
+      ],
+      "producer": {
+        "path": "skills/buster/engine/test-gates/preparation-command.ts",
+        "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+        "member": "preparationCommand.environment",
+        "literalAssignments": [
+          {
+            "line": 44,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES: String(settings.maximumInputBytes),"
+          },
+          {
+            "line": 45,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT: config.sourceRoot,"
+          },
+          {
+            "line": 46,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_TAR: config.tarExecutable,"
+          },
+          {
+            "line": 47,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY: config.trustedSourceAuthority,"
+          },
+          {
+            "line": 48,
+            "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY: config.sourceAttestationPublicKey,"
+          }
+        ]
+      },
+      "scope": "Current trustedgenerated env transported fromselected settings/original source binding; no new childauthor; real tar hardcodedvsdeclaredunused difference preserved"
+    }
+  ]
+}

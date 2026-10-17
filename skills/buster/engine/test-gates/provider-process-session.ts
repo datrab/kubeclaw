@@ -1,3 +1,4 @@
+import { assertBudgetSourceAdmission } from './budget-source-admission.ts';
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -7,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import type { ProviderInvocationV1, ProviderResultV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { TestProviderExecutionContext, TestProviderCleanupDisposition } from '@kubeclaw/plugin-sdk';
 import type { TestProviderRegistryEntry } from '@kubeclaw/plugin-foundation/registry/types';
-import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import type { ProviderProcessResources } from './provider-loader.ts';
 import { ProviderCapabilities } from './provider-capabilities.ts';
 import { processFacts, signalProvider } from './provider-process-observation.ts';
@@ -71,6 +72,7 @@ export class ProviderProcessSession {
   #resources: ProviderProcessResources = { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 1 };
 
   constructor(entry: TestProviderRegistryEntry, invocation: ProviderInvocationV1, workspaceRootValue: string, policy: BusterProviderRuntimeSettings) {
+    assertBudgetSourceAdmission(invocation.configuration);
     this.#policy = validateBusterProviderRuntimeSettings(policy);
     this.#capabilities = new ProviderCapabilities(this.#policy.provider.maximumPendingCapabilities);
     this.#entry = entry;

@@ -1,9 +1,11 @@
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-const { activateWithSdk, normalizeAgentEvent, SUPPORTED_HOOKS } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
+const { activateWithSdk, normalizeAgentEvent: normalizeSelectedAgentEvent, SUPPORTED_HOOKS } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
+const normalizeAgentEvent = (raw) => normalizeSelectedAgentEvent(raw, TEST_CORE_POLICY.agentEventSource);
 const configSchema = JSON.parse(fs.readFileSync('schemas/config.schema.json', 'utf8'));
 assert.equal(SUPPORTED_HOOKS.includes('subagent_delivery_target'), true);
 assert.equal(configSchema.properties.hooks.items.enum.includes('subagent_delivery_target'), true);
@@ -34,9 +36,9 @@ const sdk = { on(hook, handler) { handlers.set(hook, handler); return () => { ha
 const events = [];
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-agent-events-'));
 const journalPath = path.join(temporary, 'events.jsonl');
-const journal = new core.FileJournal(journalPath);
+const journal = new core.FileJournal(journalPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 const adapter = activateWithSdk({
-  registration: {}, config: { hooks: ['agent_end', 'session_end'] },
+  registration: {}, config: { ...TEST_CORE_POLICY.agentEventSource, hooks: ['agent_end', 'session_end'] },
   async invoke() { throw new Error('unexpected dependency'); },
   async emit(type, identity, payload) {
     events.push({ type, identity, payload });
@@ -68,12 +70,12 @@ await adapter.shutdown(new AbortController().signal);
 assert.equal(released, 2);
 assert.equal(handlers.size, 0);
 assert.throws(() => activateWithSdk({
-  registration: {}, config: { hooks: ['unknown'] }, async invoke() {}, async emit() {},
+  registration: {}, config: { ...TEST_CORE_POLICY.agentEventSource, hooks: ['unknown'] }, async invoke() {}, async emit() {},
 }, sdk), /AGENT_EVENT_HOOK_UNSUPPORTED/);
 const deliveryEvents = [];
 const deliveryHandlers = new Map();
 const deliveryAdapter = activateWithSdk({
-  registration: {}, config: { hooks: ['subagent_delivery_target'] },
+  registration: {}, config: { ...TEST_CORE_POLICY.agentEventSource, hooks: ['subagent_delivery_target'] },
   async invoke() { throw new Error('unexpected dependency'); },
   async emit(type) { deliveryEvents.push(type); },
 }, {
@@ -90,7 +92,7 @@ await deliveryAdapter.shutdown(new AbortController().signal);
 const partialHandlers = new Map();
 let partialReleased = 0;
 const partial = activateWithSdk({
-  registration: {}, config: { hooks: ['agent_end', 'session_end'] },
+  registration: {}, config: { ...TEST_CORE_POLICY.agentEventSource, hooks: ['agent_end', 'session_end'] },
   async invoke() { throw new Error('unexpected dependency'); }, async emit() {},
 }, {
   on(hook, handler) {

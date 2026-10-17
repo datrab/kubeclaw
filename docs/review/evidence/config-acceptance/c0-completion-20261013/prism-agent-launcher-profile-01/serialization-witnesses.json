@@ -1,0 +1,21 @@
+{
+  "fixedLocalClosureObject": {
+    "schemaId": "prism-agent-launcher-result.v1",
+    "schemaDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "values": {
+      "localProcessClosed": true
+    }
+  },
+  "JSONstringifySpecialistResultBytes": 171,
+  "digestMeaning": "Digest value syntax exemplar only; hash bytes always71chars so serialized length equals actual successful source closure shape. Actual sha256 object digest must be independently read/compared at future source execution.",
+  "currentMandatoryEvidence": "No operation evidence; at most one full-log artifact iff nonempty fullLog. Empty logs imply no artifact, not permission to drop a nonempty log.",
+  "stdoutCorpus": {
+    "stream": "stdout",
+    "ASCIIbodyBytes": 786432,
+    "prefix": "[stdout] ",
+    "one65536ChunkCount": 12,
+    "renderedBytes": 786540,
+    "calculation": "12*(65536+9); The12-chunk arithmetic is a declared serialization specimen only, not an observed Node segmentation guarantee. Explicit writes can split/coalesce; future actual context-log/live parts determine realprefixcount. Require observed cumulative bytes between B524288 and A1048576 for isolated effect; otherwise fixture is ineligible, never infer renderedbytes from rawstdout length."
+  },
+  "shapeOnlyNotNative": true
+}

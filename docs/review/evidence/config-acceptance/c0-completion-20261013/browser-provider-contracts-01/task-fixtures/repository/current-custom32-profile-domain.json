@@ -1,0 +1,453 @@
+{
+  "schemaVersion": "kubeclaw.browser-profiles.v1",
+  "profiles": {
+    "custom-00": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-01": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-02": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-03": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-04": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-05": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-06": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-07": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-08": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-09": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-10": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-11": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-12": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-13": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-14": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-15": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-16": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-17": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-18": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-19": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-20": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-21": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-22": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-23": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-24": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-25": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-26": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-27": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-28": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-29": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-30": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    },
+    "custom-31": {
+      "browser": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "reducedMotion": "no-preference",
+      "locale": "en-US",
+      "timezoneId": "UTC",
+      "hasTouch": false,
+      "isMobile": false,
+      "deviceScaleFactor": 1
+    }
+  }
+}

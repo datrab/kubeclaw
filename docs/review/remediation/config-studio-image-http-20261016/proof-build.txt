@@ -1,0 +1,14 @@
+node:fs:2216
+  binding.chown(path, uid, gid);
+          ^
+
+Error: EPERM: operation not permitted, chown '/tmp/studio-image-proof-qw8yqodo/image/studio-proof/150/author/components/prism-studio.config.json'
+    at Object.chownSync (node:fs:2216:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/build-studio-image-proof.mjs:32:6 {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'chown',
+  path: '/tmp/studio-image-proof-qw8yqodo/image/studio-proof/150/author/components/prism-studio.config.json'
+}
+
+Node.js v24.21.0

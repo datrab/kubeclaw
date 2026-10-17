@@ -1,0 +1,39 @@
+{
+  "qualification": "Actual observed new02 invocations only, not retroactive01 executionreceipt",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs",
+  "executions": [
+    {
+      "rawStdout": "checks-attempt-01.stdout",
+      "rawStderr": "checks-attempt-01.stderr",
+      "exitCode": 1,
+      "cause": "DedicatedA inherited pre-provider activation metadata; fullownernegative caught mismatch. Attemptedowner+harness preserved failed-attempt-01."
+    },
+    {
+      "rawStdout": "checks-attempt-02.stdout",
+      "rawStderr": "checks-attempt-02.stderr",
+      "exitCode": 1,
+      "cause": "Newconditional schema missing explicit array/object keywordtypes under strictAjv; attempted schema preserved failed-attempt-02. No strict options weakened."
+    },
+    {
+      "rawStdout": "checks-attempt-03.stdout",
+      "rawStderr": "checks-attempt-03.stderr",
+      "exitCode": 0,
+      "qualification": "Intermediate24 purecontrols, priorcollector provenance; finalcollector+inputmanifest supersedes for reproducibility."
+    },
+    {
+      "rawStdout": "checks-attempt-04.stdout",
+      "rawStderr": "checks-attempt-04.stderr",
+      "exitCode": 0,
+      "qualification": "Intermediate provenance-enriched purecontrols; finalbelow is actualfinalmaterialstand."
+    },
+    {
+      "rawStdout": "final-run.stdout",
+      "rawStderr": "final-run.stderr",
+      "exitCode": 0,
+      "summary": "final-run/definition-checks-02.json",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run",
+      "finalCollectorSha256": "b200dfbd2a59232a46e4a78ad7965429d044f64ae7f6554f38a635bd8ba0497f"
+    }
+  ]
+}

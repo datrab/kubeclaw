@@ -1,0 +1,112 @@
+{
+  "passed": 3,
+  "inputA": {
+    "schemaVersion": "attempt-result-retirement-scope.v1",
+    "action": "compact-imported-result",
+    "novaStorageRoot": "/tmp/icq-independent-pure",
+    "attemptRoot": "/tmp/icq-independent-pure/run/observability/attempts",
+    "attemptLimits": {
+      "maximumClosures": 10,
+      "maximumEvidenceBytes": 100000,
+      "maximumEvidenceObjectBytes": 10000,
+      "maximumEvidenceObjects": 10,
+      "maximumMetadataBytes": 65536,
+      "maximumPendingEvidenceAgeMs": 10000,
+      "maximumResults": 10
+    },
+    "inventoryLimits": {
+      "maximumFiles": 100,
+      "maximumSnapshotBytes": 100000,
+      "maximumTotalBytes": 1000000
+    },
+    "intent": {
+      "pipelineRunId": "run:1",
+      "attemptId": "attempt:1",
+      "claimGeneration": 1,
+      "resultDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "recordDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "operationId": "icq:retire",
+      "actor": "operator:local",
+      "runRoot": "/tmp/icq-independent-pure/run",
+      "runJournalHead": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expectedStoreDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "journalSequence": 1,
+      "journalHash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "inputB": {
+    "schemaVersion": "attempt-result-retirement-scope.v1",
+    "action": "compact-imported-result",
+    "novaStorageRoot": "/tmp/icq-independent-pure",
+    "attemptRoot": "/tmp/icq-independent-pure/run/observability/attempts",
+    "attemptLimits": {
+      "maximumClosures": 10,
+      "maximumEvidenceBytes": 100000,
+      "maximumEvidenceObjectBytes": 10000,
+      "maximumEvidenceObjects": 10,
+      "maximumMetadataBytes": 131072,
+      "maximumPendingEvidenceAgeMs": 10000,
+      "maximumResults": 10
+    },
+    "inventoryLimits": {
+      "maximumFiles": 100,
+      "maximumSnapshotBytes": 100000,
+      "maximumTotalBytes": 1000000
+    },
+    "intent": {
+      "pipelineRunId": "run:1",
+      "attemptId": "attempt:1",
+      "claimGeneration": 1,
+      "resultDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "recordDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "operationId": "icq:retire",
+      "actor": "operator:local",
+      "runRoot": "/tmp/icq-independent-pure/run",
+      "runJournalHead": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expectedStoreDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "journalSequence": 1,
+      "journalHash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "negative": {
+    "schemaVersion": "attempt-result-retirement-scope.v1",
+    "action": "compact-imported-result",
+    "novaStorageRoot": "/tmp/icq-independent-pure",
+    "attemptRoot": "/tmp/icq-independent-pure/run/observability/attempts",
+    "attemptLimits": {
+      "maximumClosures": 10,
+      "maximumEvidenceBytes": 100000,
+      "maximumEvidenceObjectBytes": 10000,
+      "maximumEvidenceObjects": 10,
+      "maximumMetadataBytes": 0,
+      "maximumPendingEvidenceAgeMs": 10000,
+      "maximumResults": 10
+    },
+    "inventoryLimits": {
+      "maximumFiles": 100,
+      "maximumSnapshotBytes": 100000,
+      "maximumTotalBytes": 1000000
+    },
+    "intent": {
+      "pipelineRunId": "run:1",
+      "attemptId": "attempt:1",
+      "claimGeneration": 1,
+      "resultDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "recordDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "operationId": "icq:retire",
+      "actor": "operator:local",
+      "runRoot": "/tmp/icq-independent-pure/run",
+      "runJournalHead": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expectedStoreDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "journalSequence": 1,
+      "journalHash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "source": "scripts/retire-attempt-result.mjs",
+  "sourceSha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+  "node": "v24.21.0",
+  "scope": "Actual current pure scope parser accepts changed local quota with identical intent. No filesystem root created, no effects. Target original binding equality not implemented/not-run; independent definition guard comparisons are not current production enforcement."
+}

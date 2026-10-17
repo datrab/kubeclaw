@@ -8,7 +8,11 @@ import { pathToFileURL } from 'node:url';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { test } from 'node:test';
 import { buildRegistry, discoverPackages, resolveTestPlan, createProductionNovaTestGate } from '@kubeclaw/nova-core';
-import { BusterRemotePlanRuntime, BusterRemotePlanService, FileBusterPlanJobStore } from '@kubeclaw/buster-engine';
+import { HistoricalBusterPlanJobStore as FileBusterPlanJobStore } from '../../../skills/buster/engine/test-gates/historical-plan-store.ts';
+import { historicalFullJobService } from '../../fixtures/test-gate/historical-full-job-service.mjs';
+// Full V1 compaction/replay belongs to its authentic pre-preparation service.
+// The store, compactor, contracts, producer and CLI under test remain current.
+const { BusterRemotePlanRuntime, BusterRemotePlanService } = await historicalFullJobService();
 import { remotePlanJobDigest, remotePlanJobId, type RemotePlanJobV1, type RemotePlanResultV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { type CompactionIntent } from '../../../skills/buster/engine/test-gates/remote-plan-compaction.ts';
 import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
@@ -44,7 +48,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
     admission: { maximumActiveJobs: 2, maximumQueuedJobs: 16, maximumConcurrentAttempts: 64 },
     executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: jobStore, registry,
     workerRevision: 'a'.repeat(40), runtimeRoot, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set() });
-  const runtimeFor = (service: BusterRemotePlanService) => new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token,
+  const runtimeFor = (service: InstanceType<typeof BusterRemotePlanService>) => new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token,
     maximumRequestBytes: 2 * 1024 * 1024, maximumResponseBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024, shutdownTimeoutMs: 5000 });
   const runtime = runtimeFor(serviceFor(store));
   try {
@@ -191,7 +195,10 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
           intent: artifactIntent, pluginRoot, digest: artifact.contentDigest, token }));
         const code = `import fs from 'node:fs';
           import { buildRegistry, discoverPackages } from '@kubeclaw/nova-core';
-          import { FileBusterPlanJobStore, BusterRemotePlanService, BusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
+          import { HistoricalBusterPlanJobStore as FileBusterPlanJobStore } from './skills/buster/engine/test-gates/historical-plan-store.ts';
+          import { runnerExecutionPolicy } from './tests/fixtures/test-gate/execution-policy.mts';
+          import { historicalFullJobService } from './tests/fixtures/test-gate/historical-full-job-service.mjs';
+          const { BusterRemotePlanService, BusterRemotePlanRuntime } = await historicalFullJobService();
           const input = JSON.parse(fs.readFileSync(process.argv[1], 'utf8'));
           const store = new FileBusterPlanJobStore(input.storeRoot, input.options);
           if (process.argv[2] === 'compaction') {
@@ -284,9 +291,9 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
     await t.test('SIGKILL before mutation and after durable commit recover without double release', async () => {
       const root = copy('crash');
       const scope = path.join(temporary, 'crash-scope.json'); fs.writeFileSync(scope, JSON.stringify({ root, options, intent, runtimeRoot }));
-      const storeModule = pathToFileURL(path.resolve('skills/buster/engine/test-gates/remote-plan-service.ts')).href;
+      const storeModule = pathToFileURL(path.resolve('skills/buster/engine/test-gates/historical-plan-store.ts')).href;
       const lockModule = pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/observability/durable-delivery.ts')).href;
-      const code = `import fs from 'node:fs'; import { FileBusterPlanJobStore } from ${JSON.stringify(storeModule)};
+      const code = `import fs from 'node:fs'; import { HistoricalBusterPlanJobStore as FileBusterPlanJobStore } from ${JSON.stringify(storeModule)};
         import { withDurableStoreLock } from ${JSON.stringify(lockModule)};
         const input = JSON.parse(fs.readFileSync(process.argv[1], 'utf8'));
         if (process.argv[2] === 'before') await withDurableStoreLock(input.root + '/job-admission', async () => { process.kill(process.pid, 'SIGKILL'); });

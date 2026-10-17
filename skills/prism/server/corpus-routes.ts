@@ -36,14 +36,14 @@ async function uploadArtifact(
 ) {
   const { artifacts } = context;
 
-  const input = (await body(request, 8_500_000)) as { base64?: string };
+  const input = (await body(request, context.config.maximumArtifactUploadBodyBytes)) as { base64?: string };
   if (!input.base64) throw new Error("base64 is required");
   const decoded = Buffer.from(input.base64, "base64");
   if (
-    decoded.byteLength > 6_000_000 ||
+    decoded.byteLength > context.config.maximumArtifactBytes ||
     decoded.toString("base64") !== input.base64
   )
-    throw new Error("artifact payload is invalid or exceeds 6 MB");
+    throw new Error(`artifact payload is invalid or exceeds ${context.config.maximumArtifactBytes / 1_000_000} MB`);
   return json(response, 201, await artifacts.put(decoded));
 }
 async function ingestCorpus(
@@ -53,7 +53,7 @@ async function ingestCorpus(
 ) {
   const { pool } = context;
 
-  const input = (await body(request)) as CorpusInput;
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as CorpusInput;
   const acquisition = await acquireCorpus(context.config, input);
   let publicationError: unknown;
   let stored: { id: string; digest: string } | undefined;
@@ -89,6 +89,8 @@ async function searchCorpus(
 ) {
   const { pool, runWorker } = context;
 
+  const { config } = context;
+  const limit = Math.min(config.corpusSearchMaximumLimit, Math.max(1, Number(url.searchParams.get("limit") ?? config.corpusSearchDefaultLimit)));
   const query = url.searchParams.get("q") ?? "";
   const embedded = await runWorker(
     "ingest",
@@ -106,18 +108,19 @@ async function searchCorpus(
   const items = await search(
     pool,
     query,
-    Math.min(50, Math.max(1, Number(url.searchParams.get("limit") ?? 10))),
+    limit,
     {
       embedding: embedded.embedding as number[],
       model: String(embedded.model),
     },
     {
+      ...(config.corpusRanking ? {ranking: config.corpusRanking} : {}),
       required: parseFilter("required"),
       preferred: parseFilter("preferred"),
       avoid: parseFilter("avoid"),
       sourceFamilyLimit: Math.min(
-        10,
-        Math.max(1, Number(url.searchParams.get("sourceFamilyLimit") ?? 2)),
+        config.corpusSourceFamilyMaximumLimit,
+        Math.max(1, Number(url.searchParams.get("sourceFamilyLimit") ?? config.corpusSourceFamilyDefaultLimit)),
       ),
     },
   );
@@ -125,7 +128,7 @@ async function searchCorpus(
     items,
     coverageGap:
       items.length <
-      Math.min(50, Math.max(1, Number(url.searchParams.get("limit") ?? 10)))
+      limit
         ? "The approved corpus does not cover all requested result slots."
         : null,
   });
@@ -152,7 +155,7 @@ async function acquireCorpus(
       "content-type": "application/json",
     },
     body: JSON.stringify(input),
-    signal: AbortSignal.timeout(30_000),
+    signal: AbortSignal.timeout(config.ingestionAcquireTimeoutMs),
   });
   if (!acquired.ok)
     throw new Error(`corpus acquisition failed: ${acquired.status}`);
@@ -213,7 +216,7 @@ async function cleanAcquisition(
     {
       method: "DELETE",
       headers: { authorization: `Bearer ${ingestionSecret}` },
-      signal: AbortSignal.timeout(10_000),
+      signal: AbortSignal.timeout(config.ingestionCleanupTimeoutMs),
     },
   ).then((result) => {
     if (!result.ok)

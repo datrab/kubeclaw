@@ -33,11 +33,11 @@ function argumentsFrom(value: unknown): string[] {
   return value;
 }
 
-function catalogFrom(value: unknown): ReadonlyMap<string, string> {
+function catalogFrom(value: unknown, maximumEntries: number): ReadonlyMap<string, string> {
   if (value === undefined) return new Map();
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('executableCatalog must be an object');
   const entries = Object.entries(value);
-  if (entries.length > 128 || entries.some(([name, executable]) => !/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u.test(name)
+  if (entries.length > maximumEntries || entries.some(([name, executable]) => !/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u.test(name)
     || typeof executable !== 'string')) throw new Error('executableCatalog is invalid');
   return new Map(entries.map(([name, executable]) => [name, canonicalExecutable(executable as string)]));
 }
@@ -61,10 +61,21 @@ function resolveInvocation(request: EffectRequest, executables: ReadonlySet<stri
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const executables = new Set(stringArray(context.config.allowedExecutables, 'allowedExecutables').map(canonicalExecutable));
-  const catalog = catalogFrom(context.config.executableCatalog);
+  const maximumCatalogEntries = positiveInteger(context.config.maximumCatalogEntries, 'maximumCatalogEntries');
+  if (maximumCatalogEntries > 128) throw new Error('maximumCatalogEntries exceeds supported catalog capacity');
+  const catalog = catalogFrom(context.config.executableCatalog, maximumCatalogEntries);
   for (const executable of catalog.values()) executables.add(executable);
   const roots = stringArray(context.config.allowedWorkingRoots, 'allowedWorkingRoots').map(canonicalDirectory);
   const runner = new CommandRunner({
+    processCleanup: {
+      cleanupPollIntervalMs: positiveInteger(context.config.cleanupPollIntervalMs, 'cleanupPollIntervalMs'),
+      exitAcknowledgementMs: positiveInteger(context.config.exitAcknowledgementMs, 'exitAcknowledgementMs'),
+      sandboxMinimumGraceMs: positiveInteger(context.config.sandboxMinimumGraceMs, 'sandboxMinimumGraceMs'),
+    },
+    monitoring: {
+      maximumOutputRecords: positiveInteger(context.config.maximumOutputRecords, 'maximumOutputRecords'),
+      sampleIntervalMs: positiveInteger(context.config.sampleIntervalMs, 'sampleIntervalMs'),
+    },
     maxOutputBytes: positiveInteger(context.config.maxOutputBytes, 'maxOutputBytes'),
     maxExecutionMs: positiveInteger(context.config.maxExecutionMs, 'maxExecutionMs'),
     terminationGraceMs: positiveInteger(context.config.terminationGraceMs, 'terminationGraceMs'),

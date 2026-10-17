@@ -1,1 +1,102 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["stateRoot","manifestStageId","gateStageId"],"properties":{"stateRoot":{"type":"string","minLength":1},"manifestStageId":{"type":"string","minLength":1},"gateStageId":{"type":"string","minLength":1}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "stateRoot",
+    "manifestStageId",
+    "gateStageId",
+    "gateLimits"
+  ],
+  "properties": {
+    "stateRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manifestStageId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gateStageId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gateLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pollMilliseconds",
+        "maximumResponseBytes",
+        "maximumResultBytes",
+        "maximumArchiveBytes",
+        "maximumArchiveStoreBytes",
+        "maximumEvidenceBytes",
+        "maximumEvidenceStoreBytes",
+        "recordLimits"
+      ],
+      "properties": {
+        "pollMilliseconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "maximumResponseBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "maximumResultBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "maximumArchiveBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "maximumArchiveStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "maximumEvidenceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "maximumEvidenceStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "recordLimits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumRecords",
+            "maximumBytes",
+            "maximumRecordBytes"
+          ],
+          "properties": {
+            "maximumRecords": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "maximumBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741824
+            },
+            "maximumRecordBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 67108864
+            }
+          }
+        }
+      }
+    }
+  }
+}

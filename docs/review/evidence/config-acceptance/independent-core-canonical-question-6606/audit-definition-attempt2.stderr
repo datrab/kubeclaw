@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition.py", line 62, in <module>
+    ref=h['canonicalRowReference'];assert ptr(load(ref['path']),ref['rfc6901Pointer'])['id']==h['canonicalId'];assert h['noNewAuthor']
+        ~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'canonicalRowReference'

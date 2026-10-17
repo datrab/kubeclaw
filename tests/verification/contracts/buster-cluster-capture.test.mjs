@@ -4,8 +4,8 @@ import crypto from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { busterRuntimeSelection, canonicalPipelineEntry, readTestPipeline, writeTestPipeline } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
 import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
 import { request } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
@@ -42,20 +42,20 @@ for (const mode of ['file', 'caller']) for (const [capability, field, expected] 
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-capture-'));
     return ownedClusterTest(t, root, async owner => {
     const api = clusterCommandApi(root);
-    const documents = readTestBundle(canonicalSwarmEntry);
-    const authored = documents['buster-engine'].settings.clusterInvokers;
+    const documents = readTestPipeline(canonicalPipelineEntry);
+    const authored = documents['buster-engine'].profiles.runtime.settings.clusterInvokers;
     authored.shared.kubectlExecutable = api.executable;
     authored.kubernetesFixture.registryRepositoryPrefixes = ['app'];
     authored.kubernetesFixture.allowedSecretReferences = ['source'];
     authored.kubernetesFixture.allowedStorageClasses = ['fast'];
-    const entry = path.join(root, 'config/swarm.config.json');
-    writeTestBundle(entry, documents);
-    const snapshot = loadSwarmSettings({ SWARM_CONFIG: entry });
+    const entry = path.join(root, 'config/pipeline.config.json');
+    writeTestPipeline(entry, documents);
+    const snapshot = captureSwarmSettings(entry, busterRuntimeSelection(documents));
     // Mutable direct caller inputs are intentionally separate from loader-frozen inputs.
-    const options = structuredClone(consumerOptions(snapshot.buster, capability));
+    const options = structuredClone(consumerOptions(snapshot.components['buster-engine'].settings, capability));
     const create = selected => {
       owner.signal.throwIfAborted();
-      const runtime = createBusterCapabilityRuntime(selected, { jobRoot: root, workspaceRoot: root }, snapshot.buster.execution.processInput);
+      const runtime = createBusterCapabilityRuntime(selected, { jobRoot: root, workspaceRoot: root }, snapshot.components['buster-engine'].settings.execution.processInput);
       owner.runtime({ stop: () => runtime.shutdown() });
       return runtime;
     };
@@ -72,18 +72,18 @@ for (const mode of ['file', 'caller']) for (const [capability, field, expected] 
     if (mode === 'file') {
       alter(authored, capability, field, false);
       // Rewrite the component bytes, not an in-memory projection or a symlink.
-      fs.writeFileSync(path.join(root, 'config/buster-engine.config.json'), JSON.stringify(documents['buster-engine']));
+      fs.writeFileSync(path.join(root, 'config/components/buster-engine.config.json'), JSON.stringify(documents['buster-engine']));
     } else alter(options, capability, field, true);
     api.seed();
     assert.equal((await invoke(captured)).ok, true, 'already captured consumer keeps its original authorization/parser policy');
     assert(api.calls().length > before, 'post-mutation success must issue real commands');
     if (mode === 'file') {
-      const sameSnapshot = create(consumerOptions(snapshot.buster, capability));
+      const sameSnapshot = create(consumerOptions(snapshot.components['buster-engine'].settings, capability));
       api.seed();
       assert.equal((await invoke(sameSnapshot)).ok, true, 'new consumer from the old snapshot still uses original file policy');
     }
     const freshOptions = mode === 'file'
-      ? consumerOptions(loadSwarmSettings({ SWARM_CONFIG: entry }).buster, capability) : options;
+      ? consumerOptions(captureSwarmSettings(entry, busterRuntimeSelection(documents)).components['buster-engine'].settings, capability) : options;
     const fresh = create(freshOptions);
     api.seed(); const prior = api.calls().length;
     await assert.rejects(invoke(fresh), expected, 'fresh capture must apply changed policy to the identical request');

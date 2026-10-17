@@ -1,0 +1,31 @@
+
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/js-yaml/dist/js-yaml.mjs:1140
+    return new YAMLException2(message, mark);
+           ^
+YAMLException: end of the stream or a document separator is expected (1:16)
+
+ 1 | [object Object],[object Object],[object Object] ...
+--------------------^
+    at generateError (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/js-yaml/dist/js-yaml.mjs:1140:12)
+    at throwError (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/js-yaml/dist/js-yaml.mjs:1143:11)
+    at readDocument (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/js-yaml/dist/js-yaml.mjs:2289:7)
+    at loadDocuments (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/js-yaml/dist/js-yaml.mjs:2315:7)
+    at Object.loadAll2 [as loadAll] (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/js-yaml/dist/js-yaml.mjs:2324:23)
+    at containerSlots (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/updates/deployment-release.mjs:61:8)
+    at validateRenderedRelease (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/updates/deployment-release.mjs:128:20)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/check-role-projections.mjs:8:591
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26 {
+  reason: 'end of the stream or a document separator is expected',
+  mark: {
+    name: null,
+    buffer: '[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\n',
+    position: 15,
+    line: 0,
+    column: 15,
+    snippet: ' 1 | [object Object],[object Object],[object Object] ...\n' +
+      '--------------------^'
+  }
+}
+
+Node.js v24.21.0

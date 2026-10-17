@@ -1,3 +1,4 @@
+import { nativeEngineSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with { type: 'json' };
@@ -14,7 +15,7 @@ test('original Engine and Studio preserve disjoint component layers and targeted
     document.views.home!.root.children = [{ id: 'card-instance', type: 'component', props: { component: 'card', variant: 'active', overrides: { copy: overrides } } }];
     validatePrism('designDocument', document);
     const before = structuredClone(document);
-    const engine = new PrismEngine(new DeterministicDesignProvider());
+    const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
     const rendered = await engine.execute({ contract: 'kubeclaw.prism-design-engine@1', operation: 'render',
       input: { document, view: 'home', state: 'default', viewport: 'wide' }, idempotencyKey: 'layers' });
     for (const html of [String(rendered.output.html), previewDocument(document)]) {

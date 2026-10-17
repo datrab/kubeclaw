@@ -1,0 +1,18 @@
+{
+  "scope": "existing narrow pure collector replay only; all new writes absolute and reviewer owned",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replays": [
+    {
+      "cmd": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs --output-dir /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/replay > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/replay.stdout 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/replay.stderr",
+      "chunk_id": "a90acd",
+      "wall_time_seconds": 0.376375433,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ],
+  "rawStdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/replay.stdout",
+  "rawStderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/replay.stderr",
+  "toolAndReadIdentity": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/replay/definition-receipt.json",
+  "noOtherRuntimeExecution": true
+}

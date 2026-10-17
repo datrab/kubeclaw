@@ -1,4 +1,4 @@
-import { validateBusterExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import fs from 'node:fs';
 import path from 'node:path';
 import { validateLocalWorkerRuntimePolicy, LocalWorkerRuntime, type LocalWorkerRuntimePolicy } from '@kubeclaw/worker-core';

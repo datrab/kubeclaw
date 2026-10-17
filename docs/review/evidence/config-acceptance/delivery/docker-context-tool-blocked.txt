@@ -1,0 +1,3 @@
+$ go test ./... (cwd scripts/tests/docker-context)
+exit=127
+bash: line 1: go: command not found

@@ -11,6 +11,7 @@ function directory(value: string): string {
 
 export function workspaceTarget(target: OpenClawTarget, request: EffectRequest): OpenClawTarget {
   if (request.payload.workspaceReference === undefined) return target;
+  if (!Number.isSafeInteger(target.workspaceOwnerMaximumBytes) || target.workspaceOwnerMaximumBytes < 1 || target.workspaceOwnerMaximumBytes > 32768) throw new Error('RUNTIME_WORKSPACE_OWNER_LIMIT_INVALID');
   if (!target.workspaceRoot) throw new Error('RUNTIME_WORKSPACE_ROOT_NOT_CONFIGURED');
   const ref = parseRuntimeWorkspace(request.payload.workspaceReference, request.attempt);
   const root = directory(target.workspaceRoot);
@@ -23,7 +24,7 @@ export function workspaceTarget(target: OpenClawTarget, request: EffectRequest):
   const descriptor = fs.openSync(ownerFile, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
   try {
     const stat = fs.fstatSync(descriptor);
-    if (!stat.isFile() || stat.size > 32_768) throw new Error('RUNTIME_WORKSPACE_OWNER_INVALID');
+    if (!stat.isFile() || stat.size > target.workspaceOwnerMaximumBytes) throw new Error('RUNTIME_WORKSPACE_OWNER_INVALID');
     if (canonicalJson(JSON.parse(fs.readFileSync(descriptor, 'utf8'))) !== canonicalJson(ref)) throw new Error('RUNTIME_WORKSPACE_OWNER_MISMATCH');
   } finally { fs.closeSync(descriptor); }
   return { ...target, cwd: workspace, workspaceReference: ref };

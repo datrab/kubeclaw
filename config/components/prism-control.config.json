@@ -1,0 +1,194 @@
+{
+  "schemaVersion": "pipeline-component.v4",
+  "owner": "prism-control",
+  "profiles": {
+    "standard": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000,
+        "maximumJsonBodyBytes": 2000000,
+        "maximumArtifactUploadBodyBytes": 8500000,
+        "maximumArtifactBytes": 6000000,
+        "maximumRenderAssetBytes": 6000000,
+        "maximumDispatchBodyBytes": 2000000,
+        "ingestionAcquireTimeoutMs": 30000,
+        "ingestionCleanupTimeoutMs": 10000,
+        "maximumInternalEvidenceBytes": 134217728,
+        "sessionLifetimeSeconds": 900,
+        "ingestionUrl": "http://prism-ingestion:8080",
+        "workerUrl": "http://prism-worker:8080",
+        "controlInternalUrl": "http://prism-control:8080",
+        "maximumProductInputBytes": 32000,
+        "productControllerTimeoutMs": 15000,
+        "maximumProductControllerResponseBytes": 1000000,
+        "productDecisionHistoryLimit": 100,
+        "maximumProductControllerTokenCharacters": 64000,
+        "productDecisionLifetimeMs": 300000,
+        "nativeAttemptLifetimeMs": 600000,
+        "nativeAttemptTimeoutMs": 300000,
+        "nativeAttemptCleanupTimeoutMs": 10000,
+        "nativeAttemptLogBytes": 1048576,
+        "nativeAttemptResultBytes": 16777216,
+        "nativeAttemptEvidenceBytes": 134217728,
+        "nativeAttemptEvidenceFiles": 64,
+        "corpusSearchDefaultLimit": 10,
+        "corpusSearchMaximumLimit": 50,
+        "corpusSourceFamilyDefaultLimit": 2,
+        "corpusSourceFamilyMaximumLimit": 10,
+        "ingestionServer": {
+          "port": 8080,
+          "quarantineRoot": "/quarantine",
+          "quarantineTtlMs": 3600000,
+          "reaperIntervalMs": 60000,
+          "maximumRequestBytes": 2000000,
+          "maximumSourceBytes": 6000000,
+          "sourceRequestTimeoutMs": 15000,
+          "maximumRedirects": 3,
+          "allowedMediaTypes": [
+            "application/json",
+            "text/html",
+            "text/plain",
+            "image/png",
+            "image/jpeg",
+            "image/webp",
+            "image/svg+xml",
+            "font/woff2"
+          ]
+        },
+        "maximumArtifactAcknowledgmentBytes": 8192,
+        "agentLauncher": {
+          "attemptLifetimeMs": 960000,
+          "limits": {
+            "timeoutMs": 900000,
+            "cleanupTimeoutMs": 10000,
+            "logBytes": 1048576,
+            "resultBytes": 1048576,
+            "evidenceBytes": 2097152,
+            "evidenceFiles": 2
+          },
+          "terminationGraceMs": 1000
+        },
+        "databaseBootstrap": {
+          "connectionTimeoutMs": 5000,
+          "maximumAttempts": 60,
+          "retryDelayMs": 2000
+        },
+        "agentBridge": {
+          "port": 18080,
+          "controlUrl": "http://127.0.0.1:28080",
+          "maximumRequestBytes": 2000000,
+          "dispatchTimeoutMs": 30000,
+          "controlRequestTimeoutMs": 10000,
+          "pollIntervalMs": 1000
+        },
+        "agentToolControlUrl": "http://127.0.0.1:28080",
+        "corpusRanking": {
+          "schemaVersion": "corpus-ranking.v1",
+          "candidateFloor": 100,
+          "candidateMultiplier": 10,
+          "rrfDamping": 60
+        },
+        "sessionDefaultRoles": [
+          "editor"
+        ]
+      }
+    },
+    "spiffe": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000,
+        "maximumJsonBodyBytes": 2000000,
+        "maximumArtifactUploadBodyBytes": 8500000,
+        "maximumArtifactBytes": 6000000,
+        "maximumRenderAssetBytes": 6000000,
+        "maximumDispatchBodyBytes": 2000000,
+        "ingestionAcquireTimeoutMs": 30000,
+        "ingestionCleanupTimeoutMs": 10000,
+        "maximumInternalEvidenceBytes": 134217728,
+        "sessionLifetimeSeconds": 900,
+        "ingestionUrl": "http://prism-ingestion:8080",
+        "workerUrl": "http://127.0.0.1:18081",
+        "controlInternalUrl": "http://127.0.0.1:18080",
+        "maximumProductInputBytes": 32000,
+        "productControllerTimeoutMs": 15000,
+        "maximumProductControllerResponseBytes": 1000000,
+        "productDecisionHistoryLimit": 100,
+        "maximumProductControllerTokenCharacters": 64000,
+        "productDecisionLifetimeMs": 300000,
+        "nativeAttemptLifetimeMs": 600000,
+        "nativeAttemptTimeoutMs": 300000,
+        "nativeAttemptCleanupTimeoutMs": 10000,
+        "nativeAttemptLogBytes": 1048576,
+        "nativeAttemptResultBytes": 16777216,
+        "nativeAttemptEvidenceBytes": 134217728,
+        "nativeAttemptEvidenceFiles": 64,
+        "corpusSearchDefaultLimit": 10,
+        "corpusSearchMaximumLimit": 50,
+        "corpusSourceFamilyDefaultLimit": 2,
+        "corpusSourceFamilyMaximumLimit": 10,
+        "ingestionServer": {
+          "port": 8080,
+          "quarantineRoot": "/quarantine",
+          "quarantineTtlMs": 3600000,
+          "reaperIntervalMs": 60000,
+          "maximumRequestBytes": 2000000,
+          "maximumSourceBytes": 6000000,
+          "sourceRequestTimeoutMs": 15000,
+          "maximumRedirects": 3,
+          "allowedMediaTypes": [
+            "application/json",
+            "text/html",
+            "text/plain",
+            "image/png",
+            "image/jpeg",
+            "image/webp",
+            "image/svg+xml",
+            "font/woff2"
+          ]
+        },
+        "maximumArtifactAcknowledgmentBytes": 8192,
+        "agentLauncher": {
+          "attemptLifetimeMs": 960000,
+          "limits": {
+            "timeoutMs": 900000,
+            "cleanupTimeoutMs": 10000,
+            "logBytes": 1048576,
+            "resultBytes": 1048576,
+            "evidenceBytes": 2097152,
+            "evidenceFiles": 2
+          },
+          "terminationGraceMs": 1000
+        },
+        "databaseBootstrap": {
+          "connectionTimeoutMs": 5000,
+          "maximumAttempts": 60,
+          "retryDelayMs": 2000
+        },
+        "agentBridge": {
+          "port": 18080,
+          "controlUrl": "http://127.0.0.1:28080",
+          "maximumRequestBytes": 2000000,
+          "dispatchTimeoutMs": 30000,
+          "controlRequestTimeoutMs": 10000,
+          "pollIntervalMs": 1000
+        },
+        "agentToolControlUrl": "http://127.0.0.1:28080",
+        "corpusRanking": {
+          "schemaVersion": "corpus-ranking.v1",
+          "candidateFloor": 100,
+          "candidateMultiplier": 10,
+          "rrfDamping": 60
+        },
+        "sessionDefaultRoles": [
+          "editor"
+        ]
+      }
+    }
+  }
+}

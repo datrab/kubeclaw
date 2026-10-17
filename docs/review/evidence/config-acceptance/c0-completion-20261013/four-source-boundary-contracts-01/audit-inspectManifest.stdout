@@ -1,0 +1,4 @@
+tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts:33:assert.match(fixtureSources.get('preparation')!, /inspectManifest\(bytes,/u);
+skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:3:import { inspectManifest } from './kubernetes-fixture-inspection.ts';
+skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:112:    const facts = inspectManifest(bytes, { immutableImage, maximumResources: settings.maximumResources, manifest: settings.manifest,
+skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts:37:export function inspectManifest(bytes: Buffer, policy: ManifestPolicy): {

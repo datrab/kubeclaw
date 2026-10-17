@@ -1,0 +1,33 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-runtime.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-worker-local-original-integration-20261016/final-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/contracts/tsconfig.worker-local-runtime.json"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-worker-local-original-integration-20261016/final-1.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-worker-local-original-integration-20261016/final-2.txt"
+  }
+]

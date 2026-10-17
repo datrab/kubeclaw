@@ -1,0 +1,2037 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/check-target.mjs",
+  "node": "v24.21.0",
+  "results": [
+    {
+      "registration": "kubeclaw.api-flow:flow",
+      "A": {
+        "registration": "kubeclaw.api-flow:flow",
+        "instance": "c0-flow",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.api-flow:flow",
+        "instance": "c0-flow",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log",
+            "test-report"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.api-flow:flow",
+          "instance": "c0-flow",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.api-flow:flow",
+          "instance": "c0-flow",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.api-flow:flow",
+          "instance": "c0-flow",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.api-flow:flow",
+          "instance": "c0-flow",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.axe:axe",
+      "A": {
+        "registration": "kubeclaw.axe:axe",
+        "instance": "c0-axe",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.axe:axe",
+        "instance": "c0-axe",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log",
+            "test-report",
+            "screenshot"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.axe:axe",
+          "instance": "c0-axe",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.axe:axe",
+          "instance": "c0-axe",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.axe:axe",
+          "instance": "c0-axe",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.axe:axe",
+          "instance": "c0-axe",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.container-build:buildkit",
+      "A": {
+        "registration": "kubeclaw.container-build:buildkit",
+        "instance": "c0-buildkit",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.container-build:buildkit",
+        "instance": "c0-buildkit",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.container-build:buildkit",
+          "instance": "c0-buildkit",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.container-build:buildkit",
+          "instance": "c0-buildkit",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.container-build:buildkit",
+          "instance": "c0-buildkit",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.container-build:buildkit",
+          "instance": "c0-buildkit",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.coverage-budget:lcov",
+      "A": {
+        "registration": "kubeclaw.coverage-budget:lcov",
+        "instance": "c0-lcov",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.coverage-budget:lcov",
+        "instance": "c0-lcov",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.coverage-budget:lcov",
+          "instance": "c0-lcov",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.coverage-budget:lcov",
+          "instance": "c0-lcov",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.coverage-budget:lcov",
+          "instance": "c0-lcov",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.coverage-budget:lcov",
+          "instance": "c0-lcov",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.demo-auth-smoke:session",
+      "A": {
+        "registration": "kubeclaw.demo-auth-smoke:session",
+        "instance": "c0-session",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.demo-auth-smoke:session",
+        "instance": "c0-session",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.demo-auth-smoke:session",
+          "instance": "c0-session",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.demo-auth-smoke:session",
+          "instance": "c0-session",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.demo-auth-smoke:session",
+          "instance": "c0-session",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.demo-auth-smoke:session",
+          "instance": "c0-session",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.direct-command:command",
+      "A": {
+        "registration": "kubeclaw.direct-command:command",
+        "instance": "c0-command",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "onError": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.direct-command:command",
+        "instance": "c0-command",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "onError": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.direct-command:command",
+          "instance": "c0-command",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ],
+            "onError": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.direct-command:command",
+          "instance": "c0-command",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.direct-command:command",
+          "instance": "c0-command",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ],
+            "onError": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.direct-command:command",
+          "instance": "c0-command",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ],
+            "onError": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.http:request",
+      "A": {
+        "registration": "kubeclaw.http:request",
+        "instance": "c0-request",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.http:request",
+        "instance": "c0-request",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.http:request",
+          "instance": "c0-request",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.http:request",
+          "instance": "c0-request",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.http:request",
+          "instance": "c0-request",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.http:request",
+          "instance": "c0-request",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.kubernetes-fixture:deployment",
+      "A": {
+        "registration": "kubeclaw.kubernetes-fixture:deployment",
+        "instance": "c0-deployment",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.kubernetes-fixture:deployment",
+        "instance": "c0-deployment",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.kubernetes-fixture:deployment",
+          "instance": "c0-deployment",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.kubernetes-fixture:deployment",
+          "instance": "c0-deployment",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.kubernetes-fixture:deployment",
+          "instance": "c0-deployment",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.kubernetes-fixture:deployment",
+          "instance": "c0-deployment",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.lighthouse:lighthouse",
+      "A": {
+        "registration": "kubeclaw.lighthouse:lighthouse",
+        "instance": "c0-lighthouse",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.lighthouse:lighthouse",
+        "instance": "c0-lighthouse",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.lighthouse:lighthouse",
+          "instance": "c0-lighthouse",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "performance-report",
+              "performance-report-representative",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.lighthouse:lighthouse",
+          "instance": "c0-lighthouse",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onFail": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.lighthouse:lighthouse",
+          "instance": "c0-lighthouse",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.lighthouse:lighthouse",
+          "instance": "c0-lighthouse",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onFail": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.openapi:operations",
+      "A": {
+        "registration": "kubeclaw.openapi:operations",
+        "instance": "c0-operations",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.openapi:operations",
+        "instance": "c0-operations",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log",
+            "test-report"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.openapi:operations",
+          "instance": "c0-operations",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.openapi:operations",
+          "instance": "c0-operations",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.openapi:operations",
+          "instance": "c0-operations",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.openapi:operations",
+          "instance": "c0-operations",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.playwright:playwright",
+      "A": {
+        "registration": "kubeclaw.playwright:playwright",
+        "instance": "c0-playwright",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.playwright:playwright",
+        "instance": "c0-playwright",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.playwright:playwright",
+          "instance": "c0-playwright",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.playwright:playwright",
+          "instance": "c0-playwright",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.playwright:playwright",
+          "instance": "c0-playwright",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.playwright:playwright",
+          "instance": "c0-playwright",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.security-providers:headers",
+      "A": {
+        "registration": "kubeclaw.security-providers:headers",
+        "instance": "c0-headers",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.security-providers:headers",
+        "instance": "c0-headers",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.security-providers:headers",
+          "instance": "c0-headers",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.security-providers:headers",
+          "instance": "c0-headers",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.security-providers:headers",
+          "instance": "c0-headers",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.security-providers:headers",
+          "instance": "c0-headers",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "A": {
+        "registration": "kubeclaw.security-providers:dependency-trivy",
+        "instance": "c0-dependency-trivy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.security-providers:dependency-trivy",
+        "instance": "c0-dependency-trivy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.security-providers:dependency-trivy",
+          "instance": "c0-dependency-trivy",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.security-providers:dependency-trivy",
+          "instance": "c0-dependency-trivy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.security-providers:dependency-trivy",
+          "instance": "c0-dependency-trivy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.security-providers:dependency-trivy",
+          "instance": "c0-dependency-trivy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "A": {
+        "registration": "kubeclaw.security-providers:image-trivy",
+        "instance": "c0-image-trivy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.security-providers:image-trivy",
+        "instance": "c0-image-trivy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.security-providers:image-trivy",
+          "instance": "c0-image-trivy",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.security-providers:image-trivy",
+          "instance": "c0-image-trivy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.security-providers:image-trivy",
+          "instance": "c0-image-trivy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.security-providers:image-trivy",
+          "instance": "c0-image-trivy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "A": {
+        "registration": "kubeclaw.security-providers:kubernetes-policy",
+        "instance": "c0-kubernetes-policy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.security-providers:kubernetes-policy",
+        "instance": "c0-kubernetes-policy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.security-providers:kubernetes-policy",
+          "instance": "c0-kubernetes-policy",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.security-providers:kubernetes-policy",
+          "instance": "c0-kubernetes-policy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.security-providers:kubernetes-policy",
+          "instance": "c0-kubernetes-policy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.security-providers:kubernetes-policy",
+          "instance": "c0-kubernetes-policy",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "A": {
+        "registration": "kubeclaw.security-providers:kubernetes-runtime",
+        "instance": "c0-kubernetes-runtime",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.security-providers:kubernetes-runtime",
+        "instance": "c0-kubernetes-runtime",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.security-providers:kubernetes-runtime",
+          "instance": "c0-kubernetes-runtime",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.security-providers:kubernetes-runtime",
+          "instance": "c0-kubernetes-runtime",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.security-providers:kubernetes-runtime",
+          "instance": "c0-kubernetes-runtime",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.security-providers:kubernetes-runtime",
+          "instance": "c0-kubernetes-runtime",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.size-budget:artifact",
+      "A": {
+        "registration": "kubeclaw.size-budget:artifact",
+        "instance": "c0-artifact",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onFail": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.size-budget:artifact",
+        "instance": "c0-artifact",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onFail": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onError": [
+            "log",
+            "size-budget-baseline"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.size-budget:artifact",
+          "instance": "c0-artifact",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "size-budget-baseline",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log",
+              "size-budget-baseline"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.size-budget:artifact",
+          "instance": "c0-artifact",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "size-budget-baseline"
+            ],
+            "onFail": [
+              "log",
+              "size-budget-baseline"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.size-budget:artifact",
+          "instance": "c0-artifact",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "size-budget-baseline"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.size-budget:artifact",
+          "instance": "c0-artifact",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "size-budget-baseline"
+            ],
+            "onFail": [
+              "log",
+              "size-budget-baseline"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.tailscale-exposure:exposure",
+      "A": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.tailscale-exposure:exposure",
+          "instance": "c0-exposure",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.tailscale-exposure:exposure",
+          "instance": "c0-exposure",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.tailscale-exposure:exposure",
+          "instance": "c0-exposure",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.tailscale-exposure:exposure",
+          "instance": "c0-exposure",
+          "evidencePolicy": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    },
+    {
+      "registration": "kubeclaw.visual:visual",
+      "A": {
+        "registration": "kubeclaw.visual:visual",
+        "instance": "c0-visual",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "B": {
+        "registration": "kubeclaw.visual:visual",
+        "instance": "c0-visual",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ]
+        }
+      },
+      "invalidInputs": {
+        "unsupported": {
+          "registration": "kubeclaw.visual:visual",
+          "instance": "c0-visual",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report",
+              "c0-unsupported"
+            ],
+            "onFail": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "dropMandatory": {
+          "registration": "kubeclaw.visual:visual",
+          "instance": "c0-visual",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onError": []
+          }
+        },
+        "missing": {
+          "registration": "kubeclaw.visual:visual",
+          "instance": "c0-visual",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        "unknown": {
+          "registration": "kubeclaw.visual:visual",
+          "instance": "c0-visual",
+          "evidencePolicy": {
+            "onPass": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          },
+          "ownedRetrySafe": true
+        }
+      },
+      "result": "passed",
+      "scope": "Strict proposed complete profile/finite supported source-type and mandatory-baseline relation definitions, not implementation/consumer effect or proof source retry capability is safe"
+    }
+  ],
+  "passed": 19,
+  "failed": 0,
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/proposed-evidence-policy-schemas.json": "9f8bf3775822609014fe4b83a487afe7f84a02c8e7f5fa085c5ce40c1052eca2",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/complete-policy-profiles.json": "bd86143c88f8a42fcde8b203e9b59cecaa5a6c962cadeea2d63186501b885406"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/check-target.mjs": "966a26074f335e813ec830e9d0237430dba7254c3c311f2c75c6cc0ee2a8809e"
+  },
+  "scope": "Unapproved C0 proposed domain/complete-profile schema relations only. No true policy consumer/evidence/grants/capacity/generation or provider effect execution."
+}

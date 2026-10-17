@@ -1,0 +1,1172 @@
+{
+  "fields": [
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-attempt.ts",
+          "field": "limits.timeoutMs",
+          "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+          "lines": [
+            24
+          ]
+        },
+        "current": {
+          "valueOrDefault": 900000,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+        "unit": "milliseconds",
+        "reader": "WorkerAttemptExecutor",
+        "productiveCallerChain": [
+          "Control agent claim transaction",
+          "agentAttempt",
+          "persisted attempt_envelope",
+          "AgentJobRunner.runOne",
+          "WorkerAttemptExecutor"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.timeoutMs",
+        "activationScope": {
+          "current": "J: accepted agent attempt; persisted before external launch",
+          "target": "J: accepted agent attempt; persisted before external launch"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-LIMIT-timeoutMs-EFFECT",
+          "AUTH-PRISM-AGENT-C0-DEFINITION"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "ea7b510a4e9f7f52aee3d9685fe05b5267e73644e96ed9966929971f14d281d0",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.timeoutMs",
+      "currentValue": 900000,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+      "unsupportedDistinctReason": null,
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1000,
+        "maximum": 2146970000,
+        "multipleOf": 1000
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-attempt.ts",
+          "field": "limits.cleanupTimeoutMs",
+          "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+          "lines": [
+            24
+          ]
+        },
+        "current": {
+          "valueOrDefault": 10000,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+        "unit": "milliseconds",
+        "reader": "WorkerAttemptExecutor",
+        "productiveCallerChain": [
+          "Control agent claim transaction",
+          "agentAttempt",
+          "persisted attempt_envelope",
+          "AgentJobRunner.runOne",
+          "WorkerAttemptExecutor"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.cleanupTimeoutMs",
+        "activationScope": {
+          "current": "J: accepted agent attempt; persisted before external launch",
+          "target": "J: accepted agent attempt; persisted before external launch"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-EFFECT",
+          "AUTH-PRISM-AGENT-C0-DEFINITION"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "31131f6d3214b887ef1e65df2510d85580a0c407dfdafa3bfbc1902a2fc80bac",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.cleanupTimeoutMs",
+      "currentValue": 10000,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs.config.json",
+      "unsupportedDistinctReason": null,
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-attempt.ts",
+          "field": "limits.logBytes",
+          "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+          "lines": [
+            24
+          ]
+        },
+        "current": {
+          "valueOrDefault": 1048576,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "bytes; exact target supported domain not yet frozen",
+        "unit": "bytes",
+        "reader": "WorkerAttemptExecutor",
+        "productiveCallerChain": [
+          "Control agent claim transaction",
+          "agentAttempt",
+          "persisted attempt_envelope",
+          "AgentJobRunner.runOne",
+          "WorkerAttemptExecutor"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.logBytes",
+        "activationScope": {
+          "current": "J: accepted agent attempt; persisted before external launch",
+          "target": "J: accepted agent attempt; persisted before external launch"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-LIMIT-logBytes-EFFECT",
+          "AUTH-PRISM-AGENT-C0-DEFINITION"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "22e1c00e7c770ef4aa66987a0d347f7105c059d2bedf2bd861c9308c34550c91",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.logBytes",
+      "currentValue": 1048576,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-logBytes.config.json",
+      "unsupportedDistinctReason": null,
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16777216
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-attempt.ts",
+          "field": "limits.resultBytes",
+          "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+          "lines": [
+            24
+          ]
+        },
+        "current": {
+          "valueOrDefault": 1048576,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "bytes; exact target supported domain not yet frozen",
+        "unit": "bytes",
+        "reader": "WorkerAttemptExecutor",
+        "productiveCallerChain": [
+          "Control agent claim transaction",
+          "agentAttempt",
+          "persisted attempt_envelope",
+          "AgentJobRunner.runOne",
+          "WorkerAttemptExecutor"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.resultBytes",
+        "activationScope": {
+          "current": "J: accepted agent attempt; persisted before external launch",
+          "target": "J: accepted agent attempt; persisted before external launch"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-LIMIT-resultBytes-EFFECT",
+          "AUTH-PRISM-AGENT-C0-DEFINITION"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "69e2131bdc5cbadc5c7c35d0702e9a828588b386aac29bf8d51dec2a0faab24c",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.resultBytes",
+      "currentValue": 1048576,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-resultBytes.config.json",
+      "unsupportedDistinctReason": "Valid profile altersonlybinding/admissioncapacity, no independentlycausal currentcallerquota effect.",
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 171,
+        "maximum": 9007199254740991
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-attempt.ts",
+          "field": "limits.evidenceBytes",
+          "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+          "lines": [
+            24
+          ]
+        },
+        "current": {
+          "valueOrDefault": 2097152,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "bytes; exact target supported domain not yet frozen",
+        "unit": "bytes",
+        "reader": "WorkerAttemptExecutor",
+        "productiveCallerChain": [
+          "Control agent claim transaction",
+          "agentAttempt",
+          "persisted attempt_envelope",
+          "AgentJobRunner.runOne",
+          "WorkerAttemptExecutor"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.evidenceBytes",
+        "activationScope": {
+          "current": "J: accepted agent attempt; persisted before external launch",
+          "target": "J: accepted agent attempt; persisted before external launch"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-LIMIT-evidenceBytes-EFFECT",
+          "AUTH-PRISM-AGENT-C0-DEFINITION"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "7f9a11ab9074a7133a0540bc3b31b95955b90476fd591e6afa6a837d1e8808f0",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.evidenceBytes",
+      "currentValue": 2097152,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceBytes.config.json",
+      "unsupportedDistinctReason": "Valid profile altersonlybinding/admissioncapacity, no independentlycausal currentcallerquota effect.",
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-attempt.ts",
+          "field": "limits.evidenceFiles",
+          "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+          "lines": [
+            24
+          ]
+        },
+        "current": {
+          "valueOrDefault": 2,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "files; exact target supported domain not yet frozen",
+        "unit": "files",
+        "reader": "WorkerAttemptExecutor",
+        "productiveCallerChain": [
+          "Control agent claim transaction",
+          "agentAttempt",
+          "persisted attempt_envelope",
+          "AgentJobRunner.runOne",
+          "WorkerAttemptExecutor"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.evidenceFiles",
+        "activationScope": {
+          "current": "J: accepted agent attempt; persisted before external launch",
+          "target": "J: accepted agent attempt; persisted before external launch"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-LIMIT-evidenceFiles-EFFECT",
+          "AUTH-PRISM-AGENT-C0-DEFINITION"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "3a6fa03af870926aa087e5f393c6275f239b8876562be6816af520b7f2c8b58d",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.evidenceFiles",
+      "currentValue": 2,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceFiles.config.json",
+      "unsupportedDistinctReason": "Valid profile altersonlybinding/admissioncapacity, no independentlycausal currentcallerquota effect.",
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/control/agent-jobs.ts",
+          "field": "claimLifetimeMs",
+          "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+          "lines": [
+            48
+          ]
+        },
+        "current": {
+          "valueOrDefault": 960000,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+        "unit": "milliseconds",
+        "reader": "lockAgentResult",
+        "productiveCallerChain": [
+          "authenticated agent-job-routes claim",
+          "claimAgentJob transaction",
+          "clock_timestamp + interval",
+          "agentAttempt claim/queueDeadline",
+          "lockAgentResult"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Fixed SQL interval; expired running job becomes needs_nova, never accepted/requeued. Result commit requires live fenced claim."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/claimLifetimeMs",
+        "activationScope": {
+          "current": "J: durable database claim; never reset by recovery/retry",
+          "target": "J: durable database claim; never reset by recovery/retry"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Fixed SQL interval; expired running job becomes needs_nova, never accepted/requeued. Result commit requires live fenced claim.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-CLAIM-LIFETIME-EFFECT"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "2a015f6b7cb314dca79c02e9980cd1fa53cd8c3f6eb2ae9e3d5d601d39ec72ff",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/claimLifetimeMs",
+      "currentValue": 960000,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-LIFETIME.config.json",
+      "unsupportedDistinctReason": null,
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "authenticated agent-job-routes claim",
+        "claimAgentJob transaction",
+        "clock_timestamp + interval",
+        "agentAttempt claim/queueDeadline",
+        "lockAgentResult"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-process.ts",
+          "field": "terminationGraceMs",
+          "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+          "lines": [
+            33
+          ]
+        },
+        "current": {
+          "valueOrDefault": 1000,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+        "unit": "milliseconds",
+        "reader": "negative process-group PID signal",
+        "productiveCallerChain": [
+          "AgentJobRunner.runOne",
+          "WorkerAttemptExecutor termination",
+          "AgentProcess.terminate",
+          "negative process-group PID signal"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Fixed delay, ESRCH ignored only; waits actual child close. This does not cancel remote gateway work."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/terminationGraceMs",
+        "activationScope": {
+          "current": "J: launcher operation inherits accepted cleanup policy; SIGTERM-to-SIGKILL grace is currently independent",
+          "target": "J: launcher operation inherits accepted cleanup policy; SIGTERM-to-SIGKILL grace is currently independent"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Fixed delay, ESRCH ignored only; waits actual child close. This does not cancel remote gateway work.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-KILL-GRACE-EFFECT"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "e82978656adc3971dbb9e6db2d2b26b7047c83eb51f0b9fa68baa583b5df2bb0",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/terminationGraceMs",
+      "currentValue": 1000,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-KILL-GRACE.config.json",
+      "unsupportedDistinctReason": null,
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor termination",
+        "AgentProcess.terminate",
+        "negative process-group PID signal"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "generated-binding",
+        "classificationReason": "Target CLI seconds must be an exact validated projection of sole accepted launcher timeoutMs author, not a second independently editable timeout. Current fixed 900 seconds and 900000 ms are two code literals, not proven single authority.",
+        "source": {
+          "path": "skills/prism/server/agent-job-runner.mjs",
+          "field": "cliTimeoutSeconds",
+          "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+          "lines": [
+            38
+          ]
+        },
+        "current": {
+          "valueOrDefault": 900,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "seconds; exact target supported domain not yet frozen",
+        "unit": "seconds",
+        "reader": "spawn openclaw agent --timeout",
+        "productiveCallerChain": [
+          "AgentJobRunner.runOne",
+          "AgentProcess constructor",
+          "spawn openclaw agent --timeout"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Current fixed CLI argument; external pinned OpenClaw parser owns supported domain. Must relate seconds to Core milliseconds and DB claim margin; no guessed domain."
+        },
+        "targetAuthorRef": "alias:AUTH-PRISM-AGENT-LIMIT-timeoutMs; validated milliseconds-to-seconds projection",
+        "activationScope": {
+          "current": "J: launch args bound to accepted agent policy",
+          "target": "J: launch args bound to accepted agent policy"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Current fixed CLI argument; external pinned OpenClaw parser owns supported domain. Must relate seconds to Core milliseconds and DB claim margin; no guessed domain.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-CLI-TIMEOUT-EFFECT"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "sharedAuthoritySettingId": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "dea3cfe951ec436df3472b3fc3bb4ab93e203baaacde97465500409093d6431b",
+      "activeProposedAuthor": "alias:AUTH-PRISM-AGENT-LIMIT-timeoutMs; validated milliseconds-to-seconds projection",
+      "currentValue": 900,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+      "unsupportedDistinctReason": null,
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "AgentJobRunner.runOne",
+        "AgentProcess constructor",
+        "spawn openclaw agent --timeout"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "readonlyAlias": "timeoutMs/1000; integerpositive1..2146970; no editable field"
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-job-runner.mjs",
+          "field": "agentId",
+          "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+          "lines": [
+            38
+          ]
+        },
+        "current": {
+          "valueOrDefault": "main",
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "agent identity; exact target supported domain not yet frozen",
+        "unit": "agent identity",
+        "reader": "OpenClaw agent --agent",
+        "productiveCallerChain": [
+          "AgentJobRunner.runOne",
+          "AgentProcess spawn",
+          "OpenClaw agent --agent"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Current fixed main; external installed agent roster required for alternate valid identity. Session key generated from namespace/project is task binding, not operator author."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/agentId",
+        "activationScope": {
+          "current": "J: external gateway agent selection is fixed for accepted job/session",
+          "target": "J: external gateway agent selection is fixed for accepted job/session"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Current fixed main; external installed agent roster required for alternate valid identity. Session key generated from namespace/project is task binding, not operator author.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-CLI-OWNER-EFFECT"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "52142383f91071851f8681df8fb5d5e258469d257edb57ef4521a90ac8a5ce8f",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/agentId",
+      "currentValue": "main",
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-CLI-OWNER.config.json",
+      "unsupportedDistinctReason": "No authentic installed+authorized second agent. Full pair preserves main inboth, no invented native alternate.",
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "AgentJobRunner.runOne",
+        "AgentProcess spawn",
+        "OpenClaw agent --agent"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+        "minLength": 1,
+        "maxLength": 64
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-job-runner.mjs",
+          "field": "claimHttpTimeoutMs",
+          "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+          "lines": [
+            28
+          ]
+        },
+        "current": {
+          "valueOrDefault": 10000,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+        "unit": "milliseconds",
+        "reader": "fetch AbortSignal.timeout",
+        "productiveCallerChain": [
+          "AgentJobRunner.tick/runOne",
+          "controlRequest claim",
+          "fetch AbortSignal.timeout"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Fixed timeout; response must be ok JSON; claim may already be durable when transport fails. Next tick only obtains accepted unstarted work; running remains fenced."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/claimHttpTimeoutMs",
+        "activationScope": {
+          "current": "S: runner transport policy; no retry may replay uncertain claim",
+          "target": "S: runner transport policy; no retry may replay uncertain claim"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Fixed timeout; response must be ok JSON; claim may already be durable when transport fails. Next tick only obtains accepted unstarted work; running remains fenced.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-CLAIM-HTTP-EFFECT"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "6be94f2ea0611a5c77a5f4b9f552d853ed640fe0bdd3010fc14e7409c90bafc8",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/claimHttpTimeoutMs",
+      "currentValue": 10000,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-HTTP.config.json",
+      "unsupportedDistinctReason": null,
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "AgentJobRunner.tick/runOne",
+        "controlRequest claim",
+        "fetch AbortSignal.timeout"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "originalBody": {
+        "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+        "owner": "prism-agent-launcher",
+        "scope": {
+          "instance": "prism-agent-launcher",
+          "profile": "explicit selected complete launcher policy"
+        },
+        "class": "operator-setting",
+        "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "source": {
+          "path": "skills/prism/server/agent-job-runner.mjs",
+          "field": "finishHttpTimeoutMs",
+          "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+          "lines": [
+            44
+          ]
+        },
+        "current": {
+          "valueOrDefault": 10000,
+          "precedence": "fixed producer literal; no existing operator override"
+        },
+        "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+        "unit": "milliseconds",
+        "reader": "finishAgentRun fenced transaction",
+        "productiveCallerChain": [
+          "AgentJobRunner.runOne",
+          "controlRequest finish",
+          "finishAgentRun fenced transaction"
+        ],
+        "validation": {
+          "schema": "no current central launcher author",
+          "semantic": "Fixed timeout after local result; Control receipt validates against accepted envelope. Network failure cannot establish remote failure or authorize repeat launch."
+        },
+        "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/finishHttpTimeoutMs",
+        "activationScope": {
+          "current": "S: runner transport policy; accepted attempt/claim not replaced",
+          "target": "S: runner transport policy; accepted attempt/claim not replaced"
+        },
+        "recoveryRetryClaimDeadlineBudgetEffects": "Fixed timeout after local result; Control receipt validates against accepted envelope. Network failure cannot establish remote failure or authorize repeat launch.",
+        "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+        "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F1",
+          "F3a",
+          "F-EFFECT",
+          "F-BIND"
+        ],
+        "caseIds": [
+          "AUTH-PRISM-AGENT-FINISH-HTTP-EFFECT"
+        ],
+        "verifiedSourceEvidence": [
+          "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+        ],
+        "semanticStatus": "source-traced",
+        "fragment": "author",
+        "reviewerConfirmation": null
+      },
+      "originalBodySha256": "06fe539d0866d953ee2310fd5617d8e2527d802437e9c0d1deeddf55b91730de",
+      "activeProposedAuthor": "config/engines/prism-agent.config.json#/profiles/<selected>/finishHttpTimeoutMs",
+      "currentValue": 10000,
+      "fullPair": "fixtures/pairs/AUTH-PRISM-AGENT-FINISH-HTTP.config.json",
+      "unsupportedDistinctReason": null,
+      "originalFEffectSatisfied": false,
+      "consumer": [
+        "AgentJobRunner.runOne",
+        "controlRequest finish",
+        "finishAgentRun fenced transaction"
+      ],
+      "domainSchema": "schemas/prism-agent-launcher.schema.json",
+      "domainNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "fieldSpecificDomainRelations": [
+        "timeoutMs integral multiple1000, positive, <=2146970000; CLIseconds1..2146970; gateway(waitseconds+30)*1000 <=2147000000, nozero-disable/default/truncate/clamp. Remote timeout timer capability must also be verified for exact deployed image/gateway.",
+        "cleanupTimeoutMs/kill/HTTP positive integral<=2147483647, no0 timer or clamp; terminationGraceMs<=cleanupTimeoutMs.",
+        "requiredExecutionCompletion=timeoutMs+4*cleanupTimeoutMs safe exactinteger; claimLifetimeMs>requiredExecutionCompletion. At actual executor start original expiresAt-now >=requiredExecutionCompletion; no later relative recomputation. A940000/960000 gives20kstartup; B combined620000/1000000 gives380kstartup.",
+        "claimLifetime positive safeinteger; original DBnow+duration and ISO roundtrip must fit native PG timestamp/JS Date8.64e15 and preserve integer-duration/time unit. Native clock synchronization/authority receipts gate activation; parameter/futurecase definitions not generic external OPEN.",
+        "logBytes positive<=16777216; resultBytes>=fixed exact closure serialized bytes; evidenceBytes>=logBytes and evidenceFiles>=1 to support any permitted nonempty mandatory retained log. Quotas are safe integers and actual Buffer/native storage ingress/grant bounds also apply.",
+        "No alias CLItimeoutSeconds field is editable. Same allcompleteprofiles must validate before selection/publication, not only chosen A.",
+        "Canonical normalized agentId input lower-case1..64 matching actual installedhost regex. Complete authorized deployed roster membership is separate required source grant; no implicit main/normalization fallback. Currentmain baseline is not proof of an installed alternate."
+      ],
+      "semanticContracts": "receiving-contract.json",
+      "status": "proposed-not-run-independent-review-required"
+    }
+  ],
+  "count": 12,
+  "newAuthorCount": 0,
+  "allOriginalRequirementsUnchanged": true
+}

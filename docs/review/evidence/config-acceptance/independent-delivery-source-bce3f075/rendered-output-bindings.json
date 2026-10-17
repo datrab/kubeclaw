@@ -1,0 +1,113 @@
+{
+  "controls": [
+    {
+      "id": "NOVA-A",
+      "input": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/NOVA-A.json",
+      "inputSha256": "e2ec73a1a2f63fd2b992acfbc6c6216efbdd76b8dc4ac7c18247e18f95cb169f",
+      "raw": "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-NOVA-A.stdout",
+      "expected": {
+        "modelPrimary": "openai/gpt-5.6-sol",
+        "modelFallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "gatewayPort": 18781,
+        "gatewayURL": "http://127.0.0.1:18781",
+        "drainFile": "/tmp/dlv-a-draining",
+        "redisMaxLen": "500"
+      },
+      "observed": {
+        "modelPrimary": "openai/gpt-5.6-sol",
+        "modelFallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "gatewayPort": 18781,
+        "gatewayURL": "http://127.0.0.1:18781",
+        "drainFile": "/tmp/dlv-a-draining",
+        "redisMaxLen": "500"
+      },
+      "matches": true
+    },
+    {
+      "id": "NOVA-B",
+      "input": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/NOVA-B.json",
+      "inputSha256": "1dc735a977b76426f9c20452c2afe1149a97aabdca7e098483aea55bda620fef",
+      "raw": "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-NOVA-B.stdout",
+      "expected": {
+        "modelPrimary": "openai/gpt-5.5",
+        "modelFallbacks": [
+          "openai/gpt-5.6-sol"
+        ],
+        "gatewayPort": 18782,
+        "gatewayURL": "http://127.0.0.1:18782",
+        "drainFile": "/tmp/dlv-b-draining",
+        "redisMaxLen": "1000"
+      },
+      "observed": {
+        "modelPrimary": "openai/gpt-5.5",
+        "modelFallbacks": [
+          "openai/gpt-5.6-sol"
+        ],
+        "gatewayPort": 18782,
+        "gatewayURL": "http://127.0.0.1:18782",
+        "drainFile": "/tmp/dlv-b-draining",
+        "redisMaxLen": "1000"
+      },
+      "matches": true
+    },
+    {
+      "id": "BUSTER-A",
+      "input": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/BUSTER-A.json",
+      "inputSha256": "0adcb83a287161ea2ac375e65c4c4f284958465876ec908f767b319f873aa06c",
+      "raw": "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-BUSTER-A.stdout",
+      "expected": {
+        "modelPrimary": "openai/gpt-5.6-sol",
+        "modelFallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "gatewayPort": 18781,
+        "gatewayURL": "http://127.0.0.1:18781",
+        "drainFile": "/tmp/dlv-a-draining",
+        "redisMaxLen": "500"
+      },
+      "observed": {
+        "modelPrimary": "openai/gpt-5.6-sol",
+        "modelFallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "gatewayPort": 18781,
+        "gatewayURL": "http://127.0.0.1:18781",
+        "drainFile": "/tmp/dlv-a-draining",
+        "redisMaxLen": "500"
+      },
+      "matches": true
+    },
+    {
+      "id": "BUSTER-B",
+      "input": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/BUSTER-B.json",
+      "inputSha256": "e2caf29d28b01bacc5b7ea5cb06f7ca221b14056d67b2101c60b5b760fa9d64f",
+      "raw": "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-BUSTER-B.stdout",
+      "expected": {
+        "modelPrimary": "openai/gpt-5.5",
+        "modelFallbacks": [
+          "openai/gpt-5.6-sol"
+        ],
+        "gatewayPort": 18782,
+        "gatewayURL": "http://127.0.0.1:18782",
+        "drainFile": "/tmp/dlv-b-draining",
+        "redisMaxLen": "1000"
+      },
+      "observed": {
+        "modelPrimary": "openai/gpt-5.5",
+        "modelFallbacks": [
+          "openai/gpt-5.6-sol"
+        ],
+        "gatewayPort": 18782,
+        "gatewayURL": "http://127.0.0.1:18782",
+        "drainFile": "/tmp/dlv-b-draining",
+        "redisMaxLen": "1000"
+      },
+      "matches": true
+    }
+  ],
+  "allMatch": true
+}

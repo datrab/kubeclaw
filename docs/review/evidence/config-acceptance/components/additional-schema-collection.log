@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/additional-schema-dispositions.py", line 33, in <module>
+    assert len(rows)==85,collections.Counter(x['definition'] for x in rows)
+           ^^^^^^^^^^^^^
+AssertionError: Counter({'workerRegistration': 21, 'workerTrustEnvelope': 13, 'attemptProgressEvent': 13, 'workerLogPart': 12, 'workerHealth': 9, 'workerCancellationRequest': 7})

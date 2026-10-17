@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-17T01:15:01.679928+00:00",
+  "status": "EXACT_17_SECRET_OBSERVER_POLICY_SOURCE_LANES_COMPOSED_RECEIVING_OPEN",
+  "matrixCommit": "82ca3c75a5b018f3d9347d4b99c9743b6579fda4",
+  "matrixRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-plugin-policy-source-matrix-20261017",
+  "productionSourceChanged": false,
+  "originalFields": 17,
+  "secretReferenceFields": 2,
+  "manifestObserverPolicyFields": 15,
+  "centralReceivingResiduals": 17,
+  "checks": {
+    "passed": 49,
+    "total": 49,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    },
+    "originalCasesNewlyAccepted": 0
+  },
+  "independentReview": "OPEN; no native spawn/reviewer tool exposed, CONFIG reviewers0; unchanged helper EROFS not retried; author controls only",
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "UNCHANGED: isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficient genuinely root-trusted writable archive filesystem and migrated isolated real PostgreSQL database.",
+  "writerLock": "SAME shared nonblocking; released at bounded command exit",
+  "noHistoricalFollowup": true
+}

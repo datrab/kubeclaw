@@ -1,3 +1,4 @@
+import { nativeNonceDatabaseSettings } from './native/resource-policy.mts';
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createServer as createTcpServer, type Socket } from "node:net";
@@ -11,7 +12,7 @@ test("native connection refusal retains its safe operator system code", async ()
   const address = listener.address(); assert(address && typeof address !== "string");
   await new Promise<void>(resolve => listener.close(() => resolve()));
   const diagnostics: WorkerDependencyDiagnostic[] = [];
-  const database = new WorkerNonceDatabase(`postgresql://fixture:private@127.0.0.1:${address.port}/fixture`, 100, event => diagnostics.push(event));
+  const database = new WorkerNonceDatabase(`postgresql://fixture:private@127.0.0.1:${address.port}/fixture`, { ...nativeNonceDatabaseSettings, timeoutMs: 100 }, event => diagnostics.push(event));
   try {
     await assert.rejects(database.check(), /PRISM_NONCE_DATABASE_UNAVAILABLE/);
     assert(diagnostics.some(event => event.phase === "connect" && event.code === "ECONNREFUSED"));
@@ -20,7 +21,7 @@ test("native connection refusal retains its safe operator system code", async ()
 });
 
 test("native PostgreSQL query cancellation settles and releases its actual pool client", { skip: !process.env.KUBECLAW_PRISM_READINESS_TEST_DATABASE ? "REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)" : false }, async () => {
-  const database = new WorkerNonceDatabase(process.env.KUBECLAW_PRISM_READINESS_TEST_DATABASE!, 150);
+  const database = new WorkerNonceDatabase(process.env.KUBECLAW_PRISM_READINESS_TEST_DATABASE!, { ...nativeNonceDatabaseSettings, timeoutMs: 150 });
   const lockPool = new Pool({ connectionString: process.env.KUBECLAW_PRISM_READINESS_TEST_DATABASE, connectionTimeoutMillis: 1000 });
   const locker = await lockPool.connect();
   try {

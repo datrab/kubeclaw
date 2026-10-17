@@ -1,0 +1,21 @@
+import json,hashlib,pathlib,subprocess
+R=pathlib.Path.cwd();O=R/'docs/review/evidence/config-acceptance/c0-completion-20261013/independent-controller-fields-16';B=R/'docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24';commands=[]
+def run(name,args):
+ p=subprocess.run(args,cwd=R,text=True,capture_output=True);(O/(name+'.stdout')).write_text(p.stdout);(O/(name+'.stderr')).write_text(p.stderr);commands.append({'name':name,'argv':args,'exit':p.returncode});return p
+run('head',['git','rev-parse','HEAD','HEAD^{tree}'])
+run('history',['git','log','-5','--format=%H %s'])
+run('source',['bash','-c',"nl -ba charts/kubeclaw/templates/buster-namespace-controller.yaml; nl -ba cmd/buster-namespace-controller/main.go | sed -n '132,196p;1401,1415p;1580,1621p;1685,1763p;1834,1905p'; nl -ba cmd/buster-namespace-controller/demo-readiness.go | sed -n '60,65p;97,123p'; nl -ba cmd/buster-namespace-controller/demo-readiness-lifecycle.go | sed -n '17,40p'; nl -ba cmd/buster-namespace-controller/demo-product.go | sed -n '58,81p;163,178p'"])
+run('manifest',['python3',str(B.relative_to(R)/'check.py'),'--verify-manifest'])
+script="""import fs from 'node:fs';import Ajv from 'ajv/dist/2020.js';
+const b='docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/';const read=n=>JSON.parse(fs.readFileSync(b+n));const v=new Ajv({strict:true}).compile(read('operator-slices.schema.json'));
+for(const size of [42,53,54,61,62,63]) {const p=read('operator-C1-A.json');const prefix='a'.repeat(size);p.namespaceBroker.allowedPrefixes=[prefix];const valid=v(p); const emitted=prefix+'-namespace';console.log(JSON.stringify({prefixLength:size,sliceValid:valid,request:prefix,sourceDerivedNormalizedName:emitted,normalizedNameLength:emitted.length,nativeDNSLabelLengthValid:emitted.length<=63,qualification:'source-derived exact matched-prefix fallback witness; not Go/native execution'}));}
+"""
+run('prefix-domain-challenge',['node','--input-type=module','-e',script])
+contracts=json.loads((B/'field-contracts.json').read_text());candidates=json.loads((B/'candidate-dispositions.json').read_text())['candidates'];prev=json.loads((B.parent/'batch-23/remaining-batches.json').read_text());nxt=json.loads((B/'remaining-batches.json').read_text());flat=lambda x:{i for s in x['bySource'] for i in s['candidateIds']};old=flat(prev);new=flat(nxt);ids={c['id'] for c in candidates};inventory=json.loads((R/'docs/review/remediation/config-semantic-inventory.json').read_text())['rows'];inv={r['id']:r for r in inventory};edges=[]
+for k,r in contracts['rows'].items():
+ for m in r['members']:
+  for j in m['originalStableJoins']:
+   digest=hashlib.sha256(json.dumps(inv[j['originalId']],sort_keys=True,separators=(',',':')).encode()).hexdigest();edges.append({'contract':k,'originalId':j['originalId'],'matchingOriginalDigest':digest==j['originalRowSha256']})
+cases=json.loads((B/'case-specifications.json').read_text())['cases'];result={'contracts':len(contracts['rows']),'candidates':len(ids),'priorRemaining':len(old),'remaining':len(new),'removedExactlyOriginal26':old-new==ids,'noRemainingAdditions':not(new-old),'stableJoinEdges':edges,'futureCases':len(cases),'allFutureNotRun':all(c['result']=='not-run' for c in cases.values())};(O/'joins-and-conservation.json').write_text(json.dumps(result,indent=2)+'\n')
+inputs=[*B.glob('*')]+[R/'docs/review/remediation/config-semantic-inventory.json',B.parent/'batch-23/remaining-batches.json',R/'docs/review/remediation/OPENCLAW-CONFIG-GOAL.md',R/'docs/review/remediation/GOAL-START.md',R/'charts/kubeclaw/templates/buster-namespace-controller.yaml',R/'cmd/buster-namespace-controller/main.go',R/'cmd/buster-namespace-controller/demo-readiness.go',R/'cmd/buster-namespace-controller/demo-readiness-lifecycle.go',R/'cmd/buster-namespace-controller/demo-product.go']
+(O/'input-identities.json').write_text(json.dumps([{'path':str(p.relative_to(R)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in inputs if p.is_file()],indent=2)+'\n');(O/'commands.json').write_text(json.dumps(commands,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='stableJoinEdges'}));print('join digests all matching',all(e['matchingOriginalDigest'] for e in edges));print('command exits',[(c['name'],c['exit']) for c in commands])

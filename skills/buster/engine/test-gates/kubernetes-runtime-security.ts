@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import type { TestProviderCapabilityInvoker } from './runner.ts';
 import { kubernetesCredentialEnvironment } from './kubernetes-command-environment.ts';
 
-import { validateBusterRuntimeSecuritySettings, type BusterRuntimeSecuritySettings } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+import { validateBusterRuntimeSecuritySettings, type BusterRuntimeSecuritySettings } from '@kubeclaw/plugin-foundation/config/buster-cluster-invokers';
 
 type JsonObject = Record<string, unknown>;
 

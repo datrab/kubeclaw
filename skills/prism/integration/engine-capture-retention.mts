@@ -1,3 +1,4 @@
+import { nativeEngineSettings } from '../tests/native/resource-policy.mts';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
@@ -131,7 +132,7 @@ async function main() {
   await access(executable, constants.X_OK); // ENOENT/EACCES is a hard prerequisite failure.
   await emit({ event: 'configuration', node: process.version, executable, ...config, limits, windows: 3,
     warmupCaptures: 8, sourceSha256: await sourceIdentity(), ...await dependencyIdentity(), nativeGate: true });
-  const engine = new PrismEngine(new DeterministicDesignProvider(), limits);
+  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
   await emit({ event: 'same-key', ...await sameKey(engine),
     evidence: 'one cache admission and identical settled result; no browser-launch count inferred' });
   for (let index = 0; index < 8; index++) await capture(engine, `warmup-${index}`);

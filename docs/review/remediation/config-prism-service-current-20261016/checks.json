@@ -1,0 +1,59 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "skills/prism/tests/worker-service.test.mts",
+      "skills/prism/tests/worker-cancellation.test.mts",
+      "skills/prism/tests/swarm-result-journal.test.mts",
+      "skills/prism/tests/swarm-native-settings.test.mts",
+      "skills/prism/tests/worker-readiness.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-prism-service-current-20261016/final.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "--resolveJsonModule",
+      "skills/prism/tests/swarm-native-settings.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-prism-service-current-20261016/typecheck.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-prism-service-current-20261016/original-roster.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-prism-service-current-20261016/diff.txt"
+  }
+]

@@ -1,0 +1,4 @@
+{
+  "result": "failed",
+  "reason": "repeat writer skipped all existing targetDomain rows and rewrote structured spec with zero fields; verifier correctly rejected stale linked spec digests. Fix repeat roster to skip only numeric schema fields, then fresh collector regeneration; no source/native validation assertion weakened."
+}

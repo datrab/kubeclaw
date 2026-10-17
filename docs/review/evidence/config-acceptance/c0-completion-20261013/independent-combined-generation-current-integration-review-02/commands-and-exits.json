@@ -1,0 +1,52 @@
+{
+  "scope": "Independent actual canonical root-reference inspection only; no structural/schema/Engine/Gateway/Browser collector replay, native execution, new generic validator or archive",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-combined-generation-current-integration-review-02/inspect-actual-roots.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-combined-generation-current-integration-review-02/inspection.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-combined-generation-current-integration-review-02/inspection.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "fe37aa",
+      "toolCompletionChunk": "6c0b2f",
+      "scriptSha256": "9160d80d194e040ddf4ff596f48a00c917a6bf66845bae57999594fc3925affd"
+    },
+    {
+      "command": "Python exact stable-contract beforeMetadata/current flags/Nova18 pending roster comparisons",
+      "exitCode": 0,
+      "toolChunk": "9663b0",
+      "output": "reading-and-pending-scope-checks.json"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--short",
+        "--untracked-files=no"
+      ],
+      "exitCode": 0,
+      "output": "parent-tracked-dirty-navigation.txt"
+    },
+    {
+      "command": "Python fresh SHA256 reread of all read-identities inputs and git rev-parse HEAD",
+      "exitCode": 0,
+      "output": "end-input-stability.json"
+    }
+  ],
+  "immutableBeforeRetrieval": {
+    "revision": "beda27eb69ce409ac37fe075edd4686980e39fd3",
+    "commands": [
+      "git show <revision>:<root path>",
+      "git rev-parse <revision>:<root path>"
+    ],
+    "exitCode": 0,
+    "record": "actual-root-inspection.json"
+  },
+  "recordedStructuralFinalRunInspectedOnly": "combined-generation-current-integration-02/commands-and-exits.json:finalActualRawRootStructural",
+  "recordedStructuralReexecuted": false,
+  "nativeOrProductiveCasesExecuted": 0,
+  "authorHistoryPreserved": "Intermediate raw spelling and initial historical-ref traversal failures remain in frozen author package; independent inspection did not reuse intermediate roots as final evidence"
+}

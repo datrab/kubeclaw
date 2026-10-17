@@ -1,0 +1,22 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/components/question-closure-bce3f075/current-formatter-control.mjs",
+  "identities": {
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/current-formatter-control.mjs": "0b06040295eebbfe2d973f795ddb174bf25867db72c6aa40055ca2847a33f96d",
+    "contracts/pipeline-observability/v1/src/validation.ts": "7901db9ca3d9253e1edfb9b816034334b1d4f763fca197b64e6249f86bfc5977",
+    "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+  },
+  "node": "v24.21.0",
+  "results": [
+    {
+      "id": "QC-REAL-LONG-REASON-FORMAT",
+      "result": "passed",
+      "originalReasonUnits": 2237,
+      "formattedReasonUnits": 252,
+      "formattedReason": "OBSERVABILITY_CONTRACT_INVALID:producerRecord:/ must have required property 'schemaVersion';/ must have required property 'recordId';/ must have required property 'sequence';/ must:sha256:5aecebac675ea8bd5e5f0c369163cff4ab456417f7637e78c175daea591c00d1",
+      "stateBytes": 2396,
+      "scope": "Actual canonical ingress->Ajv real40extra-properties decoder->private formatter through publicadmit->quarantine andoverflow; current256/180 only, no futureB consumption"
+    }
+  ],
+  "passed": 1,
+  "failed": 0
+}

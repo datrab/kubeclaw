@@ -1,0 +1,13 @@
+{
+  "method": "ordered unmodified raw patch byte slices; concatenating gzip-decompressed chunks reconstructs exact patch",
+  "totalBytes": 77006904,
+  "sha256": "a02f4db9c7427781360223dc54e7658aa1d771895e90e6118273bd25dcaa7498",
+  "chunks": [
+    {
+      "path": "tracked-patch-000.gz",
+      "offset": 0,
+      "uncompressedBytes": 77006904,
+      "sha256": "a02f4db9c7427781360223dc54e7658aa1d771895e90e6118273bd25dcaa7498"
+    }
+  ]
+}

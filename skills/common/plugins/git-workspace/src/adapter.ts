@@ -9,6 +9,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   const roots = Object.freeze(configuredRoots.map((root, index) => canonicalExistingDirectory(root, `allowedRepositoryRoots[${index}]`)));
   const workspaceRoot = canonicalWorkspaceRoot(context.config.workspaceRoot);
   const runner = new GitRunner({
+    errorExcerptCharacters: positiveInteger(context.config.errorExcerptCharacters, 'errorExcerptCharacters'),
     executable: canonicalExecutable(context.config.gitExecutable),
     authorName: identityValue(context.config.authorName, 'authorName'),
     authorEmail: identityValue(context.config.authorEmail, 'authorEmail'),

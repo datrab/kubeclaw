@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Externalize the operator payload structure limits",
+      "body": "The operator receiver still enforces hard-coded depth, array-entry, and object-property limits (20, 1,000, and 1,000) in validateJson. Unlike the runtime-dispatch receiver updated in this bundle, these operational limits have no Core policy fields or captured configuration path. Consequently, selecting or recovering a Core policy cannot control this receiver's structural admission limits, leaving the requested CONFIG closeout incomplete. Add validated structure settings to the Core policy, project them into operator configuration, and pass the captured values through payload validation while retaining supported hard ceilings.",
+      "priority": "P2",
+      "confidence": 0.88,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "skills/common/plugins/operator-messaging/src/payload.ts",
+        "line": 37
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The supplied source shows a remaining gap in externalizing operator payload structure limits. This assessment is based on source inspection only; no native execution or historical C0\u2013C6 acceptance is claimed.",
+  "overall_confidence": 0.85
+}

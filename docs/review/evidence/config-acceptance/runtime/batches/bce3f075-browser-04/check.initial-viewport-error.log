@@ -1,0 +1,27 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /BROWSER_AXE_PROFILE_INVALID/. Input:
+
+'Error: BROWSER_AXE_VIEWPORT_INVALID'
+
+    at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/check.mjs:6:1332 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: Error: BROWSER_AXE_VIEWPORT_INVALID
+      at positiveInteger (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/browser-axe-runtime.ts:29:91)
+      at profileOptions (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/browser-axe-runtime.ts:74:17)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/browser-axe-runtime.ts:157:23
+      at Array.map (<anonymous>)
+      at BrowserAxeCapabilityInvoker.invoke (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/browser-axe-runtime.ts:153:43)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/check.mjs:6:1365
+      at waitForActual (node:assert:632:21)
+      at strict.rejects (node:assert:769:31)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/check.mjs:6:1345,
+  expected: /BROWSER_AXE_PROFILE_INVALID/,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

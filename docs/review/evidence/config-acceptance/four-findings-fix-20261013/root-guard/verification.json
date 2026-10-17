@@ -1,0 +1,112 @@
+{
+  "controls": [
+    {
+      "control": "positive-before",
+      "exitCode": 0,
+      "errorCount": 0,
+      "inputSHA256": "e33d983cf73c4e423f3f6663c37a419976d9040530e11dd22206280badb59952",
+      "command": [
+        "/usr/bin/python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--structural",
+        "--inventory",
+        "/tmp/runtime-root-control-agrb_mij/inventory.json",
+        "--matrix",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json"
+      ]
+    },
+    {
+      "control": "history-digest",
+      "exitCode": 1,
+      "errorCount": 1,
+      "inputSHA256": "2060f2ed8b232f4d2cafc3fec64b11b2b8db175f991758888fd54645667fff9c",
+      "command": [
+        "/usr/bin/python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--structural",
+        "--inventory",
+        "/tmp/runtime-root-control-5_6tjhps/inventory.json",
+        "--matrix",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json"
+      ]
+    },
+    {
+      "control": "correction-loss",
+      "exitCode": 1,
+      "errorCount": 1,
+      "inputSHA256": "f2c015308e9ea0ca0da7269a7fba17ee507a97a43c4b5a250af5ad512def1fb7",
+      "command": [
+        "/usr/bin/python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--structural",
+        "--inventory",
+        "/tmp/runtime-root-control-f604u1nr/inventory.json",
+        "--matrix",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json"
+      ]
+    },
+    {
+      "control": "non-provenance-drift",
+      "exitCode": 1,
+      "errorCount": 1,
+      "inputSHA256": "bc9ba05dcc67da2a282ac84fbb48555b6cab7e45b377dd719c781f5795f48c66",
+      "command": [
+        "/usr/bin/python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--structural",
+        "--inventory",
+        "/tmp/runtime-root-control-1n7ii2_0/inventory.json",
+        "--matrix",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json"
+      ]
+    },
+    {
+      "control": "row-loss",
+      "exitCode": 1,
+      "errorCount": 12,
+      "inputSHA256": "74fbf2b6b6df6f7cc0ca4525cc9bb102650dbb1a5d5eb9d4d98bf5b864981db4",
+      "command": [
+        "/usr/bin/python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--structural",
+        "--inventory",
+        "/tmp/runtime-root-control-os2lj5rx/inventory.json",
+        "--matrix",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json"
+      ]
+    },
+    {
+      "control": "extra-row",
+      "exitCode": 1,
+      "errorCount": 1,
+      "inputSHA256": "49e0bf7a4cb18048f38ac383911367956bd22763e5dcceb06492e14fbcdbbc5b",
+      "command": [
+        "/usr/bin/python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--structural",
+        "--inventory",
+        "/tmp/runtime-root-control-5dmgw61o/inventory.json",
+        "--matrix",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json"
+      ]
+    },
+    {
+      "control": "positive-recovery",
+      "exitCode": 0,
+      "errorCount": 0,
+      "inputSHA256": "e33d983cf73c4e423f3f6663c37a419976d9040530e11dd22206280badb59952",
+      "command": [
+        "/usr/bin/python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--structural",
+        "--inventory",
+        "/tmp/runtime-root-control-l9fejm91/inventory.json",
+        "--matrix",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json"
+      ]
+    }
+  ],
+  "rootByteDrift": false,
+  "checkerSHA256": "77c37af0c7b940c95d6033ad72eb11be66c47296b8dbf59a222d9ec09c30f317",
+  "globalC0Accepted": false
+}

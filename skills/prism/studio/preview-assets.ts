@@ -1,7 +1,7 @@
 import type { PrismDocument } from '@kubeclaw/prism-contracts-v1';
 
 export type PreviewAssets = Record<string, { src: string; alt?: string }>;
-const MAX_BYTES = 6_000_000;
+import type { StudioBrowserPolicy } from './browser-policy.ts';
 const imageTypes = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml']);
 
 async function readBounded(response: Response, remaining: number): Promise<Uint8Array<ArrayBuffer>> {
@@ -40,9 +40,9 @@ function dataSource(bytes: Uint8Array, mediaType: string): string {
   }
   return `data:${mediaType};base64,${btoa(binary)}`;
 }
-export async function loadPreviewAssets(document: PrismDocument, signal: AbortSignal): Promise<PreviewAssets> {
+export async function loadPreviewAssets(document: PrismDocument, signal: AbortSignal, policy: StudioBrowserPolicy): Promise<PreviewAssets> {
   const result: PreviewAssets = {}; let total = 0;
-  const boundedSignal = AbortSignal.any([signal, AbortSignal.timeout(30_000)]);
+  const boundedSignal = AbortSignal.any([signal, AbortSignal.timeout(policy.previewAssetTimeoutMs)]);
   for (const [id, raw] of Object.entries(document.assets)) {
     if (!raw || typeof raw !== 'object') throw new Error(`PRISM_PREVIEW_ASSET_METADATA_INVALID:${id}`);
     const asset = raw as { kind?: string; mediaType?: string; artifact?: string; alt?: string };
@@ -54,7 +54,7 @@ export async function loadPreviewAssets(document: PrismDocument, signal: AbortSi
     const response = await fetch(new URL(`/v1/artifacts/${asset.artifact.slice('artifact:'.length)}`, location.origin), {
       credentials: 'same-origin', redirect: 'error', signal: boundedSignal,
     });
-    const bytes = await readBounded(response, MAX_BYTES - total);
+    const bytes = await readBounded(response, policy.maximumPreviewAssetBytes - total);
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)),
       (byte) => byte.toString(16).padStart(2, '0')).join('');
     if (asset.artifact !== `artifact:sha256:${digest}`) throw new Error(`PRISM_PREVIEW_ASSET_INTEGRITY_FAILED:${id}`);

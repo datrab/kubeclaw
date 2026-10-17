@@ -1,0 +1,383 @@
+{
+  "baseline": {
+    "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "inventorySha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6"
+  },
+  "handoffs": [
+    {
+      "questionId": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "canonicalId": "AUTH-PRISM-DESIGN-CARDINALITY",
+      "owner": "prism-control",
+      "field": {
+        "path": "skills/prism/server/agent-routes.ts",
+        "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+        "field": "createAgentDesignSet designs.length and unique keys3"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2387"
+      },
+      "caseIds": [
+        "AUTH-PRISM-DESIGN-CARDINALITY-FUTURE",
+        "AUTH-PRISM-C0-CURRENT-DESIGN-DEFINITIONS",
+        "AUTH-PRISM-DESIGN-ROUND-A3",
+        "AUTH-PRISM-DESIGN-ROUND-B2",
+        "AUTH-PRISM-DESIGN-SAME-KEY-PUBLISH-B",
+        "AUTH-PRISM-DESIGN-CRASH-BETWEEN-TRANSACTIONS",
+        "AUTH-PRISM-DESIGN-PRELEDGER-COMPLETED",
+        "AUTH-PRISM-DESIGN-MISSING-ORIGINAL",
+        "AUTH-PRISM-DESIGN-EXACT-THREE-INTENT-B",
+        "AUTH-PRISM-DESIGN-INTENT-REFERENCE-MISMATCH",
+        "AUTH-PRISM-DESIGN-R-THREE-ONLY",
+        "AUTH-PRISM-DESIGN-CLIENT-ALL-COMPLETION-PATHS",
+        "AUTH-PRISM-DESIGN-CLIENT-MIXED-GENERATION",
+        "AUTH-PRISM-DESIGN-RETAINED-UNCERTAINTY",
+        "AUTH-PRISM-DESIGN-COUNT-NEGATIVES",
+        "AUTH-PRISM-DESIGN-FIXED-EVAL-A"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "canonicalId": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY",
+      "owner": "prism-engine-profile",
+      "field": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "field": "module engineContentDigest = prismEngineContentDigest() || synthetic dev hash"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2388"
+      },
+      "caseIds": [
+        "AUTH-PRISM-C0-IMAGE-BINDING-SYNTAX",
+        "AUTH-PRISM-NATIVE-PROVENANCE-A-B",
+        "AUTH-PRISM-NATIVE-PROVENANCE-CODE-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-OCI-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-CONFIG-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-ROLE-GRANT-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-SAME-KEY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-RECOVERY-A",
+        "AUTH-PRISM-NATIVE-PROVENANCE-MISSING-HISTORY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-RESULT-REPLAY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-UNCERTAIN-RETRY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-DEV-NOT-PRODUCTION",
+        "AUTH-PRISM-NATIVE-PROVENANCE-FIXED-EVAL",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-IMPORT-PIN",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-NODE-LAUNCHER",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-MUTABLE-PATH",
+        "AUTH-PRISM-NATIVE-INPUT-REPLAY-NO-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-RESERVE-BEFORE-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-CONFLICT-NO-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-QUOTA-REJECT",
+        "AUTH-PRISM-NATIVE-INPUT-CRASH-RESERVED",
+        "AUTH-PRISM-NATIVE-INPUT-CRASH-READY",
+        "AUTH-PRISM-NATIVE-INPUT-SHARED-CLEANUP",
+        "AUTH-PRISM-NATIVE-INPUT-UNCERTAIN-RETAINED"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "canonicalId": "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION",
+      "owner": "native-delivery-projection",
+      "field": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 88,
+        "field": "PRISM_ENGINE_CONTENT_DIGEST",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2258"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "canonicalId": "DLV-BUSTER-KUBERNETES-CAPTURE-PATH",
+      "owner": "buster-engine-runtime-injection",
+      "field": {
+        "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "line": 109,
+        "field": "constructor.environment.PATH",
+        "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2277"
+      },
+      "caseIds": [
+        "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "canonicalId": "DLV-BUSTER-KUBERNETES-CAPTURE-KUBECONFIG",
+      "owner": "buster-engine-runtime-injection",
+      "field": {
+        "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "line": 109,
+        "field": "constructor.environment.KUBECONFIG",
+        "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2278"
+      },
+      "caseIds": [
+        "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "canonicalId": "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-HOST",
+      "owner": "buster-engine-runtime-injection",
+      "field": {
+        "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "line": 110,
+        "field": "constructor.environment.KUBERNETES_SERVICE_HOST",
+        "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2279"
+      },
+      "caseIds": [
+        "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "canonicalId": "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-PORT",
+      "owner": "buster-engine-runtime-injection",
+      "field": {
+        "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "line": 111,
+        "field": "constructor.environment.KUBERNETES_SERVICE_PORT",
+        "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2280"
+      },
+      "caseIds": [
+        "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "canonicalId": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+      "owner": "worker-core",
+      "field": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "limits.cpuPeriodMicroseconds",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/202"
+      },
+      "caseIds": [
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "canonicalId": "DLV-NATIVE-SETUP-POLICY-DOCUMENT-BYTES",
+      "owner": "native-delivery-projection",
+      "field": {
+        "path": "scripts/prepare-native-worker-pools.mjs",
+        "line": 14,
+        "field": "whole native-node-policy stat.size ceiling",
+        "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2266"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "canonicalId": "DLV-NATIVE-SETUP-RUNTIME-IDENTITY-BYTES",
+      "owner": "native-delivery-projection",
+      "field": {
+        "path": "scripts/prepare-native-worker-pools.mjs",
+        "line": 74,
+        "field": "runtime identity stat.size ceiling",
+        "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2267"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "canonicalId": "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION",
+      "owner": "native-delivery-projection",
+      "field": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "line": 48,
+        "field": "pool CPU period / quota relation",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+      },
+      "canonicalRowReference": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/remediation/config-semantic-inventory.json",
+        "sha256": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+        "rfc6901Pointer": "/rows/2268"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "status": "legitimate frozen existing owner reference ONLY; unresolved author/runtime/physical and wholecarrier prerequisites retained",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "canonicalId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-TAREXECUTABLE",
+      "owner": "buster-entrypoint-runtime",
+      "field": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "tarExecutable",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "line": 203
+      },
+      "caseIds": [
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+      ],
+      "status": "exact declared writer/inherited budget same contract source identified in frozen question; current reader repair/actual targetcases notrun",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "canonicalId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+      "owner": "buster-engine",
+      "field": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeClaimBytes",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      ],
+      "status": "exact declared writer/inherited budget same contract source identified in frozen question; current reader repair/actual targetcases notrun",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "canonicalId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+      "owner": "buster-engine",
+      "field": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeTotalBytes",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      ],
+      "status": "exact declared writer/inherited budget same contract source identified in frozen question; current reader repair/actual targetcases notrun",
+      "noNewAuthor": true
+    },
+    {
+      "questionId": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "canonicalId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+      "owner": "buster-engine",
+      "field": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/kubernetesFixture/allowedSecretReferences",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "QC-FIXTURE-SECRET-ENTRY-CAP-VAL",
+        "QC-FIXTURE-SECRET-ENTRY-CAP-BIND"
+      ],
+      "status": "exact declared writer/inherited budget same contract source identified in frozen question; current reader repair/actual targetcases notrun",
+      "noNewAuthor": true
+    }
+  ],
+  "notIndependentSemanticReview": true,
+  "wholeMJRStillOpen": true
+}

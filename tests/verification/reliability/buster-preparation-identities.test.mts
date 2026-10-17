@@ -1,4 +1,4 @@
-import { canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
+import { canonicalPipelineEntry, readTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { assertPreparedSourceShape, preparedPlanHeader, preparationDigest } from
 import { assertStagedInput, type BusterInputReference } from '../../../skills/buster/engine/test-gates/preparation-input.ts';
 import { assertPreparationCleanupEffects } from '../../../skills/buster/engine/test-gates/preparation-cleanup-binding.ts';
 
-import { loadBusterPreparationSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings, type BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { preparationEnvelope, preparationProfile } from '../../../skills/buster/engine/test-gates/preparation-envelope.ts';
 import { initialSourceReservation, validateSourceLedger, type SourceReservation } from '../../../skills/buster/engine/test-gates/preparation-ledger-state.ts';
 
@@ -61,7 +61,7 @@ test('cleanup gate digest cannot be coerced from a JSON array', () => {
 
 // Decoder-only recovery binding: filesystem ownership and execution are not modeled as proof.
 test('recovered source reference remains bound to the originally accepted extraction header', () => {
-  const settings = loadBusterPreparationSettings({ SWARM_CONFIG: canonicalSwarmEntry });
+  const settings = (captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline())).components['buster-engine']!.settings as unknown as BusterSettings).preparation;
   const envelope = preparationEnvelope(source.admissionId, preparationProfile(digest), settings,
     new Date('2026-09-21T00:00:00.000Z'), 1003, { kind: 'extract', input: input as BusterInputReference });
   const record: SourceReservation = {

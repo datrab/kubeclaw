@@ -1,0 +1,40 @@
+skills/buster/engine/test-gates/remote-plan-http.ts:5:import { authorizeProxiedSpiffePeer } from '@kubeclaw/worker-core';
+skills/buster/engine/test-gates/remote-plan-http.ts:21:      authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress,
+skills/prism/server/agent-job-routes.ts:2:import { authorizeProxiedSpiffePeer } from '@kubeclaw/worker-core';
+skills/prism/server/agent-job-routes.ts:10:  authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([options.trustedAgentId]));
+skills/prism/server/agent-routes.ts:5:import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
+skills/prism/server/agent-routes.ts:54:  authorizeProxiedSpiffePeer(
+skills/prism/server/agent-routes.ts:106:  authorizeProxiedSpiffePeer(
+skills/prism/server/dispatch-route.ts:2:import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
+skills/prism/server/dispatch-route.ts:101:      authorizeProxiedSpiffePeer(
+skills/prism/server/internal-artifacts.ts:3:import { authorizeProxiedSpiffePeer } from '@kubeclaw/worker-core';
+skills/prism/server/internal-artifacts.ts:20:      authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress,
+skills/prism/server/worker-service.ts:8:import { authorizeProxiedSpiffePeer, NativeWorkerAttemptBusy } from "@kubeclaw/worker-core";
+skills/prism/server/worker-service.ts:56:    if (auth.mode === "spiffe") authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress, new Set([auth.trustedControlSpiffeId]));
+skills/worker/core/src/index.ts:45:  authorizeProxiedSpiffePeer,
+skills/worker/core/src/index.ts:46:  authorizeSpiffePeer,
+skills/worker/core/src/index.ts:47:  spiffePeerFromForwardedClientCertificate,
+skills/worker/core/worker/trust.ts:17:export function spiffePeerFromForwardedClientCertificate(
+skills/worker/core/worker/trust.ts:31:export function authorizeSpiffePeer(
+skills/worker/core/worker/trust.ts:38:  const principal = spiffePeerFromForwardedClientCertificate(headers);
+skills/worker/core/worker/trust.ts:43:export function authorizeProxiedSpiffePeer(
+skills/worker/core/worker/trust.ts:51:  return authorizeSpiffePeer(headers, allowedSpiffeIds);
+tests/verification/contracts/check-worker-trust-spiffe.mts:3:  authorizeProxiedSpiffePeer,
+tests/verification/contracts/check-worker-trust-spiffe.mts:4:  authorizeSpiffePeer,
+tests/verification/contracts/check-worker-trust-spiffe.mts:5:  spiffePeerFromForwardedClientCertificate,
+tests/verification/contracts/check-worker-trust-spiffe.mts:10:assert.equal(spiffePeerFromForwardedClientCertificate(headers).spiffeId, nova);
+tests/verification/contracts/check-worker-trust-spiffe.mts:11:assert.equal(spiffePeerFromForwardedClientCertificate({
+tests/verification/contracts/check-worker-trust-spiffe.mts:14:assert.equal(authorizeSpiffePeer(headers, new Set([nova])).spiffeId, nova);
+tests/verification/contracts/check-worker-trust-spiffe.mts:15:assert.equal(authorizeProxiedSpiffePeer(headers, '127.0.0.1', new Set([nova])).spiffeId, nova);
+tests/verification/contracts/check-worker-trust-spiffe.mts:16:assert.equal(authorizeProxiedSpiffePeer(headers, '::1', new Set([nova])).spiffeId, nova);
+tests/verification/contracts/check-worker-trust-spiffe.mts:17:assert.equal(authorizeProxiedSpiffePeer(headers, '::ffff:127.0.0.1', new Set([nova])).spiffeId, nova);
+tests/verification/contracts/check-worker-trust-spiffe.mts:18:assert.throws(() => authorizeProxiedSpiffePeer(headers, '10.42.1.7', new Set([nova])), /PROXY_REQUIRED/u);
+tests/verification/contracts/check-worker-trust-spiffe.mts:19:assert.throws(() => authorizeProxiedSpiffePeer(headers, undefined, new Set([nova])), /PROXY_REQUIRED/u);
+tests/verification/contracts/check-worker-trust-spiffe.mts:20:assert.throws(() => authorizeSpiffePeer(headers,
+tests/verification/contracts/check-worker-trust-spiffe.mts:22:assert.throws(() => spiffePeerFromForwardedClientCertificate({}), /MISSING/u);
+tests/verification/contracts/check-worker-trust-spiffe.mts:23:assert.throws(() => spiffePeerFromForwardedClientCertificate({
+tests/verification/contracts/check-worker-trust-spiffe.mts:26:assert.throws(() => spiffePeerFromForwardedClientCertificate({
+tests/verification/contracts/check-worker-trust-spiffe.mts:29:assert.throws(() => spiffePeerFromForwardedClientCertificate({
+tests/verification/contracts/check-worker-trust-spiffe.mts:32:assert.throws(() => spiffePeerFromForwardedClientCertificate({
+tests/verification/contracts/check-worker-trust-spiffe.mts:35:assert.throws(() => authorizeSpiffePeer(headers, new Set()), /POLICY_INVALID/u);
+tests/verification/contracts/check-worker-trust-spiffe.mts:36:assert.throws(() => authorizeSpiffePeer(headers, new Set(['not-a-spiffe-id'])), /POLICY_INVALID/u);

@@ -1,0 +1,9 @@
+{
+  "verify-dls-20261013-attempt5.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "proposed-cases.json": "bea697df0e20ab5ccd94f55c99facd238f1b0017d406db1c1dc043a1ccff0fb4",
+  "semantic-closure-verification.json": "7d085890b5579457aa1a5a5e809bed084d4c4cc104e18d70bf3fe3e886ba05ce",
+  "image-projection-target-case-specifications-20261013.json": "d59dbcf83f7efcf7933dace81f0ddf1bd005c14c374a64502da1158a85951aa0",
+  "define-image-projection-targets-20261013.py": "88121e21b5a59444fe489d3eca5a00a14d024bd67d43d94f6a18b6fc514c3046",
+  "verify-dls-20261013-attempt5.stdout": "88977ee122ac0b9c05357a51eed8117728f4672dfed23d685cc2628d2d260489",
+  "future-case-invocation-specifications-20261013.json": "f3225bd2f248e448c139cf7f5a7103ab31593dc2e8425cfd9cede975aced55b3"
+}

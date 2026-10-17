@@ -1,0 +1,101 @@
+{
+  "checks": [
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "limits.timeoutMs"
+      ],
+      "nativeEffectSupported": true
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "limits.cleanupTimeoutMs"
+      ],
+      "nativeEffectSupported": true
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "limits.logBytes"
+      ],
+      "nativeEffectSupported": true
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "limits.resultBytes"
+      ],
+      "nativeEffectSupported": false
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "limits.evidenceBytes"
+      ],
+      "nativeEffectSupported": false
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "limits.evidenceFiles"
+      ],
+      "nativeEffectSupported": false
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "claimLifetimeMs"
+      ],
+      "nativeEffectSupported": true
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "terminationGraceMs"
+      ],
+      "nativeEffectSupported": true
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [],
+      "nativeEffectSupported": false
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "claimHttpTimeoutMs"
+      ],
+      "nativeEffectSupported": true
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "shaMatches": true,
+      "onlyDeclaredPointersChange": true,
+      "actualChangedPointers": [
+        "finishHttpTimeoutMs"
+      ],
+      "nativeEffectSupported": true
+    }
+  ]
+}

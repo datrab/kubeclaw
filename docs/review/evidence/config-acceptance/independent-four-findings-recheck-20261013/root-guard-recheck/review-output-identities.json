@@ -1,0 +1,321 @@
+{
+  "reviewResult": "clean-bounded-correction",
+  "checks": 18,
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/README.md",
+      "sha256": "3bb713759b53412c79da83aaf98bb645ba8e66c0308149d1ccf926bbab03b189",
+      "bytes": 3440
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/c0-acceptance-promote.inventory.json.gz",
+      "sha256": "87c3e5a9274c93bd30e17d07eba0c309bcf2ff5a5ffdf5dd7a9607c3165c12f3",
+      "bytes": 2273688
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/c0-acceptance-promote.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/c0-acceptance-promote.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/case-links-remove.inventory.json.gz",
+      "sha256": "6de9d6219d7d6405d9bb7802ca1155049ce50556d7a3915b59e398a1d90c21a2",
+      "bytes": 2273672
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/case-links-remove.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/case-links-remove.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/checks.json",
+      "sha256": "bb718212ab9b49627e24bef3a8d0be9a6aa373382399b8380856e0cc9ec56780",
+      "bytes": 12651
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/correction-provenance-remove.inventory.json.gz",
+      "sha256": "6b6ab4ac6b74323af31d64ac9175b45184142d6e663fef362674c7459ede3ac8",
+      "bytes": 2273602
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/correction-provenance-remove.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/correction-provenance-remove.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/findings.json",
+      "sha256": "61a768dd9093d1d95b404300f141bfee5ec00ed62cdb527e4d65157b8cb47a73",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/fragment-escape.inventory.json.gz",
+      "sha256": "90c0c76610252ee6b1f0921877b0aaac2dfd259c687566e0bb1e869cebd44d4c",
+      "bytes": 2273690
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/fragment-escape.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/fragment-escape.stdout",
+      "sha256": "dab23533c24f61e35009474c9575190f1e40940412d5c8d559ab1180981ef04e",
+      "bytes": 339
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/fragment-registration-delete.inventory.json.gz",
+      "sha256": "17ae62bb46fc56025e09db3f890e14d8d62f54e20d14c4200e842a46c5f32c13",
+      "bytes": 2273632
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/fragment-registration-delete.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/fragment-registration-delete.stdout",
+      "sha256": "1ab58ba3a5d21e177e4ef678f88d88895bbca72f43074fb9f460e47379578de3",
+      "bytes": 228
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/input-identities.json",
+      "sha256": "e743ed08b8d64fb8f830377194fd0626f2fb06cb34ebd8356105b48a499c33d3",
+      "bytes": 1152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/nonprovenance-current.inventory.json.gz",
+      "sha256": "9205d02a0655dba5335763ad77de200358cf4044b13cab97592873ddcae9c261",
+      "bytes": 2273680
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/nonprovenance-current.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/nonprovenance-current.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/normalized-class.inventory.json.gz",
+      "sha256": "8deed042ff6040df5403e2d47abbb3b8e3399a3d3b6b523e5b92dd9f13feb0a1",
+      "bytes": 2273680
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/normalized-class.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/normalized-class.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/original-history-hash.inventory.json.gz",
+      "sha256": "8e162889d781dac5aaf41af05314576a4921734c31439191de0bcd3593a291d4",
+      "bytes": 2273678
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/original-history-hash.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/original-history-hash.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/original-report-mutant.inventory.json.gz",
+      "sha256": "8e162889d781dac5aaf41af05314576a4921734c31439191de0bcd3593a291d4",
+      "bytes": 2273678
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/original-report-mutant.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/original-report-mutant.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/positive-after.inventory.json.gz",
+      "sha256": "e9a65cb39c019b6492c42cfbbc1a8ba64e729dc811f7d3225f3ee1d404a10de9",
+      "bytes": 2273676
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/positive-after.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/positive-after.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/positive-before.inventory.json.gz",
+      "sha256": "e9a65cb39c019b6492c42cfbbc1a8ba64e729dc811f7d3225f3ee1d404a10de9",
+      "bytes": 2273676
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/positive-before.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/positive-before.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/recheck.py",
+      "sha256": "3b09ae844bf7e1e17bfa71463c29c01e7ee0cdc65c69c3d7655d8646e6a03365",
+      "bytes": 7061
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/recheck.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/recheck.stdout",
+      "sha256": "f9fe4fbf4f357fc642df4a49fa798ada6d01528314a30343902950393b0ee06c",
+      "bytes": 98
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/recovery-identities.json",
+      "sha256": "618eb86f8511c365347ac0aec1cd7f15367f3e180cc4a8304b8ffb766706e884",
+      "bytes": 380
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/required-obligations-remove.inventory.json.gz",
+      "sha256": "2cbbc304216b5d5b399a2ec19b13c4fbfa0ac496b425b53bd446fe3679cb478b",
+      "bytes": 2273686
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/required-obligations-remove.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/required-obligations-remove.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/retained-incorrect-digest.inventory.json.gz",
+      "sha256": "342c8bf23ae45aa6f9be5c6d4e73f44ed4470458fc53c142ceb6207f762d1184",
+      "bytes": 2273622
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/retained-incorrect-digest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/retained-incorrect-digest.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/review-acceptance-promote.inventory.json.gz",
+      "sha256": "03b54b5e275a5d7e49be28c81fa51e244c5df6e31481d519a21cd04f8e36fc6b",
+      "bytes": 2273687
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/review-acceptance-promote.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/review-acceptance-promote.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/review-input.patch.gz",
+      "sha256": "41b3d1170cce58d7a037b4dc0ae9be3d02d0b8ed648c16809d5b02439fca6045",
+      "bytes": 1633184
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/row-delete.inventory.json.gz",
+      "sha256": "4e10696cf6c17d4768d4535784f65658c173980dd4ac74920ed5bffa7bcc5467",
+      "bytes": 2272716
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/row-delete.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/row-delete.stdout",
+      "sha256": "0bb2f9960bbb8dc0bc0b2f7a0418ca54e71caedaf0f3cca0586de27b9c6a6ca6",
+      "bytes": 1335
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/row-duplicate.inventory.json.gz",
+      "sha256": "2e49fdf953e6270ee4c8241551fc2a660b5d1e20456d407cfb9a482200d83bdd",
+      "bytes": 2276798
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/row-duplicate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/row-duplicate.stdout",
+      "sha256": "08803d9b4c3c61e34b7f9c43a3aae0044f7ca80f367feb8b17aba6f0b11d8faa",
+      "bytes": 241
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/unexpected-property.inventory.json.gz",
+      "sha256": "b814566a25f46c48d63353d260f0626aa32290e3d26e5fcefad6671ac86a3d0c",
+      "bytes": 2273695
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/unexpected-property.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/unexpected-property.stdout",
+      "sha256": "ba7cdb48c4f69520f5c9df514281f00111d60319cb1391c123624dd9fd270659",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/unexpected-runtime-row.inventory.json.gz",
+      "sha256": "d8e684121879a5588a60f08ad61b7d3f5d3818528a42872793765b61be8b46aa",
+      "bytes": 2276811
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/unexpected-runtime-row.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/unexpected-runtime-row.stdout",
+      "sha256": "5ad522cd07a2e9ab6eacec2a1ff0487f6c4271b109823cd2f14496f0d1aa204c",
+      "bytes": 236
+    }
+  ]
+}

@@ -1,12 +1,47 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { prismChartProjection, prismAgentBridgeProjection } from '../../../scripts/generate-prism-chart-config.mjs';
+import { busterChartProjection } from '../../../scripts/generate-buster-chart-config.mjs';
 import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 import { loadAll } from 'js-yaml';
 
 const helm = process.env.HELM_BIN ?? 'helm';
-const render = (chart, options = []) => loadAll(execFileSync(helm,
-  ['template', 'gitops-check', `charts/${chart}`, ...options], { encoding: 'utf8' })).filter(Boolean);
-const prism = ['-f', 'charts/prism/ci-values.yaml', '--namespace', 'default'];
+// Original Argo ordering/retention assertions run against normal complete chart
+// archives. Central topology selects the release/namespace; Helm cannot author it.
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'argocd-chart-order-'));
+test.after(() => fs.rmSync(root, { recursive: true, force: true }));
+const archives = new Map();
+const projection = prismChartProjection(path.resolve('config'));
+const bridge = prismAgentBridgeProjection(path.resolve('config'));
+const tools = { ...bridge.deployment, ...bridge.toolPlugin };
+function render(chart, options = []) {
+  if (!archives.has(chart)) {
+    const directory = path.join(root, chart);
+    fs.cpSync(`charts/${chart}`, directory, { recursive: true, dereference: true });
+    const topology = chart === 'prism' ? projection : busterChartProjection(path.resolve('config'));
+    const member = chart === 'prism' ? 'prism-topology.json' : 'buster-topology.json';
+    fs.writeFileSync(path.join(directory, 'files/pipeline', member), JSON.stringify(topology));
+    if (chart === 'kubeclaw') fs.writeFileSync(path.join(directory, 'files/pipeline/prism-agent-tools.json'), JSON.stringify(tools));
+    const output = path.join(root, `${chart}-package`); fs.mkdirSync(output);
+    execFileSync(helm, ['package', directory, '--destination', output], { stdio: 'pipe' });
+    const files = fs.readdirSync(output).filter(file => file.endsWith('.tgz'));
+    assert.equal(files.length, 1);
+    const archive = path.join(output, files[0]);
+    assert.deepEqual(JSON.parse(execFileSync('tar', ['-xOf', archive,
+      `${chart}/files/pipeline/${member}`], { encoding: 'utf8' })), topology);
+    if (chart === 'kubeclaw') assert.deepEqual(JSON.parse(execFileSync('tar', ['-xOf', archive,
+      'kubeclaw/files/pipeline/prism-agent-tools.json'], { encoding: 'utf8' })), tools);
+    archives.set(chart, archive);
+  }
+  const deployment = chart === 'prism' ? projection.deployment
+    : options.includes('agentRole=prism') ? bridge.deployment : { releaseName: 'agent-nova', namespace: 'kubeclaw' };
+  return loadAll(execFileSync(helm, ['template', deployment.releaseName, archives.get(chart),
+    '--namespace', deployment.namespace, ...options], { encoding: 'utf8' })).filter(Boolean);
+}
+const prism = ['-f', 'charts/prism/ci-values.yaml'];
 const wave = resource => Number(resource.metadata.annotations?.['argocd.argoproj.io/sync-wave'] ?? 0);
 
 test('Prism database and migration prerequisites precede its Argo migration hook and all application deployments', () => {

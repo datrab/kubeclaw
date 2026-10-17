@@ -1,0 +1,439 @@
+{
+  "head": "263277b0014de5f056c019307c40dc83f0201ef5",
+  "tree": "2f2553f6ad902dc83c36e0de7020ccae05d44f86",
+  "packagePins": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/README.md",
+      "expected": "d1eccf0f5b1fdfa06505db945258ab1c597b39c325ff49e58f1ab998aa9ff899",
+      "actual": "d1eccf0f5b1fdfa06505db945258ab1c597b39c325ff49e58f1ab998aa9ff899",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.py",
+      "expected": "7c77e37a6ed4970862cc9ff97e781953f2737dc2c0700505715711cd7d89589c",
+      "actual": "7c77e37a6ed4970862cc9ff97e781953f2737dc2c0700505715711cd7d89589c",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stderr",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stdout",
+      "expected": "50880e8b4395156418a5f48e916dec2b0f3c860747b43bbc0958c9224977f5a5",
+      "actual": "50880e8b4395156418a5f48e916dec2b0f3c860747b43bbc0958c9224977f5a5",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-field-definitions.json",
+      "expected": "4d92bac3a16f03be5cac564dadde223f1becd8a7abdd77fa78618af275b56ddd",
+      "actual": "4d92bac3a16f03be5cac564dadde223f1becd8a7abdd77fa78618af275b56ddd",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-identity-check.json",
+      "expected": "adf0897994b37a502b4d5393d7bec2e8bb6df5da67d759365ea843b44265d537",
+      "actual": "adf0897994b37a502b4d5393d7bec2e8bb6df5da67d759365ea843b44265d537",
+      "matches": true
+    }
+  ],
+  "priorQueuePinMatches": true,
+  "candidateSetMatches": true,
+  "candidateBodies": [
+    {
+      "id": "SRC-d0207096e9428f6e",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-b499bd9d6e0c96f9",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-4cc5161d3c1135b5",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-61a34b698eb6c0ba",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-77d139d0c914f975",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-d8463fffaf86f4d5",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-a07d8875fd4a1cb8",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-6a63ef0194be3ef9",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-c2377b06eb763ea8",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-1b55a3e1ee1d1fd2",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-b13789ea3a017a85",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-26a9686365abe960",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-24af8635b20cbc86",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-6700eefd43e4dff9",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-ff3203dbf7f11afe",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-b1bd21e3a1c1ee3c",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-4c30d386ef699815",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-4c6b76f7a12d287c",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-f5efb3dafa1d8815",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-336010687eecb339",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-031d2d94167393f9",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-d5fada1a98f4c4af",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    },
+    {
+      "id": "SRC-d0c844cef43e11dc",
+      "matchesOriginal": true,
+      "bodyDigestMatches": true
+    }
+  ],
+  "sourceReaderPins": [
+    {
+      "id": "SRC-d0207096e9428f6e",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-d0207096e9428f6e",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-b499bd9d6e0c96f9",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-b499bd9d6e0c96f9",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-4cc5161d3c1135b5",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-4cc5161d3c1135b5",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-61a34b698eb6c0ba",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-61a34b698eb6c0ba",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-77d139d0c914f975",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-77d139d0c914f975",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-d8463fffaf86f4d5",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-d8463fffaf86f4d5",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-a07d8875fd4a1cb8",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-a07d8875fd4a1cb8",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-6a63ef0194be3ef9",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-6a63ef0194be3ef9",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-c2377b06eb763ea8",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-c2377b06eb763ea8",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-1b55a3e1ee1d1fd2",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-1b55a3e1ee1d1fd2",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-b13789ea3a017a85",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-b13789ea3a017a85",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-26a9686365abe960",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-26a9686365abe960",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-24af8635b20cbc86",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-24af8635b20cbc86",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-6700eefd43e4dff9",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-6700eefd43e4dff9",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-ff3203dbf7f11afe",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-ff3203dbf7f11afe",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-b1bd21e3a1c1ee3c",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-b1bd21e3a1c1ee3c",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-4c30d386ef699815",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-4c30d386ef699815",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-4c6b76f7a12d287c",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-4c6b76f7a12d287c",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-f5efb3dafa1d8815",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-f5efb3dafa1d8815",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-336010687eecb339",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-336010687eecb339",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-031d2d94167393f9",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-031d2d94167393f9",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-d5fada1a98f4c4af",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-d5fada1a98f4c4af",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-d0c844cef43e11dc",
+      "ref": "sourceRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "id": "SRC-d0c844cef43e11dc",
+      "ref": "actualReaderRef",
+      "digestMatches": true,
+      "expressionMatches": true
+    }
+  ]
+}

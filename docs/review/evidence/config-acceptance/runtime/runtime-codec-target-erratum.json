@@ -1,0 +1,214 @@
+{
+  "caseId": "RT-C0-RUNTIME-CODEC-TARGET-ERRATUM",
+  "command": "node docs/review/evidence/config-acceptance/runtime/runtime-codec-target-erratum.mjs",
+  "node": "v24.21.0",
+  "typescript": "5.9.3",
+  "sourceDigests": {
+    "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb",
+    "skills/common/plugin-runtime/sdk/src/generated/contracts.ts": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+    "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+    "skills/nova/core/execution/adapters.ts": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+    "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+    "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+    "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+    "skills/nova/plugins/review/src/scalable-review-execution.ts": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88",
+    "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/runtime-codec-target-erratum.mjs": "0916b9abd9c644fb2e393c53011fd888f977b35914d74937fbffa0e06398bca1"
+  },
+  "currentCodec": {
+    "schemaVersion": "runtime-dispatch-profile.v1",
+    "encoding": "json-utf16-v1"
+  },
+  "currentCodecSchema": {
+    "description": "Explicit current runtime transport producer profile. Absence in historical contexts preserves the legacy producer; no profile is inferred from another digest version.",
+    "const": {
+      "schemaVersion": "runtime-dispatch-profile.v1",
+      "encoding": "json-utf16-v1"
+    }
+  },
+  "positiveDefinition": {
+    "operation": "dispatch",
+    "resource": {
+      "type": "runtime.agent",
+      "canonicalId": "case-target-a"
+    },
+    "payload": {
+      "task": "source-definition control"
+    },
+    "runtimeDispatchProfile": {
+      "schemaVersion": "runtime-dispatch-profile.v1",
+      "encoding": "json-utf16-v1"
+    }
+  },
+  "negativeNoSelectorSneaking": [
+    {
+      "key": "model",
+      "value": "case-model-b",
+      "result": "rejected",
+      "sdkError": "RUNTIME_DISPATCH_PROFILE_INVALID",
+      "schemaError": "REGISTRY_RESULT_INVALID / codec const mismatch"
+    },
+    {
+      "key": "targetId",
+      "value": "case-target-b",
+      "result": "rejected",
+      "sdkError": "RUNTIME_DISPATCH_PROFILE_INVALID",
+      "schemaError": "REGISTRY_RESULT_INVALID / codec const mismatch"
+    },
+    {
+      "key": "maxOutputTokens",
+      "value": 999999,
+      "result": "rejected",
+      "sdkError": "RUNTIME_DISPATCH_PROFILE_INVALID",
+      "schemaError": "REGISTRY_RESULT_INVALID / codec const mismatch"
+    },
+    {
+      "key": "configurationGeneration",
+      "value": "case-generation-b",
+      "result": "rejected",
+      "sdkError": "RUNTIME_DISPATCH_PROFILE_INVALID",
+      "schemaError": "REGISTRY_RESULT_INVALID / codec const mismatch"
+    },
+    {
+      "key": "profileRef",
+      "value": "../../other-profile.json",
+      "result": "rejected",
+      "sdkError": "RUNTIME_DISPATCH_PROFILE_INVALID",
+      "schemaError": "REGISTRY_RESULT_INVALID / codec const mismatch"
+    }
+  ],
+  "ordinaryModelPayload": {
+    "operation": "dispatch",
+    "resource": {
+      "type": "runtime.agent",
+      "canonicalId": "case-target-a"
+    },
+    "payload": {
+      "runtimeDispatchProfile": {
+        "model": "case-model-b",
+        "configurationGeneration": "case-generation-b"
+      },
+      "task": "ordinary model data"
+    },
+    "runtimeDispatchProfile": {
+      "schemaVersion": "runtime-dispatch-profile.v1",
+      "encoding": "json-utf16-v1"
+    }
+  },
+  "currentHistoricalAbsence": "withRuntimeDispatchProfile undefined preserves absent legacy marker; not a model or CONFIG default",
+  "actualSourceExcerpts": {
+    "skills/nova/core/execution/adapters.ts": [
+      {
+        "line": 55,
+        "sourceLine": "    const profile = runtimeDispatchProfileFields(request, capability);",
+        "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b"
+      },
+      {
+        "line": 62,
+        "sourceLine": "    if (isConfidentialCapability(capability)) return this.#options.effects.invokeConfidential(adapter, adapterOwner(this.#options, adapterId), invocation, signal);",
+        "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b"
+      },
+      {
+        "line": 63,
+        "sourceLine": "    const receipt = await this.#options.effects.invoke(adapter, adapterOwner(this.#options, adapterId), invocation, signal);",
+        "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b"
+      }
+    ],
+    "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts": [
+      {
+        "line": 30,
+        "sourceLine": "      const target = targets.get(request.resource.canonicalId);",
+        "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a"
+      },
+      {
+        "line": 32,
+        "sourceLine": "      return dispatch({ context, target, request, signal });",
+        "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a"
+      }
+    ],
+    "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts": [
+      {
+        "line": 1,
+        "sourceLine": "import { runtimeDispatchProfileFields, type AdapterActivationContext, type AdapterInstance, type EffectRequest } from '@kubeclaw/plugin-sdk';",
+        "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4"
+      },
+      {
+        "line": 12,
+        "sourceLine": "    || !validTargetId(request.resource.canonicalId)",
+        "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4"
+      },
+      {
+        "line": 19,
+        "sourceLine": "  const targets = targetsFrom(context.config);",
+        "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4"
+      },
+      {
+        "line": 21,
+        "sourceLine": "    dispatchOpenClaw(context, request.resource.canonicalId, workspaceTarget(target, request),",
+        "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4"
+      },
+      {
+        "line": 22,
+        "sourceLine": "      request.payload as Record<string, unknown>, signal, request.idempotencyKey, runtimeDispatchProfileFields(request, request.capability).runtimeDispatchProfile)",
+        "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4"
+      }
+    ],
+    "skills/nova/plugins/review/src/repository-audit-stage.ts": [
+      {
+        "line": 344,
+        "sourceLine": "    runtime: config.reviewerRuntime, agentId: config.reviewerAgentId,",
+        "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64"
+      },
+      {
+        "line": 345,
+        "sourceLine": "    model: config.reviewerModel, thinking: config.reviewerThinking });",
+        "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64"
+      },
+      {
+        "line": 624,
+        "sourceLine": "    reviewerRuntimeIdentityDigest: reviewRuntimeIdentityDigest(runtime),",
+        "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64"
+      }
+    ],
+    "skills/nova/plugins/review/src/scalable-review-execution.ts": [
+      {
+        "line": 1,
+        "sourceLine": "import { runtimeDispatchProfileFields } from '@kubeclaw/plugin-sdk';",
+        "sha256": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88"
+      },
+      {
+        "line": 9,
+        "sourceLine": "import { assertReviewRuntimeIdentity, parseReviewRuntimeAttestation,",
+        "sha256": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88"
+      },
+      {
+        "line": 37,
+        "sourceLine": "        operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent }, payload,",
+        "sha256": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88"
+      },
+      {
+        "line": 38,
+        "sourceLine": "      }, runtimeDispatchProfileFields(context.contract ?? {}).runtimeDispatchProfile)), deadlineEpochMs, 'scalable review');",
+        "sha256": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88"
+      },
+      {
+        "line": 40,
+        "sourceLine": "      assertReviewRuntimeIdentity(attestation, runtime.expectedRuntime);",
+        "sha256": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88"
+      }
+    ]
+  },
+  "materialCorrection": {
+    "supersedesCheckpoint": "40cf24e77388bced59475ece9651c9c94d848368",
+    "incorrectPriorStatement": "context.contract.runtimeDispatchProfile selects actual model/target/budget/config generation",
+    "actual": "SDK profile is finite encoding only. Actual adapter target policy is constructed from config.targets once during activation; request.resource.canonicalId selects that captured target. Review config.agent supplies symbolic target ID. reviewerModel/Runtime/AgentId/Thinking independently assert expected returned runtime identity/cache admission; they do not dispatch/select actual runtime parameters.",
+    "currentR": "actual adapter target map privately captured once in productive activate; no module/request reload here; existing catalog/grant/run configuration snapshots are separate evidence and must independently be reviewed",
+    "proposedM": "next module may change review workload quotas only within same retained R target ceilings; changing actual target policy/encoder/output/model in an already-started R instance is NOT supported by codec. Requires separately specified immutable module target dependency/instance closure and grant/target identity validation, or a new unbound run/service instance. Proposed C5 contract, not existing codec feature.",
+    "newBindingJustification": "reuse actual target owner/config snapshots and registry/grant identities, persist selected target/profile/instance/config hash before dispatch; separate from finite encoding metadata. Do not overload runtimeDispatchProfile or invent a second system index."
+  },
+  "result": "passed",
+  "reviewerConfirmation": "pending",
+  "scope": "actual finite SDK/schema rejection + exact current source caller ordering/selection checks only; no full role/model pipeline, CONFIG-generation acceptance or absence-of-all-binding claim"
+}

@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY as ISOLATION_TEST_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -80,7 +81,7 @@ try {
       return { input, networkDenied, writeDenied, secret: process.env.OPENAI_API_KEY ?? null };
     }
   `);
-  const result = await invokeIsolated({
+  const result = await invokeIsolated({ sessionPolicy: ISOLATION_TEST_POLICY.isolationSession,
     ...isolation,
     packageRoot: temporary,
     modulePath,

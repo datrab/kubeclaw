@@ -1,0 +1,2059 @@
+{
+  "scope": "Six original adapter locator groups, exact scalar joins with root/admission residuals retained",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-FIELD-CASE-JOINS.json",
+      "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9"
+    },
+    {
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json",
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e"
+    }
+  ],
+  "counts": {
+    "groups": 6,
+    "originalFields": 31,
+    "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN": 12,
+    "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN": 19
+  },
+  "groups": [
+    {
+      "plugin": "kubeclaw.artifact-store",
+      "rows": [
+        {
+          "id": "RT-fe607ddd5cfa8df5",
+          "original": "D228#/rows/479",
+          "originalObjectSha256": "430e5b393a99eaa33b6aad275562cc638bdf0d17b1902f21cd101c0f543041e6",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-fe607ddd5cfa8df5-CONTRACT",
+            "RT-fe607ddd5cfa8df5-ALTERNATE",
+            "RT-fe607ddd5cfa8df5-BINDING",
+            "RT-fe607ddd5cfa8df5-MUTANT",
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION"
+          ],
+          "originalField": "artifactRoot",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.artifact-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-150ea543e6774e0f",
+          "original": "D228#/rows/480",
+          "originalObjectSha256": "accb6bd636f870c97af2425bb0018f43cfa79babb6849405d44605c86127915e",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-150ea543e6774e0f-CONTRACT",
+            "RT-150ea543e6774e0f-ALTERNATE",
+            "RT-150ea543e6774e0f-BINDING",
+            "RT-150ea543e6774e0f-MUTANT"
+          ],
+          "originalField": "maxArtifactBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.artifact-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/artifactStore/maxArtifactBytes",
+          "valueSha256": "9641f70524a01757c47c6b10fe7f1c97c36f877ec9b8f7c73e010416540183da",
+          "registration": "kubeclaw.artifact-store:artifact-store",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.artifact-store:artifact-store', policy.artifactStore,",
+            "lines": [
+              207
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly artifactStore:",
+            "lines": [
+              46
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "sha256": "34237559d13cebd2d8f5c4ce6da7e70c14837e23e2c03bb3f4e4b54239b6533c",
+            "anchor": "config.maxArtifactBytes",
+            "lines": [
+              160
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-8aa1a4b60a163ab6",
+          "original": "D228#/rows/481",
+          "originalObjectSha256": "91f41cd064b28943d7eae3a3f3752d35dfd7d2661efbf7b5354516534fda5d0f",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-8aa1a4b60a163ab6-CONTRACT",
+            "RT-8aa1a4b60a163ab6-ALTERNATE",
+            "RT-8aa1a4b60a163ab6-BINDING",
+            "RT-8aa1a4b60a163ab6-MUTANT"
+          ],
+          "originalField": "maximumRecords",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.artifact-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/artifactStore/maximumRecords",
+          "valueSha256": "3bb78535cc9555ff19fe3556aaa41c78a0a45c64d49ba2bc564507648a8e77a1",
+          "registration": "kubeclaw.artifact-store:artifact-store",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.artifact-store:artifact-store', policy.artifactStore,",
+            "lines": [
+              207
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly artifactStore:",
+            "lines": [
+              46
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "sha256": "34237559d13cebd2d8f5c4ce6da7e70c14837e23e2c03bb3f4e4b54239b6533c",
+            "anchor": "config.maximumRecords",
+            "lines": [
+              163
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-1406e4999334624a",
+          "original": "D228#/rows/482",
+          "originalObjectSha256": "4a40ea516384a4ee50aee19d6cf86ffc9963514fc46ecd70bf1163b0ab31c25f",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-1406e4999334624a-CONTRACT",
+            "RT-1406e4999334624a-ALTERNATE",
+            "RT-1406e4999334624a-BINDING",
+            "RT-1406e4999334624a-MUTANT"
+          ],
+          "originalField": "maximumStoreBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.artifact-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/artifactStore/maximumStoreBytes",
+          "valueSha256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "registration": "kubeclaw.artifact-store:artifact-store",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.artifact-store:artifact-store', policy.artifactStore,",
+            "lines": [
+              207
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly artifactStore:",
+            "lines": [
+              46
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "sha256": "34237559d13cebd2d8f5c4ce6da7e70c14837e23e2c03bb3f4e4b54239b6533c",
+            "anchor": "config.maximumStoreBytes",
+            "lines": [
+              162
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES",
+          "original": "D228#/rows/1442",
+          "originalObjectSha256": "2be957716bc0a0dfbaf412a712cb82aff205384cd9a8da980977e38734a5e048",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES-MISSING",
+            "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES-ALT",
+            "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES-MUTANT",
+            "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES-CURRENT-DEFINITION"
+          ],
+          "originalField": "maximumRecordBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.artifact-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/artifactStore/maximumRecordBytes",
+          "valueSha256": "0f255ec16482c343fd099ba9668863778be40dc166a6856b1d470e0bc97cc6fd",
+          "registration": "kubeclaw.artifact-store:artifact-store",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.artifact-store:artifact-store', policy.artifactStore,",
+            "lines": [
+              207
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly artifactStore:",
+            "lines": [
+              46
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "sha256": "34237559d13cebd2d8f5c4ce6da7e70c14837e23e2c03bb3f4e4b54239b6533c",
+            "anchor": "config.maximumRecordBytes",
+            "lines": [
+              166
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        }
+      ],
+      "exactScalarFieldIds": [
+        "RT-150ea543e6774e0f",
+        "RT-8aa1a4b60a163ab6",
+        "RT-1406e4999334624a",
+        "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES"
+      ],
+      "remainingFieldIds": [
+        "RT-fe607ddd5cfa8df5"
+      ]
+    },
+    {
+      "plugin": "kubeclaw.network-http",
+      "rows": [
+        {
+          "id": "RT-0b11b3282059d1db",
+          "original": "D228#/rows/501",
+          "originalObjectSha256": "f898b2e7ff0db510eaf157b77d11cd1631af85b6875fc6e33d8e332b50d3f3dc",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-0b11b3282059d1db-CONTRACT",
+            "RT-0b11b3282059d1db-ALTERNATE",
+            "RT-0b11b3282059d1db-BINDING",
+            "RT-0b11b3282059d1db-MUTANT"
+          ],
+          "originalField": "allowedOrigins",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-db4ff06654e4c996",
+          "original": "D228#/rows/502",
+          "originalObjectSha256": "e5ea2d1c4553199566688446ee08d7024c5a4f1a5ba0ddc209d8f04d445068cd",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-0b11b3282059d1db-CONTRACT",
+            "RT-0b11b3282059d1db-ALTERNATE",
+            "RT-0b11b3282059d1db-BINDING",
+            "RT-0b11b3282059d1db-MUTANT"
+          ],
+          "originalField": "allowedOrigins[]",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-8510aae902279dfa",
+          "original": "D228#/rows/503",
+          "originalObjectSha256": "bc7dd7fb7552f3bd8a5267cb081f940d1fedc3288670de237fc096f8f230bcc7",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-8510aae902279dfa-CONTRACT",
+            "RT-8510aae902279dfa-ALTERNATE",
+            "RT-8510aae902279dfa-BINDING",
+            "RT-8510aae902279dfa-MUTANT"
+          ],
+          "originalField": "allowedMethods",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-8e9540f20d6b3e93",
+          "original": "D228#/rows/504",
+          "originalObjectSha256": "a1fdb6b52966a03a003962be02573fa136a3bf2438e0c04ebbab960262c9fd7c",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-8510aae902279dfa-CONTRACT",
+            "RT-8510aae902279dfa-ALTERNATE",
+            "RT-8510aae902279dfa-BINDING",
+            "RT-8510aae902279dfa-MUTANT"
+          ],
+          "originalField": "allowedMethods[]",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-bdbb356d7dbdb05b",
+          "original": "D228#/rows/505",
+          "originalObjectSha256": "3525e05947a5d66134da5f273e1d8f6b0e09d1b62b2d401d660799cd2df70d53",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-bdbb356d7dbdb05b-CONTRACT",
+            "RT-bdbb356d7dbdb05b-ALTERNATE",
+            "RT-bdbb356d7dbdb05b-BINDING",
+            "RT-bdbb356d7dbdb05b-MUTANT"
+          ],
+          "originalField": "allowedHeaders",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-129d37457d0a92b8",
+          "original": "D228#/rows/506",
+          "originalObjectSha256": "2f8764397938cd743c0d6ca688982f833285034b3dafe1f6198c893fc7e90509",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-bdbb356d7dbdb05b-CONTRACT",
+            "RT-bdbb356d7dbdb05b-ALTERNATE",
+            "RT-bdbb356d7dbdb05b-BINDING",
+            "RT-bdbb356d7dbdb05b-MUTANT"
+          ],
+          "originalField": "allowedHeaders[]",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-3e41afae2fdc5889",
+          "original": "D228#/rows/507",
+          "originalObjectSha256": "96bee32a6af619974221a00c82771e158b0d558d913932ae1bf6ec777cb3329d",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-3e41afae2fdc5889-CONTRACT",
+            "RT-3e41afae2fdc5889-ALTERNATE",
+            "RT-3e41afae2fdc5889-BINDING",
+            "RT-3e41afae2fdc5889-MUTANT"
+          ],
+          "originalField": "maxRequestBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/networkHttp/maxRequestBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545",
+          "registration": "kubeclaw.network-http:http",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.network-http:http', policy.networkHttp,",
+            "lines": [
+              204
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly networkHttp:",
+            "lines": [
+              36
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/network-http/src/adapter.ts",
+            "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+            "anchor": "config.maxRequestBytes",
+            "lines": [
+              36,
+              129
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-a21fee46884b7194",
+          "original": "D228#/rows/508",
+          "originalObjectSha256": "c27ddf5c7902ef2e1de18452bd07ddc6583762f9399c3e78687b86a17bd2749d",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-a21fee46884b7194-CONTRACT",
+            "RT-a21fee46884b7194-ALTERNATE",
+            "RT-a21fee46884b7194-BINDING",
+            "RT-a21fee46884b7194-MUTANT"
+          ],
+          "originalField": "maxResponseBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/networkHttp/maxResponseBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545",
+          "registration": "kubeclaw.network-http:http",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.network-http:http', policy.networkHttp,",
+            "lines": [
+              204
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly networkHttp:",
+            "lines": [
+              36
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/network-http/src/adapter.ts",
+            "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+            "anchor": "config.maxResponseBytes",
+            "lines": [
+              37,
+              130
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-e8382fb0497a39a3",
+          "original": "D228#/rows/509",
+          "originalObjectSha256": "e4761fe2fdc8951ef8bf91b1d14c8fbd3759be3f5becc2e0c0887be4888c495c",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-e8382fb0497a39a3-CONTRACT",
+            "RT-e8382fb0497a39a3-ALTERNATE",
+            "RT-e8382fb0497a39a3-BINDING",
+            "RT-e8382fb0497a39a3-MUTANT"
+          ],
+          "originalField": "timeoutMs",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.network-http/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/networkHttp/timeoutMs",
+          "valueSha256": "891937cb335016e9c7074c3781dcb1364e0c660733a8889bbeae83e6aa759be6",
+          "registration": "kubeclaw.network-http:http",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.network-http:http', policy.networkHttp,",
+            "lines": [
+              204
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly networkHttp:",
+            "lines": [
+              36
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/network-http/src/adapter.ts",
+            "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+            "anchor": "config.timeoutMs",
+            "lines": [
+              30,
+              38,
+              130
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        }
+      ],
+      "exactScalarFieldIds": [
+        "RT-3e41afae2fdc5889",
+        "RT-a21fee46884b7194",
+        "RT-e8382fb0497a39a3"
+      ],
+      "remainingFieldIds": [
+        "RT-0b11b3282059d1db",
+        "RT-db4ff06654e4c996",
+        "RT-8510aae902279dfa",
+        "RT-8e9540f20d6b3e93",
+        "RT-bdbb356d7dbdb05b",
+        "RT-129d37457d0a92b8"
+      ]
+    },
+    {
+      "plugin": "kubeclaw.openclaw-agent-events",
+      "rows": [
+        {
+          "id": "RT-f147a119a6b3075c",
+          "original": "D228#/rows/526",
+          "originalObjectSha256": "cea94035bf5de7831e8a9f0d71cfbbf9d4f7cf0e31d13b39bfa243027b32f293",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-f147a119a6b3075c-CONTRACT",
+            "RT-f147a119a6b3075c-ALTERNATE",
+            "RT-f147a119a6b3075c-BINDING",
+            "RT-f147a119a6b3075c-MUTANT"
+          ],
+          "originalField": "hooks",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.openclaw-agent-events/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-4e83aedfa46f2ef9",
+          "original": "D228#/rows/527",
+          "originalObjectSha256": "0f7306d1da9689aede892b4be946a8b07f50cef27c3ab563e9965602819f926f",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-f147a119a6b3075c-CONTRACT",
+            "RT-f147a119a6b3075c-ALTERNATE",
+            "RT-f147a119a6b3075c-BINDING",
+            "RT-f147a119a6b3075c-MUTANT"
+          ],
+          "originalField": "hooks[]",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.openclaw-agent-events/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-28d8b40e7a8bf705",
+          "original": "D228#/rows/528",
+          "originalObjectSha256": "4503e42d12df287e5a0b40d0b78af2ce83c4b3863212fba9bde34d436a0e4066",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-28d8b40e7a8bf705-CONTRACT",
+            "RT-28d8b40e7a8bf705-ALTERNATE",
+            "RT-28d8b40e7a8bf705-BINDING",
+            "RT-28d8b40e7a8bf705-MUTANT"
+          ],
+          "originalField": "maxQueueEvents",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.openclaw-agent-events/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/agentEventSource/maxQueueEvents",
+          "valueSha256": "51e8ea280b44e16934d4d611901f3d3afc41789840acdff81942c2f65009cd52",
+          "registration": "kubeclaw.openclaw-agent-events:source",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.openclaw-agent-events:source', policy.agentEventSource,",
+            "lines": [
+              203
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly agentEventSource:",
+            "lines": [
+              35
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+            "sha256": "13c4a4e6860218ffc69021a61149f9beacb5c638d9ec8029ed37058ddbf92b24",
+            "anchor": "ingressLimits(context.config)",
+            "lines": [
+              89
+            ]
+          },
+          "effectAnchors": [
+            {
+              "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+              "sha256": "ba2a19d16bafe446ece843c223c0f6cb68a1072d4efd4c54b4a3b73b41057dbb",
+              "anchor": "this.#limits.maxQueueEvents",
+              "lines": [
+                29
+              ]
+            }
+          ],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-911c036e593709dc",
+          "original": "D228#/rows/529",
+          "originalObjectSha256": "0ae7bcc4c1286d4c1a078b5ffea19058c7a255b17ee037529410a516f95bbc68",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-911c036e593709dc-CONTRACT",
+            "RT-911c036e593709dc-ALTERNATE",
+            "RT-911c036e593709dc-BINDING",
+            "RT-911c036e593709dc-MUTANT"
+          ],
+          "originalField": "maxQueueBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.openclaw-agent-events/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/agentEventSource/maxQueueBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545",
+          "registration": "kubeclaw.openclaw-agent-events:source",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.openclaw-agent-events:source', policy.agentEventSource,",
+            "lines": [
+              203
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly agentEventSource:",
+            "lines": [
+              35
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+            "sha256": "13c4a4e6860218ffc69021a61149f9beacb5c638d9ec8029ed37058ddbf92b24",
+            "anchor": "ingressLimits(context.config)",
+            "lines": [
+              89
+            ]
+          },
+          "effectAnchors": [
+            {
+              "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+              "sha256": "ba2a19d16bafe446ece843c223c0f6cb68a1072d4efd4c54b4a3b73b41057dbb",
+              "anchor": "this.#limits.maxQueueBytes",
+              "lines": [
+                29
+              ]
+            }
+          ],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-5aca0e1cb8fa2ede",
+          "original": "D228#/rows/530",
+          "originalObjectSha256": "5c9ff44c79903920bb579adb764b3a93b599636e41bb637298582223bdee87e2",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-5aca0e1cb8fa2ede-CONTRACT",
+            "RT-5aca0e1cb8fa2ede-ALTERNATE",
+            "RT-5aca0e1cb8fa2ede-BINDING",
+            "RT-5aca0e1cb8fa2ede-MUTANT"
+          ],
+          "originalField": "drainTimeoutMs",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.openclaw-agent-events/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/agentEventSource/drainTimeoutMs",
+          "valueSha256": "0f8eb4b72b6e0c9e88b388eb967b49e067ef1004bf07bffc22c3acb13b43580a",
+          "registration": "kubeclaw.openclaw-agent-events:source",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.openclaw-agent-events:source', policy.agentEventSource,",
+            "lines": [
+              203
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly agentEventSource:",
+            "lines": [
+              35
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+            "sha256": "13c4a4e6860218ffc69021a61149f9beacb5c638d9ec8029ed37058ddbf92b24",
+            "anchor": "ingressLimits(context.config)",
+            "lines": [
+              89
+            ]
+          },
+          "effectAnchors": [
+            {
+              "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+              "sha256": "ba2a19d16bafe446ece843c223c0f6cb68a1072d4efd4c54b4a3b73b41057dbb",
+              "anchor": "this.#limits.drainTimeoutMs",
+              "lines": [
+                71
+              ]
+            }
+          ],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        }
+      ],
+      "exactScalarFieldIds": [
+        "RT-28d8b40e7a8bf705",
+        "RT-911c036e593709dc",
+        "RT-5aca0e1cb8fa2ede"
+      ],
+      "remainingFieldIds": [
+        "RT-f147a119a6b3075c",
+        "RT-4e83aedfa46f2ef9"
+      ]
+    },
+    {
+      "plugin": "kubeclaw.state-store",
+      "rows": [
+        {
+          "id": "RT-2d3acb6254db0bd3",
+          "original": "D228#/rows/604",
+          "originalObjectSha256": "f469427de40445807a8bfda3cc576187a6f2754a7fc71158a627064ac26e3195",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-2d3acb6254db0bd3-CONTRACT",
+            "RT-2d3acb6254db0bd3-ALTERNATE",
+            "RT-2d3acb6254db0bd3-BINDING",
+            "RT-2d3acb6254db0bd3-MUTANT"
+          ],
+          "originalField": "root",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.state-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-6b0d541f89b51701",
+          "original": "D228#/rows/605",
+          "originalObjectSha256": "f95b4902acfa9a957d9db0546e8e224627ffafc2b50f0e7776a900255a2965ad",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-6b0d541f89b51701-CONTRACT",
+            "RT-6b0d541f89b51701-ALTERNATE",
+            "RT-6b0d541f89b51701-BINDING",
+            "RT-6b0d541f89b51701-MUTANT"
+          ],
+          "originalField": "maxEntryBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.state-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/stateStore/maxEntryBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545",
+          "registration": "kubeclaw.state-store:state",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.state-store:state', policy.stateStore,",
+            "lines": [
+              208
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly stateStore:",
+            "lines": [
+              44
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/state-store/src/adapter.ts",
+            "sha256": "9a4a50442aa2702cc9247f92369dee18392b1a06d569a8800a3773c618d8bfd8",
+            "anchor": "config.maxEntryBytes",
+            "lines": [
+              27,
+              30
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-5f36465bf8d033ab",
+          "original": "D228#/rows/606",
+          "originalObjectSha256": "293609ce1d56a1e1233843328f9d4d6e33d9584a8a2a344a00919e4145fa8d47",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-5f36465bf8d033ab-CONTRACT",
+            "RT-5f36465bf8d033ab-ALTERNATE",
+            "RT-5f36465bf8d033ab-BINDING",
+            "RT-5f36465bf8d033ab-MUTANT"
+          ],
+          "originalField": "maximumRecords",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.state-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/stateStore/maximumRecords",
+          "valueSha256": "3bb78535cc9555ff19fe3556aaa41c78a0a45c64d49ba2bc564507648a8e77a1",
+          "registration": "kubeclaw.state-store:state",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.state-store:state', policy.stateStore,",
+            "lines": [
+              208
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly stateStore:",
+            "lines": [
+              44
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/state-store/src/adapter.ts",
+            "sha256": "9a4a50442aa2702cc9247f92369dee18392b1a06d569a8800a3773c618d8bfd8",
+            "anchor": "config.maximumRecords",
+            "lines": [
+              28,
+              31
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-c4b0dc6ba04e97d6",
+          "original": "D228#/rows/607",
+          "originalObjectSha256": "ce9ff2fbb2822a114e57aad200ad0f862aecc88fa4259b357c10ae9ed997d50e",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-c4b0dc6ba04e97d6-CONTRACT",
+            "RT-c4b0dc6ba04e97d6-ALTERNATE",
+            "RT-c4b0dc6ba04e97d6-BINDING",
+            "RT-c4b0dc6ba04e97d6-MUTANT"
+          ],
+          "originalField": "maximumStoreBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.state-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/stateStore/maximumStoreBytes",
+          "valueSha256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "registration": "kubeclaw.state-store:state",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.state-store:state', policy.stateStore,",
+            "lines": [
+              208
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly stateStore:",
+            "lines": [
+              44
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/state-store/src/adapter.ts",
+            "sha256": "9a4a50442aa2702cc9247f92369dee18392b1a06d569a8800a3773c618d8bfd8",
+            "anchor": "config.maximumStoreBytes",
+            "lines": [
+              29,
+              32
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        }
+      ],
+      "exactScalarFieldIds": [
+        "RT-6b0d541f89b51701",
+        "RT-5f36465bf8d033ab",
+        "RT-c4b0dc6ba04e97d6"
+      ],
+      "remainingFieldIds": [
+        "RT-2d3acb6254db0bd3"
+      ]
+    },
+    {
+      "plugin": "kubeclaw.telemetry-store",
+      "rows": [
+        {
+          "id": "RT-7990fce633c970b7",
+          "original": "D228#/rows/609",
+          "originalObjectSha256": "27f864982fe631f92aa06cf483db01f13d3fc799d49644cd6bab8454041fbdd7",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-7990fce633c970b7-CONTRACT",
+            "RT-7990fce633c970b7-ALTERNATE",
+            "RT-7990fce633c970b7-BINDING",
+            "RT-7990fce633c970b7-MUTANT"
+          ],
+          "originalField": "root",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.telemetry-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-fd1e503881e87203",
+          "original": "D228#/rows/610",
+          "originalObjectSha256": "08a049eae45b70fc5a9c2b4011fd7de00ca288f7cb0fbf271f0822ea78961212",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-fd1e503881e87203-CONTRACT",
+            "RT-fd1e503881e87203-ALTERNATE",
+            "RT-fd1e503881e87203-BINDING",
+            "RT-fd1e503881e87203-MUTANT"
+          ],
+          "originalField": "maxRecordBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.telemetry-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/telemetryStore/maxRecordBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545",
+          "registration": "kubeclaw.telemetry-store:telemetry",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.telemetry-store:telemetry', policy.telemetryStore,",
+            "lines": [
+              210
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly telemetryStore:",
+            "lines": [
+              43
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+            "sha256": "d2dc84c9a4b281b7ec76c3f4661d9826fbee6adb7e3677ff8d6370f86540f16c",
+            "anchor": "config.maxRecordBytes",
+            "lines": [
+              8,
+              11
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-f89653920cb975db",
+          "original": "D228#/rows/611",
+          "originalObjectSha256": "4b00d60e95af30a893b382f922d350f20f835fd40dfff5789272d5eda95660eb",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-f89653920cb975db-CONTRACT",
+            "RT-f89653920cb975db-ALTERNATE",
+            "RT-f89653920cb975db-BINDING",
+            "RT-f89653920cb975db-MUTANT"
+          ],
+          "originalField": "maximumRecords",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.telemetry-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/telemetryStore/maximumRecords",
+          "valueSha256": "3bb78535cc9555ff19fe3556aaa41c78a0a45c64d49ba2bc564507648a8e77a1",
+          "registration": "kubeclaw.telemetry-store:telemetry",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.telemetry-store:telemetry', policy.telemetryStore,",
+            "lines": [
+              210
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly telemetryStore:",
+            "lines": [
+              43
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+            "sha256": "d2dc84c9a4b281b7ec76c3f4661d9826fbee6adb7e3677ff8d6370f86540f16c",
+            "anchor": "config.maximumRecords",
+            "lines": [
+              9,
+              12
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-f5fb18d184bb95bf",
+          "original": "D228#/rows/612",
+          "originalObjectSha256": "d6ee9d2b761321453308e454c4d832a080c0f1311bad58a8c453c2088ca6bc34",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-f5fb18d184bb95bf-CONTRACT",
+            "RT-f5fb18d184bb95bf-ALTERNATE",
+            "RT-f5fb18d184bb95bf-BINDING",
+            "RT-f5fb18d184bb95bf-MUTANT"
+          ],
+          "originalField": "maximumStoreBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.telemetry-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/telemetryStore/maximumStoreBytes",
+          "valueSha256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "registration": "kubeclaw.telemetry-store:telemetry",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.telemetry-store:telemetry', policy.telemetryStore,",
+            "lines": [
+              210
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly telemetryStore:",
+            "lines": [
+              43
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+            "sha256": "d2dc84c9a4b281b7ec76c3f4661d9826fbee6adb7e3677ff8d6370f86540f16c",
+            "anchor": "config.maximumStoreBytes",
+            "lines": [
+              10,
+              13
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        }
+      ],
+      "exactScalarFieldIds": [
+        "RT-fd1e503881e87203",
+        "RT-f89653920cb975db",
+        "RT-f5fb18d184bb95bf"
+      ],
+      "remainingFieldIds": [
+        "RT-7990fce633c970b7"
+      ]
+    },
+    {
+      "plugin": "kubeclaw.wait-store",
+      "rows": [
+        {
+          "id": "RT-e2763afc0bd85f56",
+          "original": "D228#/rows/621",
+          "originalObjectSha256": "1e90fcb421dd6525b6503bef40f971b370a42cd414247de33ba013b1ad0775c7",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-e2763afc0bd85f56-CONTRACT",
+            "RT-e2763afc0bd85f56-ALTERNATE",
+            "RT-e2763afc0bd85f56-BINDING",
+            "RT-e2763afc0bd85f56-MUTANT"
+          ],
+          "originalField": "root",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.wait-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "ORIGINAL_PLATFORM_ADMISSION_OR_ROOT_JOIN_OPEN",
+          "constraint": "Not a leaf of this Core scalar policy. Trace actual platform/provider/root/admission owner and retained closure separately; do not invent a Core pointer or treat adjacent section as closure."
+        },
+        {
+          "id": "RT-95bc9a497d7d88e4",
+          "original": "D228#/rows/622",
+          "originalObjectSha256": "a78373c3e4340bbcf0958f0e22f48fdac789688361f862b57cc83f711b947651",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-95bc9a497d7d88e4-CONTRACT",
+            "RT-95bc9a497d7d88e4-ALTERNATE",
+            "RT-95bc9a497d7d88e4-BINDING",
+            "RT-95bc9a497d7d88e4-MUTANT"
+          ],
+          "originalField": "maxEntryBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.wait-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/waitStore/maxEntryBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545",
+          "registration": "kubeclaw.wait-store:waits",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.wait-store:waits', policy.waitStore,",
+            "lines": [
+              209
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly waitStore:",
+            "lines": [
+              45
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/wait-store/src/adapter.ts",
+            "sha256": "02c39ce1c2799ab1167f87249a02a14a25f608eb93e5ef7c3be712a6e3e40ca7",
+            "anchor": "config.maxEntryBytes",
+            "lines": [
+              201,
+              204
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-80439809374a261c",
+          "original": "D228#/rows/623",
+          "originalObjectSha256": "62cc30918c600a6aaf59a138b903802c2cf43cc40a95da021ed656ce63f54876",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-80439809374a261c-CONTRACT",
+            "RT-80439809374a261c-ALTERNATE",
+            "RT-80439809374a261c-BINDING",
+            "RT-80439809374a261c-MUTANT"
+          ],
+          "originalField": "maximumRecords",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.wait-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/waitStore/maximumRecords",
+          "valueSha256": "3bb78535cc9555ff19fe3556aaa41c78a0a45c64d49ba2bc564507648a8e77a1",
+          "registration": "kubeclaw.wait-store:waits",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.wait-store:waits', policy.waitStore,",
+            "lines": [
+              209
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly waitStore:",
+            "lines": [
+              45
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/wait-store/src/adapter.ts",
+            "sha256": "02c39ce1c2799ab1167f87249a02a14a25f608eb93e5ef7c3be712a6e3e40ca7",
+            "anchor": "config.maximumRecords",
+            "lines": [
+              202,
+              205
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        },
+        {
+          "id": "RT-7f6c0b7c5e08a96d",
+          "original": "D228#/rows/624",
+          "originalObjectSha256": "bd4e07ce55d7f31e2850c100abcef20232fdff35a1d04b469d3e1534296ef8b0",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-7f6c0b7c5e08a96d-CONTRACT",
+            "RT-7f6c0b7c5e08a96d-ALTERNATE",
+            "RT-7f6c0b7c5e08a96d-BINDING",
+            "RT-7f6c0b7c5e08a96d-MUTANT"
+          ],
+          "originalField": "maximumStoreBytes",
+          "historicalLocators": [
+            "config/plugins/kubeclaw.wait-store/default/standard.json"
+          ],
+          "runtimeAcceptance": "NOT_INFERRED; original case results unchanged",
+          "status": "EXACT_CURRENT_CORE_SCALAR_SOURCE_JOIN",
+          "owner": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/waitStore/maximumStoreBytes",
+          "valueSha256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "registration": "kubeclaw.wait-store:waits",
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "['kubeclaw.wait-store:waits', policy.waitStore,",
+            "lines": [
+              209
+            ]
+          },
+          "competingAuthorRejection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "POLICY_COMPETING_AUTHOR:${field}",
+            "lines": [
+              220,
+              236
+            ]
+          },
+          "policyType": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "readonly waitStore:",
+            "lines": [
+              45
+            ]
+          },
+          "receivingConsumer": {
+            "path": "skills/common/plugins/wait-store/src/adapter.ts",
+            "sha256": "02c39ce1c2799ab1167f87249a02a14a25f608eb93e5ef7c3be712a6e3e40ca7",
+            "anchor": "config.maximumStoreBytes",
+            "lines": [
+              203,
+              206
+            ]
+          },
+          "effectAnchors": [],
+          "originalRecovery": [
+            {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+              "lines": [
+                152
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+              "lines": [
+                66,
+                94
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "configuration: { corePolicy, providers: platform.providers",
+              "lines": [
+                66
+              ]
+            }
+          ],
+          "qualification": "Exact source navigation only; not new scalar implementation, executed original cases, delivery/native proof or independent acceptance."
+        }
+      ],
+      "exactScalarFieldIds": [
+        "RT-95bc9a497d7d88e4",
+        "RT-80439809374a261c",
+        "RT-7f6c0b7c5e08a96d"
+      ],
+      "remainingFieldIds": [
+        "RT-e2763afc0bd85f56"
+      ]
+    }
+  ],
+  "independentReview": "OPEN; native reviewer/spawn tool unavailable on scheduled surface; unchanged known direct initialization EROFS not retried",
+  "fullAcceptance": "OPEN; all2409 fields/6845 cases/50 requirements/fullC0-C6 original/native/archive gates remain mandatory"
+}

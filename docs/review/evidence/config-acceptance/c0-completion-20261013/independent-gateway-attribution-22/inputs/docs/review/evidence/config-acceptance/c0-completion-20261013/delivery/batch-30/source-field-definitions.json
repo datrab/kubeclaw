@@ -1,0 +1,2336 @@
+{
+  "scope": "RGI21-001 additive exact startup attribution correction; all19 original gateway bodies and precedence/domain narratives unchanged",
+  "rows": [
+    {
+      "candidateId": "SRC-358b149942be8de8",
+      "originalCandidate": {
+        "id": "SRC-358b149942be8de8",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 2,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Discord guild user projection",
+      "currentAuthor": "Helm Values.commands.allowFromDiscord",
+      "currentPrecedence": "ordered sender list, trim user: then discord: prefixes and uniq for guild users; current absent/empty uses list fallback; same unnormalized list goes to command/channel allowFrom",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 2,
+        "expression": "{{- range $sender := (.Values.commands.allowFromDiscord | default list) -}}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 2,
+        "expression": "{{- range $sender := (.Values.commands.allowFromDiscord | default list) -}}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "channels/discord/guilds/*/users"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 490,
+          "expression": "                if (initialized?.commands && typeof initialized.commands === 'object') {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 491,
+          "expression": "                  config.commands = initialized.commands;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 494,
+          "expression": "                if (initialized?.channels?.discord",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 497,
+          "expression": "                  config.channels.discord = initialized.channels.discord;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-8276d5e9bebd9b0e",
+      "originalCandidate": {
+        "id": "SRC-8276d5e9bebd9b0e",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 67,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "memory embedding endpoint",
+      "currentAuthor": "Helm Values.litellm.endpoint",
+      "currentPrecedence": "selected HTTP(S) service endpoint; current renderer interpolates a string without URL validation. Provider/model and env SecretRef are independent dependencies, not endpoint defaults",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 67,
+        "expression": "            \"baseUrl\": \"{{ .Values.litellm.endpoint }}\",",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 67,
+        "expression": "            \"baseUrl\": \"{{ .Values.litellm.endpoint }}\",",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "memory/search/remote/baseUrl"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 528,
+          "expression": "                if (initialized?.memory?.search) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 530,
+          "expression": "                  config.memory.search = initialized.memory.search;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 531,
+          "expression": "                  config.memory.search.remote.apiKey = litellmSecretRef;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-899c6550decd7829",
+      "originalCandidate": {
+        "id": "SRC-899c6550decd7829",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 84,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "agent model route envelope",
+      "currentAuthor": "Helm Values.agent.model",
+      "currentPrecedence": "one primary plus ordered explicit fallbacks. Generated envelope is not a second author; installed model/provider/catalog/policy compatibility is required",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 84,
+        "expression": "          \"model\": {",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 84,
+        "expression": "          \"model\": {",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "agents/defaults/model"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 510,
+          "expression": "                if (initialized?.agents?.defaults?.model) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 513,
+          "expression": "                  config.agents.defaults.model = initialized.agents.defaults.model;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-2eff2e1f13d337ee",
+      "originalCandidate": {
+        "id": "SRC-2eff2e1f13d337ee",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 85,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "primary model route",
+      "currentAuthor": "Helm Values.agent.model.primary",
+      "currentPrecedence": "nonempty provider/model reference in installed catalog and selected allow policy; current renderer quotes string but does not validate catalog or authorize model access",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 85,
+        "expression": "            \"primary\": {{ .Values.agent.model.primary | quote }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 85,
+        "expression": "            \"primary\": {{ .Values.agent.model.primary | quote }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "agents/defaults/model/primary"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 513,
+          "expression": "                  config.agents.defaults.model = initialized.agents.defaults.model;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-baa92ddaf5e0df7a",
+      "originalCandidate": {
+        "id": "SRC-baa92ddaf5e0df7a",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 87,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "fallback model members",
+      "currentAuthor": "Helm Values.agent.model.fallbacks",
+      "currentPrecedence": "ordered list of provider/model references; preserve explicit empty list and priority, no implicit provider/catalog defaults",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 87,
+        "expression": "              {{- range $index, $model := .Values.agent.model.fallbacks }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 87,
+        "expression": "              {{- range $index, $model := .Values.agent.model.fallbacks }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "agents/defaults/model/fallbacks/<index>"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 513,
+          "expression": "                  config.agents.defaults.model = initialized.agents.defaults.model;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-0ddf826ce39c0744",
+      "originalCandidate": {
+        "id": "SRC-0ddf826ce39c0744",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 88,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "fallback JSON quoting and separators",
+      "currentAuthor": "Helm Values.agent.model.fallbacks",
+      "currentPrecedence": "generated array JSON punctuation and quote, not an independent setting author",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 88,
+        "expression": "              {{- if $index }},{{ end }}{{ $model | quote }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 88,
+        "expression": "              {{- if $index }},{{ end }}{{ $model | quote }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "agents/defaults/model/fallbacks/<index>"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 513,
+          "expression": "                  config.agents.defaults.model = initialized.agents.defaults.model;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-0e870bc1ee1f3e73",
+      "originalCandidate": {
+        "id": "SRC-0e870bc1ee1f3e73",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 102,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "conditional model runtime registration",
+      "currentAuthor": "Helm Values.agent.model.primary",
+      "currentPrecedence": "current astra registration iff primary is exactly openai/gpt-6-astra; constant sol/5.5 registrations remain. Fallback-only astra is not automatically registered here; catalog/policy consistency remains a target obligation",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 102,
+        "expression": "            {{- if eq .Values.agent.model.primary \"openai/gpt-6-astra\" }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 102,
+        "expression": "            {{- if eq .Values.agent.model.primary \"openai/gpt-6-astra\" }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "agents/defaults/models/openai~1gpt-6-astra/agentRuntime/id"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 516,
+          "expression": "                if (initialized?.agents?.defaults?.models) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 519,
+          "expression": "                  config.agents.defaults.models = initialized.agents.defaults.models;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 522,
+          "expression": "                if (initialized?.agents?.defaults?.modelPolicy) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 525,
+          "expression": "                  config.agents.defaults.modelPolicy = initialized.agents.defaults.modelPolicy;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-5891c2a4844a5e84",
+      "originalCandidate": {
+        "id": "SRC-5891c2a4844a5e84",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 157,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "managed Discord default binding",
+      "currentAuthor": "Helm Values.discord.enabled",
+      "currentPrecedence": "strict selected bool target. Current Helm if is not a strict boolean check; true emits binding. False emits none, but startup does not remove a prior default binding in that case",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 157,
+        "expression": "      {{- if .Values.discord.enabled }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 157,
+        "expression": "      {{- if .Values.discord.enabled }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "bindings/agentId=main/match/channel=discord/accountId=default"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 546,
+          "expression": "                const managedDiscordBinding = Array.isArray(initialized?.bindings)",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 547,
+          "expression": "                  ? initialized.bindings.find((binding) => binding?.agentId === 'main'",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 548,
+          "expression": "                    && binding?.match?.channel === 'discord'",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 549,
+          "expression": "                    && binding?.match?.accountId === 'default'",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 555,
+          "expression": "                if (managedDiscordBinding) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 567,
+          "expression": "                  config.bindings = [managedDiscordBinding, ...retainedBindings];",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-7d41f864f0fae325",
+      "originalCandidate": {
+        "id": "SRC-7d41f864f0fae325",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 190,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "command owner principals",
+      "currentAuthor": "Helm Values.commands.ownerAllowFrom",
+      "currentPrecedence": "explicit ordered known owner principal refs; absent/empty falls back to list; auth roster and genuine operator facts must agree, no arbitrary grants inferred",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 190,
+        "expression": "        \"ownerAllowFrom\": {{ .Values.commands.ownerAllowFrom | default list | toJson }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 190,
+        "expression": "        \"ownerAllowFrom\": {{ .Values.commands.ownerAllowFrom | default list | toJson }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "commands/ownerAllowFrom"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 490,
+          "expression": "                if (initialized?.commands && typeof initialized.commands === 'object') {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 491,
+          "expression": "                  config.commands = initialized.commands;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-f6b655d35e6d5252",
+      "originalCandidate": {
+        "id": "SRC-f6b655d35e6d5252",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 192,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Discord command allowlist",
+      "currentAuthor": "Helm Values.commands.allowFromDiscord",
+      "currentPrecedence": "explicit known sender refs, exact wire prefixes remain. Empty list does not itself prove downstream command denial semantics",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 192,
+        "expression": "          \"discord\": {{ .Values.commands.allowFromDiscord | default list | toJson }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 192,
+        "expression": "          \"discord\": {{ .Values.commands.allowFromDiscord | default list | toJson }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "commands/allowFrom/discord"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 490,
+          "expression": "                if (initialized?.commands && typeof initialized.commands === 'object') {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 491,
+          "expression": "                  config.commands = initialized.commands;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-609b97bc96f148d5",
+      "originalCandidate": {
+        "id": "SRC-609b97bc96f148d5",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 211,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Discord channel enable policy",
+      "currentAuthor": "Helm Values.discord.enabled",
+      "currentPrecedence": "strict target bool; current literal interpolation, channel subsection and env-token reference retained even false. Genuine provider runtime disable semantics require separate evidence",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 211,
+        "expression": "          \"enabled\": {{ .Values.discord.enabled }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 211,
+        "expression": "          \"enabled\": {{ .Values.discord.enabled }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "channels/discord/enabled"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 494,
+          "expression": "                if (initialized?.channels?.discord",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 497,
+          "expression": "                  config.channels.discord = initialized.channels.discord;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-8657126aec54be67",
+      "originalCandidate": {
+        "id": "SRC-8657126aec54be67",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 217,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Discord channel allowlist",
+      "currentAuthor": "Helm Values.commands.allowFromDiscord",
+      "currentPrecedence": "same selected sender list as command author, no independently editable channel copy. Guild normalization remains a distinct generated projection",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 217,
+        "expression": "          \"allowFrom\": {{ .Values.commands.allowFromDiscord | default list | toJson }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 217,
+        "expression": "          \"allowFrom\": {{ .Values.commands.allowFromDiscord | default list | toJson }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "channels/discord/allowFrom"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 494,
+          "expression": "                if (initialized?.channels?.discord",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 497,
+          "expression": "                  config.channels.discord = initialized.channels.discord;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-e6ff68b0dd441486",
+      "originalCandidate": {
+        "id": "SRC-e6ff68b0dd441486",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 240,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Discord execution approver principals",
+      "currentAuthor": "Helm Values.discord.execApprovers",
+      "currentPrecedence": "explicit known approver refs; current absent/empty list fallback. This does not itself authorize an execution action or bypass task/grant constraints",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 240,
+        "expression": "            \"approvers\": {{ .Values.discord.execApprovers | default list | toJson }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 240,
+        "expression": "            \"approvers\": {{ .Values.discord.execApprovers | default list | toJson }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "channels/discord/execApprovals/approvers"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 494,
+          "expression": "                if (initialized?.channels?.discord",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 497,
+          "expression": "                  config.channels.discord = initialized.channels.discord;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-99b45ac35968e69e",
+      "originalCandidate": {
+        "id": "SRC-99b45ac35968e69e",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 246,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "gateway listen port",
+      "currentAuthor": "Helm Values.gateway.port",
+      "currentPrecedence": "target integer1..65535; current unquoted interpolation. Template also delivers env and container port; persisted gateway section is NOT refreshed by managed startup copy list",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 246,
+        "expression": "        \"port\": {{ .Values.gateway.port }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 246,
+        "expression": "        \"port\": {{ .Values.gateway.port }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "gateway/port"
+      ],
+      "currentStartupReaderRefs": [],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run",
+      "persistentFileParseRef": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 460,
+        "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+      },
+      "additionalDeliveryProjectionRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1367,
+          "expression": "            - name: GATEWAY_PORT",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1368,
+          "expression": "              value: {{ .Values.gateway.port | quote }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1411,
+          "expression": "              containerPort: {{ .Values.gateway.port }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupFieldRefresh": "No field-specific initialized.gateway.port refresh in453\u2013585;460 reads the old persistent document as a whole, not the new selected port. ENV/container projections are independent delivery expressions, not startup JSON reads or native precedence proof."
+    },
+    {
+      "candidateId": "SRC-7997ec223487a03b",
+      "originalCandidate": {
+        "id": "SRC-7997ec223487a03b",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 278,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Buster installed plugin allow entry",
+      "currentAuthor": "Helm Values.agentRole",
+      "currentPrecedence": "generated iff role exactly buster, current missing role fallback empty string; role selects installed catalog, not a new plugin settings author",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 278,
+        "expression": "          {{- if eq (.Values.agentRole | default \"\") \"buster\" }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 278,
+        "expression": "          {{- if eq (.Values.agentRole | default \"\") \"buster\" }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "plugins/allow/kubeclaw-agent-observer"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 475,
+          "expression": "                if (Array.isArray(initialized?.plugins?.allow)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 477,
+          "expression": "                  config.plugins.allow = [...initialized.plugins.allow];",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-546f89fd88ae86ab",
+      "originalCandidate": {
+        "id": "SRC-546f89fd88ae86ab",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 281,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Prism installed plugin allow entry",
+      "currentAuthor": "Helm Values.agentRole",
+      "currentPrecedence": "generated iff role exactly prism, original selected role/catalog must match installed package",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 281,
+        "expression": "          {{- if eq (.Values.agentRole | default \"\") \"prism\" }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 281,
+        "expression": "          {{- if eq (.Values.agentRole | default \"\") \"prism\" }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "plugins/allow/kubeclaw-prism"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 475,
+          "expression": "                if (Array.isArray(initialized?.plugins?.allow)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 477,
+          "expression": "                  config.plugins.allow = [...initialized.plugins.allow];",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-f30c51f9367277d4",
+      "originalCandidate": {
+        "id": "SRC-f30c51f9367277d4",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 287,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Discord installed plugin enable policy",
+      "currentAuthor": "Helm Values.discord.enabled",
+      "currentPrecedence": "same selected bool as channel and binding; generated installed plugin entry, not a competing enable author",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 287,
+        "expression": "            \"enabled\": {{ .Values.discord.enabled }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 287,
+        "expression": "            \"enabled\": {{ .Values.discord.enabled }}",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "plugins/entries/discord/enabled"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 480,
+          "expression": "                if (initialized?.plugins?.entries",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 483,
+          "expression": "                  config.plugins.entries = initialized.plugins.entries;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-2de6abedf76cb061",
+      "originalCandidate": {
+        "id": "SRC-2de6abedf76cb061",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 301,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Buster observer plugin projection",
+      "currentAuthor": "Helm Values.agentRole",
+      "currentPrecedence": "generated role-specific observer entry; individual embedded observer policy constants are separately inventoried policies, not authored by the role string",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 301,
+        "expression": "          {{- if eq (.Values.agentRole | default \"\") \"buster\" }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 301,
+        "expression": "          {{- if eq (.Values.agentRole | default \"\") \"buster\" }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "plugins/entries/kubeclaw-agent-observer"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 480,
+          "expression": "                if (initialized?.plugins?.entries",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 483,
+          "expression": "                  config.plugins.entries = initialized.plugins.entries;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-bccf05d3a8b551d6",
+      "originalCandidate": {
+        "id": "SRC-bccf05d3a8b551d6",
+        "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 323,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "field": "Prism plugin projection",
+      "currentAuthor": "Helm Values.agentRole",
+      "currentPrecedence": "generated role-specific installed plugin config; fixed current controlUrl at327 is separate endpoint policy. Role itself neither defines URL nor grants service authority",
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 323,
+        "expression": "          {{- if eq (.Values.agentRole | default \"\") \"prism\" }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "line": 323,
+        "expression": "          {{- if eq (.Values.agentRole | default \"\") \"prism\" }},",
+        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+      },
+      "generatedOutputPointers": [
+        "plugins/entries/kubeclaw-prism"
+      ],
+      "currentStartupReaderRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 480,
+          "expression": "                if (initialized?.plugins?.entries",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 483,
+          "expression": "                  config.plugins.entries = initialized.plugins.entries;",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "startupDeliveryRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 444,
+          "expression": "              if [ ! -f /config/openclaw.json ]; then",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 446,
+          "expression": "                  cp /init-config/openclaw.json /config/openclaw.json",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 450,
+          "expression": "                echo \"    openclaw.json exists, keeping persistent source\"",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 460,
+          "expression": "              const config = JSON.parse(fs.readFileSync(p, 'utf8'));",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 473,
+          "expression": "              if (fs.existsSync(initializedConfigPath)) {",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 585,
+          "expression": "              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\\n`);",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1221,
+          "expression": "              mountPath: /init-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1420,
+          "expression": "              mountPath: /home/node/.openclaw",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1617,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-config",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "currentStartupSemantics": "Initial ConfigMap is copied only if persistent openclaw.json is absent. Existing persistent source survives; only explicitly managed subtrees are refreshed. gateway and other unmanaged fields can retain older values. Disabled Discord does not imply deletion of old default binding.",
+      "proposedAuthority": "One selected role/profile deployment and gateway policy owner; generated openclaw.json is not an independent author. Physical target root/schema and external installed provider roster joins remain unresolved; no competing author file invented.",
+      "activation": "Validate selected full model/catalog/authorization/role profile and SecretRef revisions before delivery; target controlled generation replacement. Current startup reader is not a durable module/run binding proof.",
+      "recovery": "Retain original selected generation, role, model/provider, authorized principal roster and SecretRef revisions; do not refresh latest into old runs or infer expanded authority from new values.",
+      "remaining": [
+        "exact setting/requirement/case links and whole role schema/profile joins",
+        "selected gateway image/version actual loader and downstream effect/rejection contracts",
+        "true/false restart and persistent-source precedence future executable cases",
+        "authentic external installed provider/model/plugin and principal/Secret revision inputs",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    }
+  ],
+  "priorQueueRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  "remainingQueueUnchanged": true,
+  "globalC0Accepted": false,
+  "supersedesDefinitionRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/source-field-definitions.json",
+    "sha256": "ceca12608b87de55c13cc428c8b5471cfb795b6d572bd740cf50586145e48603"
+  },
+  "independentCorrectionRecheck": "pending"
+}

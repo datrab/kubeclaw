@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "host",
+    "port",
+    "recordLimits",
+    "maximumResultBytes",
+    "maximumResultStoreBytes",
+    "maximumResponseBytes",
+    "shutdownTimeoutMs",
+    "allowedCapabilities"
+  ],
+  "properties": {
+    "recordLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumRecords",
+        "maximumBytes",
+        "maximumRecordBytes"
+      ],
+      "properties": {
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRecordBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "host": {
+      "type": "string",
+      "enum": [
+        "0.0.0.0",
+        "127.0.0.1"
+      ],
+      "description": "Supported local IPv4 bind fixture domain; no arbitrary host deployment/IPv6 acceptance claimed."
+    },
+    "port": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "maximumResultBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumResultStoreBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumResponseBytes": {
+      "type": "integer",
+      "minimum": 97,
+      "maximum": 9007199254740991
+    },
+    "shutdownTimeoutMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "allowedCapabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    }
+  }
+}

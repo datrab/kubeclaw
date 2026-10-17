@@ -1,0 +1,69 @@
+{
+  "argv": [
+    "python3",
+    "docs/review/evidence/config-acceptance/author/check-matrix.py",
+    "--structural"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "exitCode": 0,
+  "stdoutSha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "toolInputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "sha256": "e165fd2d9837ac944e18100700e2630dc70893e38e5edfcb470376c2b114c7c5",
+      "endSha256": "e165fd2d9837ac944e18100700e2630dc70893e38e5edfcb470376c2b114c7c5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/observation_references.py",
+      "sha256": "448c7931e5128deb7537a6d492ffed4a260fcfa19c8250f2a46cc49b914c422f",
+      "endSha256": "448c7931e5128deb7537a6d492ffed4a260fcfa19c8250f2a46cc49b914c422f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "sha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2",
+      "endSha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/historical_projection.py",
+      "sha256": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0",
+      "endSha256": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/review_receipts.py",
+      "sha256": "cb8a4c1797a33ef4c5343a96ff634737e00ed3722a39f9b4ae861ea2ab566b6d",
+      "endSha256": "cb8a4c1797a33ef4c5343a96ff634737e00ed3722a39f9b4ae861ea2ab566b6d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/definition_baseline.py",
+      "sha256": "6d33fb02ea0bcf5327d1bb21ab880a701f335e633f9e4a36cf3c4d163d06ebde",
+      "endSha256": "6d33fb02ea0bcf5327d1bb21ab880a701f335e633f9e4a36cf3c4d163d06ebde"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/definition_generation.py",
+      "sha256": "26e87eee0f8cbeb07c2cfb802b2aa9b9e88e6eb8a5a0ce18179ba6f22258dadc",
+      "endSha256": "26e87eee0f8cbeb07c2cfb802b2aa9b9e88e6eb8a5a0ce18179ba6f22258dadc"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/review_deliveries.py",
+      "sha256": "d5a68366eb1b3fdbd1489e6a787c53809d5a200f3f5d7d59ac557d53d10be755",
+      "endSha256": "d5a68366eb1b3fdbd1489e6a787c53809d5a200f3f5d7d59ac557d53d10be755"
+    }
+  ],
+  "actualFinalRootInputs": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "startRawSha256": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387",
+      "endRawSha256": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "startRawSha256": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d",
+      "endRawSha256": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d"
+    }
+  ],
+  "pythonExecutable": "/usr/bin/python3",
+  "pythonExecutableSha256": "9bee109da0dce17a7c9eeaca9f420cc6770a9fe143b9382d73bd22fe59b21a5f",
+  "pythonVersion": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+  "safetyInspection": "Complete checker/read-only local import chain inspected. Existing structural check only; no currentCombinedDefinitionGeneration semantic admission/native execution. Final input run necessary after exact raw-prefix preservation; prior parsed-identical spelling receipt remains history, not reused as final raw proof."
+}

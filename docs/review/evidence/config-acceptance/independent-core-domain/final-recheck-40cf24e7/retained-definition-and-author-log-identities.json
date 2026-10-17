@@ -1,0 +1,39 @@
+{
+  "protectedDefinitionsUnchanged": {
+    "docs/review/evidence/config-acceptance/components/active-case-specifications.json": true,
+    "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json": true,
+    "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json": true,
+    "docs/review/evidence/config-acceptance/components/refined-case-profiles.json": true,
+    "docs/review/evidence/config-acceptance/components/core-adjustability-current.md": true
+  },
+  "authorControlLogHashMatches": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/rcore001-negative-contradictory-oracle.log",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/rcore001-negative-missing-invocation.log",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/rcore001-negative-missing-historical-requirement.log",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/rcore001-restored-positive.log",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/rcore002-negative-original-duplicate.log",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/rcore002-negative-conflicting-duplicate.log",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/rcore002-restored-positive.log",
+      "matches": true
+    }
+  ]
+}

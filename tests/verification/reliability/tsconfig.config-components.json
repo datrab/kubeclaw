@@ -1,13 +1,22 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "resolveJsonModule": true
   },
   "include": [
     "config-component-bundle.test.mts",
+    "pipeline-selection.test.mts",
     "../../fixtures/config/swarm-bundle.d.mts",
     "../../../skills/common/plugin-runtime/foundation/config/swarm.ts",
-    "../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts"
+    "../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts",
+    "../../../skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+    "../../../skills/common/plugin-runtime/foundation/config/buster-startup.ts",
+    "../../../skills/buster/engine/test-gates/preparation-startup-channel.ts",
+    "../../../skills/buster/engine/test-gates/preparation-channel.ts",
+    "../../../skills/buster/engine/test-gates/preparation-config.ts"
   ]
 }

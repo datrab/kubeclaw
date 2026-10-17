@@ -1,0 +1,2314 @@
+{
+  "originalCount": 4642,
+  "thisBatchCount": 118,
+  "remainingUnreviewed": 4229,
+  "records": [
+    {
+      "id": "RT-CANDIDATE-7c1e362a0e75278b",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 13,
+        "text": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "flow/config objectshape",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7a00be9040b8115c",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 15,
+        "text": "function integer(value, fallback, minimum, maximum, code) { const result = value ?? fallback; if (!Number.isSafeInteger(result) || result < minimum || result > maximum) throw new Error(code); return result; }",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "generic integer actualrootquota/perstep override; exactownedpolicymigration remainsreview",
+      "settings": [
+        "RT-b8eb5e344f496d7c"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2ca6719f64a51bf6",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 16,
+        "text": "function map(value, code, maximum = 32) { const result = object(value ?? {}, code); if (Object.keys(result).length > maximum) throw new Error(code); return result; }",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "OPENdefault32mapitems for headers/expectJSON/extract, variablecall64 separate policy receivers; nulltask maps{} onlyabsence semantics",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f39697920db33f54",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 18,
+        "text": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error(code);",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "tasksource containment/security typeabsoluteNUL",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0bd20ba1f9e35819",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 22,
+        "text": "try { if (!real.startsWith(`${root}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error(code); }",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "realpathcontainment/regularfile actualsourceintegrity",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-26e7b8673ed546cd",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 32,
+        "text": "if (!inputs.length || inputs[0].kind !== 'value') throw new Error('API_FLOW_TARGET_REQUIRED');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "tasktarget inputrequired/value kind",
+      "settings": [
+        "RT-ecc6714a5d1b8270"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7d35c442182a3f2c",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 35,
+        "text": "if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1'",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "finitepublicfixture schema/protocol",
+      "settings": [
+        "RT-ecc6714a5d1b8270"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b2a4b81d475f7586",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 36,
+        "text": "|| typeof value.url !== 'string') throw new Error('API_FLOW_INPUT_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "taskURL inputshape",
+      "settings": [
+        "RT-ecc6714a5d1b8270"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-07c1782e782411d6",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 39,
+        "text": "if (input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1' || value.schemaVersion !== 'kubernetes-deployment-fixture.v1'",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "deploymentfixture schema/version identity",
+      "settings": [
+        "RT-ecc6714a5d1b8270"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-82e1add26a9900c6",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 40,
+        "text": "|| !Array.isArray(value.endpoints) || value.endpoints.length < 1) throw new Error('API_FLOW_INPUT_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "nonempty endpoint taskfixture",
+      "settings": [
+        "RT-98800e708ba4ebcc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5ab41ff2b07ebfb9",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 55,
+        "text": "if (typeof step.id !== 'string' || !IDENTIFIER.test(step.id) || seen.has(step.id)) throw new Error(seen.has(step.id) ? 'API_FLOW_STEP_ID_DUPLICATE' : 'API_FLOW_STEP_ID_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "declaredunique step ID grammar/taskidentity",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ab0427758a7e39e0",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 57,
+        "text": "const method = String(step.method ?? 'GET').toUpperCase(); if (step.protocol === 'websocket' ? step.method !== undefined : !METHODS.has(method)) throw new Error('API_FLOW_METHOD_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "task HTTPmethod finiteprotocol+GET implicitdefault; explicitresolvedstep requiredtarget, no policywriter",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-567c355b1b493cdd",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 58,
+        "text": "if (typeof step.path !== 'string' || !step.path.startsWith('/') || step.path.startsWith('//') || /[\\r\\n#]/u.test(step.path) || step.path.length > 2048) throw new Error('API_FLOW_PATH_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "OPEN2048step-path chars numericprocessing guard; containment/security separate",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f1fd8d2c3fa9f47a",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 60,
+        "text": "if (Object.entries(headers).some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name) || typeof content !== 'string' || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) throw new Error('API_FLOW_HEADERS_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "OPEN4096headerchars processing quota; headergrammar/CRLF safety distinct",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5d8a90c6bcb4f59c",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 62,
+        "text": "if (step.messages !== undefined && (!Array.isArray(step.messages) || step.messages.length > 64)) throw new Error('API_FLOW_MESSAGES_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "OPEN64WebSocketmessages count processing quota; protocoltype shape distinct",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e0c638a8ed3c4310",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 63,
+        "text": "const expect = exact(step.expect ?? {}, EXPECT_KEYS, 'API_FLOW_EXPECT_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "optional declaredexpected taskassertions{}; no operator successfallback",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f7db5a8eea86f121",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 67,
+        "text": "if (step.method !== undefined || step.body !== undefined || step.extract !== undefined",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "websocket excludesHTTPbody/method/extraction fields unsupportedcodec",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f2ecebf0fbd3c6e8",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 68,
+        "text": "|| httpAssertions.some((key) => expect[key] !== undefined)) throw new Error('API_FLOW_STEP_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "websocket cannotHTTPresponseassert finiteprotocol rules",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3bf1944190de93fd",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 69,
+        "text": "} else if (step.messages !== undefined || websocketAssertions.some((key) => expect[key] !== undefined)) {",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "HTTP cannotWebSocketmessage assertions finiteprotocol rules",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f53a41ef70dd3a1f",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 72,
+        "text": "if (expect.status !== undefined && (!Number.isSafeInteger(expect.status) || expect.status < 100 || expect.status > 599)) throw new Error('API_FLOW_EXPECT_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "HTTP finite protocol100..599 status taskexpectedcontract",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5713e958107a6653",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 76,
+        "text": "for (const [name, selector] of Object.entries(map(step.extract, 'API_FLOW_EXTRACT_INVALID'))) if (!VARIABLE.test(name) || typeof selector !== 'string' || !SELECTOR.test(selector)) throw new Error('API_FLOW_EXTRACT_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "task extractionvariable/JSON selector grammar notpolicy selector",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ccdff07cdc907e30",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 80,
+        "text": "const groups = [['setup', flow.setup ?? []], ['steps', flow.steps], ['cleanup', flow.cleanup ?? []]];",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "optional setup/cleanup taskabsence [] no policydefault; main required",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-372455c2c4bcd0d4",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 82,
+        "text": "const count = groups.reduce((sum, [, items]) => sum + items.length, 0); if (count < 1 || count > maximumSteps) throw new Error('API_FLOW_STEP_LIMIT_EXCEEDED');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "actualwholeflowtotal admission rejectsbeforeHTTP no tasktrimming",
+      "settings": [
+        "RT-6e292c3c6f492f07"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2bfebbee03327945",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 84,
+        "text": "if (Object.entries(variables).some(([name, value]) => !VARIABLE.test(name) || !['string', 'number', 'boolean'].includes(typeof value))) throw new Error('API_FLOW_VARIABLES_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "taskvariable scalar subset finite/stringprojection; unsupportedcontainerreject",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d4be0c92d0545faf",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 92,
+        "text": "function byPath(value, selector) { let current = value; for (const part of selector.split('.')) { if (current === null || current === undefined || !Object.prototype.hasOwnProperty.call(current, part)) return undefined; current = current[part]; } return current; }",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "own-property taskJSON path absence, notCONFIG",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e6bf6511400be9a1",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 95,
+        "text": "if (Array.isArray(left) || Array.isArray(right)) return Array.isArray(left) && Array.isArray(right)",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "deepJSON array taskassertion equality",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-72051d6b2bb1e81d",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 97,
+        "text": "if (!left || !right || typeof left !== 'object' || typeof right !== 'object') return false;",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "taskJSON object/nonobject equality notconfig",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-992c3be75c5005a8",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 106,
+        "text": "if ((expect.minimumMessages ?? 1) > response.messageCount) result.push('The WebSocket returned too few messages.');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "WebSocket defaultminimumMessages1 BUSINESScoverage predicate unresolved nestedprocessing/taskintent owner, explicitresolvedexpect needed; OPEN cardinality policy classification remains",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-12434dbea740fa05",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 124,
+        "text": "const config = object(invocation.configuration.values, 'API_FLOW_CONFIG_INVALID'); const flow = validateFlow(readFlow(invocation, context, config), integer(config.maximumSteps, 64, 1, 256, 'API_FLOW_STEP_LIMIT_INVALID'));",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "actualrootquota64 default1..256+fullfilevalidation beforeeffects mapped",
+      "settings": [
+        "RT-6e292c3c6f492f07"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-70e29d322cd832ef",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 137,
+        "text": "const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "actualroot10000/perstep precedence +bytes1048576; step override maskingroot0 sourceobservation; retiredsecondauthor targetreject proposed",
+      "settings": [
+        "RT-b8eb5e344f496d7c"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-13a434451854aff6",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 138,
+        "text": "if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "WebSocket minimumMessages1 duplicate receiver sameexpectedtaskpredicate OPENnestedauthor; requestquota/readfields linked exactroot",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-af90be341608cb41",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 139,
+        "text": "else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "HTTPrequestbodyJSON/sourceheaders/responseheaders finiteprojection plusrootquotas",
+      "settings": [
+        "RT-98a5849759145124"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-98f1605bef7cf8ec",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 142,
+        "text": "const stepFailures = failures(step.expect ?? {}, response, step.protocol === 'websocket');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "taskexpect optional{} actualfailurepredicate",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ed7e831b8155dfca",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 144,
+        "text": "records.push({ id: step.id, state: stepFailures.length ? 'failed' : 'passed', status: response.status ?? null, durationMs: Date.now() - started, failures: stepFailures });",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "explicitReviewedReason": "actualrecord duration/statusnull nullableprotocoloutput, no configurationauthor",
+      "settings": [
+        "RT-351419f2c26e2696"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-28c2ed65666ef370",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 3,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('DEMO_AUTH_CONTRACT_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "exactcontractobject type",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5bf9f7dfef242a39",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 8,
+        "text": "if (Object.keys(value).some(key => !keys.includes(key)) || keys.some(key => value[key] === undefined)) throw new Error('DEMO_AUTH_CONTRACT_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "exactroot/memberkeys requiredowningtask beforeHTTP noignoredunknown",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e86ea7db292484ff",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 11,
+        "text": "if (typeof value !== 'string' || !value || value.length > 2048 || /[\\0\\r\\n]/u.test(value)) throw new Error('DEMO_AUTH_CONTRACT_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "OPEN2048generictext processingquota acrossroute/keys/provenance/credentials; no invented singleoperatorowner, tasksecretvalues not CONFIG",
+      "settings": [
+        "RT-6eb2a289d5ca31e7"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-298044d7d1da5c43",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 17,
+        "text": "if (!value.startsWith('/') || value.startsWith('//') || value.includes('\\\\') || url.origin !== 'https://demo.invalid' || url.hash || url.search || url.pathname !== value) throw new Error('DEMO_AUTH_PATH_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "canonical route/URL originsecurity andnoquery/hash/backslash",
+      "settings": [
+        "RT-6eb2a289d5ca31e7"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-82569a27f9515824",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 21,
+        "text": "if (!value.startsWith('/') || /~(?:[^01]|$)/u.test(value) || value.split('/').some(key => ['__proto__','constructor','prototype'].includes(key))) throw new Error('DEMO_AUTH_POINTER_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "JSONpointer escapes andprototype denial integrity",
+      "settings": [
+        "RT-38cd6ae00ba2b1d6"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6efd366d0361ef47",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 29,
+        "text": "if (!Array.isArray(value.assertions) || !value.assertions.length || value.assertions.length > 16) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "OPEN16assertioncount processing bound, nonemptybusinesscoverage required no trimmingscope",
+      "settings": [
+        "RT-6e3380a34038a8f3",
+        "RT-0bebcabef1e5db22",
+        "RT-c6558fe1affde8f0",
+        "RT-a0cd7ed395eaca7e",
+        "RT-a951ca501013f2bb",
+        "RT-9edb7cb283bb137b",
+        "RT-219d797be23e8434"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8967f9ccc35f2e11",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 32,
+        "text": "if (assertion.pointer === value.usernamePointer || !['string','number','boolean'].includes(typeof assertion.equals)",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "distinctidentity pointer andfinite scalar supportedtaskassertion",
+      "settings": [
+        "RT-6e3380a34038a8f3",
+        "RT-0bebcabef1e5db22",
+        "RT-c6558fe1affde8f0",
+        "RT-a0cd7ed395eaca7e",
+        "RT-a951ca501013f2bb",
+        "RT-9edb7cb283bb137b",
+        "RT-219d797be23e8434"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-790c2d77148c1431",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 33,
+        "text": "|| (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "finiteJSON numeric domain notquota",
+      "settings": [
+        "RT-6e3380a34038a8f3",
+        "RT-0bebcabef1e5db22",
+        "RT-c6558fe1affde8f0",
+        "RT-a0cd7ed395eaca7e",
+        "RT-a951ca501013f2bb",
+        "RT-9edb7cb283bb137b",
+        "RT-219d797be23e8434"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dc2b8e8ce52faa89",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 34,
+        "text": "|| (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "OPEN2048scalarstring processingguard, authoredexpected value taskintent",
+      "settings": [
+        "RT-6e3380a34038a8f3",
+        "RT-0bebcabef1e5db22",
+        "RT-c6558fe1affde8f0",
+        "RT-a0cd7ed395eaca7e",
+        "RT-a951ca501013f2bb",
+        "RT-9edb7cb283bb137b",
+        "RT-219d797be23e8434"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3e2ff76fb692139a",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 41,
+        "text": "if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "own-property taskJSON assertion/missing fails",
+      "settings": [
+        "RT-38cd6ae00ba2b1d6"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-abca3e1d14a7d364",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 50,
+        "text": "if (!schemas[input.name] || values[input.name] || input.kind !== 'value' || input.schemaId !== schemas[input.name]) throw new Error('DEMO_AUTH_INPUT_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "exact3distinctregisteredfixtureinputnames/kinds/schema bindings, notconfig",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9573f4c576192258",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 56,
+        "text": "if (d.schemaVersion !== 'kubernetes-deployment-fixture.v1' || c.schemaVersion !== 'generated-demo-credentials.v1'",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "fixed provenance schema identities supported",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8a86c1ba79092104",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 57,
+        "text": "|| e.schemaVersion !== 'public-endpoint-fixture.v1' || e.provider !== 'tailscale-ingress'",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "fixedpublicexposureprovider identity",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-cd21c060111d6fdf",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 58,
+        "text": "|| handoff.schemaVersion !== 'demo-exposure-handoff.v1' || handoff.phase !== 'awaiting-readiness'",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "finite handoffphase awaiting-readiness supported",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a13aa139a1235bba",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 59,
+        "text": "|| source.schemaVersion !== 'generated-demo-credential-source.v1') throw new Error('DEMO_AUTH_PROVENANCE_REQUIRED');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "fixedcredential-source schema identity",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e3e335a80a2b7b9d",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 62,
+        "text": "for (const key of ['leaseName','namespace']) if (text(d[key]) !== c[key] || d[key] !== e[key]) throw new Error('DEMO_AUTH_SOURCE_MISMATCH');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "lease/namespace equality provenance actualconsumer source binding",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8467dced17471453",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 63,
+        "text": "for (const key of ['immutableImage','manifestDigest']) if (text(d[key]) !== c[key] || d[key] !== handoff[key]) throw new Error('DEMO_AUTH_SOURCE_MISMATCH');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "image/manifest equality acrossprovenance records",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ff7e99ac8ff85aa7",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 64,
+        "text": "if (!/@sha256:[a-f0-9]{64}$/u.test(d.immutableImage) || !/^sha256:[a-f0-9]{64}$/u.test(d.manifestDigest)",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "sha25664hex algorithm wire identity nottunable capacity",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d1c69031fffe8fb6",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 65,
+        "text": "|| text(source.leaseUID) !== handoff.leaseUID || source.namespace !== d.namespace || source.secretName !== c.secretName) throw new Error('DEMO_AUTH_SOURCE_MISMATCH');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "leaseUID/namespace/secretName exactsource identity",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-76f082f7c5c0e469",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 66,
+        "text": "if (!Number.isSafeInteger(handoff.exposureGeneration) || handoff.exposureGeneration < 1) throw new Error('DEMO_AUTH_EXPOSURE_GENERATION_REQUIRED');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "positive safe exposureGeneration identity notCONFIGgeneration selector",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b1d7e6e5cd8bef03",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 75,
+        "text": "if (d.expiresAt !== e.expiresAt || e.expiresAt !== handoff.expiresAt || !Number.isFinite(Date.parse(e.expiresAt)) || Date.parse(e.expiresAt) <= Date.now()) throw new Error('DEMO_AUTH_EXPOSURE_EXPIRED');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "absoluteactualclock exposureexpiry andmatchingrecords no reset",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a503c65d61526cd9",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 77,
+        "text": "if (!['http:','https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash || url.href !== e.url) throw new Error('DEMO_AUTH_URL_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "canonicalboundedHTTP(S) exposureURL/security",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-cd5806cd7479fca1",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 84,
+        "text": "if (attrs.has(name.toLowerCase()) || !['path','secure','httponly','samesite','max-age'].includes(name.toLowerCase())) throw new Error('DEMO_AUTH_SESSION_COOKIE_SCOPE_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "finitecookieattribute supportedcodec andduplicate rejection",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-01d7853be7cbfa49",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 87,
+        "text": "if ((attrs.has('secure') && attrs.get('secure') !== '') || (attrs.has('httponly') && attrs.get('httponly') !== '')",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "cookieflag noattributevalue parser",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b5cd6be40c43b978",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 88,
+        "text": "|| (attrs.has('max-age') && !/^[1-9][0-9]{0,8}$/u.test(attrs.get('max-age')))",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "OPEN9digitmaxAge processing/trust-bound guard; actualexposuredeadline distinct, mustpreserveexpirysecurity",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b25b40e16176b135",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 89,
+        "text": "|| (attrs.has('samesite') && !['strict','lax','none'].includes(attrs.get('samesite').toLowerCase()))) throw new Error('DEMO_AUTH_SESSION_COOKIE_SCOPE_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "finiteSameSite supported values protocol",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-873966408f3071de",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 93,
+        "text": "if (typeof header !== 'string' || header.length > 4096 || /[\\r\\n,]/u.test(header)) throw new Error('DEMO_AUTH_SESSION_COOKIE_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "OPEN4096sessionheader chars policyguard; CRLF/multiplecookie comma rejection separate",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-751384f52c0e2b4b",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 95,
+        "text": "if (!pair.startsWith(`${config.cookieName}=`) || !/^[A-Za-z0-9!#$%&'*+.^_`|~-]+=[\\x21\\x23-\\x2B\\x2D-\\x3A\\x3C-\\x5B\\x5D-\\x7E]+$/u.test(pair)) throw new Error('DEMO_AUTH_SESSION_COOKIE_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "declaredcookie exactname/wiretoken grammar",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b5d47130c0de6c20",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 103,
+        "text": "if (typeof cookiePath !== 'string' || !cookiePath.startsWith('/') || !attrs.has('httponly')",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "hostboundPath+HttpOnly safetyrequired",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-50769d3d6fee9a9a",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 104,
+        "text": "|| (url.protocol === 'https:' && !attrs.has('secure')) || (url.protocol !== 'https:' && attrs.has('secure'))",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "Secure flag mustmatchscheme security",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-167eb576c9eb5dfb",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "line": 105,
+        "text": "|| (attrs.get('samesite')?.toLowerCase() === 'none' && !attrs.has('secure'))) throw new Error('DEMO_AUTH_SESSION_COOKIE_SCOPE_INVALID');",
+        "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "explicitReviewedReason": "SameSiteNone requiresSecure security",
+      "settings": [
+        "RT-dbe32a8d7d4a40b9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b2e940ba07d80ff9",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "line": 6,
+        "text": "if (!Number.isSafeInteger(response.status) || response.status < 100 || response.status > 599",
+        "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "explicitReviewedReason": "HTTPstatus finiteprotocol/integrity",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1b076d986486d217",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "line": 7,
+        "text": "|| typeof response.body !== 'string' || response.sizeBytes !== Buffer.byteLength(response.body)",
+        "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "explicitReviewedReason": "nativebody UTF8byteexact integrity equality notquota",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-cfa113b202d3fb5a",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "line": 8,
+        "text": "|| response.bodyDigest !== sha256Text(response.body)) throw new Error('DEMO_AUTH_HTTP_EVIDENCE_INVALID');",
+        "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "explicitReviewedReason": "body SHA256 binding genuine responsebytes notCONFIG",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a18eae1e5cd3f0d1",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "line": 12,
+        "text": "if (response.status !== 200 || response.headers?.['content-type'] !== 'application/json') throw new Error('DEMO_AUTH_PROTECTED_RESPONSE_INVALID');",
+        "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "explicitReviewedReason": "applicationdeclared200/json response protocol beforeidentity assertion",
+      "settings": [
+        "RT-851b2948e1590b2c"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-54003a6dac92c5b1",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "line": 29,
+        "text": "const config = protocol(invocation.configuration.values), bound = inputs(invocation);",
+        "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "explicitReviewedReason": "actualrootprotocol/provenance reader beforeHTTP",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-72135a8b683ca165",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "line": 39,
+        "text": "timeoutMs:remaining,maximumResponseBytes:65536,responseHeaders:['set-cookie']}});",
+        "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "explicitReviewedReason": "OPENhardcoded65536 perrequestbyte policy productiveauth capabilitypayload; noowningoperatorfieldcurrently exists; independentnamedpolicyrow/cases required",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a44bfaae5c403b4b",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "line": 40,
+        "text": "if (context.signal.aborted || Date.now() >= deadline) throw new Error('DEMO_AUTH_DEADLINE_EXPIRED');",
+        "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "explicitReviewedReason": "absoluteactualdeadline/cancellation aftereachrequest",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5e4b7c9c1c39feff",
+      "source": {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "line": 53,
+        "text": "if (context.signal.aborted || Date.now() >= deadline) throw new Error('DEMO_AUTH_DEADLINE_EXPIRED');",
+        "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "explicitReviewedReason": "deadline beforepublishingauthenticated receipt",
+      "settings": [
+        "RT-374fc655646a9edc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-82283bf10a67d5a9",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 6,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code);",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "objectshape; no configabsence default",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-396d3687bc5965ac",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 11,
+        "text": "const resolved = value ?? fallback;",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "generic integer nullfallback used actualtwoquota members; both linked exact source",
+      "settings": [
+        "RT-6a3cdfc223a3c24b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6427b5e8ff303fd5",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 12,
+        "text": "if (!Number.isSafeInteger(resolved) || resolved < minimum || resolved > maximum) throw new Error(code);",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "safeinteger/domain gate explicit passed schemas/nativecontrols, notbeforeeffect fullrole proof",
+      "settings": [
+        "RT-6a3cdfc223a3c24b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-28845debb13cf3d6",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 17,
+        "text": "const resolved = value ?? '/';",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "optional taskroute receiver / fallback overriddenpublicfixture defaultPath, resolvedtask path explicittarget",
+      "settings": [
+        "RT-c66db038b75b910a"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8cf83f67166abcb7",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 18,
+        "text": "if (typeof resolved !== 'string' || resolved.length > 2048 || !resolved.startsWith('/') || resolved.startsWith('//')",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "OPEN2048char route numericprocessing quota; slash/origin security guarddistinct",
+      "settings": [
+        "RT-c66db038b75b910a"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5ab1ab014e490c6f",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 19,
+        "text": "|| /[\\r\\n#]/u.test(resolved)) throw new Error('HTTP_CONFIG_PATH_INVALID');",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "CRLF/fragment forbidden resourcecanonical/security semantics",
+      "settings": [
+        "RT-c66db038b75b910a"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9bae68c72f429034",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 24,
+        "text": "if (typeof value !== 'string' || value.length > 2048) throw new Error('HTTP_CONFIG_URL_INVALID');",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "OPEN2048char URLprocessing guard; currentcanonicalorigin task contract not globaltarget selector",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4531b8bafab5df7f",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 28,
+        "text": "const canonicalMatch = value === canonical || (!allowPath && url.pathname === '/' && value === url.origin);",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "canonicalexact URL origin/path identity check",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8d5f92e1b6150f2e",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 29,
+        "text": "if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.hash",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "finiteHTTP(S) protocol/no credentials/hash safety",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a259c1d93ef1ce55",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 30,
+        "text": "|| (!allowPath && url.pathname !== '/') || url.search || !canonicalMatch) {",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "rootpath/query/canonical restrictions actualHTTPtarget",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a0f9fa4b0c844244",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 44,
+        "text": "if (inputs.length > 1 || inputs.some((input) => input.kind !== 'value'",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "fixturecardinality exactvalue transport one deployment",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-40916efc28c136ba",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 45,
+        "text": "|| input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1')) throw new Error('HTTP_INPUT_INVALID');",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "finite fixture schema ID/integrity notoperator",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a6fd20b1c6569708",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 47,
+        "text": "if (endpointInputs.length > 1 || endpointInputs.some((input) => input.kind !== 'value'",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "onepublicendpoint input cardinality",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9fdeefe9970cc036",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 48,
+        "text": "|| input.schemaId !== 'kubeclaw.public-endpoint-fixture@1')) throw new Error('HTTP_INPUT_INVALID');",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "fixedpublicfixture schema identity",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1cbf9b8434d47421",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 52,
+        "text": "if (value.schemaVersion !== 'public-endpoint-fixture.v1' || value.provider !== 'tailscale-ingress'",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "finitepublicfixture version/provider supported",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bffd4fb4952ed413",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 53,
+        "text": "|| typeof value.url !== 'string') throw new Error('HTTP_INPUT_ENDPOINT_INVALID');",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "input URL string shape",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-657de2631afc89c3",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 55,
+        "text": "return [{ name: 'public', url: endpoint.origin, defaultPath: endpoint.path }];",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "publicendpoint taskprovideddefaultPath, no independentCONFIGauthor",
+      "settings": [
+        "RT-c66db038b75b910a"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b3f50bdc5388e3e1",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 59,
+        "text": "if (!Array.isArray(value.endpoints) || value.endpoints.length < 1 || value.endpoints.length > 32) {",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "OPEN32endpoints processing admission guard; inputtask data doesnotclose numericcap",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a74da4e48d210aaf",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 64,
+        "text": "if (typeof endpoint.name !== 'string' || !DNS_LABEL.test(endpoint.name) || typeof endpoint.url !== 'string') {",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "taskendpoint DNS identity/string shape",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-282c927280e6a585",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 67,
+        "text": "return { name: endpoint.name, url: explicitBase(endpoint.url), defaultPath: '/' };",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "deploymentendpoint origin root taskpath projection",
+      "settings": [
+        "RT-c66db038b75b910a"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d1947846a24a3a08",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 76,
+        "text": "if (value.endpointName !== undefined && (!deployment || typeof value.endpointName !== 'string' || !DNS_LABEL.test(value.endpointName))) {",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "unusedselector withoutdeployment rejects; source exacttaskauthority",
+      "settings": [
+        "RT-e821665e0a2aedb9"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ea5edb9ebcc31f60",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 79,
+        "text": "let base; let defaultPath = '/';",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "taskpath temporary / receiver overwrittenexplicit/publicfixture path",
+      "settings": [
+        "RT-c66db038b75b910a"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0ba22a754f6c267e",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 86,
+        "text": "base = selected.url; defaultPath = selected.defaultPath;",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "selectedfixture taskpath projection",
+      "settings": [
+        "RT-c66db038b75b910a"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-11d184eeaa73dccf",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 88,
+        "text": "const method = value.method ?? 'GET';",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "taskoperation GET absent/null; targetexplicitresolvedtaskoperation notCONFIG writer",
+      "settings": [
+        "RT-a6feb259112b5574"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-faea2209830590a2",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 90,
+        "text": "const accept = value.accept ?? '*/*';",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "taskrepresentation */* absent/null explicitresolvedtaskheader",
+      "settings": [
+        "RT-d9e562dd50c1f9b3"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b99e550f89f2bfdd",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 91,
+        "text": "if (typeof accept !== 'string' || accept.length < 1 || accept.length > 512 || /[\\r\\n]/u.test(accept)) {",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "OPEN512Acceptchars processing guard; CRLF/type safety distinct",
+      "settings": [
+        "RT-d9e562dd50c1f9b3"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-368d2b097651be67",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 94,
+        "text": "const expectedStatuses = value.expectedStatuses ?? null;",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "optional task success rule null means2xx, explicitresolvedtask intent notglobalCONFIG",
+      "settings": [
+        "RT-fcc77b9c29ab0230",
+        "RT-259ec75a40f57a0b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ce8d2e71b3387410",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 95,
+        "text": "if (expectedStatuses !== null && (!Array.isArray(expectedStatuses) || expectedStatuses.length < 1",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "taskassertion nonemptycollection/type requirement",
+      "settings": [
+        "RT-fcc77b9c29ab0230",
+        "RT-259ec75a40f57a0b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f516e759cc0f579a",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 96,
+        "text": "|| expectedStatuses.length > 32 || new Set(expectedStatuses).size !== expectedStatuses.length",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "OPEN32statusitems processing count; duplicatevalidation taskidentity retained",
+      "settings": [
+        "RT-fcc77b9c29ab0230",
+        "RT-259ec75a40f57a0b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-14ce1de2be5a2fce",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 97,
+        "text": "|| expectedStatuses.some((status) => !Number.isSafeInteger(status) || status < 100 || status > 599))) {",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "HTTPstatus finite protocol100..599 safeinteger",
+      "settings": [
+        "RT-fcc77b9c29ab0230",
+        "RT-259ec75a40f57a0b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-da0d8da3cb8ad8e3",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 100,
+        "text": "const expectedText = value.expectedText ?? null;",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "null/absent taskassertion none, explicitnone notmissingpolicy fallback",
+      "settings": [
+        "RT-c7fdaab3e3e6c833"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6bb66faa8ceb116b",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 101,
+        "text": "if (expectedText !== null && (typeof expectedText !== 'string' || expectedText.length < 1 || expectedText.length > 4096",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "OPEN4096expectedtext processing limit, HEAD incompatibility distinct",
+      "settings": [
+        "RT-c7fdaab3e3e6c833"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b10a2706b76023a1",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 102,
+        "text": "|| method === 'HEAD')) throw new Error('HTTP_CONFIG_EXPECTED_TEXT_INVALID');",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "HEAD hasnobody assertion task semanticreject",
+      "settings": [
+        "RT-c7fdaab3e3e6c833"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e4ed2324f1d2b0d4",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 103,
+        "text": "const expectedContentType = value.expectedContentType ?? null;",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "absence/null taskmedia assertion none",
+      "settings": [
+        "RT-b2f5e06d53448731"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-91482bd1c13e6f3e",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 104,
+        "text": "if (expectedContentType !== null && (typeof expectedContentType !== 'string' || expectedContentType.length > 128",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "OPEN128mediachars numericprocessinglimit separate fromMIME grammar",
+      "settings": [
+        "RT-b2f5e06d53448731"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "precise open numeric/nested-author/coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ae3c1e2d9971ff91",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 105,
+        "text": "|| !/^[a-z0-9!#$&^_.+-]+\\/[a-z0-9!#$&^_.+-]+$/u.test(expectedContentType))) {",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "supported MIME tokengrammar",
+      "settings": [
+        "RT-b2f5e06d53448731"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dee7d3c2775183c7",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 108,
+        "text": "const path = pathValue(value.path ?? defaultPath);",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "actualroute default publicfixture/explicit/ sourcepath caller",
+      "settings": [
+        "RT-c66db038b75b910a"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5a5c5e3fb615c282",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 123,
+        "text": "const textPassed = config.expectedText === null || response.body.includes(config.expectedText);",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "declaredoptional substring assertion actualbody",
+      "settings": [
+        "RT-c7fdaab3e3e6c833"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-68a7678b0d18e371",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 124,
+        "text": "const contentType = response.headers?.['content-type'] ?? null;",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "native normalized media header/null responseabsence",
+      "settings": [
+        "RT-b2f5e06d53448731"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-65d4703813623143",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 125,
+        "text": "const contentTypePassed = config.expectedContentType === null || contentType === config.expectedContentType;",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "exact optionalmedia comparison",
+      "settings": [
+        "RT-b2f5e06d53448731"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c9a638ac112d9973",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 159,
+        "text": "const config = configuration(invocation);",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "actualconfiguration beforeHTTP productivecaller",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e2e5d69bb35b0e03",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 164,
+        "text": "headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "actualmin(requestpolicy,invocation) plusdeclaredAccept request projection",
+      "settings": [
+        "RT-6a3cdfc223a3c24b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-92ae20181ca6de93",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 167,
+        "text": "if (!Number.isSafeInteger(checked.status) || typeof checked.body !== 'string'",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "actualnetworkresponse shape, not CONFIGdefault",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8bd65592b594d6c7",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 168,
+        "text": "|| !Number.isSafeInteger(checked.sizeBytes) || typeof checked.bodyDigest !== 'string'",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "actualbyte/digest response integrity shape no quota fallback",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-664f985f60f50d93",
+      "source": {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "line": 169,
+        "text": "|| !Number.isSafeInteger(checked.durationMs)) throw new Error('HTTP_RESPONSE_INVALID');",
+        "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "explicitReviewedReason": "actualduration shape no CONFIGauthor",
+      "settings": [
+        "RT-2089ad1c8390909b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/contracts.json",
+      "status": "explicit narrow source/task/protocol or existing-policy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "unmatchedGuardBusinessDefaultsNotInOriginalSyntaxRoster": [
+    {
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "lines": [
+        49,
+        61,
+        74,
+        83,
+        118,
+        129,
+        134,
+        148
+      ],
+      "reason": "1MiB flowfile readbeforecheck processingquota; step.timeoutMs duplicateauthor migration; minimumMessages1+max64 protocol/coverage; variables64 count; zero-mainfailure; firsttransporterror/cleanup best-effort notdurablerecovery",
+      "sourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+    },
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "lines": [
+        121,
+        122,
+        153
+      ],
+      "reason": "implicitany2xx taskexpectationtarget explicitnullmeaning, notGLOBALCONFIGwriter; sourceonlyHTTP_REQUEST_FAILED/TIMEOUT convertedfindings, size/securityexceptions propagate",
+      "sourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "lines": [
+        30,
+        39
+      ],
+      "reason": "65536productive auth requestbytes needs own processingpolicy field; minactualinvocation/exposuredeadline, no free reset",
+      "sourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+    }
+  ],
+  "status": "manual exactsource dispostions no lexical closure, originalsyntax artifact unchanged, independentreview pending"
+}

@@ -40,7 +40,7 @@ export async function executePrismOperation(
     input,
     idempotencyKey,
   }, signal ? { signal } : {});
-  const resultContract = engineResultSchema(name);
+  const resultContract = engineResultSchema(name, (result.output.renderer as {policyVersion?: unknown} | undefined)?.policyVersion);
   validateEngineResult(name,result.output);
   return {
     schemaId: resultContract.schemaId,

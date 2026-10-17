@@ -1,0 +1,993 @@
+{
+  "qualification": "same original recovery02 owner bytes/all24 profiles; exact selected node transport association, not full renderer or v2 script execution",
+  "owner": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/stand/my-values/infra/postgresql-recovery.yaml",
+    "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7"
+  },
+  "profiles": [
+    {
+      "profileId": "A",
+      "pointer": "/profiles/A",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/source81ClauseOracles"
+    },
+    {
+      "profileId": "B-backupIntervalMinutes",
+      "pointer": "/profiles/B-backupIntervalMinutes",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 10,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/0"
+    },
+    {
+      "profileId": "B-verificationIntervalMinutes",
+      "pointer": "/profiles/B-verificationIntervalMinutes",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 4,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/1"
+    },
+    {
+      "profileId": "B-maximumAgeSeconds",
+      "pointer": "/profiles/B-maximumAgeSeconds",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7100,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/2"
+    },
+    {
+      "profileId": "B-maximumDurationSeconds",
+      "pointer": "/profiles/B-maximumDurationSeconds",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1799,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/3"
+    },
+    {
+      "profileId": "B-verificationDeadlineSeconds",
+      "pointer": "/profiles/B-verificationDeadlineSeconds",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 899,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/4"
+    },
+    {
+      "profileId": "B-maximumBackupBytes",
+      "pointer": "/profiles/B-maximumBackupBytes",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 16777216,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/5"
+    },
+    {
+      "profileId": "B-maximumRetainedBytes",
+      "pointer": "/profiles/B-maximumRetainedBytes",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 95563022336,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/6"
+    },
+    {
+      "profileId": "B-persistence-size",
+      "pointer": "/profiles/B-persistence-size",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "101Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/7"
+    },
+    {
+      "profileId": "B-persistence-storageClass",
+      "pointer": "/profiles/B-persistence-storageClass",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": "fixture-retain"
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/8"
+    },
+    {
+      "profileId": "B-resources-requests-cpu",
+      "pointer": "/profiles/B-resources-requests-cpu",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "300m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/9"
+    },
+    {
+      "profileId": "B-resources-requests-memory",
+      "pointer": "/profiles/B-resources-requests-memory",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "320Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/10"
+    },
+    {
+      "profileId": "B-resources-limits-cpu",
+      "pointer": "/profiles/B-resources-limits-cpu",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1500m",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/11"
+    },
+    {
+      "profileId": "B-resources-limits-memory",
+      "pointer": "/profiles/B-resources-limits-memory",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "2Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/12"
+    },
+    {
+      "profileId": "B-reserveBytes",
+      "pointer": "/profiles/B-reserveBytes",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 68157440,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/13"
+    },
+    {
+      "profileId": "B-killAfterSeconds",
+      "pointer": "/profiles/B-killAfterSeconds",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 14,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/14"
+    },
+    {
+      "profileId": "B-connectionTimeoutSeconds",
+      "pointer": "/profiles/B-connectionTimeoutSeconds",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 14,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/15"
+    },
+    {
+      "profileId": "B-tocMaximumBytes",
+      "pointer": "/profiles/B-tocMaximumBytes",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66059264,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/16"
+    },
+    {
+      "profileId": "B-metadataMaximumBytesExclusive",
+      "pointer": "/profiles/B-metadataMaximumBytesExclusive",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65535,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/17"
+    },
+    {
+      "profileId": "B-checksumIndexMaximumBytesExclusive",
+      "pointer": "/profiles/B-checksumIndexMaximumBytesExclusive",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1023,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/18"
+    },
+    {
+      "profileId": "B-cronJobDeadlineOverheadSeconds",
+      "pointer": "/profiles/B-cronJobDeadlineOverheadSeconds",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 61,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/19"
+    },
+    {
+      "profileId": "B-successfulJobsHistoryLimit",
+      "pointer": "/profiles/B-successfulJobsHistoryLimit",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 4,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/20"
+    },
+    {
+      "profileId": "B-failedJobsHistoryLimit",
+      "pointer": "/profiles/B-failedJobsHistoryLimit",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 11,
+          "temporaryDirectorySize": "256Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/21"
+    },
+    {
+      "profileId": "B-temporaryDirectorySize",
+      "pointer": "/profiles/B-temporaryDirectorySize",
+      "exactTypedNode": {
+        "settings": {
+          "backupIntervalMinutes": 15,
+          "verificationIntervalMinutes": 5,
+          "maximumAgeSeconds": 7200,
+          "maximumDurationSeconds": 1800,
+          "verificationDeadlineSeconds": 900,
+          "maximumBackupBytes": 68719476736,
+          "maximumRetainedBytes": 96636764160,
+          "persistence": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "resources": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "reserveBytes": 67108864,
+          "killAfterSeconds": 15,
+          "connectionTimeoutSeconds": 15,
+          "tocMaximumBytes": 66060288,
+          "metadataMaximumBytesExclusive": 65536,
+          "checksumIndexMaximumBytesExclusive": 1024,
+          "cronJobDeadlineOverheadSeconds": 60,
+          "successfulJobsHistoryLimit": 3,
+          "failedJobsHistoryLimit": 10,
+          "temporaryDirectorySize": "257Mi"
+        }
+      },
+      "taskAuthority": "original recovery02 taskAuthorityRef/FD10/FD11 proposed bridge, not minted by CONFIG",
+      "caseDefinitionPointer": "case-definitions.json#/fieldPairs/22"
+    }
+  ]
+}

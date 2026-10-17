@@ -1,0 +1,1694 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.invalid/proposed/pipeline-component.v3/prism-execution",
+  "$defs": {
+    "positiveTimerInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "positiveSafeInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "prism-control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pipelinePreferenceSubject",
+        "artifactRoot",
+        "studioPublicUrl",
+        "port",
+        "dispatchTimeoutMs"
+      ],
+      "properties": {
+        "pipelinePreferenceSubject": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^user-[a-f0-9]{24}$"
+        },
+        "artifactRoot": {
+          "type": "string",
+          "pattern": "^/[^\u0000]+$"
+        },
+        "studioPublicUrl": {
+          "type": "string",
+          "pattern": "^https?://[^/?#\\s@]+(?:/[^?#\\s]*)?$"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "dispatchTimeoutMs": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        }
+      }
+    },
+    "prism-studio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "port",
+        "controlTimeoutMs",
+        "controlUrl"
+      ],
+      "properties": {
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "controlTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "controlUrl": {
+          "type": "string",
+          "pattern": "^https?://[^/?#\\s@\\\\\\x00-\\x20\\x7f]+/?$"
+        }
+      }
+    },
+    "prism-worker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ingress",
+        "supervisor"
+      ],
+      "properties": {
+        "ingress": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "port",
+            "maximumActiveRequests",
+            "maximumProbeRequests",
+            "maximumConnections",
+            "requestTimeoutMs",
+            "shutdownTimeoutMs",
+            "maximumInputBytes"
+          ],
+          "properties": {
+            "port": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "maximumActiveRequests": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumProbeRequests": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumConnections": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "requestTimeoutMs": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "shutdownTimeoutMs": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumInputBytes": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            }
+          }
+        },
+        "supervisor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "uid",
+            "gid",
+            "maximumOwnershipRecords",
+            "maximumOwnershipBytes",
+            "maximumOutputBytes",
+            "maximumJournalBytes",
+            "pollIntervalMs",
+            "drainTimeoutMs",
+            "closeTimeoutMs"
+          ],
+          "properties": {
+            "uid": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "gid": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumOwnershipRecords": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumOwnershipBytes": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumOutputBytes": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumJournalBytes": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            },
+            "pollIntervalMs": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "drainTimeoutMs": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "closeTimeoutMs": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            }
+          }
+        }
+      }
+    },
+    "prism-execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourcePolicy",
+        "maximumResultBytes"
+      ],
+      "properties": {
+        "resourcePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cpuTimeMs",
+            "memoryBytes",
+            "tasks"
+          ],
+          "properties": {
+            "cpuTimeMs": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            },
+            "memoryBytes": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            },
+            "tasks": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            }
+          }
+        },
+        "maximumResultBytes": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        }
+      }
+    },
+    "buster-engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preparation",
+        "admission",
+        "dependencyReadiness",
+        "execution",
+        "clusterInvokers"
+      ],
+      "properties": {
+        "preparation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "resourcePolicy",
+            "timeoutMs",
+            "cleanupTimeoutMs",
+            "maximumActivePreparations",
+            "maximumPendingAdmissions",
+            "maximumRequestBytes",
+            "maximumArchiveBytes",
+            "maximumExtractedBytes",
+            "maximumHeaderBytes",
+            "maximumSourceBytes",
+            "maximumMetadataBytes",
+            "maximumRecords",
+            "maximumOwnershipBytes",
+            "maximumJournalBytes",
+            "maximumInputBytes",
+            "maximumOutputBytes",
+            "maximumResultBytes",
+            "pollIntervalMs",
+            "drainTimeoutMs",
+            "closeTimeoutMs",
+            "tarTimeoutMs",
+            "maximumArchiveEntries",
+            "maximumListingLineBytes",
+            "maximumTarStderrBytes",
+            "maximumSourceEntries",
+            "sourceEntryReservationBytes",
+            "maximumOpenFiles"
+          ],
+          "properties": {
+            "resourcePolicy": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "cpuTimeMs",
+                "memoryBytes",
+                "tasks"
+              ],
+              "properties": {
+                "cpuTimeMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "memoryBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "tasks": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            },
+            "timeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "cleanupTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumActivePreparations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2
+            },
+            "maximumPendingAdmissions": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumRequestBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumArchiveBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumExtractedBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumHeaderBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumSourceBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumMetadataBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumRecords": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumOwnershipBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumJournalBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumInputBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumOutputBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumResultBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "pollIntervalMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "drainTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "closeTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "tarTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumArchiveEntries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumListingLineBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumTarStderrBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumSourceEntries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "sourceEntryReservationBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumOpenFiles": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumActiveJobs",
+            "maximumQueuedJobs",
+            "maximumConcurrentAttempts"
+          ],
+          "properties": {
+            "maximumActiveJobs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumQueuedJobs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumConcurrentAttempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "dependencyReadiness": {
+          "$ref": "#/$defs/buster-dependency-readiness"
+        },
+        "execution": {
+          "$ref": "#/$defs/buster-execution"
+        },
+        "clusterInvokers": {
+          "$ref": "#/$defs/buster-cluster-invokers"
+        }
+      }
+    },
+    "buster-preparation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourcePolicy",
+        "timeoutMs",
+        "cleanupTimeoutMs",
+        "maximumActivePreparations",
+        "maximumPendingAdmissions",
+        "maximumRequestBytes",
+        "maximumArchiveBytes",
+        "maximumExtractedBytes",
+        "maximumHeaderBytes",
+        "maximumSourceBytes",
+        "maximumMetadataBytes",
+        "maximumRecords",
+        "maximumOwnershipBytes",
+        "maximumJournalBytes",
+        "maximumInputBytes",
+        "maximumOutputBytes",
+        "maximumResultBytes",
+        "pollIntervalMs",
+        "drainTimeoutMs",
+        "closeTimeoutMs",
+        "tarTimeoutMs",
+        "maximumArchiveEntries",
+        "maximumListingLineBytes",
+        "maximumTarStderrBytes",
+        "maximumSourceEntries",
+        "sourceEntryReservationBytes",
+        "maximumOpenFiles"
+      ],
+      "properties": {
+        "resourcePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cpuTimeMs",
+            "memoryBytes",
+            "tasks"
+          ],
+          "properties": {
+            "cpuTimeMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "memoryBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "tasks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "cleanupTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumActivePreparations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "maximumPendingAdmissions": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRequestBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumArchiveBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumExtractedBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumHeaderBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumSourceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumMetadataBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumOwnershipBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumJournalBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumInputBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumOutputBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumResultBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "pollIntervalMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "drainTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "closeTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "tarTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumArchiveEntries": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumListingLineBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumTarStderrBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumSourceEntries": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sourceEntryReservationBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumOpenFiles": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 2147483647
+        }
+      }
+    },
+    "buster-admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumActiveJobs",
+        "maximumQueuedJobs",
+        "maximumConcurrentAttempts"
+      ],
+      "properties": {
+        "maximumActiveJobs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumQueuedJobs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumConcurrentAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "worker-core": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "localRuntime"
+      ],
+      "properties": {
+        "localRuntime": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "drainTimeoutMs",
+            "cancellationTimeoutMs",
+            "replayLimit"
+          ],
+          "properties": {
+            "drainTimeoutMs": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "cancellationTimeoutMs": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "replayLimit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            }
+          }
+        }
+      }
+    },
+    "buster-dependency-readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumExecutionMs",
+        "maximumOutputBytes"
+      ],
+      "properties": {
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30000
+        },
+        "maximumOutputBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        }
+      }
+    },
+    "buster-execution-provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cleanupTimeoutMs",
+        "maximumResultBytes",
+        "claimGraceMs",
+        "queueTimeoutMs",
+        "workerResultWrapperBytes",
+        "maximumProtocolBytes",
+        "terminationGraceMs",
+        "terminationTimeoutMs",
+        "capabilityDrainTimeoutMs",
+        "minimumHeapMiB",
+        "heapFraction",
+        "maximumPendingCapabilities",
+        "minimumOpenFiles",
+        "artifactFileDescriptorReserve"
+      ],
+      "properties": {
+        "cleanupTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "maximumResultBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "claimGraceMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "queueTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "workerResultWrapperBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumProtocolBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "terminationGraceMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "terminationTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "capabilityDrainTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "minimumHeapMiB": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8589934591
+        },
+        "heapFraction": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "maximumPendingCapabilities": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "minimumOpenFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "artifactFileDescriptorReserve": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "buster-execution-reports": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumAggregateResultBytes",
+        "maximumSourceBytes",
+        "maximumCases",
+        "maximumFindings",
+        "maximumCaseFindings",
+        "maximumTimeoutMs",
+        "memoryBytes",
+        "minimumCpuTimeMs",
+        "maximumOpenFiles",
+        "minimumOpenFiles",
+        "minimumHeapMiB",
+        "heapFraction",
+        "runtimeMemoryReserveBytes"
+      ],
+      "properties": {
+        "maximumAggregateResultBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        },
+        "maximumSourceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "maximumCases": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000
+        },
+        "maximumFindings": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000
+        },
+        "maximumCaseFindings": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "maximumTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        },
+        "memoryBytes": {
+          "type": "integer",
+          "minimum": 67108869,
+          "maximum": 2147483648
+        },
+        "minimumCpuTimeMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000,
+          "multipleOf": 1000
+        },
+        "maximumOpenFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "minimumOpenFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "minimumHeapMiB": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8589934591
+        },
+        "heapFraction": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "runtimeMemoryReserveBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483648
+        }
+      }
+    },
+    "buster-execution-observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourceSampleIntervalMs",
+        "processSampleIntervalMs"
+      ],
+      "properties": {
+        "resourceSampleIntervalMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "processSampleIntervalMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      }
+    },
+    "buster-execution-store-attempts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumEvidenceObjects",
+        "maximumEvidenceBytes",
+        "maximumEvidenceObjectBytes",
+        "maximumResults",
+        "maximumClosures",
+        "maximumMetadataBytes",
+        "maximumPendingEvidenceAgeMs"
+      ],
+      "properties": {
+        "maximumEvidenceObjects": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumEvidenceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumEvidenceObjectBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumResults": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumClosures": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumMetadataBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumPendingEvidenceAgeMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "buster-execution-store-admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumIngressBytes",
+        "maximumRecords",
+        "maximumBytes",
+        "maximumQuarantineRecords",
+        "maximumQuarantineBytes"
+      ],
+      "properties": {
+        "maximumIngressBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumBytes": {
+          "type": "integer",
+          "minimum": 1025,
+          "maximum": 9007199254740991
+        },
+        "maximumQuarantineRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumQuarantineBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "buster-execution-stores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempts",
+        "admission"
+      ],
+      "properties": {
+        "attempts": {
+          "$ref": "#/$defs/buster-execution-store-attempts"
+        },
+        "admission": {
+          "$ref": "#/$defs/buster-execution-store-admission"
+        }
+      }
+    },
+    "buster-execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "reports",
+        "observation",
+        "stores",
+        "processInput"
+      ],
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/buster-execution-provider"
+        },
+        "reports": {
+          "$ref": "#/$defs/buster-execution-reports"
+        },
+        "observation": {
+          "$ref": "#/$defs/buster-execution-observation"
+        },
+        "stores": {
+          "$ref": "#/$defs/buster-execution-stores"
+        },
+        "processInput": {
+          "$ref": "#/$defs/buster-execution-processInput"
+        }
+      }
+    },
+    "buster-provider-runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "observation"
+      ],
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/buster-execution-provider"
+        },
+        "observation": {
+          "$ref": "#/$defs/buster-execution-observation"
+        }
+      }
+    },
+    "buster-execution-processInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cleanupTimeoutMs",
+        "terminationGraceMs",
+        "acknowledgementPollMs"
+      ],
+      "properties": {
+        "cleanupTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "terminationGraceMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "acknowledgementPollMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      }
+    },
+    "buster-cluster-invokers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "shared",
+        "kubernetesFixture",
+        "tailscaleExposure",
+        "runtimeSecurity"
+      ],
+      "properties": {
+        "shared": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kubectlExecutable",
+            "leaseApiGroup",
+            "leaseApiVersion"
+          ],
+          "properties": {
+            "kubectlExecutable": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\x00]+$"
+            },
+            "leaseApiGroup": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"
+            },
+            "leaseApiVersion": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$"
+            }
+          }
+        },
+        "kubernetesFixture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowedNamespacePrefixes",
+            "registryRepositoryPrefixes",
+            "allowedSecretReferences",
+            "allowedStorageClasses",
+            "allowDefaultStorageClass",
+            "runnerServiceAccount",
+            "credentialReaderServiceAccount",
+            "maximumManifestBytes",
+            "maximumResources",
+            "maximumPersistentVolumeClaimBytes",
+            "maximumPersistentVolumeTotalBytes",
+            "maximumRetentionSeconds",
+            "maximumExecutionMs",
+            "pollIntervalMs",
+            "shortCommandTimeoutMs",
+            "commandOutputManifestMultiplier",
+            "diagnosticCodeUnits",
+            "manifest"
+          ],
+          "properties": {
+            "allowedNamespacePrefixes": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+                "maxLength": 42
+              }
+            },
+            "registryRepositoryPrefixes": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-z0-9]+(?:[._/-][a-z0-9]+)*$"
+              }
+            },
+            "allowedSecretReferences": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 32,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9._-]+$"
+              }
+            },
+            "allowedStorageClasses": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 32,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$",
+                "maxLength": 253
+              }
+            },
+            "allowDefaultStorageClass": {
+              "type": "boolean"
+            },
+            "runnerServiceAccount": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+            },
+            "credentialReaderServiceAccount": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+            },
+            "maximumManifestBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumResources": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumPersistentVolumeClaimBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumPersistentVolumeTotalBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumRetentionSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumExecutionMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "pollIntervalMs": {
+              "type": "integer",
+              "minimum": 50,
+              "maximum": 10000
+            },
+            "shortCommandTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "commandOutputManifestMultiplier": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "diagnosticCodeUnits": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "manifest": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maximumNodes",
+                "maximumDepth",
+                "maximumAliases",
+                "maximumFlattenVisits",
+                "maximumFlattenPending"
+              ],
+              "properties": {
+                "maximumNodes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "maximumDepth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "maximumAliases": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "maximumFlattenVisits": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "maximumFlattenPending": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          }
+        },
+        "tailscaleExposure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowedNamespacePrefixes",
+            "allowedHostSuffixes",
+            "maximumExecutionMs",
+            "pollIntervalMs",
+            "shortCommandTimeoutMs",
+            "maximumCommandOutputBytes"
+          ],
+          "properties": {
+            "allowedNamespacePrefixes": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+                "maxLength": 42
+              }
+            },
+            "allowedHostSuffixes": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^\\.[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?$"
+              }
+            },
+            "maximumExecutionMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "pollIntervalMs": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 2147483647
+            },
+            "shortCommandTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "maximumCommandOutputBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "runtimeSecurity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowedNamespacePrefixes",
+            "maximumExecutionMs",
+            "maximumOutputBytes",
+            "pollIntervalMs",
+            "maximumObservationAgeMs",
+            "maximumFutureSkewMs",
+            "diagnosticCodeUnits",
+            "executableSearchPath"
+          ],
+          "properties": {
+            "allowedNamespacePrefixes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "maximumExecutionMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "maximumOutputBytes": {
+              "type": "integer",
+              "minimum": 1024,
+              "maximum": 9007199254740991
+            },
+            "pollIntervalMs": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 10000
+            },
+            "maximumObservationAgeMs": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 60000
+            },
+            "maximumFutureSkewMs": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "diagnosticCodeUnits": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "executableSearchPath": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^/[^:\\x00]*$"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "owner",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-component.v3"
+    },
+    "owner": {
+      "const": "prism-execution"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "settings",
+          "activation"
+        ],
+        "properties": {
+          "settings": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "resourcePolicy",
+              "maximumResultBytes",
+              "attemptPolicy",
+              "engine"
+            ],
+            "properties": {
+              "resourcePolicy": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "cpuTimeMs",
+                  "memoryBytes",
+                  "tasks"
+                ],
+                "properties": {
+                  "cpuTimeMs": {
+                    "$ref": "#/$defs/positiveSafeInteger"
+                  },
+                  "memoryBytes": {
+                    "$ref": "#/$defs/positiveSafeInteger"
+                  },
+                  "tasks": {
+                    "$ref": "#/$defs/positiveSafeInteger"
+                  }
+                }
+              },
+              "maximumResultBytes": {
+                "$ref": "#/$defs/positiveTimerInteger"
+              },
+              "attemptPolicy": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "limits",
+                  "claimLifetimeMs",
+                  "parentCompletionPhaseAllowance"
+                ],
+                "properties": {
+                  "limits": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "cleanupTimeoutMs",
+                      "evidenceBytes",
+                      "evidenceFiles",
+                      "logBytes",
+                      "resultBytes",
+                      "timeoutMs"
+                    ],
+                    "properties": {
+                      "cleanupTimeoutMs": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 2147483647
+                      },
+                      "evidenceBytes": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 134217728
+                      },
+                      "evidenceFiles": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 64
+                      },
+                      "logBytes": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 1048576
+                      },
+                      "resultBytes": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 16777216
+                      },
+                      "timeoutMs": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 2147483647
+                      }
+                    }
+                  },
+                  "claimLifetimeMs": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "parentCompletionPhaseAllowance": {
+                    "type": "integer",
+                    "minimum": 8,
+                    "maximum": 16
+                  }
+                }
+              },
+              "engine": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "cache",
+                  "maximumIngestTextCodeUnits",
+                  "render",
+                  "capturePolicy"
+                ],
+                "properties": {
+                  "cache": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "maximumCompletedBytes",
+                      "maximumCompletedEntries",
+                      "maximumInFlight"
+                    ],
+                    "properties": {
+                      "maximumCompletedBytes": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 16777216
+                      },
+                      "maximumCompletedEntries": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 32
+                      },
+                      "maximumInFlight": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 4
+                      }
+                    }
+                  },
+                  "maximumIngestTextCodeUnits": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 200000
+                  },
+                  "render": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "ASSET-LENGTH",
+                      "HEIGHT",
+                      "LOCALE",
+                      "MOTION",
+                      "TIMEZONE",
+                      "WIDTH-COMPACT",
+                      "WIDTH-REGULAR",
+                      "WIDTH-WIDE"
+                    ],
+                    "properties": {
+                      "ASSET-LENGTH": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 16000000
+                      },
+                      "HEIGHT": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000
+                      },
+                      "LOCALE": {
+                        "type": "string",
+                        "enum": [
+                          "en-US",
+                          "de-DE"
+                        ]
+                      },
+                      "MOTION": {
+                        "type": "string",
+                        "enum": [
+                          "reduce"
+                        ]
+                      },
+                      "TIMEZONE": {
+                        "type": "string",
+                        "enum": [
+                          "UTC",
+                          "Europe/Berlin"
+                        ]
+                      },
+                      "WIDTH-COMPACT": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 390
+                      },
+                      "WIDTH-REGULAR": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 768
+                      },
+                      "WIDTH-WIDE": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1440
+                      }
+                    }
+                  },
+                  "capturePolicy": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "minimumLargeContrast",
+                      "minimumNormalContrast",
+                      "largeBoldFontPx",
+                      "largeBoldWeight",
+                      "largeNormalFontPx",
+                      "minimumTargetPx"
+                    ],
+                    "properties": {
+                      "minimumLargeContrast": {
+                        "type": "number",
+                        "minimum": 3,
+                        "maximum": 21
+                      },
+                      "minimumNormalContrast": {
+                        "type": "number",
+                        "minimum": 4.5,
+                        "maximum": 21
+                      },
+                      "largeBoldFontPx": {
+                        "type": "number",
+                        "minimum": 18.66,
+                        "maximum": 48
+                      },
+                      "largeBoldWeight": {
+                        "type": "integer",
+                        "minimum": 700,
+                        "maximum": 900
+                      },
+                      "largeNormalFontPx": {
+                        "type": "integer",
+                        "minimum": 24,
+                        "maximum": 48
+                      },
+                      "minimumTargetPx": {
+                        "type": "integer",
+                        "minimum": 24,
+                        "maximum": 48
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "activation": {
+            "const": {
+              "deterministicProvider": "enabled",
+              "openAICompatibleProvider": "dormant"
+            }
+          }
+        }
+      }
+    }
+  }
+}

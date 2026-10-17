@@ -1,0 +1,37 @@
+{
+  "time": "2026-10-14T00:49:18.751996+00:00",
+  "frozenInputCount": 90,
+  "changedSinceFreeze": [],
+  "original49BodiesAndSixCases": "all equal, see conservation.json",
+  "canonicalDriftFrom01": [
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "onlyCurrentProviderFieldAdoption": true,
+      "metadataKeys": [
+        "scope",
+        "adoption",
+        "newProcessingBindings",
+        "additiveSourceOwnership",
+        "independentBoundedReview",
+        "wholeC0Accepted",
+        "implementationAuthorization"
+      ]
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "onlyCurrentProviderFieldAdoption": true,
+      "metadataKeys": [
+        "scope",
+        "adoption",
+        "newProcessingBindings",
+        "additiveSourceOwnership",
+        "independentBoundedReview",
+        "wholeC0Accepted",
+        "implementationAuthorization"
+      ]
+    }
+  ],
+  "prior56HistoryPreserved": true,
+  "wholeC0Accepted": false,
+  "freshIndependentRecheckRequired": true
+}

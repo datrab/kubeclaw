@@ -2,11 +2,30 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["targets", "deliveryRoot"],
+  "required": [
+    "targets",
+    "deliveryRoot",
+    "maximumDeliveryRecords",
+    "maximumDeliveryBytes",
+    "targetPayloadProfiles",
+    "failureExcerptCharacters",
+    "maximumRecordBytes"
+  ],
   "properties": {
-    "deliveryRoot": { "type": "string", "minLength": 1 },
-    "maximumDeliveryRecords": { "type": "integer", "minimum": 1, "default": 100000 },
-    "maximumDeliveryBytes": { "type": "integer", "minimum": 1, "default": 268435456 },
+    "deliveryRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maximumDeliveryRecords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumDeliveryBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
     "targets": {
       "type": "object",
       "minProperties": 1,
@@ -21,18 +40,28 @@
                 "endpoint": {},
                 "tokenSecret": {}
               },
-              "required": ["endpoint", "tokenSecret"]
+              "required": [
+                "endpoint",
+                "tokenSecret"
+              ]
             },
             {
               "properties": {
                 "endpointOrigin": {},
                 "endpointSecret": {}
               },
-              "required": ["endpointOrigin", "endpointSecret"]
+              "required": [
+                "endpointOrigin",
+                "endpointSecret"
+              ]
             }
           ],
           "properties": {
-            "receiptEndpoint": { "type": "string", "format": "uri", "pattern": "^https?://" },
+            "receiptEndpoint": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https?://"
+            },
             "endpoint": {
               "type": "string",
               "format": "uri",
@@ -51,20 +80,129 @@
               "type": "string",
               "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
             },
-            "maxPayloadBytes": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 1048576,
-              "default": 65536
-            },
             "format": {
               "type": "string",
-              "enum": ["json", "discord_webhook"],
+              "enum": [
+                "json",
+                "discord_webhook"
+              ],
               "default": "json"
+            },
+            "payloadProfile": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9._-]{0,127}$"
             }
+          },
+          "required": [
+            "payloadProfile"
+          ]
+        }
+      }
+    },
+    "targetPayloadProfiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "maxPayloadBytes"
+        ],
+        "properties": {
+          "maxPayloadBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1048576
           }
         }
       }
+    },
+    "failureExcerptCharacters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2048
+    },
+    "maximumRecordBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "payloadStructure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumDepth",
+        "maximumArrayEntries",
+        "maximumObjectProperties"
+      ],
+      "properties": {
+        "maximumDepth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "maximumArrayEntries": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "maximumObjectProperties": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      }
+    },
+    "payloadPolicyVersion": {
+      "const": "operator-payload.v2"
     }
-  }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "payloadPolicyVersion": false,
+        "payloadStructure": false
+      }
+    },
+    {
+      "properties": {
+        "payloadPolicyVersion": {
+          "const": "operator-payload.v2"
+        },
+        "payloadStructure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumDepth",
+            "maximumArrayEntries",
+            "maximumObjectProperties"
+          ],
+          "properties": {
+            "maximumDepth": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "maximumArrayEntries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "maximumObjectProperties": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          }
+        }
+      },
+      "required": [
+        "payloadPolicyVersion",
+        "payloadStructure"
+      ]
+    }
+  ]
 }

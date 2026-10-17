@@ -1,0 +1,1204 @@
+{
+  "artifact": "docs/review/evidence/config-acceptance/author/prism-trust-surface-dispositions.json",
+  "sha256": "d18f6869e634474f01c83470d8c9d36940d716f52f65d826b6538116277f4a91",
+  "settings": [
+    {
+      "id": "AUTH-PRISM-TRUST-MODE",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart workerTrust.spiffe.enabled \u2192 Control/Worker startup \u2192 nativePrismCommand closed ENV \u2192 nativePrismHostConfig \u2192 artifact/attempt auth",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "All control/worker/proxy projections must agree. False omits ENV and selects real HMAC secrets; true emits peer IDs/proxy and suppresses HMAC secret ENV. No per-request latest mode.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "WORKER_TRUST_SPIFFE_ENABLED",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "absent or any non-true string => HMAC; exact true => SPIFFE",
+        "precedence": "All control/worker/proxy projections must agree. False omits ENV and selects real HMAC secrets; true emits peer IDs/proxy and suppresses HMAC secret ENV. No per-request latest mode."
+      },
+      "typeUnitDomain": "boolean target; current coercion is not type validation",
+      "reader": "artifact/attempt auth",
+      "productiveCallerChain": [
+        "Chart workerTrust.spiffe.enabled",
+        "Control/Worker startup",
+        "nativePrismCommand closed ENV",
+        "nativePrismHostConfig",
+        "artifact/attempt auth"
+      ],
+      "validation": {
+        "semantic": "boolean target; current coercion is not type validation; All control/worker/proxy projections must agree. False omits ENV and selects real HMAC secrets; true emits peer IDs/proxy and suppresses HMAC secret ENV. No per-request latest mode.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "aliasOf:DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENABLED",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "All control/worker/proxy projections must agree. False omits ENV and selects real HMAC secrets; true emits peer IDs/proxy and suppresses HMAC secret ENV. No per-request latest mode.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-TRUST-MODE-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-NOVA",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 loadTrustConfig \u2192 dispatchRoute.authenticateDispatch \u2192 loopback-only authorizeProxiedSpiffePeer",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Load checks presence only; actual guard validates syntax and exact peer membership. Not a separate editable identity author.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_TRUSTED_NOVA_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "empty when absent; required nonempty in SPIFFE mode",
+        "precedence": "Load checks presence only; actual guard validates syntax and exact peer membership. Not a separate editable identity author."
+      },
+      "typeUnitDomain": "Chart trustDomain/novaNamespace/novaServiceAccount derivation; exact Core SPIFFE regex at real authorizeProxiedSpiffePeer",
+      "reader": "loopback-only authorizeProxiedSpiffePeer",
+      "productiveCallerChain": [
+        "Chart",
+        "loadTrustConfig",
+        "dispatchRoute.authenticateDispatch",
+        "loopback-only authorizeProxiedSpiffePeer"
+      ],
+      "validation": {
+        "semantic": "Chart trustDomain/novaNamespace/novaServiceAccount derivation; exact Core SPIFFE regex at real authorizeProxiedSpiffePeer; Load checks presence only; actual guard validates syntax and exact peer membership. Not a separate editable identity author.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "generatedFrom:DLV-CHART-PRISM-WORKERTRUST-SPIFFE-TRUSTDOMAIN,NOVANAMESPACE,NOVASERVICEACCOUNT",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Load checks presence only; actual guard validates syntax and exact peer membership. Not a separate editable identity author.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-TRUST-PRINCIPAL-NOVA-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-WORKER",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 loadTrustConfig \u2192 internal-artifacts.authorized \u2192 Core loopback peer guard",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Artifact route permits worker/control/optional agent peers; preserve exact selected identity and accepted artifact origin on retry.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_TRUSTED_WORKER_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "empty when absent; required in SPIFFE mode",
+        "precedence": "Artifact route permits worker/control/optional agent peers; preserve exact selected identity and accepted artifact origin on retry."
+      },
+      "typeUnitDomain": "trustDomain + Release.Namespace + actual prism-worker service account",
+      "reader": "Core loopback peer guard",
+      "productiveCallerChain": [
+        "Chart",
+        "loadTrustConfig",
+        "internal-artifacts.authorized",
+        "Core loopback peer guard"
+      ],
+      "validation": {
+        "semantic": "trustDomain + Release.Namespace + actual prism-worker service account; Artifact route permits worker/control/optional agent peers; preserve exact selected identity and accepted artifact origin on retry.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "generatedFrom:Prism deployment trust domain/namespace/service account",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Artifact route permits worker/control/optional agent peers; preserve exact selected identity and accepted artifact origin on retry.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-TRUST-PRINCIPAL-WORKER-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-CONTROL",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 Control own identity/artifact peer and admitDesignAgent identity prefix; Worker trusted peer \u2192 worker-service guard",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Control principal also prefixes admitted agent registration (/prism/main/v2); cannot classify as only transport auth. Worker alias is not a second author.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_CONTROL_SPIFFE_ID; worker PRISM_TRUSTED_CONTROL_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "control and worker aliases derive same Chart principal; empty control value in HMAC mode",
+        "precedence": "Control principal also prefixes admitted agent registration (/prism/main/v2); cannot classify as only transport auth. Worker alias is not a second author."
+      },
+      "typeUnitDomain": "trustDomain + Release.Namespace + actual prism-control service account",
+      "reader": "worker-service guard",
+      "productiveCallerChain": [
+        "Chart",
+        "Control own identity/artifact peer and admitDesignAgent identity prefix; Worker trusted peer",
+        "worker-service guard"
+      ],
+      "validation": {
+        "semantic": "trustDomain + Release.Namespace + actual prism-control service account; Control principal also prefixes admitted agent registration (/prism/main/v2); cannot classify as only transport auth. Worker alias is not a second author.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "generatedFrom:Prism deployment trust domain/namespace/service account",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Control principal also prefixes admitted agent registration (/prism/main/v2); cannot classify as only transport auth. Worker alias is not a second author.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-TRUST-PRINCIPAL-CONTROL-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-AGENT",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 loadTrustConfig \u2192 internal artifact allowed peer set",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "This is the peer identity allowlist, not the runtime/model selector; artifact route includes it only when nonempty.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_TRUSTED_AGENT_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "empty when absent; required in SPIFFE mode",
+        "precedence": "This is the peer identity allowlist, not the runtime/model selector; artifact route includes it only when nonempty."
+      },
+      "typeUnitDomain": "Chart trustDomain/agentNamespace/agentServiceAccount; Core regex at guard",
+      "reader": "internal artifact allowed peer set",
+      "productiveCallerChain": [
+        "Chart",
+        "loadTrustConfig",
+        "internal artifact allowed peer set"
+      ],
+      "validation": {
+        "semantic": "Chart trustDomain/agentNamespace/agentServiceAccount; Core regex at guard; This is the peer identity allowlist, not the runtime/model selector; artifact route includes it only when nonempty.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "generatedFrom:DLV-CHART-PRISM-WORKERTRUST-SPIFFE-TRUSTDOMAIN,AGENTNAMESPACE,AGENTSERVICEACCOUNT",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "This is the peer identity allowlist, not the runtime/model selector; artifact route includes it only when nonempty.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-TRUST-PRINCIPAL-AGENT-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-TEST-RUNNER",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 loadTrustConfig \u2192 dispatchRoute authenticated peer set after filtering empty values",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Distinct allowed caller, not a fabricated productive Core trust-envelope consumer.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "optional empty; Chart emits same namespace prism-test-runner in SPIFFE mode",
+        "precedence": "Distinct allowed caller, not a fabricated productive Core trust-envelope consumer."
+      },
+      "typeUnitDomain": "generated principal or explicit absent optional membership; target optional activation explicit",
+      "reader": "dispatchRoute authenticated peer set after filtering empty values",
+      "productiveCallerChain": [
+        "Chart",
+        "loadTrustConfig",
+        "dispatchRoute authenticated peer set after filtering empty values"
+      ],
+      "validation": {
+        "semantic": "generated principal or explicit absent optional membership; target optional activation explicit; Distinct allowed caller, not a fabricated productive Core trust-envelope consumer.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "generatedFrom:Prism deployment trust domain/namespace/service account",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Distinct allowed caller, not a fabricated productive Core trust-envelope consumer.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-TRUST-PRINCIPAL-TEST-RUNNER-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-SESSION",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart SecretKeyRef \u2192 loadControlServerConfig \u2192 session mint/verify and productActor",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Session validity uses originally signed expiry. External Secretstore identity/revision/rotation and recovery contract unknown; do not invent a revision.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_SESSION_SECRET",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "Chart secrets.runtime key session-secret; actual bytes never persisted",
+        "precedence": "Session validity uses originally signed expiry. External Secretstore identity/revision/rotation and recovery contract unknown; do not invent a revision."
+      },
+      "typeUnitDomain": "current required nonempty bytes, no trim or revision validation",
+      "reader": "session mint/verify and productActor",
+      "productiveCallerChain": [
+        "Chart SecretKeyRef",
+        "loadControlServerConfig",
+        "session mint/verify and productActor"
+      ],
+      "validation": {
+        "semantic": "current required nonempty bytes, no trim or revision validation; Session validity uses originally signed expiry. External Secretstore identity/revision/rotation and recovery contract unknown; do not invent a revision.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "referenceOf:DLV-CHART-PRISM-SECRETS-RUNTIME#/session-secret",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Session validity uses originally signed expiry. External Secretstore identity/revision/rotation and recovery contract unknown; do not invent a revision.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-SECRET-SESSION-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-INGRESS",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 Control identity exchange; same ref \u2192 Studio upstreamHeaders x-prism-ingress-secret",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Control/Studio share the exact logical credential; selected endpoint/credential must remain coupled. No separate Studio secret author.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_INGRESS_SECRET; Studio same ENV",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "Chart secrets.runtime key ingress-secret; Studio missing => empty disables proxy",
+        "precedence": "Control/Studio share the exact logical credential; selected endpoint/credential must remain coupled. No separate Studio secret author."
+      },
+      "typeUnitDomain": "Control requires nonempty; Studio only rejects at proxy if empty",
+      "reader": "Studio upstreamHeaders x-prism-ingress-secret",
+      "productiveCallerChain": [
+        "Chart",
+        "Control identity exchange; same ref",
+        "Studio upstreamHeaders x-prism-ingress-secret"
+      ],
+      "validation": {
+        "semantic": "Control requires nonempty; Studio only rejects at proxy if empty; Control/Studio share the exact logical credential; selected endpoint/credential must remain coupled. No separate Studio secret author.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "referenceOf:DLV-CHART-PRISM-SECRETS-RUNTIME#/ingress-secret",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Control/Studio share the exact logical credential; selected endpoint/credential must remain coupled. No separate Studio secret author.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-SECRET-INGRESS-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-WORKER",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 WorkerNonceDatabase.authenticate; Control artifact Bearer guard; closed native ENV \u2192 WorkerArtifactClient",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Same bytes serve HMAC attempts and artifact Bearer auth, but those are different validation protocols. Child environment is captured, not reloaded from ambient ENV.",
+      "source": {
+        "path": "skills/prism/server/worker-config.ts",
+        "field": "PRISM_WORKER_SECRET; Control and native child aliases",
+        "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+      },
+      "current": {
+        "valueOrDefault": "Chart secrets.runtime key worker-secret only in HMAC mode; true-mode empty",
+        "precedence": "Same bytes serve HMAC attempts and artifact Bearer auth, but those are different validation protocols. Child environment is captured, not reloaded from ambient ENV."
+      },
+      "typeUnitDomain": "required nonempty HMAC; intentionally unused in SPIFFE mode",
+      "reader": "WorkerArtifactClient",
+      "productiveCallerChain": [
+        "Chart",
+        "WorkerNonceDatabase.authenticate; Control artifact Bearer guard; closed native ENV",
+        "WorkerArtifactClient"
+      ],
+      "validation": {
+        "semantic": "required nonempty HMAC; intentionally unused in SPIFFE mode; Same bytes serve HMAC attempts and artifact Bearer auth, but those are different validation protocols. Child environment is captured, not reloaded from ambient ENV.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "referenceOf:DLV-CHART-PRISM-SECRETS-RUNTIME#/worker-secret",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Same bytes serve HMAC attempts and artifact Bearer auth, but those are different validation protocols. Child environment is captured, not reloaded from ambient ENV.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-SECRET-WORKER-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-DISPATCH",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 loadTrustConfig \u2192 dispatch-route HMAC(key.rawBody)",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Not the worker secret or model selector; idempotency key + raw body define actual signature domain.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_DISPATCH_SECRET",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "Chart secrets.runtime key dispatch-secret only HMAC",
+        "precedence": "Not the worker secret or model selector; idempotency key + raw body define actual signature domain."
+      },
+      "typeUnitDomain": "required nonempty HMAC; unused SPIFFE",
+      "reader": "dispatch-route HMAC(key.rawBody)",
+      "productiveCallerChain": [
+        "Chart",
+        "loadTrustConfig",
+        "dispatch-route HMAC(key.rawBody)"
+      ],
+      "validation": {
+        "semantic": "required nonempty HMAC; unused SPIFFE; Not the worker secret or model selector; idempotency key + raw body define actual signature domain.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "referenceOf:DLV-CHART-PRISM-SECRETS-RUNTIME#/dispatch-secret",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Not the worker secret or model selector; idempotency key + raw body define actual signature domain.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-SECRET-DISPATCH-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-INGESTION",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 Control config \u2192 corpus acquisition POST / cleanup DELETE Authorization",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Original endpoint, quarantine digest and credential reference must survive cleanup/retry. No latest credential fills missing historical binding.",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_INGESTION_SECRET",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "current": {
+        "valueOrDefault": "Chart secrets.runtime key ingestion-secret",
+        "precedence": "Original endpoint, quarantine digest and credential reference must survive cleanup/retry. No latest credential fills missing historical binding."
+      },
+      "typeUnitDomain": "Control requires nonempty bytes",
+      "reader": "corpus acquisition POST / cleanup DELETE Authorization",
+      "productiveCallerChain": [
+        "Chart",
+        "Control config",
+        "corpus acquisition POST / cleanup DELETE Authorization"
+      ],
+      "validation": {
+        "semantic": "Control requires nonempty bytes; Original endpoint, quarantine digest and credential reference must survive cleanup/retry. No latest credential fills missing historical binding.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "referenceOf:DLV-CHART-PRISM-SECRETS-RUNTIME#/ingestion-secret",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Original endpoint, quarantine digest and credential reference must survive cleanup/retry. No latest credential fills missing historical binding.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-SECRET-INGESTION-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-DATABASE",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Chart \u2192 WorkerNonceDatabase or Control captured listener \u2192 pg.Pool",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Worker SPIFFE does not use nonce DB. Control missing URL can fall through to pg connection defaults; current existence of a required explicit Control connection reference is not proven.",
+      "source": {
+        "path": "skills/prism/server/worker-config.ts",
+        "field": "DATABASE_URL; Control listener alias",
+        "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+      },
+      "current": {
+        "valueOrDefault": "Chart secrets.database key runtime-url",
+        "precedence": "Worker SPIFFE does not use nonce DB. Control missing URL can fall through to pg connection defaults; current existence of a required explicit Control connection reference is not proven."
+      },
+      "typeUnitDomain": "Worker HMAC requires nonempty; SPIFFE worker permits empty; Control passes undefined to pg.Pool if omitted",
+      "reader": "pg.Pool",
+      "productiveCallerChain": [
+        "Chart",
+        "WorkerNonceDatabase or Control captured listener",
+        "pg.Pool"
+      ],
+      "validation": {
+        "semantic": "Worker HMAC requires nonempty; SPIFFE worker permits empty; Control passes undefined to pg.Pool if omitted; Worker SPIFFE does not use nonce DB. Control missing URL can fall through to pg connection defaults; current existence of a required explicit Control connection reference is not proven.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "referenceOf:DLV-CHART-PRISM-SECRETS-DATABASE#/runtime-url",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Worker SPIFFE does not use nonce DB. Control missing URL can fall through to pg connection defaults; current existence of a required explicit Control connection reference is not proven.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-SECRET-DATABASE-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-SCOPE",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Core native-worker-launcher.c \u2192 setenv(parent_path) \u2192 nativePrismHostConfig \u2192 native operation scope",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Not an operator-tunable arbitrary ENV path. Genuine host membership/recovery proof remains not-run; no cgroup mutation in this evidence.",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "KUBECLAW_NATIVE_SCOPE",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "current": {
+        "valueOrDefault": "launcher exports validated parent cgroup path",
+        "precedence": "Not an operator-tunable arbitrary ENV path. Genuine host membership/recovery proof remains not-run; no cgroup mutation in this evidence."
+      },
+      "typeUnitDomain": "host checks presence; actual launcher verifies pinned parent/child scopes and process relocation",
+      "reader": "native operation scope",
+      "productiveCallerChain": [
+        "Core native-worker-launcher.c",
+        "setenv(parent_path)",
+        "nativePrismHostConfig",
+        "native operation scope"
+      ],
+      "validation": {
+        "semantic": "host checks presence; actual launcher verifies pinned parent/child scopes and process relocation; Not an operator-tunable arbitrary ENV path. Genuine host membership/recovery proof remains not-run; no cgroup mutation in this evidence.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "generatedFrom:Core trusted accepted native scope binding",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Not an operator-tunable arbitrary ENV path. Genuine host membership/recovery proof remains not-run; no cgroup mutation in this evidence.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-NATIVE-SCOPE-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-ASSIGNED-INPUT",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "CMP-prism-worker-ingress.maximumInputBytes \u2192 prismSupervisorSettings \u2192 nativePrismCommand closed ENV \u2192 host input bound",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Same variable is forbidden ambient loader authority but required generated child transport. Do not classify the two paths as equivalent overrides.",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "PRISM_NATIVE_ASSIGNED_INPUT_BYTES",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "current": {
+        "valueOrDefault": "String(native.maximumInputBytes) from captured ingress settings",
+        "precedence": "Same variable is forbidden ambient loader authority but required generated child transport. Do not classify the two paths as equivalent overrides."
+      },
+      "typeUnitDomain": "host safe integer1..2147483647; supervisor loader rejects this ENV as legacy competing config authority",
+      "reader": "host input bound",
+      "productiveCallerChain": [
+        "CMP-prism-worker-ingress.maximumInputBytes",
+        "prismSupervisorSettings",
+        "nativePrismCommand closed ENV",
+        "host input bound"
+      ],
+      "validation": {
+        "semantic": "host safe integer1..2147483647; supervisor loader rejects this ENV as legacy competing config authority; Same variable is forbidden ambient loader authority but required generated child transport. Do not classify the two paths as equivalent overrides.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "aliasOf:CMP-prism-worker-ingress.maximumInputBytes",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Same variable is forbidden ambient loader authority but required generated child transport. Do not classify the two paths as equivalent overrides.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-NATIVE-ASSIGNED-INPUT-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-POOL-POLICY-LOCATOR",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Docker + host generated mount \u2192 nativePrismSupervisorConfig \u2192 readNativeWorkerPoolPolicy/identity",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Policy bytes/limits remain their existing sole Core/host authority; filepath transport does not create a second policy author. Exact actual host/node/pool identity is external.",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "PRISM_NATIVE_POOL_POLICY_FILE",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "current": {
+        "valueOrDefault": "Docker /etc/kubeclaw/prism-pool.json; Chart host preflight projection/mount",
+        "precedence": "Policy bytes/limits remain their existing sole Core/host authority; filepath transport does not create a second policy author. Exact actual host/node/pool identity is external."
+      },
+      "typeUnitDomain": "absolute canonical non-root locator; actual Core pool parser/runtime/node identity authority",
+      "reader": "readNativeWorkerPoolPolicy/identity",
+      "productiveCallerChain": [
+        "Docker + host generated mount",
+        "nativePrismSupervisorConfig",
+        "readNativeWorkerPoolPolicy/identity"
+      ],
+      "validation": {
+        "semantic": "absolute canonical non-root locator; actual Core pool parser/runtime/node identity authority; Policy bytes/limits remain their existing sole Core/host authority; filepath transport does not create a second policy author. Exact actual host/node/pool identity is external.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "generatedFrom:Core native host pool/policy binding",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Policy bytes/limits remain their existing sole Core/host authority; filepath transport does not create a second policy author. Exact actual host/node/pool identity is external.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-NATIVE-POOL-POLICY-LOCATOR-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-LAUNCHER-LOCATOR",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Docker install/ENV \u2192 nativePrismSupervisorConfig \u2192 nativePrismCommand \u2192 Core launcher",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "generated-binding",
+      "classificationReason": "No claim that pathname alone proves installed executable or privilege/cgroup authority.",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "PRISM_NATIVE_LAUNCHER",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "current": {
+        "valueOrDefault": "Docker /usr/local/libexec/kubeclaw-native-worker-launcher",
+        "precedence": "No claim that pathname alone proves installed executable or privilege/cgroup authority."
+      },
+      "typeUnitDomain": "absolute canonical non-root filepath at config; image installation/executable trust distinct",
+      "reader": "Core launcher",
+      "productiveCallerChain": [
+        "Docker install/ENV",
+        "nativePrismSupervisorConfig",
+        "nativePrismCommand",
+        "Core launcher"
+      ],
+      "validation": {
+        "semantic": "absolute canonical non-root filepath at config; image installation/executable trust distinct; No claim that pathname alone proves installed executable or privilege/cgroup authority.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "generatedFrom:locked native launcher package/delivery binding",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "No claim that pathname alone proves installed executable or privilege/cgroup authority.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-NATIVE-LAUNCHER-LOCATOR-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-BROWSER-ROOT",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Docker locked browser package \u2192 supervisor browserPath \u2192 closed child ENV \u2192 Playwright registry/browser launch",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Native child cannot see later ambient path changes. Actual locked registry reader, architecture/package closure and complete alternative installation profile proof remain open.",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "PLAYWRIGHT_BROWSERS_PATH",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "current": {
+        "valueOrDefault": "ENV else /ms-playwright; Docker image sets same path",
+        "precedence": "Native child cannot see later ambient path changes. Actual locked registry reader, architecture/package closure and complete alternative installation profile proof remain open."
+      },
+      "typeUnitDomain": "current loader no explicit path/existence validation; supported locked installation domain pending",
+      "reader": "Playwright registry/browser launch",
+      "productiveCallerChain": [
+        "Docker locked browser package",
+        "supervisor browserPath",
+        "closed child ENV",
+        "Playwright registry/browser launch"
+      ],
+      "validation": {
+        "semantic": "current loader no explicit path/existence validation; supported locked installation domain pending; Native child cannot see later ambient path changes. Actual locked registry reader, architecture/package closure and complete alternative installation profile proof remain open.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "prism-worker existing owner proposed installation/browserRoot",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Native child cannot see later ambient path changes. Actual locked registry reader, architecture/package closure and complete alternative installation profile proof remain open.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-BROWSER-ROOT-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-STUDIO-ASSET-ROOT",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "Docker built assets/ENV \u2192 loadStudioConfig \u2192 handleStudioRequest actual static-file resolver",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Package locator and actual files must be one delivered generation; no fake root/path-only success or unrelated asset rewrite.",
+      "source": {
+        "path": "skills/prism/server/studio-config.ts",
+        "field": "STUDIO_ROOT",
+        "sha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465"
+      },
+      "current": {
+        "valueOrDefault": "ENV else module-relative dist-studio; Docker sets /app/prism/skills/prism/dist-studio",
+        "precedence": "Package locator and actual files must be one delivered generation; no fake root/path-only success or unrelated asset rewrite."
+      },
+      "typeUnitDomain": "loader accepts string; studio request path containment/open/stream is separate boundary",
+      "reader": "handleStudioRequest actual static-file resolver",
+      "productiveCallerChain": [
+        "Docker built assets/ENV",
+        "loadStudioConfig",
+        "handleStudioRequest actual static-file resolver"
+      ],
+      "validation": {
+        "semantic": "loader accepts string; studio request path containment/open/stream is separate boundary; Package locator and actual files must be one delivered generation; no fake root/path-only success or unrelated asset rewrite.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "prism-studio existing owner proposed installation/assetRoot",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Package locator and actual files must be one delivered generation; no fake root/path-only success or unrelated asset rewrite.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-STUDIO-ASSET-ROOT-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "authenticated Control internal artifact POST \u2192 byte accumulation \u2192 digest check \u2192 artifacts.put",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Distinct from6MB corpus/base64 and native evidence envelope budgets; requires coupled domain/admission/profile review, not equal-cap alias.",
+      "source": {
+        "path": "skills/prism/server/internal-artifacts.ts",
+        "field": "POST accumulated bytes ceiling",
+        "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8"
+      },
+      "current": {
+        "valueOrDefault": 134217728,
+        "precedence": "Distinct from6MB corpus/base64 and native evidence envelope budgets; requires coupled domain/admission/profile review, not equal-cap alias."
+      },
+      "typeUnitDomain": "wire bytes; current reject size>limit",
+      "reader": "artifacts.put",
+      "productiveCallerChain": [
+        "authenticated Control internal artifact POST",
+        "byte accumulation",
+        "digest check",
+        "artifacts.put"
+      ],
+      "validation": {
+        "semantic": "wire bytes; current reject size>limit; Distinct from6MB corpus/base64 and native evidence envelope budgets; requires coupled domain/admission/profile review, not equal-cap alias.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "prism-control existing owner proposed internalArtifact/maximumUploadBytes",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Distinct from6MB corpus/base64 and native evidence envelope budgets; requires coupled domain/admission/profile review, not equal-cap alias.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-ARTIFACT-ACK-BYTES",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "native WorkerArtifactClient.upload \u2192 current real HTTP response parser \u2192 acknowledgment identity checks",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Read artifact limit derives artifact.sizeBytes task binding; acknowledgment cap is code policy. Preserve redirect:error and digest/size/ID equality.",
+      "source": {
+        "path": "skills/prism/server/worker-artifacts.ts",
+        "field": "upload responseBytes(response,8192)",
+        "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+      },
+      "current": {
+        "valueOrDefault": 8192,
+        "precedence": "Read artifact limit derives artifact.sizeBytes task binding; acknowledgment cap is code policy. Preserve redirect:error and digest/size/ID equality."
+      },
+      "typeUnitDomain": "response bytes; checks content-length and actual streamed length",
+      "reader": "acknowledgment identity checks",
+      "productiveCallerChain": [
+        "native WorkerArtifactClient.upload",
+        "current real HTTP response parser",
+        "acknowledgment identity checks"
+      ],
+      "validation": {
+        "semantic": "response bytes; checks content-length and actual streamed length; Read artifact limit derives artifact.sizeBytes task binding; acknowledgment cap is code policy. Preserve redirect:error and digest/size/ID equality.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "prism-worker existing owner proposed artifactClient/maximumAcknowledgmentBytes",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Read artifact limit derives artifact.sizeBytes task binding; acknowledgment cap is code policy. Preserve redirect:error and digest/size/ID equality.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-ARTIFACT-ACK-BYTES-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-STUDIO-REQUEST-BYTES",
+      "owner": "actual Prism role/producer identified in target reference",
+      "scope": {
+        "instance": "studio.ts \u2192 handleStudioRequest/proxy \u2192 requestBody \u2192 upstream fetch",
+        "profile": "current actual startup generation; target full selection/binding still open"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Independent real parser/consumer from Control body even though current value equals2M; coupled domains/full profiles/real proxy harness still open.",
+      "source": {
+        "path": "skills/prism/server/studio-request.ts",
+        "field": "requestBody accumulated size ceiling",
+        "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+      },
+      "current": {
+        "valueOrDefault": 2000000,
+        "precedence": "Independent real parser/consumer from Control body even though current value equals2M; coupled domains/full profiles/real proxy harness still open."
+      },
+      "typeUnitDomain": "wire bytes; current error413 PRISM_STUDIO_REQUEST_TOO_LARGE",
+      "reader": "upstream fetch",
+      "productiveCallerChain": [
+        "studio.ts",
+        "handleStudioRequest/proxy",
+        "requestBody",
+        "upstream fetch"
+      ],
+      "validation": {
+        "semantic": "wire bytes; current error413 PRISM_STUDIO_REQUEST_TOO_LARGE; Independent real parser/consumer from Control body even though current value equals2M; coupled domains/full profiles/real proxy harness still open.",
+        "schema": "Current reader boundaries above; complete default-free target schema/projection domain not implemented"
+      },
+      "targetAuthorRef": "prism-studio existing owner proposed proxy/maximumRequestBytes",
+      "activationScope": {
+        "current": "S captured service/supervisor or J assigned native child binding, as identified above",
+        "target": "Retain original accepted profile/identity/reference for operation and cleanup; unstarted allowed modules only after atomic validated publish"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Independent real parser/consumer from Control body even though current value equals2M; coupled domains/full profiles/real proxy harness still open.",
+      "profileEvalSuitability": "Fixed original generation/ref identity for Eval; missing external Secretstore revision/host prerequisites cannot be fabricated",
+      "migrationAction": "C3 existing role-author extension or referenced shared producer; C5 durable closure before dispatch; no second author/ambient override",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-STUDIO-REQUEST-BYTES-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log"
+      ],
+      "semanticStatus": "source-traced-exact-alias-domain-profile-case-review-open",
+      "c0Closed": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "startedAt": "2026-10-16T22:38:14.722737+00:00",
+  "wrapperPid": 2580123,
+  "command": [
+    "node",
+    "--test",
+    "--test-timeout=90000",
+    "tests/verification/e2e/real-run-workspace.test.mjs"
+  ],
+  "sourceCommit": "79b80a1d13477ebd2cf149773e3d24ead4acb839",
+  "sourceHashes": {
+    "tests/verification/e2e/real-run-workspace.mjs": "555faf4ce62db9731f3a2813cff031773c7fa2f3ddcf42f6de913202a601490d",
+    "tests/verification/e2e/real-run-workspace.test.mjs": "eb9245a823afd3800cb8a922fd034aa4286ac290cd17ae91f075a243759a552c"
+  },
+  "reason": "Final whole original command after corrected conflict-origin source; previous full predecessor timed out, no final-source whole exit was recorded. Same original90000ms per-case deadline.",
+  "independentAcceptance": false,
+  "nativeAcceptance": false,
+  "fullC0C6Complete": false,
+  "writerLock": "SAME exclusive nonblocking; held only during productive command, released on wrapper exit",
+  "childPid": 2580125
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "argv": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.buster-preparation-native.json"
+    ],
+    "exitCode": 0,
+    "log": "typecheck.txt"
+  },
+  {
+    "argv": [
+      "node",
+      "docs/review/remediation/config-native-preparation-current-owner-20261017/source-input-controls.mjs"
+    ],
+    "exitCode": 0,
+    "log": "source-input-controls.txt"
+  }
+]

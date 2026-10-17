@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "provider-configuration.v2",
+  "contractId": "kubeclaw.visual@1",
+  "taskSchemaDigest": "sha256:955bb16607d783e47da85d26747f217db5e1d892412f735ecae8312199d6234c",
+  "values": {
+    "url": "http://127.0.0.1:18080",
+    "manifestFile": "manifest-640-a.json",
+    "targets": [
+      "target-a",
+      "target-b"
+    ]
+  },
+  "selectedPolicy": {
+    "schemaVersion": "selected-registration-policy.v1",
+    "binding": {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.visual",
+      "registrationId": "kubeclaw.visual:visual",
+      "instanceId": "fixture.visual",
+      "profileId": "RT-be3717baf421a9dd-B",
+      "serviceInstanceId": "fixture.service.buster-browser-runtime",
+      "ownerPath": "plugins/kubeclaw.visual.config.json",
+      "rootDigest": "sha256:d3adc4ab245ef178f1d9cb833d7af4307ebad61af572ef679b20b713b56c2c1a",
+      "ownerDigest": "sha256:67a65f2b427fd3dc2746a3fe027f3f80294a612ab5d42f87800aa3d114a33f81",
+      "profileDigest": "sha256:1e578079a987a39e6c86084005074ec2038b28debe03cf6be4082e029b67c857",
+      "packageVersion": "1.0.0",
+      "packageContentDigest": "sha256:bad99128dd2f6434a4fe8b96969ea1053ddd43eae745aefb997ee9de5ff389e4",
+      "ownerSchemaDigest": "sha256:e682efc481dc65e4e19b273f3d31b5c99d16d7bff474ce554c54878543465ff3",
+      "taskSchemaDigest": "sha256:955bb16607d783e47da85d26747f217db5e1d892412f735ecae8312199d6234c",
+      "readerVersion": "pipeline-entry.v9/provider-configuration.v2",
+      "c3RuntimeSchemaDigest": "sha256:af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "c3ReferenceContractDigest": "sha256:d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+      "runtimeRole": "buster",
+      "componentInstanceId": "fixture.service.buster-browser-runtime",
+      "componentProfileId": "browser-source-A",
+      "componentOwnerDigest": "sha256:db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252",
+      "componentProfileDigest": "sha256:3f57729163ae695896028dddbc9a8565266a9a28f060c950ac3c3dfbe388ac67",
+      "workerComponentProfileDigest": "sha256:bd819145a22dcf8018de07820a9589f1901163b17df01208dc4591a8c74d9b5c",
+      "nativeResourcePolicyDigest": "sha256:654555f2e4776830dcd0afef6564720c224e96b0fdcd7f5a49ebebdee9a42629"
+    },
+    "processing": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 640,
+            "height": 480
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparisonProfiles": {
+        "strict-v1": {
+          "maximumDifferencePercent": 0,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 0
+        },
+        "balanced-v1": {
+          "maximumDifferencePercent": 0.5,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 0.25
+        }
+      },
+      "selectedComparisonProfile": "strict-v1",
+      "overrides": {},
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#b"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "declarations": {
+      "retrySafe": true,
+      "matrixFields": [],
+      "evidenceDefaults": {
+        "onPass": [
+          "log",
+          "visual-baseline",
+          "visual-current",
+          "visual-difference",
+          "test-report"
+        ],
+        "onFail": [
+          "log",
+          "visual-baseline",
+          "visual-current",
+          "visual-difference",
+          "test-report"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    }
+  }
+}

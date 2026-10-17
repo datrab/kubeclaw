@@ -1,0 +1,59 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/runner-original-producer-inputs.test.mjs",
+      "tests/verification/contracts/runner-scheduler-drain.test.mjs",
+      "tests/verification/contracts/runner-scheduler-provider-drain.test.mjs",
+      "tests/verification/reliability/quality-provider-v2.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.22,
+    "log": "docs/review/remediation/config-quality-original-producer-join-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/buster/engine/test-gates/runner.ts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.02,
+    "log": "docs/review/remediation/config-quality-original-producer-join-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 98.88,
+    "log": "docs/review/remediation/config-quality-original-producer-join-20261016/check-2.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.07,
+    "log": "docs/review/remediation/config-quality-original-producer-join-20261016/check-3.txt"
+  }
+]

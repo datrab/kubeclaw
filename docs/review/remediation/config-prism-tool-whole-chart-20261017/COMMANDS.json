@@ -1,0 +1,27 @@
+[
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/deployment/prism-tool-plugin-config.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/prism-tool-plugin-config.test.mjs",
+      "skills/prism/openclaw-plugin/index.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+]

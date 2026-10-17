@@ -1,0 +1,659 @@
+{
+  "scope": "Narrow JSON coordinate equality, not new validator or native semantic proof",
+  "checks": [
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT",
+      "profile": "A",
+      "pointer": "/readonlyBindings/api/port",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT",
+      "profile": "B",
+      "pointer": "/readonlyBindings/api/port",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+      "profile": "A",
+      "pointer": "/readonlyBindings/sharedLease/apiGroup",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+      "profile": "B",
+      "pointer": "/readonlyBindings/sharedLease/apiGroup",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+      "profile": "A",
+      "pointer": "/readonlyBindings/sharedLease/apiVersion",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+      "profile": "B",
+      "pointer": "/readonlyBindings/sharedLease/apiVersion",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/allowedPrefixes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/allowedPrefixes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/defaultTtlSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/defaultTtlSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/maxTtlSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/maxTtlSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT",
+      "profile": "A",
+      "pointer": "/readonlyBindings/roles/controllerServiceAccount",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT",
+      "profile": "B",
+      "pointer": "/readonlyBindings/roles/controllerServiceAccount",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME",
+      "profile": "A",
+      "pointer": "/readonlyBindings/roles/secretRole",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME",
+      "profile": "B",
+      "pointer": "/readonlyBindings/roles/secretRole",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME",
+      "profile": "A",
+      "pointer": "/readonlyBindings/roles/deployerRole",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME",
+      "profile": "B",
+      "pointer": "/readonlyBindings/roles/deployerRole",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME",
+      "profile": "A",
+      "pointer": "/readonlyBindings/roles/testerRole",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME",
+      "profile": "B",
+      "pointer": "/readonlyBindings/roles/testerRole",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/allowedAccess",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/allowedAccess",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE",
+      "profile": "A",
+      "pointer": "/readonlyBindings/releaseNamespace",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE",
+      "profile": "B",
+      "pointer": "/readonlyBindings/releaseNamespace",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/pollIntervalMs",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/pollIntervalMs",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST",
+      "profile": "A",
+      "pointer": "/readonlyBindings/api/host",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST",
+      "profile": "B",
+      "pointer": "/readonlyBindings/api/host",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/allowedSourceSecrets",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/allowedSourceSecrets",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/port",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/port",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/audience",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/audience",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness",
+      "exactTypedNodeEquals": false,
+      "declared": {
+        "enabled": true,
+        "audience": "fixture-ready",
+        "producerNamespace": "kubeclaw",
+        "producerServiceAccount": "agent-nova",
+        "tlsSecretRef": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        }
+      },
+      "actual": {
+        "enabled": true,
+        "audience": "fixture-ready",
+        "producerNamespace": "kubeclaw",
+        "producerServiceAccount": "agent-nova",
+        "tlsSecretRef": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        },
+        "port": 8443
+      }
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness",
+      "exactTypedNodeEquals": false,
+      "declared": {
+        "enabled": true,
+        "audience": "fixture-ready",
+        "producerNamespace": "kubeclaw",
+        "producerServiceAccount": "agent-nova",
+        "tlsSecretRef": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        }
+      },
+      "actual": {
+        "enabled": true,
+        "audience": "fixture-ready",
+        "producerNamespace": "kubeclaw",
+        "producerServiceAccount": "agent-nova",
+        "tlsSecretRef": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        },
+        "port": 8443
+      }
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED",
+      "profile": "A",
+      "pointer": "/readonlyBindings/product/enabled",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED",
+      "profile": "B",
+      "pointer": "/readonlyBindings/product/enabled",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY",
+      "profile": "A",
+      "pointer": "/readonlyBindings/product/verifyKeyRef",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY",
+      "profile": "B",
+      "pointer": "/readonlyBindings/product/verifyKeyRef",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE",
+      "profile": "A",
+      "pointer": "/readonlyBindings/product/audience",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE",
+      "profile": "B",
+      "pointer": "/readonlyBindings/product/audience",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER",
+      "profile": "A",
+      "pointer": "/readonlyBindings/product/producer",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER",
+      "profile": "B",
+      "pointer": "/readonlyBindings/product/producer",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER",
+      "profile": "A",
+      "pointer": "/readonlyBindings/product/issuer",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER",
+      "profile": "B",
+      "pointer": "/readonlyBindings/product/issuer",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON",
+      "profile": "A",
+      "pointer": "/readonlyBindings/product/actors",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON",
+      "profile": "B",
+      "pointer": "/readonlyBindings/product/actors",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/httpClientTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/httpClientTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityRefreshSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityRefreshSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityFutureSkewSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityFutureSkewSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumFindings",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumFindings",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumSerializedBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumSerializedBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyReadHeaderTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyReadHeaderTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyReadTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyReadTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyWriteTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyWriteTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyIdleTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyIdleTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyMaxHeaderBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyMaxHeaderBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyHandlerTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyHandlerTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyMaximumBodyBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyMaximumBodyBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productHandlerTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productHandlerTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productMaximumBodyBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productMaximumBodyBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/defaultDemoRetentionSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/defaultDemoRetentionSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS",
+      "profile": "A",
+      "pointer": "/readonlyBindings/maximumDemoRetentionSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS",
+      "profile": "B",
+      "pointer": "/readonlyBindings/maximumDemoRetentionSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiResponseMaximumBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiResponseMaximumBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiRequestMaximumBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiRequestMaximumBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiDiagnosticMaximumBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiDiagnosticMaximumBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/authorizationMaximumBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/authorizationMaximumBytes",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/namespaceDeletionTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/namespaceDeletionTimeoutSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyObservationMaximumAgeSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyObservationMaximumAgeSeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "profile": "A",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productDecisionMaximumValiditySeconds",
+      "exactTypedNodeEquals": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "profile": "B",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productDecisionMaximumValiditySeconds",
+      "exactTypedNodeEquals": true
+    }
+  ]
+}

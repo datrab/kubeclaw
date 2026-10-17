@@ -1,0 +1,128 @@
+{
+  "scope": "Document-integrity and anti-summary-waiver controls only, no F-MUT or semantic/runtime acceptance",
+  "checkerSha256": "229dfbf15ab71edd7a68b49ea73f7011213cc263119e14eef6f9738697e1e441",
+  "sourcePackageSha256": "b0f15920b3fd279fd25868d8f885bc0dade6b52adaeae4a165d77c6bbc7e81a1",
+  "results": [
+    {
+      "case": "real-package-structural",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplement-links-yfxnya4r/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplement-links-yfxnya4r/matrix.json",
+        "--structural"
+      ],
+      "exit": 0,
+      "report": {
+        "mode": "draft-structural",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 0,
+        "errors": []
+      },
+      "stderr": ""
+    },
+    {
+      "case": "strict-review-and-field-links-missing",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplement-links-yfxnya4r/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplement-links-yfxnya4r/matrix.json"
+      ],
+      "exit": 1,
+      "report": {
+        "mode": "strict-C0-completion",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 15,
+        "errors": [
+          "supplemental CORE-ICQ-DEFINITION-CORRECTIONS-20261013: independent complete field/consumer/case closure required",
+          "supplemental CMP-SOURCE-FOUNDATION-FLOCK-WAIT: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-ADMISSION-REASON-LIMITS: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-ADMISSION-METADATA-RESERVE: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-OUTBOX-UNBOUNDED-READ: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-FIXTURE-STORAGE-EXPONENT: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-PRISM-DESIGN-CARDINALITY: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE: canonical field/case links incomplete"
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "case": "bounded-summary-cannot-bypass-field-links",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplement-links-yfxnya4r/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplement-links-yfxnya4r/matrix.json"
+      ],
+      "exit": 1,
+      "report": {
+        "mode": "strict-C0-completion",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 14,
+        "errors": [
+          "supplemental CMP-SOURCE-FOUNDATION-FLOCK-WAIT: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-ADMISSION-REASON-LIMITS: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-ADMISSION-METADATA-RESERVE: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-OUTBOX-UNBOUNDED-READ: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-FIXTURE-STORAGE-EXPONENT: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-PRISM-DESIGN-CARDINALITY: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV: canonical field/case links incomplete",
+          "supplemental CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE: canonical field/case links incomplete"
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "case": "restored-structural",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplement-links-yfxnya4r/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplement-links-yfxnya4r/matrix.json",
+        "--structural"
+      ],
+      "exit": 0,
+      "report": {
+        "mode": "draft-structural",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 0,
+        "errors": []
+      },
+      "stderr": ""
+    }
+  ]
+}

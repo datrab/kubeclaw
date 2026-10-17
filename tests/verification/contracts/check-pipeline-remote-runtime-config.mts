@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -12,7 +13,8 @@ import {
   loadProductionBusterRemotePlanRuntime as productionRuntime,
 } from '@kubeclaw/buster-engine';
 
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings, type BusterSettings, type WorkerCoreSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { declaredPipelineServices } from '../../../scripts/updates/pipeline-generation.mjs';
 import type { BusterPreparation } from '../../../skills/buster/engine/test-gates/preparation-client.ts';
 
 // This original configuration-only suite starts empty stores, never preparation.
@@ -21,7 +23,23 @@ const preparation: BusterPreparation = {
   extract: async () => { throw new Error('UNEXPECTED_PREPARATION'); },
   repository: async () => { throw new Error('UNEXPECTED_PREPARATION'); },
 };
-const snapshot = loadSwarmSettings({ SWARM_CONFIG: path.resolve('charts/kubeclaw/files/config/swarm.config.json') });
+// Source-only configuration fixture: consume the declared Buster owners together.
+// This is not a verified installed-service boot receipt or native acceptance.
+const authorRoot = path.resolve('config');
+const selection = declaredPipelineServices(authorRoot, { role: 'buster', namespace: 'kubeclaw', releaseName: 'agent-buster' })
+  .find(service => service.callerId === 'buster-runtime');
+if (!selection) throw new Error('TEST_BUSTER_SELECTION_REQUIRED');
+const capture = captureSwarmSettings(path.join(authorRoot, 'pipeline.config.json'), selection);
+const busterComponent = capture.components['buster-engine'];
+const workerComponent = capture.components['worker-core'];
+if (!busterComponent || !workerComponent) throw new Error('TEST_BUSTER_COMPONENT_REQUIRED');
+const authored = busterComponent.settings as unknown as BusterSettings;
+const snapshot = {
+  buster: { ...authored, clusterInvokers: { ...authored.clusterInvokers,
+    shared: { ...authored.clusterInvokers.shared,
+      kubectlExecutable: path.resolve(capture.identity.generationDirectory, authored.clusterInvokers.shared.kubectlExecutable) } } },
+  workerCore: workerComponent.settings as unknown as WorkerCoreSettings,
+};
 function loadProductionBusterRemotePlanRuntime(file: string, environment: NodeJS.ProcessEnv) {
   return productionRuntime(file, preparation, snapshot.buster, snapshot.workerCore.localRuntime, environment);
 }
@@ -79,7 +97,7 @@ try {
 
   const platformConfig = path.join(temporary, 'platform.json');
   const pluginRoot = path.join(root, 'skills/buster/plugins');
-  fs.writeFileSync(platformConfig, JSON.stringify({
+  fs.writeFileSync(platformConfig, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION,
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [pluginRoot], trustedBuiltinRoots: [pluginRoot],
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {},
     adapters: {}, activeAdapters: [], observers: {}, storageRoot: './platform-state', shutdownTimeoutMs: 5_000,

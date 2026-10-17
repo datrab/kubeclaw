@@ -1,0 +1,2254 @@
+{
+  "checks": [
+    {
+      "check": "exact_twenty_queue_ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original_body:SRC-ae3c2b0bb81275f6",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-ae3c2b0bb81275f6:charts/kubeclaw/templates/_swarm-config.tpl:52",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-ae3c2b0bb81275f6:charts/kubeclaw/templates/_swarm-config.tpl:52",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-ae3c2b0bb81275f6:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-ae3c2b0bb81275f6:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ae3c2b0bb81275f6:/settings/localRuntime/drainTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 300000
+      }
+    },
+    {
+      "check": "document_member:SRC-ae3c2b0bb81275f6:/settings/localRuntime/cancellationTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 30000
+      }
+    },
+    {
+      "check": "document_member:SRC-ae3c2b0bb81275f6:/settings/localRuntime/replayLimit",
+      "passed": true,
+      "detail": {
+        "currentValue": 65536
+      }
+    },
+    {
+      "check": "original_body:SRC-eac5ec66c49e4c61",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-eac5ec66c49e4c61:charts/kubeclaw/templates/_swarm-config.tpl:54",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-eac5ec66c49e4c61:charts/kubeclaw/templates/_swarm-config.tpl:54",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-eac5ec66c49e4c61:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-eac5ec66c49e4c61:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-eac5ec66c49e4c61:/settings/localRuntime/drainTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 300000
+      }
+    },
+    {
+      "check": "document_member:SRC-eac5ec66c49e4c61:/settings/localRuntime/cancellationTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 30000
+      }
+    },
+    {
+      "check": "document_member:SRC-eac5ec66c49e4c61:/settings/localRuntime/replayLimit",
+      "passed": true,
+      "detail": {
+        "currentValue": 65536
+      }
+    },
+    {
+      "check": "original_body:SRC-4531f56429cdcc26",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-4531f56429cdcc26:charts/kubeclaw/templates/_swarm-config.tpl:91",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-4531f56429cdcc26:charts/kubeclaw/templates/_swarm-config.tpl:91",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-4531f56429cdcc26:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-4531f56429cdcc26:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/processInput/cleanupTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1500
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/processInput/cleanupTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/processInput/terminationGraceMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 250
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/processInput/terminationGraceMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/processInput/acknowledgementPollMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 10
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/processInput/acknowledgementPollMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/cleanupTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 30000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/cleanupTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/maximumResultBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 16777216
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/maximumResultBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/claimGraceMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 60000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/claimGraceMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/queueTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 60000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/queueTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/workerResultWrapperBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 4096
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/workerResultWrapperBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/maximumProtocolBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 16777216
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/maximumProtocolBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/terminationGraceMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 500
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/terminationGraceMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/terminationTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/terminationTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/capabilityDrainTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/capabilityDrainTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/minimumHeapMiB",
+      "passed": true,
+      "detail": {
+        "currentValue": 16
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/minimumHeapMiB",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/heapFraction",
+      "passed": true,
+      "detail": {
+        "currentValue": 0.7
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/heapFraction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/maximumPendingCapabilities",
+      "passed": true,
+      "detail": {
+        "currentValue": 32
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/maximumPendingCapabilities",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/minimumOpenFiles",
+      "passed": true,
+      "detail": {
+        "currentValue": 64
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/minimumOpenFiles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/provider/artifactFileDescriptorReserve",
+      "passed": true,
+      "detail": {
+        "currentValue": 32
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/provider/artifactFileDescriptorReserve",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/maximumAggregateResultBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 16777216
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/maximumAggregateResultBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/maximumSourceBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/maximumSourceBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/maximumCases",
+      "passed": true,
+      "detail": {
+        "currentValue": 5000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/maximumCases",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/maximumFindings",
+      "passed": true,
+      "detail": {
+        "currentValue": 5000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/maximumFindings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/maximumCaseFindings",
+      "passed": true,
+      "detail": {
+        "currentValue": 100
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/maximumCaseFindings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/maximumTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 300000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/maximumTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/memoryBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 536870912
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/memoryBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/minimumCpuTimeMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/minimumCpuTimeMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/maximumOpenFiles",
+      "passed": true,
+      "detail": {
+        "currentValue": 64
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/maximumOpenFiles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/minimumOpenFiles",
+      "passed": true,
+      "detail": {
+        "currentValue": 16
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/minimumOpenFiles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/minimumHeapMiB",
+      "passed": true,
+      "detail": {
+        "currentValue": 16
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/minimumHeapMiB",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/heapFraction",
+      "passed": true,
+      "detail": {
+        "currentValue": 0.7
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/heapFraction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/reports/runtimeMemoryReserveBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/reports/runtimeMemoryReserveBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/observation/resourceSampleIntervalMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 10
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/observation/resourceSampleIntervalMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/observation/processSampleIntervalMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 50
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/observation/processSampleIntervalMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumEvidenceObjects",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumEvidenceObjects",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumEvidenceBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 10737418240
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumEvidenceBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumEvidenceObjectBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 1073741824
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumEvidenceObjectBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumResults",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumResults",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumClosures",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumClosures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumMetadataBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 268435456
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumMetadataBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumPendingEvidenceAgeMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 3600000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/attempts/maximumPendingEvidenceAgeMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumIngressBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 16777216
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumIngressBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumRecords",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumRecords",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 268435456
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumQuarantineRecords",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumQuarantineRecords",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumQuarantineBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "schema_domain:SRC-4531f56429cdcc26:/settings/execution/stores/admission/maximumQuarantineBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original_body:SRC-fa5d875cf1fc1453",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-fa5d875cf1fc1453:charts/kubeclaw/templates/_swarm-config.tpl:99",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-fa5d875cf1fc1453:charts/kubeclaw/templates/_swarm-config.tpl:99",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-fa5d875cf1fc1453:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-fa5d875cf1fc1453:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-fa5d875cf1fc1453:/settings/execution/provider/terminationGraceMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 500
+      }
+    },
+    {
+      "check": "document_member:SRC-fa5d875cf1fc1453:/settings/execution/provider/terminationTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "original_body:SRC-e95d781b7945c3ca",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-e95d781b7945c3ca:charts/kubeclaw/templates/_swarm-config.tpl:103",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-e95d781b7945c3ca:charts/kubeclaw/templates/_swarm-config.tpl:103",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-e95d781b7945c3ca:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-e95d781b7945c3ca:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-e95d781b7945c3ca:/settings/execution/reports/memoryBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 536870912
+      }
+    },
+    {
+      "check": "document_member:SRC-e95d781b7945c3ca:/settings/execution/reports/runtimeMemoryReserveBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "document_member:SRC-e95d781b7945c3ca:/settings/execution/reports/maximumSourceBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "document_member:SRC-e95d781b7945c3ca:/settings/execution/reports/maximumAggregateResultBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 16777216
+      }
+    },
+    {
+      "check": "original_body:SRC-fd03cb740079506d",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-fd03cb740079506d:charts/kubeclaw/templates/_swarm-config.tpl:117",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-fd03cb740079506d:charts/kubeclaw/templates/_swarm-config.tpl:117",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-fd03cb740079506d:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-fd03cb740079506d:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-fd03cb740079506d:/settings/admission/maximumActiveJobs",
+      "passed": true,
+      "detail": {
+        "currentValue": 2
+      }
+    },
+    {
+      "check": "schema_domain:SRC-fd03cb740079506d:/settings/admission/maximumActiveJobs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-fd03cb740079506d:/settings/admission/maximumQueuedJobs",
+      "passed": true,
+      "detail": {
+        "currentValue": 8
+      }
+    },
+    {
+      "check": "schema_domain:SRC-fd03cb740079506d:/settings/admission/maximumQueuedJobs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-fd03cb740079506d:/settings/admission/maximumConcurrentAttempts",
+      "passed": true,
+      "detail": {
+        "currentValue": 64
+      }
+    },
+    {
+      "check": "schema_domain:SRC-fd03cb740079506d:/settings/admission/maximumConcurrentAttempts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-fd03cb740079506d:/settings/dependencyReadiness/maximumExecutionMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-fd03cb740079506d:/settings/dependencyReadiness/maximumExecutionMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-fd03cb740079506d:/settings/dependencyReadiness/maximumOutputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 65536
+      }
+    },
+    {
+      "check": "schema_domain:SRC-fd03cb740079506d:/settings/dependencyReadiness/maximumOutputBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original_body:SRC-ea5d74692fd5fcdd",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-ea5d74692fd5fcdd:charts/kubeclaw/templates/_swarm-config.tpl:130",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-ea5d74692fd5fcdd:charts/kubeclaw/templates/_swarm-config.tpl:130",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-ea5d74692fd5fcdd:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-ea5d74692fd5fcdd:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/timeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 300000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/timeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/cleanupTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/cleanupTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumActivePreparations",
+      "passed": true,
+      "detail": {
+        "currentValue": 2
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumActivePreparations",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumPendingAdmissions",
+      "passed": true,
+      "detail": {
+        "currentValue": 16
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumPendingAdmissions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumRequestBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 100663296
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumRequestBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumArchiveBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumArchiveBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumExtractedBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 536870912
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumExtractedBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumHeaderBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 3145728
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumHeaderBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumSourceBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 1073741824
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumSourceBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumMetadataBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumMetadataBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumRecords",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumRecords",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumOwnershipBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 16777216
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumOwnershipBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumJournalBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 268435456
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumJournalBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumInputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 65536
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumInputBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumOutputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 8388608
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumOutputBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumResultBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 4194304
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumResultBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/pollIntervalMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 25
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/pollIntervalMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/drainTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 5000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/drainTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/closeTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/closeTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/tarTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 120000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/tarTimeoutMs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumArchiveEntries",
+      "passed": true,
+      "detail": {
+        "currentValue": 200000
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumArchiveEntries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumListingLineBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 1048576
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumListingLineBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumTarStderrBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 65536
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumTarStderrBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumSourceEntries",
+      "passed": true,
+      "detail": {
+        "currentValue": 400014
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumSourceEntries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/sourceEntryReservationBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 256
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/sourceEntryReservationBytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumOpenFiles",
+      "passed": true,
+      "detail": {
+        "currentValue": 64
+      }
+    },
+    {
+      "check": "schema_domain:SRC-ea5d74692fd5fcdd:/settings/preparation/maximumOpenFiles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original_body:SRC-3b4dfcac94af3ad0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-3b4dfcac94af3ad0:charts/kubeclaw/templates/_swarm-config.tpl:147",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-3b4dfcac94af3ad0:charts/kubeclaw/templates/_swarm-config.tpl:147",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-3b4dfcac94af3ad0:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-3b4dfcac94af3ad0:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-3b4dfcac94af3ad0:/settings/port",
+      "passed": true,
+      "detail": {
+        "currentValue": 8080
+      }
+    },
+    {
+      "check": "document_member:SRC-3b4dfcac94af3ad0:/settings/controlTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 30000
+      }
+    },
+    {
+      "check": "original_body:SRC-13c8327678d63641",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-13c8327678d63641:charts/kubeclaw/templates/_swarm-config.tpl:150",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-13c8327678d63641:charts/kubeclaw/templates/_swarm-config.tpl:150",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-13c8327678d63641:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-13c8327678d63641:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-13c8327678d63641:/settings/port",
+      "passed": true,
+      "detail": {
+        "currentValue": 8080
+      }
+    },
+    {
+      "check": "document_member:SRC-13c8327678d63641:/settings/controlTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 30000
+      }
+    },
+    {
+      "check": "original_body:SRC-c63f4f93fa7cdd5c",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-c63f4f93fa7cdd5c:charts/kubeclaw/templates/_swarm-config.tpl:195",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-c63f4f93fa7cdd5c:charts/kubeclaw/templates/_swarm-config.tpl:195",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-c63f4f93fa7cdd5c:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-c63f4f93fa7cdd5c:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/uid",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/gid",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/maximumOwnershipRecords",
+      "passed": true,
+      "detail": {
+        "currentValue": 65536
+      }
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/maximumOwnershipBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/maximumOutputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 33554432
+      }
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/maximumJournalBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 68719476736
+      }
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/pollIntervalMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 20
+      }
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/drainTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "document_member:SRC-c63f4f93fa7cdd5c:/settings/supervisor/closeTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 105000
+      }
+    },
+    {
+      "check": "original_body:SRC-a9734a7cd38b3ac8",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a9734a7cd38b3ac8:charts/kubeclaw/templates/_swarm-config.tpl:197",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a9734a7cd38b3ac8:charts/kubeclaw/templates/_swarm-config.tpl:197",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a9734a7cd38b3ac8:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a9734a7cd38b3ac8:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/uid",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/gid",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/maximumOwnershipRecords",
+      "passed": true,
+      "detail": {
+        "currentValue": 65536
+      }
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/maximumOwnershipBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/maximumOutputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 33554432
+      }
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/maximumJournalBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 68719476736
+      }
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/pollIntervalMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 20
+      }
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/drainTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "document_member:SRC-a9734a7cd38b3ac8:/settings/supervisor/closeTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 105000
+      }
+    },
+    {
+      "check": "original_body:SRC-b56d3dbbda2be12a",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-b56d3dbbda2be12a:charts/kubeclaw/templates/_swarm-config.tpl:211",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-b56d3dbbda2be12a:charts/kubeclaw/templates/_swarm-config.tpl:210",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-b56d3dbbda2be12a:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-b56d3dbbda2be12a:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-b56d3dbbda2be12a:/settings/ingress/maximumActiveRequests",
+      "passed": true,
+      "detail": {
+        "currentValue": 16
+      }
+    },
+    {
+      "check": "document_member:SRC-b56d3dbbda2be12a:/settings/ingress/maximumProbeRequests",
+      "passed": true,
+      "detail": {
+        "currentValue": 4
+      }
+    },
+    {
+      "check": "document_member:SRC-b56d3dbbda2be12a:/settings/ingress/maximumConnections",
+      "passed": true,
+      "detail": {
+        "currentValue": 128
+      }
+    },
+    {
+      "check": "original_body:SRC-e6907369daeea5f0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-e6907369daeea5f0:charts/kubeclaw/templates/_swarm-config.tpl:217",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-e6907369daeea5f0:charts/kubeclaw/templates/_swarm-config.tpl:217",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-e6907369daeea5f0:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-e6907369daeea5f0:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-e6907369daeea5f0:/settings/preparation/maximumArchiveBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "document_member:SRC-e6907369daeea5f0:/settings/preparation/maximumRequestBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 100663296
+      }
+    },
+    {
+      "check": "document_member:SRC-e6907369daeea5f0:/settings/preparation/maximumHeaderBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 3145728
+      }
+    },
+    {
+      "check": "document_member:SRC-e6907369daeea5f0:/settings/preparation/maximumMetadataBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 67108864
+      }
+    },
+    {
+      "check": "document_member:SRC-e6907369daeea5f0:/settings/preparation/maximumInputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 65536
+      }
+    },
+    {
+      "check": "document_member:SRC-e6907369daeea5f0:/settings/preparation/maximumJournalBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 268435456
+      }
+    },
+    {
+      "check": "document_member:SRC-e6907369daeea5f0:/settings/preparation/maximumResultBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 4194304
+      }
+    },
+    {
+      "check": "document_member:SRC-e6907369daeea5f0:/settings/preparation/maximumOutputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 8388608
+      }
+    },
+    {
+      "check": "original_body:SRC-bd47d110c9c2cd08",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-bd47d110c9c2cd08:charts/kubeclaw/templates/_swarm-config.tpl:218",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-bd47d110c9c2cd08:charts/kubeclaw/templates/_swarm-config.tpl:218",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-bd47d110c9c2cd08:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-bd47d110c9c2cd08:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-bd47d110c9c2cd08:/settings/preparation/closeTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "document_member:SRC-bd47d110c9c2cd08:/settings/preparation/drainTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 5000
+      }
+    },
+    {
+      "check": "original_body:SRC-a366c6559124018b",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a366c6559124018b:charts/kubeclaw/templates/_swarm-config.tpl:225",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a366c6559124018b:charts/kubeclaw/templates/_swarm-config.tpl:225",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a366c6559124018b:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a366c6559124018b:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original_body:SRC-2ca0c163bfd57e6a",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-2ca0c163bfd57e6a:charts/kubeclaw/templates/_swarm-config.tpl:260",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-2ca0c163bfd57e6a:charts/kubeclaw/templates/_swarm-config.tpl:260",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-2ca0c163bfd57e6a:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-2ca0c163bfd57e6a:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/maximumManifestBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 1048576
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/maximumResources",
+      "passed": true,
+      "detail": {
+        "currentValue": 64
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeClaimBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 10737418240
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeTotalBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 21474836480
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/maximumRetentionSeconds",
+      "passed": true,
+      "detail": {
+        "currentValue": 604800
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/maximumExecutionMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 900000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/pollIntervalMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/shortCommandTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 15000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/commandOutputManifestMultiplier",
+      "passed": true,
+      "detail": {
+        "currentValue": 2
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/diagnosticCodeUnits",
+      "passed": true,
+      "detail": {
+        "currentValue": 4096
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/manifest/maximumNodes",
+      "passed": true,
+      "detail": {
+        "currentValue": 100000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/manifest/maximumDepth",
+      "passed": true,
+      "detail": {
+        "currentValue": 64
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/manifest/maximumAliases",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenVisits",
+      "passed": true,
+      "detail": {
+        "currentValue": 100000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenPending",
+      "passed": true,
+      "detail": {
+        "currentValue": 100000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/tailscaleExposure/maximumExecutionMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 900000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/tailscaleExposure/pollIntervalMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/tailscaleExposure/shortCommandTimeoutMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 15000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/tailscaleExposure/maximumCommandOutputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 1048576
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/runtimeSecurity/maximumExecutionMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 300000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/runtimeSecurity/maximumOutputBytes",
+      "passed": true,
+      "detail": {
+        "currentValue": 16777216
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/runtimeSecurity/pollIntervalMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 1000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/runtimeSecurity/maximumObservationAgeMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 10000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/runtimeSecurity/maximumFutureSkewMs",
+      "passed": true,
+      "detail": {
+        "currentValue": 5000
+      }
+    },
+    {
+      "check": "document_member:SRC-2ca0c163bfd57e6a:/settings/clusterInvokers/runtimeSecurity/diagnosticCodeUnits",
+      "passed": true,
+      "detail": {
+        "currentValue": 1024
+      }
+    },
+    {
+      "check": "original_body:SRC-a33bbe84d92a0346",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a33bbe84d92a0346:charts/kubeclaw/templates/_swarm-config.tpl:265",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a33bbe84d92a0346:charts/kubeclaw/templates/_swarm-config.tpl:265",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a33bbe84d92a0346:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-a33bbe84d92a0346:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original_body:SRC-3b703d3eda783cd9",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-3b703d3eda783cd9:charts/kubeclaw/templates/_swarm-config.tpl:266",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-3b703d3eda783cd9:charts/kubeclaw/templates/_swarm-config.tpl:266",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-3b703d3eda783cd9:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-3b703d3eda783cd9:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original_body:SRC-34575fbfcf7ce405",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-34575fbfcf7ce405:charts/kubeclaw/templates/_swarm-config.tpl:269",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-34575fbfcf7ce405:charts/kubeclaw/templates/_swarm-config.tpl:269",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-34575fbfcf7ce405:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-34575fbfcf7ce405:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original_body:SRC-4281f12995569fb2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-4281f12995569fb2:charts/kubeclaw/templates/_swarm-config.tpl:271",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-4281f12995569fb2:charts/kubeclaw/templates/_swarm-config.tpl:271",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-4281f12995569fb2:charts/kubeclaw/templates/configmap-swarm-config.yaml:10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pin:SRC-4281f12995569fb2:charts/prism/templates/_swarm-config.tpl:18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "document_member:SRC-4281f12995569fb2:/settings/clusterInvokers/shared/leaseApiGroup",
+      "passed": true,
+      "detail": {
+        "currentValue": "kubeclaw.forgestack.ai"
+      }
+    },
+    {
+      "check": "document_member:SRC-4281f12995569fb2:/settings/clusterInvokers/shared/leaseApiVersion",
+      "passed": true,
+      "detail": {
+        "currentValue": "v1alpha1"
+      }
+    },
+    {
+      "check": "top_ref:charts/kubeclaw/files/config/swarm-components.schema.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "top_ref:docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "manifest:docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/README.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "manifest:docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/define.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "manifest:docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/local-check.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "manifest:docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/source-field-definitions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "execution_required_loop_44",
+      "passed": true,
+      "detail": {
+        "expected": [
+          "/settings/execution/observation/processSampleIntervalMs",
+          "/settings/execution/observation/resourceSampleIntervalMs",
+          "/settings/execution/processInput/acknowledgementPollMs",
+          "/settings/execution/processInput/cleanupTimeoutMs",
+          "/settings/execution/processInput/terminationGraceMs",
+          "/settings/execution/provider/artifactFileDescriptorReserve",
+          "/settings/execution/provider/capabilityDrainTimeoutMs",
+          "/settings/execution/provider/claimGraceMs",
+          "/settings/execution/provider/cleanupTimeoutMs",
+          "/settings/execution/provider/heapFraction",
+          "/settings/execution/provider/maximumPendingCapabilities",
+          "/settings/execution/provider/maximumProtocolBytes",
+          "/settings/execution/provider/maximumResultBytes",
+          "/settings/execution/provider/minimumHeapMiB",
+          "/settings/execution/provider/minimumOpenFiles",
+          "/settings/execution/provider/queueTimeoutMs",
+          "/settings/execution/provider/terminationGraceMs",
+          "/settings/execution/provider/terminationTimeoutMs",
+          "/settings/execution/provider/workerResultWrapperBytes",
+          "/settings/execution/reports/heapFraction",
+          "/settings/execution/reports/maximumAggregateResultBytes",
+          "/settings/execution/reports/maximumCaseFindings",
+          "/settings/execution/reports/maximumCases",
+          "/settings/execution/reports/maximumFindings",
+          "/settings/execution/reports/maximumOpenFiles",
+          "/settings/execution/reports/maximumSourceBytes",
+          "/settings/execution/reports/maximumTimeoutMs",
+          "/settings/execution/reports/memoryBytes",
+          "/settings/execution/reports/minimumCpuTimeMs",
+          "/settings/execution/reports/minimumHeapMiB",
+          "/settings/execution/reports/minimumOpenFiles",
+          "/settings/execution/reports/runtimeMemoryReserveBytes",
+          "/settings/execution/stores/admission/maximumBytes",
+          "/settings/execution/stores/admission/maximumIngressBytes",
+          "/settings/execution/stores/admission/maximumQuarantineBytes",
+          "/settings/execution/stores/admission/maximumQuarantineRecords",
+          "/settings/execution/stores/admission/maximumRecords",
+          "/settings/execution/stores/attempts/maximumClosures",
+          "/settings/execution/stores/attempts/maximumEvidenceBytes",
+          "/settings/execution/stores/attempts/maximumEvidenceObjectBytes",
+          "/settings/execution/stores/attempts/maximumEvidenceObjects",
+          "/settings/execution/stores/attempts/maximumMetadataBytes",
+          "/settings/execution/stores/attempts/maximumPendingEvidenceAgeMs",
+          "/settings/execution/stores/attempts/maximumResults"
+        ],
+        "covered": [
+          "/settings/execution/observation/processSampleIntervalMs",
+          "/settings/execution/observation/resourceSampleIntervalMs",
+          "/settings/execution/processInput/acknowledgementPollMs",
+          "/settings/execution/processInput/cleanupTimeoutMs",
+          "/settings/execution/processInput/terminationGraceMs",
+          "/settings/execution/provider/artifactFileDescriptorReserve",
+          "/settings/execution/provider/capabilityDrainTimeoutMs",
+          "/settings/execution/provider/claimGraceMs",
+          "/settings/execution/provider/cleanupTimeoutMs",
+          "/settings/execution/provider/heapFraction",
+          "/settings/execution/provider/maximumPendingCapabilities",
+          "/settings/execution/provider/maximumProtocolBytes",
+          "/settings/execution/provider/maximumResultBytes",
+          "/settings/execution/provider/minimumHeapMiB",
+          "/settings/execution/provider/minimumOpenFiles",
+          "/settings/execution/provider/queueTimeoutMs",
+          "/settings/execution/provider/terminationGraceMs",
+          "/settings/execution/provider/terminationTimeoutMs",
+          "/settings/execution/provider/workerResultWrapperBytes",
+          "/settings/execution/reports/heapFraction",
+          "/settings/execution/reports/maximumAggregateResultBytes",
+          "/settings/execution/reports/maximumCaseFindings",
+          "/settings/execution/reports/maximumCases",
+          "/settings/execution/reports/maximumFindings",
+          "/settings/execution/reports/maximumOpenFiles",
+          "/settings/execution/reports/maximumSourceBytes",
+          "/settings/execution/reports/maximumTimeoutMs",
+          "/settings/execution/reports/memoryBytes",
+          "/settings/execution/reports/minimumCpuTimeMs",
+          "/settings/execution/reports/minimumHeapMiB",
+          "/settings/execution/reports/minimumOpenFiles",
+          "/settings/execution/reports/runtimeMemoryReserveBytes",
+          "/settings/execution/stores/admission/maximumBytes",
+          "/settings/execution/stores/admission/maximumIngressBytes",
+          "/settings/execution/stores/admission/maximumQuarantineBytes",
+          "/settings/execution/stores/admission/maximumQuarantineRecords",
+          "/settings/execution/stores/admission/maximumRecords",
+          "/settings/execution/stores/attempts/maximumClosures",
+          "/settings/execution/stores/attempts/maximumEvidenceBytes",
+          "/settings/execution/stores/attempts/maximumEvidenceObjectBytes",
+          "/settings/execution/stores/attempts/maximumEvidenceObjects",
+          "/settings/execution/stores/attempts/maximumMetadataBytes",
+          "/settings/execution/stores/attempts/maximumPendingEvidenceAgeMs",
+          "/settings/execution/stores/attempts/maximumResults"
+        ]
+      }
+    },
+    {
+      "check": "admission_readiness_required_loop_5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "preparation_required_loop_26",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "recursive_cluster_integer_25",
+      "passed": true,
+      "detail": {
+        "expected": {
+          "/settings/clusterInvokers/kubernetesFixture/maximumManifestBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/maximumResources": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeClaimBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeTotalBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/maximumRetentionSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/maximumExecutionMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "/settings/clusterInvokers/kubernetesFixture/pollIntervalMs": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 10000
+          },
+          "/settings/clusterInvokers/kubernetesFixture/shortCommandTimeoutMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "/settings/clusterInvokers/kubernetesFixture/commandOutputManifestMultiplier": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/diagnosticCodeUnits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/manifest/maximumNodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/manifest/maximumDepth": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/manifest/maximumAliases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenVisits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenPending": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/tailscaleExposure/maximumExecutionMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "/settings/clusterInvokers/tailscaleExposure/pollIntervalMs": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 2147483647
+          },
+          "/settings/clusterInvokers/tailscaleExposure/shortCommandTimeoutMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "/settings/clusterInvokers/tailscaleExposure/maximumCommandOutputBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/runtimeSecurity/maximumExecutionMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "/settings/clusterInvokers/runtimeSecurity/maximumOutputBytes": {
+            "type": "integer",
+            "minimum": 1024,
+            "maximum": 9007199254740991
+          },
+          "/settings/clusterInvokers/runtimeSecurity/pollIntervalMs": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 10000
+          },
+          "/settings/clusterInvokers/runtimeSecurity/maximumObservationAgeMs": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 60000
+          },
+          "/settings/clusterInvokers/runtimeSecurity/maximumFutureSkewMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "/settings/clusterInvokers/runtimeSecurity/diagnosticCodeUnits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        }
+      }
+    },
+    {
+      "check": "literal_loop:52",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "literal_loop:54",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "literal_loop:147",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "literal_loop:150",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "literal_loop:195",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "literal_loop:197",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "allMechanicalChecksPassed": true,
+  "adjacentRendererCap": {
+    "keys": [
+      "maximumRequestBytes",
+      "maximumArchiveBytes",
+      "maximumHeaderBytes",
+      "maximumInputBytes",
+      "maximumOutputBytes",
+      "maximumResultBytes"
+    ],
+    "rendererMaximum": 2147483647,
+    "rendererLines": [
+      "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+      "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}"
+    ],
+    "candidateId": "SRC-ea5d74692fd5fcdd",
+    "documentedSchemaMaximum": {
+      "maximumRequestBytes": 9007199254740991,
+      "maximumArchiveBytes": 9007199254740991,
+      "maximumHeaderBytes": 9007199254740991,
+      "maximumInputBytes": 9007199254740991,
+      "maximumOutputBytes": 9007199254740991,
+      "maximumResultBytes": 9007199254740991
+    },
+    "currentDomainAndRelations": "Each non-resourcePolicy preparation scalar must match its exact schema minimum/maximum and integer type; nested resourcePolicy validated separately"
+  }
+}

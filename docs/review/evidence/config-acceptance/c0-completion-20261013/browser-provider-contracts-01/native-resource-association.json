@@ -1,0 +1,395 @@
+{
+  "completeOwnerPath": "stand/config/components/buster-engine.config.json",
+  "completeProfile": "browser-source-A",
+  "soleService": "fixture.service.buster-runtime",
+  "workerCoreProfile": "local-A",
+  "settings": {
+    "preparation": {
+      "resourcePolicy": {
+        "cpuTimeMs": 120000,
+        "memoryBytes": 8589934592,
+        "tasks": 64
+      },
+      "timeoutMs": 300000,
+      "cleanupTimeoutMs": 10000,
+      "maximumActivePreparations": 2,
+      "maximumPendingAdmissions": 16,
+      "maximumRequestBytes": 100663296,
+      "maximumArchiveBytes": 67108864,
+      "maximumExtractedBytes": 536870912,
+      "maximumHeaderBytes": 3145728,
+      "maximumSourceBytes": 1073741824,
+      "maximumMetadataBytes": 67108864,
+      "maximumRecords": 10000,
+      "maximumOwnershipBytes": 16777216,
+      "maximumJournalBytes": 268435456,
+      "maximumInputBytes": 65536,
+      "maximumOutputBytes": 8388608,
+      "maximumResultBytes": 4194304,
+      "pollIntervalMs": 25,
+      "drainTimeoutMs": 5000,
+      "closeTimeoutMs": 10000,
+      "tarTimeoutMs": 120000,
+      "maximumArchiveEntries": 200000,
+      "maximumListingLineBytes": 1048576,
+      "maximumTarStderrBytes": 65536,
+      "maximumSourceEntries": 400014,
+      "sourceEntryReservationBytes": 256,
+      "maximumOpenFiles": 64,
+      "attemptEvidenceBytes": 1,
+      "attemptEvidenceFiles": 1,
+      "attemptLogBytes": 1,
+      "completionPhaseAllowance": 8,
+      "storeLockWaitSeconds": 5,
+      "tarDiagnosticCodeUnits": 4096,
+      "resultInputReserveMultiplier": 4
+    },
+    "admission": {
+      "maximumActiveJobs": 2,
+      "maximumQueuedJobs": 8,
+      "maximumConcurrentAttempts": 64
+    },
+    "dependencyReadiness": {
+      "maximumExecutionMs": 1000,
+      "maximumOutputBytes": 65536
+    },
+    "execution": {
+      "provider": {
+        "cleanupTimeoutMs": 30000,
+        "maximumResultBytes": 16777216,
+        "claimGraceMs": 60000,
+        "queueTimeoutMs": 60000,
+        "workerResultWrapperBytes": 4096,
+        "maximumProtocolBytes": 16777216,
+        "terminationGraceMs": 500,
+        "terminationTimeoutMs": 1000,
+        "capabilityDrainTimeoutMs": 1000,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "maximumPendingCapabilities": 32,
+        "minimumOpenFiles": 64,
+        "artifactFileDescriptorReserve": 32
+      },
+      "reports": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 536870912,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 64,
+        "minimumOpenFiles": 16,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 67108864
+      },
+      "observation": {
+        "resourceSampleIntervalMs": 10,
+        "processSampleIntervalMs": 50
+      },
+      "stores": {
+        "attempts": {
+          "maximumEvidenceObjects": 10000,
+          "maximumEvidenceBytes": 10737418240,
+          "maximumEvidenceObjectBytes": 1073741824,
+          "maximumResults": 10000,
+          "maximumClosures": 10000,
+          "maximumMetadataBytes": 268435456,
+          "maximumPendingEvidenceAgeMs": 3600000,
+          "lockWaitSeconds": 5
+        },
+        "admission": {
+          "maximumIngressBytes": 16777216,
+          "maximumRecords": 10000,
+          "maximumBytes": 268435456,
+          "maximumQuarantineRecords": 1000,
+          "maximumQuarantineBytes": 67108864,
+          "lockWaitSeconds": 5,
+          "metadataReserveBytes": 4011,
+          "reasonPrefixCodeUnits": 180,
+          "reasonThresholdCodeUnits": 256
+        }
+      },
+      "processInput": {
+        "cleanupTimeoutMs": 1500,
+        "terminationGraceMs": 250,
+        "acknowledgementPollMs": 10
+      },
+      "capabilityProviders": {
+        "directCommand": {
+          "runtimeReadRoots": [
+            "/usr/local/bin",
+            "/usr/local/lib/node_modules",
+            "/usr/bin",
+            "/bin",
+            "/usr/lib",
+            "/lib",
+            "/lib64",
+            "/etc/ssl",
+            "/etc/alternatives",
+            "/fixture/direct-read-marker"
+          ],
+          "maximumOutputBytes": 16777216,
+          "maximumExecutionMs": 900000,
+          "maximumProcesses": 128,
+          "maximumMemoryBytes": 4294967296,
+          "maximumCpuMillis": 900000,
+          "terminationGraceMs": 2000,
+          "allowSampledProcessLimit": true
+        },
+        "containerBuild": {
+          "repositoryPrefix": "kubeclaw/pipeline",
+          "allowedPlatforms": [
+            "linux/amd64",
+            "linux/arm64"
+          ],
+          "allowedBuildArguments": [
+            "NODE_ENV"
+          ],
+          "maximumLogBytes": 8388608,
+          "maximumExecutionMs": 900000,
+          "maximumManifestBytes": 16777216
+        },
+        "networkHttp": {
+          "registryHealth": true,
+          "allowedOrigins": [
+            "https://fixture.invalid",
+            "https://alternate.fixture.invalid"
+          ],
+          "allowedHostSuffixes": [],
+          "allowedPorts": [
+            443
+          ],
+          "allowedMethods": [
+            "GET",
+            "HEAD",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE",
+            "OPTIONS"
+          ],
+          "allowedRequestHeaders": [
+            "accept",
+            "content-type",
+            "idempotency-key",
+            "x-proof"
+          ],
+          "allowWebSocket": true,
+          "maximumRequestBytes": 1048576,
+          "maximumResponseBytes": 4096,
+          "maximumExecutionMs": 1000
+        },
+        "browserAccess": {
+          "allowedOrigins": [
+            "http://127.0.0.1:18080",
+            "http://127.0.0.1:18081"
+          ]
+        },
+        "browserAxe": {
+          "allowedBrowsers": [
+            "chromium",
+            "firefox",
+            "webkit"
+          ],
+          "maximumCombinations": 32,
+          "maximumConcurrency": 4,
+          "maximumExecutionMs": 120000,
+          "maximumResultBytes": 16777216,
+          "maximumScreenshots": 16,
+          "maximumScreenshotBytes": 8388608
+        },
+        "browserLighthouse": {
+          "maximumRuns": 80,
+          "maximumExecutionMs": 180000,
+          "maximumResultBytes": 67108864
+        },
+        "browserVisual": {
+          "allowedBrowsers": [
+            "chromium",
+            "firefox",
+            "webkit"
+          ],
+          "maximumCombinations": 64,
+          "maximumConcurrency": 4,
+          "maximumExecutionMs": 120000,
+          "maximumResultBytes": 134217728,
+          "maximumScreenshotBytes": 16777216,
+          "maximumMasksPerCombination": 32
+        },
+        "browserPlaywright": {
+          "allowedTargetPorts": [
+            18080,
+            18081
+          ],
+          "readOnlyRoots": [
+            "/app",
+            "/ms-playwright",
+            "/usr",
+            "/lib",
+            "/lib64",
+            "/etc/fonts",
+            "/etc/hosts",
+            "/etc/nsswitch.conf",
+            "/etc/resolv.conf",
+            "/etc/ssl",
+            "/proc",
+            "/sys",
+            "/dev",
+            "/fixture/browser-read-marker"
+          ],
+          "maximumWorkers": 4,
+          "maximumExecutionMs": 900000,
+          "maximumOutputBytes": 16777216,
+          "maximumResultBytes": 67108864,
+          "maximumArtifactBytes": 268435456,
+          "maximumArtifactFiles": 256,
+          "maximumProcesses": 128,
+          "maximumMemoryBytes": 4294967296,
+          "maximumCpuMillis": 900000,
+          "terminationGraceMs": 5000
+        },
+        "securityScan": {
+          "allowedRegistryPrefixes": [
+            "fixture-registry.invalid/kubeclaw"
+          ],
+          "maximumExecutionMs": 900000,
+          "maximumOutputBytes": 67108864,
+          "cacheDirectory": "/home/builder/.cache/trivy",
+          "databasePolicy": {
+            "maximumVulnerabilityAgeMs": 172800000,
+            "maximumJavaAgeMs": 604800000,
+            "maximumDatabaseBytes": 8589934592
+          }
+        }
+      }
+    },
+    "clusterInvokers": {
+      "shared": {
+        "kubectlExecutable": "/usr/local/bin/kubectl",
+        "leaseApiGroup": "kubeclaw.forgestack.ai",
+        "leaseApiVersion": "v1alpha1"
+      },
+      "kubernetesFixture": {
+        "allowedNamespacePrefixes": [
+          "test"
+        ],
+        "registryRepositoryPrefixes": [
+          "kubeclaw"
+        ],
+        "allowedSecretReferences": [],
+        "allowedStorageClasses": [],
+        "allowDefaultStorageClass": true,
+        "runnerServiceAccount": "agent-buster",
+        "credentialReaderServiceAccount": "agent-nova",
+        "maximumManifestBytes": 1048576,
+        "maximumResources": 64,
+        "maximumPersistentVolumeClaimBytes": 10737418240,
+        "maximumPersistentVolumeTotalBytes": 21474836480,
+        "maximumRetentionSeconds": 604800,
+        "maximumExecutionMs": 900000,
+        "pollIntervalMs": 1000,
+        "shortCommandTimeoutMs": 15000,
+        "commandOutputManifestMultiplier": 2,
+        "diagnosticCodeUnits": 4096,
+        "manifest": {
+          "maximumNodes": 100000,
+          "maximumDepth": 64,
+          "maximumAliases": 1000,
+          "maximumFlattenVisits": 100000,
+          "maximumFlattenPending": 100000
+        },
+        "maximumSecretReferenceEntries": 32
+      },
+      "tailscaleExposure": {
+        "allowedNamespacePrefixes": [
+          "test"
+        ],
+        "allowedHostSuffixes": [
+          ".ts.net"
+        ],
+        "maximumExecutionMs": 900000,
+        "pollIntervalMs": 1000,
+        "shortCommandTimeoutMs": 15000,
+        "maximumCommandOutputBytes": 1048576
+      },
+      "runtimeSecurity": {
+        "allowedNamespacePrefixes": [
+          "test"
+        ],
+        "maximumExecutionMs": 300000,
+        "maximumOutputBytes": 16777216,
+        "pollIntervalMs": 1000,
+        "maximumObservationAgeMs": 10000,
+        "maximumFutureSkewMs": 5000,
+        "diagnosticCodeUnits": 1024,
+        "executableSearchPath": [
+          "/usr/local/bin",
+          "/usr/bin",
+          "/bin"
+        ]
+      }
+    },
+    "remotePlanService": {
+      "host": "0.0.0.0",
+      "port": 18891,
+      "recordLimits": {
+        "maximumRecords": 10000,
+        "maximumBytes": 1073741824,
+        "maximumRecordBytes": 67108864
+      },
+      "maximumResultBytes": 67108864,
+      "maximumResultStoreBytes": 1073741824,
+      "maximumResponseBytes": 67108864,
+      "shutdownTimeoutMs": 15000,
+      "allowedCapabilities": [
+        "command.execute",
+        "container.build",
+        "kubernetes.fixture",
+        "kubernetes.exposure",
+        "network.http",
+        "browser.axe",
+        "browser.lighthouse",
+        "browser.visual",
+        "browser.playwright",
+        "security.scan",
+        "kubernetes.runtime-security"
+      ]
+    }
+  },
+  "originalBaseProfile": "provider-network-A",
+  "nativeBudgetCeilingsUnchanged": true,
+  "requestedOriginPortPolicyDelta": "Explicit task source fixture origins18080/18081 and Playwright port18081 added to complete requested policy. NO grant/endpoint/host/capacity installation fact. All existing time/count/byte/process/memory/CPU/browser-membership caps unchanged.",
+  "capabilityProjection": {
+    "browser.axe": {
+      "sourceConsumer": "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+      "nativePolicyKey": "browserAxe"
+    },
+    "browser.lighthouse": {
+      "sourceConsumer": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+      "nativePolicyKey": "browserLighthouse"
+    },
+    "browser.playwright": {
+      "sourceConsumer": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "nativePolicyKey": "browserPlaywright"
+    },
+    "browser.visual": {
+      "sourceConsumer": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+      "nativePolicyKey": "browserVisual"
+    }
+  },
+  "externalActivation": {
+    "browserExecutables": null,
+    "observedBrowserVersions": null,
+    "nativeSourceImages": null,
+    "runtimeNodeModulesIdentity": null,
+    "sandboxAndCgroupIdentity": null,
+    "originalCapabilityGrants": null,
+    "hostResourceCapacity": null,
+    "authenticTypedFixtureInputs": null,
+    "approvedVisualBaselines": null
+  },
+  "allNativeCases": "not-run"
+}

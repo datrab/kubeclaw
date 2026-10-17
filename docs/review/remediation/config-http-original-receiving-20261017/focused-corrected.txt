@@ -1,0 +1,49 @@
+✔ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (6734.988996ms)
+✔ actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives (7.722849ms)
+✔ HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed with restored positive (3.580012ms)
+✔ network error excerpt policy is selected centrally and rejects competing or invalid authors (0.953395ms)
+✖ central network caps enforce actual UTF-8 boundaries and timeout; original run survives missing current author (4458.986372ms)
+✔ network limit policies reject absent, invalid and competing authors and capture activation values (3.48963ms)
+✔ selected HTTP structure caps reach request and response traversal and capture activation values (2.929155ms)
+✔ installed HTTP structure selection survives changed B and removed current author on original resume (3183.724137ms)
+✔ original HTTP binding privately owns nested sets and rejects mixed or foreign receiving (1.072258ms)
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (8204.513724ms)
+✔ real Nova v3 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (7951.712109ms)
+✔ publisher original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (1.462948ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16940.018987
+
+✖ failing tests:
+
+test at tests/verification/reliability/nova-http-policy.test.mjs:84:1
+✖ central network caps enforce actual UTF-8 boundaries and timeout; original run survives missing current author (4458.986372ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /RECOVERY_SIGNAL_REQUIRED/. Input:
+  
+  "Error: ENOENT: no such file or directory, open '/tmp/nova-http-policy-o4LL4T/state/runs/v2-51ac7ef30c25ccfe523937f4ea1981d8765f26a8f3e1a3bac636360aa332ffe4/run-snapshot.json'"
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-http-policy.test.mjs:101:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, open '/tmp/nova-http-policy-o4LL4T/state/runs/v2-51ac7ef30c25ccfe523937f4ea1981d8765f26a8f3e1a3bac636360aa332ffe4/run-snapshot.json'
+        at Object.readFileSync (node:fs:483:20)
+        at readRunSnapshot (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-snapshots.ts:108:34)
+        at retainedRuntimePolicies (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-snapshots.ts:168:25)
+        at recoverPipeline (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts:65:20)
+        at recoverPipelineV2 (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine.ts:29:10)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-http-policy.test.mjs:101:23)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /RECOVERY_SIGNAL_REQUIRED/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

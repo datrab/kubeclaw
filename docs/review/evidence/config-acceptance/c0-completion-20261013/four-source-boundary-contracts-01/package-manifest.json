@@ -1,0 +1,153 @@
+{
+  "status": "Reviewable proposal only; fresh independent review required",
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/README.md",
+      "sha256": "c5752106300921c931b13ebd74edbfc71ee0b20f825a59633851a4326c9fff90"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-FileBusterFixtureJournal.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-FileBusterFixtureJournal.stdout",
+      "sha256": "0b79ccaa00c0e91139b01e58298837a1ca77013c201be7c7682d253ec6e55daf"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-FileDurableBlobStore.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-FileDurableBlobStore.stdout",
+      "sha256": "c234991fdc936fa2af46dba6e011765dc831a5bc7fdeb311b6c72343cdb7675e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-FileNovaGateImportStore.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-FileNovaGateImportStore.stdout",
+      "sha256": "5477561be7022b1181877077d03b1001dce373dc131e2414368b145ff8bbac46"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-FileProducerOutbox.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-FileProducerOutbox.stdout",
+      "sha256": "9fbb528f7e5c01c6351df39a1fa22853840487fc886a6557b47badd53961f08f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-HistoricalBusterPlanJobStore.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-HistoricalBusterPlanJobStore.stdout",
+      "sha256": "3565f96396f9a14fefee8ccf46376a9301f9bd93e73dfee76fe1de7ddc55875e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-NativeAttemptJournal.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-NativeAttemptJournal.stdout",
+      "sha256": "ce20739c80bf1a6023d849c122eab7a3220960d019cdb277a4f240ed54cd5746"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-ProviderProcessSession.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-ProviderProcessSession.stdout",
+      "sha256": "ce1ac77772c0d3c3244f942ce0dc71743a4d2a269f4e0c29f2d689e0354ce2a9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-RegisteredTestProviderLoader.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-RegisteredTestProviderLoader.stdout",
+      "sha256": "400662fab2595fa21b9f307b4d7310367f99bd8629c73cd139a5ca9a4ca794f3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-inspectManifest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-inspectManifest.stdout",
+      "sha256": "d7735dc1d66775e2feb9201cb3292a357bb4c68c9140b35e05a81faf05352e56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-validatePersistentVolumeClaim.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/audit-validatePersistentVolumeClaim.stdout",
+      "sha256": "3c2e520d0b4e0e7dd547e18b3cac1de0ac072594c421e7269d913b52823e3dcf"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/author-definition-receipt.json",
+      "sha256": "de47ea5e8cbf64ec044aabbf3c8685771a9c63225604531413c639374652b9ed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/author-definition.py",
+      "sha256": "88bb33f3e3581f730fd4c0d111358b327dc9e62ebfce1f82a33546fa0adb3131"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/caller-audit.json",
+      "sha256": "3593fc84a6d2218b5b31b7623b941f0521f99d30bb7468d6768f90a0f5336032"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/commands-and-exits.json",
+      "sha256": "4891178780dea8a6440c8971ef8a47fc76d591adc9dfa5604ba07c1d21a31a22"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/contracts.json",
+      "sha256": "5908d1606b9a2994a81628d7f53bfde99143d01e4a19ef3348c58168731b3aee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition-shape-check.mjs",
+      "sha256": "4cdb1a7ce858b2864832e539d7db814fcf97e531ee7898805900637f1f8e64fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition.stdout",
+      "sha256": "4c9f5dda0f3cd3602e5aa24239f5b86d4c20e88f74be29cf555ced91c0e44c1c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/future-case-contracts.json",
+      "sha256": "11cca32cef0f2e72ea19bf201acf435b832126238ab3e4c3f95f1784ca108d95"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/input-identities.json",
+      "sha256": "4d3830040bc8e3a9fc8a314180b690c715719d002f182b142a9ba901b9193a61"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/original-records.json",
+      "sha256": "eeab191d24bea5ce8a12d1a5eb157388d551aa0dd0335bb1112d5910799af6bb"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/receiving-projections.schema.json",
+      "sha256": "5ff1bf396fb0472dd115d67c11c502faf48bdf025864c738bcb28a47ecb38c24"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/shape.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/shape.stdout",
+      "sha256": "b796ce9ec2bf60c4f87b102dffc1a16fc52af27e793f42d5374660a5f1fd455c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/source-witnesses.json",
+      "sha256": "40abfacbc70a37fa9746e1ee7104e62d4b2014d5f03d6d74bd6b20f15c2a0efc"
+    }
+  ],
+  "originalInputEndPinsAllEqual": true,
+  "futureCasesExecuted": 0,
+  "globalC0Accepted": false,
+  "implementationAuthorization": false
+}

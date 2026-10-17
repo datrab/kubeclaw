@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "node",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-controller-role-profile-review-01/replay/check-local-definitions.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "exitCode": 0,
+  "copiedAuthorInputsUnchanged": true,
+  "scope": "strict schema and public-source predicates only; no productive/native effects",
+  "node": "v24.21.0",
+  "observations": 56,
+  "failed": 0
+}

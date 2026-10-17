@@ -1,0 +1,32 @@
+✖ epoch change after outer stripe check cannot admit a stale participant (219.75852ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 811.229443
+
+✖ failing tests:
+
+test at tests/verification/contracts/worker-core-policy.test.mts:181:1
+✖ epoch change after outer stripe check cannot admit a stale participant (219.75852ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ROUTING_CONFLICT/. Input:
+  
+  'AssertionError [ERR_ASSERTION]: stale participant entered admission'
+  
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/worker-core-policy.test.mts:210:77
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-journal-routing.ts:14:18
+      at async withDurableStoreLock (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/worker-core-policy.test.mts:188:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'AssertionError [ERR_ASSERTION]: stale participant entered admission',
+    expected: /ROUTING_CONFLICT/,
+    operator: 'match',
+    diff: 'simple'
+  }

@@ -1,0 +1,254 @@
+[
+  {
+    "role": "nova",
+    "letter": "A",
+    "dir": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/loader-nova-A",
+    "comparisons": [
+      {
+        "name": "swarm.config.json",
+        "source": "charts/kubeclaw/files/config/swarm.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-control.config.json",
+        "source": "charts/kubeclaw/files/config/prism-control.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-studio.config.json",
+        "source": "charts/kubeclaw/files/config/prism-studio.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-worker.config.json",
+        "source": "charts/kubeclaw/files/config/prism-worker.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-execution.config.json",
+        "source": "charts/kubeclaw/files/config/prism-execution.config.json",
+        "equal": true
+      },
+      {
+        "name": "buster-engine.config.json",
+        "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "equal": true
+      },
+      {
+        "name": "worker-core.config.json",
+        "source": "charts/kubeclaw/files/config/worker-core.config.json",
+        "equal": true
+      }
+    ]
+  },
+  {
+    "role": "nova",
+    "letter": "B",
+    "dir": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/loader-nova-B",
+    "comparisons": [
+      {
+        "name": "swarm.config.json",
+        "source": "charts/kubeclaw/files/config/swarm.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-control.config.json",
+        "source": "charts/kubeclaw/files/config/prism-control.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-studio.config.json",
+        "source": "charts/kubeclaw/files/config/prism-studio.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-worker.config.json",
+        "source": "charts/kubeclaw/files/config/prism-worker.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-execution.config.json",
+        "source": "charts/kubeclaw/files/config/prism-execution.config.json",
+        "equal": true
+      },
+      {
+        "name": "buster-engine.config.json",
+        "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+        "equal": true
+      },
+      {
+        "name": "worker-core.config.json",
+        "source": "charts/kubeclaw/files/config/worker-core.config.json",
+        "equal": true
+      }
+    ]
+  },
+  {
+    "role": "buster",
+    "letter": "A",
+    "dir": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/loader-buster-A",
+    "comparisons": [
+      {
+        "name": "swarm.config.json",
+        "source": "charts/kubeclaw/files/config/swarm.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-control.config.json",
+        "source": "charts/kubeclaw/files/config/prism-control.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-studio.config.json",
+        "source": "charts/kubeclaw/files/config/prism-studio.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-worker.config.json",
+        "source": "charts/kubeclaw/files/config/prism-worker.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-execution.config.json",
+        "source": "charts/kubeclaw/files/config/prism-execution.config.json",
+        "equal": true
+      },
+      {
+        "name": "buster-engine.config.json",
+        "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "equal": true
+      },
+      {
+        "name": "worker-core.config.json",
+        "source": "charts/kubeclaw/files/config/worker-core.config.json",
+        "equal": true
+      }
+    ]
+  },
+  {
+    "role": "buster",
+    "letter": "B",
+    "dir": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/loader-buster-B",
+    "comparisons": [
+      {
+        "name": "swarm.config.json",
+        "source": "charts/kubeclaw/files/config/swarm.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-control.config.json",
+        "source": "charts/kubeclaw/files/config/prism-control.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-studio.config.json",
+        "source": "charts/kubeclaw/files/config/prism-studio.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-worker.config.json",
+        "source": "charts/kubeclaw/files/config/prism-worker.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-execution.config.json",
+        "source": "charts/kubeclaw/files/config/prism-execution.config.json",
+        "equal": true
+      },
+      {
+        "name": "buster-engine.config.json",
+        "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+        "equal": true
+      },
+      {
+        "name": "worker-core.config.json",
+        "source": "charts/kubeclaw/files/config/worker-core.config.json",
+        "equal": true
+      }
+    ]
+  },
+  {
+    "role": "prism",
+    "letter": "A",
+    "dir": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/loader-prism-A",
+    "comparisons": [
+      {
+        "name": "swarm.config.json",
+        "source": "charts/prism/files/config/swarm.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-control.config.json",
+        "source": "charts/prism/files/config/prism-control.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-studio.config.json",
+        "source": "charts/prism/files/config/prism-studio.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-worker.config.json",
+        "source": "charts/prism/files/config/prism-worker.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-execution.config.json",
+        "source": "charts/prism/files/config/prism-execution.config.json",
+        "equal": true
+      },
+      {
+        "name": "buster-engine.config.json",
+        "source": "charts/prism/files/config/buster-engine.config.json",
+        "equal": true
+      },
+      {
+        "name": "worker-core.config.json",
+        "source": "charts/prism/files/config/worker-core.config.json",
+        "equal": true
+      }
+    ]
+  },
+  {
+    "role": "prism",
+    "letter": "B",
+    "dir": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/loader-prism-B",
+    "comparisons": [
+      {
+        "name": "swarm.config.json",
+        "source": "charts/prism/files/config/swarm.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-control.config.json",
+        "source": "charts/prism/files/config/prism-control.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-studio.config.json",
+        "source": "charts/prism/files/config/prism-studio.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-worker.config.json",
+        "source": "charts/prism/files/config/prism-worker.config.json",
+        "equal": true
+      },
+      {
+        "name": "prism-execution.config.json",
+        "source": "charts/prism/files/config/prism-execution.config.json",
+        "equal": true
+      },
+      {
+        "name": "buster-engine.config.json",
+        "source": "charts/prism/files/config/profiles/buster-engine.runtime.config.json",
+        "equal": true
+      },
+      {
+        "name": "worker-core.config.json",
+        "source": "charts/prism/files/config/worker-core.config.json",
+        "equal": true
+      }
+    ]
+  }
+]

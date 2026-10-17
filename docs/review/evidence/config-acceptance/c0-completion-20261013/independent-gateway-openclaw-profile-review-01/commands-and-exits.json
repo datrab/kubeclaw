@@ -1,0 +1,18 @@
+{
+  "scope": "existing gateway-specific finite checker only; VM current startup cut uses in-memory fs shim, not native/config/secret writes",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replays": [
+    {
+      "cmd": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-01/replay.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-01/replay.stderr",
+      "chunk_id": "c356ab",
+      "wall_time_seconds": 0.167564766,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ],
+  "rawStdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-01/replay.stdout.json",
+  "rawStderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-01/replay.stderr",
+  "toolAndInputIdentities": "initial-identities.json and end-identities.json",
+  "noOtherRuntimeExecution": true
+}

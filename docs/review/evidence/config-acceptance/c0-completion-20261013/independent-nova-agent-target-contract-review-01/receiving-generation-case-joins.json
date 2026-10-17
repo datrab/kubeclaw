@@ -1,0 +1,1484 @@
+{
+  "receiving": [
+    {
+      "id": "RT-c0a779743e7384ba",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-34cb107ae059df42",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-34cb107ae059df42",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-6442142673149854",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-6442142673149854",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-96698b5568aba94d",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-96698b5568aba94d",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-36accddb567c892f",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-36accddb567c892f",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-81d42184c1081430",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-81d42184c1081430",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-41d93665317a7d07",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-41d93665317a7d07",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-0086141ada6be298",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-0086141ada6be298",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-8152550972f10185",
+      "side": "A",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    },
+    {
+      "id": "RT-8152550972f10185",
+      "side": "B",
+      "profileSHA": true,
+      "projectionSHA": true,
+      "exactProjection": true
+    }
+  ],
+  "wholeEntries": [
+    {
+      "id": "RT-c0a779743e7384ba",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-34cb107ae059df42",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-34cb107ae059df42",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-6442142673149854",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-6442142673149854",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-96698b5568aba94d",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-96698b5568aba94d",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-36accddb567c892f",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-36accddb567c892f",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-81d42184c1081430",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-81d42184c1081430",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-41d93665317a7d07",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-41d93665317a7d07",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-0086141ada6be298",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-0086141ada6be298",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-8152550972f10185",
+      "side": "A",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    },
+    {
+      "id": "RT-8152550972f10185",
+      "side": "B",
+      "rootSHA": true,
+      "profileSHA": true,
+      "sixComponentsUnchanged": true,
+      "componentBindingsUnchanged": true,
+      "engineSelectionsUnchanged": true,
+      "priorPluginSelectionsUnchanged": true
+    }
+  ],
+  "caseJoins": [
+    {
+      "id": "RT-c0a779743e7384ba-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-c0a779743e7384ba-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-ae11bf913a6050c6-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8152550972f10185-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8152550972f10185-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8152550972f10185-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8152550972f10185-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8152550972f10185-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8152550972f10185-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8152550972f10185-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8152550972f10185-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-34cb107ae059df42-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-34cb107ae059df42-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-34cb107ae059df42-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-34cb107ae059df42-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-34cb107ae059df42-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-34cb107ae059df42-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-34cb107ae059df42-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-34cb107ae059df42-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-6442142673149854-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-6442142673149854-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-6442142673149854-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-6442142673149854-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-6442142673149854-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-6442142673149854-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-6442142673149854-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-6442142673149854-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2d37a257c3d7dd45-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae-REPORT17-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae-REPORT17-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae-REPORT17-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae-REPORT17-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae-REPORT17-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae-REPORT17-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8750f030bf25ecae-REPORT17-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-96698b5568aba94d-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-96698b5568aba94d-REPORT17-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-96698b5568aba94d-REPORT17-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-96698b5568aba94d-REPORT17-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-96698b5568aba94d-REPORT17-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-96698b5568aba94d-REPORT17-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-96698b5568aba94d-REPORT17-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-96698b5568aba94d-REPORT17-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-36accddb567c892f-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-36accddb567c892f-REPORT17-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-36accddb567c892f-REPORT17-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-36accddb567c892f-REPORT17-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-36accddb567c892f-REPORT17-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-36accddb567c892f-REPORT17-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-36accddb567c892f-REPORT17-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-36accddb567c892f-REPORT17-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-81d42184c1081430-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-81d42184c1081430-REPORT17-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-81d42184c1081430-REPORT17-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-81d42184c1081430-REPORT17-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-81d42184c1081430-REPORT17-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-81d42184c1081430-REPORT17-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-81d42184c1081430-REPORT17-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-81d42184c1081430-REPORT17-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-41d93665317a7d07-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-41d93665317a7d07-REPORT17-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-41d93665317a7d07-REPORT17-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-41d93665317a7d07-REPORT17-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-41d93665317a7d07-REPORT17-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-41d93665317a7d07-REPORT17-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-41d93665317a7d07-REPORT17-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-41d93665317a7d07-REPORT17-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6-APPROVAL13-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6-APPROVAL13-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6-APPROVAL13-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6-APPROVAL13-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6-APPROVAL13-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6-APPROVAL13-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-8e39db110874a9d6-APPROVAL13-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33-APPROVAL13-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33-APPROVAL13-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33-APPROVAL13-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33-APPROVAL13-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33-APPROVAL13-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33-APPROVAL13-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-03fda24ef110ef33-APPROVAL13-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d-APPROVAL13-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d-APPROVAL13-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d-APPROVAL13-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d-APPROVAL13-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d-APPROVAL13-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d-APPROVAL13-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-94d352d99db6b92d-APPROVAL13-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf-APPROVAL13-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf-APPROVAL13-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf-APPROVAL13-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf-APPROVAL13-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf-APPROVAL13-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf-APPROVAL13-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-afddbf26c06e75cf-APPROVAL13-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-0086141ada6be298-CURRENT-SCHEMA-FIELD",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-0086141ada6be298-AGENT16-VAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-0086141ada6be298-AGENT16-AB",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-0086141ada6be298-AGENT16-BINDING",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-0086141ada6be298-AGENT16-RECOVERY",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-0086141ada6be298-AGENT16-EVAL",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-0086141ada6be298-AGENT16-MUTANT",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    },
+    {
+      "id": "RT-0086141ada6be298-AGENT16-CURRENT-DEFINITION",
+      "phaseAndResultExact": true,
+      "caseSchemaMemberExact": true,
+      "futureNotRun": true
+    }
+  ]
+}

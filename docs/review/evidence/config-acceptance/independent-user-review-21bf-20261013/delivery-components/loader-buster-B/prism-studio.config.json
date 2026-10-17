@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "swarm-component.v1",
+  "owner": "prism-studio",
+  "settings": {
+    "port": 8080,
+    "controlTimeoutMs": 30000,
+    "controlUrl": "http://prism-control:8080"
+  }
+}

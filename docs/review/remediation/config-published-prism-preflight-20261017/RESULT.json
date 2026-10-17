@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-17T03:51:41.061537+00:00",
+  "status": "FULL_COMPONENT_GATE_651_OF_652_UID1000_PROOF_OPEN",
+  "sourceCommit": "ffaf7b4dd7b7cf86d32ca0a1ae4cb9dbda0e27ab",
+  "sourceRemoteVerified": true,
+  "testedBaseCommit": "cb319a7a9fb587768f016fbd5c35442abbb96fe8",
+  "testedHelperSha256": "84508be5e5ec85801d200fb06c1fa6139aa00ebc702a20955e1b4b5a63e6ad74",
+  "evidence": "docs/review/remediation/config-published-prism-preflight-20261017",
+  "change": "Shared genuine published Prism fixture validates the complete current author/service set through the same production captureSwarmSettings before compiling/copying any role. No cache/fallback/fake capture. All valid cases still build the real role, publish a real generation, revalidate in the materializer, verify receipts and boot the named authenticated caller. Invalid policies no longer pay for repeated unnecessary role builds. No production policy, schema, default or activation changed.",
+  "checks": {
+    "requiredCommand": "npm run verify:config:components",
+    "strictComponentsTypecheck": true,
+    "wholeOriginalComponentGate": {
+      "tests": 652,
+      "passed": 651,
+      "failed": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "exitCode": 1,
+      "durationMs": 397247.77728,
+      "overall": "FAIL_REQUIRED_UID1000_IDENTITY_NOT_SATISFIED"
+    },
+    "wholeOriginalStudio": {
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 49101.929816
+    },
+    "requiredLeafDeletionObligations": 461,
+    "nodeSyntaxAndDiffCheck": true
+  },
+  "requiredFailure": {
+    "file": "tests/verification/deployment/buster-admission-render.test.mjs",
+    "test": "actual service CLI rejects inherited retired ENV before opening its parent channel",
+    "diagnostic": "this unprivileged CLI proof uses its real service identity: actual UID0 expected UID1000",
+    "classification": "Existing actual guest/service identity obligation; NOT a production source regression or scheduler execution failure. GID1000 and actual CLI loop remain unexecuted after the UID assertion. No setuid wrapper, spoof, skip or assertion change.",
+    "resumeCondition": "Execute the unchanged original CLI proof with genuine UID/GID1000 in the suitable isolated prepared native guest; retain full native/boot/permission requirements."
+  },
+  "diagnosticRecovery": "Initial integrated command reached RPC90s lifetime:17 files cancelled, no result PASS. Bounded55s isolated diagnostic also cancelled. Single original first test10s and full original Studio49s after preflight demonstrated repeated role assembly cost, NOT an import hang. Corrected interpretation retained. Required whole command then ran owned under SAME lock independently of RPC lifetime and completed normally with exact651/652 result.",
+  "originalTestBodiesSha256": {
+    "skills/prism/tests/studio-config.test.mts": "1c2bc5782534dd9579cd6d96218bbfd9454afe6d5829fe2b9cf3e980fabae503",
+    "skills/prism/tests/studio-service.test.mts": "76cbed3809741d2b42a0892d11573f661be82452f886ede13ed3aacb2dbff291",
+    "skills/prism/tests/swarm-worker-config.test.mts": "0f08cb0fa71e204c57c6fa022f01f90eb46a1303b40625653251a67ff2b3731e",
+    "skills/prism/tests/swarm-supervisor-config.test.mts": "a6a6b9779822afeef69e14c7e0ada78c1a822dbcbbd00bcf4f9ad3244930fa9e",
+    "skills/prism/tests/swarm-resource-operation.test.mts": "e9fa46b5071f8db956ff3c3822e4f6aea232c5fb4ca6f2bcd0ca12d9b1bffd0f",
+    "tests/verification/deployment/buster-admission-render.test.mjs": "6c738f94b61d41cb0f6fd32e6c3059e600cc71de1edddd6a8ff50e4be9a91b6a"
+  },
+  "originalRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+    "originalResultsChanged": false
+  },
+  "independentReview": "OPEN: native spawn/review/collaboration tools not exposed; CONFIG subagents0, parent terminal, no fresh independent reviewer output. Known unchanged app-server EROFS not retried. Author-run verification only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged suitable isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted archive storage and migrated isolated PostgreSQL. No trust/identity/kernel spoof or skipped acceptance.",
+  "writerLock": "SAME shared nonblocking exclusive lock; terminal parent/no productive owner at admission; released at bounded command exit",
+  "noHistoricalFollowup": true
+}

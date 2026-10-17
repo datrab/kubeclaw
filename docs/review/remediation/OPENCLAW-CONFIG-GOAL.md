@@ -1,5 +1,43 @@
 # OpenClaw /goal: CONFIG inventory, definition and gated implementation
 
+Copyable start objective, current readiness, concrete next work, implementation
+transition and later-phase resume rules: [GOAL-START.md](GOAL-START.md).
+The whole CONFIG migration is the intended outcome; current C0 gaps are autonomous
+work, not inventory tasks delegated back to the user. Package authorization below
+remains explicit; bounded evidence fixes alone do not make implementation ready.
+
+## Current C0 work checkpoint
+
+Active work branch: `codex/config-c0-semantic-inventory-20261012`, based on the
+handoff commit `9452d35524192f8665bc87254b3c63a361e7bd4a`. The current
+[working definition](config-definition-current.md),
+[semantic inventory](config-semantic-inventory.json),
+[acceptance matrix](config-acceptance-matrix.json) and
+[raw evidence](../evidence/config-acceptance/README.md) persist incremental work.
+**C0 remains in progress and is not accepted.** Schema/candidate rows with open
+consumers and incomplete proposed cases remain explicit; they do not satisfy
+the gates below. A fresh independent reviewer checks the work against code.
+No production/test implementation, C1 approval, deployment or production-finding closure
+has occurred. Continue semantic closure and review before asking for approval.
+
+The four document-integrity findings from the user-requested `21bf` review are
+now [corrected and independently verified](../evidence/config-acceptance/four-findings-fix-20261013/README.md).
+The fresh zero-conversation-context reviewer also identified a Runtime root
+conservation guard gap; its correction has a
+[clean bounded recheck](../evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/README.md).
+Historical findings and failures remain preserved. This closes only those five
+evidence/validator corrections, not production findings, global C0, native or
+module acceptance. Original obligations and C1–C6 authorization remain unchanged.
+
+The original [independent Core challenge](independent-config-c0-core-domain-a07de567.md)
+is preserved with its historical **NOT ACCEPTED** verdict. Its material corrections
+and subsequent RCORE-001/002 fixes are now
+[independently verified at bounded definition scope](independent-config-c0-core-final-recheck-40cf24e7.md).
+This covers adjustable proposed domains, complete canonical case specifications,
+additional schema dispositions and six retention callers, not global C0 or runtime
+acceptance. Runtime/delivery/plugin/agent scope and complete C1 package remain open.
+Raw failures continue to be preserved; no implementation approval is asked.
+
 Current handoff: 12 October 2026, `datrab/kubeclaw`, branch
 `codex/cloud-config-handoff-20261012`. This file is the current autonomous task
 entry and does not require the previous chat or `AGENTS.md`. The user has disabled

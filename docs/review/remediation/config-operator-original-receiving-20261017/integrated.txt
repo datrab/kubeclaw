@@ -1,0 +1,42 @@
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (8300.682153ms)
+✖ real Nova v3 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (5.749979ms)
+✔ operator original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (0.811681ms)
+✔ current v3 original operator capture compares nested structure and version before reprojecting (1.909439ms)
+✖ captured operator structure A/B reaches the real adapter before effects; exact depth/array/object boundaries and restored positives (2.630398ms)
+✔ original v1/v2 operator captures remain unchanged and use their original protocol contract; malformed v3 cannot fall back (49.44299ms)
+✔ real Nova resume and authenticated admin retry/replay restore both original Redis targets without current-source refill (7324.22154ms)
+✔ original Redis capture rejects partial captures, policy disagreement and registration-set drift without refill (0.840842ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 6
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9264.97731
+
+✖ failing tests:
+
+test at tests/verification/reliability/nova-operator-original-recovery.test.mjs:19:36
+✖ real Nova v3 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (5.749979ms)
+  Error: CORE_RUNTIME_POLICY_INVALID
+      at captureCoreRuntimePolicy (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts:76:31)
+      at loadCoreRuntimePolicy (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts:113:20)
+      at inspectRuntimeConfiguration (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-runtime.ts:48:57)
+      at prepareRuntime (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-runtime.ts:74:21)
+      at runNewPipeline (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts:38:90)
+      at runPipelineV2 (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine.ts:26:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-operator-original-recovery.test.mjs:41:20)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/nova-operator-structure-policy.test.mjs:15:1
+✖ captured operator structure A/B reaches the real adapter before effects; exact depth/array/object boundaries and restored positives (2.630398ms)
+  Error: REVIEW_POLICY_CAPTURE_COMPETING_AUTHOR
+      at loadCoreRuntimePolicy (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts:112:62)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-operator-structure-policy.test.mjs:19:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

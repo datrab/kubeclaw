@@ -1,0 +1,1 @@
+Historical comparison harness incorrectly searched mcp instead of actual ops-mcp container, causing eight empty lookup failures. Exact raw maps/script/results preserved. Corrected field locator matches productive container without weakening value comparison; source/schema failures remain failures. No production/test changes.

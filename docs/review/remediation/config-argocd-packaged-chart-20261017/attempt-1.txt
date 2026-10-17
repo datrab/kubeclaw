@@ -1,0 +1,42 @@
+Error: execution error at (kubeclaw/templates/deployment.yaml:31:28): Prism tool release identity must match central bindings
+
+Use --debug flag to render out invalid YAML
+✔ Prism database and migration prerequisites precede its Argo migration hook and all application deployments (155.938688ms)
+✔ all standalone data claims and PostgreSQL-generated claims retain data on Argo prune/delete (224.227032ms)
+✔ an external database selection does not create a phantom migration hook or PostgreSQL data claim (63.87466ms)
+✖ every standalone claim has a same-wave consumer, including backup storage before its first schedule (120.996965ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1126.070196
+
+✖ failing tests:
+
+test at tests/verification/deployment/argocd-chart-order.test.mjs:80:1
+✖ every standalone claim has a same-wave consumer, including backup storage before its first schedule (120.996965ms)
+  Error: Command failed: helm template agent-nova /tmp/argocd-chart-order-MN6g0S/kubeclaw-package/kubeclaw-1.0.1.tgz --namespace kubeclaw --set agentRole=prism
+  Error: execution error at (kubeclaw/templates/deployment.yaml:31:28): Prism tool release identity must match central bindings
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:35:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:81:47)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'Error: execution error at (kubeclaw/templates/deployment.yaml:31:28): Prism tool release identity must match central bindings\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 2789030,
+    stdout: '',
+    stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:31:28): Prism tool release identity must match central bindings\n\nUse --debug flag to render out invalid YAML\n'
+  }

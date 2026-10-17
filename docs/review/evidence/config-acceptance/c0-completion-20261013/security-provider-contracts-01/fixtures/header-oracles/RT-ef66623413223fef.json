@@ -1,0 +1,13 @@
+{
+  "status": 200,
+  "headers": {
+    "x-content-type-options": "nosniff",
+    "content-security-policy": "default-src 'none'",
+    "referrer-policy": "no-referrer",
+    "permissions-policy": "geolocation=()",
+    "x-custom": "b",
+    "strict-transport-security": "max-age=31536000",
+    "x-frame-options": "deny"
+  },
+  "qualification": "Concrete endpoint response definition for SOURCE predicate assessment/future authenticated HTTP fixture; no served/observed response claimed"
+}

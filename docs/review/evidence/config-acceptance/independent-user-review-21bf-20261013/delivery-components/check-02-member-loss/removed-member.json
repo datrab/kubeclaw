@@ -1,0 +1,84 @@
+{
+  "settingId": "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+  "owner": "worker-core",
+  "field": "/settings/localRuntime/cancellationTimeoutMs",
+  "schemaPathsTraversed": [
+    "/$defs/worker-core",
+    "/$defs/worker-core/properties/localRuntime",
+    "/$defs/worker-core/properties/localRuntime/properties/cancellationTimeoutMs",
+    "/$defs/positiveTimerInteger"
+  ],
+  "effectiveScalarPointer": "/$defs/positiveTimerInteger",
+  "row": {
+    "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+    "path": "docs/review/evidence/config-acceptance/components/semantic-fragment.json",
+    "sha256": "8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1",
+    "gitBlob": "6ccfb1356f5bc20749be4981999f22c73b7a0dd1",
+    "rfc6901Pointer": "/rows/156"
+  },
+  "reader": {
+    "loader": "loadSwarmSettings -> readSwarmBundle, both Prism and Buster validated before return",
+    "productiveCallerChain": [
+      "skills/buster/engine/remote-plan-cli.ts",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "skills/buster/engine/test-gates/runner-setup.ts",
+      "skills/worker/core/worker/local-runtime.ts"
+    ],
+    "fieldAccessEvidence": [
+      {
+        "path": "skills/buster/engine/test-gates/runner-setup.ts",
+        "line": 113,
+        "text": "cancellationTimeoutMs: workerLocalRuntime.cancellationTimeoutMs,"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 22,
+        "text": "const cancellationTimeoutMs = positiveTimer(options.cancellationTimeoutMs,"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 28,
+        "text": "return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 108,
+        "text": "const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 115,
+        "text": "coreVersion: options.coreVersion, capacity: options.capacity, drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 243,
+        "text": "if (!(await settleWithin(cancelled, this.#options.cancellationTimeoutMs))) {"
+      }
+    ],
+    "traceStatus": "productive-chain-correlated; independent semantic review pending",
+    "proofLimit": "Access excerpts belong to manually identified productive construction/call chain; lexical name similarity alone does not establish every downstream branch. Source-traced status does not mean runtime effect tested."
+  },
+  "caseIds": [
+    "CMP-C1-VAL-worker-core",
+    "CMP-C1-EFFECT-worker-core",
+    "CMP-C1-DELIVERY",
+    "CMP-C1-MUT",
+    "CMP-C5-BIND",
+    "CMP-C1-EFFECT-worker-core-localRuntime.cancellationTimeoutMs"
+  ],
+  "completeAB": {
+    "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+    "path": "docs/review/evidence/config-acceptance/components/refined-case-profiles.json",
+    "sha256": "139f4f494bc8806d164b66c87f2b5cddc4e6f0a846fe6b2f979776987c558d87",
+    "gitBlob": "bce44ae83319dbbb0701e8fa8241248582b8b5a8",
+    "rfc6901Pointer": "/CMP-C1-EFFECT-worker-core-localRuntime.cancellationTimeoutMs"
+  },
+  "currentResolvedLeafSchema": {
+    "type": "integer",
+    "minimum": 1,
+    "maximum": 2147483647
+  },
+  "currentVsProposed": "This schema maximum is a current loader domain guard. It is not an operator default or automatically the universal target/current native/physical capacity; retain existing field-specific proposals/consumer constraints and future cases."
+}

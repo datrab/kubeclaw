@@ -23,7 +23,8 @@ export interface ResolvedReviewPolicy {
 }
 
 export interface ResolveReviewPolicyInput {
-  readonly builtIn: unknown;
+  readonly builtIn?: unknown;
+  readonly selectedFile?: unknown;
   readonly settingsFile?: unknown;
   readonly runOverride?: {
     readonly authorized: boolean;
@@ -60,9 +61,9 @@ function deepFreeze<T>(value: T): T {
 export function resolveReviewPolicy(input: ResolveReviewPolicyInput, encoding?: ReviewSemanticEncoding): ResolvedReviewPolicy {
   assertReviewSemanticEncoding(encoding);
   portableJson(input);
-  const candidates: Array<readonly [ReviewPolicySourceKind, ReviewPolicy]> = [
-    ['built_in', validated(input.builtIn, 'built_in')],
-  ];
+  if(input.selectedFile !== undefined && ['builtIn','settingsFile','runOverride'].some(key=>Object.hasOwn(input,key)))throw new Error('REVIEW_POLICY_COMPETING_AUTHOR');
+  const candidates: Array<readonly [ReviewPolicySourceKind, ReviewPolicy]> = input.selectedFile === undefined
+    ? [['built_in', validated(input.builtIn, 'built_in')]] : [['settings_file', validated(input.selectedFile,'settings_file')]];
   if (input.settingsFile !== undefined) {
     candidates.push(['settings_file', validated(input.settingsFile, 'settings_file')]);
   }

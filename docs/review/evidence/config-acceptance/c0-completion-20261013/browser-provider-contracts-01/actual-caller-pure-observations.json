@@ -1,0 +1,8 @@
+{
+  "novaSourceSha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3",
+  "budgetGuardSha256": "bb3887c50fc726a857fd1688166cf7a34aae9570d2fa847b572599743f0918c3",
+  "budgetGuard": "      if (provider.registration.contractId === 'kubeclaw.lighthouse@1'\n        && mode === 'blocking' && configuration.values.purpose === 'performance'\n        && configuration.values.budget === undefined) {\n        fail('TEST_PLAN_LIGHTHOUSE_BUDGET_REQUIRED', id);\n      }\n",
+  "evidenceSliceSha256": "24da6bd2c200582abc05aca6b9c35752d803899e322b6285b88d1e5c6e18c7b2",
+  "evidenceSlice": "function evidencePolicy(provider: TestProviderRegistryEntry, override: EvidenceOverride | undefined, nodeId: string): EvidencePolicyV1 {\n  const policy = {\n    onPass: [...(override?.onPass ?? provider.registration.evidenceDefaults.onPass)],\n    onFail: [...(override?.onFail ?? provider.registration.evidenceDefaults.onFail)],\n    onError: [...(override?.onError ?? provider.registration.evidenceDefaults.onError)],\n  };\n  const supported = new Set(provider.registration.evidenceTypes);\n  for (const type of [...policy.onPass, ...policy.onFail, ...policy.onError]) if (!supported.has(type)) fail('TEST_PLAN_EVIDENCE_INVALID', `${nodeId}:${type}`);\n  return policy;\n}\n\n",
+  "qualification": "Only actual current Nova guard and metadata function, no full resolver/provider/native/credential/API effect"
+}

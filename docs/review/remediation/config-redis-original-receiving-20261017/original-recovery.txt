@@ -1,0 +1,10 @@
+✔ real Nova wait/resume restores both complete original Redis targets and original Core without current-source refill (4221.980983ms)
+✔ original Redis capture rejects partial captures, policy disagreement and registration-set drift without refill (1.18629ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4920.852828

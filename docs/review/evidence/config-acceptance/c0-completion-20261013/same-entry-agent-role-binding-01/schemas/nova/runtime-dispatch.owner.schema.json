@@ -1,0 +1,191 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "registrationId",
+    "instanceId",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-registration-policy.v1"
+    },
+    "packageId": {
+      "const": "kubeclaw.runtime-dispatch"
+    },
+    "registrationId": {
+      "const": "kubeclaw.runtime-dispatch:openclaw"
+    },
+    "instanceId": {
+      "const": "fixture.runtime-dispatch"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "processing"
+        ],
+        "properties": {
+          "processing": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "targets"
+            ],
+            "properties": {
+              "targets": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "endpoint",
+                    "tokenSecret",
+                    "runtime",
+                    "agentId",
+                    "agentRole",
+                    "model",
+                    "thinking",
+                    "collectorMode",
+                    "spawnIntervalMs",
+                    "tokenizerEncoding",
+                    "maxPromptBytes",
+                    "maxInputTokens",
+                    "maxOutputTokens",
+                    "maxContextTokens",
+                    "cwd",
+                    "repositoryRoot",
+                    "workspaceRoot",
+                    "pollMs",
+                    "maxPollMs",
+                    "maxPolls",
+                    "sessionTimeoutMs",
+                    "resultPathPrefix"
+                  ],
+                  "properties": {
+                    "endpoint": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "tokenSecret": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "runtime": {
+                      "enum": [
+                        "acp",
+                        "subagent"
+                      ]
+                    },
+                    "agentId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "agentRole": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "model": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "thinking": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "controllerSessionKey": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "collectorMode": {
+                      "type": "boolean"
+                    },
+                    "spawnIntervalMs": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 60000
+                    },
+                    "tokenizerEncoding": {
+                      "const": "o200k_base"
+                    },
+                    "maxPromptBytes": {
+                      "const": 900000
+                    },
+                    "maxInputTokens": {
+                      "const": 120000
+                    },
+                    "maxOutputTokens": {
+                      "const": 6000
+                    },
+                    "maxContextTokens": {
+                      "const": 128000
+                    },
+                    "cwd": {
+                      "type": "string",
+                      "pattern": "^/"
+                    },
+                    "repositoryRoot": {
+                      "type": "string",
+                      "pattern": "^/"
+                    },
+                    "workspaceRoot": {
+                      "type": "string",
+                      "pattern": "^/",
+                      "description": "Trusted Git workspace root required for attempt-owned runtime workspaces."
+                    },
+                    "pollMs": {
+                      "type": "integer",
+                      "minimum": 10
+                    },
+                    "maxPollMs": {
+                      "type": "integer",
+                      "minimum": 10
+                    },
+                    "maxPolls": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "sessionTimeoutMs": {
+                      "type": "integer",
+                      "minimum": 10,
+                      "maximum": 86400000
+                    },
+                    "resultPathPrefix": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+                    },
+                    "resultEndpoint": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "resultTokenSecret": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "dependentRequired": {
+                    "resultEndpoint": [
+                      "resultTokenSecret"
+                    ],
+                    "resultTokenSecret": [
+                      "resultEndpoint"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

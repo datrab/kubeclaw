@@ -1,0 +1,53 @@
+✔ actual Nova startup selects A/B artifact UTF8 cap, snapshots A and resumes A without current B (3738.507739ms)
+✔ central artifact limits required and relationally valid; raw duplicate authors reject even equal or null before activation (3.058439ms)
+✔ actual artifact consumer enforces independently selected record count, metadata bytes and blob-store bytes with restored positives (245.759534ms)
+✖ original durable store roots survive B relocation without effects at B; grants still bind (968.005372ms)
+✔ actual Nova state/wait A/B entry policies reach both real adapters and retained A resumes without B (6122.04454ms)
+✔ selected state and wait entry bytes, records and store capacities enforce actual boundaries and restore positives (422.915604ms)
+✔ all six central leaves are mandatory; malformed, missing and raw duplicate authors reject without defaults (5.849101ms)
+✖ original durable store roots survive B relocation without effects at B; grants still bind (1212.812163ms)
+✔ actual Nova telemetry A/B record cap, redaction and retained A resume without B use selected snapshot (3533.944025ms)
+✔ selected actual telemetry byte/count/store limits enforce exact UTF8 boundaries and restored positives (135.763174ms)
+✔ all central telemetry leaves required; malformed direct/central values and duplicate authors reject (5.388228ms)
+✔ selected telemetry structural budgets enforce exact boundaries, capture and restored positives (69.819677ms)
+✖ original durable store roots survive B relocation without effects at B; grants still bind (933.174535ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 10
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8890.081376
+
+✖ failing tests:
+
+test at tests/verification/reliability/nova-artifact-policy.test.mjs:72:2
+✖ original durable store roots survive B relocation without effects at B; grants still bind (968.005372ms)
+  TypeError: Cannot assign to read only property 'artifactRoot' of object '#<Object>'
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-artifact-policy.test.mjs:78:110
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-artifact-policy.test.mjs:78:6)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/nova-state-wait-policy.test.mjs:88:2
+✖ original durable store roots survive B relocation without effects at B; grants still bind (1212.812163ms)
+  TypeError: Cannot assign to read only property 'root' of object '#<Object>'
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-state-wait-policy.test.mjs:94:110
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-state-wait-policy.test.mjs:94:6)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/nova-telemetry-policy.test.mjs:84:2
+✖ original durable store roots survive B relocation without effects at B; grants still bind (933.174535ms)
+  TypeError: Cannot assign to read only property 'root' of object '#<Object>'
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-telemetry-policy.test.mjs:90:110
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-telemetry-policy.test.mjs:90:6)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

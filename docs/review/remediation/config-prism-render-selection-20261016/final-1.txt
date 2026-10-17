@@ -1,0 +1,1 @@
+contracts/prism/v1/src/index.ts(20,3): error TS2724: '"./validators.generated.mjs"' has no exported member named 'validateEngineResultRenderSelected'. Did you mean 'validateEngineResultRender'?

@@ -1,0 +1,152 @@
+{
+  "scope": "Doc-package integrity only, not F-MUT/semantic/runtime acceptance",
+  "receiptSourceSha256": "b0f15920b3fd279fd25868d8f885bc0dade6b52adaeae4a165d77c6bbc7e81a1",
+  "checkMatrixSha256": "066b8a46a896a715f9b0eb4f9e180d32379907495a5b165da8947b25b7eba3f9",
+  "results": [
+    {
+      "case": "stable-real-core-package-integrity",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplemental-controls-_3g3x71m/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplemental-controls-_3g3x71m/matrix.json",
+        "--structural"
+      ],
+      "exit": 0,
+      "report": {
+        "mode": "draft-structural",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 0,
+        "errors": []
+      },
+      "stderr": ""
+    },
+    {
+      "case": "duplicate-supplemental-case",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplemental-controls-_3g3x71m/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplemental-controls-_3g3x71m/matrix.json",
+        "--structural"
+      ],
+      "exit": 1,
+      "report": {
+        "mode": "draft-structural",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 1,
+        "errors": [
+          "supplemental case: duplicate ID QC-FOUNDATION-FLOCK-WAIT-VAL"
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "case": "dangling-question",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplemental-controls-_3g3x71m/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplemental-controls-_3g3x71m/matrix.json",
+        "--structural"
+      ],
+      "exit": 1,
+      "report": {
+        "mode": "draft-structural",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 1,
+        "errors": [
+          "supplemental QC-FOUNDATION-FLOCK-WAIT-VAL: missing question definition"
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "case": "false-runtime-lifecycle",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplemental-controls-_3g3x71m/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplemental-controls-_3g3x71m/matrix.json",
+        "--structural"
+      ],
+      "exit": 1,
+      "report": {
+        "mode": "draft-structural",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 1,
+        "errors": [
+          "supplemental QC-FOUNDATION-FLOCK-WAIT-VAL: unexpected acceptance/runtime lifecycle"
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "case": "strict-supplemental-not-acceptance",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplemental-controls-_3g3x71m/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplemental-controls-_3g3x71m/matrix.json"
+      ],
+      "exit": 1,
+      "report": {
+        "mode": "strict-C0-completion",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 1,
+        "errors": [
+          "supplemental CORE-ICQ-DEFINITION-CORRECTIONS-20261013: independent complete field/consumer/case closure required"
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "case": "restored-package-integrity",
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-matrix.py",
+        "--inventory",
+        "/tmp/c0-supplemental-controls-_3g3x71m/inventory.json",
+        "--matrix",
+        "/tmp/c0-supplemental-controls-_3g3x71m/matrix.json",
+        "--structural"
+      ],
+      "exit": 0,
+      "report": {
+        "mode": "draft-structural",
+        "scope": "integrity only; independent semantic review remains mandatory",
+        "settings": 0,
+        "cases": 0,
+        "errorCount": 0,
+        "errors": []
+      },
+      "stderr": ""
+    }
+  ]
+}

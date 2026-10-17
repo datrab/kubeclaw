@@ -1,3 +1,4 @@
+import {nativeControlSettings} from '../../../skills/prism/tests/native/resource-policy.mts';
 import {enqueueAgentJob,claimAgentJob,agentJob} from '../../../skills/prism/control/agent-jobs.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -65,7 +66,7 @@ try {
   assert.equal((await pool.query('SELECT id FROM prism.direction')).rows.length,6);
   const next=await startDesignRound(pool,{...parent,startKey:'agent-job-round',parentRoundId:winner.value.generationId,documentId:deliveries[0]!.documentId});
   const queued=await enqueueAgentJob(pool,'spiffe://test/control/main/v2','transaction-regression','design-set',{projectId:'transaction-regression',preferences:next});
-  const claims=await Promise.all(['bridge-one','bridge-two'].map(owner=>claimAgentJob(pool,owner)));
+  const claims=await Promise.all(['bridge-one','bridge-two'].map(owner=>claimAgentJob(pool,owner,nativeControlSettings)));
   assert.equal(claims.filter(Boolean).length,1,'native pooled claims cannot launch the same session twice');
   const claim=claims.find(Boolean)!;
   assert.equal(claim.id,queued.id);assert.ok(claim.fence);

@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-17T00:10:29.883327+00:00",
+  "status": "ORIGINAL_DEPLOYMENT_TRUTH_CENTRAL_OBSERVER_AND_GENUINE_RECEIPT_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "a830acc44b5bb7dcc116a90fc2c9c8281790411c",
+  "sourceRemoteVerified": true,
+  "verifiedRemoteHead": "a830acc44b5bb7dcc116a90fc2c9c8281790411c",
+  "evidence": "docs/review/remediation/config-observer-deployment-truth-20261017",
+  "change": "Original deployment truth now checks the sole existing chart Observer author, every original required field, actual rendered Buster plugin payload and real immutable resolver. Token and SPIFFE branches use actual packaged native-parent path. Helm fixture obtains a genuine builder-produced image/generation receipt at actual Git source revision and cleans its temporary output; no forged receipt or production validation exception. No production policy changed.",
+  "checks": {
+    "originalDeploymentTruth": {
+      "exitCode": 0,
+      "log": "truth-final.txt",
+      "scope": "Whole original script, real default/Buster/Nova Helm rendering, original negative provider controls; NOT deployment/native execution"
+    },
+    "actualObserverAB": {
+      "passed": 1,
+      "total": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": "observer-receiver.txt",
+      "scope": "Genuine image bundle; two actual Helm configs; actual resolver; checksum contrast; required leaf deletion and retired ENV negatives"
+    },
+    "syntax": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "counts": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "preserved": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "integrityFailures": 0,
+      "unknownFieldIds": 0,
+      "unknownRequirementIds": 0,
+      "missingTargetLocatorCount": 45,
+      "fullAcceptance": "OPEN"
+    }
+  },
+  "initialFailuresRetained": {
+    "truth-initial.txt": "Original native-parent token/SPIFFE assertions used retired source-tree path; actual installed package path retained instead.",
+    "truth-second.txt": "Original Buster Helm fixture lacked exact selected image delivery receipt; supplied genuine buildBusterImageBundle metadata, no bypass."
+  },
+  "independentReview": "OPEN; current native spawn/reviewer discovery empty; CONFIG subagents0; no fresh reviewer output. Known unchanged same-surface EROFS not retried. Author-run checks are not independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Continue genuine QB-R02 producer/build/source/baseline/inputStore ownership/accounting/sealed snapshots/publication plus coordinated sole-root/all-profile/schema/file-set/actual boot+Nova receiving; original history/native/archive/independent/fullC0-C6 gates remain OPEN. Deployment-truth migration is locally passing; do not replay unchanged suites as new progress.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000 delegated writable cgroup, sufficient genuinely root-trusted writable archive filesystem and migrated isolated PostgreSQL. Existing local capability/UID restrictions unchanged.",
+  "writerLock": "SAME nonblocking repository lock held through this mutation/check/commit/push; released on command exit",
+  "noHistoricalFollowup": true,
+  "sourceHashes": {
+    "tests/verification/deployment/check-deployment-truth.mjs": "82c442120a851decd64b20d35642a446bbdac08845d18a967e99cbb73bc259b2"
+  }
+}

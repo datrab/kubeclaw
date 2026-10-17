@@ -1,0 +1,78 @@
+{
+  "negativeControls": [
+    {
+      "name": "missing original field",
+      "rejected": true
+    },
+    {
+      "name": "duplicate original field",
+      "rejected": true
+    },
+    {
+      "name": "original original",
+      "rejected": true
+    },
+    {
+      "name": "original originalObjectSha256",
+      "rejected": true
+    },
+    {
+      "name": "original caseIds",
+      "rejected": true
+    },
+    {
+      "name": "original class",
+      "rejected": true
+    },
+    {
+      "name": "original owner",
+      "rejected": true
+    },
+    {
+      "name": "foreign ID",
+      "rejected": true
+    },
+    {
+      "name": "invented central author",
+      "rejected": true
+    },
+    {
+      "name": "false runtime PASS",
+      "rejected": true
+    },
+    {
+      "name": "false whole acceptance",
+      "rejected": true
+    },
+    {
+      "name": "false original case acceptance",
+      "rejected": true
+    },
+    {
+      "name": "wrong environment source",
+      "rejected": true
+    },
+    {
+      "name": "token file falsely static secret",
+      "rejected": true
+    },
+    {
+      "name": "ordinary origin falsely secret",
+      "rejected": true
+    }
+  ],
+  "passed": 15,
+  "total": 15,
+  "restoredDeterministic": true,
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "all44UnrelatedGroupsUnchanged": true,
+  "historicalGroupsPreserved": 45,
+  "remainingUnresolvedHistoricalGroups": 4,
+  "independentReview": "OPEN; native spawn/reviewer unavailable; CONFIG reviewers0; unchanged EROFS not retried"
+}

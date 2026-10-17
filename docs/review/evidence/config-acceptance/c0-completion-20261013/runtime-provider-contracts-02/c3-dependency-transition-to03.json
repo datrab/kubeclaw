@@ -1,0 +1,22 @@
+{
+  "status": "Explicit frozen reference transition proposal ONLY after independent03 review; no base02 mutation and no03 activation/whole C3 acceptance",
+  "base": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02",
+  "baseRuntimeSchemaSha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b",
+  "supersessionArtifact": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/frozen-supersession.json",
+  "supersessionArtifactSha256": "6333028861c7bfa51963d7edce2c4b4ba52f74e38397a2f1fe2ce84d4304fb44",
+  "supersession": {
+    "base": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02",
+      "rootSha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+      "runtimeSchemaSha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b",
+      "manifestSha256": "740d15efcb1e6689a7dd73c023890b4b4f221cb9b5aed457786dbcf26f082f9c",
+      "reviewSha256": "75bcd0e526908aea715ea2a4903baf09af0255ad6d915cd8fd30268e0a517470"
+    },
+    "delta": "only generated peer/repeated scanner/container registry schema permits optional worker registryCaFile, conditionally paired HTTPS name refs vs anonymous HTTP; full owner policies/root schema/root version v4 unchanged",
+    "rootSha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+    "provider02Dependency": "Provider proposed root.v5 currently based on frozen02 v4. After independent03 review it must replace base runtime-schema/reference-contract refs with exact frozen03 identities; root/settings bytes remain equal. This is explicit reference supersession, not approval or automatic provider closure.",
+    "correctedRuntimeSchemaSha256": "af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+    "correctedReferenceContractSha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2"
+  },
+  "requiredAction": "Next authenticated generation updates ONLY generated runtime schema/registry-reference contract pins to exact frozen03 after bounded independent check; root v4/settings identical03, v5 plugin tuples/policy fixtures retained. No implicit current-file lookup."
+}

@@ -1,6 +1,6 @@
 import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
-import { canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
-import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { canonicalPipelineEntry, readTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings, type BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
 import { preparedPlanStateRoot, preparedPlanRuntimeRoot } from '../../fixtures/test-gate/modeled-preparation.mts';
 // Preparation authority is modeled here; parser, extraction and durable service/store remain real.
@@ -64,7 +64,7 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
     const service = new BusterRemotePlanService({
     dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
     executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: limited, registry, workerRevision: 'a'.repeat(40), runtimeRoot,
-      tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['command.execute']), admission: { ...loadBusterSettings({ SWARM_CONFIG: canonicalSwarmEntry }).admission, maximumActiveJobs: 1 } });
+      tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['command.execute']), admission: { ...(captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline())).components['buster-engine']!.settings as unknown as BusterSettings).admission, maximumActiveJobs: 1 } });
     const queued = job('reservation:other');
     if (timing === 'queued') {
       await limited.accept(first, new Date().toISOString());

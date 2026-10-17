@@ -1,0 +1,11 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6845,
+  "errorCount": 2,
+  "errors": [
+    "Runtime normalized row set conservation drift",
+    "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+  ]
+}

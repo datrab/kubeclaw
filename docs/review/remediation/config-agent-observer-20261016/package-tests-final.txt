@@ -1,0 +1,24 @@
+npm notice run @kubeclaw/openclaw-agent-observer@0.0.0 test
+npm notice run node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts
+{"ok":true,"suite":"observer-clean-source-build","compiler":"actual-typescript"}
+npm notice run @kubeclaw/openclaw-agent-observer@0.0.0 pretypecheck
+npm notice run npm run sync-contract
+npm notice run @kubeclaw/openclaw-agent-observer@0.0.0 sync-contract
+npm notice run node scripts/sync-contract.mjs
+npm notice run @kubeclaw/openclaw-agent-observer@0.0.0 typecheck
+npm notice run tsc --noEmit -p tsconfig.json
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"config"}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"live-function","registrations":{"openclaw:service":["pass","fail","crash"]}}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"package-boundary"}
+✔ actual observer preserves distinct outputs and deduplicates shared call content across hook/runtime (6.5701ms)
+✔ queue rejection does not poison ingress or runtime dedupe (1.065648ms)
+✔ normalization handles array/record cycles and shared values, rejecting complexity/accessors explicitly (2.099945ms)
+✔ actual hook records cycle marker and reports excessive depth without a RangeError (1.825497ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 172.524812

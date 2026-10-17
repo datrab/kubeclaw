@@ -1,0 +1,33 @@
+{
+  "source": "skills/buster/engine/test-gates/preparation-host.ts",
+  "sourceSha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+  "actualLiteralCallers": [
+    {
+      "name": "BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES",
+      "line": 34
+    },
+    {
+      "name": "BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT",
+      "line": 51
+    },
+    {
+      "name": "KUBECLAW_NATIVE_SCOPE",
+      "line": 66
+    },
+    {
+      "name": "BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY",
+      "line": 81
+    },
+    {
+      "name": "BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY",
+      "line": 82
+    },
+    {
+      "name": "BUSTER_PREPARATION_ASSIGNED_TAR",
+      "line": 99
+    }
+  ],
+  "publishedLiteralCallerExpansions": [],
+  "scopeProducer": "skills/worker/core/worker/native-worker-launcher.c:103 setenv KUBECLAW_NATIVE_SCOPE from pinned parent_path",
+  "finding": "Computed reader named environment is not expanded by the assigned-only discovery; five assigned inputs and generated scope must each have exact caller/producer records, not empty caller list plus producer summary."
+}

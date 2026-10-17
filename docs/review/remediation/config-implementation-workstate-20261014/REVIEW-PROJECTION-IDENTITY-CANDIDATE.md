@@ -1,0 +1,25 @@
+# Local review author/effective identity candidate — 2026-10-15
+
+WIP source-side checks only, not an authenticated owned-profile resolver or full C0–C6 acceptance.
+
+## Exact approved reference seam
+
+Batch07 OWNER-BRIDGE requires matching parent `profiles[]` and `consumerProjections[]` owner=kubeclaw.review, registration=review, explicit instance/profile/scope M and exact stageId. The profile content and validation schema refer to captured objects. Its effectiveConfig is a separate full v2 object, not a task-inline override or a semantically equivalent dictionary with different published bytes. Codec-correction-04 requires SHA of exact UTF8 bytes and physical byte length, with portable JSON canonical ordering; old review semantic digests remain a separate explicit reader mode.
+
+The actual SDK generator is `scripts/generate-plugin-sdk-types.mjs`, sourced only from the existing plugin-system-v2 schema. Neither it nor generated SDK types/schema were changed. New project-local candidate schema files are **byte-for-byte copies** of the approved corrected target and Batch07 authored-value proposal, used only for local inspection. They are not a new wire/version, installed source grant or an addition to the 448-member capture.
+
+## Concrete implementation
+
+`inspectReviewPolicyClosureCandidate` validates strict profile/consumer/object shapes; exact declared expected stage/instance/profile and disjoint owner/registration/scope; equal nested parent profile; exact schema-owner links; referenced object presence, SHA, physical byte length and canonical portable bytes; and available referenced schema hashes/validation. Known authored and effective schemas must equal the reader's exact canonical source schemas. The full author is parsed/projected by the approved candidate and original typed parser, and the resulting canonical effective policy must equal the received bytes exactly. Schema substitution, formatting/duplicate JSON, raw/hash/length/schema linkage drift and unknown markers reject. TaskInput and effectiveExecution references must exist and match their declared bytes/schema, but that does not authenticate their original source, role/model/tool limits or task semantics.
+
+The explicit reviewSemanticEncoding is required in local comparison context, including explicit undefined for historical mode. Closure encoding never supplies this mode. The existing `digestReviewPolicy` computes the separate semantic digest; source kinds remain built_in/settings_file/run_override. No WeakMap-owned resolver proof or original authority is manufactured. Local public maps, JSON references and expected-context strings are comparisons, not loader capabilities.
+
+Known policy/schema payloads here have no parent internal digest field. This checker does not accept or verify an entire binding/foundation/membership record's unsigned/internal digest, source/software/projection implementation identity, grant/budget/lease/journal or original R history; those remain required before admission. It does not cover duplicate/dangling references elsewhere in an unseen parent array. It checks only the supplied profile/projection and directly referenced bytes. All source/R/caller/original/parent-binding/task/execution authorization and activation flags are false; objectIdentitiesVerified means these local referenced identities only.
+
+No file/Latest policy lookup, new source kind, runOverride proof, stage/CLI/SDK/parent R/history/runtime/materializer path is switched. Module initialization reads fixed candidate schemas; the check itself performs no external I/O or publication. Missing canonical AUTHOR, same-generation source/owner/instance/issuer/task/R/caller/store proof cannot be filled by this local map. Both materializer denials and existing 448/2409/6845/50/16MiB, receipt v1/delivery v3/Python historical codecs remain.
+
+## Verification and next action
+
+Seven local controls cover exact approved schema copies, all three full source author profiles and independent historical/portable review modes, strict scope/schema/hash/codec/missing-reference negatives with restored positives, physical UTF8 byte count, duplicate JSON and schema replacement. Existing author-parser controls remain included. The unchanged SDK generator check and targeted source TypeScript check pass. Native original credentials/role/store/Docker/UID1000/cgroup and full independent acceptance remain open; helper review limitations are recorded separately.
+
+Next inspect approved parent software/projection-implementation references and actual retained code/reader closure contracts. Determine exact supported source-side pinned schema/projection implementation identity verification before any future loader capability; do not turn this public candidate into such a capability or add fields absent from the approved carrier. If the required software/source/instance binding is unavailable, record exact gap and continue another approved unblocked receiving seam. Current graph/snapshot SDK versions and original run recovery ordering remain untouched.

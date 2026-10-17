@@ -1,5 +1,6 @@
 import type {Demo} from './demo.ts';
 import {reviewIdentityDigest, PORTABLE_JSON_ENCODING, parseReviewSource, type StageDefinition} from '@kubeclaw/plugin-sdk';
+import {resolveCompilerExecutionGroups} from './execution-group-policy.ts';
 
 type ObjectValue = Record<string, any>;
 function object(value: unknown, fields: string[], label: string): ObjectValue {
@@ -32,6 +33,21 @@ function identityFields(identityEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODI
 
 /** One source admission and one sync precede the entire sequential publication lane. */
 export function sourceStages(project: ObjectValue, ordered: ObjectValue[], demo?:Demo, identityEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING) {
+  // Historical archived compilers keep their original source-helper policy.
+  return buildSourceStages(project,ordered,120000,demo,identityEncoding);
+}
+
+/** Explicit future receiving path, not wired to compileProject/new starts.
+ * Original source/selected-owner/task/R authorization must precede publication.
+ */
+export function sourceStagesWithExecutionGroups(project: ObjectValue, ordered: ObjectValue[], executionGroups: unknown,
+  demo?:Demo, identityEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING) {
+  const groups = resolveCompilerExecutionGroups(executionGroups);
+  return buildSourceStages(project,ordered,groups.source.timeoutMs,demo,identityEncoding);
+}
+
+function buildSourceStages(project: ObjectValue, ordered: ObjectValue[], timeoutMs:number, demo:Demo|undefined,
+  identityEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING) {
   const architecture = object(project.architecture, ['ref','requiredFiles','review'], 'architecture');
   if (typeof architecture.ref !== 'string' || !architecture.ref.trim() || /[\x00-\x20]/u.test(architecture.ref)) throw new Error('PROJECT_ARCHITECTURE_REF_REQUIRED');
   const requiredFiles = paths(architecture.requiredFiles).sort();
@@ -45,7 +61,7 @@ export function sourceStages(project: ObjectValue, ordered: ObjectValue[], demo?
       integrationRequirements:project.final.integrationRequirements,requiredChecks:project.final.test.requiredChecks}};
   const binding = {stageId:'source-preflight',...identity,inputDigest:reviewIdentityDigest(contract,source),
     ...(architecture.review ? {reviewStageId:'architecture-review'}:{})};
-  const execution = {maxAttempts:1,maxRemediationCycles:0,timeoutMs:120000};
+  const execution = {maxAttempts:1,maxRemediationCycles:0,timeoutMs};
   const stages: StageDefinition[] = [{id:'source-preflight',type:'kubeclaw.validate.source-preflight',dependsOn:[],config:{},
     input:{source,contract},execution}];
   if (architecture.review !== undefined) {

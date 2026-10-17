@@ -1,0 +1,90 @@
+{
+  "scope": "actual isolated existing native preparation renderer only; all generated host setup/service binaries/scripts are data, never run",
+  "records": [
+    {
+      "id": "DLV-C0-BCE3-NATIVE-HOST-RENDER-A",
+      "command": [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+      "exit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.stderr"
+      ],
+      "result": "passed",
+      "scope": "existing preparation-only renderer and output bindings; NOT installed selected node/API/cgroup/runtime receipt",
+      "fieldWitnesses": {
+        "samePolicyDigest": true,
+        "busterChartDigest": true,
+        "prismChartDigest": true,
+        "cpuQuotaPeriod": true,
+        "setupMembers": true,
+        "nriRuntime": true
+      },
+      "policyDigest": "614839c558e11a73e06221d1d42eb8454b7fa35b7f2462a1c0c3f256e2cc15b6"
+    },
+    {
+      "id": "DLV-C0-BCE3-NATIVE-HOST-RENDER-B",
+      "command": [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+      "exit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.stderr"
+      ],
+      "result": "passed",
+      "scope": "existing preparation-only renderer and output bindings; NOT installed selected node/API/cgroup/runtime receipt",
+      "fieldWitnesses": {
+        "samePolicyDigest": true,
+        "busterChartDigest": true,
+        "prismChartDigest": true,
+        "cpuQuotaPeriod": true,
+        "setupMembers": true,
+        "nriRuntime": true
+      },
+      "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100"
+    }
+  ],
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml": "82d666d4d3794a43d1b9375e16317244fc09cc3634985cdb4b4e576fdd55be20",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/native-nri.json": "d6c939f7f7f8ffd09b5d17235c3f5a1ae92a5c5be091ae3275e176573ee2f1b8",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/native-node-policy.json": "6da17e36047f641f314baff40dab6bc6ffaaf9a49b5b62f7ade1a5681d5bda65",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/kubelet-reservations.json": "aad0d889434a0970e9155685bb72bf1323a156091d31a0b8a2c2dbe674b4ca81",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/kubeclaw-native-pools.service": "cf9e9da5d92776bdae0453ac0494af38c211cb0added98056cdc162d4d1eed2b",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/prepare-native-worker-pools.mjs": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/prism-pool.json": "31b2fcc4a7d1abebc012f528976b25542fcc75c07a48304bc09b0291772bd721",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/prism-native-values.yaml": "db34effa01e145c92e4c3cfe96ff784d8ce438d5475814522b54cac4dfdfddde",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/containerd-nri.toml": "36575745687167a38a1ab778da0703cf9e1dc7b81d8204baf55e8e73f7f75fde",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/buster-native-values.yaml": "cd653804a6e6e6378514676634d90f0cb757a04841a1c4d2210dddb272e9ff20",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle/buster-pool.json": "dbe1c00f99de10a15c125c881a46769f377603baaeadb94747d6a91df771f13f",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml": "97bf3708d7f47ce8a867b20db053dd40077d56aea1787df947a51f290f758394",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/native-nri.json": "519376830338767231dc2fb2cbe47331fb17f6fabc8c92cdebf5c6e8144dfbae",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/native-node-policy.json": "2cffc56becd33f3727115ff83b9a7b95c438a4b50b2815115b8a69d27b99d222",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/kubelet-reservations.json": "782774010775963ca6dbc902fde51821fc773e9e23c434a7720eefa9fa1d8101",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/kubeclaw-native-pools.service": "cf9e9da5d92776bdae0453ac0494af38c211cb0added98056cdc162d4d1eed2b",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/prepare-native-worker-pools.mjs": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/prism-pool.json": "bd2b44b08baa8dae5a62e82885f4ba94260267e9d824809d9b7429b9a89cc41a",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/prism-native-values.yaml": "757e39bdc53d4973eb1d95ebf5b3454e6b8d6fff4d3c52e8357f77133498d907",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/containerd-nri.toml": "36575745687167a38a1ab778da0703cf9e1dc7b81d8204baf55e8e73f7f75fde",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/buster-native-values.yaml": "2a72605bec29f5d951dfb8be410f102a86b87f55dd2b19e73a2ab1a2e19c2497",
+    "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle/buster-pool.json": "86bc35a6a40274435ea2e1f145517b6c12c226396ffab96e3a539d5446a4ee2e",
+    "docs/review/evidence/config-acceptance/delivery/run-native-host-definitions-bce3f075.py": "d8f0b0bfe21aa98a0626c467b8d89dda27ca6e32413732ae5d9ea45078fee79f",
+    "scripts/native-worker-node-policy.mjs": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+    "scripts/render-native-worker-node.mjs": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+    "scripts/prepare-native-worker-pools.mjs": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+    "versions.json": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+  },
+  "tools": {
+    "node": "v24.21.0"
+  },
+  "acceptance": "NOT ACCEPTED; synthetic policy shapes are not physical capacity or installed runtime claims"
+}

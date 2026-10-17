@@ -1,0 +1,63 @@
+{
+  "scope": "Independent bounded final parent documentation cross-link guard recheck only; no substantive self-review of authored Core definitions",
+  "verdict": "C6-RECHECK-01/02 corrected at bounded documentation integration guard scope",
+  "dispositions": [
+    {
+      "id": "C6-RECHECK-01",
+      "status": "resolved-bounded-integration-guard",
+      "reason": "Full actual structural checker rejects matrix package omission, both package/advertisement omission, advertisement omission, count/unlinked-count/path/SHA/location drift and duplicate package/advertisement IDs. Required real Runtime source anchors presence even if both index sides disappear."
+    },
+    {
+      "id": "C6-RECHECK-02",
+      "status": "resolved-bounded-integration-guard",
+      "reason": "Full actual checker and standalone native helper reject missing, wrong package/native case/path/SHA, duplicate exact reference and unrelated canonical/native tuple. Forward exact-one and reverse package/mapping/source binding checks close reproduced stale-reference hole."
+    }
+  ],
+  "findings": [],
+  "frozenInputs": 25,
+  "inputDrift": 0,
+  "prior1005FreezeReportEvidenceDrift": 0,
+  "actualReplays": {
+    "structuralExit": 0,
+    "structuralErrors": 0,
+    "strictExit": 1,
+    "strictOpenErrors": 98805,
+    "nativeHelperExit": 0
+  },
+  "controls": {
+    "actualFullStructuralCheckerVirtualLoads": 21,
+    "negativeStructuralControls": 19,
+    "positiveStructuralControls": 2,
+    "standaloneHelperRejectionControlsRequiredAndPassed": 16,
+    "noSourceOrRootMutations": true
+  },
+  "unchangedConservation": {
+    "rootMatrixSha256": "1eb9534c1576b6ee0bc621c4b67fe43e3f1592b005ed1ddb85e37012fbd6f998",
+    "canonicalCases": 6289,
+    "nativeSpecifications": 5793,
+    "mappedCanonicalCases": 5524,
+    "explicitUnlinkedNativeObligations": 269,
+    "immutableReferenceOccurrences": 2229
+  },
+  "limits": [
+    "No global C0 verdict or runtime/row/whole-source acceptance.",
+    "Native package and mapping reviewers remain null; original C0-A..E remain not-run; implementation authorization null.",
+    "Current source/schema/business policy validity was not substantively re-reviewed.",
+    "Virtual input metadata negatives are documentation-integrity controls, not F-MUT or live implementation cases.",
+    "Standalone helper has narrower metadata coverage: matrixLocation and duplicate package/advertisement-ID negatives are enforced by full structural checker; no claim of identical standalone coverage.",
+    "All original1005 frozen review snapshots/report/evidence preserved."
+  ],
+  "evidence": [
+    "input-freeze.json",
+    "crosslink-controls.json",
+    "crosslink-controls.log",
+    "virtual-checker-load-adaptation.py",
+    "virtual-native-helper-load-adaptation.py",
+    "replayed-structural.log",
+    "replayed-strict.log",
+    "replayed-native-conservation.log",
+    "parent-correction-receipt-integrity.json"
+  ],
+  "globalC0Verdict": null,
+  "futureRuntimeCasesRun": 0
+}

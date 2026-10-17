@@ -1,0 +1,173 @@
+{
+  "controls": [
+    {
+      "id": "synthetic unchanged whole catalog with failed case and gap history preserved",
+      "result": "passed"
+    },
+    {
+      "id": "production registry rejects synthetic baseline",
+      "result": "passed",
+      "boundary": "DEFINITION_BASELINE_NOT_REGISTERED"
+    },
+    {
+      "id": "legacy case shape is not finalized semantic acceptance",
+      "result": "passed",
+      "boundary": "DEFINITION_CASE_BODY_INVALID"
+    },
+    {
+      "id": "integrated finalized future case preserves original failed C3 body",
+      "result": "passed"
+    },
+    {
+      "id": "valid case metadata cannot accept remaining whole-generation gates",
+      "result": "passed",
+      "boundary": "DEFINITION_GENERATION_SEMANTIC_ACCEPTANCE_NOT_IMPLEMENTED"
+    },
+    {
+      "id": "fully rehashed original runtime case cannot become C0 execution",
+      "result": "passed",
+      "boundary": "ORIGINAL_RUNTIME_CASE_RECLASSIFIED"
+    },
+    {
+      "id": "fully rehashed original C3 cannot become C4",
+      "result": "passed",
+      "boundary": "ORIGINAL_IMPLEMENTATION_SLICE_CHANGED"
+    },
+    {
+      "id": "missing original setting after valid reseal",
+      "result": "passed",
+      "boundary": "ORIGINAL_ID_MISSING"
+    },
+    {
+      "id": "duplicate original ID after valid reseal",
+      "result": "passed",
+      "boundary": "ID_ORDER_INVALID"
+    },
+    {
+      "id": "noncanonical record ordering after valid reseal",
+      "result": "passed",
+      "boundary": "ID_ORDER_INVALID"
+    },
+    {
+      "id": "false original-body provenance after valid reseal",
+      "result": "passed",
+      "boundary": "ORIGIN_DRIFT"
+    },
+    {
+      "id": "baseline case disguised as discovery",
+      "result": "passed",
+      "boundary": "CHANGE_ORIGIN_INVALID"
+    },
+    {
+      "id": "original case obligation omitted",
+      "result": "passed",
+      "boundary": "ORIGINAL_CASE_SET_INVALID"
+    },
+    {
+      "id": "stale requirement context after valid reseal",
+      "result": "passed",
+      "boundary": "REQUIREMENT_CONTEXT_INVALID"
+    },
+    {
+      "id": "stale pointed-body digest after valid reseal",
+      "result": "passed",
+      "boundary": "BODY_DRIFT"
+    },
+    {
+      "id": "body file outside manifest after valid reseal",
+      "result": "passed",
+      "boundary": "BODY_NOT_IN_INPUT_SET"
+    },
+    {
+      "id": "wrong baseline catalog context after valid reseal",
+      "result": "passed",
+      "boundary": "BASELINE_CONTEXT_INVALID"
+    },
+    {
+      "id": "normative requirement cannot be edited",
+      "result": "passed",
+      "boundary": "REQUIREMENT_CHANGED"
+    },
+    {
+      "id": "coherently rehashed dangling case-to-setting join",
+      "result": "passed",
+      "boundary": "DANGLING_LINK"
+    },
+    {
+      "id": "matching two-root authority preserves complete original projections",
+      "result": "passed"
+    },
+    {
+      "id": "one-sided root activation",
+      "result": "passed",
+      "boundary": "ROOT_REFERENCES_DIFFER"
+    },
+    {
+      "id": "null is not historical absence",
+      "result": "passed",
+      "boundary": "NULL_ROOT_REFERENCE"
+    },
+    {
+      "id": "parsed root cannot differ from pinned root bytes",
+      "result": "passed",
+      "boundary": "PARSED_ROOT_DRIFT"
+    },
+    {
+      "id": "coherently referenced actual root history mutation",
+      "result": "passed",
+      "boundary": "ROOT_HISTORY_DRIFT"
+    },
+    {
+      "id": "IC09 actual root bytes changed after paired load",
+      "result": "passed",
+      "boundary": "REVIEW_INPUT_CHANGED"
+    },
+    {
+      "id": "IC09 same-byte root symlink changed after paired load",
+      "result": "passed",
+      "boundary": "REVIEW_INPUT_CHANGED"
+    },
+    {
+      "id": "explicit checker-path matrix changed at final root check",
+      "result": "passed",
+      "boundary": "REVIEW_INPUT_CHANGED"
+    },
+    {
+      "id": "restored canonical and explicit-path paired-root positives",
+      "result": "passed"
+    },
+    {
+      "id": "IC10 mutable parsed canonical roots cannot activate absent disk generation",
+      "result": "passed",
+      "boundary": "PARSED_ROOT_DRIFT"
+    },
+    {
+      "id": "IC10 mutable parsed explicit roots cannot activate absent disk generation",
+      "result": "passed",
+      "boundary": "PARSED_ROOT_DRIFT"
+    },
+    {
+      "id": "root authority cannot select external checkout path",
+      "result": "passed",
+      "boundary": "ROOT_PATH_OUTSIDE_CHECKOUT"
+    },
+    {
+      "id": "body byte mutation at final logical pin check",
+      "result": "passed",
+      "boundary": "REVIEW_INPUT_CHANGED"
+    },
+    {
+      "id": "same-byte body symlink retarget at final pin check",
+      "result": "passed",
+      "boundary": "REVIEW_INPUT_CHANGED"
+    },
+    {
+      "id": "restored original positive at same catalog boundary",
+      "result": "passed"
+    }
+  ],
+  "passed": 34,
+  "failed": 0,
+  "globalC0Accepted": false,
+  "qualification": "synthetic catalog integrity only; semantic validator and genuine whole review remain open"
+}

@@ -1,0 +1,741 @@
+{
+  "records": [
+    {
+      "id": "RT-CANDIDATE-4c2a6e3bdd37ff0c",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 4,
+        "text": "export const DEFAULT_APPROVAL_TIMEOUT_MINUTES = 60;",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c5625f66b2b82733",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 16,
+        "text": "readonly timeoutMinutes: number;",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-47342bcfc4fe1091",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 33,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) {",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Common value-record type/array guard used config/input/guidance/wait data; exactstrictkeydiscrimination present. Generatedtypedcontract shape, no adjustablequota or acceptedunknownkey author.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Common value-record type/array guard used config/input/guidance/wait data; exactstrictkeydiscrimination present. Generatedtypedcontract shape, no adjustablequota or acceptedunknownkey author.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-418f282b29c0fb70",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 50,
+        "text": "|| normalized.length > maximum",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual requiredText UTF16+trim/NUL/CRLF checks atconfig target/issuer max1024; schema Unicodecodepoints/edgewhitespace semantics differ. Helperalsoinputsummary10000/guidancereason4096/waitId2048 parameters; those separate data/source processingbounds not silentlyclosed bythese configlinks.",
+      "settings": [
+        "RT-68403831105f367c",
+        "RT-cf7bff92d1482b21",
+        "RT-4430b360df8ad6c0",
+        "RT-5649034e546463fd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bbe3d34c4468774a",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 51,
+        "text": "|| normalized.includes('\\0')",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual requiredText UTF16+trim/NUL/CRLF checks atconfig target/issuer max1024; schema Unicodecodepoints/edgewhitespace semantics differ. Helperalsoinputsummary10000/guidancereason4096/waitId2048 parameters; those separate data/source processingbounds not silentlyclosed bythese configlinks.",
+      "settings": [
+        "RT-68403831105f367c",
+        "RT-cf7bff92d1482b21",
+        "RT-4430b360df8ad6c0",
+        "RT-5649034e546463fd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ba65f6c65e24d519",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 52,
+        "text": "|| /[\\r\\n]/.test(normalized)",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual requiredText UTF16+trim/NUL/CRLF checks atconfig target/issuer max1024; schema Unicodecodepoints/edgewhitespace semantics differ. Helperalsoinputsummary10000/guidancereason4096/waitId2048 parameters; those separate data/source processingbounds not silentlyclosed bythese configlinks.",
+      "settings": [
+        "RT-68403831105f367c",
+        "RT-cf7bff92d1482b21",
+        "RT-4430b360df8ad6c0",
+        "RT-5649034e546463fd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-937b4f01478e8e39",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 68,
+        "text": "const config = record(value, 'CONFIG');",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual requiredText UTF16+trim/NUL/CRLF checks atconfig target/issuer max1024; schema Unicodecodepoints/edgewhitespace semantics differ. Helperalsoinputsummary10000/guidancereason4096/waitId2048 parameters; those separate data/source processingbounds not silentlyclosed bythese configlinks.",
+      "settings": [
+        "RT-68403831105f367c",
+        "RT-cf7bff92d1482b21",
+        "RT-4430b360df8ad6c0",
+        "RT-5649034e546463fd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-12c8c555a82bd96d",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 70,
+        "text": "const timeout = config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES;",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a6afd3b4cfa2dee0",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 73,
+        "text": "|| Number(timeout) < 1",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bc3fcb8f0cacaaaa",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 74,
+        "text": "|| Number(timeout) > MAX_APPROVAL_TIMEOUT_MINUTES",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e7273d2e71e2b048",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 81,
+        "text": "timeoutMinutes: Number(timeout),",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c6ad484684b1e8cf",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 122,
+        "text": "timeoutMinutes: number,",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-73966995b1a584dd",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 127,
+        "text": "|| timeoutMinutes < 1",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-27456213e1b063d4",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 128,
+        "text": "|| timeoutMinutes > MAX_APPROVAL_TIMEOUT_MINUTES",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Actual exportedsharedparse/expiry currentnullish60 default+integer1..525600 guard, currentpublic helper andfixedDateexpirycontrols. Sameexistinghuman/architecture approval field, no standaloneglobaltimer; nearDateoverflow distinctfromsupportedminutes. Targetrequired nofallback and actualfiniteexpiry beforeeffects.",
+      "settings": [
+        "RT-f2f586691b7aa7f9",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-de140d5d63a4aaa0",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "line": 151,
+        "text": "message: guidance.reason ?? 'Approval was rejected.',",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "explicitReviewedReason": "Absentrejectedguidancereason uses exactfallback humanmessage; decision/issuer rejection remains. User-visiblepresentationtext, no runtimepolicy/capacity or overrideauthor.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Absentrejectedguidancereason uses exactfallback humanmessage; decision/issuer rejection remains. User-visiblepresentationtext, no runtimepolicy/capacity or overrideauthor.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0853165f1059b411",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 14,
+        "text": "if (!normalized || normalized.length > maximum || normalized.includes('\\0') || /[\\r\\n]/u.test(normalized)) {",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "OPEN arbitrary input/reporttext maxarguments(summary4096/artifactId2048/namespace1024/reportfield8192/display10000) are currentprocessingguards, not fundamentalprotocol/capacity. Source-taskvalidation vs operator clipping/headroom and full source-owner/domain/case proof remain separate; do notaliashumanconfig max1024.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN arbitrary input/reporttext maxarguments(summary4096/artifactId2048/namespace1024/reportfield8192/display10000) are currentprocessingguards, not fundamentalprotocol/capacity. Source-taskvalidation vs operator clipping/headroom and full source-owner/domain/case proof remain separate; do notaliashumanconfig max1024.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "precise open source processing/evidence bound/owner/domain/case obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-07cda6cec774f73d",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 21,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) {",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Actualinput/artifact/finding object/string shape andNUL guards. Taskartifact/metadata data validators, not deploymentknobs; findingseverity/blocking/remediation andgenuineauthenticatedsubject/sourceproof remain retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualinput/artifact/finding object/string shape andNUL guards. Taskartifact/metadata data validators, not deploymentknobs; findingseverity/blocking/remediation andgenuineauthenticatedsubject/sourceproof remain retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-336ee850d8196bf4",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 36,
+        "text": "if (typeof value !== 'string' || value.includes('\\0')) {",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Actualinput/artifact/finding object/string shape andNUL guards. Taskartifact/metadata data validators, not deploymentknobs; findingseverity/blocking/remediation andgenuineauthenticatedsubject/sourceproof remain retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualinput/artifact/finding object/string shape andNUL guards. Taskartifact/metadata data validators, not deploymentknobs; findingseverity/blocking/remediation andgenuineauthenticatedsubject/sourceproof remain retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c2bc4c0b12651100",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 40,
+        "text": "if (!normalized || normalized.length > maximum) {",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "OPEN arbitrary input/reporttext maxarguments(summary4096/artifactId2048/namespace1024/reportfield8192/display10000) are currentprocessingguards, not fundamentalprotocol/capacity. Source-taskvalidation vs operator clipping/headroom and full source-owner/domain/case proof remain separate; do notaliashumanconfig max1024.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN arbitrary input/reporttext maxarguments(summary4096/artifactId2048/namespace1024/reportfield8192/display10000) are currentprocessingguards, not fundamentalprotocol/capacity. Source-taskvalidation vs operator clipping/headroom and full source-owner/domain/case proof remain separate; do notaliashumanconfig max1024.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "precise open source processing/evidence bound/owner/domain/case obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d6a159d490f0f00d",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 47,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) {",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Actualinput/artifact/finding object/string shape andNUL guards. Taskartifact/metadata data validators, not deploymentknobs; findingseverity/blocking/remediation andgenuineauthenticatedsubject/sourceproof remain retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualinput/artifact/finding object/string shape andNUL guards. Taskartifact/metadata data validators, not deploymentknobs; findingseverity/blocking/remediation andgenuineauthenticatedsubject/sourceproof remain retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0f6483b0b2fb5725",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 54,
+        "text": "if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Actualinput/artifact/finding object/string shape andNUL guards. Taskartifact/metadata data validators, not deploymentknobs; findingseverity/blocking/remediation andgenuineauthenticatedsubject/sourceproof remain retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualinput/artifact/finding object/string shape andNUL guards. Taskartifact/metadata data validators, not deploymentknobs; findingseverity/blocking/remediation andgenuineauthenticatedsubject/sourceproof remain retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bb79878b5159875d",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 98,
+        "text": "if (producers.size !== 1 || selected.length !== 1) throw new Error('ARCHITECTURE_APPROVAL_REFERENCE_MISSING_OR_AMBIGUOUS');",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c6d9488bc5d41253",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 100,
+        "text": "if (artifact.mediaType !== 'application/json' || !Number.isSafeInteger(artifact.sizeBytes)",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "OPEN actualarchitecturereference maximum262144bytes andpositive safeintegers are source evidence acceptance/processingbound, not physicalcapacity. Existing artifact reader/storagequota remains separate; no evidenced solepolicyowner/adjustabledomain/genuinepositive-negative boundarycase supplied here.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actualarchitecturereference maximum262144bytes andpositive safeintegers are source evidence acceptance/processingbound, not physicalcapacity. Existing artifact reader/storagequota remains separate; no evidenced solepolicyowner/adjustabledomain/genuinepositive-negative boundarycase supplied here.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "precise open source processing/evidence bound/owner/domain/case obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3f3aaba8b605eb1d",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 101,
+        "text": "|| artifact.sizeBytes < 1 || artifact.sizeBytes > 256 * 1024) throw new Error('ARCHITECTURE_APPROVAL_REFERENCE_INVALID');",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "OPEN actualarchitecturereference maximum262144bytes andpositive safeintegers are source evidence acceptance/processingbound, not physicalcapacity. Existing artifact reader/storagequota remains separate; no evidenced solepolicyowner/adjustabledomain/genuinepositive-negative boundarycase supplied here.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actualarchitecturereference maximum262144bytes andpositive safeintegers are source evidence acceptance/processingbound, not physicalcapacity. Existing artifact reader/storagequota remains separate; no evidenced solepolicyowner/adjustabledomain/genuinepositive-negative boundarycase supplied here.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "precise open source processing/evidence bound/owner/domain/case obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b8487f2271a2b6d7",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 108,
+        "text": "if (response.digest !== artifact.digest || response.sizeBytes !== artifact.sizeBytes",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a5102e7f11a532fa",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 109,
+        "text": "|| sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) {",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ba34b5929bccc179",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 113,
+        "text": "if (!report || report.verdict !== 'passed') throw new Error('ARCHITECTURE_APPROVAL_REPORT_NOT_PASSED');",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9efad8f9452116da",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 124,
+        "text": "if (typeof reason !== 'string' || !reason.trim()) throw new Error('ARCHITECTURE_APPROVAL_REASON_REQUIRED');",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-86c6af8c15f5d040",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 136,
+        "text": "decision: 'approved', subject: subject ?? null, reportDigest: artifact.digest, reportStageId: artifact.producer.stageId,",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0bef045974c0cc4e",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "line": 137,
+        "text": "guidance: context.contract.guidance ?? null, clean: !findings,",
+        "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "explicitReviewedReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactsame-run oneproducer/latestattempt selection, sha/contentbyte identity, passedreport/notblocking/findingsapprovalreason andgeneratedfinalproof. User/task signeddecision/data/sourceidentity\u2014not adjustable gatepermission orfakeevidence. Cleanreport skipsapprovalconfig thenoptionalsubjectverify+artifactwrite; noncleanoriginalguidance persists.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-550a6f215fc49b59",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/stage.ts",
+        "line": 18,
+        "text": "const config = parseApprovalConfig(context.contract.config);",
+        "sha256": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd",
+      "explicitReviewedReason": "Actualnormalhuman stage parses samecontract.config beforeguidance; approved/rejectedreturns withoutwait/publication, pendingallfields. Exactexistingthreefields, no accepted-unusedglobalclassification; architectureclean branch separatelydormant.",
+      "settings": [
+        "RT-68403831105f367c",
+        "RT-cf7bff92d1482b21",
+        "RT-f2f586691b7aa7f9",
+        "RT-4430b360df8ad6c0",
+        "RT-5649034e546463fd",
+        "RT-aa5a4ccf3d9a7fdd"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-fd9a4104a8318d7a",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "line": 5,
+        "text": "type Config={agent:\"prism\";target:string;issuerId:string;timeoutMinutes:number};",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "explicitReviewedReason": "ActualprivatePrism config exactagentprism typestrings/positiveSafe timeout differs owningschema requirednonempty/maximum525600; noprivateparser execution claimed. Pending/approved/requireDesignfalse branches anddeadline effectordering explicitlysource-traced. Agent is implementedcapabilityidentity, not business model/SDKwireselector.",
+      "settings": [
+        "RT-8e39db110874a9d6",
+        "RT-03fda24ef110ef33",
+        "RT-94d352d99db6b92d",
+        "RT-afddbf26c06e75cf"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-480e4b498b0f65ed",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "line": 6,
+        "text": "const record=(value:unknown):Record<string,unknown>=>{if(!value||typeof value!==\"object\"||Array.isArray(value))throw new Error(\"PRISM_DESIGN_VALUE_INVALID\");return value as Record<string,unknown>;};",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "explicitReviewedReason": "Exactrecord/type andapproval operatorissuer/digest tuple, waitFrom expectedissuer/expiry/project/signal/waitId comparison. ActualexportedwaitFrom positive+wrongissuernegative only; source signedguidance/nativearchive/provider notperformed. Additionalignoredkeys atprivatehelpers vs owningstrictschemas remain boundarydistinction.",
+      "settings": [
+        "RT-94d352d99db6b92d"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-77c506a593d5083a",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "line": 7,
+        "text": "function config(value:unknown):Config{const item=record(value);if(item.agent!==\"prism\"||typeof item.target!==\"string\"||typeof item.issuerId!==\"string\"||!Number.isSafeInteger(item.timeoutMinutes)||Number(item.timeoutMinutes)<1)return (()=>{throw new Error(\"PRISM_DESIGN_CONFIG_INVALID\");})();return item as unknown as Config;}",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "explicitReviewedReason": "ActualprivatePrism config exactagentprism typestrings/positiveSafe timeout differs owningschema requirednonempty/maximum525600; noprivateparser execution claimed. Pending/approved/requireDesignfalse branches anddeadline effectordering explicitlysource-traced. Agent is implementedcapabilityidentity, not business model/SDKwireselector.",
+      "settings": [
+        "RT-8e39db110874a9d6",
+        "RT-03fda24ef110ef33",
+        "RT-94d352d99db6b92d",
+        "RT-afddbf26c06e75cf"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2b7a684a7464f8c7",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "line": 8,
+        "text": "function approval(value:unknown,issuerId:string,architectureDigest:string):{approvalId:string;bundleDigest:string}|undefined{if(value===undefined)return undefined;const item=record(value);const issuer=record(item.issuer);if(item.decision!==\"approved\"||issuer.type!==\"operator\"||issuer.id!==issuerId||typeof item.approvalId!==\"string\"||!item.approvalId||item.architectureDigest!==architectureDigest||typeof item.bundleDigest!==\"string\"||!/^sha256:[a-f0-9]{64}$/u.test(item.bundleDigest))return (()=>{throw new Error(\"PRISM_DESIGN_APPROVAL_INVALID\");})();return {approvalId:item.approvalId,bundleDigest:item.bundleDigest};}",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "explicitReviewedReason": "Exactrecord/type andapproval operatorissuer/digest tuple, waitFrom expectedissuer/expiry/project/signal/waitId comparison. ActualexportedwaitFrom positive+wrongissuernegative only; source signedguidance/nativearchive/provider notperformed. Additionalignoredkeys atprivatehelpers vs owningstrictschemas remain boundarydistinction.",
+      "settings": [
+        "RT-94d352d99db6b92d"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-470b7f73af8982ba",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "line": 9,
+        "text": "export function waitFrom(value:unknown,expected:{issuerId:string;expiresAt:string;projectId:string}):WaitRequest{const item=record(value);const wait=record(item.wait);const issuer=record(wait.authorizedIssuer);const request=record(wait.request);if(typeof item.created!==\"boolean\"||wait.schemaVersion!==\"wait-request.v2\"||typeof wait.waitId!==\"string\"||!/^wait:[a-f0-9]{64}$/u.test(wait.waitId)||wait.kind!==\"signal\"||wait.signalType!==\"prism.approval.resolved\"||issuer.type!==\"operator\"||issuer.id!==expected.issuerId||wait.expiresAt!==expected.expiresAt||request.projectId!==expected.projectId)throw new Error(\"PRISM_DESIGN_WAIT_INVALID\");return wait as unknown as WaitRequest;}",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "explicitReviewedReason": "Exactrecord/type andapproval operatorissuer/digest tuple, waitFrom expectedissuer/expiry/project/signal/waitId comparison. ActualexportedwaitFrom positive+wrongissuernegative only; source signedguidance/nativearchive/provider notperformed. Additionalignoredkeys atprivatehelpers vs owningstrictschemas remain boundarydistinction.",
+      "settings": [
+        "RT-94d352d99db6b92d"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "explicit source/config/data/conditionaldormancy disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c70a27c9ce516a1b",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "line": 17,
+        "text": "if(!architectureRef||architectureRef.producer.runId!==input.runId||architectureRef.mediaType!==\"application/json\"||architectureRef.sizeBytes>256*1024||architectureRef.digest!==input.architectureArtifact.contentDigest)throw new Error(\"PRISM_DESIGN_ARCHITECTURE_REFERENCE_INVALID\");",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "explicitReviewedReason": "OPEN Prismarchitecture reference maximum262144/ownrun/JSON/digestcurrentguard distinct from architectureapprovalbytes proof and storagequota; realexactsourceartifact+schema/provenance/owner/domain requirements remain. No samevaluealias/fakegeneratedcapacityproof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN Prismarchitecture reference maximum262144/ownrun/JSON/digestcurrentguard distinct from architectureapprovalbytes proof and storagequota; realexactsourceartifact+schema/provenance/owner/domain requirements remain. No samevaluealias/fakegeneratedcapacityproof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json",
+      "status": "precise open source processing/evidence bound/owner/domain/case obligation",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "thisBatchCount": 37
+}

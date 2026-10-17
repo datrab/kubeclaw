@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "deploymentBindings"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-entry.v6-controller-proposal"
+    },
+    "deploymentBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kubeclaw"
+      ],
+      "properties": {
+        "kubeclaw": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "file",
+            "profile",
+            "bindings"
+          ],
+          "properties": {
+            "file": {
+              "const": "charts/kubeclaw/values.yaml"
+            },
+            "profile": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "bindings": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "role",
+                  "instanceId",
+                  "consumer",
+                  "serviceInstanceId"
+                ],
+                "properties": {
+                  "role": {
+                    "const": "buster"
+                  },
+                  "instanceId": {
+                    "const": "agent-buster"
+                  },
+                  "consumer": {
+                    "const": "namespace-controller"
+                  },
+                  "serviceInstanceId": {
+                    "const": "agent-buster-namespace-controller"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "receipt": "docs/review/evidence/config-acceptance/delivery/delivery-stable-controller-material-corrections-6606-20261013.json",
+  "receiptSha256": "8759725799049f8fc3aa176003d9f0b1e338256c0292013f85528fa7a6d868f7",
+  "manifestSha256": "73270becbf255f9e3c4ce552f4aa463361034d5b52c9853f863524bf2824961c",
+  "verificationSha256": "4a62c0dfd453ca58cde75e3d691bf0431d1f76879df4704a1fd412fe0d25c8a8",
+  "files": 2064,
+  "rows": 832,
+  "futureCases": 204,
+  "pure": 105,
+  "state": "FROZEN, NOT ACCEPTED"
+}

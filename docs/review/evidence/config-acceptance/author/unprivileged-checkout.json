@@ -1,0 +1,25 @@
+{
+  "method": "git archive HEAD selected actual sources/tests plus unchanged lockfile-installed node_modules; no modified test or invented image identity",
+  "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+  "checkout": "/tmp/kubeclaw-config-c0-uid1000-2e3tgsz7",
+  "uid": 1000,
+  "gid": 1000,
+  "paths": [
+    "skills",
+    "contracts",
+    "charts",
+    "my-values",
+    "scripts",
+    "packaging",
+    "tests",
+    "docker",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.base.json",
+    "versions.json",
+    ".dockerignore"
+  ],
+  "command": "env -u NODE_ENV -u SWARM_CONFIG setpriv --reuid=1000 --regid=1000 --clear-groups npm run verify:config:components",
+  "status": "finished",
+  "exitCode": 127
+}

@@ -3,9 +3,7 @@
 # Keep volume references aligned with the selected Buster base values.
 nodeSelector:
   kubernetes.io/hostname: ax41-production
-podAnnotations:
-  kubeclaw.dev/native-worker-role: buster
-  kubeclaw.dev/native-worker-policy: b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af
+# Native role/policy annotations come from the generated busterNative binding.
 gateway:
   resources:
     requests:

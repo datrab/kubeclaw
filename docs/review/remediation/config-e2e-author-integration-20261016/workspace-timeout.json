@@ -1,0 +1,15 @@
+{
+  "exitCode": 124,
+  "timeoutSeconds": 100,
+  "status": "INCOMPLETE_NOT_PASS",
+  "failure": "Repository clone-backed original real-run-workspace cases exceeded60-second test and100-second batch deadlines. No full workspace-suite pass.",
+  "retainedLog": "workspace-clean-environment.txt",
+  "ownOrphanCleanup": {
+    "confirmedPid": 2560037,
+    "descendantGitPid": 2560520,
+    "signal": "SIGTERM",
+    "sharedProcessesStopped": false,
+    "ownPartialCloneRemoved": ".swarm/real-e2e/real-e2e-1792188570679-2560037"
+  },
+  "initialEnvironmentFailure": "Inherited KUBECLAW_LOCAL_REGISTRY rejected; removed only from test child environment, production guard unchanged."
+}

@@ -1,0 +1,31 @@
+npm notice run test
+npm notice run node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:99
+        throw new RegistryError('REGISTRY_RESULT_INVALID', `Value failed schema ${schemaPath}`, {
+              ^
+
+RegistryError: Value failed schema /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/repository-adapter/schemas/config.schema.json
+    at check (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:99:15)
+    at Object.validate (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:105:43)
+    at validateReferencedValue (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:130:44)
+    at #config (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapter-startup.ts:54:5)
+    at #start (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapter-startup.ts:43:34)
+    at AdapterStarter.startAll (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapter-startup.ts:29:90)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async #start (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapters.ts:49:23) {
+  code: 'REGISTRY_RESULT_INVALID',
+  details: {
+    schemaPath: '/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/repository-adapter/schemas/config.schema.json',
+    errors: [
+      {
+        instancePath: '',
+        schemaPath: '#/required',
+        keyword: 'required',
+        params: { missingProperty: 'maxChangedPaths' },
+        message: "must have required property 'maxChangedPaths'"
+      }
+    ]
+  }
+}
+
+Node.js v24.21.0

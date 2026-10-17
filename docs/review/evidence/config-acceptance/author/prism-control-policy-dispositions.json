@@ -1,0 +1,60 @@
+{
+  "sourceIdentity": [
+    {
+      "path": "skills/prism/server/control-http.ts",
+      "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1"
+    },
+    {
+      "path": "skills/prism/control/session.ts",
+      "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+    },
+    {
+      "path": "skills/prism/server/session-routes.ts",
+      "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+    },
+    {
+      "path": "skills/prism/server/control-context.ts",
+      "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02"
+    },
+    {
+      "path": "skills/prism/server/control-server.ts",
+      "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+    },
+    {
+      "path": "skills/prism/server/internal-auth.ts",
+      "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72"
+    },
+    {
+      "path": "skills/prism/server/worker-readiness.ts",
+      "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+    },
+    {
+      "path": "skills/prism/server/corpus-routes.ts",
+      "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+    },
+    {
+      "path": "skills/prism/corpus/index.ts",
+      "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+    }
+  ],
+  "settings": [
+    "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES",
+    "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES",
+    "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT",
+    "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT",
+    "AUTH-PRISM-CONTROL-HMAC-WINDOW",
+    "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES",
+    "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH",
+    "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR",
+    "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER",
+    "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT",
+    "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT",
+    "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX",
+    "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT",
+    "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING",
+    "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES",
+    "AUTH-PRISM-CONTROL-SESSION-TTL"
+  ],
+  "definitionCase": "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER",
+  "status": "C0 open, source traced; no implementation acceptance"
+}

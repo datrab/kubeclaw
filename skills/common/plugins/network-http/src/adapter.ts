@@ -1,7 +1,7 @@
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
 
-function positiveInteger(value: unknown, label: string, fallback: number): number {
-  const resolved = value ?? fallback;
+function positiveInteger(value: unknown, label: string): number {
+  const resolved = value;
   if (!Number.isSafeInteger(resolved) || Number(resolved) < 1) throw new Error(`NETWORK_CONFIG_INVALID:${label}`);
   return Number(resolved);
 }
@@ -13,9 +13,12 @@ interface NetworkConfig {
   readonly maxRequestBytes: number;
   readonly maxResponseBytes: number;
   readonly timeoutMs: number;
+  readonly errorExcerptCharacters: number;
 }
 
 function parseConfig(config: Readonly<Record<string, unknown>>): NetworkConfig {
+  const excerpt = config.errorExcerptCharacters;
+  if (!Number.isSafeInteger(excerpt) || Number(excerpt) < 1) throw new Error('NETWORK_CONFIG_INVALID:errorExcerptCharacters');
   const origins = config.allowedOrigins;
   if (!Array.isArray(origins) || !origins.every((value) => typeof value === 'string')) {
     throw new Error('allowedOrigins is required');
@@ -24,13 +27,15 @@ function parseConfig(config: Readonly<Record<string, unknown>>): NetworkConfig {
   if (!Array.isArray(rawHeaders) || rawHeaders.some((item) => typeof item !== 'string')) {
     throw new Error('NETWORK_CONFIG_INVALID:allowedHeaders');
   }
+  if (Number(config.timeoutMs) > 4_294_967_295) throw new Error('NETWORK_CONFIG_INVALID:timeoutMs');
   return {
+    errorExcerptCharacters: Number(excerpt),
     origins: new Set(origins.map((origin) => new URL(origin).origin)),
     methods: new Set((config.allowedMethods as string[] | undefined ?? ['GET']).map((method) => method.toUpperCase())),
     headers: new Set(rawHeaders.map((item) => item.toLowerCase())),
-    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576),
-    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576),
-    timeoutMs: positiveInteger(config.timeoutMs, 'timeoutMs', 30_000),
+    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes'),
+    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes'),
+    timeoutMs: positiveInteger(config.timeoutMs, 'timeoutMs'),
   };
 }
 
@@ -52,7 +57,7 @@ function requestHeaders(value: unknown, allowed: ReadonlySet<string>): Record<st
 
 async function performRequest(
   url: URL, method: string, headers: Record<string, string>, body: string | undefined,
-  signal: AbortSignal, timeoutMs: number, maximum: number,
+  signal: AbortSignal, timeoutMs: number, maximum: number, errorExcerptCharacters: number,
 ): Promise<{ response: Response; text: string; contentType: string | undefined }> {
   const timeout = AbortSignal.timeout(timeoutMs);
   const requestSignal = AbortSignal.any([signal, timeout]);
@@ -61,7 +66,7 @@ async function performRequest(
       method, headers, ...(body === undefined ? {} : { body }),
       signal: requestSignal, redirect: 'manual',
     });
-    return { response, ...await responseBody(response, maximum) };
+    return { response, ...await responseBody(response, maximum, errorExcerptCharacters) };
   } catch (error) {
     if (requestSignal.aborted) {
       const timedOut = timeout.aborted && requestSignal.reason === timeout.reason;
@@ -71,7 +76,7 @@ async function performRequest(
   }
 }
 
-async function responseBody(response: Response, maximum: number): Promise<{ text: string; contentType: string | undefined }> {
+async function responseBody(response: Response, maximum: number, errorExcerptCharacters: number): Promise<{ text: string; contentType: string | undefined }> {
   const reader = response.body?.getReader();
   try {
     if (response.status >= 300 && response.status < 400) throw new Error('NETWORK_REDIRECT_DENIED');
@@ -88,7 +93,7 @@ async function responseBody(response: Response, maximum: number): Promise<{ text
       total += value.byteLength;
     }
     const text = new TextDecoder().decode(Buffer.concat(chunks, total));
-    if (!response.ok) throw new Error(`HTTP_${response.status}:${text.slice(0, 1000)}`);
+    if (!response.ok) throw new Error(`HTTP_${response.status}:${text.slice(0, errorExcerptCharacters)}`);
     return { text, contentType: response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase() };
   } finally {
     if (reader) {
@@ -122,7 +127,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const headers = requestHeaders(request.payload.headers, config.headers);
       const body = request.payload.body === undefined ? undefined : JSON.stringify(request.payload.body);
       if (body && Buffer.byteLength(body, 'utf8') > config.maxRequestBytes) throw new Error('NETWORK_REQUEST_SIZE_EXCEEDED');
-      const { response, text, contentType } = await performRequest(url, method, headers, body, signal, config.timeoutMs, config.maxResponseBytes);
+      const { response, text, contentType } = await performRequest(url, method, headers, body, signal, config.timeoutMs, config.maxResponseBytes, config.errorExcerptCharacters);
       return {
         status: response.status,
         headers: {

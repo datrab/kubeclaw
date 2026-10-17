@@ -1,0 +1,441 @@
+{
+  "at": "2026-10-17T01:50:14.016385+00:00",
+  "scope": "Security86 source matrix only; no runtime implementation",
+  "checks": {
+    "passed": 102,
+    "total": 102,
+    "controls": [
+      {
+        "name": "alter id",
+        "rejected": true
+      },
+      {
+        "name": "alter original",
+        "rejected": true
+      },
+      {
+        "name": "alter originalObjectSha256",
+        "rejected": true
+      },
+      {
+        "name": "alter caseIds",
+        "rejected": true
+      },
+      {
+        "name": "alter class",
+        "rejected": true
+      },
+      {
+        "name": "alter owner",
+        "rejected": true
+      },
+      {
+        "name": "alter centralPhysicalAuthor",
+        "rejected": true
+      },
+      {
+        "name": "alter runtimeAcceptance",
+        "rejected": true
+      },
+      {
+        "name": "alter actualEffects",
+        "rejected": true
+      },
+      {
+        "name": "alter status",
+        "rejected": true
+      },
+      {
+        "name": "missing row",
+        "rejected": true
+      },
+      {
+        "name": "duplicate row",
+        "rejected": true
+      },
+      {
+        "name": "false full acceptance",
+        "rejected": true
+      },
+      {
+        "name": "false original pass",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-163ebc138c768e21",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-6afb26eb1a7b7271",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-611f5b01895a7c90",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-93c925a29f21dd8d",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-d852318fd5b15892",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-cd92cb7109a38c4a",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-8a73cb4fa2939ad4",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-ebb85facca8d1b1b",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-d87b67b33610f619",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-ef66623413223fef",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-101f7a1f1f29236a",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-5118b56e0742663b",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-584baa9f0f15c058",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-6ecf22c1afd37e91",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-e702d189d1282e3b",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-58a77efdd8cd5820",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-95a1b17121581a49",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-f4e73c3bb3c19c65",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-0da96fe7ba066ccb",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-0c0b02b6fbc2160c",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-c9bc44d00a7b9c90",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-6b059c9d6ad52058",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-cdfcefd44e87996b",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-f365121af3c2af9e",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-3caa1e915a125dcd",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-ea0bcd6957dbc556",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-0e050207e6faa65c",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-ec0fc91072a8b630",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-1242f6b3245f130e",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-3f66e997ecc380c1",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-81f4bdf5f3872b9e",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-4a23015d6ca86669",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-a3dc4204fd2dbc99",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-d912c283aeea31d8",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-25155a8525353895",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-513bbd46b45156b7",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-6d1bc088852536a7",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-2dc4f91b61e79184",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-bd7eee80bc8feca2",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-53653aa9d3f03c8f",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-376a55c52779beed",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-e8358fe85c80d3d0",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-2fe8190f12f15510",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-8de947a02be68652",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-76d0d20d46b9a8e6",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-773179d734f2eb77",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-9370858078281283",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-f036e66205a0fa61",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-ffc33c06d6b6a1c2",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-0a39f16498c38979",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-c00914a2402f91bf",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-8d1e26bc5360c737",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-ae78d041c3d0fbd6",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-9941fbebdaea1c41",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-2672b24a1df6464d",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-52731740c2eb92d2",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-cc64dd898be55e05",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-95d37d46c3d99337",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+        "rejected": true
+      },
+      {
+        "name": "source identity RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+        "rejected": true
+      },
+      {
+        "name": "44 unrelated groups unchanged",
+        "passed": true
+      },
+      {
+        "name": "all45 groups and security86 composition",
+        "passed": true
+      }
+    ],
+    "restoredDeterministic": true,
+    "all44UnrelatedGroupsUnchanged": true
+  },
+  "counts": {
+    "INVOCATION_AND_HARDCODED_POLICY_CENTRAL_RECEIVING_OPEN": 58,
+    "MANIFEST_DECLARATION_CENTRAL_RECEIVING_OPEN": 25,
+    "HARDCODED_SHARED_VERDICT_POLICY_CENTRAL_RECEIVING_OPEN": 3
+  },
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "remainingUnresolvedHistoricalGroups": 3,
+  "centralReceivingResiduals": 86,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; native spawn/reviewer discovery empty; parent done; CONFIG subagents0; no new output; unchanged same-surface EROFS not retried",
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged isolated Linux Docker UID1000/GID1000 writable delegated cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL",
+  "writerLock": "SAME nonblocking shared lock; released at command exit",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false
+}

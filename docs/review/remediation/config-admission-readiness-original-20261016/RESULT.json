@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-16T23:09:57.724329+00:00",
+  "status": "ORIGINAL_ADMISSION_READINESS_SHUTDOWN_16_OF_16_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "95004b71d2352b6ceb7ed5f71b45f684da5bb0c9",
+  "sourceRemoteVerified": true,
+  "verifiedRemoteHead": "95004b71d2352b6ceb7ed5f71b45f684da5bb0c9",
+  "evidence": "docs/review/remediation/config-admission-readiness-original-20261016",
+  "change": "Original admission queue/drain/replay, real factory/service dependency probes and six durable shutdown-failure scenarios consume complete current central authors through actual Buster runtime owner selection. Shared CLI input fixture writes raw current pipeline authors; no synthetic boot authentication or retired full-facade reconstruction.",
+  "checks": {
+    "originalTests": {
+      "total": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "strictTypecheck": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "fullAcceptance": "OPEN"
+    }
+  },
+  "sourceHashes": {
+    "tests/fixtures/test-gate/buster-admission.mts": "03bfcdf875da56ef2577a4c9c05515c6dcf6904e0a0211008e8e2a74874304aa",
+    "tests/fixtures/test-gate/buster-cli-profile.mjs": "1a2a028723bf90e26f1a41fbb21cc1ceb29565fe09aa3f25ed9603189ec9903e",
+    "tests/fixtures/test-gate/buster-cli-profile.d.mts": "7ad6b1f657ce79f92e1a372b64f81ed2154a8611fed082f96df20213165c2df1",
+    "tests/fixtures/test-gate/buster-readiness-profile.mts": "208bf28347468b99d0016bd3cea978be465e618a9c58b6a4b1180189610adce9",
+    "tests/verification/reliability/buster-admission-config.test.mts": "1bae0aee9db4a7de6338f68118463aca7e4fda931ac6b9cd37b89afaf9c0164a",
+    "tests/verification/reliability/buster-readiness-consumer.test.mts": "01ef41bce18efab4c7bf794ec6051d6874ad8b9dc3a6b43128bda4726afc9d1b",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts": "7c09735823291e77540a65d3b3f6f5e3dd2416aaaef0101951942633a4aaa5eb"
+  },
+  "retainedFailures": [
+    "before.txt: original admission/readiness/shutdown commands failed at SWARM_CONFIG_RETIRED_FULL_FACADE",
+    "typecheck-initial.txt: existing JS cliProfile import lacked declaration; added precise .d.mts without loosening strict compiler settings"
+  ],
+  "independentReview": "OPEN: fresh discovery exposes no native reviewer/spawn tool; CONFIG subagents0, parent done. Existing same-surface app-server EROFS unchanged, not retried. Author checks are not independent/native acceptance.",
+  "nativeCLI": "NOT VERIFIED: unchanged original buster-admission-cli.test.mjs requires actual UID1000/GID1000 and genuine native startup environment; current UID0. Assertions preserved, not spoofed or skipped into PASS. Central input migration is not productive boot authentication.",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allSemanticObligationsAccepted": false
+  },
+  "remaining": [
+    "Genuine QB-R02 original producer/source/build/baseline association and inputStore-owned reservation/accounting/sealed snapshot/prepublication validity",
+    "Authenticated coordinated sole-root/all-profile/schema/file-set/actual boot+Nova receiving without denied-v10 promotion",
+    "Fresh independent complete-source/original/history/native/archive/full C0-C6 acceptance"
+  ],
+  "nextAction": "Continue genuine QB-R02 and coordinated authenticated sole-root/boot+Nova receiving; original reliability admission/readiness/shutdown consumer seams now execute. Classify remaining config-component-bundle legacy references before calling them residuals; do not repeat unchanged green suites.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000/delegated writable cgroup with sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped gates.",
+  "writerLock": "SAME nonblocking shared lock; released at process exit",
+  "noHistoricalFollowup": true
+}

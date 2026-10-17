@@ -1,0 +1,28 @@
+{
+  "originalFields": 18,
+  "originalCanonicalCases": 144,
+  "originalNativeBodies": 144,
+  "scopeCounts": {
+    "architecture-validator": 2,
+    "implementation-agent": 2,
+    "pipeline-review": 7,
+    "prism-design": 4,
+    "project-summary": 2,
+    "case-study": 1
+  },
+  "originalAllCaseBodiesPreserved": true,
+  "originalRequirementsStatesAndHistoryPreserved": true,
+  "originalFEffectBINDRecoveryEvalNotWaived": true,
+  "completePackageOwners": 6,
+  "declaredCompletePackageProfiles": 42,
+  "currentWireReceivingViews": 36,
+  "wholeFutureSingleEntryPairs": 36,
+  "noIndependentDistinctProfileFields": [
+    "RT-8750f030bf25ecae",
+    "RT-96698b5568aba94d",
+    "RT-8e39db110874a9d6"
+  ],
+  "nativeActions": 0,
+  "implementationAuthorization": null,
+  "freshIndependentReview": "required; no self/global C0 acceptance"
+}

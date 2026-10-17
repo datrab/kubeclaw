@@ -1,0 +1,10 @@
+✔ actual SIGKILL before-rename leaves one atomic Wait state and retry never reinflates original bytes (6034.686551ms)
+✔ actual SIGKILL after-rename leaves one atomic Wait state and retry never reinflates original bytes (5650.649438ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12390.732391

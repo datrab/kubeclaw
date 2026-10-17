@@ -23,10 +23,12 @@ export async function agentRoutes(
 
   if (
     await handleAgentJobs(request, response, url, {
-      db: pool,
+      ...(context.config.workerCore ? {workerCore: context.config.workerCore} : {}), db: pool,
+      agentLauncher: context.config.agentLauncher,
+      maximumArtifactAcknowledgmentBytes: context.config.maximumArtifactAcknowledgmentBytes,
       spiffeEnabled,
       trustedAgentId: trustedPrismAgentSpiffeId,
-      readBody: body,
+      readBody: request => body(request, context.config.maximumJsonBodyBytes),
     })
   )
     return true;
@@ -56,7 +58,7 @@ async function createAgentDesignSet(
     request.socket.remoteAddress,
     new Set([trustedPrismAgentSpiffeId]),
   );
-  const input = (await body(request)) as DesignSetInput;
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as DesignSetInput;
   if (!input.projectId || input.designs?.length !== 3)
     throw new Error("exactly three Prism designs are required");
   if (new Set(input.designs.map((item) => item.key)).size !== 3)
@@ -108,7 +110,7 @@ async function reviseAgentDocument(
     request.socket.remoteAddress,
     new Set([trustedPrismAgentSpiffeId]),
   );
-  const input = (await body(request)) as AgentRevisionInput;
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as AgentRevisionInput;
   if (
     !input.projectId ||
     !input.documentId ||

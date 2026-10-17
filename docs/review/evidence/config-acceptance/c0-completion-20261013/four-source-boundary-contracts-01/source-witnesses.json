@@ -1,0 +1,2843 @@
+{
+  "witnesses": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 230,
+      "expression": "  return setrlimit(resource, &limit);",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 233,
+      "expression": "static int join_cgroup(const char *root) {",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 235,
+      "expression": "  if (snprintf(file, sizeof(file), \"%s/cgroup.procs\", root) < 0",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 248,
+      "expression": "static const char *child_cgroup = NULL;",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 249,
+      "expression": "static int child_cgroup_kill_fd = -1;",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 288,
+      "expression": "  pid_t main_child = fork();",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 292,
+      "expression": "    if (child_cgroup && join_cgroup(child_cgroup) != 0) { perror(\"child cgroup\"); _exit(70); }",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 312,
+      "expression": "      if (child_cgroup_kill_fd >= 0 && write(child_cgroup_kill_fd, \"1\", 1) != 1) return -1;",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 383,
+      "expression": "    fprintf(stderr, \"usage: plugin-sandbox <memory-bytes> <cpu-seconds> <max-files> [--allow-network] [--connect-tcp-port port] [--run-as-uid uid --run-as-gid gid] [--no-address-space-limit] [--cgroup path | --child-cgroup path] [--read-root path]... [--write-root path] <program> [args...]\\n\");",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 447,
+      "expression": "  /* Validate before any cgroup write, kill-file open or credential change. */",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 460,
+      "expression": "    perror(\"setrlimit\");",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 463,
+      "expression": "  if (argc >= program_index + 2 && strcmp(argv[program_index], \"--cgroup\") == 0) {",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 464,
+      "expression": "    if (join_cgroup(argv[program_index + 1]) != 0) {",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 465,
+      "expression": "      perror(\"cgroup\");",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 470,
+      "expression": "  if (argc >= program_index + 2 && strcmp(argv[program_index], \"--child-cgroup\") == 0) {",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 471,
+      "expression": "    child_cgroup = argv[program_index + 1];",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 473,
+      "expression": "    int length = snprintf(kill_file, sizeof(kill_file), \"%s/cgroup.kill\", child_cgroup);",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 475,
+      "expression": "    child_cgroup_kill_fd = open(kill_file, O_WRONLY | O_CLOEXEC);",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "line": 476,
+      "expression": "    if (child_cgroup_kill_fd < 0) { perror(\"child cgroup kill\"); return 70; }",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 26,
+      "expression": "export async function readBoundedSnapshot(file: string, maximumBytes: number): Promise<string> {",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 30,
+      "expression": "    replayAssert(stat.isFile() && stat.size <= maximumBytes, 'snapshot-size');",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 35,
+      "expression": "      replayAssert(read.bytesRead > 0, 'snapshot-truncated'); offset += read.bytesRead;",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 38,
+      "expression": "    replayAssert(extra.bytesRead === 0, 'snapshot-grew');",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 43,
+      "expression": "function admissionEntry(entry: AdmissionState['entries'][number], cursor: number, keys: Set<string>, maximumIngressBytes: number): void {",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 46,
+      "expression": "  replayAssert(typeof entry.bytes === 'string' && Buffer.byteLength(entry.bytes) <= maximumIngressBytes, 'admission-bytes');",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 74,
+      "expression": "      schemaVersion: 'observability-completeness.v1', pipelineRunId, state: 'partial', requiredClosureIds: [], admittedClosureIds: [],",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 80,
+      "expression": "  replayAssert(state.quarantine.length <= limits.maximumQuarantineRecords && Buffer.byteLength(canonicalJson(state.quarantine)) <= limits.maximumQuarantineBytes, 'admission-quarantine-size');",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 93,
+      "expression": "  replayObject(state, ['schemaVersion', 'nextCursor', 'entries', 'quarantine', 'quarantineOverflow', 'gaps', 'unresolvedItems', 'overflowUnresolvedItems',...(state.schemaVersion === 'observability-admission-store.v2'?['retiredEntries']:[])], 'admission-envelope');",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 94,
+      "expression": "  replayAssert(state.schemaVersion === 'observability-admission-store.v1' || state.schemaVersion === 'observability-admission-store.v2', 'admission-version');",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 96,
+      "expression": "  replayAssert(state.schemaVersion !== 'observability-admission-store.v2' || Array.isArray(state.retiredEntries),'admission-retired-entries');",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 98,
+      "expression": "  replayAssert(state.entries.length <= limits.maximumRecords && state.nextCursor === state.entries.length + retired.length + 1, 'admission-next-cursor');",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 101,
+      "expression": "    admissionEntry(entry, state.schemaVersion==='observability-admission-store.v1'?index+1:entry.canonicalCursor, keys, limits.maximumIngressBytes);",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 37,
+      "expression": "async function boundedBytes(handle: Awaited<ReturnType<typeof fs.open>>, opened: Stats, maximum: number): Promise<Buffer> {",
+      "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 38,
+      "expression": "  if (!Number.isSafeInteger(opened.size) || opened.size < 0 || opened.size > maximum) {",
+      "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 52,
+      "expression": "export async function readDurableBlob(file: string, digest: string, maximum: number): Promise<Buffer> {",
+      "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 59,
+      "expression": "    const bytes = await boundedBytes(handle, opened, maximum);",
+      "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 16,
+      "expression": "  readDurableState,",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 25,
+      "expression": "  schemaVersion: \"durable-attempt-store.v1\",",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 42,
+      "expression": "  constructor(root: string, limits: DurableAttemptStoreLimits) {",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 65,
+      "expression": "    const raw = await readDurableState<PersistedAttempt>(",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 68,
+      "expression": "      this.limits.maximumMetadataBytes,",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 101,
+      "expression": "      this.limits.maximumMetadataBytes",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 123,
+      "expression": "        now - stagedAt < this.limits.maximumPendingEvidenceAgeMs",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 19,
+      "expression": "        timeoutMs: options.timeout as number, maximumOutputBytes: options.maxBuffer as number,",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 42,
+      "expression": "    readonly maximumManifestBytes: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 43,
+      "expression": "    readonly maximumResources: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 44,
+      "expression": "    readonly maximumPersistentVolumeClaimBytes: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 45,
+      "expression": "    readonly maximumPersistentVolumeTotalBytes: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 46,
+      "expression": "    readonly maximumRetentionSeconds: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 47,
+      "expression": "    readonly maximumExecutionMs: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 70,
+      "expression": "    readonly maximumManifestBytes: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 71,
+      "expression": "    readonly maximumResources: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 72,
+      "expression": "    readonly maximumPersistentVolumeClaimBytes: bigint;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 73,
+      "expression": "    readonly maximumPersistentVolumeTotalBytes: bigint;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 74,
+      "expression": "    readonly maximumRetentionSeconds: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 75,
+      "expression": "    readonly maximumExecutionMs: number;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 84,
+      "expression": "    constructor(options: KubernetesFixtureCapabilityInvokerOptions) {",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 108,
+      "expression": "        this.maximumManifestBytes = options.maximumManifestBytes;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 109,
+      "expression": "        this.maximumResources = options.maximumResources;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 110,
+      "expression": "        this.maximumPersistentVolumeClaimBytes = BigInt(options.maximumPersistentVolumeClaimBytes);",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 111,
+      "expression": "        this.maximumPersistentVolumeTotalBytes = BigInt(options.maximumPersistentVolumeTotalBytes);",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 112,
+      "expression": "        this.maximumRetentionSeconds = options.maximumRetentionSeconds;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 113,
+      "expression": "        this.maximumExecutionMs = options.maximumExecutionMs;",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 152,
+      "expression": "    for (const [value, label] of [[options.maximumManifestBytes, 'MANIFEST_SIZE'], [options.maximumResources, 'RESOURCE_COUNT'],",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 153,
+      "expression": "        [options.maximumPersistentVolumeClaimBytes, 'PVC_SIZE'], [options.maximumPersistentVolumeTotalBytes, 'PVC_TOTAL_SIZE'],",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 154,
+      "expression": "        [options.maximumRetentionSeconds, 'RETENTION'], [options.maximumExecutionMs, 'EXECUTION']] as const) {",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 161,
+      "expression": "    if (options.maximumPersistentVolumeTotalBytes < options.maximumPersistentVolumeClaimBytes)",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 166,
+      "expression": "        options.diagnosticCodeUnits, options.manifest?.maximumNodes, options.manifest?.maximumDepth,",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 167,
+      "expression": "        options.manifest?.maximumAliases, options.manifest?.maximumFlattenVisits, options.manifest?.maximumFlattenPending];",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 169,
+      "expression": "        || options.shortCommandTimeoutMs > MAX_TIMER_MS || options.maximumExecutionMs > MAX_TIMER_MS",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 170,
+      "expression": "        || !Number.isSafeInteger(options.maximumManifestBytes * options.commandOutputManifestMultiplier)) {",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 17,
+      "expression": "    constructor(settings: KubernetesFixtureSettings, operations: PreparationOperations) {",
+      "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 101,
+      "expression": "    const bytes = manifestBytes(manifestPath, manifestDigest, settings.maximumManifestBytes);",
+      "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 112,
+      "expression": "    const facts = inspectManifest(bytes, { immutableImage, maximumResources: settings.maximumResources, manifest: settings.manifest,",
+      "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 117,
+      "expression": "            maximumClaimBytes: settings.maximumPersistentVolumeClaimBytes,",
+      "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 118,
+      "expression": "            maximumTotalBytes: settings.maximumPersistentVolumeTotalBytes,",
+      "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 125,
+      "expression": "    const retentionSeconds = integer(payload.retentionSeconds, 'retentionSeconds', 60, settings.maximumRetentionSeconds);",
+      "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 130,
+      "expression": "    const readinessTimeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1_000, settings.maximumExecutionMs);",
+      "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 5,
+      "expression": "import { persistentVolumeClaims, validatePersistentVolumeClaim, type PersistentVolumePolicy } from './kubernetes-fixture-storage.ts';",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 21,
+      "expression": "    readonly maximumResources: number;",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 35,
+      "expression": "    persistentVolumeTotalBytes: bigint;",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 43,
+      "expression": "    const documents = flattenDocuments(loaded, policy.maximumResources, policy.manifest);",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 44,
+      "expression": "    if (documents.length < 1 || documents.length > policy.maximumResources)",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 48,
+      "expression": "        namedContainerPorts: new Map(), persistentVolumeTotalBytes: 0n };",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 67,
+      "expression": "        state.persistentVolumeTotalBytes += validatePersistentVolumeClaim(claim.name, claim.spec, policy.persistentVolumePolicy)",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 69,
+      "expression": "        if (state.persistentVolumeTotalBytes > policy.persistentVolumePolicy.maximumTotalBytes) {",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 3,
+      "expression": "function storageBytes(value: unknown): bigint {",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 10,
+      "expression": "    let numerator = BigInt(mantissa.replace('.', ''));",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 11,
+      "expression": "    let denominator = 10n ** BigInt(decimalPlaces);",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 23,
+      "expression": "        numerator *= 10n ** BigInt(exponent);",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 25,
+      "expression": "        denominator *= 10n ** BigInt(-exponent);",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 55,
+      "expression": "            spec: object(template.spec, 'statefulSet.volumeClaimTemplate.spec'), copies: BigInt(Number(replicas)) };",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 61,
+      "expression": "    readonly maximumClaimBytes: bigint;",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 62,
+      "expression": "    readonly maximumTotalBytes: bigint;",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 64,
+      "expression": "export function validatePersistentVolumeClaim(name: string, spec: JsonObject, policy: PersistentVolumePolicy): bigint {",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 85,
+      "expression": "    const bytes = storageBytes(requests.storage);",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 86,
+      "expression": "    if (bytes > policy.maximumClaimBytes)",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "line": 15,
+      "expression": "export function text(value: unknown, label: string, maximum = 1024): string {",
+      "sha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "line": 16,
+      "expression": "    if (typeof value !== 'string' || value.length < 1 || value.length > maximum || value.includes('\\0')) {",
+      "sha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "line": 21,
+      "expression": "export function integer(value: unknown, label: string, minimum: number, maximum: number): number {",
+      "sha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "line": 22,
+      "expression": "    if (!Number.isSafeInteger(value) || Number(value) < minimum || Number(value) > maximum) {",
+      "sha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "line": 27,
+      "expression": "export function stringArray(value: unknown, label: string, maximum: number, pattern?: RegExp): string[] {",
+      "sha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "line": 28,
+      "expression": "    if (!Array.isArray(value) || value.length > maximum",
+      "sha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 11,
+      "expression": "function detail(error: unknown, maximumCodeUnits: number): string {",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 15,
+      "expression": "            return stderr.trim().slice(0, maximumCodeUnits);",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 17,
+      "expression": "    return (error instanceof Error ? error.message : String(error)).slice(0, maximumCodeUnits);",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 22,
+      "expression": "    constructor(options: KubernetesFixtureCapabilityInvokerOptions) {",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 32,
+      "expression": "    async #kubectlRun(args: readonly string[], input: Buffer | string | null, signal: AbortSignal, timeout = this.#settings.maximumExecutionMs): Promise<string> {",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 35,
+      "expression": "                encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 49,
+      "expression": "        const timer = setTimeout(() => controller.abort(), this.#settings.maximumExecutionMs);",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 75,
+      "expression": "            '--ignore-not-found=true', '--wait=true', `--timeout=${Math.ceil(this.#settings.maximumExecutionMs / 1_000)}s`], null, signal);",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 4,
+      "expression": "  readonly maximumNodes: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 5,
+      "expression": "  readonly maximumDepth: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 6,
+      "expression": "  readonly maximumAliases: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 7,
+      "expression": "  readonly maximumFlattenVisits: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 8,
+      "expression": "  readonly maximumFlattenPending: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 23,
+      "expression": "  readonly maximumManifestBytes: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 24,
+      "expression": "  readonly maximumResources: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 25,
+      "expression": "  readonly maximumPersistentVolumeClaimBytes: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 26,
+      "expression": "  readonly maximumPersistentVolumeTotalBytes: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 27,
+      "expression": "  readonly maximumRetentionSeconds: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 28,
+      "expression": "  readonly maximumExecutionMs: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 38,
+      "expression": "  readonly maximumExecutionMs: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 41,
+      "expression": "  readonly maximumCommandOutputBytes: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 45,
+      "expression": "  readonly maximumExecutionMs: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 46,
+      "expression": "  readonly maximumOutputBytes: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 48,
+      "expression": "  readonly maximumObservationAgeMs: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 49,
+      "expression": "  readonly maximumFutureSkewMs: number;",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 56,
+      "expression": "  if (input.maximumObservationAgeMs < input.pollIntervalMs) {",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 74,
+      "expression": "  if (input.runtimeSecurity.maximumObservationAgeMs < input.runtimeSecurity.pollIntervalMs",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 75,
+      "expression": "    || kube.maximumPersistentVolumeTotalBytes < kube.maximumPersistentVolumeClaimBytes",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 76,
+      "expression": "    || !Number.isSafeInteger(kube.maximumManifestBytes * kube.commandOutputManifestMultiplier)",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 77,
+      "expression": "    || tail.pollIntervalMs > tail.maximumExecutionMs",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 54,
+      "expression": "        maximumRecords: integer(records.maximumRecords, 'recordLimits.maximumRecords'),",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 55,
+      "expression": "        maximumBytes: integer(records.maximumBytes, 'recordLimits.maximumBytes'),",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 56,
+      "expression": "        maximumRecordBytes: integer(records.maximumRecordBytes, 'recordLimits.maximumRecordBytes'),",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 58,
+      "expression": "      maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 59,
+      "expression": "      maximumResultStoreBytes: integer(value.maximumResultStoreBytes, 'maximumResultStoreBytes'),",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 122,
+      "expression": "    maximumRequestBytes: settings.preparation.maximumRequestBytes,",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 123,
+      "expression": "    maximumResponseBytes: integer(value.maximumResponseBytes, 'maximumResponseBytes'),",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 124,
+      "expression": "    maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 16,
+      "expression": "  #maximumMemoryBytes;",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 18,
+      "expression": "  #sampleIntervalMs;",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 21,
+      "expression": "  constructor() {",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 25,
+      "expression": "    this.#maximumMemoryBytes = process.memoryUsage().rss;",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 29,
+      "expression": "        send({ kind: 'error', error: error instanceof Error ? error.message : String(error), resources: this.#resources() });",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 60,
+      "expression": "  #resources() {",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 61,
+      "expression": "    const usage = process.resourceUsage();",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 63,
+      "expression": "      cpuTimeMs: (usage.userCPUTime + usage.systemCPUTime) / 1000,",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 64,
+      "expression": "      maximumMemoryBytes: this.#maximumMemoryBytes,",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 77,
+      "expression": "    if (this.#sampleIntervalMs !== undefined) {",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 78,
+      "expression": "      if (this.#sampleIntervalMs !== interval) throw new Error('TEST_PROVIDER_OBSERVATION_CHANGED');",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 81,
+      "expression": "    this.#sampleIntervalMs = interval;",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 83,
+      "expression": "      this.#maximumMemoryBytes = Math.max(this.#maximumMemoryBytes, process.memoryUsage().rss);",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 105,
+      "expression": "    send({ kind: 'initialized', supportsCleanup: typeof this.#instance.cleanup === 'function', resources: this.#resources() });",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 112,
+      "expression": "    send({ kind: 'result', value, resources: this.#resources() });",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 116,
+      "expression": "    if (message.schemaVersion !== 'provider-cleanup.v1'",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "line": 121,
+      "expression": "    send({ kind: 'cleanup-result', resources: this.#resources() });",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "line": 40,
+      "expression": "export function processFacts(pid: number): { cpuTimeMs: number; memoryBytes: number; processes: number } {",
+      "sha256": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "line": 42,
+      "expression": "  let cpuTimeMs = 0; let memoryBytes = 0;",
+      "sha256": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "line": 47,
+      "expression": "    cpuTimeMs += ((Number(fields[11]) + Number(fields[12])) / 100) * 1000;",
+      "sha256": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "line": 49,
+      "expression": "    if (status !== null) memoryBytes += Number(/^VmRSS:\\s+(\\d+)\\s+kB$/mu.exec(status)?.[1] ?? 0) * 1024;",
+      "sha256": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "line": 51,
+      "expression": "  return { cpuTimeMs, memoryBytes, processes: descendants.size };",
+      "sha256": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 13,
+      "expression": "import { processFacts, signalProvider } from './provider-process-observation.ts';",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 53,
+      "expression": "  readonly #sampleTimer: NodeJS.Timeout;",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 66,
+      "expression": "  #disposalConfirmed = false;",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 71,
+      "expression": "  #resources: ProviderProcessResources = { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 1 };",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 73,
+      "expression": "  constructor(entry: TestProviderRegistryEntry, invocation: ProviderInvocationV1, workspaceRootValue: string, policy: BusterProviderRuntimeSettings) {",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 75,
+      "expression": "    this.#capabilities = new ProviderCapabilities(this.#policy.provider.maximumPendingCapabilities);",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 91,
+      "expression": "    this.#child = spawn(runtime.launcher, [",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 92,
+      "expression": "      String(invocation.limits.memoryBytes), String(Math.max(1, Math.ceil(invocation.limits.cpuMillis / 1000))),",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 107,
+      "expression": "      if (this.#protocolBytes > this.#policy.provider.maximumProtocolBytes) { this.#protocolFailure ??= new Error('TEST_PROVIDER_PROTOCOL_LIMIT'); this.#fail(this.#protocolFailure); void this.terminate().catch((error) => this.#fail(error instanceof Error ? error : new Error(String(error)))); }",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 127,
+      "expression": "      clearInterval(this.#sampleTimer); this.#lines.close();",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 130,
+      "expression": "    this.#sampleTimer = setInterval(() => this.#sample(), this.#policy.observation.processSampleIntervalMs);",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 131,
+      "expression": "    this.#sample();",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 164,
+      "expression": "    if (!this.#send({ kind: 'cleanup', schemaVersion: 'provider-cleanup.v1', disposition })) this.#fail(new Error('TEST_PROVIDER_PROCESS_CLOSED'));",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 173,
+      "expression": "  get disposalConfirmed(): boolean { return this.#disposalConfirmed; }",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 202,
+      "expression": "    this.#disposalConfirmed = true;",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 205,
+      "expression": "  resources(): ProviderProcessResources { this.#sample(); return { ...this.#resources }; }",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 207,
+      "expression": "  #sample(): void {",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 211,
+      "expression": "    let facts: ReturnType<typeof processFacts>;",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 212,
+      "expression": "    try { facts = processFacts(this.#child.pid ?? -1); }",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 220,
+      "expression": "      cpuTimeMs: Math.max(this.#resources.cpuTimeMs, facts.cpuTimeMs),",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 221,
+      "expression": "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, facts.memoryBytes),",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 222,
+      "expression": "      maximumProcesses: Math.max(this.#resources.maximumProcesses, facts.processes),",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 224,
+      "expression": "    const limit = facts.cpuTimeMs > this.#invocation.limits.cpuMillis ? 'TEST_PROVIDER_CPU_LIMIT'",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 231,
+      "expression": "    if (this.#protocolBytes > this.#policy.provider.maximumProtocolBytes) return;",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 235,
+      "expression": "    this.#reportedResources(message);",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 250,
+      "expression": "  #reportedResources(message: Record<string, unknown>): void {",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 253,
+      "expression": "      cpuTimeMs: Math.max(this.#resources.cpuTimeMs, Number(reported.cpuTimeMs ?? 0)),",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 254,
+      "expression": "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, Number(reported.maximumMemoryBytes ?? 0)),",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 255,
+      "expression": "      maximumProcesses: Math.max(this.#resources.maximumProcesses, Number(reported.maximumProcesses ?? 1)),",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 305,
+      "expression": "    // The constructor samples before initialize has installed its callbacks.",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 13,
+      "expression": "  readonly cpuTimeMs: number;",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 14,
+      "expression": "  readonly maximumMemoryBytes: number;",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 15,
+      "expression": "  readonly maximumProcesses: number;",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 24,
+      "expression": "  resources(): ProviderProcessResources;",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 37,
+      "expression": "  const snapshots = path.join(workspaceRoot, 'test-provider-snapshots');",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 38,
+      "expression": "  fs.mkdirSync(snapshots, { recursive: true });",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 39,
+      "expression": "  const snapshotKey = createHash('sha256').update(attemptId).digest('hex');",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 40,
+      "expression": "  const destination = fs.mkdtempSync(path.join(snapshots, `${snapshotKey}-`));",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 69,
+      "expression": "  #resources: ProviderProcessResources = { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 1 };",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 73,
+      "expression": "  constructor(entry: TestProviderRegistryEntry, invocation: ProviderInvocationV1, workspaceRoot: string, policy: BusterProviderRuntimeSettings) {",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 117,
+      "expression": "    session.resources();",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 120,
+      "expression": "      if (session.disposalConfirmed) {",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 122,
+      "expression": "          this.#resources = this.#combinedResources(session);",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 136,
+      "expression": "    const snapshots = path.join(fs.realpathSync(this.#workspaceRoot), 'test-provider-snapshots');",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 137,
+      "expression": "    const relative = path.relative(snapshots, this.#entry.package.root);",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 142,
+      "expression": "  #combinedResources(session: ProviderProcessSession): ProviderProcessResources {",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 143,
+      "expression": "    const current = session.resources();",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 145,
+      "expression": "      cpuTimeMs: this.#resources.cpuTimeMs + current.cpuTimeMs,",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 146,
+      "expression": "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, current.maximumMemoryBytes),",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 147,
+      "expression": "      maximumProcesses: Math.max(this.#resources.maximumProcesses, current.maximumProcesses),",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 151,
+      "expression": "  resources(): ProviderProcessResources {",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 152,
+      "expression": "    return this.#terminated ? { ...this.#resources } : this.#combinedResources(this.#session);",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 158,
+      "expression": "  constructor(policy: BusterProviderRuntimeSettings) {",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "line": 104,
+      "expression": "      const measured = state.instance?.resources() ?? { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 0 };",
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "line": 105,
+      "expression": "      return { cpuTimeMs: Math.ceil(measured.cpuTimeMs ?? 0),",
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "line": 106,
+      "expression": "        maximumMemoryBytes: Math.ceil(measured.maximumMemoryBytes ?? 0),",
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "line": 107,
+      "expression": "        maximumProcesses: Math.ceil(measured.maximumProcesses ?? 0) };",
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 52,
+      "expression": "  constructor(options: TestPlanRunnerOptions) {",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 121,
+      "expression": "    const providerResultLimit = this.#options.executionPolicy.provider.maximumResultBytes;",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 187,
+      "expression": "    maximumFiles: number,",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 188,
+      "expression": "    maximumBytes: number,",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 192,
+      "expression": "    if (declarations.length > maximumFiles)",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 214,
+      "expression": "        maximumBytes - total,",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 219,
+      "expression": "      if (total > maximumBytes)",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 48,
+      "expression": "      schemaVersion: \"worker-attempt-envelope.v1\" as const,",
+      "sha256": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 59,
+      "expression": "        schemaVersion: \"attempt-claim.v1\" as const,",
+      "sha256": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 76,
+      "expression": "      limits: envelopeLimits(node, cleanupTimeoutMs, providerResultLimit, options.executionPolicy.reports.maximumAggregateResultBytes, options.executionPolicy.provider.workerResultWrapperBytes),",
+      "sha256": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 57,
+      "expression": "  readonly cpuTimeMs: number;",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 58,
+      "expression": "  readonly maximumMemoryBytes: number;",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 59,
+      "expression": "  readonly maximumProcesses: number;",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 99,
+      "expression": "  constructor(state: Exclude<WorkerAttemptResultV1['state'], 'completed'>, code: string, message = code) {",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 188,
+      "expression": "  if(envelope.schemaVersion==='worker-attempt-envelope.v3')validateWorkerResourceContractV3('workerAttemptEnvelope',envelope);",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 189,
+      "expression": "  else if(envelope.schemaVersion==='worker-attempt-envelope.v2')validateWorkerResourceContractV2('workerAttemptEnvelope',envelope);",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 220,
+      "expression": "  constructor(options: WorkerAttemptExecutorOptions<E>) {",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 231,
+      "expression": "    this.#accounting=envelope.schemaVersion==='worker-attempt-envelope.v3'?initialWorkerNativeResourceAccounting(envelope)",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 232,
+      "expression": "      :envelope.schemaVersion==='worker-attempt-envelope.v2'?initialWorkerResourceAccounting(envelope):undefined;",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 330,
+      "expression": "          schemaVersion: 'worker-log-part.v1' as const,",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 470,
+      "expression": "    // The terminal log snapshot is authoritative. Ignore delayed stream",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 475,
+      "expression": "        schemaVersion: 'worker-log-part.v1' as const,",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 594,
+      "expression": "      schemaVersion: 'attempt-progress-event.v1' as const,",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 682,
+      "expression": "      if(result.schemaVersion==='worker-attempt-result.v3')validateWorkerResourceContractV3('workerAttemptResult',result);",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 683,
+      "expression": "      else if(result.schemaVersion==='worker-attempt-result.v2')validateWorkerResourceContractV2('workerAttemptResult',result);",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 17,
+      "expression": " if(envelope.schemaVersion==='worker-attempt-envelope.v1'){",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 22,
+      "expression": "  const limits={cpuTimeMs:envelope.limits.cpuMillis,maximumMemoryBytes:envelope.limits.memoryBytes,maximumProcesses:envelope.limits.processes};",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 23,
+      "expression": "  const codes={cpuTimeMs:'WORKER_CPU_LIMIT',maximumMemoryBytes:'WORKER_MEMORY_LIMIT',maximumProcesses:'WORKER_PROCESS_LIMIT'};",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 27,
+      "expression": " if(envelope.schemaVersion==='worker-attempt-envelope.v3'){",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 28,
+      "expression": "  if(accounting?.schemaVersion!=='worker-resource-accounting.v2')return invalid();",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 31,
+      "expression": " if(accounting?.schemaVersion==='worker-resource-accounting.v2')return invalid();",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 36,
+      "expression": "function validObservation(observation:WorkerResourceObservations['cpuTimeMs'],capability:WorkerResourceAccounting['capabilities']['cpuTimeMs']):boolean {",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 40,
+      "expression": "function budgetError(metric:typeof workerResourceMetrics[number],observation:WorkerResourceObservations['cpuTimeMs'],budget:WorkerResourceAccounting['budgets']['cpuTimeMs']):ResourceCheck['error'] {",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 61,
+      "expression": " if(envelope.schemaVersion!=='worker-attempt-envelope.v2')return undefined;",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 3,
+      "expression": "type NativeUse = Partial<WorkerResourceUseV1> & { maximumTasks?: number };",
+      "sha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 28,
+      "expression": "  const codes = { cpuTimeMs: 'WORKER_CPU_LIMIT', maximumMemoryBytes: 'WORKER_MEMORY_LIMIT', maximumTasks: 'WORKER_TASK_LIMIT' };",
+      "sha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 4,
+      "expression": "/** Native task units are deliberately distinct from V1 maximumProcesses. */",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 7,
+      "expression": "  readonly cpuTimeMicroseconds: number;",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 8,
+      "expression": "  readonly maximumMemoryBytes: number;",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 9,
+      "expression": "  readonly maximumTasks: number;",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 18,
+      "expression": "  const counters = ['cpuTimeMicroseconds', 'maximumMemoryBytes', 'maximumTasks', 'oomKills', 'taskLimitHits'];",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 56,
+      "expression": "  const populated = counter(scope, 'cgroup.events', 'populated');",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 60,
+      "expression": "    cpuTimeMicroseconds: counter(scope, 'cpu.stat', 'usage_usec'),",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 61,
+      "expression": "    maximumMemoryBytes: scalar(scope, 'memory.peak'),",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 62,
+      "expression": "    maximumTasks: scalar(scope, 'pids.peak'),",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "line": 20,
+      "expression": "  constructor(root: string, limits: NativeWorkerPoolLimits, maximumScopes: number) {",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "line": 26,
+      "expression": "    this.#reservations = new WorkerResourceReservations(limits, maximumScopes);",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "line": 48,
+      "expression": "    if (fs.readFileSync(path.join(this.#root, 'cgroup.type'), 'utf8').trim() !== 'domain') {",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "line": 54,
+      "expression": "    fs.accessSync(path.join(this.#root, 'cgroup.kill'), fs.constants.W_OK);",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 6,
+      "expression": "  readonly schemaVersion: 1;",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 10,
+      "expression": "  readonly cgroupRoot: string;",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 14,
+      "expression": "  readonly maximumActiveScopes: number;",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 34,
+      "expression": "  if (value?.schemaVersion !== 1 || value.role !== role || typeof value.nodeName !== 'string' || !value.nodeName",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 41,
+      "expression": "  for (const location of [value.cgroupRoot, value.ownershipRoot, value.nodeIdentityFile, value.runtimeIdentityFile]) {",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 49,
+      "expression": "  for (const number of [value.maximumActiveScopes, value.limits?.memoryBytes, value.limits?.tasks,",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 3,
+      "expression": "import { readDurableState } from '@kubeclaw/plugin-foundation/observability/durable-delivery';",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 4,
+      "expression": "import { nativeJournalMaximumDiagnosticUnits, validateJournalState, type NativeAttemptJournalLimits, type NativeAttemptJournalState } from './native-journal-state.ts';",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 7,
+      "expression": "export const nativeJournalMaximumRecordBytes = 65536;",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 8,
+      "expression": "const maximumInteger = Number.MAX_SAFE_INTEGER;",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 9,
+      "expression": "const maximumDate = '+275760-09-13T00:00:00.000Z';",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 11,
+      "expression": "const diagnostic = '\\u0000'.repeat(nativeJournalMaximumDiagnosticUnits);",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 17,
+      "expression": "  const output = { digest, sizeBytes: limits.maximumOutputBytes };",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 19,
+      "expression": "    schemaVersion: 'worker-native-process-result.v1', stdout: output, stderr: output,",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 21,
+      "expression": "    resources: { unit: 'linux-tasks', cpuTimeMicroseconds: maximumInteger,",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 22,
+      "expression": "      maximumMemoryBytes: maximumInteger, maximumTasks: maximumInteger,",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 23,
+      "expression": "      populated: false, oomKills: maximumInteger, taskLimitHits: maximumInteger },",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 24,
+      "expression": "  }, processCompletedAt: payload.processCompletedAt ?? maximumDate,",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 25,
+      "expression": "  result: { digest, sizeBytes: limits.maximumResultBytes } };",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 34,
+      "expression": "  if (Buffer.byteLength(canonicalJson(payload)) > nativeJournalMaximumRecordBytes) {",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 38,
+      "expression": "    committedAt: maximumDate, payloadDigest: digest, payload })));",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 49,
+      "expression": "    if (bytes > limits.maximumStateBytes - total) throw new Error('WORKER_NATIVE_JOURNAL_METADATA_CAPACITY_EXCEEDED');",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 52,
+      "expression": "  if (total > limits.maximumStateBytes) throw new Error('WORKER_NATIVE_JOURNAL_METADATA_CAPACITY_EXCEEDED');",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 59,
+      "expression": "  const state = await readDurableState<DurableRecordState>(file,",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 60,
+      "expression": "    { schemaVersion: 'pipeline-durable-record-store.v1', records: [] }, limits.maximumStateBytes);",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 64,
+      "expression": "  const record: DurableRecord = { schemaVersion: 'pipeline-durable-record.v2', owner,",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 65,
+      "expression": "    stream: nativeJournalStream, sequence, idempotencyKey, committedAt: maximumDate,",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 67,
+      "expression": "  nativeJournalTerminalMetadataBytes({ ...state, schemaVersion: 'pipeline-durable-record-store.v2',",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 9,
+      "expression": "export const nativeJournalMaximumDiagnosticUnits = 4096;",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 12,
+      "expression": "  readonly maximumRecords: number;",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 13,
+      "expression": "  readonly maximumStateBytes: number;",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 14,
+      "expression": "  readonly maximumTotalBytes: number;",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 15,
+      "expression": "  readonly maximumInputBytes: number;",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 16,
+      "expression": "  readonly maximumOutputBytes: number;",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 17,
+      "expression": "  readonly maximumResultBytes: number;",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 23,
+      "expression": "  readonly schemaVersion: 'native-attempt-journal.v1';",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 28,
+      "expression": "  readonly reservationBytes: number;",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 50,
+      "expression": "  exact(value, ['schemaVersion', 'identity', 'envelopeDigest', 'envelope', 'acceptedAt', 'reservationBytes', 'process', 'processCompletedAt', 'result']);",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 51,
+      "expression": "  if (value.schemaVersion !== 'native-attempt-journal.v1' || typeof value.acceptedAt !== 'string'",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 52,
+      "expression": "    || !Number.isFinite(Date.parse(value.acceptedAt)) || !Number.isSafeInteger(value.reservationBytes) || Number(value.reservationBytes) < 1) {",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 66,
+      "expression": "  exact(value, ['schemaVersion', 'stdout', 'stderr', 'exitCode', 'signal', 'fault', 'resources']);",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 67,
+      "expression": "  if (value.schemaVersion !== 'worker-native-process-result.v1') throw new Error('WORKER_NATIVE_JOURNAL_PROCESS_INVALID');",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 74,
+      "expression": "    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > nativeJournalMaximumDiagnosticUnits)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 14,
+      "expression": "    maximumRecords: native.maximumRecords, maximumStateBytes: native.maximumBytes,",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 15,
+      "expression": "    maximumTotalBytes: native.maximumJournalBytes, maximumInputBytes: native.maximumInputBytes,",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 16,
+      "expression": "    maximumOutputBytes: native.maximumOutputBytes, maximumResultBytes: native.maximumResultBytes,",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 30,
+      "expression": "          maximumInputBytes: native.maximumInputBytes, maximumOutputBytes: native.maximumOutputBytes,",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 37,
+      "expression": "/** Build a closed child environment from the startup snapshot, never process.env. */",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 45,
+      "expression": "      PRISM_NATIVE_ASSIGNED_INPUT_BYTES: String(native.maximumInputBytes) },",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 31,
+      "expression": "    maximumRecords: settings.maximumRecords, maximumBytes: settings.maximumOwnershipBytes,",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 33,
+      "expression": "  await NativeWorkerOwnership.supervise({ store, cgroupRoot: native.pool.cgroupRoot,",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 35,
+      "expression": "    maximumActiveScopes: native.pool.maximumActiveScopes, poolLimits: native.pool.limits }, async owner => {",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 37,
+      "expression": "      maximumRecords: settings.maximumRecords, maximumStateBytes: settings.maximumMetadataBytes,",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 38,
+      "expression": "      maximumTotalBytes: settings.maximumJournalBytes, maximumInputBytes: settings.maximumInputBytes,",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 39,
+      "expression": "      maximumOutputBytes: settings.maximumOutputBytes, maximumResultBytes: settings.maximumResultBytes,",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 45,
+      "expression": "        cgroupRoot: native.pool.cgroupRoot, tarExecutable: native.tarExecutable,",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 57,
+      "expression": "  const child = spawn('/usr/bin/setpriv', ['--reuid=1000', '--regid=1000', '--groups', '1000,1002',",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 76,
+      "expression": "      maximumActivePreparations: execution.settings.maximumActivePreparations,",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 77,
+      "expression": "      maximumRequestBytes: execution.settings.maximumRequestBytes,",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 17,
+      "expression": "import { buildCommittedSourceSnapshot } from './source-snapshot.ts';",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 27,
+      "expression": "  readonly maximumResponseBytes: number;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 28,
+      "expression": "  readonly maximumResultBytes: number;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 29,
+      "expression": "  readonly maximumArchiveBytes: number;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 30,
+      "expression": "  readonly maximumArchiveStoreBytes: number;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 31,
+      "expression": "  readonly maximumEvidenceBytes: number;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 32,
+      "expression": "  readonly maximumEvidenceStoreBytes: number;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 44,
+      "expression": "  readonly maximumConcurrency: number;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 54,
+      "expression": "  readonly #maximumArchiveBytes: number;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 55,
+      "expression": "  constructor(options: { remote: NovaRemoteTestGate; sourceAuthority: string;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 56,
+      "expression": "    sourceAttestationPrivateKey: string | Buffer; maximumArchiveBytes: number }) {",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 60,
+      "expression": "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 70,
+      "expression": "        maximumArchiveBytes: this.#maximumArchiveBytes, timeoutMs: deadline.remaining(), signal: deadline.signal,",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 76,
+      "expression": "        maximumConcurrency: input.maximumConcurrency, submittedAt: input.submittedAt });",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 80,
+      "expression": "    } finally { deadline.dispose(); }",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 99,
+      "expression": "    maximumResponseBytes: options.maximumResponseBytes,",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 100,
+      "expression": "    maximumResultBytes: options.maximumResultBytes,",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 105,
+      "expression": "      maximumArchiveBytes: options.maximumArchiveBytes,",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 106,
+      "expression": "      maximumArchiveStoreBytes: options.maximumArchiveStoreBytes,",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 114,
+      "expression": "      maximumEvidenceStoreBytes: options.maximumEvidenceStoreBytes,",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 118,
+      "expression": "    maximumEvidenceBytes: options.maximumEvidenceBytes,",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 119,
+      "expression": "    maximumResultBytes: options.maximumResultBytes,",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 124,
+      "expression": "    maximumArchiveBytes: options.maximumArchiveBytes });",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 30,
+      "expression": "  assertKnownKeys(value, ['schemaVersion', 'endpoint', 'authentication', 'tokenEnvironmentVariable',",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 32,
+      "expression": "    'maximumResponseBytes', 'maximumResultBytes', 'maximumArchiveBytes', 'maximumArchiveStoreBytes',",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 33,
+      "expression": "    'maximumEvidenceBytes', 'maximumEvidenceStoreBytes', 'recordLimits'], 'root');",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 34,
+      "expression": "  if (value.schemaVersion !== 'nova-remote-test-gate-runtime.v1') throw new Error('NOVA_REMOTE_CONFIG_VERSION_INVALID');",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 63,
+      "expression": "  assertKnownKeys(records, ['maximumRecords', 'maximumBytes', 'maximumRecordBytes'], 'recordLimits');",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 72,
+      "expression": "    maximumResponseBytes: integer(value.maximumResponseBytes, 'maximumResponseBytes'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 73,
+      "expression": "    maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 74,
+      "expression": "    maximumArchiveBytes: integer(value.maximumArchiveBytes, 'maximumArchiveBytes'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 75,
+      "expression": "    maximumArchiveStoreBytes: integer(value.maximumArchiveStoreBytes, 'maximumArchiveStoreBytes'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 76,
+      "expression": "    maximumEvidenceBytes: integer(value.maximumEvidenceBytes, 'maximumEvidenceBytes'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 77,
+      "expression": "    maximumEvidenceStoreBytes: integer(value.maximumEvidenceStoreBytes, 'maximumEvidenceStoreBytes'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 79,
+      "expression": "      maximumRecords: integer(records.maximumRecords, 'recordLimits.maximumRecords'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 80,
+      "expression": "      maximumBytes: integer(records.maximumBytes, 'recordLimits.maximumBytes'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "line": 81,
+      "expression": "      maximumRecordBytes: integer(records.maximumRecordBytes, 'recordLimits.maximumRecordBytes'),",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 20,
+      "expression": "function positiveInteger(value: unknown, maximum: number, code: string): number {",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 21,
+      "expression": "  if (!Number.isSafeInteger(value) || Number(value) < 1 || Number(value) > maximum) throw new Error(code);",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 86,
+      "expression": "    pollMilliseconds: 500, maximumResponseBytes: 64 * 1024 * 1024,",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 87,
+      "expression": "    maximumResultBytes: 64 * 1024 * 1024, maximumArchiveBytes: 64 * 1024 * 1024,",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 88,
+      "expression": "    maximumArchiveStoreBytes: 1024 * 1024 * 1024, maximumEvidenceBytes: 64 * 1024 * 1024,",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 89,
+      "expression": "    maximumEvidenceStoreBytes: 1024 * 1024 * 1024,",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 90,
+      "expression": "    recordLimits: { maximumRecords: 10_000, maximumBytes: 1024 * 1024 * 1024,",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 91,
+      "expression": "      maximumRecordBytes: 64 * 1024 * 1024 } });",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 97,
+      "expression": "    maximumConcurrency: positiveInteger(request.payload.maximumConcurrency, 64, 'REMOTE_TEST_GATE_CONCURRENCY_INVALID'),",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "line": 57,
+      "expression": "  const store=new FileNovaGateImportStore(path.join(root,'imports'),{recordLimits:{maximumRecords:10000,maximumBytes:1024**3,maximumRecordBytes:64*1024**2},maximumEvidenceStoreBytes:1024**3});",
+      "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 22,
+      "expression": "  if (root === '/' || root === '/sys/fs/cgroup' || fs.statfsSync(root).type !== 0x63677270) {",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 25,
+      "expression": "  if (fs.readFileSync(path.join(root, 'cgroup.procs'), 'utf8').trim()) {",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 28,
+      "expression": "  const controllers = fs.readFileSync(path.join(root, 'cgroup.subtree_control'), 'utf8').trim().split(/\\s+/u);",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 49,
+      "expression": "  #disposed = false;",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 52,
+      "expression": "  private constructor(scope: string, aggregate: boolean) {",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 87,
+      "expression": "      fs.writeFileSync(path.join(scope, 'cgroup.subtree_control'), '+cpu +memory +pids');",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 88,
+      "expression": "      const enabled = fs.readFileSync(path.join(scope, 'cgroup.subtree_control'), 'utf8').trim().split(/\\s+/u);",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 90,
+      "expression": "      fs.accessSync(path.join(scope, 'cgroup.kill'), fs.constants.W_OK);",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 159,
+      "expression": "  disposeChildren(children: readonly WorkerOwnedChild[]): void {",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 176,
+      "expression": "    fs.writeFileSync(path.join(this.#path, 'cgroup.kill'), '1');",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 189,
+      "expression": "  dispose(): void {",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 190,
+      "expression": "    if (this.#disposed) return;",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 193,
+      "expression": "    this.#disposed = true;",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 197,
+      "expression": "    if (this.#disposed) throw new Error('WORKER_NATIVE_SCOPE_DISPOSED');",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 12,
+      "expression": "  readonly cpuTimeMs: number;",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 17,
+      "expression": "  readonly maximumInputBytes: number;",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 18,
+      "expression": "  readonly maximumOutputBytes: number;",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 34,
+      "expression": "  readonly schemaVersion: 'worker-native-process-result.v1';",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 53,
+      "expression": "  if (observation.oomKills || observation.maximumMemoryBytes > limits.memoryBytes) return 'WORKER_MEMORY_LIMIT';",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 54,
+      "expression": "  if (observation.taskLimitHits || observation.maximumTasks > limits.tasks) return 'WORKER_TASK_LIMIT';",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 55,
+      "expression": "  if (observation.cpuTimeMicroseconds / 1000 > limits.cpuTimeMs) return 'WORKER_CPU_LIMIT';",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 68,
+      "expression": "  if (options.input.byteLength > limits.maximumInputBytes) throw new Error('WORKER_NATIVE_INPUT_LIMIT');",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 107,
+      "expression": "  const output = captureNativeWorkerOutput(child, limits.maximumOutputBytes, stop, outputCapture);",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 109,
+      "expression": "  let disposeCancellation: (() => void) | undefined;",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 111,
+      "expression": "    if (closing || disposeCancellation) return;",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 113,
+      "expression": "    disposeCancellation = cancelNativeProcess(child, limits.closeTimeoutMs, close);",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 136,
+      "expression": "    return { schemaVersion: 'worker-native-process-result.v1', ...output.snapshot(),",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 141,
+      "expression": "    disposeCancellation?.();",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "line": 48,
+      "expression": "    schemaVersion: \"worker-profile.v1\" as const,",
+      "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "line": 56,
+      "expression": "      contentDigest: registry.snapshotDigest,",
+      "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 386,
+      "expression": "func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time) bool {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 387,
+      "expression": "\tphase := stringValue(snapshot[\"phase\"])",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 394,
+      "expression": "\tobservedAt, err := time.Parse(time.RFC3339, stringValue(snapshot[\"observedAt\"]))",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 421,
+      "expression": "\tconst maximumFindings = 4096",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 422,
+      "expression": "\tconst maximumSerializedBytes = 512 * 1024",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 423,
+      "expression": "\tbounded := make([]interface{}, 0, min(total, maximumFindings))",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 424,
+      "expression": "\tsizes := make([]int, 0, min(total, maximumFindings))",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 435,
+      "expression": "\t\tif len(bounded) >= maximumFindings || serializedBytes+separatorBytes+len(encoded) > maximumSerializedBytes {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 454,
+      "expression": "\t\tif len(bounded)+1 <= maximumFindings && serializedBytes+separatorBytes+len(encodedOverflow) <= maximumSerializedBytes {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 608,
+      "expression": "\tif err := c.ensureNamespaceResourceLimits(ctx, item, namespaceName); err != nil {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 931,
+      "expression": "// ensureNamespaceResourceLimits puts an enforced ceiling below the cluster",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 933,
+      "expression": "func (c *controller) ensureNamespaceResourceLimits(ctx context.Context, item *lease, namespaceName string) error {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 937,
+      "expression": "\t\t\"apiVersion\": \"v1\", \"kind\": \"ResourceQuota\",",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 942,
+      "expression": "\t\t\t\"persistentvolumeclaims\": \"8\", \"requests.storage\": \"100Gi\",",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 1604,
+      "expression": "\t\treturn fmt.Errorf(\"ttlSeconds exceeds maximum %d\", int(c.maxTTL/time.Second))",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 1784,
+      "expression": "func leaseLabelValue(item *lease) string {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 1823,
+      "expression": "func sanitizeLabelValue(value string, fallback string) string {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 1908,
+      "expression": "func stringValue(value interface{}) string {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 1921,
+      "expression": "func stringValueDefault(value interface{}, fallback string) string {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 1946,
+      "expression": "func intValue(value interface{}, fallback int) int {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 1968,
+      "expression": "func boolValue(value interface{}) bool {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "line": 1973,
+      "expression": "func objectValue(value interface{}) map[string]interface{} {",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 108,
+      "expression": "                  maximum: 65535",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 112,
+      "expression": "                  maximum: 65535",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 126,
+      "expression": "                  maximum: {{ .Values.busterNamespaceBroker.maxTtlSeconds }}",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 176,
+      "expression": "                      maximum: 65535",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 255,
+      "expression": "                        required: [schemaVersion, decisionId, payloadDigest, action, leaseName, leaseUID, readyDigest, generation, actorId, issuer, appliedAt, previousExpiry, expiresAt, state, envelope]",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 257,
+      "expression": "                          schemaVersion:",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 273,
+      "expression": "                            maximum: 9007199254740991",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 317,
+      "expression": "                            required: [schemaVersion, payload, signature]",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 319,
+      "expression": "                              schemaVersion:",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 333,
+      "expression": "                    - rule: \"(self.schemaVersion == 'demo-readiness.v1' && !has(self.retentionSeconds)) || (self.schemaVersion == 'demo-readiness.v2' && has(self.retentionSeconds))\"",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 335,
+      "expression": "                    - rule: \"self.schemaVersion == oldSelf.schemaVersion\"",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 337,
+      "expression": "                  required: [schemaVersion, state, requestId, requestDigest, readyAt, expiresAt, leaseUID, owner, previousOwner, exposureGeneration, exposureSpec, receipt]",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 339,
+      "expression": "                    schemaVersion:",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 389,
+      "expression": "                      maximum: 9223372036",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 436,
+      "expression": "                          maximum: 65535",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 439,
+      "expression": "                      required: [schemaVersion, accepted, target, status, messageId, deliveryId, payloadDigest]",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 441,
+      "expression": "                        schemaVersion:",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 450,
+      "expression": "                          maximum: 299",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 484,
+      "expression": "                  required: [schemaVersion, leaseUID, secretUID, secretResourceVersion, namespace, secretName, credentialDigest]",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "line": 486,
+      "expression": "                    schemaVersion:",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 35,
+      "expression": "// in addition to String() and AsInt64() accessors.",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 373,
+      "expression": "\t\tamount.Round(amount, Nano.infScale(), inf.RoundUp)",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 502,
+      "expression": "\t\tresultBigInt := new(big.Int).Mul(infDec.UnscaledBig(), pow10AbsScale)",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 503,
+      "expression": "\t\tresultBigFloat = new(big.Float).SetInt(resultBigInt)",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 514,
+      "expression": "// AsInt64 returns a representation of the current value as an int64 if a fast conversion",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 516,
+      "expression": "func (q *Quantity) AsInt64() (int64, bool) {",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 520,
+      "expression": "\treturn q.i.AsInt64()",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 571,
+      "expression": "func (q *Quantity) AsScale(scale Scale) (CanonicalValue, bool) {",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 813,
+      "expression": "func (q *Quantity) Value() int64 {",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 819,
+      "expression": "func (q *Quantity) MilliValue() int64 {",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 827,
+      "expression": "func (q *Quantity) ScaledValue(scale Scale) int64 {",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 866,
+      "expression": "func (q *QuantityValue) Set(s string) error {",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 876,
+      "expression": "func (q QuantityValue) Type() string {",
+      "sha256": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 35,
+      "expression": "// in addition to String() and AsInt64() accessors.",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 374,
+      "expression": "\t\tamount.Round(amount, Nano.infScale(), inf.RoundUp)",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 503,
+      "expression": "\t\tresultBigInt := new(big.Int).Mul(infDec.UnscaledBig(), pow10AbsScale)",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 504,
+      "expression": "\t\tresultBigFloat = new(big.Float).SetInt(resultBigInt)",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 515,
+      "expression": "// AsInt64 returns a representation of the current value as an int64 if a fast conversion",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 517,
+      "expression": "func (q *Quantity) AsInt64() (int64, bool) {",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 521,
+      "expression": "\treturn q.i.AsInt64()",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 572,
+      "expression": "func (q *Quantity) AsScale(scale Scale) (CanonicalValue, bool) {",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 814,
+      "expression": "func (q *Quantity) Value() int64 {",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 820,
+      "expression": "func (q *Quantity) MilliValue() int64 {",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 828,
+      "expression": "func (q *Quantity) ScaledValue(scale Scale) int64 {",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 868,
+      "expression": "func (q *QuantityValue) Set(s string) error {",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+      "line": 878,
+      "expression": "func (q QuantityValue) Type() string {",
+      "sha256": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110"
+    }
+  ],
+  "meaning": "Exact current source witnesses, no observed native numbers or activation receipt"
+}

@@ -1,0 +1,20 @@
+{
+  "skills/nova/core/execution/pipeline-loop.ts": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+  "skills/nova/core/execution/graph.ts": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af",
+  "skills/nova/core/execution/graph-build.ts": "75ce0387330d8acc6d7217aa8539a41c7796fcfd1522c079c8585c55e765adc6",
+  "skills/nova/core/execution/stage-executor.ts": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+  "skills/nova/core/lifecycle/reducer.ts": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+  "skills/nova/core/lifecycle/recovery.ts": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8",
+  "skills/nova/project/compiler.ts": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+  "skills/nova/project/coverage.ts": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b",
+  "skills/nova/plugins/architecture-validator/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+  "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json": "77f3bc2d1d9a25347219cbb5f11d8580e57390abee3936a6de044b6d5cea68c5",
+  "skills/nova/plugins/implementation-agent/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+  "skills/nova/plugins/pipeline-review/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+  "skills/nova/plugins/project-summary/schemas/config.schema.json": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+  "skills/nova/plugins/architecture-validator/src/stage.ts": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+  "skills/nova/plugins/buster-quality-gate/src/stage.ts": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76",
+  "skills/nova/plugins/implementation-agent/src/stage.ts": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+  "skills/nova/plugins/pipeline-review/src/stage.ts": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+  "skills/nova/plugins/project-summary/src/stage.ts": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+}

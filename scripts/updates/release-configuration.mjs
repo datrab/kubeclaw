@@ -3,23 +3,13 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
 const configurationPaths = {
-  runtime: ['charts/kubeclaw', 'charts/prism', ...['nova', 'buster', 'prism-agent', 'prism'].map(role => `my-values/${role}-values.yaml`)],
+  runtime: ['config', 'packaging/runtime', 'scripts/updates/pipeline-generation.mjs', 'scripts/build-runtime-role-bundle.mjs', 'scripts/build-prism-image-bundle.mjs', 'scripts/build-buster-image-bundle.mjs', 'scripts/build-buster-proof-harness.mjs', 'scripts/generate-buster-chart-config.mjs', 'scripts/updates/buster-image-delivery.mjs', 'scripts/updates/write-image-receipt.mjs', 'scripts/generate-prism-chart-config.mjs', 'scripts/pipeline-publish.c', 'charts/kubeclaw', 'charts/prism', ...['nova', 'buster', 'prism-agent', 'prism'].map(role => `my-values/${role}-values.yaml`)],
   ops: ['charts/ops-pod'],
 };
 
 const configurationAliases = {
-  'charts/prism/files/config/swarm.config.json': '../../../kubeclaw/files/config/swarm.config.json',
-  'charts/prism/files/config/swarm.schema.json': '../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json',
-  "charts/prism/templates/_swarm-bundle.tpl": "../../kubeclaw/templates/_swarm-config.tpl",
   "charts/kubeclaw/files/config/swarm.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json",
   "charts/kubeclaw/files/config/swarm-components.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
-  "charts/prism/files/config/swarm-components.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
-  "charts/prism/files/config/prism-control.config.json": "../../../kubeclaw/files/config/prism-control.config.json",
-  "charts/prism/files/config/prism-studio.config.json": "../../../kubeclaw/files/config/prism-studio.config.json",
-  "charts/prism/files/config/prism-worker.config.json": "../../../kubeclaw/files/config/prism-worker.config.json",
-  "charts/prism/files/config/prism-execution.config.json": "../../../kubeclaw/files/config/prism-execution.config.json",
-  "charts/prism/files/config/buster-engine.config.json": "../../../kubeclaw/files/config/buster-engine.config.json",
-  "charts/prism/files/config/worker-core.config.json": "../../../kubeclaw/files/config/worker-core.config.json",
 };
 
 function assertNoLinkedAncestors(root, relative) {

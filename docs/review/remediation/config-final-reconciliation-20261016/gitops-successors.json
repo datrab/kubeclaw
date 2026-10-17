@@ -1,0 +1,667 @@
+{
+  "scope": "Exact original GitOps8 generated-binding source lineage only, not implementation or acceptance",
+  "constraint": "All eight original fields retain generated-binding classification. Four inventory fields derive from verified committed bundle resources; repository/revision are explicit validated invocation inputs; project/rootName derive from explicit naming or original fallbacks. Continuous route selects gitops/production/config.json naming, then intentionally changes rendered Application revision to main. The historical central deployment/profile contract and original cases remain OPEN. Do not invent eight independent editable settings, a parallel root, acceptance or denied-v10 activation.",
+  "rows": [
+    {
+      "id": "DLV-CHART-GITOPS-REPOSITORY",
+      "original": "D228#/rows/2224",
+      "originalObjectSha256": "b88c12962968057f614f78bc3f1dabe9d3d853ead67875b42610a4b59cbda875",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-CHART-LAST-CHART-GITOPS-REPOSITORY"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-gitops",
+      "originalSource": {
+        "path": "charts/gitops/values.yaml",
+        "field": "repository",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+        "line": 2,
+        "lineKind": "unique YAML key author",
+        "valuePath": "repository"
+      },
+      "status": "VALIDATED_INVOCATION_INPUT_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "sourceInputs": [
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "validateBootstrapAddress(url, argoNamespace);",
+          "lines": [
+            77
+          ]
+        },
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "repository: url, revision, destinations",
+          "lines": [
+            91
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "- {{ $repository | quote }}",
+          "lines": [
+            17
+          ]
+        },
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "repoURL: {{ $repository | quote }}",
+          "lines": [
+            44
+          ]
+        }
+      ],
+      "generatedTransport": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "helm: { valuesObject: values }",
+        "lines": [
+          102
+        ]
+      },
+      "committedRead": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "inspectCommittedGroup(repository, directory, revision, group, bundle.receipt)",
+        "lines": [
+          60
+        ]
+      },
+      "continuousReceiving": {
+        "path": "scripts/gitops-continuous.mjs",
+        "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+        "anchor": "config.argoNamespace, config.naming",
+        "lines": [
+          62
+        ]
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN"
+    },
+    {
+      "id": "DLV-CHART-GITOPS-REVISION",
+      "original": "D228#/rows/2225",
+      "originalObjectSha256": "81f0d4973872d806d3b4fa9c0c9275ea7159f327b1e8c9393364e25c09a7d1c7",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-CHART-LAST-CHART-GITOPS-REVISION"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-gitops",
+      "originalSource": {
+        "path": "charts/gitops/values.yaml",
+        "field": "revision",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+        "line": 3,
+        "lineKind": "unique YAML key author",
+        "valuePath": "revision"
+      },
+      "status": "COMMITTED_REVISION_INPUT_CONTINUOUS_MAIN_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "sourceInputs": [
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "if (!/^[a-f0-9]{40}$/u.test(revision))",
+          "lines": [
+            46
+          ]
+        },
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "git(repository, ['rev-parse', `${revision}^{commit}`])",
+          "lines": [
+            48
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "targetRevision: {{ $revision | quote }}",
+          "lines": [
+            45
+          ]
+        }
+      ],
+      "generatedTransport": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "helm: { valuesObject: values }",
+        "lines": [
+          102
+        ]
+      },
+      "committedRead": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "inspectCommittedGroup(repository, directory, revision, group, bundle.receipt)",
+        "lines": [
+          60
+        ]
+      },
+      "continuousReceiving": {
+        "path": "scripts/gitops-continuous.mjs",
+        "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+        "anchor": "config.argoNamespace, config.naming",
+        "lines": [
+          62
+        ]
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "continuousRevisionEffects": [
+        {
+          "path": "scripts/gitops-continuous.mjs",
+          "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+          "anchor": "targetRevision: 'main'",
+          "lines": [
+            18
+          ]
+        },
+        {
+          "path": "scripts/gitops-continuous.mjs",
+          "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+          "anchor": "document.spec.source.targetRevision = 'main'",
+          "lines": [
+            34
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DLV-CHART-GITOPS-PROJECT",
+      "original": "D228#/rows/2226",
+      "originalObjectSha256": "e27242879307e2f86fad7b1ef846d631b8e66d85b63bb1a617fe871531617f8e",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-CHART-LAST-CHART-GITOPS-PROJECT"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-gitops",
+      "originalSource": {
+        "path": "charts/gitops/values.yaml",
+        "field": "project",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+        "line": 4,
+        "lineKind": "unique YAML key author",
+        "valuePath": "project"
+      },
+      "status": "EXPLICIT_NAMING_WITH_ORIGINAL_FALLBACK_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "sourceInputs": [
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "const workloadProject = naming.workloadProject ?? `${name}-workloads`;",
+          "lines": [
+            82
+          ]
+        },
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "project: workloadProject, groups: bundle.groups",
+          "lines": [
+            91
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "name: {{ $project }}",
+          "lines": [
+            9
+          ]
+        },
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "project: {{ $project }}",
+          "lines": [
+            40,
+            42
+          ]
+        }
+      ],
+      "generatedTransport": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "helm: { valuesObject: values }",
+        "lines": [
+          102
+        ]
+      },
+      "committedRead": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "inspectCommittedGroup(repository, directory, revision, group, bundle.receipt)",
+        "lines": [
+          60
+        ]
+      },
+      "continuousReceiving": {
+        "path": "scripts/gitops-continuous.mjs",
+        "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+        "anchor": "config.argoNamespace, config.naming",
+        "lines": [
+          62
+        ]
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "currentNamingSelection": {
+        "path": "gitops/production/config.json",
+        "sha256": "aa3d20f6787b1ea18f828a42a1d5235544444aad0e660576db0e76bb9a35529c",
+        "pointer": "/naming/workloadProject"
+      }
+    },
+    {
+      "id": "DLV-CHART-GITOPS-ROOTNAME",
+      "original": "D228#/rows/2227",
+      "originalObjectSha256": "2720fa5cbe560d0e9484bad6c629048902bebd3e892a955075cd10be75c04762",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-CHART-LAST-CHART-GITOPS-ROOTNAME"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-gitops",
+      "originalSource": {
+        "path": "charts/gitops/values.yaml",
+        "field": "rootName",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+        "line": 5,
+        "lineKind": "unique YAML key author",
+        "valuePath": "rootName"
+      },
+      "status": "EXPLICIT_NAMING_WITH_ORIGINAL_FALLBACK_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "sourceInputs": [
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "const name = naming.rootName ?? `${bundle.groups[0].namespace}-runtime`;",
+          "lines": [
+            80
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "required \"rootName is required\" .Values.rootName",
+          "lines": [
+            11
+          ]
+        }
+      ],
+      "generatedTransport": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "helm: { valuesObject: values }",
+        "lines": [
+          102
+        ]
+      },
+      "committedRead": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "inspectCommittedGroup(repository, directory, revision, group, bundle.receipt)",
+        "lines": [
+          60
+        ]
+      },
+      "continuousReceiving": {
+        "path": "scripts/gitops-continuous.mjs",
+        "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+        "anchor": "config.argoNamespace, config.naming",
+        "lines": [
+          62
+        ]
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "currentNamingSelection": {
+        "path": "gitops/production/config.json",
+        "sha256": "aa3d20f6787b1ea18f828a42a1d5235544444aad0e660576db0e76bb9a35529c",
+        "pointer": "/naming/rootName"
+      }
+    },
+    {
+      "id": "DLV-CHART-GITOPS-GROUPS",
+      "original": "D228#/rows/2228",
+      "originalObjectSha256": "a6a1df59e24557f8b5c6554d145714ee838276b92e104a53a4908cc17ac5243a",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-CHART-LAST-CHART-GITOPS-GROUPS"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-gitops",
+      "originalSource": {
+        "path": "charts/gitops/values.yaml",
+        "field": "groups",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+        "line": 6,
+        "lineKind": "unique YAML key author",
+        "valuePath": "groups"
+      },
+      "status": "VERIFIED_BUNDLE_DERIVED_BINDING_CENTRAL_GENERATION_JOIN_OPEN",
+      "centralPhysicalAuthor": null,
+      "sourceInputs": [
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "const bundle = readCommittedBundle(repository, directory, revision);",
+          "lines": [
+            78
+          ]
+        },
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "groups: bundle.groups",
+          "lines": [
+            91
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "range .Values.groups",
+          "lines": [
+            29
+          ]
+        },
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "path: {{ .path | quote }}",
+          "lines": [
+            46
+          ]
+        }
+      ],
+      "generatedTransport": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "helm: { valuesObject: values }",
+        "lines": [
+          102
+        ]
+      },
+      "committedRead": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "inspectCommittedGroup(repository, directory, revision, group, bundle.receipt)",
+        "lines": [
+          60
+        ]
+      },
+      "continuousReceiving": {
+        "path": "scripts/gitops-continuous.mjs",
+        "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+        "anchor": "config.argoNamespace, config.naming",
+        "lines": [
+          62
+        ]
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN"
+    },
+    {
+      "id": "DLV-CHART-GITOPS-DESTINATIONS",
+      "original": "D228#/rows/2229",
+      "originalObjectSha256": "927c97a4933a9c4b6c9007d97ad8683b5bd2fc4325a2d4fcab3c5b7eadc68cc7",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-CHART-LAST-CHART-GITOPS-DESTINATIONS"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-gitops",
+      "originalSource": {
+        "path": "charts/gitops/values.yaml",
+        "field": "destinations",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+        "line": 7,
+        "lineKind": "unique YAML key author",
+        "valuePath": "destinations"
+      },
+      "status": "VERIFIED_BUNDLE_DERIVED_BINDING_CENTRAL_GENERATION_JOIN_OPEN",
+      "centralPhysicalAuthor": null,
+      "sourceInputs": [
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "const destinations = [...new Set(bundle.groups.flatMap",
+          "lines": [
+            90
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "range .Values.destinations",
+          "lines": [
+            19
+          ]
+        }
+      ],
+      "generatedTransport": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "helm: { valuesObject: values }",
+        "lines": [
+          102
+        ]
+      },
+      "committedRead": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "inspectCommittedGroup(repository, directory, revision, group, bundle.receipt)",
+        "lines": [
+          60
+        ]
+      },
+      "continuousReceiving": {
+        "path": "scripts/gitops-continuous.mjs",
+        "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+        "anchor": "config.argoNamespace, config.naming",
+        "lines": [
+          62
+        ]
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN"
+    },
+    {
+      "id": "DLV-CHART-GITOPS-CLUSTERRESOURCEWHITELIST",
+      "original": "D228#/rows/2230",
+      "originalObjectSha256": "243cdb96745e030b0d398eb1644825234922c972cf7dfff61bc7bd6e240d5835",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-CHART-LAST-CHART-GITOPS-CLUSTERRESOURCEWHITELIST"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-gitops",
+      "originalSource": {
+        "path": "charts/gitops/values.yaml",
+        "field": "clusterResourceWhitelist",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+        "line": 8,
+        "lineKind": "unique YAML key author",
+        "valuePath": "clusterResourceWhitelist"
+      },
+      "status": "VERIFIED_BUNDLE_DERIVED_BINDING_CENTRAL_GENERATION_JOIN_OPEN",
+      "centralPhysicalAuthor": null,
+      "sourceInputs": [
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "gitOpsClusterKinds.has(resource.kind) ? cluster : namespaced",
+          "lines": [
+            88
+          ]
+        },
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "clusterResourceWhitelist: [...cluster.values()]",
+          "lines": [
+            92
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "toYaml .Values.clusterResourceWhitelist",
+          "lines": [
+            24
+          ]
+        }
+      ],
+      "generatedTransport": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "helm: { valuesObject: values }",
+        "lines": [
+          102
+        ]
+      },
+      "committedRead": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "inspectCommittedGroup(repository, directory, revision, group, bundle.receipt)",
+        "lines": [
+          60
+        ]
+      },
+      "continuousReceiving": {
+        "path": "scripts/gitops-continuous.mjs",
+        "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+        "anchor": "config.argoNamespace, config.naming",
+        "lines": [
+          62
+        ]
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN"
+    },
+    {
+      "id": "DLV-CHART-GITOPS-NAMESPACERESOURCEWHITELIST",
+      "original": "D228#/rows/2231",
+      "originalObjectSha256": "2ed7bf795e17494d5f1befc23b095ba70380f778580e2d481585cf68031ad2ed",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-CHART-LAST-CHART-GITOPS-NAMESPACERESOURCEWHITELIST"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-gitops",
+      "originalSource": {
+        "path": "charts/gitops/values.yaml",
+        "field": "namespaceResourceWhitelist",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+        "line": 9,
+        "lineKind": "unique YAML key author",
+        "valuePath": "namespaceResourceWhitelist"
+      },
+      "status": "VERIFIED_BUNDLE_DERIVED_BINDING_CENTRAL_GENERATION_JOIN_OPEN",
+      "centralPhysicalAuthor": null,
+      "sourceInputs": [
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "gitOpsClusterKinds.has(resource.kind) ? cluster : namespaced",
+          "lines": [
+            88
+          ]
+        },
+        {
+          "path": "scripts/gitops.mjs",
+          "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+          "anchor": "namespaceResourceWhitelist: [...namespaced.values()]",
+          "lines": [
+            92
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "charts/gitops/templates/applications.yaml",
+          "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+          "anchor": "toYaml .Values.namespaceResourceWhitelist",
+          "lines": [
+            26
+          ]
+        }
+      ],
+      "generatedTransport": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "helm: { valuesObject: values }",
+        "lines": [
+          102
+        ]
+      },
+      "committedRead": {
+        "path": "scripts/gitops.mjs",
+        "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+        "anchor": "inspectCommittedGroup(repository, directory, revision, group, bundle.receipt)",
+        "lines": [
+          60
+        ]
+      },
+      "continuousReceiving": {
+        "path": "scripts/gitops-continuous.mjs",
+        "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+        "anchor": "config.argoNamespace, config.naming",
+        "lines": [
+          62
+        ]
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN"
+    }
+  ],
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN"
+}

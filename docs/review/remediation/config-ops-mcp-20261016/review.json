@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects were identified in the supplied change bundle. The final verify.py correction resolves imports when delivered through stdin, and the selected policy is wired through image delivery, supervisor startup, server configuration, probes, and runtime budget consumers. This is a source review only; tests were not executed, and deployment, native runtime behavior, and paid model evaluations were not verified.",
+  "overall_confidence": 0.86
+}

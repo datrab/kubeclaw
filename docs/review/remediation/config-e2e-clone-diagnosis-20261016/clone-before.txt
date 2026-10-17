@@ -1,0 +1,23 @@
+✖ retry-buster-pass-echo-rejects materializes canonical swarm review instructions (1.744935ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 680.032361
+
+✖ failing tests:
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:447:1
+✖ retry-buster-pass-echo-rejects materializes canonical swarm review instructions (1.744935ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:450:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P1] Preserve validation of previously retained runtime policies",
+      "body": "Making `payloadStructure` unconditionally required rejects every previously valid retained policy that contains only `operatorMessagingPayload.targetPayloadProfiles`. Recovery passes retained policies through `captureCoreRuntimePolicy()` in `inspectRuntimeConfiguration()`, so runs captured before this change now fail with `CORE_RUNTIME_POLICY_INVALID` before adapters can activate. The policy version remains unchanged, and accepting both document versions does not address this new required field. Add version-aware compatibility handling that preserves the original structural limits for retained policies while requiring explicit selection for new policies.",
+      "priority": "P1",
+      "confidence": 0.96,
+      "category": "regression",
+      "code_location": {
+        "file_path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json",
+        "line": 559
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The configuration externalization introduces a retained-policy compatibility regression that prevents recovery of previously captured runs. Review used the supplied source datasets; shell inspection was unavailable, and no tests or native execution were performed.",
+  "overall_confidence": 0.91
+}

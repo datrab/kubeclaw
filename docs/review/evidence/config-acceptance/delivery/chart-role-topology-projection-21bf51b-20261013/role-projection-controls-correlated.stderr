@@ -1,0 +1,11 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/check-role-projections.mjs:9
+ const definition=renders.records.find(x=>x.profile.path===r.profile.path);const output=fs.readFileSync(path.join(repo,definition.strictDefinition.stdout.path),'utf8');observe('WHOLE-PINNED-DEFINITION-'+id,definition.strictDefinition.exitCode===0&&/Invalid: 0, Errors: 0, Skipped: 0/.test(output),{summary:output.trim(),meaning:'whole rendered structural definitions only; no API/admission/CEL/default/CSI/provider/grant/capacity'});
+                                                                                                                                                          ^
+
+TypeError: Cannot read properties of undefined (reading 'path')
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/check-role-projections.mjs:9:155
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

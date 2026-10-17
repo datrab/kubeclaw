@@ -1,0 +1,3 @@
+skills/buster/engine/test-gates/kubernetes-fixture-storage.ts:64:export function validatePersistentVolumeClaim(name: string, spec: JsonObject, policy: PersistentVolumePolicy): bigint {
+skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts:5:import { persistentVolumeClaims, validatePersistentVolumeClaim, type PersistentVolumePolicy } from './kubernetes-fixture-storage.ts';
+skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts:67:        state.persistentVolumeTotalBytes += validatePersistentVolumeClaim(claim.name, claim.spec, policy.persistentVolumePolicy)

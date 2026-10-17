@@ -2,8 +2,9 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 
 export type Session = { user: string; audience: "prism"; roles: string[]; expiresAt: number };
 const encode = (value: object): string => Buffer.from(JSON.stringify(value)).toString("base64url");
-export function mintSession(user: string, secret: string, now = Date.now(), roles=["editor"]): string {
-  const payload = encode({ user, audience:"prism", roles, expiresAt: now + 15 * 60_000 });
+export function mintSession(user: string, secret: string, lifetimeSeconds: number, now = Date.now(), roles=["editor"]): string {
+  if (!Number.isSafeInteger(lifetimeSeconds) || lifetimeSeconds < 1 || lifetimeSeconds > 2147483) throw new Error("invalid session lifetime");
+  const payload = encode({ user, audience:"prism", roles, expiresAt: now + lifetimeSeconds * 1000 });
   return `${payload}.${createHmac("sha256", secret).update(payload).digest("base64url")}`;
 }
 export function verifySession(token: string, secret: string, now = Date.now()): Session {
@@ -13,8 +14,19 @@ export function verifySession(token: string, secret: string, now = Date.now()): 
   const session = JSON.parse(Buffer.from(payload, "base64url").toString()) as Session;
   if (!session.user || session.audience!=="prism" || !Array.isArray(session.roles) || session.expiresAt <= now) throw new Error("expired session"); return session;
 }
-export function exchangeTailscaleIdentity(headers: Record<string, string | undefined>, ingressSecret: string, sessionSecret: string): string {
+export function exchangeTailscaleIdentity(headers: Record<string, string | undefined>, ingressSecret: string, sessionSecret: string, lifetimeSeconds: number): string {
   if (!ingressSecret || headers["x-prism-ingress-secret"] !== ingressSecret) throw new Error("untrusted ingress");
   const user = headers["tailscale-user-login"]?.trim(); if (!user) throw new Error("missing Tailscale identity");
-  return mintSession(user, sessionSecret);
+  return mintSession(user, sessionSecret, lifetimeSeconds);
+}
+
+/** Explicit selected writer. The approved role domain is fixed to editor, not a new grant authority.
+ * Original v2/v3 exchange and signed-token reader above remain unchanged.
+ */
+export function exchangeSelectedTailscaleIdentity(headers: Record<string, string | undefined>, ingressSecret: string, sessionSecret: string, lifetimeSeconds: number, roles: readonly ['editor']): string {
+  if (!Array.isArray(roles) || roles.length !== 1 || roles[0] !== 'editor') throw new Error("invalid selected session roles");
+  const originalRoles = [...roles];
+  if (!ingressSecret || headers["x-prism-ingress-secret"] !== ingressSecret) throw new Error("untrusted ingress");
+  const user = headers["tailscale-user-login"]?.trim(); if (!user) throw new Error("missing Tailscale identity");
+  return mintSession(user, sessionSecret, lifetimeSeconds, Date.now(), originalRoles);
 }

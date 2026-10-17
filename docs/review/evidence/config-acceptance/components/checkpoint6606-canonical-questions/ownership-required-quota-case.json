@@ -1,0 +1,56 @@
+{
+  "id": "QC-OWNERSHIP-CAPACITY-REQUIRED-EXISTING-QUOTA",
+  "stage": "proposed-definition",
+  "implementationStatus": "not-implemented/not-run",
+  "requirements": [
+    "F-VAL"
+  ],
+  "boundary": "ownershipTerminalCapacityBytes pure API required parameter and same actual canonical terminal accounting; not deployed role/store migration",
+  "input": {
+    "state": {
+      "schemaVersion": "worker-ownership-store.v3",
+      "hostIdentity": null,
+      "records": []
+    },
+    "stateCanonicalBytes": 78,
+    "validExistingSuppliedPureAPIQuota": 332,
+    "adjacentRejectQuota": 331,
+    "invalidSelectedQuota": [
+      0,
+      -1,
+      1.5,
+      "Infinity",
+      "NaN",
+      "MAX_SAFE_INTEGER+1",
+      "undefined/omitted"
+    ],
+    "actualOuterCallers": "ownership-store.ts:122 and:189 supply this.#maximumBytes; they must remain byte-for-byte the same caller quota projection, no MAX_SAFE substituting/new quota",
+    "ownedProfileContext": "Complete pure API invocation state+suppliedlimit above; not a claimed332-byte deployed role profile. Real outer Prism/Buster owner/profile/root history bindings remain distinct required cross-owner cases."
+  },
+  "priorState": {
+    "freshPureInput": "exact JSON state above; compute hash BEFORE baseline call; no files/effects",
+    "retainedInput": "same object must remain unchanged after accepted/rejected calls"
+  },
+  "oracle": [
+    "exact supplied332 returns332 without modifying source state; adjacent331 rejects WORKER_OWNERSHIP_CAPACITY_EXCEEDED",
+    "omitted/undefined/invalid selectedquota rejects BEFORE any future accounting allocation/persistent effect; no implicitMAX_SAFE_INTEGER",
+    "original two productive inner callers continue passing same original selectedthis.#maximumBytes; public repair cannot replace caller-specific real quota with newfield/default",
+    "real root recovery/original-policy/equality/Eval obligations remain linked to existing FLOCK history/root and parent universal carrier; this pure case does NOT independently prove M/J/R"
+  ],
+  "invocation": {
+    "executable": "node",
+    "argv": [
+      "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/future-canonical-question-harness.mjs",
+      "--case",
+      "QC-OWNERSHIP-CAPACITY-REQUIRED-EXISTING-QUOTA",
+      "--input-contract",
+      "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/ownership-required-quota-case.json",
+      "--stand",
+      "APPROVED_IMPLEMENTATION_COMMIT"
+    ],
+    "availability": "exact proposed target harness interface; file intentionally absent before approval"
+  },
+  "lifecycle": {
+    "status": "active-proposed-not-run"
+  }
+}

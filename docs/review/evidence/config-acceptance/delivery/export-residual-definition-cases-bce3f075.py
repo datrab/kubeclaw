@@ -1,0 +1,23 @@
+"""Link actual bounded current definition observations, retaining failed observer attempts."""
+import pathlib,json,hashlib,collections
+out=pathlib.Path(__file__).resolve().parent;repo=out.parents[4]
+v=json.loads((out/'inventory-fragment.json').read_text());records=[]
+def rel(p):return str(p.relative_to(repo))
+def h(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+for name,script in [('residual-chart-definitions-bce3f075.json','run-residual-chart-definitions-bce3f075.py'),('residual-chart-definitions-bce3f075-observer2.json','run-residual-chart-definitions-bce3f075-observer2.py'),('definition-syntax-bce3f075.json','check-definition-syntax-bce3f075.cjs'),('native-host-definitions-bce3f075.json','run-native-host-definitions-bce3f075.py')]:
+ data=json.loads((out/name).read_text())
+ for observation in data['records']:
+  id=observation['id'];semgrep='SEMgrep' in id;prism='PRISM' in id;chart='charts/prism/' if prism else 'charts/kubeclaw/'
+  if 'NATIVE-HOST-RENDER' in id:rows=[r for r in v['rows'] if r['id'].startswith('DLV-NATIVE-HOST-') and r['id']!='DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION']
+  elif semgrep:rows=[r for r in v['rows'] if r['source']['path']=='charts/kubeclaw/files/config/.semgrep.yml']
+  else:rows=[r for r in v['rows'] if r['source']['path'].startswith(chart) and r['source']['path'] in data['sourceDigests']]
+  raw=observation.get('rawEvidencePaths',[rel(out/'definition-syntax-bce3f075.stdout'),rel(out/'definition-syntax-bce3f075.stderr')]);sources=dict(data['sourceDigests']);sources[rel(out/name)]=h(out/name)
+  record={'id':id,'scope':data['scope'],'settingIds':[r['id'] for r in rows], 'command':observation.get('command',['node',rel(out/script)]),'priorState':'unchanged productive sources; new isolated synthetic profile files/output directories; no API/host/native account state modified','inputProfile':observation.get('profile',data.get('inputDefinitionWitnesses')),'expectedEffectOrBoundary':('exact pinned primary Semgrep JSONschema structural shape; negative controls reject missing pattern/invalid severity, not native language parsing' if semgrep else 'existing native preparation-only policy/pool/NRI/Chart/setup projections, not installed host effects' if 'NATIVE-HOST-RENDER' in id else 'current Helm schema/template/package and pinned whole-document structural schema or exact rendered-field observation; not productive runtime effect'),'observerMethod':'retained exact command/output and nonempty whole-document collection; initial wrong Deployment-name observer failures retained separately','sourceDigests':sources,'testDigests':{rel(out/script):h(out/script)},'tools':data.get('tools',data.get('toolIdentity')),'rawEvidencePath':raw,'result':observation['result'],'exit':observation.get('exit'),'observed':observation,'reason':'actual bounded C0 definition check; initial observer failures are setup failures, not semantic negative rejection. No deployed API/native consumer/effective runtime proof.','reviewerConfirmation':'pending','implementationCase':False}
+  records.append(record)
+syntax=json.loads((out/'parser-profile-syntax-bce3f075.json').read_text())
+for observation in syntax['records']:
+ ids=[r['id'] for r in v['rows'] if r['owner']=='ops-codex'] if 'TOML' in observation['id'] else [r['id'] for r in v['rows'] if r['source']['path']=='charts/kubeclaw/files/config/eslint.config.mjs']
+ source=dict(syntax['sourceDigests']);source.update(observation['sourceDigests']);source[rel(out/'parser-profile-syntax-bce3f075.json')]=h(out/'parser-profile-syntax-bce3f075.json')
+ records.append({'id':observation['id'],'scope':observation['scope'],'settingIds':ids,'command':observation['command'],'priorState':'isolated proposed profile definition files only','inputProfile':observation['profile'],'expectedEffectOrBoundary':'standard TOML/ECMAScript syntax only; actual native consumer validation remains not-run','observerMethod':'real Python tomllib or node --check with explicit ESLint two-file collection guard','sourceDigests':source,'testDigests':{rel(out/'check-parser-profile-syntax-bce3f075.py'):h(out/'check-parser-profile-syntax-bce3f075.py')},'tools':syntax['tools'],'rawEvidencePath':[rel(out/'parser-profile-syntax-bce3f075-corrected.stdout'),rel(out/'parser-profile-syntax-bce3f075-corrected.stderr')],'result':observation['result'],'reason':'syntax only, no native parser/flat-config/model/auth/account/permissions effect','reviewerConfirmation':'pending','implementationCase':False})
+(out/'c0-residual-definition-cases-bce3f075.json').write_text(json.dumps(records,indent=2)+'\n')
+print(json.dumps({'actualDefinitionRecords':len(records),'results':dict(collections.Counter(r['result'] for r in records)),'acceptance':'NOT ACCEPTED; bounded current definition only'}))

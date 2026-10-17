@@ -1,0 +1,311 @@
+{
+  "qualification": "finite pure schema/selector/source/receiver navigation, not implemented materializer or authentic activation proof",
+  "node": "v24.21.0",
+  "scriptSha256": "94113ad9039084e9d5c52c27f457390dfdef8269282c703c544010c507c3f00e",
+  "observations": [
+    {
+      "name": "complete unified root selection and all owner/profile schemas",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/controller-local-A.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/controller-local-B.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/controller-Ready-port-contrast.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/controller-ready-product-off.json",
+      "pass": true,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/controller-role-off.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-A.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-backupIntervalMinutes.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-verificationIntervalMinutes.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-maximumAgeSeconds.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-maximumDurationSeconds.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-verificationDeadlineSeconds.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-maximumBackupBytes.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-maximumRetainedBytes.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-persistence-size.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-persistence-storageClass.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-resources-requests-cpu.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-resources-requests-memory.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-resources-limits-cpu.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-resources-limits-memory.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-reserveBytes.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-killAfterSeconds.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-connectionTimeoutSeconds.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-tocMaximumBytes.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-metadataMaximumBytesExclusive.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-checksumIndexMaximumBytesExclusive.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-cronJobDeadlineOverheadSeconds.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-successfulJobsHistoryLimit.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-failedJobsHistoryLimit.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "explicit profile stand stands/recovery-B-temporaryDirectorySize.json",
+      "pass": false,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "retired controller fragment rejected",
+      "pass": true,
+      "error": "SCHEMA:pipeline-entry.schema.json:[{\"instancePath\":\"\",\"schemaPath\":\"#/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"deploymentSelections\"},\"message\":\"must have required property 'deploymentSelections'\"},{\"instancePath\":\"\",\"schemaPath\":\"#/additionalProperties\",\"keyword\":\"additionalProperties\",\"params\":{\"additionalProperty\":\"deploymentBindings\"},\"message\":\"must NOT have additional properties\"}]"
+    },
+    {
+      "name": "controller candidate fork version rejected",
+      "pass": true,
+      "error": "SCHEMA:pipeline-entry.schema.json:[{\"instancePath\":\"/schemaVersion\",\"schemaPath\":\"#/properties/schemaVersion/const\",\"keyword\":\"const\",\"params\":{\"allowedValue\":\"pipeline-entry.v6\"},\"message\":\"must be equal to constant\"}]"
+    },
+    {
+      "name": "old v5 fragment fallback rejected",
+      "pass": true,
+      "error": "SCHEMA:pipeline-entry.schema.json:[{\"instancePath\":\"/schemaVersion\",\"schemaPath\":\"#/properties/schemaVersion/const\",\"keyword\":\"const\",\"params\":{\"allowedValue\":\"pipeline-entry.v6\"},\"message\":\"must be equal to constant\"}]"
+    },
+    {
+      "name": "duplicate deploymentSelections",
+      "pass": true,
+      "error": "DUPLICATE_DEPLOYMENT:buster|namespace-controller|agent-buster"
+    },
+    {
+      "name": "duplicate infrastructureSelections",
+      "pass": true,
+      "error": "DUPLICATE_INFRA:postgresql-recovery|fixture.recovery"
+    },
+    {
+      "name": "duplicate pluginSelections",
+      "pass": true,
+      "error": "SCHEMA:pipeline-entry.schema.json:[{\"instancePath\":\"/pluginSelections\",\"schemaPath\":\"#/properties/pluginSelections/uniqueItems\",\"keyword\":\"uniqueItems\",\"params\":{\"i\":4,\"j\":0},\"message\":\"must NOT have duplicate items (items ## 0 and 4 are identical)\"}]"
+    },
+    {
+      "name": "missing controller owner path",
+      "pass": true,
+      "error": "SCHEMA:pipeline-entry.schema.json:[{\"instancePath\":\"/deploymentSelections/0\",\"schemaPath\":\"#/properties/deploymentSelections/items/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"ownerPath\"},\"message\":\"must have required property 'ownerPath'\"}]"
+    },
+    {
+      "name": "escaping owner path",
+      "pass": true,
+      "error": "SCHEMA:pipeline-entry.schema.json:[{\"instancePath\":\"/deploymentSelections/0/ownerPath\",\"schemaPath\":\"#/properties/deploymentSelections/items/properties/ownerPath/const\",\"keyword\":\"const\",\"params\":{\"allowedValue\":\"charts/kubeclaw/values.yaml\"},\"message\":\"must be equal to constant\"}]"
+    },
+    {
+      "name": "missing controller profile",
+      "pass": true,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "wrong Buster source join",
+      "pass": true,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "wrong Control source join",
+      "pass": true,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "wrong registration instance",
+      "pass": true,
+      "error": "WRONG_PACKAGE_REGISTRATION_INSTANCE"
+    },
+    {
+      "name": "seventh component/private author",
+      "pass": true,
+      "error": "SCHEMA:pipeline-entry.schema.json:[{\"instancePath\":\"/components\",\"schemaPath\":\"#/properties/components/const\",\"keyword\":\"const\",\"params\":{\"allowedValue\":{\"prism-control\":\"components/prism-control.config.json\",\"prism-studio\":\"components/prism-studio.config.json\",\"prism-worker\":\"components/prism-worker.config.json\",\"prism-execution\":\"components/prism-execution.config.json\",\"buster-engine\":\"components/buster-engine.config.json\",\"worker-core\":\"components/worker-core.config.json\"}},\"message\":\"must be equal to constant\"}]"
+    },
+    {
+      "name": "wrong authenticated caller tuple",
+      "pass": true,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "missing required unselected controller field",
+      "pass": true,
+      "error": "unknown format \"uri\" ignored in schema at path \"#/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items\""
+    },
+    {
+      "name": "invalid unselected/selected provider default ceiling domain",
+      "pass": true,
+      "error": "DEFAULT_EXCEEDS_CEILING:kubeclaw.api-flow/A"
+    },
+    {
+      "name": "retired ambient CONFIG reject even equal BACKUP_MAXIMUM_BYTES",
+      "pass": true,
+      "error": "AMBIENT_CONFIG_OVERRIDE"
+    },
+    {
+      "name": "retired ambient CONFIG reject even equal BUSTER_READY_LISTEN",
+      "pass": true,
+      "error": "AMBIENT_CONFIG_OVERRIDE"
+    },
+    {
+      "name": "retired ambient CONFIG reject even equal PGHOST",
+      "pass": true,
+      "error": "AMBIENT_CONFIG_OVERRIDE"
+    },
+    {
+      "name": "all file-set members physical exact source equality",
+      "pass": true,
+      "detail": 42
+    },
+    {
+      "name": "Provider03 source bytes unchanged components/buster-engine.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged components/prism-control.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged components/prism-execution.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged components/prism-studio.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged components/prism-worker.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged components/worker-core.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged plugins/kubeclaw.api-flow.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged plugins/kubeclaw.http.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged plugins/kubeclaw.network-http.config.json",
+      "pass": true
+    },
+    {
+      "name": "Provider03 source bytes unchanged plugins/kubeclaw.openapi.config.json",
+      "pass": true
+    },
+    {
+      "name": "current renderer positional policy and shell runtime reader are not proposed ABI",
+      "pass": true,
+      "detail": "source only, no renderer/script invocation"
+    },
+    {
+      "name": "current controller status-before-decode, no managed entry loader",
+      "pass": true
+    },
+    {
+      "name": "same entry base preserved after additive ABI projection",
+      "pass": true
+    }
+  ],
+  "failed": 29
+}

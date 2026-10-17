@@ -1,0 +1,15 @@
+{
+  "qualification": "Author conservation/source-pointer receipt; no independent/global/runtime acceptance",
+  "unchangedFrozenInputs": 318,
+  "frozenInputMismatches": [],
+  "originalRowsExactAgainstCurrentCanonical": 67,
+  "originalCasesExactAgainstCurrentCanonical": 408,
+  "sourceCoordinatesExact": 257,
+  "targetSchemaBindingsExact": 67,
+  "wholeProfileIndexHashesExact": 32,
+  "canonicalIdentity": {
+    "semanticInventorySha256": "9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a",
+    "acceptanceMatrixSha256": "1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992"
+  },
+  "futureImplementationResults": "not-run"
+}

@@ -1,0 +1,69 @@
+{
+  "scope": "Full supplied roster/coordinates/default/ENV/CLI context audit; independent semantic findings in separate report. Counts never imply source closure.",
+  "inputDrift": [],
+  "candidateCoordinates": 1353,
+  "protectedCore13Inputs": {
+    "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json": {
+      "sha256": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43",
+      "bytes": 249443
+    },
+    "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json": {
+      "sha256": "695ea10b3c08a72f93098665e7d4a0b83947a5f436241adc0447c048aabfd1be",
+      "bytes": 43589
+    },
+    "docs/review/evidence/config-acceptance/components/core-adjustability-current.md": {
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a",
+      "bytes": 14908
+    }
+  },
+  "questionIds": [
+    "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+    "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+    "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+    "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+    "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+    "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+    "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+    "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+    "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+    "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+    "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+    "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+    "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+    "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE"
+  ],
+  "caseIds": [
+    "QC-FOUNDATION-FLOCK-WAIT-VAL",
+    "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+    "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+    "QC-ADMISSION-REASON-LIMITS-VAL",
+    "QC-ADMISSION-REASON-LIMITS-FORMAT",
+    "QC-ADMISSION-REASON-LIMITS-HISTORY",
+    "QC-ADMISSION-METADATA-RESERVE-VAL",
+    "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+    "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+    "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+    "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+    "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+    "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+    "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+    "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+    "QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+    "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+    "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY",
+    "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+    "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+    "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+    "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+  ],
+  "currentHead": "bce3f075156a86be345821499c04628cb35c2762",
+  "tools": {
+    "python": "Python 3.11.2",
+    "node": "v24.21.0"
+  },
+  "inputs": {
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+    "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231",
+    "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/independent-audit.py": "fbd91d792a523192dbfdcc5f84c241e3721efbafa200b85a57d5534901ba7602"
+  }
+}

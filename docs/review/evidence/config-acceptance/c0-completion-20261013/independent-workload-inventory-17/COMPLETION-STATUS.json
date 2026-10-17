@@ -1,0 +1,12 @@
+{
+  "runtimeOutcome": "turn_failed",
+  "reportedReason": "Content flagged for possible cybersecurity risk",
+  "reportPresent": true,
+  "reviewedPackagePresent": true,
+  "independentCompletionAccepted": false,
+  "materialFindingsRetained": [
+    "W17-001",
+    "W17-002"
+  ],
+  "parentVerifiedFindings": true
+}

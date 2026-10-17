@@ -10,15 +10,18 @@ if [[ "${3:-}" == runtime ]]; then
   cd /app
   node -e 'const sdk=require("openclaw/plugin-sdk/diagnostic-runtime"); if(typeof sdk.onDiagnosticEvent!=="function") process.exit(1)'
   if [[ "$role" == prism-agent ]]; then
-  PORT=18080 node /opt/kubeclaw-prism/agent-bridge.mjs &
+  node /app/prism/skills/packages/prism-engine/server/agent-bridge-entry.mjs &
   bridge_pid=$!
   trap 'kill "$bridge_pid" 2>/dev/null || true' EXIT
   node --input-type=module -e '
     import { setTimeout } from "node:timers/promises";
+    import { verifyPipelineBootReceipt } from "/app/prism/skills/packages/plugin-foundation/config/pipeline-boot.mjs";
+    import { loadAgentBridgeConfig } from "/app/prism/skills/packages/prism-engine/server/agent-bridge-config.ts";
+    const config = loadAgentBridgeConfig(verifyPipelineBootReceipt("/run/pipeline-delivery", "prism-agent-bridge"));
     let lastError;
     for(let attempt=0; attempt<50; attempt++) {
       try {
-        const response=await fetch("http://127.0.0.1:18080/health");
+        const response=await fetch(`http://127.0.0.1:${config.port}/health`);
         if(response.status!==200 || (await response.json()).status!=="ready") throw Error("Invalid bridge response");
         process.exit(0);
       } catch(error) { lastError=error; await setTimeout(100); }
@@ -89,7 +92,7 @@ fi
 
 if [[ "$role" == prism-agent ]]; then
   node --check /app/dist/extensions/kubeclaw-prism/index.mjs
-  node --check /opt/kubeclaw-prism/agent-bridge.mjs
+  node --check /app/prism/skills/packages/prism-engine/server/agent-bridge-entry.mjs
 
 else
   test ! -e /opt/kubeclaw-prism/agent-bridge.mjs

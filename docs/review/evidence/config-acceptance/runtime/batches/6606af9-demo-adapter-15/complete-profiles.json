@@ -1,0 +1,28 @@
+{
+  "A": {
+    "candidateStageId": "demo-candidate",
+    "deliveryStageId": "demo-delivery",
+    "readyStageId": "demo-ready",
+    "manifestStageId": "project-summary",
+    "endpoint": "https://ready.example.invalid/v1/demo-ready",
+    "tokenPath": "/fixture/credentials/ready.token",
+    "caPath": "/fixture/credentials/ready.ca.pem",
+    "stateRoot": "/fixture/state/demo-A",
+    "operatorTarget": "operators-a",
+    "timeoutMs": 1000
+  },
+  "B": {
+    "candidateStageId": "demo-candidate",
+    "deliveryStageId": "demo-delivery",
+    "readyStageId": "demo-ready",
+    "manifestStageId": "project-summary",
+    "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+    "tokenPath": "/fixture/credentials/ready-b.token",
+    "caPath": "/fixture/credentials/ready-b.ca.pem",
+    "stateRoot": "/fixture/state/demo-B",
+    "operatorTarget": "operators-b",
+    "timeoutMs": 2000
+  },
+  "sourceTaskIds": "A/B preserve same producerstageIDs, not independent CONFIG tuning; alternatetaskgraph onlychanges generatedassertions andmustactualmatch source/artifacts/attempt membership.",
+  "noPhysicalStand": "example.invalid/.fixture paths are structural only; genuine role TLS endpoint, boundedactualcredentials/source/lease/operatorreceipt/controller+durableintent fixture/grants prerequisite; no networkruns. Changingendpoint/credentials/backendroot requires realapproved versionedRactivation/grants+historycompatibility, not merelyB JSON."
+}

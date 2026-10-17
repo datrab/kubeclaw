@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No concrete actionable defects were identified in the supplied change bundle and caller context. Review covered policy projection and capture, validation bounds, producer/receiver compatibility, retained-policy behavior, and security-sensitive paths. This was a source review; no tests or native execution were performed, and full historical C0\u2013C6 acceptance was not assessed.",
+  "overall_confidence": 0.8
+}

@@ -1,0 +1,6 @@
+skills/nova/core/src/index.ts:13:  resolveTestProviderConfiguration,
+skills/nova/core/src/index.ts:15:  validateTestProviderConfiguration,
+skills/nova/core/test-gates/resolver.ts:15:import { resolveTestProviderConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';
+skills/nova/core/test-gates/resolver.ts:563:        configuration = resolveTestProviderConfiguration(input.registry, provider.registration.contractId, config);
+skills/common/plugin-runtime/foundation/registry/configuration.ts:86:export function validateTestProviderConfiguration(
+skills/common/plugin-runtime/foundation/registry/configuration.ts:102:export function resolveTestProviderConfiguration(

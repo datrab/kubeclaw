@@ -1,0 +1,3 @@
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.8)
+No concrete actionable defects were identified in the supplied change bundle and caller context. Review covered policy projection and capture, validation bounds, producer/receiver compatibility, retained-policy behavior, and security-sensitive paths. This was a source review; no tests or native execution were performed, and full historical C0–C6 acceptance was not assessed.

@@ -1,0 +1,44 @@
+{
+  "status": "proposed/unapproved C4 semantic validator change, not implemented and not an accepted relaxation",
+  "currentGuard": {
+    "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+    "lines": [
+      286,
+      312,
+      313
+    ],
+    "relation": "configured maxInputTokensPerJob + maxOutputTokensPerJob <= maxContextTokensPerJob; current A14000/B18000 reject with input120000/output6000"
+  },
+  "targetMeaning": "local review context quota only; input quota and context quota jointly bound each actual reserved task via measuredInput <= min(inputQuota,contextQuota-outputReserve). Retained CONFIGURED target context ceiling remains128000. No model API context setting or parameter support inferred.",
+  "actualPreservedEnforcement": [
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-compiler.ts",
+      "lines": [
+        184,
+        185,
+        229,
+        234
+      ],
+      "math": "maximum actual compiled job tokens <= input quota and maximum tokens+output reserve<=review context quota; mismatched/incomplete snapshot coverage rejects rather than truncates"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+      "lines": [
+        125,
+        133,
+        134,
+        135,
+        166,
+        168
+      ],
+      "math": "measure exact reserved prompt; input+output<=review context quota BEFORE reservation counters and before productive dispatch"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "math": "prepareOpenClawTask remeasures declared prompt, requires same encoder/output and verifies actual prompt bytes/input/context<=both declaration and retained target ceilings before dispatch"
+    }
+  ],
+  "whyNotSilentWeakening": "The current configured-maxima guarantee that every hypothetical input-quota-sized task fits is deliberately changed, not claimed preserved. Proposed definition instead explicitly defines effective input admission as intersection of two quotas. Actual bounded task safety, full compilation coverage and source evidence are retained; smaller quota rejects oversized or incomplete work, never deletes lenses/files/relations or silently caps measured input to manufacture success. Grant/resource selection and catalog/package/source/prepared identities unchanged. User approval and fresh A6/F-VAL reviewer disposition required before implementation; if they require original worst-case configured-maxima relation, retain it and mark independent context effect impossible instead.",
+  "actualControls": "all87 complete preserved/A/B target definition positives, per-task small A positive and measured task A reject/B admit, unchanged runtime helper B positive plus oversized same helper negative; current resolver context A/B rejection separately recorded",
+  "futureRequired": "actual admitted full compiler/stage source/coverage and exact retained grant/target identities; over-budget rejects before Core effect admission; mutation removing measured-input guard must fail; historical/current source math does not satisfy future behavioral gate"
+}

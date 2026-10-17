@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/build.py", line 28, in <module>
+    assert lines[c['line']-1]==c['exactText'];match=[x for x in coords if x['path']==path and x['line']==c['line'] and x['pointer'].endswith('/maximum')];assert len(match)==1,(c['id'],match);ptr=match[0]['pointer'];ownerNode=ptr.rsplit('/',1)[0];applicable=[m for m in members if ownerNode in m['schemaPathsTraversed'] or m['effectiveScalarPointer']==ownerNode];assert applicable,(c['id'],ptr)
+                                                                                                                                                                                                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('SRC-a4e75f3a47f9b3a2', '/$defs/buster-preparation/properties/resourcePolicy/properties/cpuTimeMs/maximum')

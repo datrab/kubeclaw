@@ -1,0 +1,112 @@
+{
+  "reviewer": "/root/workload_correction_recheck_18",
+  "head": "263277b0014de5f056c019307c40dc83f0201ef5",
+  "tree": "2f2553f6ad902dc83c36e0de7020ccae05d44f86",
+  "identityScope": "Exact bounded file bytes; no full dirty-tree identity claimed",
+  "inputs": [
+    {
+      "path": "charts/prism/templates/_helpers.tpl",
+      "sha256": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49"
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/README.md",
+      "sha256": "d1eccf0f5b1fdfa06505db945258ab1c597b39c325ff49e58f1ab998aa9ff899"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.py",
+      "sha256": "7c77e37a6ed4970862cc9ff97e781953f2737dc2c0700505715711cd7d89589c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stdout",
+      "sha256": "50880e8b4395156418a5f48e916dec2b0f3c860747b43bbc0958c9224977f5a5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/package-manifest.json",
+      "sha256": "7c5d1908ad476e8dc91498f795ff4c3c812abc170967e073748b908b7372ae52"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-field-definitions.json",
+      "sha256": "4d92bac3a16f03be5cac564dadde223f1becd8a7abdd77fa78618af275b56ddd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-identity-check.json",
+      "sha256": "adf0897994b37a502b4d5393d7bec2e8bb6df5da67d759365ea843b44265d537"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-26/README.md",
+      "sha256": "413f5012e7cb713bfff6c7389163c43e8550f0be8f6a4a53bc58f2540309e5c5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-26/local-check.json",
+      "sha256": "272a00975b5abce33f8d75ad30c83ee1cd72e57bb03db3b7c0f7758f579e5dd8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-26/package-manifest.json",
+      "sha256": "8057c63392215910bfcf48434a576996472e4ac2cc35bb852c20c857b6af33d4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-26/source-field-definitions.json",
+      "sha256": "81f62d8762eea544c5320011ca6823c3c47b3558dcb8e1f40024b29c52e1c1dc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/REPORT.md",
+      "sha256": "861387da08fa3f587d8c47fb4d347f29b53e119b3c0ae47ce01b193c42aa9fe3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/frozen-identities.json",
+      "sha256": "e501b3f1f0252a24f3915c675972508d6994e0f8982d9a5a0b49a6ba4a91435e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/README.md",
+      "sha256": "d1eccf0f5b1fdfa06505db945258ab1c597b39c325ff49e58f1ab998aa9ff899"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/define.py",
+      "sha256": "7c77e37a6ed4970862cc9ff97e781953f2737dc2c0700505715711cd7d89589c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/define.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/define.stdout",
+      "sha256": "50880e8b4395156418a5f48e916dec2b0f3c860747b43bbc0958c9224977f5a5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/package-manifest.json",
+      "sha256": "7c5d1908ad476e8dc91498f795ff4c3c812abc170967e073748b908b7372ae52"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/source-field-definitions.json",
+      "sha256": "4d92bac3a16f03be5cac564dadde223f1becd8a7abdd77fa78618af275b56ddd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/source-identity-check.json",
+      "sha256": "adf0897994b37a502b4d5393d7bec2e8bb6df5da67d759365ea843b44265d537"
+    },
+    {
+      "path": "docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    }
+  ]
+}

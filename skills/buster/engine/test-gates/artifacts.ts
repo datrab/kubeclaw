@@ -21,6 +21,10 @@ interface StagedEvidenceUse {
 export async function stageEvidenceFiles(evidenceRoot: string, stagingRoot: string,
   declarations: readonly DeclaredEvidenceV1[], maximumFiles: number, maximumBytes: number,
   signal?: AbortSignal): Promise<StagedEvidenceUse> {
+  // Capture original producer declarations before any asynchronous filesystem work.
+  // Readonly types alone do not preserve their identity across caller mutation.
+  declarations = Object.freeze(declarations.map(declaration => Object.freeze({ ...declaration })));
+  signal?.throwIfAborted();
   if (declarations.length > maximumFiles) throw new Error('TEST_PROVIDER_ARTIFACT_FILE_LIMIT');
   await fs.promises.mkdir(stagingRoot, { recursive: true });
   const names = new Set<string>();
@@ -39,7 +43,9 @@ export async function stageEvidenceFiles(evidenceRoot: string, stagingRoot: stri
     }
     await fs.promises.mkdir(path.dirname(destination), { recursive: true });
     await fs.promises.writeFile(destination, content, { flag: 'wx', signal });
+    signal?.throwIfAborted();
   }
+  signal?.throwIfAborted();
   return { files: declarations.length, bytes: total };
 }
 
@@ -62,22 +68,47 @@ async function readContainedFile(rootValue: string, relative: string, maximumByt
   } catch {
     throw new Error(`TEST_EVIDENCE_PATH_FORBIDDEN:${relative}`);
   }
+  let content: Buffer;
   try {
-    const sourceStat = await handle.stat();
+    signal?.throwIfAborted();
+    const sourceStat = await handle.stat({ bigint: true });
     if (!sourceStat.isFile()) throw new Error(`TEST_EVIDENCE_PATH_FORBIDDEN:${relative}`);
     const openedPath = fs.realpathSync(candidate);
     if (!openedPath.startsWith(`${root}${path.sep}`)) throw new Error(`TEST_EVIDENCE_PATH_FORBIDDEN:${relative}`);
-    const pathStat = fs.statSync(openedPath);
+    const pathStat = fs.statSync(openedPath, { bigint: true });
     if (pathStat.dev !== sourceStat.dev || pathStat.ino !== sourceStat.ino) {
       throw new Error(`TEST_EVIDENCE_PATH_FORBIDDEN:${relative}`);
     }
-    if (sourceStat.size > maximumBytes) throw new Error('TEST_PROVIDER_ARTIFACT_BYTE_LIMIT');
-    const content = await handle.readFile({ signal });
-    if (content.byteLength > maximumBytes) throw new Error('TEST_PROVIDER_ARTIFACT_BYTE_LIMIT');
-    return content;
+    if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 0
+      || sourceStat.size > BigInt(maximumBytes)) throw new Error('TEST_PROVIDER_ARTIFACT_BYTE_LIMIT');
+    // Snapshot the existing producer output through its one held descriptor.
+    // 64KiB is an I/O chunk, not another authored policy or store reservation.
+    // Never let a growing file make readFile allocate beyond the admitted size.
+    const size = Number(sourceStat.size), chunks: Buffer[] = [];
+    let offset = 0;
+    while (offset < size) {
+      signal?.throwIfAborted();
+      const chunk = Buffer.allocUnsafe(Math.min(64 * 1024, size - offset));
+      const { bytesRead } = await handle.read(chunk, 0, chunk.byteLength, offset);
+      signal?.throwIfAborted();
+      if (bytesRead === 0) throw new Error('TEST_EVIDENCE_SOURCE_CHANGED');
+      chunks.push(chunk.subarray(0, bytesRead));
+      offset += bytesRead;
+    }
+    signal?.throwIfAborted();
+    const { bytesRead: extra } = await handle.read(Buffer.alloc(1), 0, 1, size);
+    signal?.throwIfAborted();
+    const finalStat = await handle.stat({ bigint: true });
+    if (extra !== 0 || ['dev', 'ino', 'mode', 'nlink', 'uid', 'gid', 'size', 'mtimeNs', 'ctimeNs']
+      .some(key => sourceStat[key as keyof typeof sourceStat] !== finalStat[key as keyof typeof finalStat])) {
+      throw new Error('TEST_EVIDENCE_SOURCE_CHANGED');
+    }
+    content = Buffer.concat(chunks, size);
   } finally {
     await handle.close();
   }
+  signal?.throwIfAborted();
+  return content;
 }
 
 export class FileEvidenceStore implements EvidenceStore {
@@ -90,6 +121,7 @@ export class FileEvidenceStore implements EvidenceStore {
   }
 
   async store(attemptId: string, evidenceRoot: string, declaration: DeclaredEvidenceV1, maximumBytes: number, signal?: AbortSignal): Promise<StoredEvidence> {
+    declaration = Object.freeze({ ...declaration });
     const content = await readContainedFile(evidenceRoot, declaration.file, maximumBytes, signal);
     signal?.throwIfAborted();
     const digest = `sha256:${crypto.createHash('sha256').update(content).digest('hex')}`;

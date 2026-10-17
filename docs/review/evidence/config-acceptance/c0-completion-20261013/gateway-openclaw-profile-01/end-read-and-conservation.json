@@ -1,0 +1,33 @@
+{
+  "time": "2026-10-14T02:30:22.895449+00:00",
+  "inputCount": 233,
+  "changedInputs": [],
+  "original70FieldBodyMismatch": [],
+  "original75CaseBodyMismatch": [],
+  "fullCanonicalBodyConservation": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "arrays": {
+        "rows": {
+          "exactBodyEqual": true,
+          "members": 2409
+        }
+      }
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "arrays": {
+        "cases": {
+          "exactBodyEqual": true,
+          "members": 6845
+        },
+        "requirements": {
+          "exactBodyEqual": true,
+          "members": 50
+        }
+      }
+    }
+  ],
+  "globalC0Accepted": false,
+  "freshIndependentReviewRequired": true
+}

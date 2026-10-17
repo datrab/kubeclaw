@@ -1,0 +1,195 @@
+{
+  "scope": "Actual current SDK source/definition controls, not module runtime acceptance",
+  "sourceCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "sourceTree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "command": "node docs/review/evidence/config-acceptance/author/nova-sdk-envelope-current-6606/check-current-sdk-envelope.mjs",
+  "exit": 0,
+  "nodeVersion": "v24.21.0",
+  "inputs": [
+    {
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "bytes": 46877
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "bytes": 5817
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/errors.ts",
+      "sha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25",
+      "bytes": 1305
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "bytes": 18480
+    },
+    {
+      "path": "skills/nova/core/execution/runner.ts",
+      "sha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6",
+      "bytes": 6254
+    },
+    {
+      "path": "skills/nova/core/lifecycle/recovery.ts",
+      "sha256": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8",
+      "bytes": 2614
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-delivery.ts",
+      "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc",
+      "bytes": 4097
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-sdk-envelope-current-6606/check-current-sdk-envelope.mjs",
+      "sha256": "0ff4475ee9bf64b9d74210be3a105c957a54e0d5b3cbe3e8715258c6a1f8abea",
+      "bytes": 2353
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-sdk-envelope-current-6606/current-sdk-envelope-attempt1.log",
+      "sha256": "8e3bf3759398480f1f84fffaa862e1065f7ea431cfc603374936b53bb3c3efdb",
+      "bytes": 4110
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+      "bytes": 277178
+    },
+    {
+      "path": "node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "bytes": 4405
+    },
+    {
+      "path": "node_modules/ajv-formats/package.json",
+      "sha256": "402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69",
+      "bytes": 1897
+    }
+  ],
+  "observations": [
+    {
+      "id": "SDK-CURRENT-STAGE-ENVELOPE",
+      "result": "passed",
+      "observed": "current contract accepts",
+      "limits": "Schema validation only, no actual stage/observer action."
+    },
+    {
+      "id": "SDK-NEW-MODULE-TYPE-UNSUPPORTED",
+      "result": "passed",
+      "observed": "current contract rejects at intended boundary",
+      "diagnostic": {
+        "definition": "lifecycleEvent",
+        "errors": [
+          {
+            "instancePath": "/type",
+            "schemaPath": "#/properties/type/enum",
+            "keyword": "enum",
+            "params": {
+              "allowedValues": [
+                "run.created",
+                "run.started",
+                "run.resumed",
+                "run.waiting",
+                "run.paused",
+                "run.succeeded",
+                "run.failed",
+                "run.blocked",
+                "run.cancelled",
+                "stage.scheduled",
+                "stage.started",
+                "stage.waiting",
+                "stage.retrying",
+                "stage.skipped",
+                "stage.succeeded",
+                "stage.failed",
+                "stage.blocked",
+                "stage.cancelled",
+                "attempt.created",
+                "attempt.dispatched",
+                "attempt.completed",
+                "attempt.timed_out",
+                "attempt.cancelled",
+                "effect.requested",
+                "effect.accepted",
+                "effect.completed",
+                "effect.failed",
+                "artifact.created",
+                "wait.created",
+                "wait.resolved",
+                "orchestrator.required"
+              ]
+            },
+            "message": "must be equal to one of the allowed values"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SDK-NEW-MODULE-IDENTITY-UNSUPPORTED",
+      "result": "passed",
+      "observed": "current contract rejects at intended boundary",
+      "diagnostic": {
+        "definition": "lifecycleEvent",
+        "errors": [
+          {
+            "instancePath": "/identity",
+            "schemaPath": "#/additionalProperties",
+            "keyword": "additionalProperties",
+            "params": {
+              "additionalProperty": "moduleId"
+            },
+            "message": "must NOT have additional properties"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SDK-TOPLEVEL-BINDING-UNSUPPORTED",
+      "result": "passed",
+      "observed": "current contract rejects at intended boundary",
+      "diagnostic": {
+        "definition": "lifecycleEvent",
+        "errors": [
+          {
+            "instancePath": "",
+            "schemaPath": "#/additionalProperties",
+            "keyword": "additionalProperties",
+            "params": {
+              "additionalProperty": "binding"
+            },
+            "message": "must NOT have additional properties"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SDK-INNER-SEQUENCE-ZERO",
+      "result": "passed",
+      "observed": "current contract rejects at intended boundary",
+      "diagnostic": {
+        "definition": "lifecycleEvent",
+        "errors": [
+          {
+            "instancePath": "/sequence",
+            "schemaPath": "#/properties/sequence/minimum",
+            "keyword": "minimum",
+            "params": {
+              "comparison": ">=",
+              "limit": 1
+            },
+            "message": "must be >= 1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SDK-GENERIC-PAYLOAD-NOT-TYPED-BINDING",
+      "result": "passed",
+      "observed": "current contract accepts",
+      "limits": "Generic payload acceptance does not validate owner/generation/membership/grant/quota or provide a module-binding event."
+    }
+  ],
+  "reviewerConfirmation": null,
+  "remaining": "Exact versioned typed binding event/SDK-union/observer/recovery migration and task/profile partition, real manifests/grants/store accounting and complete executable future cases."
+}

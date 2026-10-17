@@ -1,3 +1,5 @@
+import { withNativeJournalSupervisor, type NativeJournalSupervisor } from './native-journal-routing.ts';
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import fs from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
@@ -29,6 +31,7 @@ export interface WorkerScopeBinding {
 }
 
 export interface WorkerOwnershipRecord {
+  readonly workerCore?: WorkerCorePolicyCapture;
   readonly identity: WorkerOwnershipIdentity;
   readonly scopeName: string;
   readonly revision: number;
@@ -58,17 +61,45 @@ function validateTransitionChange(current: WorkerOwnershipRecord, phase: WorkerO
  */
 export class FileWorkerOwnershipStore {
   readonly #file: string;
+  readonly #workerCore: WorkerCorePolicyCapture | undefined;
   readonly #maximumRecords: number;
   readonly #maximumBytes: number;
+  readonly #additionalMetadataBytes: (() => number) | undefined;
 
-  constructor(root: string, limits: { maximumRecords: number; maximumBytes: number }) {
+  constructor(root: string, limits: { maximumRecords: number; maximumBytes: number },
+    additionalMetadataBytes?: () => number, workerCore?: WorkerCorePolicyCapture) {
     if (!path.isAbsolute(root) || !Number.isSafeInteger(limits.maximumRecords) || limits.maximumRecords < 1
       || !Number.isSafeInteger(limits.maximumBytes) || limits.maximumBytes < 1) {
       throw new Error('WORKER_OWNERSHIP_CONFIG_INVALID');
     }
+    this.#workerCore = workerCore === undefined ? undefined : readWorkerCorePolicyCapture(workerCore);
     this.#file = path.join(path.resolve(root), 'owners.json');
     this.#maximumRecords = limits.maximumRecords;
     this.#maximumBytes = limits.maximumBytes;
+    this.#additionalMetadataBytes = additionalMetadataBytes;
+  }
+
+  /** Trusted in-process sidecar writer shares the EXACT owners.json fence and
+   * unchanged ceiling. Reserve the existing future-terminal bound, not merely
+   * today's file size. Callback must publish exactly the charged bytes; it is
+   * synchronous so no unbounded authority escapes this fenced operation.
+   */
+  async withMetadataReservation(addition: number | (() => number), operation: () => undefined): Promise<void> {
+    return withDurableStoreLock(this.#file, async () => {
+      const state = await this.#read();
+      const additionalBytes = typeof addition === 'function' ? addition() : addition;
+      if (!Number.isSafeInteger(additionalBytes) || additionalBytes < 0) throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
+      ownershipTerminalCapacityBytes(state, this.#availableBytes() - additionalBytes);
+      operation();
+    });
+  }
+
+  #availableBytes(): number {
+    const additional = this.#additionalMetadataBytes ? this.#additionalMetadataBytes() : 0;
+    if (!Number.isSafeInteger(additional) || additional < 0 || additional >= this.#maximumBytes) {
+      throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
+    }
+    return this.#maximumBytes - additional;
   }
 
   async records(): Promise<readonly WorkerOwnershipRecord[]> {
@@ -94,8 +125,8 @@ export class FileWorkerOwnershipStore {
   }
 
   /** Held for the entire supervisor lifetime, including recovery and admission. */
-  async withSupervisor<T>(operation: () => Promise<T>): Promise<T> {
-    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);
+  async withSupervisor<T>(operation: (authority: NativeJournalSupervisor) => Promise<T>): Promise<T> {
+    return withNativeJournalSupervisor(path.dirname(this.#file), () => this.records(), operation);
   }
 
   async reserve(input: WorkerOwnershipIdentity): Promise<WorkerOwnershipRecord> {
@@ -115,11 +146,12 @@ export class FileWorkerOwnershipStore {
       }
       if (previous.some(record => !['disposed', 'abandoned'].includes(record.phase))) throw new Error('WORKER_OWNERSHIP_RECONCILIATION_REQUIRED');
       const record: WorkerOwnershipRecord = {
-        identity, scopeName: `worker-${randomUUID()}`, revision: 1, phase: 'reserved', binding: null, diagnosis: null, finalObservation: null,
+        ...(this.#workerCore ? {workerCore: this.#workerCore} : {}), identity, scopeName: `worker-${randomUUID()}`, revision: 1, phase: 'reserved', binding: null, diagnosis: null, finalObservation: null,
         topology: { kind: 'aggregate.v1', children: [] },
       };
+      if (this.#workerCore) state.schemaVersion = 'worker-ownership-store.v4';
       state.records.push(record);
-      ownershipTerminalCapacityBytes(state, this.#maximumBytes);
+      ownershipTerminalCapacityBytes(state, this.#availableBytes());
       await this.#write(state);
       return structuredClone(record);
     });
@@ -186,7 +218,7 @@ export class FileWorkerOwnershipStore {
         topology: { kind: current.topology.kind, children: update(current) } };
       validateRecord(updated);
       state.records[index] = updated;
-      if (admission) ownershipTerminalCapacityBytes(state, this.#maximumBytes);
+      if (admission) ownershipTerminalCapacityBytes(state, this.#availableBytes());
       await this.#write(state);
       return structuredClone(updated);
     });
@@ -211,7 +243,7 @@ export class FileWorkerOwnershipStore {
   }
 
   async #write(state: State): Promise<void> {
-    if (state.records.length > this.#maximumRecords || Buffer.byteLength(canonicalJson(state)) > this.#maximumBytes) {
+    if (state.records.length > this.#maximumRecords || Buffer.byteLength(canonicalJson(state)) > this.#availableBytes()) {
       throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
     }
     await writeDurableState(this.#file, state);

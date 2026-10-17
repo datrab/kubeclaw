@@ -1,0 +1,5 @@
+# Exact failed path construction and copy operation from initial freeze attempt.
+R=Path.cwd(); F=O/'frozen'
+paths|={str(p) for p in (R/'skills/common/plugin-runtime/foundation/observability').glob('*.ts')}
+for p in sorted(paths):
+ src=R/p;dest=F/p;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dest)

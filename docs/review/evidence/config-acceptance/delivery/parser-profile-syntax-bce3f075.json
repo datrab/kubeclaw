@@ -1,0 +1,138 @@
+{
+  "records": [
+    {
+      "id": "DLV-C0-BCE3-TOML-SYNTAX-A",
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/A.toml",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/A.toml": "d02672481c4e989fe9985d46631d88d7c23f966a154e6d9e54f594ad75be4098"
+      },
+      "scope": "Python standard TOML syntax only, NOT selected Codex serde/requirements/auth/permissions/MCP parser or effect",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-TOML-SYNTAX-B-approval_policy",
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-approval_policy.toml",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-approval_policy.toml": "7c0703b66564e83315280e01c482b0b973c1bcc39d53c25f4053b00ef535e3d5"
+      },
+      "scope": "Python standard TOML syntax only, NOT selected Codex serde/requirements/auth/permissions/MCP parser or effect",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-TOML-SYNTAX-B-cli_auth_credentials_store",
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-cli_auth_credentials_store.toml",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-cli_auth_credentials_store.toml": "f32086683889b763e893bcc26ed2eed93fc5110a69bf3682cc92b46f583fa8f1"
+      },
+      "scope": "Python standard TOML syntax only, NOT selected Codex serde/requirements/auth/permissions/MCP parser or effect",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-TOML-SYNTAX-B-mcp_servers-kubeclaw_ops-bearer_token_env_var",
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-mcp_servers-kubeclaw_ops-bearer_token_env_var.toml",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-mcp_servers-kubeclaw_ops-bearer_token_env_var.toml": "f0c7c2bf333b74324b407369f5c5e3ef2ba75a18c3119180f074f6ae00c6b1f3"
+      },
+      "scope": "Python standard TOML syntax only, NOT selected Codex serde/requirements/auth/permissions/MCP parser or effect",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-TOML-SYNTAX-B-mcp_servers-kubeclaw_ops-url",
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-mcp_servers-kubeclaw_ops-url.toml",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-mcp_servers-kubeclaw_ops-url.toml": "4750aa4c260fe0f16cf680b1c429345b102ef015256f2a184465ff433d052ce7"
+      },
+      "scope": "Python standard TOML syntax only, NOT selected Codex serde/requirements/auth/permissions/MCP parser or effect",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-TOML-SYNTAX-B-sandbox_mode",
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-sandbox_mode.toml",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-sandbox_mode.toml": "4b38a924ffbcdc1640678868b2fa2554e8d06601e649830233cc89c5eb244a2c"
+      },
+      "scope": "Python standard TOML syntax only, NOT selected Codex serde/requirements/auth/permissions/MCP parser or effect",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-TOML-SYNTAX-B",
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B.toml",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B.toml": "e63e7cb3b972ffefe111a18b507198c186be897a3c8f104603978c0052f74f9f"
+      },
+      "scope": "Python standard TOML syntax only, NOT selected Codex serde/requirements/auth/permissions/MCP parser or effect",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-ESLINT-MODULE-SYNTAX-A.eslint.config",
+      "command": [
+        "node",
+        "--check",
+        "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/A.eslint.config.mjs"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/A.eslint.config.mjs",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/A.eslint.config.mjs": "d2df141e7e01e400c3fc3a09f4910b2da105f9e77370f4fd0a657768546b135b"
+      },
+      "scope": "ECMAScript module syntax only, NO module import/dependency resolution/flat-config or per-rule semantic validation/native lint effect",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-ESLINT-MODULE-SYNTAX-B.eslint.config",
+      "command": [
+        "node",
+        "--check",
+        "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/B.eslint.config.mjs"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/B.eslint.config.mjs",
+      "sourceDigests": {
+        "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/B.eslint.config.mjs": "075be5a02bc4838137b7dc7cf899e7184b859b1b1ffc5da1e7f3dfb7c70aa09f"
+      },
+      "scope": "ECMAScript module syntax only, NO module import/dependency resolution/flat-config or per-rule semantic validation/native lint effect",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "result": "passed"
+    }
+  ],
+  "scope": "bounded static profile syntax observations only",
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py": "4f1710b90c3601fb2713b5cd0744d66f70995e25b50625422c892b313a95e488"
+  },
+  "tools": {
+    "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+    "node": "v24.21.0"
+  },
+  "acceptance": "NOT ACCEPTED; native semantics/effects unrun"
+}

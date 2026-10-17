@@ -1,0 +1,1171 @@
+{"path": "skills/prism/server/native-worker-execution.ts", "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"}
+1: import { prismAttemptResourceLimits } from '../config/resource-policy.ts';
+2: import { fileURLToPath } from 'node:url';
+3: import path from 'node:path';
+4: import { executeNativeWorkerAttempt, NativeAttemptJournal, recoverNativeWorkerAttempts, type NativeWorkerOwnership } from '@kubeclaw/worker-core';
+5: import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
+6: import { prismNativeWorkerProfile } from '../engine/worker-envelope.ts';
+7: import type { nativePrismSupervisorConfig } from '../config/native-worker.ts';
+8: import type { loadWorkerConfig } from './worker-config.ts';
+9: 
+10: /** Only serializable trusted configuration crosses into the per-attempt host. */
+11: export async function nativePrismExecution(owner: NativeWorkerOwnership, native: ReturnType<typeof nativePrismSupervisorConfig>,
+12:   config: ReturnType<typeof loadWorkerConfig>) {
+13:   const journal = new NativeAttemptJournal(path.join(native.ownershipRoot, 'attempt-journal'), {
+14:     maximumRecords: native.maximumRecords, maximumStateBytes: native.maximumBytes,
+15:     maximumTotalBytes: native.maximumJournalBytes, maximumInputBytes: native.maximumInputBytes,
+16:     maximumOutputBytes: native.maximumOutputBytes, maximumResultBytes: native.maximumResultBytes,
+17:   });
+18:   await recoverNativeWorkerAttempts(journal, owner);
+19:   const command = nativePrismCommand(native, config);
+20:   return {
+21:     ready: () => owner.isReady(),
+22:     async execute(envelope: WorkerAttemptEnvelopeV3, signal: AbortSignal) {
+23:       validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
+24:       const recovered = await journal.hasAttempt(envelope);
+25:       if (!recovered && envelope.profile.profileDigest !== prismNativeWorkerProfile.profileDigest) throw new Error('PRISM_NATIVE_PROFILE_NOT_ACCEPTED');
+26:       const resourceLimits = prismAttemptResourceLimits(envelope, native.policy, recovered);
+27:       return executeNativeWorkerAttempt({ envelope, journal, process: { owner, command, signal,
+28:         limits: { ...resourceLimits,
+29:           timeoutMs: envelope.limits.timeoutMs + 8 * envelope.limits.cleanupTimeoutMs,
+30:           maximumInputBytes: native.maximumInputBytes, maximumOutputBytes: native.maximumOutputBytes,
+31:           pollIntervalMs: native.pollIntervalMs, closeTimeoutMs: native.closeTimeoutMs },
+32:       } });
+33:     },
+34:   };
+35: }
+36: 
+37: /** Build a closed child environment from the startup snapshot, never process.env. */
+38: export function nativePrismCommand(native: ReturnType<typeof nativePrismSupervisorConfig>, config: ReturnType<typeof loadWorkerConfig>) {
+39:   return { launcher: native.launcher, uid: native.uid, gid: native.gid, executable: process.execPath,
+40:     arguments: [fileURLToPath(new URL('./native-worker-host.ts', import.meta.url))], cwd: process.cwd(),
+41:     environment: { PATH: '/usr/local/bin:/usr/bin:/bin', HOME: '/tmp', NODE_ENV: 'production',
+42:       PRISM_ENGINE_CONTENT_DIGEST: native.engineContentDigest,
+43:       PLAYWRIGHT_BROWSERS_PATH: native.browserPath, PRISM_CONTROL_INTERNAL_URL: config.controlInternalUrl.toString(),
+44:       PRISM_WORKER_SECRET: config.workerSecret, WORKER_TRUST_SPIFFE_ENABLED: String(config.spiffeEnabled),
+45:       PRISM_NATIVE_ASSIGNED_INPUT_BYTES: String(native.maximumInputBytes) },
+46:   };
+47: }
+{"path": "skills/prism/server/native-worker-host.ts", "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"}
+1: import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
+2: import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
+3: import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
+4: import { WorkerArtifactClient } from './worker-artifacts.ts';
+5: import { nativeOperationFor } from './worker-operation.ts';
+6: import { nativePrismHostConfig } from '../config/native-worker.ts';
+7: 
+8: const cancellation = new AbortController();
+9: const cancel = () => cancellation.abort(new Error('WORKER_ATTEMPT_CANCELLED'));
+10: process.once('SIGTERM', cancel); process.once('SIGINT', cancel);
+11: 
+12: async function main(): Promise<void> {
+13: const config = nativePrismHostConfig();
+14: const chunks: Buffer[] = [];
+15: let bytes = 0;
+16: for await (const chunk of process.stdin) {
+17:   bytes += chunk.length;
+18:   if (bytes > config.maximumInputBytes) throw new Error('PRISM_NATIVE_INPUT_LIMIT');
+19:   chunks.push(Buffer.from(chunk));
+20: }
+21: const envelope = JSON.parse(Buffer.concat(chunks).toString('utf8')) as WorkerAttemptEnvelopeV3;
+22: validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
+23: const artifacts = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled);
+24: const engine = new PrismEngine(new DeterministicDesignProvider());
+25: const result = await new WorkerAttemptExecutor({ envelope, signal: cancellation.signal,
+26:   operation: nativeOperationFor(envelope, engine, artifacts, config.scope), receiptNamespace: 'prism-native-provisional',
+27:   storeFullLog(attemptId, content, { signal }) {
+28:     if (attemptId !== envelope.attemptId) throw new Error('Prism log attempt identity mismatch');
+29:     return artifacts.upload('prism-full-log', 'log', 'text/plain', Buffer.from(content), signal);
+30:   },
+31: }).execute();
+32: // Closing stdout is not the completion boundary: the supervisor drains the tree and reseals.
+33: process.stdout.write(JSON.stringify(result));
+34: }
+35: try { await main(); }
+36: finally { process.removeListener('SIGTERM', cancel); process.removeListener('SIGINT', cancel); }
+{"path": "skills/prism/server/worker-operation.ts", "sha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471"}
+1: import type { WorkerAttemptEnvelopeV3, WorkerAttemptLimitsV2 } from '@kubeclaw/pipeline-worker-core-contract';
+2: import { observeNativeWorkerResources } from '@kubeclaw/worker-core';
+3: import type { WorkerAttemptContext, WorkerAttemptOperation, WorkerAttemptOperationResult } from '@kubeclaw/worker-core';
+4: import type { PrismEngine } from '../engine/index.ts';
+5: import { executePrismOperation } from '../engine/worker-binding.ts';
+6: import type { WorkerArtifactClient } from './worker-artifacts.ts';
+7: import { PrismBrowserCloseError } from '../engine/browser-capture.ts';
+8: 
+9: /** The same Prism lifecycle runs inside the dedicated native host. */
+10: export function nativeOperationFor(envelope: WorkerAttemptEnvelopeV3, engine: PrismEngine,
+11:   artifacts: WorkerArtifactClient, scope: string): WorkerAttemptOperation<WorkerAttemptEnvelopeV3> {
+12:   const operation = new PrismWorkerOperation(envelope, engine, artifacts);
+13:   return {
+14:     prepare: limits => operation.prepare(limits), execute: context => operation.execute(context),
+15:     terminate: () => operation.terminate(),
+16:     async measure({ signal }) {
+17:       signal.throwIfAborted();
+18:       const resources = observeNativeWorkerResources(scope);
+19:       return { cpuTimeMs: { status: 'observed', value: Math.ceil(resources.cpuTimeMicroseconds / 1000) },
+20:         maximumMemoryBytes: { status: 'observed', value: resources.maximumMemoryBytes },
+21:         maximumTasks: { status: 'observed', value: resources.maximumTasks } };
+22:     },
+23:   };
+24: }
+25: 
+26: export class PrismWorkerOperation implements Omit<WorkerAttemptOperation<WorkerAttemptEnvelopeV3>, 'measure'> {
+27:   private prepared = false;
+28:   private terminated = false;
+29:   private readonly controller = new AbortController();
+30:   private execution: Promise<WorkerAttemptOperationResult> | undefined;
+31:   private settlement: Promise<{ ok: true } | { ok: false; error: unknown }> | undefined;
+32:   private readonly envelope: WorkerAttemptEnvelopeV3;
+33:   private readonly engine: PrismEngine;
+34:   private readonly artifacts: WorkerArtifactClient;
+35:   constructor(envelope: WorkerAttemptEnvelopeV3, engine: PrismEngine, artifacts: WorkerArtifactClient) {
+36:     this.envelope = envelope; this.engine = engine; this.artifacts = artifacts;
+37:   }
+38:   prepare(_limits: WorkerAttemptLimitsV2) {
+39:     if (this.prepared || this.terminated) throw new Error('Prism attempt cannot be prepared again');
+40:     this.prepared = true;
+41:     return undefined;
+42:   }
+43:   execute(context: Pick<WorkerAttemptContext, 'signal' | 'log'>) {
+44:     if (this.execution) throw new Error('Prism attempt execution already started');
+45:     const signal = AbortSignal.any([context.signal, this.controller.signal]);
+46:     this.execution = this.run({ ...context, signal });
+47:     this.settlement = this.execution.then(() => ({ ok: true as const }),
+48:       (error: unknown) => ({ ok: false as const, error }));
+49:     return this.execution;
+50:   }
+51:   async terminate() {
+52:     this.terminated = true;
+53:     this.controller.abort(new Error('Prism attempt terminated'));
+54:     // Core bounds this drain and reports unresolved work; do not detach I/O.
+55:     const settled = await this.settlement;
+56:     if (settled && !settled.ok && settled.error instanceof PrismBrowserCloseError) throw settled.error;
+57:   }
+58:   private async run(context: Pick<WorkerAttemptContext, 'signal' | 'log'>) {
+59:     if (!this.prepared || this.terminated || context.signal.aborted)
+60:       throw new Error("Prism attempt cannot start");
+61:     if (this.envelope.operation.values.operation === "generate")
+62:       throw new Error("Prism generation requires the OpenClaw agent gateway");
+63:     context.log(
+64:       "system",
+65:       `Prism ${String(this.envelope.operation.values.operation)} operation started`,
+66:     );
+67:     const hydratedInput = await readInput(this.envelope, this.artifacts, context.signal);
+68:     const specialistResult = await executePrismOperation(
+69:       this.engine,
+70:       this.envelope.operation,
+71:       this.envelope.executionId,
+72:       hydratedInput,
+73:       context.signal,
+74:     );
+75:     if (this.terminated || context.signal.aborted)
+76:       throw new Error("Prism attempt was cancelled");
+77:     const values={...specialistResult.values};const evidence=[];
+78:     if(typeof values.screenshotBase64==="string"){evidence.push(await this.artifacts.upload("render-screenshot","preview","image/png",Buffer.from(values.screenshotBase64,"base64"), context.signal));delete values.screenshotBase64;}
+79:     if(typeof values.ariaSnapshot==="string"){evidence.push(await this.artifacts.upload("render-aria","accessibility-tree","text/plain",Buffer.from(values.ariaSnapshot), context.signal));delete values.ariaSnapshot;}
+80:     const boundedResult={...specialistResult,values};
+81:     return {
+82:       summary: "Prism operation completed",
+83:       specialistResult:boundedResult,
+84:       evidence,
+85:       exitCode: 0,
+86:       signal: null,
+87:     };
+88:   }
+89: }
+90: 
+91: async function readInput(envelope: WorkerAttemptEnvelopeV3, artifacts: WorkerArtifactClient,
+92:   signal: AbortSignal): Promise<Record<string, unknown>> {
+93:   const inputName = String(envelope.operation.values.inputName ?? '');
+94:   const declared = envelope.inputs.find((item) => item.name === inputName && item.kind === 'artifact');
+95:   if (!declared || declared.kind !== 'artifact' || declared.artifact.mediaType !== 'application/json'
+96:     || declared.artifact.type !== 'prism-engine-input') throw new Error('Prism input artifact is missing or invalid');
+97:   const bytes = await artifacts.read(declared.artifact, signal);
+98:   return JSON.parse(bytes.toString('utf8')) as Record<string, unknown>;
+99: }
+{"path": "skills/prism/engine/worker-envelope.ts", "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"}
+1: import type { PrismResourcePolicy } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+2: import { randomUUID } from "node:crypto";
+3: import type { WorkerArtifactRefV1, WorkerAttemptEnvelopeV1 } from "@kubeclaw/pipeline-worker-core-contract";
+4: import { canonicalJson, sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kubeclaw/worker-core";
+5: import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
+6: import type { EngineOperation } from "./index.ts";
+7: import type { WorkerAttemptEnvelopeV3, WorkerProfileV3 } from '@kubeclaw/pipeline-worker-core-contract';
+8: import { prismEngineContentDigest } from '../config/native-worker.ts';
+9: 
+10: const engineContentDigest = prismEngineContentDigest()
+11:   || sha256Digest({ engineId: "prism-design-engine", engineVersion: "1.0.0", development: true });
+12: const unsignedProfile = {
+13:   schemaVersion: "worker-profile.v3" as const,
+14:   profileId: "prism-design-engine-v3",
+15:   workerType: "prism",
+16:   coreContractId: "kubeclaw.pipeline-worker-core@1",
+17:   engine: { engineId: "prism-design-engine", contractId: "kubeclaw.prism-design-engine@1", engineVersion: "1.0.0", contentDigest: engineContentDigest },
+18:   resourceCapabilities: { schemaVersion: 'worker-resource-capabilities.v2' as const,
+19:     cpuTimeMs: { scope: 'native-attempt-tree' as const, unit: 'milliseconds' as const, measurement: 'measured' as const },
+20:     maximumMemoryBytes: { scope: 'native-attempt-tree' as const, unit: 'bytes' as const, measurement: 'measured' as const },
+21:     maximumTasks: { scope: 'native-attempt-tree' as const, unit: 'linux-tasks' as const, measurement: 'measured' as const },
+22:   },
+23:   capabilities: ["artifacts.read", "artifacts.write", "network.http", "secrets.read", "telemetry.emit"],
+24: };
+25: export const prismNativeWorkerProfile: WorkerProfileV3 = { ...unsignedProfile, profileDigest: workerProfileDigest(unsignedProfile) };
+26: /** Reconstruct the original producer order so PostgreSQL jsonb reordering preserves historical digests. */
+27: export function prismRequestDigest(operation: WorkerAttemptEnvelopeV1['operation'], inputDigest: string): string {
+28:   const values = JSON.parse(canonicalJson(operation.values)) as typeof operation.values;
+29:   const ordered = { contractId: operation.contractId, inputSchemaId: operation.inputSchemaId, inputSchemaDigest: operation.inputSchemaDigest,
+30:     values: { operation: values.operation, inputName: values.inputName, ...values } };
+31:   return sha256Digest(JSON.stringify({ operation: ordered, inputDigest }));
+32: }
+33: 
+34: export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string, policy: PrismResourcePolicy): WorkerAttemptEnvelopeV3 {
+35:   const now = new Date(); const expires = new Date(now.getTime() + 10 * 60_000); const attemptId = `attempt-${randomUUID()}`;
+36:   const request = engineRequestSchema(operation);
+37:   const unsigned = {
+38:     schemaVersion: "worker-attempt-envelope.v3" as const, protocolVersion: "worker-protocol.v1" as const,
+39:     pipelineRunId: `prism-${idempotencyKey}`.slice(0, 128), moduleId: null, gateId: null, planId: `plan-${idempotencyKey}`.slice(0, 128),
+40:     nodeId: `node-${operation}`, executionId: `execution-${randomUUID()}`, attemptId, attemptNumber: 1,
+41:     claim: { schemaVersion: "attempt-claim.v1" as const, claimId: `claim-${randomUUID()}`, attemptId, generation: 1, workerId: "prism-worker", claimedAt: now.toISOString(), expiresAt: expires.toISOString() },
+42:     profile: prismNativeWorkerProfile, packages: [], grantedCapabilities: prismNativeWorkerProfile.capabilities,
+43:     limits: { timeoutMs: 300_000, cleanupTimeoutMs: 10_000, logBytes: 1_048_576, resultBytes: 16_777_216, evidenceBytes: 134_217_728, evidenceFiles: 64 },
+44:     resourceBudgets: { schemaVersion: 'worker-resource-budgets.v2' as const,
+45:       cpuTimeMs: { state: 'requested' as const, limit: policy.cpuTimeMs },
+46:       maximumMemoryBytes: { state: 'requested' as const, limit: policy.memoryBytes },
+47:       maximumTasks: { state: 'requested' as const, limit: policy.tasks },
+48:     },
+49:     inputs: [{name:"prism-input",kind:"artifact" as const,artifact:inputArtifact}], operation: { contractId: "kubeclaw.prism-design-engine@1", inputSchemaId: request.schemaId, inputSchemaDigest: request.schemaDigest, values: { operation, inputName:"prism-input" } },
+50:     cancellationId: `cancel-${randomUUID()}`, issuedAt: now.toISOString(), queueDeadline: expires.toISOString(),
+51:   };
+52:   return { ...unsigned, attemptSpecDigest: workerAttemptSpecDigest(unsigned) };
+53: }
+54: 
+{"path": "skills/worker/core/worker/attempt-executor.ts", "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"}
+1: import { assessWorkerResources, unsupportedWorkerBudget } from './resource-accounting.ts';
+2: import { resourceResultFields } from './resource-result-fields.ts';
+3: import crypto from 'node:crypto';
+4: import { WorkerPhaseDeadline, settlesWithin, armWorkerClaimDeadline } from './phase-deadline.ts';
+5: import { WorkerLogDecoder } from './log-decoder.ts';
+6: import {
+7:   validatePipelineWorkerCoreContract,
+8:   validateWorkerResourceContractV2, initialWorkerResourceAccounting,
+9:   validateWorkerResourceContractV3, initialWorkerNativeResourceAccounting,
+10:   type WorkerAttemptEnvelopeV3, type WorkerNativeResourceAccounting, type WorkerNativeResourceObservations,
+11:   type WorkerAttemptEnvelope, type WorkerAttemptEnvelopeV2, type WorkerAttemptResult, type WorkerResultFor,
+12:   type WorkerResourceObservations, type WorkerResourceAccounting,
+13:   type AttemptProgressEventV1,
+14:   type JsonValue,
+15:   type WorkerAttemptEnvelopeV1,
+16:   type WorkerAttemptResultV1,
+17:   type WorkerEvidenceRefV1,
+18:   type WorkerLogPartV1,
+19:   type WorkerResourceUseV1,
+20:   type WorkerSpecialistResultV1,
+21: } from '@kubeclaw/pipeline-worker-core-contract';
+22: import { sha256Digest, sha256Text } from './digest.ts';
+23: 
+24: const MAX_ATTEMPT_ENVELOPE_BYTES = 16 * 1024 * 1024;
+25: const MAX_ATTEMPT_LOG_BYTES = 16 * 1024 * 1024;
+26: const MAX_ATTEMPT_LOG_PARTS = 10_000;
+27: const MAX_ATTEMPT_VALUE_DEPTH = 64;
+28: const MAX_ATTEMPT_VALUE_NODES = 100_000;
+29: 
+30: export interface WorkerAttemptOperationResult {
+31:   readonly summary: string;
+32:   readonly specialistResult: WorkerSpecialistResultV1;
+33:   readonly evidence: readonly WorkerEvidenceRefV1[];
+34:   readonly exitCode: number | null;
+35:   readonly signal: string | null;
+36: }
+37: 
+38: export interface WorkerAttemptEvidenceResult {
+39:   readonly evidence: readonly WorkerEvidenceRefV1[];
+40:   readonly error?: string;
+41: }
+42: 
+43: export interface WorkerAttemptEvidenceContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+44:   readonly attempt: E;
+45:   readonly state: WorkerAttemptResultV1['state'];
+46:   readonly signal: AbortSignal;
+47: }
+48: 
+49: export interface WorkerAttemptResultFinalizationContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+50:   readonly attempt: E;
+51:   readonly evidence: readonly WorkerEvidenceRefV1[];
+52:   readonly specialistResult: WorkerSpecialistResultV1;
+53:   readonly signal: AbortSignal;
+54: }
+55: 
+56: export interface WorkerAttemptOperationResources {
+57:   readonly cpuTimeMs: number;
+58:   readonly maximumMemoryBytes: number;
+59:   readonly maximumProcesses: number;
+60: }
+61: 
+62: export interface WorkerAttemptContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+63:   readonly attempt: E;
+64:   readonly signal: AbortSignal;
+65:   readonly log: (stream: 'stdout' | 'stderr' | 'system', text: string | Uint8Array) => void;
+66: }
+67: 
+68: export interface WorkerAttemptOperation<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+69:   /** Apply limits synchronously. Do not start specialist work here. */
+70:   prepare(limits: E['limits']): undefined;
+71:   execute(context: WorkerAttemptContext<E>): Promise<WorkerAttemptOperationResult>;
+72:   terminate(): Promise<void>;
+73:   /** Cumulative owned usage. Called after execution and again after completion hooks. */
+74:   measure(context: { readonly signal: AbortSignal }): Promise<E extends WorkerAttemptEnvelopeV3 ? WorkerNativeResourceObservations : E extends WorkerAttemptEnvelopeV2 ? WorkerResourceObservations : WorkerAttemptOperationResources>;
+75:   cleanup?(context: WorkerAttemptContext<E>): Promise<void>;
+76:   collectEvidence?(context: WorkerAttemptEvidenceContext<E>): Promise<WorkerAttemptEvidenceResult>;
+77:   /** Add evidence-derived facts before the terminal result becomes durable. */
+78:   finalizeResult?(context: WorkerAttemptResultFinalizationContext<E>): Promise<WorkerSpecialistResultV1>;
+79: }
+80: 
+81: export interface WorkerAttemptExecutorOptions<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+82:   readonly envelope: E;
+83:   readonly operation: WorkerAttemptOperation<E>;
+84:   readonly signal?: AbortSignal;
+85:   readonly onProgress?: (event: AttemptProgressEventV1) => void | Promise<void>;
+86:   readonly onLogPart?: (part: WorkerLogPartV1) => void | Promise<void>;
+87:   readonly retainLogs?: boolean;
+88:   readonly storeFullLog?: (attemptId: string, content: string, context: { readonly signal: AbortSignal }) => Promise<WorkerEvidenceRefV1 | null>;
+89:   readonly now?: () => Date;
+90:   readonly id?: () => string;
+91:   /** Local receipt namespace. This is not worker authentication. */
+92:   readonly receiptNamespace?: string;
+93: }
+94: 
+95: class AttemptFault extends Error {
+96:   readonly state: Exclude<WorkerAttemptResultV1['state'], 'completed'>;
+97:   readonly code: string;
+98: 
+99:   constructor(state: Exclude<WorkerAttemptResultV1['state'], 'completed'>, code: string, message = code) {
+100:     super(message);
+101:     this.name = 'AttemptFault';
+102:     this.state = state;
+103:     this.code = code;
+104:   }
+105: }
+106: 
+107: function detail(error: unknown): string {
+108:   return error instanceof Error ? error.message : String(error);
+109: }
+110: 
+111: function boundedText(value: unknown, fallback: string): string {
+112:   const text = typeof value === 'string' && value.length > 0 ? value : fallback;
+113:   return text.slice(0, 4096).toWellFormed();
+114: }
+115: 
+116: function freeze<T>(value: T): T {
+117:   if (!value || typeof value !== 'object') return value;
+118:   for (const child of Object.values(value as Record<string, unknown>)) freeze(child);
+119:   return Object.isFrozen(value) ? value : Object.freeze(value);
+120: }
+121: 
+122: function jsonStringBytes(value: string): number {
+123:   let bytes = 2;
+124:   for (let index = 0; index < value.length; index += 1) {
+125:     const unit = value.charCodeAt(index);
+126:     if (unit === 0x22 || unit === 0x5c || unit === 0x08 || unit === 0x09 || unit === 0x0a
+127:       || unit === 0x0c || unit === 0x0d) {
+128:       bytes += 2;
+129:     } else if (unit <= 0x1f) {
+130:       bytes += 6;
+131:     } else if (unit >= 0xd800 && unit <= 0xdbff && index + 1 < value.length
+132:       && value.charCodeAt(index + 1) >= 0xdc00 && value.charCodeAt(index + 1) <= 0xdfff) {
+133:       bytes += 4;
+134:       index += 1;
+135:     } else if (unit >= 0xd800 && unit <= 0xdfff) {
+136:       bytes += 6;
+137:     } else {
+138:       bytes += Buffer.byteLength(value[index]!);
+139:     }
+140:   }
+141:   return bytes;
+142: }
+143: 
+144: function preflightJson(value: unknown, byteLimit: number, prefix: string): void {
+145:   const pending: Array<{ value: unknown; depth: number }> = [{ value, depth: 0 }];
+146:   const seen = new WeakSet<object>();
+147:   let bytes = 0;
+148:   let nodes = 0;
+149:   while (pending.length > 0) {
+150:     const current = pending.pop()!;
+151:     nodes += 1;
+152:     if (nodes > MAX_ATTEMPT_VALUE_NODES) throw new Error(`${prefix}_NODE_LIMIT`);
+153:     if (current.depth > MAX_ATTEMPT_VALUE_DEPTH) throw new Error(`${prefix}_DEPTH_LIMIT`);
+154:     if (typeof current.value === 'string') bytes += jsonStringBytes(current.value);
+155:     else if (current.value === null) bytes += 4;
+156:     else if (typeof current.value === 'number' || typeof current.value === 'boolean') {
+157:       const encoded = JSON.stringify(current.value);
+158:       if (encoded === undefined) throw new Error(`${prefix}_TYPE_INVALID`);
+159:       bytes += Buffer.byteLength(encoded);
+160:     }
+161:     else if (typeof current.value === 'object') {
+162:       if (seen.has(current.value)) throw new Error(`${prefix}_CYCLE`);
+163:       seen.add(current.value);
+164:       if (Array.isArray(current.value)) {
+165:         bytes += 2 + Math.max(0, current.value.length - 1);
+166:         for (const child of current.value) pending.push({ value: child, depth: current.depth + 1 });
+167:       } else {
+168:         const prototype = Object.getPrototypeOf(current.value);
+169:         if (prototype !== Object.prototype && prototype !== null) throw new Error(`${prefix}_TYPE_INVALID`);
+170:         const keys = Reflect.ownKeys(current.value);
+171:         bytes += 2 + Math.max(0, keys.length - 1);
+172:         for (const key of keys) {
+173:           if (typeof key !== 'string') throw new Error(`${prefix}_TYPE_INVALID`);
+174:           const descriptor = Object.getOwnPropertyDescriptor(current.value, key);
+175:           if (!descriptor?.enumerable || !('value' in descriptor)) throw new Error(`${prefix}_TYPE_INVALID`);
+176:           bytes += jsonStringBytes(key) + 1;
+177:           pending.push({ value: descriptor.value, depth: current.depth + 1 });
+178:         }
+179:       }
+180:     } else {
+181:       throw new Error(`${prefix}_TYPE_INVALID`);
+182:     }
+183:     if (bytes > byteLimit) throw new Error(`${prefix}_BYTE_LIMIT`);
+184:   }
+185: }
+186: 
+187: function validateEnvelopeDigests(envelope: WorkerAttemptEnvelope): void {
+188:   if(envelope.schemaVersion==='worker-attempt-envelope.v3')validateWorkerResourceContractV3('workerAttemptEnvelope',envelope);
+189:   else if(envelope.schemaVersion==='worker-attempt-envelope.v2')validateWorkerResourceContractV2('workerAttemptEnvelope',envelope);
+190:   else validatePipelineWorkerCoreContract('workerAttemptEnvelope', envelope);
+191: }
+192: 
+193: function receipt(namespace: string, nonce: string, resultDigest: string) {
+194:   const receiptId = `receipt:${crypto.createHash('sha256').update(`${namespace}:${nonce}:${resultDigest}`).digest('hex')}`;
+195:   return { receiptId, receiptDigest: sha256Digest({ namespace, receiptId, resultDigest }) };
+196: }
+197: 
+198: function checkEvidence(evidence: readonly WorkerEvidenceRefV1[], envelope: WorkerAttemptEnvelope): void {
+199:   if (evidence.length > envelope.limits.evidenceFiles) throw new AttemptFault('errored', 'WORKER_EVIDENCE_FILE_LIMIT');
+200:   const ids = new Set<string>();
+201:   let total = 0;
+202:   for (const item of evidence) {
+203:     validatePipelineWorkerCoreContract('workerEvidenceRef', item);
+204:     if (ids.has(item.evidenceId)) throw new AttemptFault('errored', 'WORKER_EVIDENCE_ID_DUPLICATE');
+205:     ids.add(item.evidenceId);
+206:     total += item.artifact.sizeBytes;
+207:     if (total > envelope.limits.evidenceBytes) throw new AttemptFault('errored', 'WORKER_EVIDENCE_BYTE_LIMIT');
+208:   }
+209: }
+210: 
+211: export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+212:   readonly #options: WorkerAttemptExecutorOptions<E>;
+213:   readonly #accounting: WorkerResourceAccounting | WorkerNativeResourceAccounting | undefined;
+214:   readonly #now: () => Date;
+215:   readonly #id: () => string;
+216:   #progressSequence = 0;
+217:   #logSequence = 0;
+218:   #execution: Promise<WorkerAttemptResult> | null = null;
+219: 
+220:   constructor(options: WorkerAttemptExecutorOptions<E>) {
+221:     preflightJson(options.envelope, MAX_ATTEMPT_ENVELOPE_BYTES, 'WORKER_ATTEMPT_INPUT');
+222:     const envelope = freeze(structuredClone(options.envelope));
+223:     validateEnvelopeDigests(envelope);
+224:     if (envelope.limits.logBytes > MAX_ATTEMPT_LOG_BYTES) throw new Error('WORKER_LOG_LIMIT_INVALID');
+225:     if (options.receiptNamespace !== undefined
+226:       && (options.receiptNamespace.length === 0 || options.receiptNamespace.length > 4096
+227:         || options.receiptNamespace !== options.receiptNamespace.toWellFormed())) {
+228:       throw new Error('WORKER_RECEIPT_NAMESPACE_INVALID');
+229:     }
+230:     this.#options = { ...options, envelope };
+231:     this.#accounting=envelope.schemaVersion==='worker-attempt-envelope.v3'?initialWorkerNativeResourceAccounting(envelope)
+232:       :envelope.schemaVersion==='worker-attempt-envelope.v2'?initialWorkerResourceAccounting(envelope):undefined;
+233:     this.#now = options.now ?? (() => new Date());
+234:     this.#id = options.id ?? (() => crypto.randomUUID());
+235:   }
+236: 
+237:   async execute(): Promise<WorkerResultFor<E>> {
+238:     this.#execution ??= this.#executeOnce();
+239:     return this.#execution as Promise<WorkerResultFor<E>>;
+240:   }
+241: 
+242:   async #executeOnce(): Promise<WorkerAttemptResult> {
+243:     const { envelope, operation } = this.#options;
+244:     const started = this.#now();
+245:     if (started.getTime() >= Date.parse(envelope.queueDeadline)) {
+246:       // No operation is prepared or started after queue expiry. Zero resource
+247:       // use is authoritative here; calling the adapter would violate that rule.
+248:       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_QUEUE_DEADLINE_EXPIRED'), null, [], {
+249:         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
+250:       }, { state: 'not_required', summary: null });
+251:     }
+252:     if (started.getTime() >= Date.parse(envelope.claim.expiresAt)) {
+253:       // An expired claim owns no work. Do not touch the operation adapter.
+254:       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED'), null, [], {
+255:         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
+256:       }, { state: 'not_required', summary: null });
+257:     }
+258:     if (started.getTime() < Date.parse(envelope.claim.claimedAt)) {
+259:       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_CLAIM_NOT_ACTIVE'), null, [], {
+260:         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
+261:       }, { state: 'not_required', summary: null });
+262:     }
+263:     const completionPhases = 3 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence))
+264:       + Number(this.#options.retainLogs !== false && Boolean(this.#options.storeFullLog)) + Number(Boolean(operation.finalizeResult));
+265:     const requiredClaimWindow = envelope.limits.timeoutMs + (completionPhases * envelope.limits.cleanupTimeoutMs);
+266:     if (Date.parse(envelope.claim.expiresAt) - started.getTime() < requiredClaimWindow) {
+267:       // The local executor cannot renew a claim. It starts only when the claim
+268:       // covers execution, termination, both measurements and every configured completion hook.
+269:       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_CLAIM_WINDOW_INSUFFICIENT'), null, [], {
+270:         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
+271:       }, { state: 'not_required', summary: null });
+272:     }
+273: 
+274:     const unsupportedBudget = unsupportedWorkerBudget(envelope);
+275:     if (unsupportedBudget) return this.#result(started, started,
+276:       new AttemptFault('errored', 'WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE', `Requested ${unsupportedBudget} has no declared measurement capability`),
+277:       null, [], {logBytes: 0, resultBytes: 0, evidenceBytes: 0}, {state: 'not_required', summary: null});
+278:     const controller = new AbortController();
+279:     const logParts: WorkerLogPartV1[] = [];
+280:     const decoder = new WorkerLogDecoder(envelope.limits.logBytes);
+281:     let logPartCount = 0;
+282:     let logBytes = 0;
+283:     let logClosed = false;
+284:     let logFault: AttemptFault | null = null;
+285:     let timedOut = false;
+286:     let claimExpired = false;
+287:     let timer: NodeJS.Timeout | undefined;
+288:     let termination: Promise<string | null> | null = null;
+289:     const terminate = (): Promise<string | null> => {
+290:       termination ??= this.#terminate(operation, envelope.limits.cleanupTimeoutMs);
+291:       return termination;
+292:     };
+293:     const abort = (): void => {
+294:       controller.abort(this.#options.signal?.reason ?? new Error('WORKER_ATTEMPT_CANCELLED'));
+295:       void terminate();
+296:     };
+297:     this.#options.signal?.addEventListener('abort', abort, { once: true });
+298:     if (this.#options.signal?.aborted) abort();
+299:     const log: WorkerAttemptContext['log'] = (stream, value) => {
+300:       if (logClosed || logFault) return;
+301:       let text: string;
+302:       try { text = decoder.decode(stream, value); }
+303:       catch (error) { logFault = new AttemptFault('errored', detail(error)); controller.abort(logFault); void terminate(); return; }
+304:       if (!text && typeof value !== 'string') return;
+305:       let offset = 0;
+306:       do {
+307:         if (logPartCount >= MAX_ATTEMPT_LOG_PARTS) {
+308:           logFault = new AttemptFault('errored', 'WORKER_LOG_LIMIT');
+309:           controller.abort(logFault);
+310:           void terminate();
+311:           return;
+312:         }
+313:         logPartCount += 1;
+314:         let end = Math.min(offset + 65_536, text.length);
+315:         if (end < text.length && end > offset && /[\uD800-\uDBFF]/u.test(text[end - 1]!)) end -= 1;
+316:         const chunk = text.slice(offset, end);
+317:         const rendered = `[${stream}] ${chunk}`;
+318:         logBytes += Buffer.byteLength(rendered);
+319:         if (logBytes > envelope.limits.logBytes) {
+320:           logFault = new AttemptFault('errored', 'WORKER_LOG_LIMIT');
+321:           controller.abort(logFault);
+322:           void terminate();
+323:           return;
+324:         }
+325:         if (this.#options.retainLogs === false) {
+326:           offset = end;
+327:           continue;
+328:         }
+329:         const part = freeze({
+330:           schemaVersion: 'worker-log-part.v1' as const,
+331:           protocolVersion: envelope.protocolVersion,
+332:           attemptId: envelope.attemptId,
+333:           claimId: envelope.claim.claimId,
+334:           claimGeneration: envelope.claim.generation,
+335:           workerId: envelope.claim.workerId,
+336:           sequence: this.#logSequence++,
+337:           stream,
+338:           text: chunk,
+339:           contentDigest: sha256Text(chunk),
+340:           final: false,
+341:           sentAt: this.#now().toISOString(),
+342:         });
+343:         validatePipelineWorkerCoreContract('workerLogPart', part);
+344:         logParts.push(part);
+345:         try {
+346:           void Promise.resolve(this.#options.onLogPart?.(part)).catch(() => undefined);
+347:         } catch {
+348:           // Live delivery is best effort. The full log is stored before completion.
+349:         }
+350:         offset = end;
+351:       } while (offset < text.length);
+352:     };
+353: 
+354:     let operationResult: WorkerAttemptOperationResult | null = null;
+355:     let operationWork: Promise<WorkerAttemptOperationResult> | undefined;
+356:     let executionUnresolved = false;
+357:     let fault: AttemptFault | null = null;
+358:     let cleanup: WorkerAttemptResultV1['cleanup'] = { state: 'not_required', summary: null };
+359:     const timeoutAt = started.getTime() + envelope.limits.timeoutMs;
+360:     const claimExpiresAt = Date.parse(envelope.claim.expiresAt);
+361:     const phases = new WorkerPhaseDeadline(claimExpiresAt, envelope.limits.cleanupTimeoutMs, () => this.#now().getTime(), this.#options.signal);
+362:     const clearClaimTimer = armWorkerClaimDeadline(claimExpiresAt, () => this.#now().getTime(), () => {
+363:       claimExpired = true; controller.abort(new Error('WORKER_CLAIM_EXPIRED')); void terminate();
+364:     });
+365:     const deadlineAt = Math.min(timeoutAt, claimExpiresAt);
+366:     timer = setTimeout(() => {
+367:       claimExpired = claimExpiresAt <= timeoutAt;
+368:       timedOut = !claimExpired;
+369:       controller.abort(new Error(claimExpired ? 'WORKER_CLAIM_EXPIRED' : 'WORKER_ATTEMPT_TIMEOUT'));
+370:       void terminate();
+371:     }, Math.max(1, deadlineAt - started.getTime()));
+372:     const cancellation = new Promise<never>((_resolve, reject) => {
+373:       const rejectCancellation = (): void => {
+374:         if (logFault) reject(logFault);
+375:         else if (claimExpired) reject(new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED'));
+376:         else if (timedOut) reject(new AttemptFault('timed_out', 'WORKER_ATTEMPT_TIMEOUT'));
+377:         else reject(new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED'));
+378:       };
+379:       controller.signal.addEventListener('abort', rejectCancellation, { once: true });
+380:     });
+381:     try {
+382:       if (controller.signal.aborted) throw new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
+383:       this.#progress('accepted', 'Attempt accepted.');
+384:       this.#progress('started', 'Attempt started.');
+385:       const preparationResult = operation.prepare(envelope.limits) as unknown;
+386:       if (preparationResult !== undefined) {
+387:         if ((typeof preparationResult === 'object' && preparationResult !== null)
+388:           || typeof preparationResult === 'function') {
+389:           try {
+390:             const then = Reflect.get(preparationResult, 'then');
+391:             if (typeof then === 'function') void Promise.resolve(preparationResult).catch(() => undefined);
+392:           } catch {
+393:             // The invalid return is rejected below. A hostile then getter cannot escape.
+394:           }
+395:         }
+396:         throw new AttemptFault('errored', 'WORKER_PREPARATION_INVALID');
+397:       }
+398:       const preparedAt = this.#now().getTime();
+399:       const queueDeadlineAt = Date.parse(envelope.queueDeadline);
+400:       const firstDeadlineAt = Math.min(queueDeadlineAt, timeoutAt, claimExpiresAt);
+401:       if (preparedAt >= firstDeadlineAt) {
+402:         if (queueDeadlineAt === firstDeadlineAt) {
+403:           throw new AttemptFault('interrupted', 'WORKER_QUEUE_DEADLINE_EXPIRED');
+404:         }
+405:         claimExpired = claimExpiresAt === firstDeadlineAt;
+406:         timedOut = timeoutAt === firstDeadlineAt && !claimExpired;
+407:         controller.abort(new Error(claimExpired ? 'WORKER_CLAIM_EXPIRED' : 'WORKER_ATTEMPT_TIMEOUT'));
+408:         await cancellation;
+409:       }
+410:       const remainingExecutionMs = timeoutAt - preparedAt;
+411:       if (claimExpiresAt - preparedAt < remainingExecutionMs + (completionPhases * envelope.limits.cleanupTimeoutMs)) {
+412:         throw new AttemptFault('interrupted', 'WORKER_CLAIM_WINDOW_INSUFFICIENT');
+413:       }
+414:       if (controller.signal.aborted) await cancellation;
+415:       operationWork = operation.execute({ attempt: envelope, signal: controller.signal, log });
+416:       operationResult = await Promise.race([operationWork, cancellation]);
+417:       const operationCompletedAt = this.#now().getTime();
+418:       if (operationCompletedAt >= claimExpiresAt && claimExpiresAt <= timeoutAt) {
+419:         throw new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED');
+420:       }
+421:       if (operationCompletedAt >= timeoutAt) throw new AttemptFault('timed_out', 'WORKER_ATTEMPT_TIMEOUT');
+422:       if (logFault) throw logFault;
+423:       preflightJson(operationResult.specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT');
+424:       const resultBytes = Buffer.byteLength(JSON.stringify(operationResult.specialistResult));
+425:       if (resultBytes > envelope.limits.resultBytes) throw new AttemptFault('errored', 'WORKER_RESULT_LIMIT');
+426:       checkEvidence(operationResult.evidence, envelope);
+427:       operationResult = freeze(structuredClone(operationResult));
+428:       this.#progress('running', 'Attempt operation completed.');
+429:     } catch (error) {
+430:       operationResult = null;
+431:       fault = error instanceof AttemptFault
+432:         ? error
+433:         : error instanceof Error && /^WORKER_[A-Z0-9_]+$/.test(error.message)
+434:           ? new AttemptFault('errored', error.message)
+435:         : new AttemptFault(controller.signal.aborted ? (timedOut ? 'timed_out' : 'cancelled') : 'errored',
+436:           controller.signal.aborted ? (timedOut ? 'WORKER_ATTEMPT_TIMEOUT' : 'WORKER_ATTEMPT_CANCELLED') : 'WORKER_ATTEMPT_ERROR', detail(error));
+437:       const terminationError = await terminate();
+438:       if (terminationError) fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
+439:       if (operationWork) executionUnresolved = !(await settlesWithin(operationWork, envelope.limits.cleanupTimeoutMs));
+440:     } finally {
+441:       if (timer) clearTimeout(timer);
+442:     }
+443: 
+444:     if (executionUnresolved) phases.quarantine();
+445:     const executionFault = fault;
+446:     let measured:unknown;
+447:     try {measured=await phases.run('WORKER_RESOURCE_MEASUREMENT',signal=>operation.measure({signal}),Boolean(executionFault));}
+448:     catch {measured=undefined;}
+449:     let assessment=assessWorkerResources(envelope,measured,this.#accounting);
+450:     if(assessment.error && (!fault || assessment.error.code==='WORKER_RESOURCE_MEASUREMENT_INVALID'))fault=new AttemptFault('errored',assessment.error.code,assessment.error.message);
+451: 
+452:     if (operation.cleanup) {
+453:       if (claimExpired || this.#now().getTime() >= claimExpiresAt) await terminate();
+454:       this.#progress('cleanup_started', 'Attempt cleanup started.');
+455:       try {
+456:         await phases.run('WORKER_CLEANUP', signal => operation.cleanup!({ attempt: envelope, signal, log }), true);
+457:         cleanup = { state: 'completed', summary: null };
+458:         this.#progress('cleanup_completed', 'Attempt cleanup completed.');
+459:       } catch (error) {
+460:         const terminationError = await terminate();
+461:         const message = detail(error);
+462:         cleanup = { state: 'failed', summary: message };
+463:         fault = new AttemptFault('errored', terminationError ? 'WORKER_TERMINATION_FAILED' : 'WORKER_CLEANUP_FAILED', terminationError ?? message);
+464:       }
+465:     }
+466:     try { decoder.finish(); } catch (error) { logFault = new AttemptFault('errored', detail(error)); }
+467: 
+468:     if (logFault) fault = logFault;
+469: 
+470:     // The terminal log snapshot is authoritative. Ignore delayed stream
+471:     // callbacks after this point so live delivery and durable evidence agree.
+472:     logClosed = true;
+473:     if (this.#options.retainLogs !== false && this.#options.onLogPart) {
+474:       const finalPart = freeze({
+475:         schemaVersion: 'worker-log-part.v1' as const,
+476:         protocolVersion: envelope.protocolVersion,
+477:         attemptId: envelope.attemptId,
+478:         claimId: envelope.claim.claimId,
+479:         claimGeneration: envelope.claim.generation,
+480:         workerId: envelope.claim.workerId,
+481:         sequence: this.#logSequence++,
+482:         stream: 'system' as const,
+483:         text: '',
+484:         contentDigest: sha256Text(''),
+485:         final: true,
+486:         sentAt: this.#now().toISOString(),
+487:       });
+488:       validatePipelineWorkerCoreContract('workerLogPart', finalPart);
+489:       try {
+490:         void Promise.resolve(this.#options.onLogPart(finalPart)).catch(() => undefined);
+491:       } catch {
+492:         // The terminal result remains authoritative when live delivery fails.
+493:       }
+494:     }
+495:     const fullLog = logParts.map((part) => `[${part.stream}] ${part.text}`).join('');
+496:     let evidence = [...(operationResult?.evidence ?? [])];
+497:     if (operation.collectEvidence) {
+498:       try {
+499:         const collected = await phases.run('WORKER_EVIDENCE_COLLECTION', signal => operation.collectEvidence!({
+500:           attempt: envelope, state: fault?.state ?? 'completed', signal,
+501:         }));
+502:         const candidateEvidence = [...evidence, ...collected.evidence];
+503:         checkEvidence(candidateEvidence, envelope);
+504:         evidence = candidateEvidence;
+505:         if (collected.error) {
+506:           fault = new AttemptFault('errored', 'WORKER_EVIDENCE_COLLECTION_FAILED', collected.error);
+507:         }
+508:       } catch (error) {
+509:         fault = error instanceof AttemptFault
+510:           ? error
+511:           : new AttemptFault('errored', 'WORKER_EVIDENCE_COLLECTION_FAILED', detail(error));
+512:       }
+513:     }
+514:     if (fullLog) {
+515:       try {
+516:         if (!this.#options.storeFullLog) throw new Error('WORKER_FULL_LOG_STORE_REQUIRED');
+517:         const fullLogBytes = Buffer.byteLength(fullLog);
+518:         const existingEvidenceBytes = evidence.reduce((sum, item) => sum + item.artifact.sizeBytes, 0);
+519:         if (evidence.length + 1 > envelope.limits.evidenceFiles) throw new Error('WORKER_EVIDENCE_FILE_LIMIT');
+520:         if (existingEvidenceBytes + fullLogBytes > envelope.limits.evidenceBytes) {
+521:           throw new Error('WORKER_EVIDENCE_BYTE_LIMIT');
+522:         }
+523:         const stored = await phases.run('WORKER_LOG_STORE', signal => this.#options.storeFullLog!(envelope.attemptId, fullLog, { signal }));
+524:         if (!stored) throw new Error('WORKER_FULL_LOG_STORE_REQUIRED');
+525:         if (stored.artifact.contentDigest !== sha256Text(fullLog)
+526:           || stored.artifact.sizeBytes !== fullLogBytes) {
+527:           throw new Error('WORKER_FULL_LOG_INTEGRITY_MISMATCH');
+528:         }
+529:         const candidateEvidence = [...evidence, stored];
+530:         checkEvidence(candidateEvidence, envelope);
+531:         evidence = candidateEvidence;
+532:       } catch (error) {
+533:         fault ??= new AttemptFault('errored', 'WORKER_LOG_STORE_FAILED', detail(error));
+534:       }
+535:     }
+536:     if (!fault && operationResult && operation.finalizeResult) {
+537:       try {
+538:         const specialistResult = await phases.run('WORKER_RESULT_FINALIZATION', signal => operation.finalizeResult!({
+539:           attempt: envelope, evidence: freeze(structuredClone(evidence)), specialistResult: operationResult!.specialistResult, signal,
+540:         }));
+541:         preflightJson(specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT');
+542:         const finalizedBytes = Buffer.byteLength(JSON.stringify(specialistResult));
+543:         if (finalizedBytes > envelope.limits.resultBytes) throw new Error('WORKER_RESULT_LIMIT');
+544:         operationResult = freeze({ ...operationResult, specialistResult: structuredClone(specialistResult) });
+545:       } catch (error) {
+546:         fault = new AttemptFault('errored', 'WORKER_RESULT_FINALIZATION_FAILED', detail(error));
+547:       }
+548:     }
+549:     // Completion hooks also consume the attempt's resources. Keep the early
+550:     // check above to avoid starting optional finalization after an overrun, but
+551:     // bind the terminal receipt to usage after cleanup, evidence and reports.
+552:     // A failed or quarantined final observation must not reuse an earlier value
+553:     // as if it covered those phases. Maintenance measurement preserves bounded
+554:     // diagnostics after cancellation without authorizing additional execution.
+555:     measured = undefined;
+556:     try { measured = await phases.run('WORKER_FINAL_RESOURCE_MEASUREMENT', signal => operation.measure({ signal }), Boolean(fault)); }
+557:     catch { measured = undefined; }
+558:     assessment = assessWorkerResources(envelope, measured, this.#accounting, assessment.resources);
+559:     if (assessment.error && !fault) {
+560:       fault = new AttemptFault('errored', assessment.error.code, assessment.error.message);
+561:     }
+562:     this.#options.signal?.removeEventListener('abort', abort);
+563:     if (this.#options.signal?.aborted) {
+564:       const terminationError = await terminate();
+565:       if (terminationError) {
+566:         fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
+567:       } else {
+568:         if (cleanup.state !== 'failed') fault = executionFault ?? new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
+569:       }
+570:     } else if (!fault && controller.signal.aborted) {
+571:       fault = new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
+572:     }
+573:     if (claimExpired || this.#now().getTime() >= claimExpiresAt || phases.unresolved || executionUnresolved) {
+574:       const terminationError = await terminate();
+575:       if (terminationError) fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
+576:     }
+577:     clearClaimTimer();
+578:     if ((phases.unresolved || executionUnresolved) && fault?.code !== 'WORKER_TERMINATION_FAILED') fault = new AttemptFault('errored', 'WORKER_PHASE_UNRESOLVED', `${fault?.code ?? 'WORKER_ATTEMPT_ERROR'}: ${fault?.message ?? ''}; aborted work did not settle; external outcome requires reconciliation.`);
+579:     else if ((claimExpired || this.#now().getTime() >= claimExpiresAt) && fault?.code !== 'WORKER_TERMINATION_FAILED' && cleanup.state !== 'failed') fault = executionFault ?? new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED');
+580:     const completed = this.#now();
+581:     const resultBytes = operationResult ? Buffer.byteLength(JSON.stringify(operationResult.specialistResult)) : 0;
+582:     return this.#result(started, completed, fault, operationResult, evidence, {
+583:       ...assessment.resources,
+584:       logBytes,
+585:       resultBytes,
+586:       evidenceBytes: evidence.reduce((sum, item) => sum + item.artifact.sizeBytes, 0),
+587:     }, cleanup);
+588:   }
+589: 
+590:   #progress(state: AttemptProgressEventV1['state'], message: string): void {
+591:     if (!this.#options.onProgress) return;
+592:     const { envelope } = this.#options;
+593:     const event = freeze({
+594:       schemaVersion: 'attempt-progress-event.v1' as const,
+595:       protocolVersion: envelope.protocolVersion,
+596:       attemptId: envelope.attemptId,
+597:       claimId: envelope.claim.claimId,
+598:       claimGeneration: envelope.claim.generation,
+599:       workerId: envelope.claim.workerId,
+600:       sequence: this.#progressSequence++,
+601:       state,
+602:       message,
+603:       progressPercent: null,
+604:       details: {} as Record<string, JsonValue>,
+605:       sentAt: this.#now().toISOString(),
+606:     });
+607:     validatePipelineWorkerCoreContract('attemptProgressEvent', event);
+608:     try {
+609:       void Promise.resolve(this.#options.onProgress(event)).catch(() => undefined);
+610:     } catch {
+611:       // Progress is best effort. The terminal result is authoritative.
+612:     }
+613:   }
+614: 
+615:   async #terminate(operation: WorkerAttemptOperation<E>, timeoutMs: number): Promise<string | null> {
+616:     let timer: NodeJS.Timeout | undefined;
+617:     try {
+618:       return await Promise.race([
+619:         Promise.resolve().then(() => operation.terminate()).then(() => null, (error: unknown) => detail(error)),
+620:         new Promise<string>((resolve) => {
+621:           timer = setTimeout(() => resolve('WORKER_TERMINATION_TIMEOUT'), timeoutMs);
+622:         }),
+623:       ]);
+624:     } finally {
+625:       if (timer) clearTimeout(timer);
+626:     }
+627:   }
+628: 
+629:   #result(started: Date, completed: Date, fault: AttemptFault | null, operationResult: WorkerAttemptOperationResult | null,
+630:     evidence: readonly WorkerEvidenceRefV1[], resources: WorkerResourceUseV1,
+631:     cleanup: WorkerAttemptResultV1['cleanup']): WorkerAttemptResult {
+632:     const { envelope } = this.#options;
+633:     const finalCompleted = completed.getTime() < started.getTime() ? started : completed;
+634:     const unsigned = {
+635:       ...resourceResultFields(envelope, this.#accounting),
+636:       protocolVersion: envelope.protocolVersion,
+637:       attemptId: envelope.attemptId,
+638:       claimId: envelope.claim.claimId,
+639:       claimGeneration: envelope.claim.generation,
+640:       workerId: envelope.claim.workerId,
+641:       state: fault?.state ?? 'completed' as const,
+642:       startedAt: started.toISOString(),
+643:       completedAt: finalCompleted.toISOString(),
+644:       durationMs: Math.max(0, finalCompleted.getTime() - started.getTime()),
+645:       summary: boundedText(fault?.message ?? operationResult?.summary, 'Attempt completed.'),
+646:       specialistResult: fault ? null : operationResult?.specialistResult ?? null,
+647:       error: fault ? { code: fault.code, message: boundedText(fault.message, fault.code) } : null,
+648:       evidence: [...evidence],
+649:       resources,
+650:       cleanup: {
+651:         state: cleanup.state,
+652:         summary: cleanup.summary === null ? null : boundedText(cleanup.summary, 'Cleanup failed.'),
+653:       },
+654:       exitCode: fault ? null : operationResult?.exitCode ?? null,
+655:       signal: fault ? null : (typeof operationResult?.signal === 'string' && operationResult.signal.length > 0
+656:         ? operationResult.signal.slice(0, 4096).toWellFormed() : null),
+657:     };
+658:     let resultDigest: string;
+659:     try {
+660:       resultDigest = sha256Digest(unsigned);
+661:     } catch {
+662:       if (fault?.code === 'WORKER_OPERATION_RESULT_INVALID') throw new Error('WORKER_TERMINAL_RESULT_INVALID');
+663:       return this.#result(started, completed,
+664:         new AttemptFault('errored', 'WORKER_OPERATION_RESULT_INVALID',
+665:           'Specialist operation returned a result that cannot be canonically hashed.'),
+666:         null, [], {
+667:           ...resources,
+668:           logBytes: resources.logBytes,
+669:           resultBytes: 0,
+670:           evidenceBytes: 0,
+671:         }, cleanup);
+672:     }
+673:     // This local receipt detects accidental duplication or mutation. The
+674:     // authenticated Nova-worker transport required by D-103 binds identity.
+675:     const namespace = this.#options.receiptNamespace ?? `worker:${envelope.claim.workerId}`;
+676:     const result: WorkerAttemptResult = {
+677:       ...unsigned,
+678:       resultDigest,
+679:       receipt: receipt(namespace, this.#id(), resultDigest),
+680:     };
+681:     try {
+682:       if(result.schemaVersion==='worker-attempt-result.v3')validateWorkerResourceContractV3('workerAttemptResult',result);
+683:       else if(result.schemaVersion==='worker-attempt-result.v2')validateWorkerResourceContractV2('workerAttemptResult',result);
+684:       else validatePipelineWorkerCoreContract('workerAttemptResult', result);
+685:       const frozenResult = freeze(result);
+686:       if (!fault && this.#now().getTime() >= Date.parse(envelope.claim.expiresAt)) {
+687:         return this.#result(started, this.#now(), new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED'), null, evidence, resources, cleanup);
+688:       }
+689:       return frozenResult;
+690:     } catch (error) {
+691:       if (fault?.code === 'WORKER_OPERATION_RESULT_INVALID') throw error;
+692:       return this.#result(started, completed,
+693:         new AttemptFault('errored', 'WORKER_OPERATION_RESULT_INVALID', 'Specialist operation returned an invalid result.'),
+694:         null, [], {
+695:           ...resources,
+696:           logBytes: resources.logBytes,
+697:           resultBytes: 0,
+698:           evidenceBytes: 0,
+699:         }, cleanup.state === 'failed'
+700:           ? { state: 'failed', summary: boundedText(cleanup.summary, 'Cleanup failed.') }
+701:           : cleanup);
+702:     }
+703:   }
+704: }
+{"path": "skills/worker/core/worker/native-attempt-executor.ts", "sha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3"}
+1: import {
+2:   validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3, type WorkerAttemptResultV3,
+3: } from '@kubeclaw/pipeline-worker-core-contract';
+4: import { runNativeWorkerProcess, type NativeWorkerProcessOptions } from './native-worker-process.ts';
+5: import { NativeWorkerAttemptBusy, type NativeAttemptJournal } from './native-attempt-journal.ts';
+6: import { NativeWorkerOutputSpool } from './native-output-spool.ts';
+7: import { journalIdentity } from './native-journal-state.ts';
+8: import { finalizeNativeWorkerResult, interruptedNativeWorkerResult } from './native-result.ts';
+9: import { recoverNativeAttempt } from './native-attempt-recovery.ts';
+10: import { NativeWorkerCapacityExceeded } from './resource-reservations.ts';
+11: 
+12: export interface NativeWorkerAttemptExecutorOptions {
+13:   readonly envelope: WorkerAttemptEnvelopeV3;
+14:   readonly journal: NativeAttemptJournal;
+15:   readonly process: Omit<NativeWorkerProcessOptions, 'identity' | 'input' | 'outputCapture'>;
+16: }
+17: 
+18: class NativeAdmissionRejected extends Error {}
+19: 
+20: /** A fsynced identity precedes launch; a fsynced sealed receipt precedes delivery. */
+21: export async function executeNativeWorkerAttempt(options: NativeWorkerAttemptExecutorOptions): Promise<WorkerAttemptResultV3> {
+22:   validateWorkerResourceContractV3('workerAttemptEnvelope', options.envelope);
+23:   try {
+24:     const result = await options.journal.withAttempt(options.envelope, async context => {
+25:       const envelope = context.envelope;
+26:       const cached = await options.journal.readResult(envelope);
+27:       if (cached) return cached;
+28:       const started = new Date(context.acceptedAt);
+29:       const recovered = await recoverNativeAttempt(options.journal, options.process.owner, envelope, started, context.newlyAccepted);
+30:       if (recovered) return options.journal.seal(envelope, recovered);
+31:       const limits = launchLimits(options, envelope);
+32:       if (limits instanceof NativeAdmissionRejected) {
+33:         // Admission was persisted, but the claim expired before launch. The
+34:         // ownership lookup above proved that no process crossed that boundary.
+35:         return options.journal.seal(envelope, interruptedNativeWorkerResult(envelope, started, limits.message, null, true));
+36:       }
+37:       const spool = await NativeWorkerOutputSpool.create(context.outputRoot, limits.maximumOutputBytes);
+38:       try {
+39:         const process = await runNativeWorkerProcess({ ...options.process, limits, outputCapture: spool,
+40:           identity: journalIdentity(envelope), input: Buffer.from(JSON.stringify(envelope)) });
+41:         const completed = new Date();
+42:         await spool.flush();
+43:         await options.journal.recordProcess(envelope, process, completed);
+44:         return await options.journal.seal(envelope, finalizeNativeWorkerResult(envelope, process, started, completed));
+45:       } catch (error) {
+46:         if (!(error instanceof NativeWorkerCapacityExceeded)) throw error;
+47:         if (await options.process.owner.record(journalIdentity(envelope))) throw new Error('WORKER_NATIVE_CAPACITY_REJECTION_OWNERSHIP_CONFLICT');
+48:         // Aggregate admission rejected before the durable owner reservation.
+49:         // Preserve this accepted attempt as an explicit never-launched failure.
+50:         return await options.journal.seal(envelope, interruptedNativeWorkerResult(envelope, started, error.message, null, true));
+51:       } finally { await spool.close(); }
+52:     }, envelope => { acceptedLimits(options, envelope, new Date()); });
+53:     if (result.cleanup.state === 'failed') options.process.owner.fenceAdmission();
+54:     return result;
+55:   } catch (error) {
+56:     if (error instanceof NativeWorkerAttemptBusy || error instanceof NativeAdmissionRejected) throw error;
+57:     // Persistence or ownership uncertainty cannot permit a later admission.
+58:     options.process.owner.fenceAdmission();
+59:     throw error;
+60:   }
+61: }
+62: 
+63: function launchLimits(options: NativeWorkerAttemptExecutorOptions, envelope: WorkerAttemptEnvelopeV3) {
+64:   try { return acceptedLimits(options, envelope, new Date()); }
+65:   catch (error) { if (error instanceof NativeAdmissionRejected) return error; throw error; }
+66: }
+67: 
+68: function acceptedLimits(options: NativeWorkerAttemptExecutorOptions, envelope: WorkerAttemptEnvelopeV3, started: Date) {
+69:   const limits = options.process.limits;
+70:   const accepted = { cpuTimeMs: limits.cpuTimeMs, maximumMemoryBytes: limits.memoryBytes, maximumTasks: limits.tasks };
+71:   for (const [metric, maximum] of Object.entries(accepted)) {
+72:     const budget = envelope.resourceBudgets[metric as keyof typeof accepted];
+73:     if (budget.state !== 'requested' || budget.limit !== maximum) throw new NativeAdmissionRejected('WORKER_NATIVE_ACCEPTED_LIMIT_MISMATCH');
+74:   }
+75:   const claimRemaining = Date.parse(envelope.claim.expiresAt) - started.getTime();
+76:   if (started.getTime() < Date.parse(envelope.claim.claimedAt) || claimRemaining <= 0
+77:     || started.getTime() >= Date.parse(envelope.queueDeadline)) throw new NativeAdmissionRejected('WORKER_NATIVE_CLAIM_NOT_ACTIVE');
+78:   return { ...limits, timeoutMs: Math.min(limits.timeoutMs, claimRemaining) };
+79: }
+{"path": "skills/worker/core/worker/native-worker-process.ts", "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"}
+1: import type { ChildProcessWithoutNullStreams } from 'node:child_process';
+2: import type { NativeWorkerOwnership, NativeWorkerOwnershipLease } from './native-worker-ownership.ts';
+3: import type { WorkerOwnershipIdentity } from './ownership-store.ts';
+4: import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
+5: import type { NativeWorkerOutputCapture } from './native-output-spool.ts';
+6: import { cancelNativeProcess } from './native-process-cancellation.ts';
+7: import { captureNativeWorkerOutput } from './native-process-output.ts';
+8: import { validateNativeWorkerControlLimits } from './native-control-channel.ts';
+9: import { startNativeProcessControl, type NativeWorkerProcessControl } from './native-process-control.ts';
+10: 
+11: export interface NativeWorkerProcessLimits {
+12:   readonly cpuTimeMs: number;
+13:   readonly memoryBytes: number;
+14:   readonly tasks: number;
+15:   readonly timeoutMs: number;
+16:   readonly pollIntervalMs: number;
+17:   readonly maximumInputBytes: number;
+18:   readonly maximumOutputBytes: number;
+19:   readonly closeTimeoutMs: number;
+20: }
+21: 
+22: export interface NativeWorkerProcessOptions {
+23:   readonly owner: NativeWorkerOwnership;
+24:   readonly identity: WorkerOwnershipIdentity;
+25:   readonly limits: NativeWorkerProcessLimits;
+26:   readonly command: Parameters<NativeWorkerOwnershipLease['launch']>[0];
+27:   readonly input: Uint8Array;
+28:   readonly signal?: AbortSignal;
+29:   readonly outputCapture?: NativeWorkerOutputCapture;
+30:   readonly control?: NativeWorkerProcessControl;
+31: }
+32: 
+33: export interface NativeWorkerProcessResult {
+34:   readonly schemaVersion: 'worker-native-process-result.v1';
+35:   readonly stdout: Uint8Array;
+36:   readonly stderr: Uint8Array;
+37:   readonly exitCode: number | null;
+38:   readonly signal: string | null;
+39:   readonly fault: string | null;
+40:   readonly resources: NativeWorkerResourceObservation;
+41: }
+42: 
+43: function validateLimits(limits: NativeWorkerProcessLimits): void {
+44:   if (Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1)) {
+45:     throw new Error('WORKER_NATIVE_PROCESS_LIMIT_INVALID');
+46:   }
+47:   for (const value of [limits.timeoutMs, limits.pollIntervalMs, limits.closeTimeoutMs]) {
+48:     if (value > 2_147_483_647) throw new Error('WORKER_NATIVE_PROCESS_TIMER_INVALID');
+49:   }
+50: }
+51: 
+52: function budgetFault(observation: NativeWorkerResourceObservation, limits: NativeWorkerProcessLimits): string | null {
+53:   if (observation.oomKills || observation.maximumMemoryBytes > limits.memoryBytes) return 'WORKER_MEMORY_LIMIT';
+54:   if (observation.taskLimitHits || observation.maximumTasks > limits.tasks) return 'WORKER_TASK_LIMIT';
+55:   if (observation.cpuTimeMicroseconds / 1000 > limits.cpuTimeMs) return 'WORKER_CPU_LIMIT';
+56:   return null;
+57: }
+58: 
+59: /** Entire trusted attempt host, including its completion I/O and every descendant. */
+60: export async function runNativeWorkerProcess(options: NativeWorkerProcessOptions): Promise<NativeWorkerProcessResult> {
+61:   const limits = { ...options.limits };
+62:   const control = options.control ? { limits: { ...options.control.limits }, run: options.control.run } : undefined;
+63:   validateLimits(limits);
+64:   if (control) {
+65:     validateNativeWorkerControlLimits(control.limits);
+66:     if (typeof control.run !== 'function') throw new Error('WORKER_NATIVE_CONTROL_CONFIG_INVALID');
+67:   }
+68:   if (options.input.byteLength > limits.maximumInputBytes) throw new Error('WORKER_NATIVE_INPUT_LIMIT');
+69:   const input = Buffer.from(options.input);
+70:   const command = structuredClone(options.command);
+71:   options.signal?.throwIfAborted();
+72:   const lease = await options.owner.allocate(options.identity, { memoryBytes: limits.memoryBytes, tasks: limits.tasks });
+73:   let child: ChildProcessWithoutNullStreams | undefined;
+74:   try {
+75:     options.signal?.throwIfAborted();
+76:     child = await lease.launch(command, control !== undefined);
+77:     return await collectProcess(child, lease, input, limits, options.signal, options.outputCapture, control);
+78:   } finally {
+79:     // Also stop a launcher interrupted before joining; it has no authority to start later.
+80:     child?.kill('SIGKILL');
+81:     await lease.finish();
+82:   }
+83: }
+84: 
+85: async function collectProcess(child: ChildProcessWithoutNullStreams, lease: NativeWorkerOwnershipLease,
+86:   input: Buffer, limits: NativeWorkerProcessLimits, signal?: AbortSignal, outputCapture?: NativeWorkerOutputCapture,
+87:   controlOptions?: NativeWorkerProcessControl): Promise<NativeWorkerProcessResult> {
+88:   let fault: string | null = null;
+89:   let closeTimer: NodeJS.Timeout | undefined;
+90:   let closing: Promise<NativeWorkerResourceObservation> | undefined;
+91:   let finish: () => void = () => {};
+92:   const close = () => {
+93:     child.kill('SIGKILL');
+94:     closing ??= lease.finish();
+95:     // The caller always observes this rejection after the child boundary settles.
+96:     void closing.catch(() => {});
+97:     closeTimer ??= setTimeout(() => {
+98:       fault = 'WORKER_NATIVE_PROCESS_DRAIN_TIMEOUT';
+99:       finish();
+100:     }, limits.closeTimeoutMs);
+101:   };
+102:   const exited = new Promise<void>(resolve => { finish = resolve; });
+103:   const stop = (code: string) => {
+104:     fault ??= code;
+105:     close();
+106:   };
+107:   const output = captureNativeWorkerOutput(child, limits.maximumOutputBytes, stop, outputCapture);
+108:   const control = startNativeProcessControl(child, controlOptions, stop, limits.closeTimeoutMs, lease.launchAuthority());
+109:   let disposeCancellation: (() => void) | undefined;
+110:   const abort = () => {
+111:     if (closing || disposeCancellation) return;
+112:     fault ??= 'WORKER_ATTEMPT_CANCELLED';
+113:     disposeCancellation = cancelNativeProcess(child, limits.closeTimeoutMs, close);
+114:   };
+115:   child.once('error', () => stop('WORKER_NATIVE_PROCESS_START_FAILED'));
+116:   child.stdin.once('error', () => stop('WORKER_NATIVE_PROCESS_INPUT_FAILED'));
+117:   child.once('exit', () => { close(); });
+118:   child.once('close', finish);
+119:   signal?.addEventListener('abort', abort, { once: true });
+120:   const deadline = setTimeout(() => stop('WORKER_ATTEMPT_TIMEOUT'), limits.timeoutMs);
+121:   const poll = setInterval(() => {
+122:     if (closing) return;
+123:     try { const code = budgetFault(lease.observe(), limits); if (code) stop(code); }
+124:     catch { stop('WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE'); }
+125:   }, limits.pollIntervalMs);
+126:   try {
+127:     if (signal?.aborted) abort();
+128:     else child.stdin.end(input);
+129:     await exited;
+130:     close();
+131:     const resources = await closing!;
+132:     await output.flush();
+133:     await control.finish();
+134:     fault ??= budgetFault(resources, limits);
+135:     if (child.exitCode !== 0 && fault === null) fault = 'WORKER_NATIVE_PROCESS_FAILED';
+136:     return { schemaVersion: 'worker-native-process-result.v1', ...output.snapshot(),
+137:       exitCode: child.exitCode, signal: child.signalCode, fault, resources };
+138:   } finally {
+139:     clearTimeout(deadline); clearInterval(poll); if (closeTimer) clearTimeout(closeTimer);
+140:     signal?.removeEventListener('abort', abort);
+141:     disposeCancellation?.();
+142:     child.stdin.destroy(); child.stdout.destroy(); child.stderr.destroy();
+143:     await control.finish();
+144:   }
+145: }

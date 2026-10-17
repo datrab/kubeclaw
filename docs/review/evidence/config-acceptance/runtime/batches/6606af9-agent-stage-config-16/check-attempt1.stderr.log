@@ -1,0 +1,17 @@
+/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/util.js:174
+        throw new Error(msg);
+              ^
+
+Error: strict mode: required property "agent" is not defined at "#/allOf/0/then" (strictRequired)
+    at checkStrictMode (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/util.js:174:15)
+    at Object.code (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/vocabularies/validation/required.js:33:48)
+    at keywordCode (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:464:13)
+    at /home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:222:17
+    at CodeGen.code (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+    at CodeGen.block (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/codegen/index.js:568:18)
+    at iterateKeywords (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:219:9)
+    at groupKeywords (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:200:13)
+    at /home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:192:13
+    at CodeGen.code (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+
+Node.js v24.21.0

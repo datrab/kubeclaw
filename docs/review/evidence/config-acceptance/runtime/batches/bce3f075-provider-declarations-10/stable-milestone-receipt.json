@@ -1,0 +1,129 @@
+{
+  "status": "STABLE MILESTONE NOT ACCEPTED; Runtime frozen for independent Core ICQ material recheck",
+  "recordedAtUTC": "2026-10-13T01:34:34.039592+00:00",
+  "summary": {
+    "status": "stable provider declaration/source/current registry-helper and strict proposed evidence-profile definition milestone ONLY; NOT ACCEPTED",
+    "rows": 1248,
+    "cases": 5713,
+    "caseResults": {
+      "not-run": 4287,
+      "passed": 1426
+    },
+    "batch10OriginalSupplementalRowsRefined": 95,
+    "newNarrowCurrentDefinitionCases": 95,
+    "newStrictProposedProfileDefinitionCases": 19,
+    "newFutureNotRunCases": 380,
+    "oldCaseBodiesUnchanged": 5219,
+    "immutableObservationReferenceOccurrences": 2213,
+    "allC0ClosedFalse": true,
+    "remainingConsumerReviewRows": 77,
+    "remainingOriginalSupplementalSourceTracedRows": 102,
+    "originalCandidates": 4642,
+    "manualCandidateRecordsThisBatch": 109,
+    "manualCandidateRecordsCombined": 696,
+    "remainingUnreviewedCandidates": 3946,
+    "reviewedOpenCandidates": 129,
+    "unmatchedSourceObligations": [
+      {
+        "path": "skills/nova/core/test-gates/resolver.ts",
+        "lines": [
+          493,
+          497,
+          559,
+          568,
+          575
+        ],
+        "reason": "Actual matrix whitelist + suppliedproductcount, explicitunsafeRetry consent currenttask safety, blockingcoverage/size assertion requirements not lexical rows. Current Source/API producer gap remains no global owner invented.",
+        "sourceSha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+        "lines": [
+          9,
+          10,
+          12,
+          13,
+          15,
+          18,
+          40,
+          44,
+          51,
+          55,
+          59,
+          64,
+          83,
+          87
+        ],
+        "reason": "Actual produced artifact/report types added irrespective optional selected policy; staged evidence/runnerlog consume remaining existing byte/file budgets; failure retains explicit evidence fault and may fall back empty only after collection failures. Full real source/output/mandatory evidence/grant/actor/generation/capacity definitions and actual linked failed collection observations required; manufactured helper projection not productive artifact proof.",
+        "sourceSha256": "2613dc8b3a3f252d4afa13415b17e6345de726e8ccb2115e7551615a4578e174"
+      },
+      {
+        "path": "skills/nova/core/execution/engine-run.ts",
+        "lines": [
+          37,
+          57,
+          61,
+          83,
+          87
+        ],
+        "reason": "Parent primary map actual runtime prepare/activate BEFORE runlock/snapshot equality, no activation effects reproduced. Existing v4whole graph/config/package/grants binding cannot be bypassed by policyfilename; D20 parent firstmodule/carrier/view/legacy contract OPEN. No new universal module owner IDs.",
+        "sourceSha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+      }
+    ],
+    "remaining": "77 original schema consumers,102 untouched original supplemental rows,3946 unreviewed candidates plus129 reviewed-open;95 declarations are SOURCE-REFINED NOT ACCEPTED, no claim they are semantically closed. Exact public resolver producer absent, source metadata retry safety/code/matrix and genuine evidence emission/role/sandbox/grants/immutable owner binding/accounting still open. Current v4whole graph/config/package/grants equality plus prepare/activate BEFORE lock/equality and explicit admin upgrade rules preserved. D20 parent first-module carrier/membership/view/legacy/cleanup contract OPEN; profile filename, JSON validation, per-stage started or SDKcodec cannot solve it. No provider/retry/matrix/evidence/registryactivation/physical/model acceptance."
+  },
+  "summarySHA256": "a497af376cb7529bd95a2fddf6e0e9f49300e3cf3bd8226ba78a831abcaf99a6",
+  "ownedPublishedIdentities": {
+    "docs/review/evidence/config-acceptance/runtime/README.md": "776ad6c5226c464f64036dd7bf9b8242aa8715252faa79a872a0e3d10e08505a",
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": "755f99110e7bbc25560377c4462486e991c27bb5db2a74420e3ad95313e9df86",
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": "0905cd867a03ccb7ff04057ed0b885b6a8d79d710768cbfabcc915702296de27",
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": "d53975d0d85ad48f007abdb9676352de174ba2639ba508d41454ae8d871c3e18"
+  },
+  "batchFileIdentities": {
+    "check.mjs": "8382f4cf6b91b4dfc90641a2f1e8096e2147972b19f4e803971e25dce18e751e",
+    "integrate.py": "ebc57c5181b4f126d5057b7256de32ac4ba1d6d9b767be257a57120c69f0cc12",
+    "README.md": "1c3c453252fce731c2916f6a6f4da2347cc604baa80263cd144df737805fae5f",
+    "check-attempt1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "check-binding-attempt1.stderr.log": "b274903c3f50c9c9cea4ab3db33fbb8e3709e8d1d21fd3a40a584a0488659fde",
+    "check-target-attempt1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observations.json": "a92203d5e9a1730732e17e9d311e4ccef92d9700ac652a46c447d3bf50562626",
+    "complete-policy-profiles.json": "bd86143c88f8a42fcde8b203e9b59cecaa5a6c962cadeea2d63186501b885406",
+    "check-binding-attempt1.mjs.snapshot": "affde35702e4f52ba03619d082e17436cc4289703289aad086e049bc6c9031bd",
+    "parent-binding-seam-map.snapshot.json": "8c02537b23c8cd5d25a2dbf62ffb71b26862ff31978f978fe9e278de468d3a6e",
+    "record.py": "2d926aca16ccba7aa943f1063b7377309737a0381fb445d6751c5020e27d5894",
+    "integrate.log": "585ff24cd00eda8f06a21b2651ec99a36f578a12a43df636c10bc501c76e9be7",
+    "candidate-dispositions.json": "edeab8af0ddb9d39a96ab1082b8a8aacbe7dfb4428e9fa9d8135a03c9ea44e91",
+    "contracts.json": "462d9aeee8758a0dfeaa7233ad412663871beb5bf1cb4ee6836d3c3eca68ba95",
+    "before-runtime-case-dispositions.json.gz": "0059dcec1e18ae2fcabf6207ca433cc71559a29556181891acc672196bdf61bb",
+    "binding-seam-context.json": "b4325d87379e2b268b96921f9f975d41f8b4325dfb0ff57b2330761c3feaddbe",
+    "candidate-dispositions.log": "d29a80bd5dff09b2b9be23ddfe87a1a81fc67845ff26d5c7ee4c6dc2e4068c56",
+    "check-binding.mjs": "b9a0255dafc7e32184d96eaa4194f7b5eb0797d7e514b083c46694faf3fa8f7f",
+    "check-attempt1.log": "a92203d5e9a1730732e17e9d311e4ccef92d9700ac652a46c447d3bf50562626",
+    "capture-binding-context.log": "13a4564f560503d684aedfc87830c22d76710c658fbbd0e92183fc879a5088d7",
+    "record.log": "8e6697ee425018aff2f052bae0e5485ac74bc03c50ccff08a039f989926c29fc",
+    "define-target.py": "e174e42eb29e0215fc961e2fd21a0361f62c3d3478cc5fc285cddd0026a67379",
+    "binding-observations.json": "4f6802496456ebdbeb16a424b666fecbf422c9283250fa4d3756672767a30b33",
+    "candidate-dispositions.py": "3084e8f3f657e9bdc9ab21757480b05d1b5eddaa04fdbebba3db6fd240405eda",
+    "combined-candidate-dispositions.json": "c9b7c248c4a027e0ad89c3c38909abf65b1d57208c959bf0395a1b17868d9b1a",
+    "complete-source-read.log.gz": "d98b39da2195e3881e2ece177f8d54959f33aea5dd42071d1f553eb9239f12d4",
+    "target-observations.json": "65ad3b6164ef0213f05ce59dc1ffd68975d59aab2ffa512f05d05cbc7ef24b56",
+    "check-binding-attempt1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "check-target.mjs": "966a26074f335e813ec830e9d0237430dba7254c3c311f2c75c6cc0ee2a8809e",
+    "provider-provenance-core-handoff.json": "5a67b172fc369d68346c8429c156649c51ee4fb2f3ed07d593f3febc256ca095",
+    "check-target-attempt1.log": "65ad3b6164ef0213f05ce59dc1ffd68975d59aab2ffa512f05d05cbc7ef24b56",
+    "before-case-proposals.json.gz": "7aa61ba1d6b6e342b4cbb661e81b7d0325258e5a59844cd50a82d118e994d311",
+    "capture-binding-context.py": "4d23566965b00badb2a8e250172225e944de58014348c9b5d304fae00cf3ee21",
+    "define-target.log": "cbf39705afed07c929f545504c072c9624d1c1b9b25cf6f0ea7cc02fa58ee43e",
+    "runtime-dirty.patch.gz": "e7c35660adcf41ec8a7532b507a5886db119586195318d698877e0ef25e3fe98",
+    "record-final.log": "8e6697ee425018aff2f052bae0e5485ac74bc03c50ccff08a039f989926c29fc",
+    "observation-reference-integrity.json": "a9366b62dab489cb7434ee6c71b69988457f58ece5b158ac9778cf93dd5f60b8",
+    "identities.json": "e0c503436361b865bde9658bc58f6502797d8ff053404264e08c2a3ae0a35fb4",
+    "check-binding-attempt2.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "check-binding-attempt2.log": "4f6802496456ebdbeb16a424b666fecbf422c9283250fa4d3756672767a30b33",
+    "binding-primary-source-read.log.gz": "ce10571dd990fdf9907481df480c5bac659a7e545af5a2076b2d11658030c3f2",
+    "summary.json": "a497af376cb7529bd95a2fddf6e0e9f49300e3cf3bd8226ba78a831abcaf99a6",
+    "before-inventory-fragment.json.gz": "5384467b61c2f9be43dd540a437fd4bde7c8577b416e356cc70a93f91f46687c",
+    "proposed-evidence-policy-schemas.json": "9f8bf3775822609014fe4b83a487afe7f84a02c8e7f5fa085c5ce40c1052eca2"
+  },
+  "limits": "No self-review/semantic acceptance, all C0Closed false. Old5219 case bodies preserved; no Runtime writes until parent continuation. Parent correct-Core material recheck is separate independent task; no Core edits/acceptance."
+}

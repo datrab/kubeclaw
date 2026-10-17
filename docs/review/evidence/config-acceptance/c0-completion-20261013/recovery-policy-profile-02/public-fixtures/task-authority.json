@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "postgresql-recovery-task-authority.v1",
+  "receipts": [
+    {
+      "taskId": "fixture.recovery.backup",
+      "origin": "manual",
+      "operation": "backup",
+      "argvSha256": "bc70afaf8bb8387641f1bea2f7b293a36d2ac08e994ccf690240ec366655c94d",
+      "generationRootSha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "policyDocumentSha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "selectedProfileId": "A",
+      "deploymentInstanceId": "fixture.recovery",
+      "originalC1TaskBindingRef": {
+        "artifactSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "memberPointer": "/receipts/0"
+      },
+      "clock": {
+        "kind": "linux-boot-uptime-10ms.v1",
+        "bootId": "00000000-0000-0000-0000-000000000001",
+        "anchorTicks": "100000",
+        "expiresTicks": "286000",
+        "budgetTicks": "186000"
+      },
+      "executionIdentity": {
+        "requestOrJobUid": "fixture.original.backup",
+        "originalProcessScopeRef": "unsealed-fixture-original-scope-not-a-live-cgroup",
+        "firstAdmissionId": "fixture.first.backup"
+      },
+      "inheritedOriginalCeilingTicks": "186000",
+      "hostCeilingTicks": "186000"
+    },
+    {
+      "taskId": "fixture.recovery.scheduled",
+      "origin": "scheduled",
+      "operation": "scheduled",
+      "argvSha256": "17cf5e914e6b097aa1acc4f69efa9c57d93c8f1deb655b3e883e5e8237b95a42",
+      "generationRootSha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "policyDocumentSha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "selectedProfileId": "A",
+      "deploymentInstanceId": "fixture.recovery",
+      "originalC1TaskBindingRef": {
+        "artifactSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "memberPointer": "/receipts/1"
+      },
+      "clock": {
+        "kind": "linux-boot-uptime-10ms.v1",
+        "bootId": "00000000-0000-0000-0000-000000000001",
+        "anchorTicks": "100000",
+        "expiresTicks": "286000",
+        "budgetTicks": "186000"
+      },
+      "executionIdentity": {
+        "requestOrJobUid": "fixture.original.scheduled",
+        "originalProcessScopeRef": "unsealed-fixture-original-scope-not-a-live-cgroup",
+        "firstAdmissionId": "fixture.first.scheduled"
+      },
+      "inheritedOriginalCeilingTicks": "186000",
+      "hostCeilingTicks": "186000"
+    },
+    {
+      "taskId": "fixture.recovery.verify",
+      "origin": "manual",
+      "operation": "verify",
+      "argvSha256": "27c4aa21ec726789b14de509e34ebb4cfe428bdb49f998ad11a352443ad6f2c0",
+      "generationRootSha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "policyDocumentSha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "selectedProfileId": "A",
+      "deploymentInstanceId": "fixture.recovery",
+      "originalC1TaskBindingRef": {
+        "artifactSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "memberPointer": "/receipts/2"
+      },
+      "clock": {
+        "kind": "linux-boot-uptime-10ms.v1",
+        "bootId": "00000000-0000-0000-0000-000000000001",
+        "anchorTicks": "100000",
+        "expiresTicks": "286000",
+        "budgetTicks": "186000"
+      },
+      "executionIdentity": {
+        "requestOrJobUid": "fixture.original.verify",
+        "originalProcessScopeRef": "unsealed-fixture-original-scope-not-a-live-cgroup",
+        "firstAdmissionId": "fixture.first.verify"
+      },
+      "inheritedOriginalCeilingTicks": "186000",
+      "hostCeilingTicks": "186000"
+    },
+    {
+      "taskId": "fixture.recovery.restore",
+      "origin": "manual",
+      "operation": "restore",
+      "argvSha256": "db917342437984781ce4c90dc0b395798be676dcd40620fb906ab0a348dfaafc",
+      "generationRootSha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "policyDocumentSha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "selectedProfileId": "A",
+      "deploymentInstanceId": "fixture.recovery",
+      "originalC1TaskBindingRef": {
+        "artifactSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "memberPointer": "/receipts/3"
+      },
+      "clock": {
+        "kind": "linux-boot-uptime-10ms.v1",
+        "bootId": "00000000-0000-0000-0000-000000000001",
+        "anchorTicks": "100000",
+        "expiresTicks": "286000",
+        "budgetTicks": "186000"
+      },
+      "executionIdentity": {
+        "requestOrJobUid": "fixture.original.restore",
+        "originalProcessScopeRef": "unsealed-fixture-original-scope-not-a-live-cgroup",
+        "firstAdmissionId": "fixture.first.restore"
+      },
+      "inheritedOriginalCeilingTicks": "186000",
+      "hostCeilingTicks": "186000"
+    },
+    {
+      "taskId": "fixture.recovery.migrate",
+      "origin": "manual",
+      "operation": "migrate",
+      "argvSha256": "69e8255aec5ca3eca9a629e83583d4839f1500751a78b6089e8f03d331e45a68",
+      "generationRootSha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "policyDocumentSha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "selectedProfileId": "A",
+      "deploymentInstanceId": "fixture.recovery",
+      "originalC1TaskBindingRef": {
+        "artifactSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "memberPointer": "/receipts/4"
+      },
+      "clock": {
+        "kind": "linux-boot-uptime-10ms.v1",
+        "bootId": "00000000-0000-0000-0000-000000000001",
+        "anchorTicks": "100000",
+        "expiresTicks": "286000",
+        "budgetTicks": "186000"
+      },
+      "executionIdentity": {
+        "requestOrJobUid": "fixture.original.migrate",
+        "originalProcessScopeRef": "unsealed-fixture-original-scope-not-a-live-cgroup",
+        "firstAdmissionId": "fixture.first.migrate"
+      },
+      "inheritedOriginalCeilingTicks": "186000",
+      "hostCeilingTicks": "186000"
+    }
+  ]
+}

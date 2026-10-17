@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects were identified in the supplied change bundle. The selected policy requires explicit fields, rejects competing policy environment variables, captures and freezes configuration at registration, and preserves the original dynamic merge path without a discriminator. Review was source-only because shell inspection was unavailable; tests were not run, and Gateway, cluster deployment, and paid model evaluation were not verified.",
+  "overall_confidence": 0.82
+}

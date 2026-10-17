@@ -1,0 +1,13 @@
+✔ CE01 shared authorship is centrally validated before explicit E2E-profile projection (38.597359ms)
+✔ CE02 root rejects invalid central authorship before E2E derivation (2.641038ms)
+✔ CE02 operator rejects invalid central authorship before E2E derivation (3.555012ms)
+✔ CE02 worker-value rejects invalid central authorship before E2E derivation (2.920186ms)
+✔ CE03 run-scoped E2E overrides are added only after central validation and projection (4.818005ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 543.094007

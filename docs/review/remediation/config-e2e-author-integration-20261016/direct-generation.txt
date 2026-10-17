@@ -1,0 +1,14 @@
+✔ generated real e2e seed requires publishable case study output (66.759639ms)
+✔ non-smoke suite profile disables optional terminal extras canonically (8.586783ms)
+✔ module execution boundary disables terminal extras without env override (6.848328ms)
+✔ final-review execution boundary keeps summary scope without optional terminal extras (6.106818ms)
+✔ run config runtime normalization refreshes terminal generator models (0.439942ms)
+✔ pipeline review timeout scenario uses run config as the only pipeline review authority (5.054221ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 821.272286

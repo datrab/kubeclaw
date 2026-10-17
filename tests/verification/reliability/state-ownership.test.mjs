@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -14,11 +15,11 @@ const temporary = (t) => { const root = fs.mkdtempSync(path.join(os.tmpdir(), 's
 
 test('journal owns append, sequenced, reader and replay JSON including optional fields', (t) => {
   const file = path.join(temporary(t), 'events.jsonl');
-  const journal = new FileJournal(file);
+  const journal = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   const payload = { decision: 'approved', values: [{ amount: 2 }], optional: undefined };
   const record = journal.append({ payload });
   payload.decision = 'rejected'; payload.values[0].amount = 99;
-  for (const current of [record, journal.records()[0], journal.refresh()[0], new FileJournal(file).records()[0]]) {
+  for (const current of [record, journal.records()[0], journal.refresh()[0], new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records()[0]]) {
     assert.equal(current.entry.payload.decision, 'approved');
     assert.equal(current.entry.payload.values[0].amount, 2);
     assert.throws(() => { current.entry.payload.values[0].amount = 8; }, TypeError);
@@ -27,7 +28,7 @@ test('journal owns append, sequenced, reader and replay JSON including optional 
   journal.appendSequenced((sequence) => ({ sequence, payload }));
   payload.values.push({ amount: 4 });
   assert.equal(journal.records()[1].entry.payload.values.length, 1);
-  assert.deepEqual(journal.records(), new FileJournal(file).records());
+  assert.deepEqual(journal.records(), new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records());
   let escaped;
   journal.transact((_records, append) => { escaped = append; });
   assert.throws(() => escaped({ payload }), /JOURNAL_TRANSACTION_CLOSED/);
@@ -37,7 +38,7 @@ test('journal owns append, sequenced, reader and replay JSON including optional 
 });
 
 test('lossy non-JSON values are rejected before append without caller hooks', (t) => {
-  const journal = new FileJournal(path.join(temporary(t), 'events.jsonl'));
+  const journal = new FileJournal(path.join(temporary(t), 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   let invoked = false;
   const circular = {}; circular.self = circular;
   for (const value of [NaN, Infinity, undefined, 1n, () => 1, new Date(), [undefined], Array(1), circular,
@@ -67,7 +68,7 @@ test('plugin state snapshots provenance and payload, including projection and du
     }, surface: 'stage', registrationId: 'main',
   };
   const original = structuredClone(registration);
-  const state = new PluginStateJournal(file, registration);
+  const state = new PluginStateJournal(file, registration, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   registration.package.package.pluginId = 'changed';
   const input = { namespace: 'plugin.example.stage.main', registration: original, entryType: 'example.counter', idempotencyKey: 'counter:1', payload: { nested: { amount: 2 }, optional: undefined } };
   const first = state.append(input);
@@ -77,7 +78,7 @@ test('plugin state snapshots provenance and payload, including projection and du
   input.payload.nested.amount = 2;
   const duplicate = state.append(input);
   assert.throws(() => { duplicate.registration.package.package.pluginId = 'changed'; }, TypeError);
-  assert.deepEqual(state.entries(), new PluginStateJournal(file, original).entries());
+  assert.deepEqual(state.entries(), new PluginStateJournal(file, original, TEST_CORE_POLICY.journalAppendLockTimeoutMs).entries());
 });
 
 test('kernel lock releases on exception, times out under reentrancy, retains stable inode', (t) => {
@@ -112,7 +113,7 @@ test('SIGKILL owner then twelve real contenders preserve exclusion and complete 
   holder.kill('SIGKILL'); assert.deepEqual(await heldExit, [null, 'SIGKILL']);
   for (const child of contenders) child.send('start');
   await Promise.all(done);
-  const records = new FileJournal(path.join(root, 'events.jsonl')).records();
+  const records = new FileJournal(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
   assert.equal(records.length, 600);
   assert.equal(new Set(records.map(({ entry }) => `${entry.pid}:${entry.index}`)).size, 600);
   assert.equal(fs.existsSync(path.join(root, 'critical')), false);

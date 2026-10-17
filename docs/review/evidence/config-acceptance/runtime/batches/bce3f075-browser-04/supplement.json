@@ -1,0 +1,29 @@
+{
+  "newBuiltinBusinessRows": [
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT",
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT",
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE",
+    "RT-AXE-BUILTIN-MOBILE-LOCALE",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH",
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION",
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR",
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE",
+    "RT-AXE-BUILTIN-MOBILE-BROWSER",
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID",
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID",
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION",
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME",
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH",
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH",
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME",
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR",
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER"
+  ],
+  "newNarrowDefinitions": 21,
+  "newFutureCases": 80,
+  "bindingDistinction": "browser payloadprofile.browser REALselectsactualbackend withinretainedallowedR/exemap; finiteSDKcodec isnot browser/model/CONFIGselector",
+  "open": "actualfullSDK/renderer/ICU/backend/frame/source/project/role/grantfixtures and semanticcompatibility remainunapproved/unresolved; allnumericprocessingguards/profile-file inner sourcepolicy fields notthis20builtinroster mustcontinueexactcandidate/sourceinventory",
+  "status": "not-accepted"
+}

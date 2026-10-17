@@ -1,4 +1,4 @@
-import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+import type { BusterManifestPolicy } from '@kubeclaw/plugin-foundation/config/buster-cluster-invokers';
 import { loadAll } from 'js-yaml';
 
 

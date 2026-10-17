@@ -1,0 +1,243 @@
+{
+  "qualification": "Pure source-specific author/schema/selector/hash and existing read-only digest/elapsed helpers only; no native/CLI/provider/browser/gateway/PG/Helm/renderer/network/credential/Eval activation",
+  "receipts": [
+    {
+      "artifact": "author-final.command.json",
+      "receipt": {
+        "argv": [
+          "python3",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/author-generation.py"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "elapsedSeconds": 28.037575483322144,
+        "scriptStartSha256": "2a497c287d0892ae71178cf8c98af5dfc6eb712eddca6e8baf8bb1b907f37529",
+        "scriptEndSha256": "2a497c287d0892ae71178cf8c98af5dfc6eb712eddca6e8baf8bb1b907f37529"
+      }
+    },
+    {
+      "artifact": "before-Gateway-S-author-final.command.json",
+      "receipt": {
+        "argv": [
+          "python3",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/author-generation.py"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "elapsedSeconds": 27.578497886657715,
+        "scriptStartSha256": "00da3c9aa66f4dacd92f47cc812edb683734bbdfc182142c64c24a4a8efd897d",
+        "scriptEndSha256": "00da3c9aa66f4dacd92f47cc812edb683734bbdfc182142c64c24a4a8efd897d"
+      }
+    },
+    {
+      "artifact": "before-Gateway-S-check-final.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "elapsedSeconds": 31.24127435684204,
+        "scriptStartSha256": "472228adf756e4e402e0b62f5c02e4d5d4ff891039b7e54b104e3c59d37a54c0",
+        "scriptEndSha256": "472228adf756e4e402e0b62f5c02e4d5d4ff891039b7e54b104e3c59d37a54c0"
+      }
+    },
+    {
+      "artifact": "before-active-schema-path-normalization-author-final.command.json",
+      "receipt": {
+        "argv": [
+          "python3",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/author-generation.py"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "elapsedSeconds": 27.817387580871582,
+        "scriptStartSha256": "28ac524be728655265f53476c2ac12f099cc5573a944be358e35a26aa868b9ab",
+        "scriptEndSha256": "28ac524be728655265f53476c2ac12f099cc5573a944be358e35a26aa868b9ab"
+      }
+    },
+    {
+      "artifact": "before-active-schema-path-normalization-check-final.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "elapsedSeconds": 30.78134274482727,
+        "scriptStartSha256": "17d70f57ce63d73ff3e1573d8dbc8ac4c473f102597a4ab21fc9e63cc04ee620",
+        "scriptEndSha256": "17d70f57ce63d73ff3e1573d8dbc8ac4c473f102597a4ab21fc9e63cc04ee620"
+      }
+    },
+    {
+      "artifact": "before-explicit-source-plans-author-final.command.json",
+      "receipt": {
+        "argv": [
+          "python3",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/author-generation.py"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "elapsedSeconds": 27.970268487930298,
+        "scriptStartSha256": "7b6287b4e300e53292a6d858a17dfc1d0741d3b3811b5130b2c4744f883a1273",
+        "scriptEndSha256": "7b6287b4e300e53292a6d858a17dfc1d0741d3b3811b5130b2c4744f883a1273"
+      }
+    },
+    {
+      "artifact": "check-01.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 1,
+        "elapsedSeconds": 1.1226637363433838,
+        "scriptStartSha256": "73a86291e641ff7d033e103300ead1ff4a55c53b55be9a3c1e8deb998d945bf9",
+        "scriptEndSha256": "73a86291e641ff7d033e103300ead1ff4a55c53b55be9a3c1e8deb998d945bf9"
+      }
+    },
+    {
+      "artifact": "check-02.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 1,
+        "elapsedSeconds": 1.9445009231567383,
+        "scriptStartSha256": "0564d57707d47c0dd4cc6994203ebd3a10ece58e6970ea5c301c392b6a0e6070",
+        "scriptEndSha256": "0564d57707d47c0dd4cc6994203ebd3a10ece58e6970ea5c301c392b6a0e6070"
+      }
+    },
+    {
+      "artifact": "check-03.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 1,
+        "elapsedSeconds": 1.8196771144866943,
+        "scriptStartSha256": "0564d57707d47c0dd4cc6994203ebd3a10ece58e6970ea5c301c392b6a0e6070",
+        "scriptEndSha256": "0564d57707d47c0dd4cc6994203ebd3a10ece58e6970ea5c301c392b6a0e6070"
+      }
+    },
+    {
+      "artifact": "check-04.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "elapsedSeconds": 32.059924602508545,
+        "scriptStartSha256": "2b185ac3cf102bb4e2930ce0cc44fb4831941f7dc0158dd0c428bb865bb2f263",
+        "scriptEndSha256": "2b185ac3cf102bb4e2930ce0cc44fb4831941f7dc0158dd0c428bb865bb2f263"
+      }
+    },
+    {
+      "artifact": "check-final.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "elapsedSeconds": 31.382573127746582,
+        "scriptStartSha256": "17d70f57ce63d73ff3e1573d8dbc8ac4c473f102597a4ab21fc9e63cc04ee620",
+        "scriptEndSha256": "17d70f57ce63d73ff3e1573d8dbc8ac4c473f102597a4ab21fc9e63cc04ee620"
+      }
+    },
+    {
+      "artifact": "closeout.command.json",
+      "receipt": {
+        "argv": [
+          "python3",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/closeout-conservation.py"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "scriptSha256": "a79bd6fe6ff6cbbbba0b7792a664a164b88f755abc37936496f507e74d48468c"
+      }
+    },
+    {
+      "artifact": "earlier-closeout.command.json",
+      "receipt": {
+        "argv": [
+          "python3",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/closeout-conservation.py"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "scriptSha256": "a79bd6fe6ff6cbbbba0b7792a664a164b88f755abc37936496f507e74d48468c"
+      }
+    },
+    {
+      "artifact": "elapsed-source.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-elapsed-source.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "scriptSha256": "9f737f8a4dc51edf5df25b729b761216650c35a74920e4049a494bee12eb4ba5"
+      }
+    },
+    {
+      "artifact": "failed-elapsed-source.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-elapsed-source.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 1,
+        "scriptSha256": "556a5fbf7d9e1e0629e4ca96eef3223265ebf36b382cabec661f76c75ca20dec"
+      }
+    },
+    {
+      "artifact": "package-source.command.json",
+      "receipt": {
+        "argv": [
+          "node",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-package-source.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "scriptSha256": "d00cddff3cbe5c4b1712bc507d7e898e7db32c3e007be1f4e3772647caa301d2"
+      }
+    },
+    {
+      "artifact": "author-attempt1.exit.json",
+      "receipt": {
+        "exit": 1,
+        "reason": "Controller readonlyBindings is discriminated oneOf, not simple properties; add Gateway bindings within each actual arm"
+      },
+      "script": "author-attempt1.py.snapshot",
+      "stdout": "author-attempt1.stdout",
+      "stderr": "author-attempt1.stderr"
+    }
+  ],
+  "preservedFailures": {
+    "author1": "Discriminated readonly schema assembly; actual conditional arms corrected",
+    "check01": "Missing pure hash declaration; snapshot/rawexit1 retained",
+    "check02": "Gateway readonly fields missing in original then/else closed branches; exact arms corrected without relaxing original relations",
+    "check03": "Security ownerErrors lexical array shadowed Browser helper; lexical name corrected",
+    "elapsed": "Missing builtin path import; failed snapshot/rawexit1 retained",
+    "closeoutInline": "Default workspace CWD could not resolve a historical repo-relative input; no wrongpath absence inferred. Actual collector CWD is repo; author now normalizes repo-relative old schemas before active current schema rejoin"
+  },
+  "additionalMaterialCorrections": [
+    "Closed explicit five-profile source plan: no unknown/non-B\u2192A fill;857 physical input/entry/output members remained byte-exact",
+    "Historical relative Browser schema refs normalized against actual repo before active receiving path+arm index rejoin.105 exact active Browser owner/receiver nodes now point to current physical twelve-arm/currentowner schema; originals/history retained.857 physical members unchanged; final3108collector replay exit0 after corrected concordance"
+  ],
+  "originalBrowserFullCollectorExecuted": false,
+  "nativeCasesExecuted": 0
+}

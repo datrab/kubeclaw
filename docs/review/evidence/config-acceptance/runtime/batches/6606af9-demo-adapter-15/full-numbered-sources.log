@@ -1,0 +1,841 @@
+SOURCE skills/nova/plugins/demo-handoff/package.json SHA256 0862144204d32c406fb2248b09dff87582d2a67234b2a05a8614d7393167dcf4
+1: {
+2:   "name": "@kubeclaw/plugin-demo-handoff",
+3:   "private": true,
+4:   "type": "module",
+5:   "scripts": {
+6:     "build": "tsc --noEmit -p tsconfig.json",
+7:     "test": "cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs"
+8:   },
+9:   "dependencies": {
+10:     "@kubeclaw/plugin-sdk": "*",
+11:     "@kubeclaw/plugin-foundation": "*",
+12:     "@kubeclaw/plugin-operator-messaging": "*"
+13:   }
+14: }
+SOURCE skills/nova/plugins/demo-handoff/plugin.json SHA256 6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e
+1: {
+2:   "id": "kubeclaw.demo-handoff",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "candidate",
+8:       "type": "kubeclaw.demo.candidate",
+9:       "module": "src/candidate.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "test.plan.evidence",
+13:         "artifacts.write"
+14:       ],
+15:       "configSchema": "schemas/empty.schema.json",
+16:       "inputSchema": "schemas/candidate.schema.json",
+17:       "resultSchema": "schemas/result.schema.json"
+18:     },
+19:     {
+20:       "id": "delivery",
+21:       "type": "kubeclaw.demo.delivery",
+22:       "module": "src/delivery.ts",
+23:       "export": "execute",
+24:       "requiredCapabilities": [
+25:         "demo.handoff",
+26:         "artifacts.write"
+27:       ],
+28:       "configSchema": "schemas/empty.schema.json",
+29:       "inputSchema": "schemas/delivery.schema.json",
+30:       "resultSchema": "schemas/result.schema.json"
+31:     },
+32:     {
+33:       "id": "ready",
+34:       "type": "kubeclaw.demo.ready",
+35:       "module": "src/ready.ts",
+36:       "export": "execute",
+37:       "requiredCapabilities": [
+38:         "demo.handoff",
+39:         "artifacts.write"
+40:       ],
+41:       "configSchema": "schemas/empty.schema.json",
+42:       "inputSchema": "schemas/ready.schema.json",
+43:       "resultSchema": "schemas/result.schema.json"
+44:     }
+45:   ],
+46:   "observers": [],
+47:   "adapters": [
+48:     {
+49:       "id": "handoff",
+50:       "module": "src/adapter.ts",
+51:       "export": "activate",
+52:       "providesCapabilities": [
+53:         "demo.handoff"
+54:       ],
+55:       "requiredCapabilities": [
+56:         "artifacts.read",
+57:         "test.plan.evidence",
+58:         "operator.request",
+59:         "operator.receipt"
+60:       ],
+61:       "configSchema": "schemas/adapter.schema.json"
+62:     }
+63:   ]
+64: }
+SOURCE skills/nova/plugins/demo-handoff/tsconfig.json SHA256 e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b
+1: {
+2:   "extends": "../../../../tsconfig.base.json",
+3:   "compilerOptions": {
+4:     "rootDir": "src",
+5:     "exactOptionalPropertyTypes": true,
+6:     "noUncheckedIndexedAccess": true
+7:   },
+8:   "include": [
+9:     "src/**/*.ts"
+10:   ]
+11: }
+SOURCE skills/nova/plugins/demo-handoff/schemas/candidate.schema.json SHA256 20ef1065dadcf3236d091621eee86a81157f52dd9aca1b7f3535187aa09d3b13
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "properties": {
+5:     "manifestStageId": {
+6:       "type": "string",
+7:       "minLength": 1,
+8:       "maxLength": 2048
+9:     },
+10:     "authNodeId": {
+11:       "type": "string",
+12:       "minLength": 1,
+13:       "maxLength": 2048
+14:     },
+15:     "protocol": {
+16:       "const": "json-session.v1"
+17:     },
+18:     "operatorTarget": {
+19:       "type": "string",
+20:       "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+21:     },
+22:     "retentionSeconds": {
+23:       "type": "integer",
+24:       "minimum": 1,
+25:       "maximum": 9223372036
+26:     }
+27:   },
+28:   "required": [
+29:     "manifestStageId",
+30:     "authNodeId",
+31:     "protocol",
+32:     "operatorTarget",
+33:     "retentionSeconds"
+34:   ],
+35:   "additionalProperties": false
+36: }
+SOURCE skills/nova/plugins/demo-handoff/schemas/empty.schema.json SHA256 2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false
+5: }
+SOURCE skills/nova/plugins/demo-handoff/schemas/result.schema.json SHA256 b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "$ref": "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult"
+4: }
+SOURCE skills/nova/plugins/demo-handoff/schemas/delivery.schema.json SHA256 0c23e4a13b585c3c1acde7410fed759f034c05f90b2202664bcac9dc5e1010c9
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "properties": {
+5:     "candidateStageId": {
+6:       "type": "string",
+7:       "minLength": 1,
+8:       "maxLength": 2048
+9:     }
+10:   },
+11:   "required": [
+12:     "candidateStageId"
+13:   ],
+14:   "additionalProperties": false
+15: }
+SOURCE skills/nova/plugins/demo-handoff/schemas/adapter.schema.json SHA256 908e54cafb1d4edac6aeffe49ded47dc578f87e3d37952b247b7520aa4560fa4
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "properties": {
+5:     "candidateStageId": {
+6:       "type": "string",
+7:       "minLength": 1,
+8:       "maxLength": 2048
+9:     },
+10:     "deliveryStageId": {
+11:       "type": "string",
+12:       "minLength": 1,
+13:       "maxLength": 2048
+14:     },
+15:     "readyStageId": {
+16:       "type": "string",
+17:       "minLength": 1,
+18:       "maxLength": 2048
+19:     },
+20:     "manifestStageId": {
+21:       "type": "string",
+22:       "minLength": 1,
+23:       "maxLength": 2048
+24:     },
+25:     "endpoint": {
+26:       "type": "string",
+27:       "minLength": 1,
+28:       "maxLength": 2048
+29:     },
+30:     "tokenPath": {
+31:       "type": "string",
+32:       "minLength": 1,
+33:       "maxLength": 2048
+34:     },
+35:     "caPath": {
+36:       "type": "string",
+37:       "minLength": 1,
+38:       "maxLength": 2048
+39:     },
+40:     "stateRoot": {
+41:       "type": "string",
+42:       "minLength": 1,
+43:       "maxLength": 2048
+44:     },
+45:     "operatorTarget": {
+46:       "type": "string",
+47:       "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+48:     },
+49:     "timeoutMs": {
+50:       "type": "integer",
+51:       "minimum": 100,
+52:       "maximum": 60000
+53:     }
+54:   },
+55:   "required": [
+56:     "candidateStageId",
+57:     "deliveryStageId",
+58:     "readyStageId",
+59:     "manifestStageId",
+60:     "endpoint",
+61:     "tokenPath",
+62:     "caPath",
+63:     "stateRoot",
+64:     "operatorTarget",
+65:     "timeoutMs"
+66:   ],
+67:   "additionalProperties": false
+68: }
+SOURCE skills/nova/plugins/demo-handoff/schemas/ready.schema.json SHA256 5b61a49b5383f4d4c1b3227104e136ef0119383ec4c9d456658c20df136dcbb0
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "properties": {
+5:     "candidateStageId": {
+6:       "type": "string",
+7:       "minLength": 1,
+8:       "maxLength": 2048
+9:     },
+10:     "deliveryStageId": {
+11:       "type": "string",
+12:       "minLength": 1,
+13:       "maxLength": 2048
+14:     }
+15:   },
+16:   "required": [
+17:     "candidateStageId",
+18:     "deliveryStageId"
+19:   ],
+20:   "additionalProperties": false
+21: }
+SOURCE skills/nova/plugins/demo-handoff/src/delivery.ts SHA256 a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7
+1: import type {PluginInvocationContext,StageResult} from '@kubeclaw/plugin-sdk';
+2: import {NAMESPACE,object,exact,text,select,ref} from './protocol.ts';
+3: export async function execute(value:unknown,context:PluginInvocationContext):Promise<StageResult> {
+4:   try {
+5:     const input=object(value);exact(input,['candidateStageId']);const candidate=select(context,text(input.candidateStageId),NAMESPACE);
+6:     const result=await context.invoke('demo.handoff',{operation:'deliver',resource:{type:'demo.candidate',canonicalId:candidate.artifactId},payload:{namespace:NAMESPACE,candidate}});
+7:     const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:`demo-delivery:${context.contract.lease.attempt.runId}`},payload:{namespace:NAMESPACE,mediaType:'application/json',value:result}});
+8:     return {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[ref(stored.artifact)]};
+9:   }catch(error){return {schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'demo.delivery_unresolved',message:error instanceof Error?error.message:String(error)},artifacts:[]};}
+10: }
+SOURCE skills/nova/plugins/demo-handoff/src/controller-client.ts SHA256 bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315
+1: import fs from 'node:fs/promises';
+2: import {constants} from 'node:fs';
+3: import https from 'node:https';
+4: import {sha256Text} from '@kubeclaw/plugin-sdk';
+5: import {object,exact,text,retention,type Value} from './protocol.ts';
+6: export interface ClientConfig {readonly endpoint:string;readonly tokenPath:string;readonly caPath:string;}
+7: async function boundedFile(file:string,limit:number,signal:AbortSignal):Promise<Buffer> {
+8:   signal.throwIfAborted();
+9:   const handle=await fs.open(file,constants.O_RDONLY|constants.O_NONBLOCK);
+10:   try {const stat=await handle.stat();signal.throwIfAborted();if(!stat.isFile()||stat.size<1||stat.size>limit)throw new Error('DEMO_READY_CREDENTIAL_FILE_INVALID');
+11:     const buffer=Buffer.alloc(limit+1);let size=0;
+12:     while(size<buffer.length){signal.throwIfAborted();const read=await handle.read(buffer,size,buffer.length-size,null);if(read.bytesRead===0)break;size+=read.bytesRead;}
+13:     signal.throwIfAborted();if(size>limit)throw new Error('DEMO_READY_CREDENTIAL_FILE_INVALID');return buffer.subarray(0,size);
+14:   }finally{await handle.close();}
+15: }
+16: export async function post(config:ClientConfig,body:string,status:boolean,signal:AbortSignal):Promise<Value> {
+17:   if(Buffer.byteLength(body)>16384)throw new Error('DEMO_READY_REQUEST_TOO_LARGE');
+18:   const ca=await boundedFile(config.caPath,1024**2,signal),token=(await boundedFile(config.tokenPath,16384,signal)).toString('utf8').trim();
+19:   if(!token||/[\s\u0000-\u001f]/u.test(token))throw new Error('DEMO_READY_TOKEN_INVALID');
+20:   const url=new URL(config.endpoint);if(status)url.pathname+='/status';
+21:   return new Promise((resolve,reject)=>{
+22:     const request=https.request(url,{method:'POST',ca,signal,headers:{authorization:`Bearer ${token}`,'content-type':'application/json','content-length':Buffer.byteLength(body)}},response=>{
+23:       const chunks:Buffer[]=[];let size=0;
+24:       response.on('data',(chunk:Buffer)=>{size+=chunk.length;if(size>16384){request.destroy(new Error('DEMO_READY_RESPONSE_TOO_LARGE'));return;}chunks.push(chunk);});
+25:       response.on('error',()=>reject(new Error('DEMO_READY_RESPONSE_UNRESOLVED')));
+26:       response.on('end',()=>{
+27:         if(signal.aborted){reject(new Error('DEMO_READY_CANCELLED'));return;}
+28:         if(response.statusCode!==200){reject(new Error(`DEMO_READY_HTTP_${response.statusCode??0}:unresolved`));return;}
+29:         try{resolve(object(JSON.parse(Buffer.concat(chunks).toString('utf8'))));}catch{reject(new Error('DEMO_READY_RESPONSE_INVALID'));}
+30:       });
+31:     });
+32:     request.on('error',()=>reject(new Error('DEMO_READY_TRANSPORT_UNRESOLVED')));request.end(body);
+33:   });
+34: }
+35: export function validateResponse(value:Value,request:Value,body:string):Value {
+36:   exact(value,['schemaVersion','leaseName','leaseUID','requestId','state','readyAt','expiresAt','requestDigest','retentionSeconds']);
+37:   const ready=Date.parse(text(value.readyAt)),expires=Date.parse(text(value.expiresAt));
+38:   if(value.schemaVersion!=='demo-ready-response.v1'||value.state!=='ready-for-acceptance'||value.requestDigest!==sha256Text(body)
+39:     ||['leaseName','leaseUID','requestId'].some(key=>value[key]!==request[key])||!Number.isFinite(ready)||value.retentionSeconds!==retention(request.retentionSeconds)||expires!==ready+retention(request.retentionSeconds)*1000
+40:     ||expires<=Date.now()||ready<Date.parse(text(request.observedAt)))throw new Error('DEMO_READY_RESPONSE_UNBOUND');
+41:   return value;
+42: }
+SOURCE skills/nova/plugins/demo-handoff/src/adapter.ts SHA256 245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855
+1: import path from 'node:path';
+2: import {canonicalJson,sha256Text,type AdapterActivationContext,type AdapterInstance,type EffectRequest} from '@kubeclaw/plugin-sdk';
+3: import {FileDurableRecordStore} from '@kubeclaw/plugin-foundation/observability/durable-records';
+4: import {NAMESPACE,exact,object,text,target,ref,type Value,type Reader} from './protocol.ts';
+5: import {bind,delivered,deliveryArtifact,requestBody,type BindingConfig,type Binding} from './binding.ts';
+6: import {post,validateResponse,type ClientConfig} from './controller-client.ts';
+7: interface Config extends BindingConfig,ClientConfig {readonly stateRoot:string;readonly timeoutMs:number;}
+8: function configuration(value:Value):Config {
+9:   exact(value,['candidateStageId','deliveryStageId','readyStageId','manifestStageId','operatorTarget','endpoint','tokenPath','caPath','stateRoot','timeoutMs']);
+10:   const endpoint=new URL(text(value.endpoint));
+11:   if(endpoint.protocol!=='https:'||endpoint.pathname!=='/v1/demo-ready'||endpoint.search||endpoint.hash||endpoint.username||endpoint.password||endpoint.href!==value.endpoint)throw new Error('DEMO_READY_ENDPOINT_INVALID');
+12:   const absolute=(item:unknown)=>{const result=text(item);if(!path.isAbsolute(result)||path.normalize(result)!==result)throw new Error('DEMO_READY_PATH_INVALID');return result;};
+13:   const timeoutMs=Number(value.timeoutMs);if(!Number.isSafeInteger(timeoutMs)||timeoutMs<100||timeoutMs>60000)throw new Error('DEMO_READY_DEADLINE_INVALID');
+14:   return {candidateStageId:text(value.candidateStageId),deliveryStageId:text(value.deliveryStageId),readyStageId:text(value.readyStageId),manifestStageId:text(value.manifestStageId),
+15:     operatorTarget:target(value.operatorTarget),endpoint:endpoint.href,tokenPath:absolute(value.tokenPath),caPath:absolute(value.caPath),stateRoot:absolute(value.stateRoot),timeoutMs};
+16: }
+17: function assertRequest(request:EffectRequest,config:Config):void {
+18:   if(request.capability!=='demo.handoff'||!['deliver','commit'].includes(request.operation)||request.resource.type!=='demo.candidate'||request.payload.namespace!==NAMESPACE)throw new Error('DEMO_HANDOFF_OPERATION_INVALID');
+19:   exact(request.payload,request.operation==='deliver'?['namespace','candidate']:['namespace','candidate','delivery']);
+20:   if(request.attempt.stageId!==(request.operation==='deliver'?config.deliveryStageId:config.readyStageId))throw new Error('DEMO_HANDOFF_PRODUCER_DENIED');
+21:   if(request.resource.canonicalId!==ref(request.payload.candidate).artifactId)throw new Error('DEMO_HANDOFF_RESOURCE_INVALID');
+22: }
+23: async function lookup(context:Reader,bound:Binding,config:Config):Promise<Value> {
+24:   return object(await context.invoke('operator.receipt',{operation:'lookup',resource:{type:'operator.target',canonicalId:config.operatorTarget},
+25:     payload:{deliveryId:bound.deliveryId,stageId:config.deliveryStageId,payload:bound.payload}}));
+26: }
+27: async function commit(records:FileDurableRecordStore,config:Config,body:string,signal:AbortSignal,recovery:boolean):Promise<Value|undefined> {
+28:   const request=object(JSON.parse(body)),key=text(request.requestId),stream='demo-ready/intents';
+29:   let previous=(await records.read<Value>(stream)).find(entry=>entry.idempotencyKey===key);
+30:   if(previous&&previous.payload.body!==body)throw new Error('DEMO_READY_INTENT_CONFLICT');
+31:   if(!previous&&recovery)return undefined;
+32:   let first=false;
+33:   if(!previous){const admitted=await records.append(stream,key,{schemaVersion:'demo-ready-intent.v1',body});previous=admitted.record;first=admitted.appended;}
+34:   signal.throwIfAborted();
+35:   const statusBody=JSON.stringify({schemaVersion:'demo-ready-status-request.v1',leaseName:request.leaseName,leaseUID:request.leaseUID,requestId:request.requestId});
+36:   let response:Value;
+37:   if(first){try{response=await post(config,body,false,signal);}catch{signal.throwIfAborted();response=await post(config,statusBody,true,signal);}}
+38:   else response=await post(config,statusBody,true,signal);
+39:   signal.throwIfAborted();const accepted=validateResponse(response,request,body);
+40:   await records.append('demo-ready/receipts',key,{schemaVersion:'demo-ready-commit.v1',requestDigest:sha256Text(body),response:accepted});
+41:   signal.throwIfAborted();return {schemaVersion:'demo-ready-commit.v1',candidateDigest:request.candidateDigest,requestDigest:sha256Text(body),response:accepted};
+42: }
+43: export function activate(context:AdapterActivationContext):AdapterInstance {
+44:   const config=configuration(context.config),stopping=new AbortController();
+45:   const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});
+46:   const execute=async(request:EffectRequest,signal:AbortSignal,recovery:boolean):Promise<Value|undefined>=>{
+47:     assertRequest(request,config);signal.throwIfAborted();
+48:     const reader:Reader={invoke:(capability,invocation)=>context.invoke(capability,invocation,{signal})};
+49:     const bound=await bind(reader,ref(request.payload.candidate),request.attempt.runId,config);
+50:     if(request.operation==='deliver') {
+51:       const receipt=recovery?await lookup(reader,bound,config):object(await context.invoke('operator.request',{operation:'publish',resource:{type:'operator.target',canonicalId:config.operatorTarget},payload:bound.payload},{signal,deliveryId:bound.deliveryId}));
+52:       // Even a returned completion is checked against the original durable request and receipt.
+53:       const authoritative=await lookup(reader,bound,config);
+54:       if(canonicalJson(receipt)!==canonicalJson(authoritative))throw new Error('DEMO_DELIVERY_RECEIPT_CHANGED');return deliveryArtifact(bound,authoritative);
+55:     }
+56:     const receipt=await delivered(reader,bound,ref(request.payload.delivery),request.attempt.runId,config);
+57:     const body=requestBody(bound,receipt);if(Buffer.byteLength(body)>16384)throw new Error('DEMO_READY_REQUEST_TOO_LARGE');
+58:     return commit(records,config,body,signal,recovery);
+59:   };
+60:   return {async ready(){stopping.signal.throwIfAborted();},async invoke(invocation){
+61:     if(!invocation.confidential)invocation.fence.assertCurrent();
+62:     const signal=AbortSignal.any([invocation.signal,stopping.signal,AbortSignal.timeout(config.timeoutMs)]);
+63:     const value=await execute(invocation.request,signal,false);signal.throwIfAborted();return value!;
+64:   },async receipt(request){
+65:     const signal=AbortSignal.any([stopping.signal,AbortSignal.timeout(config.timeoutMs)]);
+66:     const result=await execute(request,signal,true);signal.throwIfAborted();return result;
+67:   },async shutdown(){stopping.abort(new Error('DEMO_HANDOFF_SHUTDOWN'));}};
+68: }
+SOURCE skills/nova/plugins/demo-handoff/src/ready.ts SHA256 ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82
+1: import type {PluginInvocationContext,StageResult} from '@kubeclaw/plugin-sdk';
+2: import {NAMESPACE,object,exact,text,select,ref} from './protocol.ts';
+3: export async function execute(value:unknown,context:PluginInvocationContext):Promise<StageResult> {
+4:   try {
+5:     const input=object(value);exact(input,['candidateStageId','deliveryStageId']);
+6:     const candidate=select(context,text(input.candidateStageId),NAMESPACE),delivery=select(context,text(input.deliveryStageId),NAMESPACE);
+7:     const result=await context.invoke('demo.handoff',{operation:'commit',resource:{type:'demo.candidate',canonicalId:candidate.artifactId},payload:{namespace:NAMESPACE,candidate,delivery}});
+8:     const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:`demo-ready:${context.contract.lease.attempt.runId}`},payload:{namespace:NAMESPACE,mediaType:'application/json',value:result}});
+9:     return {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[ref(stored.artifact)]};
+10:   }catch(error){return {schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'demo.readiness_unresolved',message:error instanceof Error?error.message:String(error)},artifacts:[]};}
+11: }
+SOURCE skills/nova/plugins/demo-handoff/src/binding.ts SHA256 6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91
+1: import {canonicalJson,sha256Text,type ArtifactRef} from '@kubeclaw/plugin-sdk';
+2: import {discordWebhookPayload} from '@kubeclaw/plugin-operator-messaging/src/discord-payload.ts';
+3: import {NAMESPACE,object,exact,text,target,ref,read,evidence,deliveryIdentity,retention,type Reader,type Value} from './protocol.ts';
+4: export interface BindingConfig {readonly candidateStageId:string;readonly deliveryStageId:string;readonly readyStageId:string;readonly manifestStageId:string;readonly operatorTarget:string;}
+5: export async function bind(context:Reader,reference:ArtifactRef,runId:string,config:BindingConfig) {
+6:   const candidate=await read(context,reference,runId,config.candidateStageId,NAMESPACE);
+7:   exact(candidate,['schemaVersion','runId','manifest','authNodeId','protocol','operatorTarget','retentionSeconds','evidence']);
+8:   if(candidate.schemaVersion!=='demo-candidate.v1'||candidate.runId!==runId||candidate.protocol!=='json-session.v1'||target(candidate.operatorTarget)!==config.operatorTarget)throw new Error('DEMO_CANDIDATE_BINDING_INVALID');
+9:   retention(candidate.retentionSeconds);
+10:   const manifest=ref(candidate.manifest);if(manifest.producer.stageId!==config.manifestStageId||manifest.producer.runId!==runId)throw new Error('DEMO_MANIFEST_OWNER_INVALID');
+11:   const verified=await evidence(context,manifest,text(candidate.authNodeId));
+12:   if(canonicalJson(verified)!==canonicalJson(candidate.evidence)||verified.runId!==runId)throw new Error('DEMO_CANDIDATE_SOURCE_CHANGED');
+13:   const authentication=object(verified.authentication),credentials=object(object(verified.credentials).values);
+14:   const url=text(authentication.url);const parsed=new URL(url);
+15:   if(parsed.protocol!=='https:'||parsed.href!==url||parsed.username||parsed.password||parsed.search||parsed.hash)throw new Error('DEMO_PUBLIC_HTTPS_URL_REQUIRED');
+16:   const username=text(credentials.username,1024),password=text(credentials.password,1024);
+17:   const payload={type:'demo.access',severity:'success',title:'Demo access for acceptance',summary:url,
+18:     fields:[{name:'Username',value:username,inline:false},{name:'Password',value:password,inline:false}]};
+19:   const transport=discordWebhookPayload(payload),payloadDigest=sha256Text(JSON.stringify(transport));
+20:   return {reference,candidate,verified,authentication,payload,payloadDigest,deliveryId:deliveryIdentity(reference,config.operatorTarget)};
+21: }
+22: export type Binding=Awaited<ReturnType<typeof bind>>;
+23: export function deliveryArtifact(bound:Binding,receipt:Value):Value {
+24:   return {schemaVersion:'demo-delivery.v1',candidate:bound.reference,deliveryId:bound.deliveryId,payloadDigest:bound.payloadDigest,receipt};
+25: }
+26: export async function delivered(context:Reader,bound:Binding,reference:ArtifactRef,runId:string,config:BindingConfig):Promise<Value> {
+27:   const value=await read(context,reference,runId,config.deliveryStageId,NAMESPACE);
+28:   const receipt=object(await context.invoke('operator.receipt',{operation:'lookup',resource:{type:'operator.target',canonicalId:config.operatorTarget},
+29:     payload:{deliveryId:bound.deliveryId,stageId:config.deliveryStageId,payload:bound.payload}}));
+30:   if(canonicalJson(value)!==canonicalJson(deliveryArtifact(bound,receipt)))throw new Error('DEMO_DELIVERY_ARTIFACT_UNBOUND');return receipt;
+31: }
+32: export function requestBody(bound:Binding,receipt:Value):string {
+33:   const auth=bound.authentication;
+34:   if(!Number.isSafeInteger(auth.exposureGeneration)||Number(auth.exposureGeneration)<1)throw new Error('DEMO_EXPOSURE_GENERATION_INVALID');
+35:   const sourceRevision=text(bound.verified.sourceRevision);
+36:   if(!/^git:[a-f0-9]{40}$/u.test(sourceRevision))throw new Error('DEMO_SOURCE_REVISION_INVALID');
+37:   const request={schemaVersion:'demo-ready-request.v1',requestId:bound.deliveryId,runId:bound.candidate.runId,sourceRevision,candidateDigest:bound.reference.digest,
+38:     decisionDigest:bound.verified.decisionDigest,resultDigest:bound.verified.resultDigest,
+39:     leaseName:auth.leaseName,leaseUID:auth.leaseUID,namespace:auth.namespace,immutableImage:auth.immutableImage,manifestDigest:auth.manifestDigest,
+40:     credentialDigest:auth.credentialDigest,secretUID:auth.secretUID,exposureOwner:auth.exposureOwner,exposureGeneration:auth.exposureGeneration,
+41:     url:auth.url,observedAt:auth.observedAt,retentionSeconds:retention(bound.candidate.retentionSeconds),receipt};
+42:   return JSON.stringify(request);
+43: }
+SOURCE skills/nova/plugins/demo-handoff/src/protocol.ts SHA256 930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58
+1: import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
+2: import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type AdapterActivationContext } from '@kubeclaw/plugin-sdk';
+3: import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
+4: export const NAMESPACE='kubeclaw.demo-handoff';
+5: export type Value=Readonly<Record<string,unknown>>;
+6: export type Reader=Pick<AdapterActivationContext,'invoke'>;
+7: export function object(value:unknown):Value {
+8:   if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('DEMO_HANDOFF_OBJECT_INVALID');
+9:   return value as Value;
+10: }
+11: export function text(value:unknown,maximum=2048):string {
+12:   if(typeof value!=='string'||!value||value.length>maximum||/[\u0000-\u001f\u007f]/u.test(value))throw new Error('DEMO_HANDOFF_TEXT_INVALID');
+13:   return value;
+14: }
+15: export function exact(value:Value,keys:readonly string[]):void {
+16:   if(Object.keys(value).some(key=>!keys.includes(key))||keys.some(key=>value[key]===undefined))throw new Error('DEMO_HANDOFF_FIELDS_INVALID');
+17: }
+18: export function ref(value:unknown):ArtifactRef {validateContractValue('artifactRef',value);return value as ArtifactRef;}
+19: export function select(context:PluginInvocationContext,stageId:string,namespace:string):ArtifactRef {
+20:   const candidates=context.contract.artifacts.filter(item=>item.producer.runId===context.contract.lease.attempt.runId&&item.producer.stageId===stageId&&item.namespace===namespace);
+21:   const latest=Math.max(...candidates.map(item=>item.producer.attemptNumber));
+22:   const matches=candidates.filter(item=>item.producer.attemptNumber===latest);
+23:   if(matches.length!==1)throw new Error('DEMO_HANDOFF_REFERENCE_AMBIGUOUS');return matches[0]!;
+24: }
+25: export async function read(context:Reader,reference:ArtifactRef,runId:string,stageId:string,namespace:string):Promise<Value> {
+26:   if(reference.producer.runId!==runId||reference.producer.stageId!==stageId||reference.namespace!==namespace||reference.mediaType!=='application/json'
+27:     ||reference.sizeBytes<1||reference.sizeBytes>8*1024**2)throw new Error('DEMO_HANDOFF_ARTIFACT_OWNER_INVALID');
+28:   const response=await context.invoke('artifacts.read',{operation:'get_latest_json_bytes',resource:{type:'artifact.object',canonicalId:reference.artifactId},payload:{namespace,digest:reference.digest}});
+29:   if(canonicalJson(response.artifact)!==canonicalJson(reference))throw new Error('DEMO_HANDOFF_ARTIFACT_CHANGED');
+30:   const bytes=verifiedArtifactJsonText(response, reference);
+31:   if(response.digest!==reference.digest||response.sizeBytes!==reference.sizeBytes
+32:     ||Buffer.byteLength(bytes)!==reference.sizeBytes||sha256Text(bytes)!==reference.digest)throw new Error('DEMO_HANDOFF_ARTIFACT_CHANGED');
+33:   return object(response.value);
+34: }
+35: export function target(value:unknown):string {const result=text(value,128);if(!/^[a-z0-9][a-z0-9._:-]*$/u.test(result))throw new Error('DEMO_HANDOFF_TARGET_INVALID');return result;}
+36: export function deliveryIdentity(candidate:ArtifactRef,operatorTarget:string):string {
+37:   return `demo:${sha256Text(canonicalJson({runId:candidate.producer.runId,candidateDigest:candidate.digest,target:operatorTarget})).slice(7)}`;
+38: }
+39: export async function evidence(context:Reader,manifest:ArtifactRef,authNodeId:string):Promise<Value> {
+40:   return object(await context.invoke('test.plan.evidence',{operation:'demo',resource:{type:'test.plan.evidence',canonicalId:manifest.artifactId},payload:{namespace:manifest.namespace,manifest,authNodeId}}));
+41: }
+42: 
+43: export function retention(value:unknown=604800):number {
+44:   if(typeof value!=='number'||!Number.isSafeInteger(value)||value<1||value>9223372036)throw new Error('DEMO_RETENTION_INVALID');return value;
+45: }
+SOURCE skills/nova/plugins/demo-handoff/src/candidate.ts SHA256 0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3
+1: import type {PluginInvocationContext,StageResult} from '@kubeclaw/plugin-sdk';
+2: import {NAMESPACE,object,exact,text,target,select,evidence,ref,retention} from './protocol.ts';
+3: export async function execute(value:unknown,context:PluginInvocationContext):Promise<StageResult> {
+4:   try {
+5:     const input=object(value);exact(input,['manifestStageId','authNodeId','protocol','operatorTarget','retentionSeconds']);
+6:     if(input.protocol!=='json-session.v1')throw new Error('DEMO_HANDOFF_PROTOCOL_UNSUPPORTED');
+7:     const manifest=select(context,text(input.manifestStageId),'kubeclaw.project-summary');
+8:     const authNodeId=text(input.authNodeId),operatorTarget=target(input.operatorTarget);
+9:     const verified=await evidence(context,manifest,authNodeId);
+10:     const candidate={schemaVersion:'demo-candidate.v1',runId:context.contract.lease.attempt.runId,manifest,authNodeId,protocol:input.protocol,operatorTarget,retentionSeconds:retention(input.retentionSeconds),evidence:verified};
+11:     const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:`demo-candidate:${candidate.runId}`},payload:{namespace:NAMESPACE,mediaType:'application/json',value:candidate}});
+12:     return {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[ref(stored.artifact)]};
+13:   }catch(error){return {schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'demo.candidate_invalid',message:error instanceof Error?error.message:String(error)},artifacts:[]};}
+14: }
+SOURCE skills/nova/project/demo.ts SHA256 fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566
+1: import type {StageDefinition} from '@kubeclaw/plugin-sdk';
+2: import {validatePipelineTestGateContract,resolvedTestPlanDigest,type ResolvedTestPlanV1} from '@kubeclaw/pipeline-test-gate-contract';
+3: export interface Demo {readonly authNodeId:string;readonly protocol:'json-session.v1';readonly operatorTarget:string;readonly retentionSeconds:number;}
+4: function configuration(value:unknown):Demo {
+5:   if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('PROJECT_DEMO_INVALID');
+6:   const record=value as Record<string,unknown>;
+7:   if(Object.keys(record).some(key=>!['authNodeId','protocol','operatorTarget','retentionSeconds'].includes(key))
+8:     ||typeof record.authNodeId!=='string'||!record.authNodeId||record.authNodeId.length>2048||record.protocol!=='json-session.v1'
+9:     ||typeof record.operatorTarget!=='string'||!/^[a-z0-9][a-z0-9._:-]{0,127}$/u.test(record.operatorTarget))throw new Error('PROJECT_DEMO_INVALID');
+10:   const seconds=retention(record.retentionSeconds);
+11:   return {authNodeId:record.authNodeId,protocol:record.protocol,operatorTarget:record.operatorTarget,retentionSeconds:seconds};
+12: }
+13: function retention(value:unknown):number {
+14:   const seconds=value===undefined?604800:value;
+15:   if(typeof seconds!=='number'||!Number.isSafeInteger(seconds)||seconds<1||seconds>9223372036)throw new Error('PROJECT_DEMO_RETENTION_INVALID');return seconds;
+16: }
+17: function validatePlan(value:unknown,demo:Demo):void {
+18:   validatePipelineTestGateContract('resolvedTestPlan',value);const plan=value as ResolvedTestPlanV1;
+19:   const {planDigest,...unsigned}=plan;if(resolvedTestPlanDigest(unsigned)!==planDigest)throw new Error('PROJECT_DEMO_PLAN_DIGEST_MISMATCH');
+20:   const auth=plan.nodes.find(node=>node.id===demo.authNodeId);
+21:   assertAuthentication(auth,plan,demo);
+22:   const incoming=(nodeId:string,input:string)=>{const links=plan.links.filter(link=>link.to.nodeId===nodeId&&link.to.input===input);
+23:     if(links.length!==1)throw new Error('PROJECT_DEMO_SOURCE_LINK_REQUIRED');const link=links[0]!,node=plan.nodes.find(item=>item.id===link.from.nodeId);
+24:     if(!node||node.skipReason!==null)throw new Error('PROJECT_DEMO_SOURCE_NODE_REQUIRED');return {link,node};};
+25:   const deployment=incoming(demo.authNodeId,'deployment'),credentials=incoming(demo.authNodeId,'credentials'),exposure=incoming(demo.authNodeId,'exposure');
+26:   assertFixtures(deployment,credentials,exposure);
+27:   const source=incoming(exposure.node.id,'deployment');if(source.node.id!==deployment.node.id||source.link.from.output!==deployment.link.from.output)throw new Error('PROJECT_DEMO_EXPOSURE_BINDING_REQUIRED');
+28:   const image=incoming(deployment.node.id,'image'),manifest=incoming(deployment.node.id,'checked-manifest');
+29:   if(image.node.provider.packageId!=='kubeclaw.container-build'||image.link.kind!=='value'||image.link.schemaId!=='kubeclaw.container-image@1'
+30:     ||manifest.link.kind!=='artifact'||manifest.link.mediaType!=='application/vnd.kubeclaw.checked-kubernetes-yaml')throw new Error('PROJECT_DEMO_SOURCE_BUILD_REQUIRED');
+31: }
+32: export function normalizeDemo(value:unknown):Demo|undefined {return value===undefined?undefined:configuration(value);}
+33: export function demoStages(value:unknown,plan:unknown):StageDefinition[] {
+34:   if(value===undefined)return [];
+35:   const demo=configuration(value);validatePlan(plan,demo);
+36:   const execution={maxAttempts:2,maxRemediationCycles:0,maxTechnicalRetries:1,timeoutMs:120000};
+37:   return [{id:'demo-candidate',type:'kubeclaw.demo.candidate',dependsOn:['project-summary'],config:{},input:{manifestStageId:'project-summary',...demo},execution},
+38:     {id:'demo-delivery',type:'kubeclaw.demo.delivery',dependsOn:['demo-candidate'],config:{},input:{candidateStageId:'demo-candidate'},execution},
+39:     {id:'demo-ready',type:'kubeclaw.demo.ready',dependsOn:['demo-delivery'],config:{},input:{candidateStageId:'demo-candidate',deliveryStageId:'demo-delivery'},execution}];
+40: }
+41: 
+42: function assertAuthentication(auth:ResolvedTestPlanV1['nodes'][number]|undefined,plan:ResolvedTestPlanV1,demo:Demo):void {
+43:   if(!auth||auth.kind!=='test'||auth.mode!=='blocking'||auth.skipReason!==null||auth.provider.packageId!=='kubeclaw.demo-auth-smoke'
+44:     ||auth.provider.contractId!=='kubeclaw.demo-auth-smoke@1'||auth.configuration.values.protocol!==demo.protocol
+45:     ||!plan.coverage?.policy.requiredChecks.some(check=>check.nodeIds.includes(auth.id)))throw new Error('PROJECT_DEMO_BLOCKING_AUTH_REQUIRED');
+46: }
+47: 
+48: type Linked={readonly link:ResolvedTestPlanV1['links'][number];readonly node:ResolvedTestPlanV1['nodes'][number]};
+49: function assertFixtures(deployment:Linked,credentials:Linked,exposure:Linked):void {
+50:   if(deployment.node.provider.packageId!=='kubeclaw.kubernetes-fixture'||deployment.node.id!==credentials.node.id
+51:     ||deployment.link.kind!=='value'||deployment.link.schemaId!=='kubeclaw.kubernetes-deployment-fixture@1'
+52:     ||credentials.link.kind!=='value'||credentials.link.schemaId!=='kubeclaw.generated-demo-credentials@1'
+53:     ||exposure.node.provider.packageId!=='kubeclaw.tailscale-exposure'||exposure.link.kind!=='value'||exposure.link.schemaId!=='kubeclaw.public-endpoint-fixture@1'
+54:     ||exposure.node.configuration.values.retentionMode!=='await-readiness')throw new Error('PROJECT_DEMO_FIXTURE_BINDING_REQUIRED');
+55: }
+SOURCE skills/common/plugin-runtime/foundation/observability/durable-records.ts SHA256 ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553
+1: export { FileDurableBlobStore, type DurableBlobStore } from './durable-blobs.ts';
+2: import { readStoreRecords, withRetainedStoreFence } from './durable-record-dependency.ts';
+3: import {assertDurableRecordReplay, assertRetirementIntent, payloadDigest, ownerValid, existingRecord,
+4:   type DurableRecord, type DurableRecordState, type RecordRetirementIntent, type RecordRetirement} from './record-retirement.ts';
+5: export {assertDurableRecordReplay} from './record-retirement.ts';
+6: export type {DurableRecord, DurableRecordState, RecordRetirementIntent, RecordRetirement, RecordTombstone} from './record-retirement.ts';
+7: import path from "node:path";
+8: import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";
+9: import {
+10:   readDurableState,
+11:   withDurableStoreLock,
+12:   writeDurableState,
+13: } from "./durable-delivery.ts";
+14: 
+15: export interface DurableRecordLimits {
+16:   readonly maximumRecords: number;
+17:   readonly maximumBytes: number;
+18:   readonly maximumRecordBytes: number;
+19: }
+20: 
+21: export interface DurableRecordStore {
+22:   append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{
+23:     readonly appended: boolean;
+24:     readonly record: DurableRecord<T>;
+25:   }>;
+26:   transition<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string, payload: T): Promise<DurableRecord<T>>;
+27:   read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>>;
+28: }
+29: 
+30: const EMPTY_STATE: DurableRecordState = {
+31:   schemaVersion: "pipeline-durable-record-store.v1",
+32:   records: [],
+33: };
+34: const IDENTITY = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/;
+35: const DIGEST = /^sha256:[a-f0-9]{64}$/;
+36: 
+37: function positiveInteger(value: number, code: string): void {
+38:   if (!Number.isSafeInteger(value) || value < 1) throw new Error(code);
+39: }
+40: 
+41: function identity(value: string, code: string): void {
+42:   if (!IDENTITY.test(value)) throw new Error(code);
+43: }
+44: 
+45: 
+46: export class FileDurableRecordStore implements DurableRecordStore {
+47:   readonly #file: string;
+48:   readonly #limits: DurableRecordLimits;
+49:   #queue: Promise<unknown> = Promise.resolve();
+50: 
+51:   constructor(root: string, limits: DurableRecordLimits) {
+52:     positiveInteger(limits.maximumRecords, "DURABLE_RECORD_LIMIT_INVALID");
+53:     positiveInteger(limits.maximumBytes, "DURABLE_RECORD_LIMIT_INVALID");
+54:     positiveInteger(limits.maximumRecordBytes, "DURABLE_RECORD_LIMIT_INVALID");
+55:     this.#file = path.join(path.resolve(root), "records", "store.json");
+56:     this.#limits = limits;
+57:   }
+58: 
+59:   #serial<T>(operation: () => Promise<T>): Promise<T> {
+60:     const locked = () => withDurableStoreLock(this.#file, operation);
+61:     const result = this.#queue.then(locked, locked);
+62:     this.#queue = result.then(() => undefined, () => undefined);
+63:     return result;
+64:   }
+65: 
+66:   async append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{
+67:     readonly appended: boolean;
+68:     readonly record: DurableRecord<T>;
+69:   }> {
+70:     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
+71:     identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");
+72:     if (owner !== undefined && !ownerValid(owner)) throw new Error("DURABLE_RECORD_OWNER_INVALID");
+73:     const snapshot = JSON.parse(canonicalJson(payload)) as T;
+74:     const digest = payloadDigest(snapshot);
+75:     if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)
+76:       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
+77:     return this.#serial(async () => {
+78:       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
+79:       assertDurableRecordReplay(state);
+80:       const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);
+81:       if (duplicate) return { appended: false, record: duplicate };
+82:       if (state.records.length >= this.#limits.maximumRecords)
+83:         throw new Error("DURABLE_RECORD_STORE_FULL");
+84:       const record: DurableRecord<T> = {
+85:         schemaVersion: owner === undefined ? "pipeline-durable-record.v1" : "pipeline-durable-record.v2",
+86:         ...(owner === undefined ? {} : { owner }),
+87:         stream,
+88:         sequence: state.records.filter((entry) => entry.stream === stream).length + (state.tombstones?.filter(entry => entry.stream === stream).length ?? 0) + 1,
+89:         idempotencyKey,
+90:         committedAt: new Date().toISOString(),
+91:         payloadDigest: digest,
+92:         payload: snapshot,
+93:       };
+94:       const candidate: DurableRecordState = owner === undefined ? { ...state, records: [...state.records, record] }
+95:         : { ...state, schemaVersion: 'pipeline-durable-record-store.v2', records: [...state.records, record], tombstones: state.tombstones ?? [], retirements: state.retirements ?? [] };
+96:       if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)
+97:         throw new Error("DURABLE_RECORD_STORE_FULL");
+98:       await writeDurableState(this.#file, candidate);
+99:       return { appended: true, record: structuredClone(record) };
+100:     });
+101:   }
+102: 
+103:   async read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>> {
+104:     return this.withRecords<T, ReadonlyArray<DurableRecord<T>>>(stream, async records => records);
+105:   }
+106: 
+107:   /** Domain owners may inspect records while holding this store's writer fence.
+108:    * Never reenter this store from operation; acquire other stores in a fixed order. */
+109:   async withRecords<T, R>(stream: string, operation: (records: ReadonlyArray<DurableRecord<T>>) => Promise<R>): Promise<R> {
+110:     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
+111:     return this.#serial(async () => operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream)));
+112:   }
+113: 
+114:   async retirements(stream: string): Promise<readonly RecordRetirement[]> {
+115:     identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+116:     return this.#serial(async () => {
+117:       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);
+118:       return structuredClone((state.retirements ?? []).filter(entry => entry.intent.stream === stream));
+119:     });
+120:   }
+121: 
+122:   /** Caller holds its domain fence; authorize runs again inside the real store writer fence. */
+123:   async retire(intentInput: RecordRetirementIntent, authorize: (records: readonly DurableRecord[]) => Promise<void>): Promise<RecordRetirement & { readonly newlyRetired: boolean; readonly releasedBytes: number }> {
+124:     const intent = JSON.parse(canonicalJson(intentInput)) as RecordRetirementIntent; assertRetirementIntent(intent);
+125:     const intentDigest = payloadDigest(intent);
+126:     return this.#serial(async () => {
+127:       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);
+128:       const previous = state.retirements?.find(item => item.intent.operationId === intent.operationId);
+129:       if (previous) {
+130:         if (previous.intentDigest !== intentDigest) throw new Error('DURABLE_RETIREMENT_CONFLICT');
+131:         await authorize([]);
+132:         return { ...structuredClone(previous), newlyRetired: false, releasedBytes: Number.parseInt(previous.releasedBytesHex,16) };
+133:       }
+134:       const selected = intent.records.map(item => {
+135:         const record = state.records.find(entry => entry.stream === intent.stream && entry.idempotencyKey === item.idempotencyKey);
+136:         if (!record || record.schemaVersion !== 'pipeline-durable-record.v2' || record.owner !== intent.owner
+137:           || record.payloadDigest !== item.payloadDigest) throw new Error('DURABLE_RETIREMENT_RECORD_CHANGED');
+138:         return record;
+139:       });
+140:       await authorize(structuredClone(selected));
+141:       const selectedIds = new Set(selected.map(record => record.idempotencyKey));
+142:       const retirement = { intent, intentDigest, releasedBytesHex: '0000000000000000' };
+143:       const candidate: DurableRecordState = {
+144:         schemaVersion: 'pipeline-durable-record-store.v2',
+145:         records: state.records.filter(record => record.stream !== intent.stream || !selectedIds.has(record.idempotencyKey)),
+146:         tombstones: [...state.tombstones ?? [], ...selected.map(record => {
+147:           const { payload: _payload, ...header } = record; return { ...header, retirementId: intent.operationId };
+148:         })], retirements: [...state.retirements ?? [], retirement],
+149:       };
+150:       const before = Buffer.byteLength(canonicalJson(state));
+151:       // Fixed-width hex avoids a self-referential decimal digit-count equation.
+152:       const releasedBytes = before - Buffer.byteLength(canonicalJson(candidate));
+153:       if (releasedBytes < 1) throw new Error('DURABLE_RETIREMENT_NO_SAVING');
+154:       retirement.releasedBytesHex = releasedBytes.toString(16).padStart(16,'0');
+155:       assertDurableRecordReplay(candidate);
+156:       if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes) throw new Error('DURABLE_RECORD_STORE_FULL');
+157:       await writeDurableState(this.#file, candidate);
+158:       return { ...structuredClone(retirement), newlyRetired: true, releasedBytes };
+159:     });
+160:   }
+161: 
+162:   async transition<T>(
+163:     stream: string,
+164:     idempotencyKey: string,
+165:     expectedPayloadDigest: string,
+166:     payload: T,
+167:     authorize?: (records: ReadonlyArray<DurableRecord>) => void,
+168:   ): Promise<DurableRecord<T>> {
+169:     const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);
+170:     return this.#serial(() => this.#transitionLocked(stream, idempotencyKey, expectedPayloadDigest, snapshot, digest, authorize));
+171:   }
+172: 
+173:   /** Hold the owner writer before its retained dependency writer through the
+174:    * original durable transition. Domain callers must use one fixed store order. */
+175:   async transitionWithRetainedStore<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string,
+176:     payload: T, retained: FileDurableRecordStore, retainedStream: string,
+177:     authorize: (records: ReadonlyArray<DurableRecord>, retainedRecords: ReadonlyArray<DurableRecord>) => void,
+178:   ): Promise<DurableRecord<T>> {
+179:     const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);
+180:     return this.#withRetainedStore(retained, retainedStream, retainedRecords =>
+181:       this.#transitionLocked(stream, idempotencyKey, expectedPayloadDigest, snapshot, digest,
+182:         records => authorize(records, retainedRecords)));
+183:   }
+184: 
+185:   /** Read-owned snapshots with the same fixed two-store fence as a retained transition. */
+186:   async withRetainedRecords<T, R>(stream: string, retained: FileDurableRecordStore, retainedStream: string,
+187:     operation: (records: readonly DurableRecord<T>[], retainedRecords: readonly DurableRecord[]) => Promise<R>,
+188:   ): Promise<R> {
+189:     identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+190:     return this.#withRetainedStore(retained, retainedStream, async records =>
+191:       operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream), records));
+192:   }
+193: 
+194:   #withRetainedStore<R>(retained: FileDurableRecordStore, stream: string, operation: (records: readonly DurableRecord[]) => Promise<R>): Promise<R> {
+195:     identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+196:     return withRetainedStoreFence({ ownerFile: this.#file, retainedFile: retained.#file,
+197:       owner: callback => this.#serial(callback), retained: callback => retained.withRecords(stream, callback) }, operation);
+198:   }
+199: 
+200:   #transitionCandidate<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string, payload: T): { snapshot: T; digest: string } {
+201:     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
+202:     identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");
+203:     if (!DIGEST.test(expectedPayloadDigest)) throw new Error("DURABLE_RECORD_DIGEST_INVALID");
+204:     const snapshot = JSON.parse(canonicalJson(payload)) as T;
+205:     const digest = payloadDigest(snapshot);
+206:     if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)
+207:       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
+208:     return { snapshot, digest };
+209:   }
+210: 
+211:   async #transitionLocked<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string,
+212:     snapshot: T, digest: string, authorize?: (records: ReadonlyArray<DurableRecord>) => void,
+213:   ): Promise<DurableRecord<T>> {
+214:       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
+215:       assertDurableRecordReplay(state);
+216:       const index = state.records.findIndex(
+217:         (record) => record.stream === stream && record.idempotencyKey === idempotencyKey,
+218:       );
+219:       if (index < 0) {
+220:         if (state.tombstones?.some(record => record.stream === stream && record.idempotencyKey === idempotencyKey)) throw new Error('DURABLE_RECORD_RETIRED');
+221:         throw new Error("DURABLE_RECORD_NOT_FOUND");
+222:       }
+223:       const existing = state.records[index];
+224:       if (!existing) throw new Error("DURABLE_RECORD_NOT_FOUND");
+225:       if (existing.payloadDigest !== expectedPayloadDigest)
+226:         throw new Error("DURABLE_RECORD_TRANSITION_CONFLICT");
+227:       const record: DurableRecord<T> = {
+228:         ...existing,
+229:         committedAt: new Date().toISOString(),
+230:         payloadDigest: digest,
+231:         payload: snapshot,
+232:       };
+233:       const next = [...state.records];
+234:       next[index] = record;
+235:       const candidate: DurableRecordState = { ...state, records: next };
+236:       if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)
+237:         throw new Error("DURABLE_RECORD_STORE_FULL");
+238:       // The domain fence is already held; the final check must not yield or
+239:       // reenter this store between its CAS comparison and durable write.
+240:       if (authorize?.(structuredClone(state.records)) !== undefined) throw new Error('DURABLE_RECORD_AUTHORIZATION_NOT_SYNCHRONOUS');
+241:       await writeDurableState(this.#file, candidate);
+242:       return structuredClone(record);
+243: 
+244:   }
+245: }
+246: 
+SOURCE cmd/buster-namespace-controller/demo-retention.go SHA256 4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7
+1: package main
+2: 
+3: import (
+4: 	"encoding/json"
+5: 	"errors"
+6: 	"time"
+7: )
+8: 
+9: const defaultDemoRetentionSeconds int64 = 604800
+10: 
+11: // Technical arithmetic bound only; this is not an operational retention policy.
+12: const maximumDemoRetentionSeconds int64 = (1<<63 - 1) / int64(time.Second)
+13: 
+14: func parseDemoRetention(raw json.RawMessage) (int64, error) {
+15: 	if len(raw) == 0 {
+16: 		return defaultDemoRetentionSeconds, nil
+17: 	}
+18: 	var seconds int64
+19: 	if string(raw) == "null" || json.Unmarshal(raw, &seconds) != nil || seconds < 1 || seconds > maximumDemoRetentionSeconds {
+20: 		return 0, errors.New("DEMO_READY_RETENTION_INVALID")
+21: 	}
+22: 	return seconds, nil
+23: }
+24: 
+25: func storedDemoRetention(state map[string]interface{}) (int64, error) {
+26: 	value, exists := state["retentionSeconds"]
+27: 	if state["schemaVersion"] == "demo-readiness.v1" && !exists {
+28: 		// Only the actual historical schema has implicit seven-day retention.
+29: 		return defaultDemoRetentionSeconds, nil
+30: 	}
+31: 	if state["schemaVersion"] != "demo-readiness.v2" || !exists {
+32: 		return 0, errors.New("DEMO_READY_RETENTION_INVALID")
+33: 	}
+34: 	raw, err := json.Marshal(value)
+35: 	if err != nil {
+36: 		return 0, errors.New("DEMO_READY_RETENTION_INVALID")
+37: 	}
+38: 	return parseDemoRetention(raw)
+39: }
+40: 
+41: func demoRetentionDeadline(ready time.Time, seconds int64) (time.Time, error) {
+42: 	if seconds < 1 || seconds > maximumDemoRetentionSeconds {
+43: 		return time.Time{}, errors.New("DEMO_READY_RETENTION_INVALID")
+44: 	}
+45: 	expires := ready.Add(time.Duration(seconds) * time.Second)
+46: 	if ready.Year() < 1 || ready.Year() > 9999 || expires.Year() < 1 || expires.Year() > 9999 {
+47: 		return time.Time{}, errors.New("DEMO_READY_RETENTION_INVALID")
+48: 	}
+49: 	return expires, nil
+50: }

@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -38,7 +41,7 @@ const granted = core.resolveCapabilityGrants(snapshot, {
 });
 const activated = await core.activateRegistry(snapshot, new Set(granted.grants.keys()));
 const effects = new core.EffectCoordinator(
-  new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')),
+  new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY),
   undefined,
   undefined,
   new core.MemoryResourceLockManager(), 300_000,
@@ -48,14 +51,14 @@ const adapters = new core.AdapterRuntime({
   activated,
   configs: new Map([
     ['kubeclaw.repository-adapter:repository', { repositoryRoot: repository }],
-    ['kubeclaw.artifact-store:artifact-store', { artifactRoot: artifacts }],
+    ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: artifacts }],
   ]),
   effects,
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });
 await adapters.start();
-const runner = new core.PipelineRunner({
+const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
   definition: {
     schemaVersion: 'pipeline-definition.v2',
     id: 'pipeline:e2e',
@@ -76,7 +79,7 @@ const runner = new core.PipelineRunner({
   registry: granted,
   activated,
   adapters,
-  journal: new core.FileJournal(path.join(temporary, 'events.jsonl')),
+  journal: new core.FileJournal(path.join(temporary, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
 });
 const result = await runner.run('run:e2e');
 assert.equal(result.status, 'succeeded');

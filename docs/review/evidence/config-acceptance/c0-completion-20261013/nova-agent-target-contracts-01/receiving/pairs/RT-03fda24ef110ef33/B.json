@@ -1,0 +1,6 @@
+{
+  "agent": "prism",
+  "target": "case-operator-b",
+  "issuerId": "case-issuer-a",
+  "timeoutMinutes": 60
+}

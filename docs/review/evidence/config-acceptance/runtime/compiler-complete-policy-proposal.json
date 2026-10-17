@@ -1,0 +1,36 @@
+{
+  "module": {
+    "repairBudget": {
+      "categories": {
+        "lint": 2,
+        "review": 2,
+        "test": 2
+      },
+      "maximumOrchestratorOrders": 1
+    },
+    "maxTechnicalRetries": 1,
+    "timeoutMs": 1800000
+  },
+  "cumulative": {
+    "maxAttempts": 2,
+    "maxRemediationCycles": 0,
+    "maxTechnicalRetries": 1,
+    "timeoutMs": 1800000
+  },
+  "source": {
+    "maxAttempts": 1,
+    "maxRemediationCycles": 0,
+    "timeoutMs": 120000,
+    "architectureApprovalMaxAttempts": 2
+  },
+  "demo": {
+    "maxAttempts": 2,
+    "maxRemediationCycles": 0,
+    "maxTechnicalRetries": 1,
+    "timeoutMs": 120000,
+    "retentionSeconds": 604800
+  },
+  "publicationLane": {
+    "maxConcurrency": 1
+  }
+}

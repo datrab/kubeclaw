@@ -1,4 +1,4 @@
-# ConfigMap: component bundle mounted as one generation, plus canonical lint policy.
+# ConfigMap: lint policy only. Runtime settings stay in the image-owned generation.
 # Init copies lint files only; the operator bundle is never copied to the config PVC.
 apiVersion: v1
 kind: ConfigMap
@@ -7,10 +7,6 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 data:
-{{- range $name, $contents := (include "kubeclaw.swarmBundle" . | mustFromJson) }}
-  {{ $name }}: |
-{{ $contents | indent 4 }}
-{{- end }}
   .semgrep.yml: |
 {{- if .Values.semgrepConfigYaml }}
 {{ .Values.semgrepConfigYaml | indent 4 }}

@@ -1,0 +1,168 @@
+{
+  "scope": "actual pure proposed own target JSONschema and BigInt correlation controls only; native/API/kubelet/node installed/version/grants/host maintenance untouched; NOT primary Kubernetes schema replacement",
+  "records": [
+    {
+      "id": "DLV-C0-DLS-HOST-TARGET-A",
+      "validSchema": true,
+      "errors": null,
+      "validCorrelations": true,
+      "diagnostic": null,
+      "expectedSchema": true,
+      "expectedSemantic": true,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-TARGET-B",
+      "validSchema": true,
+      "errors": null,
+      "validCorrelations": true,
+      "diagnostic": null,
+      "expectedSchema": true,
+      "expectedSemantic": true,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-OLD-EQUAL-VERSION",
+      "validSchema": false,
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "runtime"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ],
+      "validCorrelations": null,
+      "diagnostic": null,
+      "expectedSchema": false,
+      "expectedSemantic": true,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-EXTRA-ROLE",
+      "validSchema": false,
+      "errors": [
+        {
+          "instancePath": "/pools",
+          "schemaPath": "#/properties/pools/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "third"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ],
+      "validCorrelations": null,
+      "diagnostic": null,
+      "expectedSchema": false,
+      "expectedSemantic": true,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-MISSING-PERIOD",
+      "validSchema": false,
+      "errors": [
+        {
+          "instancePath": "/pools/buster",
+          "schemaPath": "#/properties/pools/properties/buster/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "cpuPeriodMicroseconds"
+          },
+          "message": "must have required property 'cpuPeriodMicroseconds'"
+        }
+      ],
+      "validCorrelations": null,
+      "diagnostic": null,
+      "expectedSchema": false,
+      "expectedSemantic": true,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-PAGE-MISALIGNMENT",
+      "validSchema": false,
+      "errors": [
+        {
+          "instancePath": "/pools/buster/memoryBytes",
+          "schemaPath": "#/properties/pools/properties/buster/properties/memoryBytes/multipleOf",
+          "keyword": "multipleOf",
+          "params": {
+            "multipleOf": 4096
+          },
+          "message": "must be multiple of 4096"
+        }
+      ],
+      "validCorrelations": null,
+      "diagnostic": null,
+      "expectedSchema": false,
+      "expectedSemantic": true,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-PERIOD-OUTSIDE",
+      "validSchema": false,
+      "errors": [
+        {
+          "instancePath": "/pools/buster/cpuPeriodMicroseconds",
+          "schemaPath": "#/properties/pools/properties/buster/properties/cpuPeriodMicroseconds/maximum",
+          "keyword": "maximum",
+          "params": {
+            "comparison": "<=",
+            "limit": 1000000
+          },
+          "message": "must be <= 1000000"
+        }
+      ],
+      "validCorrelations": null,
+      "diagnostic": null,
+      "expectedSchema": false,
+      "expectedSemantic": true,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-NONINTEGRAL-RATE",
+      "validSchema": true,
+      "errors": null,
+      "validCorrelations": false,
+      "diagnostic": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID",
+      "expectedSchema": true,
+      "expectedSemantic": false,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-QUOTA-BELOW-NATIVE-MIN",
+      "validSchema": true,
+      "errors": null,
+      "validCorrelations": false,
+      "diagnostic": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID",
+      "expectedSchema": true,
+      "expectedSemantic": false,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-DLS-HOST-AGGREGATE-OVERFLOW",
+      "validSchema": true,
+      "errors": null,
+      "validCorrelations": false,
+      "diagnostic": "NATIVE_NODE_TOTAL_RANGE_INVALID",
+      "expectedSchema": true,
+      "expectedSemantic": false,
+      "result": "passed"
+    }
+  ],
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json": "1ddbd67b3c3e62228c0354a3082454a61f9cbdb46848c13997c7a6a8d95799b6",
+    "docs/review/evidence/config-acceptance/delivery/check-native-host-target-definition-20261013.cjs": "678bcb44e14294be712a326f484b472a4524682e9f7bbb68582cf1f5376d9c92",
+    "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+    "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a"
+  },
+  "tools": {
+    "node": "v24.21.0",
+    "ajv": "8.20.0",
+    "jsYaml": "4.3.1"
+  },
+  "acceptance": "NOT ACCEPTED; independent material review pending"
+}

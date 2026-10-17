@@ -20,7 +20,7 @@ export async function deliverObserver(options: ObserverRuntimeOptions, now: () =
   const timeoutMs = entry.registration.failurePolicy.timeoutMs; const timestamp = now();
   const leaseContract = { schemaVersion: 'invocation-lease.v2' as const, leaseId: `lease:${crypto.randomUUID()}`, attempt,
     registration: entry.provenance, status: 'active' as const, grants: [...(options.registry.grants.get(observerId) ?? [])],
-    limits: { wallTimeMs: timeoutMs, memoryBytes: 256 * 1024 * 1024, cpuMillis: timeoutMs }, issuedAt: timestamp.toISOString(),
+    limits: { wallTimeMs: timeoutMs, memoryBytes: options.memoryBytes, cpuMillis: timeoutMs }, issuedAt: timestamp.toISOString(),
     expiresAt: new Date(timestamp.getTime() + timeoutMs).toISOString() };
   const lease = new RevocableLease(leaseContract, now); const controller = new AbortController();
   const delivery: ObserverDelivery = { schemaVersion: 'observer-delivery.v2', deliveryId: `delivery:${observerId}:${event.eventId}`,

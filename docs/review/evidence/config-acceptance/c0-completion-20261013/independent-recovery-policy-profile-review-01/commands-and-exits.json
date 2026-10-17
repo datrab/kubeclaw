@@ -1,0 +1,18 @@
+{
+  "scope": "only existing narrow pure collector; shell redirection to reviewer-owned logs",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replays": [
+    {
+      "cmd": "node docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/replay > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/replay.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/replay.stderr",
+      "chunk_id": "597487",
+      "wall_time_seconds": 0.270590651,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ],
+  "stdout": "replay.stdout",
+  "stderr": "replay.stderr",
+  "toolAndInputIdentity": "replay/definition-receipt.json",
+  "noOtherRuntimeExecution": true
+}

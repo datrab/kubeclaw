@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-studio",
+  "profiles": {
+    "grouped-B": {
+      "settings": {
+        "port": 8080,
+        "controlTimeoutMs": 30000,
+        "controlUrl": "http://prism-control:8080"
+      }
+    }
+  }
+}

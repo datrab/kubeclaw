@@ -1,0 +1,303 @@
+{
+  "qualification": "Unsigned publicstructuralfixture, notinstalledrole/deployedpeer/grant/capacity; no secretbytes",
+  "callers": [
+    {
+      "callerId": "buster-preparation",
+      "role": "buster",
+      "instanceId": "fixture.service.buster-preparation",
+      "owners": [
+        "buster-engine"
+      ]
+    },
+    {
+      "callerId": "buster-runtime",
+      "role": "buster",
+      "instanceId": "fixture.service.buster-runtime",
+      "owners": [
+        "buster-engine",
+        "worker-core"
+      ]
+    }
+  ],
+  "actualProviderDeclarations": [
+    {
+      "pluginId": "kubeclaw.http",
+      "registrationId": "request",
+      "contractId": "kubeclaw.http@1",
+      "requiredCapabilities": [
+        "network.http"
+      ],
+      "manifestPath": "skills/buster/plugins/http/plugin.json",
+      "manifestSha256": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.tailscale-exposure",
+      "registrationId": "exposure",
+      "contractId": "kubeclaw.tailscale-exposure@1",
+      "requiredCapabilities": [
+        "kubernetes.exposure"
+      ],
+      "manifestPath": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "manifestSha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.size-budget",
+      "registrationId": "artifact",
+      "contractId": "kubeclaw.size-budget@1",
+      "requiredCapabilities": [],
+      "manifestPath": "skills/buster/plugins/size-budget/plugin.json",
+      "manifestSha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.demo-auth-smoke",
+      "registrationId": "session",
+      "contractId": "kubeclaw.demo-auth-smoke@1",
+      "requiredCapabilities": [
+        "network.http"
+      ],
+      "manifestPath": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "manifestSha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.api-flow",
+      "registrationId": "flow",
+      "contractId": "kubeclaw.api-flow@1",
+      "requiredCapabilities": [
+        "network.http"
+      ],
+      "manifestPath": "skills/buster/plugins/api-flow/plugin.json",
+      "manifestSha256": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.kubernetes-fixture",
+      "registrationId": "deployment",
+      "contractId": "kubeclaw.kubernetes-fixture@1",
+      "requiredCapabilities": [
+        "kubernetes.fixture"
+      ],
+      "manifestPath": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "manifestSha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.direct-command",
+      "registrationId": "command",
+      "contractId": "kubeclaw.direct-command@1",
+      "requiredCapabilities": [
+        "command.execute"
+      ],
+      "manifestPath": "skills/buster/plugins/direct-command/plugin.json",
+      "manifestSha256": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.openapi",
+      "registrationId": "operations",
+      "contractId": "kubeclaw.openapi@1",
+      "requiredCapabilities": [
+        "network.http"
+      ],
+      "manifestPath": "skills/buster/plugins/openapi/plugin.json",
+      "manifestSha256": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.security-providers",
+      "registrationId": "headers",
+      "contractId": "kubeclaw.security-headers@1",
+      "requiredCapabilities": [
+        "network.http"
+      ],
+      "manifestPath": "skills/buster/plugins/security-providers/plugin.json",
+      "manifestSha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.security-providers",
+      "registrationId": "dependency-trivy",
+      "contractId": "kubeclaw.dependency-scan-trivy@1",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "manifestPath": "skills/buster/plugins/security-providers/plugin.json",
+      "manifestSha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.security-providers",
+      "registrationId": "image-trivy",
+      "contractId": "kubeclaw.image-scan-trivy@1",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "manifestPath": "skills/buster/plugins/security-providers/plugin.json",
+      "manifestSha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.security-providers",
+      "registrationId": "kubernetes-policy",
+      "contractId": "kubeclaw.kubernetes-policy-security@1",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "manifestPath": "skills/buster/plugins/security-providers/plugin.json",
+      "manifestSha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.security-providers",
+      "registrationId": "kubernetes-runtime",
+      "contractId": "kubeclaw.kubernetes-runtime-security@1",
+      "requiredCapabilities": [
+        "kubernetes.runtime-security"
+      ],
+      "manifestPath": "skills/buster/plugins/security-providers/plugin.json",
+      "manifestSha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.playwright",
+      "registrationId": "playwright",
+      "contractId": "kubeclaw.playwright@1",
+      "requiredCapabilities": [
+        "browser.playwright"
+      ],
+      "manifestPath": "skills/buster/plugins/playwright/plugin.json",
+      "manifestSha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.lighthouse",
+      "registrationId": "lighthouse",
+      "contractId": "kubeclaw.lighthouse@1",
+      "requiredCapabilities": [
+        "browser.lighthouse"
+      ],
+      "manifestPath": "skills/buster/plugins/lighthouse/plugin.json",
+      "manifestSha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.axe",
+      "registrationId": "axe",
+      "contractId": "kubeclaw.axe@1",
+      "requiredCapabilities": [
+        "browser.axe"
+      ],
+      "manifestPath": "skills/buster/plugins/axe/plugin.json",
+      "manifestSha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.container-build",
+      "registrationId": "buildkit",
+      "contractId": "kubeclaw.container-build@1",
+      "requiredCapabilities": [
+        "container.build"
+      ],
+      "manifestPath": "skills/buster/plugins/container-build/plugin.json",
+      "manifestSha256": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.visual",
+      "registrationId": "visual",
+      "contractId": "kubeclaw.visual@1",
+      "requiredCapabilities": [
+        "browser.visual"
+      ],
+      "manifestPath": "skills/buster/plugins/visual/plugin.json",
+      "manifestSha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    },
+    {
+      "pluginId": "kubeclaw.coverage-budget",
+      "registrationId": "lcov",
+      "contractId": "kubeclaw.coverage-budget@1",
+      "requiredCapabilities": [],
+      "manifestPath": "skills/buster/plugins/coverage-budget/plugin.json",
+      "manifestSha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067",
+      "fixtureGrantMeaning": "Theseactualdeclarationsneed genuine signed/original grants; manifestavailability isnot grant."
+    }
+  ],
+  "generationReferences": {
+    "RUNTIME_CONFIG_ROOT": "/fixture/config",
+    "REGISTRY_REFERENCE": "fixture-registry.invalid:5000",
+    "REGISTRY_CLIENT_RUNTIME": "/fixture/registry-client.json",
+    "CONTROLLER_NAMESPACE": "fixture",
+    "BUILDKIT_HOST": "unix:///fixture/buildkit.sock",
+    "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT": "/fixture/browser-cgroup",
+    "BUSTER_NETWORK_HTTP_EXACT_ORIGINS": "http://127.0.0.1:18080",
+    "BUSTER_BROWSER_AXE_EXACT_ORIGINS": "http://127.0.0.1:18080",
+    "BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET": "false",
+    "BUSTER_V2_STATE_DIR": "/var/lib/buster-v2/plan-jobs",
+    "BUSTER_V2_RUN_DIR": "/var/lib/buster-v2/runs",
+    "BUSTER_TRUSTED_PEER_SPIFFE_ID": "spiffe://fixture.invalid/ns/fixture/sa/nova",
+    "BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY": "nova:production"
+  },
+  "missingAuthenticInputs": [
+    "KUBECLAW_BUILD_REVISION/image/role installedreceipt",
+    "signedplan grants/original source approval+keyrevision",
+    "nativepool+node+cgroup/runtime/executable/browserrealpaths",
+    "registrypeer/credentials/CA+hostname binding",
+    "measuredvolume/writers/temp/retainedmetadata/inodes capacity",
+    "authenticproxy remoteAddress+SPIFFEpeers or tokenrevision",
+    "source/state/run retention original archiveclosure"
+  ],
+  "activationStatus": "blocked until exact authentic inputs and real productive checks",
+  "maximumResponseFixedFrameBytes": 97,
+  "fixedResponseFrames": [
+    {
+      "error": "BUSTER_REMOTE_RESPONSE_SIZE_EXCEEDED"
+    },
+    {
+      "schemaVersion": "buster-plan-health.v2",
+      "live": true
+    },
+    {
+      "schemaVersion": "buster-plan-bootstrap.v1",
+      "initialized": false
+    },
+    {
+      "schemaVersion": "buster-plan-readiness.v1",
+      "ready": true,
+      "code": "BUSTER_READY"
+    },
+    {
+      "schemaVersion": "buster-plan-readiness.v1",
+      "ready": false,
+      "code": "BUSTER_DEPENDENCY_UNAVAILABLE"
+    },
+    {
+      "schemaVersion": "buster-plan-readiness.v1",
+      "ready": false,
+      "code": "BUSTER_NOT_BOOTSTRAPPED"
+    }
+  ],
+  "markerMounts": [
+    {
+      "target": "/fixture/direct-read-marker",
+      "fixtureFile": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/direct-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "meaning": "Future disposable localreadonly fixture mount, not claimed alreadyinstalled"
+    },
+    {
+      "target": "/fixture/browser-read-marker",
+      "fixtureFile": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/browser-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "meaning": "Future disposable localreadonly fixture mount, not claimed alreadyinstalled"
+    }
+  ],
+  "sourceKeyReference": {
+    "environmentName": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+    "actualRequiredType": "Ed25519 SPKI/PEM publickey",
+    "sourceAuthority": "nova:production",
+    "meaning": "Observed explicit current authority used as localstructuralfixture; genuine original issuer approval/key revision is missing, no key or token bytes fabricated."
+  }
+}

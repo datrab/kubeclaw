@@ -1,5 +1,5 @@
 import type { WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import type { PrismResourcePolicy } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { PrismResourcePolicy } from '@kubeclaw/plugin-foundation/config/swarm';
 
 /** Cumulative CPU time is not comparable to the pool's CPU quota/rate. */
 export function requirePrismResourcePoolCapacity(policy: PrismResourcePolicy, pool: { memoryBytes: number; tasks: number }): void {

@@ -1,0 +1,5 @@
+{
+  "correction": "Normalize historical relative schema paths against actual repository before resolving active Browser owner/receiving nodes into current copied owner schemas/current twelve-arm receiving schema. Original refs/history untouched; previous report refs to old seven-arm schema not authoritative after this correction.",
+  "physicalTreeInputOutputChanges": [],
+  "historicalReceipts": "Before normalization metadata and actual command/failure logs retained; final collector rerun required"
+}

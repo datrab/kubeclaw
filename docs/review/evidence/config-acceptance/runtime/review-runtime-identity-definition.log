@@ -1,0 +1,91 @@
+{
+  "caseId": "RT-C0-REVIEW-RUNTIME-IDENTITY-DEFINITION",
+  "command": "node docs/review/evidence/config-acceptance/runtime/review-runtime-identity-definition.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/nova/plugins/review/src/review-runtime-attestation.ts": "1154397de55d1e27dcb291d060e36fcc7ce95cc0ae8d79c9b755f1ed4157f43d",
+    "skills/nova/plugins/review/src/review-report-encoding.ts": "64b604ae4f25b3825e68527b30ad9093b9f6eda7b72fe1b227a914f0b0acae5f",
+    "skills/nova/plugins/review/src/review-semantics.ts": "653f853d511c6955e3c44cc0db3ddf62e6e12321f791d0d427f4137747b75008",
+    "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+    "skills/nova/plugins/review/src/scalable-review-execution.ts": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88",
+    "skills/nova/plugins/review/src/scalable-review-verification.ts": "d06f9d7524d75b61ac8cd6493418f4689d0fd5883d10a93390393f7df320034d"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/review-runtime-identity-definition.mjs": "37321e0b4ea9972049d20ab1055672d5871d791b67a3481fbf901af6236a5ed1"
+  },
+  "input": {
+    "fictionalIdentityOnly": {
+      "targetId": "case-fixture",
+      "runtime": "subagent",
+      "agentId": "case-agent",
+      "model": "fictional/identity-only",
+      "thinking": "high"
+    },
+    "actualAttestation": {
+      "schemaVersion": "runtime-agent-attestation.v1",
+      "targetId": "case-fixture",
+      "runtime": "subagent",
+      "agentId": "case-agent",
+      "model": "fictional/identity-only",
+      "thinking": "high",
+      "identityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9"
+    }
+  },
+  "observations": [
+    {
+      "field": "targetId",
+      "current": "case-fixture",
+      "alternateExpected": "other-fixture",
+      "result": "passed",
+      "effect": "same actual attestation is rejected; expected identity does not dispatch or select a model/runtime",
+      "actualIdentityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9",
+      "alternateExpectedDigest": "sha256:5444e3e5d76949ca53a182e0f7da6b3b241e94b81d4b34be8845328b57dbee0f"
+    },
+    {
+      "field": "runtime",
+      "current": "subagent",
+      "alternateExpected": "acp",
+      "result": "passed",
+      "effect": "same actual attestation is rejected; expected identity does not dispatch or select a model/runtime",
+      "actualIdentityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9",
+      "alternateExpectedDigest": "sha256:733ce245e63b2ab19563856802c0ce93266aa32bc90e6e79b2764a64e56b2ea7"
+    },
+    {
+      "field": "agentId",
+      "current": "case-agent",
+      "alternateExpected": "other-agent",
+      "result": "passed",
+      "effect": "same actual attestation is rejected; expected identity does not dispatch or select a model/runtime",
+      "actualIdentityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9",
+      "alternateExpectedDigest": "sha256:c005eaddcc17492207e8dbb31957f084ec460dcc814532586369ca12421e41fb"
+    },
+    {
+      "field": "model",
+      "current": "fictional/identity-only",
+      "alternateExpected": "fictional/other-identity",
+      "result": "passed",
+      "effect": "same actual attestation is rejected; expected identity does not dispatch or select a model/runtime",
+      "actualIdentityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9",
+      "alternateExpectedDigest": "sha256:d5c11a02f893391812ff793765a2907a9c349b40b368df5890fc38e0ede4deca"
+    },
+    {
+      "field": "thinking",
+      "current": "high",
+      "alternateExpected": "low",
+      "result": "passed",
+      "effect": "same actual attestation is rejected; expected identity does not dispatch or select a model/runtime",
+      "actualIdentityDigest": "sha256:b9ad91c052602c6b2007298993f5198a5c93b2cc87999a18e591e5394db5d9d9",
+      "alternateExpectedDigest": "sha256:e03a16ded1127a29587417ec459af0d22bce413f160bb7006a9766a37daa4c30"
+    }
+  ],
+  "codecObservations": [
+    "absence returns undefined historical mode",
+    "exact portable report marker accepted",
+    "unsupported report marker rejects",
+    "semantic marker requires compatible report marker",
+    "exact paired semantic/report markers accepted"
+  ],
+  "result": "passed",
+  "reviewerConfirmation": "pending",
+  "limitation": "actual parser/assertion/codec source definitions, no installed model/runtime lookup or dispatch; identity labels are fictional non-production controls"
+}

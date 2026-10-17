@@ -1,0 +1,126 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "onPass": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "log",
+          "test-report",
+          "screenshot",
+          "video",
+          "trace",
+          "test-artifact"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        },
+        {
+          "contains": {
+            "const": "test-report"
+          }
+        },
+        {
+          "contains": {
+            "const": "screenshot"
+          }
+        },
+        {
+          "contains": {
+            "const": "video"
+          }
+        },
+        {
+          "contains": {
+            "const": "trace"
+          }
+        },
+        {
+          "contains": {
+            "const": "test-artifact"
+          }
+        }
+      ]
+    },
+    "onFail": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "log",
+          "test-report",
+          "screenshot",
+          "video",
+          "trace",
+          "test-artifact"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        },
+        {
+          "contains": {
+            "const": "test-report"
+          }
+        },
+        {
+          "contains": {
+            "const": "screenshot"
+          }
+        },
+        {
+          "contains": {
+            "const": "video"
+          }
+        },
+        {
+          "contains": {
+            "const": "trace"
+          }
+        },
+        {
+          "contains": {
+            "const": "test-artifact"
+          }
+        }
+      ]
+    },
+    "onError": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "log",
+          "test-report",
+          "screenshot",
+          "video",
+          "trace",
+          "test-artifact"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        }
+      ]
+    }
+  },
+  "description": "Provided outcome must preserve actual mandatory package baseline; absent outcome inherits captured selected declaration. This is retention choice, not produced artifact assertion."
+}

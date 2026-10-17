@@ -1,0 +1,519 @@
+{
+  "records": [
+    {
+      "id": "RT-CANDIDATE-67369ab38d2c6a96",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 7,
+        "text": "interface Config extends BindingConfig,ClientConfig {readonly stateRoot:string;readonly timeoutMs:number;}",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "Actual lexicalcanonicalabsolute capturedlocator andtimeout configtype; constructor storespathlimits withoutfilesystem read. Sourceabsolute/string max2048 vsrealfs/grants/role/credentialrereads separate; noNOFOLLOW/frozenbyte currentclaim. Actualsafeconstructorpositive/missingnullunknown controls.",
+      "settings": [
+        "RT-743c93ef7d59622e",
+        "RT-fb9918b06d28dfd1",
+        "RT-e96bf541dc026a22",
+        "RT-c0f7186c20e14014"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f26f3c7fc666f4b2",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 11,
+        "text": "if(endpoint.protocol!=='https:'||endpoint.pathname!=='/v1/demo-ready'||endpoint.search||endpoint.hash||endpoint.username||endpoint.password||endpoint.href!==value.endpoint)throw new Error('DEMO_READY_ENDPOINT_INVALID');",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "Actualcapturedcanonical HTTPS /v1/demo-ready URL withnoquery/hash/userinfo/defaultportnoncanonical. Pureactivationpositive +invalidURLnegatives only; genuineendpoint/certificate/networkgrants/controllerbody/status/provenance futurecasesNOTRUN.",
+      "settings": [
+        "RT-0ad5fcaf62f2d7c9"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dc46aa2b059e6118",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 12,
+        "text": "const absolute=(item:unknown)=>{const result=text(item);if(!path.isAbsolute(result)||path.normalize(result)!==result)throw new Error('DEMO_READY_PATH_INVALID');return result;};",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "Actual lexicalcanonicalabsolute capturedlocator andtimeout configtype; constructor storespathlimits withoutfilesystem read. Sourceabsolute/string max2048 vsrealfs/grants/role/credentialrereads separate; noNOFOLLOW/frozenbyte currentclaim. Actualsafeconstructorpositive/missingnullunknown controls.",
+      "settings": [
+        "RT-743c93ef7d59622e",
+        "RT-fb9918b06d28dfd1",
+        "RT-e96bf541dc026a22",
+        "RT-c0f7186c20e14014"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e559cb51bbe1a3eb",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 13,
+        "text": "const timeoutMs=Number(value.timeoutMs);if(!Number.isSafeInteger(timeoutMs)||timeoutMs<100||timeoutMs>60000)throw new Error('DEMO_READY_DEADLINE_INVALID');",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "ActualNumber coercion andsafeinteger100..60000 guard; string1000 directaccepted but owningschema rejected. Eachinvoke/receipt outerAbortSignaldeadline sharesfirstPOST+fallbackstatus window, not renewed perPOST. Actualtimer/network/cancellation effectsNOTRUN.",
+      "settings": [
+        "RT-c0f7186c20e14014"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-664d6bcb94e9d932",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 17,
+        "text": "function assertRequest(request:EffectRequest,config:Config):void {",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "Exactdemo.handoff deliver/commit, demo.candidate/resource/namespace/fullpayload +request.attemptstageproducer guard. Taskgraphgeneratedassertion notindependentoperatorknob orrequest fakecapability.",
+      "settings": [
+        "RT-f51b077d37643917",
+        "RT-aae5792f4b11f246"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-af5f9d7328e80374",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 18,
+        "text": "if(request.capability!=='demo.handoff'||!['deliver','commit'].includes(request.operation)||request.resource.type!=='demo.candidate'||request.payload.namespace!==NAMESPACE)throw new Error('DEMO_HANDOFF_OPERATION_INVALID');",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "Exactdemo.handoff deliver/commit, demo.candidate/resource/namespace/fullpayload +request.attemptstageproducer guard. Taskgraphgeneratedassertion notindependentoperatorknob orrequest fakecapability.",
+      "settings": [
+        "RT-f51b077d37643917",
+        "RT-aae5792f4b11f246"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c9f5fc8771449ec4",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 23,
+        "text": "async function lookup(context:Reader,bound:Binding,config:Config):Promise<Value> {",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "Actualconfiguration capturedbeforeconstructor; operatorreceiptlookupexacttarget andbounddelivery/payload. Recordstore caps distinctauthor sourcepolicies; copiedprimitivefields notwholecredential/sourcegraph deepfreeze. ProductiveeffectsNOTRUN.",
+      "settings": [
+        "RT-e96bf541dc026a22",
+        "RT-9546f9706a2afc7c"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6a67709494cc352a",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 27,
+        "text": "async function commit(records:FileDurableRecordStore,config:Config,body:string,signal:AbortSignal,recovery:boolean):Promise<Value|undefined> {",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "OPEN actualdurableintents/receipts wholemetadata/cursor/count/payload cap10000/64MiB/65536 andcontrollerstatus idempotency; originalroot/intent/role/profile/historycompatibility mustretain pendingA. Distinctpayloadvsencodedwhole recordsemantics; no newglobalowner/clearingorlatest substitute.",
+      "settings": [
+        "RT-e96bf541dc026a22"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "precise open actualrole/credential/quota/history sourcepolicy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-585142240ed67836",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 44,
+        "text": "const config=configuration(context.config),stopping=new AbortController();",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "explicitReviewedReason": "Actualconfiguration capturedbeforeconstructor; operatorreceiptlookupexacttarget andbounddelivery/payload. Recordstore caps distinctauthor sourcepolicies; copiedprimitivefields notwholecredential/sourcegraph deepfreeze. ProductiveeffectsNOTRUN.",
+      "settings": [
+        "RT-e96bf541dc026a22",
+        "RT-9546f9706a2afc7c"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2350e6d66494d085",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+        "line": 5,
+        "text": "export async function bind(context:Reader,reference:ArtifactRef,runId:string,config:BindingConfig) {",
+        "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "explicitReviewedReason": "Actualreferenceproducer/run/namespace verifiedbeforecandidate schema/exacttarget/manifestowner/content/sourcechecks. Source IDs taskderivedsamefullgraph, operatorroute capturedsameprofile; no arbitraryBstage rename or mismatchedcandidateinputpolicy authority.",
+      "settings": [
+        "RT-3cb22c95b05b00aa",
+        "RT-c24bc404702abdde",
+        "RT-9546f9706a2afc7c"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-fd0dd7c8986c088f",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+        "line": 8,
+        "text": "if(candidate.schemaVersion!=='demo-candidate.v1'||candidate.runId!==runId||candidate.protocol!=='json-session.v1'||target(candidate.operatorTarget)!==config.operatorTarget)throw new Error('DEMO_CANDIDATE_BINDING_INVALID');",
+        "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "explicitReviewedReason": "Actualreferenceproducer/run/namespace verifiedbeforecandidate schema/exacttarget/manifestowner/content/sourcechecks. Source IDs taskderivedsamefullgraph, operatorroute capturedsameprofile; no arbitraryBstage rename or mismatchedcandidateinputpolicy authority.",
+      "settings": [
+        "RT-3cb22c95b05b00aa",
+        "RT-c24bc404702abdde",
+        "RT-9546f9706a2afc7c"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-71cc41d84012b0cf",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+        "line": 10,
+        "text": "const manifest=ref(candidate.manifest);if(manifest.producer.stageId!==config.manifestStageId||manifest.producer.runId!==runId)throw new Error('DEMO_MANIFEST_OWNER_INVALID');",
+        "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "explicitReviewedReason": "Actualreferenceproducer/run/namespace verifiedbeforecandidate schema/exacttarget/manifestowner/content/sourcechecks. Source IDs taskderivedsamefullgraph, operatorroute capturedsameprofile; no arbitraryBstage rename or mismatchedcandidateinputpolicy authority.",
+      "settings": [
+        "RT-3cb22c95b05b00aa",
+        "RT-c24bc404702abdde",
+        "RT-9546f9706a2afc7c"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-adaaedf5ecd769df",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+        "line": 12,
+        "text": "if(canonicalJson(verified)!==canonicalJson(candidate.evidence)||verified.runId!==runId)throw new Error('DEMO_CANDIDATE_SOURCE_CHANGED');",
+        "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "explicitReviewedReason": "Actualverifiedcandidateevidence equality/run andpublicauth URLcanonical HTTPS/exposuregeneration positive +deliveredartifact/authoritativeoperatorreceipt exacttuple. Generated/sourceauth data guards, not independentbusinessruntimeConfig knobs orsamevaluealiases. Genuine source-evidence/TLS/receipt/grants futureprereqs.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualverifiedcandidateevidence equality/run andpublicauth URLcanonical HTTPS/exposuregeneration positive +deliveredartifact/authoritativeoperatorreceipt exacttuple. Generated/sourceauth data guards, not independentbusinessruntimeConfig knobs orsamevaluealiases. Genuine source-evidence/TLS/receipt/grants futureprereqs.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e66625530ae29a0f",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+        "line": 15,
+        "text": "if(parsed.protocol!=='https:'||parsed.href!==url||parsed.username||parsed.password||parsed.search||parsed.hash)throw new Error('DEMO_PUBLIC_HTTPS_URL_REQUIRED');",
+        "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "explicitReviewedReason": "Actualverifiedcandidateevidence equality/run andpublicauth URLcanonical HTTPS/exposuregeneration positive +deliveredartifact/authoritativeoperatorreceipt exacttuple. Generated/sourceauth data guards, not independentbusinessruntimeConfig knobs orsamevaluealiases. Genuine source-evidence/TLS/receipt/grants futureprereqs.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualverifiedcandidateevidence equality/run andpublicauth URLcanonical HTTPS/exposuregeneration positive +deliveredartifact/authoritativeoperatorreceipt exacttuple. Generated/sourceauth data guards, not independentbusinessruntimeConfig knobs orsamevaluealiases. Genuine source-evidence/TLS/receipt/grants futureprereqs.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-357ab29ac74a0306",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+        "line": 26,
+        "text": "export async function delivered(context:Reader,bound:Binding,reference:ArtifactRef,runId:string,config:BindingConfig):Promise<Value> {",
+        "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "explicitReviewedReason": "Actualverifiedcandidateevidence equality/run andpublicauth URLcanonical HTTPS/exposuregeneration positive +deliveredartifact/authoritativeoperatorreceipt exacttuple. Generated/sourceauth data guards, not independentbusinessruntimeConfig knobs orsamevaluealiases. Genuine source-evidence/TLS/receipt/grants futureprereqs.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualverifiedcandidateevidence equality/run andpublicauth URLcanonical HTTPS/exposuregeneration positive +deliveredartifact/authoritativeoperatorreceipt exacttuple. Generated/sourceauth data guards, not independentbusinessruntimeConfig knobs orsamevaluealiases. Genuine source-evidence/TLS/receipt/grants futureprereqs.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c76c44fd0bcad972",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+        "line": 34,
+        "text": "if(!Number.isSafeInteger(auth.exposureGeneration)||Number(auth.exposureGeneration)<1)throw new Error('DEMO_EXPOSURE_GENERATION_INVALID');",
+        "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "explicitReviewedReason": "Actualverifiedcandidateevidence equality/run andpublicauth URLcanonical HTTPS/exposuregeneration positive +deliveredartifact/authoritativeoperatorreceipt exacttuple. Generated/sourceauth data guards, not independentbusinessruntimeConfig knobs orsamevaluealiases. Genuine source-evidence/TLS/receipt/grants futureprereqs.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualverifiedcandidateevidence equality/run andpublicauth URLcanonical HTTPS/exposuregeneration positive +deliveredartifact/authoritativeoperatorreceipt exacttuple. Generated/sourceauth data guards, not independentbusinessruntimeConfig knobs orsamevaluealiases. Genuine source-evidence/TLS/receipt/grants futureprereqs.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5778b2718a97ff26",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "line": 7,
+        "text": "async function boundedFile(file:string,limit:number,signal:AbortSignal):Promise<Buffer> {",
+        "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "explicitReviewedReason": "OPEN actualboundedcredentialfile beforeeachHTTPSpost; O_RDONLY|NONBLOCK follows symlinks, CA1MiB/token16KiB/no whitespace; postrequestresponse16KiB hardcodedlimits actualsource policy. Role/trust/rotation/fileidentity/source/grant/quota/timestamp/capacity correlation andbeforeeffectcases required; constructorlocatorpositive doesnotprove readvalidcontent.",
+      "settings": [
+        "RT-0ad5fcaf62f2d7c9",
+        "RT-743c93ef7d59622e",
+        "RT-fb9918b06d28dfd1"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "precise open actualrole/credential/quota/history sourcepolicy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3fcdd29009013fa0",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "line": 10,
+        "text": "try {const stat=await handle.stat();signal.throwIfAborted();if(!stat.isFile()||stat.size<1||stat.size>limit)throw new Error('DEMO_READY_CREDENTIAL_FILE_INVALID');",
+        "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "explicitReviewedReason": "OPEN actualboundedcredentialfile beforeeachHTTPSpost; O_RDONLY|NONBLOCK follows symlinks, CA1MiB/token16KiB/no whitespace; postrequestresponse16KiB hardcodedlimits actualsource policy. Role/trust/rotation/fileidentity/source/grant/quota/timestamp/capacity correlation andbeforeeffectcases required; constructorlocatorpositive doesnotprove readvalidcontent.",
+      "settings": [
+        "RT-0ad5fcaf62f2d7c9",
+        "RT-743c93ef7d59622e",
+        "RT-fb9918b06d28dfd1"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "precise open actualrole/credential/quota/history sourcepolicy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e77eda183fecff2e",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "line": 16,
+        "text": "export async function post(config:ClientConfig,body:string,status:boolean,signal:AbortSignal):Promise<Value> {",
+        "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "explicitReviewedReason": "OPEN actualboundedcredentialfile beforeeachHTTPSpost; O_RDONLY|NONBLOCK follows symlinks, CA1MiB/token16KiB/no whitespace; postrequestresponse16KiB hardcodedlimits actualsource policy. Role/trust/rotation/fileidentity/source/grant/quota/timestamp/capacity correlation andbeforeeffectcases required; constructorlocatorpositive doesnotprove readvalidcontent.",
+      "settings": [
+        "RT-0ad5fcaf62f2d7c9",
+        "RT-743c93ef7d59622e",
+        "RT-fb9918b06d28dfd1"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "precise open actualrole/credential/quota/history sourcepolicy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c703aa9b25fabe78",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "line": 19,
+        "text": "if(!token||/[\\s\\u0000-\\u001f]/u.test(token))throw new Error('DEMO_READY_TOKEN_INVALID');",
+        "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "explicitReviewedReason": "OPEN actualboundedcredentialfile beforeeachHTTPSpost; O_RDONLY|NONBLOCK follows symlinks, CA1MiB/token16KiB/no whitespace; postrequestresponse16KiB hardcodedlimits actualsource policy. Role/trust/rotation/fileidentity/source/grant/quota/timestamp/capacity correlation andbeforeeffectcases required; constructorlocatorpositive doesnotprove readvalidcontent.",
+      "settings": [
+        "RT-0ad5fcaf62f2d7c9",
+        "RT-743c93ef7d59622e",
+        "RT-fb9918b06d28dfd1"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "precise open actualrole/credential/quota/history sourcepolicy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6228ba60dc520ab5",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "line": 28,
+        "text": "if(response.statusCode!==200){reject(new Error(`DEMO_READY_HTTP_${response.statusCode??0}:unresolved`));return;}",
+        "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "explicitReviewedReason": "Actual HTTP200 strictboundresponse/bodydigest/leaseUID/requestId/retention/ready+expiry/datecurrentpredicate. Existingretentioncompilerrow andtechnicaldurationdomain retained; noHTTP/controllerexecute now. Originalbody/retention/observedAt/statuslookup immutabletuple, not network success orfictional capacity.",
+      "settings": [
+        "RT-PROJECT-DEMO-RETENTIONSECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-cde707d49086f74c",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "line": 38,
+        "text": "if(value.schemaVersion!=='demo-ready-response.v1'||value.state!=='ready-for-acceptance'||value.requestDigest!==sha256Text(body)",
+        "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "explicitReviewedReason": "Actual HTTP200 strictboundresponse/bodydigest/leaseUID/requestId/retention/ready+expiry/datecurrentpredicate. Existingretentioncompilerrow andtechnicaldurationdomain retained; noHTTP/controllerexecute now. Originalbody/retention/observedAt/statuslookup immutabletuple, not network success orfictional capacity.",
+      "settings": [
+        "RT-PROJECT-DEMO-RETENTIONSECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4e487ff32d32f531",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "line": 39,
+        "text": "||['leaseName','leaseUID','requestId'].some(key=>value[key]!==request[key])||!Number.isFinite(ready)||value.retentionSeconds!==retention(request.retentionSeconds)||expires!==ready+retention(request.retentionSeconds)*1000",
+        "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "explicitReviewedReason": "Actual HTTP200 strictboundresponse/bodydigest/leaseUID/requestId/retention/ready+expiry/datecurrentpredicate. Existingretentioncompilerrow andtechnicaldurationdomain retained; noHTTP/controllerexecute now. Originalbody/retention/observedAt/statuslookup immutabletuple, not network success orfictional capacity.",
+      "settings": [
+        "RT-PROJECT-DEMO-RETENTIONSECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ec4128d437919334",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "line": 40,
+        "text": "||expires<=Date.now()||ready<Date.parse(text(request.observedAt)))throw new Error('DEMO_READY_RESPONSE_UNBOUND');",
+        "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "explicitReviewedReason": "Actual HTTP200 strictboundresponse/bodydigest/leaseUID/requestId/retention/ready+expiry/datecurrentpredicate. Existingretentioncompilerrow andtechnicaldurationdomain retained; noHTTP/controllerexecute now. Originalbody/retention/observedAt/statuslookup immutabletuple, not network success orfictional capacity.",
+      "settings": [
+        "RT-PROJECT-DEMO-RETENTIONSECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-demo-adapter-15/contracts.json",
+      "status": "exactcurrent source/config/taskproducer/protocol disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "thisBatchCount": 24,
+  "unmatchedProductiveLiteralObligations": [
+    {
+      "source": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "line": 45,
+      "reason": "ActualFileDurableRecordStore10000records/64MiBwhole/65536payload literal policyconstructor; properexistingowner fields/domains/correlatedcompleteprofiles/cases remainOPEN",
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+    },
+    {
+      "source": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+      "lines": [
+        17,
+        18,
+        24
+      ],
+      "reason": "Actualrequest/response16384/token16384/CA1048576 hardcodedproductivecaps not lexicalcandidatecovered or physical capacity; exactsameexistingowner/source/role/grant/beforeeffectcase obligationsOPEN",
+      "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315"
+    }
+  ]
+}

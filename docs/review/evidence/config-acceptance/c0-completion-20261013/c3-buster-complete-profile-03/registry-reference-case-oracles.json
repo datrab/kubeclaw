@@ -1,0 +1,746 @@
+{
+  "status": "additive strengthening; every original ID/body and not-run status retained",
+  "originalCases": [
+    {
+      "caseId": "DLV-B23-EMIT-45a77594a284944f-CMP18-VAL",
+      "originalBodySha256": "ea052c5befcff153ba52cf211f5406ee1bc95694c02aee8ee7859c7bcf453124",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-45a77594a284944f-VAL",
+        "DLV-B23-EMIT-45a77594a284944f-EFFECT",
+        "DLV-B23-EMIT-45a77594a284944f-BIND",
+        "DLV-B23-EMIT-45a77594a284944f-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/repositoryPrefix",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-45a77594a284944f-CMP18-EFFECT",
+      "originalBodySha256": "22d618e4820f594939a113fa2b83094fda2f98c54fb857731dfded043a5c3f34",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-45a77594a284944f-VAL",
+        "DLV-B23-EMIT-45a77594a284944f-EFFECT",
+        "DLV-B23-EMIT-45a77594a284944f-BIND",
+        "DLV-B23-EMIT-45a77594a284944f-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/repositoryPrefix",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-45a77594a284944f-CMP18-BIND",
+      "originalBodySha256": "ef4dc61c64f76695a91c8005ab9b0c399ffe1bdf6a6375dd11eebdfabf98caa2",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-45a77594a284944f-VAL",
+        "DLV-B23-EMIT-45a77594a284944f-EFFECT",
+        "DLV-B23-EMIT-45a77594a284944f-BIND",
+        "DLV-B23-EMIT-45a77594a284944f-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/repositoryPrefix",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-45a77594a284944f-CMP18-MUT",
+      "originalBodySha256": "d147e266e59ee27fef5d6d2edac825745ac9a0ef0ad1ee08613a41d29ebbfcb4",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-45a77594a284944f-VAL",
+        "DLV-B23-EMIT-45a77594a284944f-EFFECT",
+        "DLV-B23-EMIT-45a77594a284944f-BIND",
+        "DLV-B23-EMIT-45a77594a284944f-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/repositoryPrefix",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-61b8952807a6ae64-CMP18-VAL",
+      "originalBodySha256": "c938a5091bebc2ea55cbfd5d39ebc9b906d32e90ebb518a247bc0cff4f7f26d5",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-61b8952807a6ae64-VAL",
+        "DLV-B23-EMIT-61b8952807a6ae64-EFFECT",
+        "DLV-B23-EMIT-61b8952807a6ae64-BIND",
+        "DLV-B23-EMIT-61b8952807a6ae64-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedPlatforms",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-61b8952807a6ae64-CMP18-EFFECT",
+      "originalBodySha256": "652436fa8c9bc363b6b27552f198be1904e0101cf8c77b886aa2063b7fb38f96",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-61b8952807a6ae64-VAL",
+        "DLV-B23-EMIT-61b8952807a6ae64-EFFECT",
+        "DLV-B23-EMIT-61b8952807a6ae64-BIND",
+        "DLV-B23-EMIT-61b8952807a6ae64-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedPlatforms",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-61b8952807a6ae64-CMP18-BIND",
+      "originalBodySha256": "1f688cff3f558711d25de970d598ce3913661c211617cf5be75c32c42211c0c2",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-61b8952807a6ae64-VAL",
+        "DLV-B23-EMIT-61b8952807a6ae64-EFFECT",
+        "DLV-B23-EMIT-61b8952807a6ae64-BIND",
+        "DLV-B23-EMIT-61b8952807a6ae64-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedPlatforms",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-61b8952807a6ae64-CMP18-MUT",
+      "originalBodySha256": "892885aaf43276440e01240ceb26cd3daf6943976579b179340bb710f072e8a6",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-61b8952807a6ae64-VAL",
+        "DLV-B23-EMIT-61b8952807a6ae64-EFFECT",
+        "DLV-B23-EMIT-61b8952807a6ae64-BIND",
+        "DLV-B23-EMIT-61b8952807a6ae64-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedPlatforms",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-32fdcf1249dece9d-CMP18-VAL",
+      "originalBodySha256": "aaf18a2656af4acfbeeaff5ce3cfe7afbd762cf5ce824e723c998b63a3641d97",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-32fdcf1249dece9d-VAL",
+        "DLV-B23-EMIT-32fdcf1249dece9d-EFFECT",
+        "DLV-B23-EMIT-32fdcf1249dece9d-BIND",
+        "DLV-B23-EMIT-32fdcf1249dece9d-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedBuildArguments",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-32fdcf1249dece9d-CMP18-EFFECT",
+      "originalBodySha256": "1b5a465b6035a028b9c61f0ac077577fd0caa1d5e38c78579bde7bc8ed3b9461",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-32fdcf1249dece9d-VAL",
+        "DLV-B23-EMIT-32fdcf1249dece9d-EFFECT",
+        "DLV-B23-EMIT-32fdcf1249dece9d-BIND",
+        "DLV-B23-EMIT-32fdcf1249dece9d-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedBuildArguments",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-32fdcf1249dece9d-CMP18-BIND",
+      "originalBodySha256": "94094fef3e0abb67e08e0740152fa8776427cdf69e9104245aa665b13fa1c385",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-32fdcf1249dece9d-VAL",
+        "DLV-B23-EMIT-32fdcf1249dece9d-EFFECT",
+        "DLV-B23-EMIT-32fdcf1249dece9d-BIND",
+        "DLV-B23-EMIT-32fdcf1249dece9d-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedBuildArguments",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-32fdcf1249dece9d-CMP18-MUT",
+      "originalBodySha256": "2f098189760955d99fa91bbf14b7ee3a3f40b8a2bb2eaaeed0859a9be1327a0b",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-32fdcf1249dece9d-VAL",
+        "DLV-B23-EMIT-32fdcf1249dece9d-EFFECT",
+        "DLV-B23-EMIT-32fdcf1249dece9d-BIND",
+        "DLV-B23-EMIT-32fdcf1249dece9d-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedBuildArguments",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e1dbc20e704941b2-CMP18-VAL",
+      "originalBodySha256": "77e4145f9f95dccffd1e7982fbafd150b85367b17c90090d7ee503cf8e219f08",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e1dbc20e704941b2-VAL",
+        "DLV-B23-EMIT-e1dbc20e704941b2-EFFECT",
+        "DLV-B23-EMIT-e1dbc20e704941b2-BIND",
+        "DLV-B23-EMIT-e1dbc20e704941b2-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumLogBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e1dbc20e704941b2-CMP18-EFFECT",
+      "originalBodySha256": "6d653b6009f9a0559e793ab0d9cc7cfe81db70369045abef0dcc8c5257be6ae2",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e1dbc20e704941b2-VAL",
+        "DLV-B23-EMIT-e1dbc20e704941b2-EFFECT",
+        "DLV-B23-EMIT-e1dbc20e704941b2-BIND",
+        "DLV-B23-EMIT-e1dbc20e704941b2-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumLogBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e1dbc20e704941b2-CMP18-BIND",
+      "originalBodySha256": "01b42450da2e9c06d1f62faa511522024a1e30c831afc3edaee28ad0df174398",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e1dbc20e704941b2-VAL",
+        "DLV-B23-EMIT-e1dbc20e704941b2-EFFECT",
+        "DLV-B23-EMIT-e1dbc20e704941b2-BIND",
+        "DLV-B23-EMIT-e1dbc20e704941b2-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumLogBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e1dbc20e704941b2-CMP18-MUT",
+      "originalBodySha256": "cc95612356efaf4121d234d9f08a4a50eaf21ee3ff6c0dab8cafa68354aeb8fb",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e1dbc20e704941b2-VAL",
+        "DLV-B23-EMIT-e1dbc20e704941b2-EFFECT",
+        "DLV-B23-EMIT-e1dbc20e704941b2-BIND",
+        "DLV-B23-EMIT-e1dbc20e704941b2-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumLogBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e7411fa0b80cc0f9-CMP18-VAL",
+      "originalBodySha256": "fd64fc540e33c34b9d8e27644d5c9226d00da4904f8aecd6185b5fc184b650b4",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-VAL",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-EFFECT",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-BIND",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumExecutionMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e7411fa0b80cc0f9-CMP18-EFFECT",
+      "originalBodySha256": "5290050e817d34fec5e758e1b34e169606a5c05abfdb218a42ce1a4cd56574c0",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-VAL",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-EFFECT",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-BIND",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumExecutionMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e7411fa0b80cc0f9-CMP18-BIND",
+      "originalBodySha256": "cf099c9af87b6465c1e47a7760dded6dc9b0bc6bb50f6046fa16346b72cefcea",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-VAL",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-EFFECT",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-BIND",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumExecutionMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e7411fa0b80cc0f9-CMP18-MUT",
+      "originalBodySha256": "69c5166c412f596f14bb937b7a59dd79e8356a4d969298767387b7c9c4922a1d",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-VAL",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-EFFECT",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-BIND",
+        "DLV-B23-EMIT-e7411fa0b80cc0f9-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumExecutionMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-d310fed664330657-CMP18-VAL",
+      "originalBodySha256": "8f63e22b47520241799bb36a749b32fe89ac9a7e5691400e8cefe29ec2cbd0b0",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-d310fed664330657-VAL",
+        "DLV-B23-EMIT-d310fed664330657-EFFECT",
+        "DLV-B23-EMIT-d310fed664330657-BIND",
+        "DLV-B23-EMIT-d310fed664330657-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumManifestBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-d310fed664330657-CMP18-EFFECT",
+      "originalBodySha256": "9513354c7cbc5f9902f0a0278af2ecd3294dea63df4052bb487334b13235d321",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-d310fed664330657-VAL",
+        "DLV-B23-EMIT-d310fed664330657-EFFECT",
+        "DLV-B23-EMIT-d310fed664330657-BIND",
+        "DLV-B23-EMIT-d310fed664330657-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumManifestBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-d310fed664330657-CMP18-BIND",
+      "originalBodySha256": "8e57c68ebcb1dfb21152c8944076f982ca08d573509e50d756f2eea0060d3068",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-d310fed664330657-VAL",
+        "DLV-B23-EMIT-d310fed664330657-EFFECT",
+        "DLV-B23-EMIT-d310fed664330657-BIND",
+        "DLV-B23-EMIT-d310fed664330657-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumManifestBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-d310fed664330657-CMP18-MUT",
+      "originalBodySha256": "b2e0b6e5eb869871ab68b5f357e22e61199965d16e816e718cad4aef78d1a355",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-d310fed664330657-VAL",
+        "DLV-B23-EMIT-d310fed664330657-EFFECT",
+        "DLV-B23-EMIT-d310fed664330657-BIND",
+        "DLV-B23-EMIT-d310fed664330657-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumManifestBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e7c15e45c06e70a1-CMP18-VAL",
+      "originalBodySha256": "6eba329d751d8cc58c1fe0c744eb2161f64894fafa85a8d657b021bbb05677aa",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e7c15e45c06e70a1-VAL",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-EFFECT",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-BIND",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/registryHealth",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e7c15e45c06e70a1-CMP18-EFFECT",
+      "originalBodySha256": "826f7271c8b4d78f4b264d3a5df12c41bafca078844f148ed388f33426e60ecf",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e7c15e45c06e70a1-VAL",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-EFFECT",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-BIND",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/registryHealth",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e7c15e45c06e70a1-CMP18-BIND",
+      "originalBodySha256": "c62263eca85d711a8617f79fc77f43f0de18a158b19f745e3b93b80a3fd10c47",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e7c15e45c06e70a1-VAL",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-EFFECT",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-BIND",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/registryHealth",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-e7c15e45c06e70a1-CMP18-MUT",
+      "originalBodySha256": "c0eecf9083293c03fe8ef00c57e9576a2f923aaf795ee2acb46eeb053d0d95f0",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-e7c15e45c06e70a1-VAL",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-EFFECT",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-BIND",
+        "DLV-B23-EMIT-e7c15e45c06e70a1-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/registryHealth",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-7a9dc3364cb189d1-CMP18-VAL",
+      "originalBodySha256": "52def8ad6a52c137d0c3da925ef3e4339f129d54be9c10f9ed1ba52e713992ce",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-7a9dc3364cb189d1-VAL",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-EFFECT",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-BIND",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/allowedRegistryPrefixes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-7a9dc3364cb189d1-CMP18-EFFECT",
+      "originalBodySha256": "ff8701db150c6586f6df2944517fd389637995da465a0d5aa21ccc30e5e64454",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-7a9dc3364cb189d1-VAL",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-EFFECT",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-BIND",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/allowedRegistryPrefixes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-7a9dc3364cb189d1-CMP18-BIND",
+      "originalBodySha256": "7b0a8dcf73a31c3c2fb2eb795a9b9c6c9a706195babef447996b8d4263f7de30",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-7a9dc3364cb189d1-VAL",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-EFFECT",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-BIND",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/allowedRegistryPrefixes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-7a9dc3364cb189d1-CMP18-MUT",
+      "originalBodySha256": "cac7c037f6a3b9a724081851a01ed8a7a88125cda672d15186f89e77131669ef",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-7a9dc3364cb189d1-VAL",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-EFFECT",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-BIND",
+        "DLV-B23-EMIT-7a9dc3364cb189d1-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/allowedRegistryPrefixes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-ecb13abf6a54a6ec-CMP18-VAL",
+      "originalBodySha256": "a5982f432164a1e0ba35fa306e3f179d36b3e19e889e60bbdf99397a19f330e8",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-VAL",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-EFFECT",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-BIND",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumExecutionMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-ecb13abf6a54a6ec-CMP18-EFFECT",
+      "originalBodySha256": "7a77d38b50e19781f5ae6e9033643b51cda8b9f267b62ef74a8cbf6f09880b82",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-VAL",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-EFFECT",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-BIND",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumExecutionMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-ecb13abf6a54a6ec-CMP18-BIND",
+      "originalBodySha256": "302958c7c950bf81d1e2dceef66ff74c61c955c84b36c135f25511a39d8d725a",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-VAL",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-EFFECT",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-BIND",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumExecutionMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-ecb13abf6a54a6ec-CMP18-MUT",
+      "originalBodySha256": "d6eff315701642a6d79efe1a0d550b8d660a996af9948f0c30c1d527089915f1",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-VAL",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-EFFECT",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-BIND",
+        "DLV-B23-EMIT-ecb13abf6a54a6ec-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumExecutionMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-c8482b736ed56522-CMP18-VAL",
+      "originalBodySha256": "1f255384d5f940b5a52b7b9110439919c177e82aea15612d46f9ef5edf26d9d7",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-c8482b736ed56522-VAL",
+        "DLV-B23-EMIT-c8482b736ed56522-EFFECT",
+        "DLV-B23-EMIT-c8482b736ed56522-BIND",
+        "DLV-B23-EMIT-c8482b736ed56522-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumOutputBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-c8482b736ed56522-CMP18-EFFECT",
+      "originalBodySha256": "e277dccc16537855a9a7a187a0e43be79c35d3c7d611e405544059a5e87a175a",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-c8482b736ed56522-VAL",
+        "DLV-B23-EMIT-c8482b736ed56522-EFFECT",
+        "DLV-B23-EMIT-c8482b736ed56522-BIND",
+        "DLV-B23-EMIT-c8482b736ed56522-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumOutputBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-c8482b736ed56522-CMP18-BIND",
+      "originalBodySha256": "d30ba34aad1da0e17ea9c89d943b18f088e77c20685c6b5dbdfbe89bcbd3a87f",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-c8482b736ed56522-VAL",
+        "DLV-B23-EMIT-c8482b736ed56522-EFFECT",
+        "DLV-B23-EMIT-c8482b736ed56522-BIND",
+        "DLV-B23-EMIT-c8482b736ed56522-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumOutputBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-c8482b736ed56522-CMP18-MUT",
+      "originalBodySha256": "b6b69477cdf9b17d0ad66176cc7e6e5107fa61354e94f723f8d7a18f424be54e",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-c8482b736ed56522-VAL",
+        "DLV-B23-EMIT-c8482b736ed56522-EFFECT",
+        "DLV-B23-EMIT-c8482b736ed56522-BIND",
+        "DLV-B23-EMIT-c8482b736ed56522-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumOutputBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-6b7babe5458de645-CMP18-VAL",
+      "originalBodySha256": "a926fdc058ac401920f7ef0510f390a83f0e75318ff8bf74282fd20a2e312f7d",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-6b7babe5458de645-VAL",
+        "DLV-B23-EMIT-6b7babe5458de645-EFFECT",
+        "DLV-B23-EMIT-6b7babe5458de645-BIND",
+        "DLV-B23-EMIT-6b7babe5458de645-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/cacheDirectory",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-6b7babe5458de645-CMP18-EFFECT",
+      "originalBodySha256": "6e58ee99843eca01d2ab470582ff8754e7082b458a6bf8183736f62ae4b0612e",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-6b7babe5458de645-VAL",
+        "DLV-B23-EMIT-6b7babe5458de645-EFFECT",
+        "DLV-B23-EMIT-6b7babe5458de645-BIND",
+        "DLV-B23-EMIT-6b7babe5458de645-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/cacheDirectory",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-6b7babe5458de645-CMP18-BIND",
+      "originalBodySha256": "41cc4021c443011d1234143da3cc743066297d9cf26f613b23ed067d7afa6ffc",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-6b7babe5458de645-VAL",
+        "DLV-B23-EMIT-6b7babe5458de645-EFFECT",
+        "DLV-B23-EMIT-6b7babe5458de645-BIND",
+        "DLV-B23-EMIT-6b7babe5458de645-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/cacheDirectory",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-6b7babe5458de645-CMP18-MUT",
+      "originalBodySha256": "0946f7c4f5ca82e1add98f082786b5e13b5c069f095d0e4be6d04a25f323dcad",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-6b7babe5458de645-VAL",
+        "DLV-B23-EMIT-6b7babe5458de645-EFFECT",
+        "DLV-B23-EMIT-6b7babe5458de645-BIND",
+        "DLV-B23-EMIT-6b7babe5458de645-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/cacheDirectory",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-a0b9c19a66131792-CMP18-VAL",
+      "originalBodySha256": "da6f681be8a7020169a29c3e30b75c2d93bd0a70d800c293d1a76ebcc811f8e9",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-a0b9c19a66131792-VAL",
+        "DLV-B23-EMIT-a0b9c19a66131792-EFFECT",
+        "DLV-B23-EMIT-a0b9c19a66131792-BIND",
+        "DLV-B23-EMIT-a0b9c19a66131792-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumVulnerabilityAgeMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-a0b9c19a66131792-CMP18-EFFECT",
+      "originalBodySha256": "087c5f04596b1996961ffffd68ae938c3c90caf2bc85085cc352f6203dbe13aa",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-a0b9c19a66131792-VAL",
+        "DLV-B23-EMIT-a0b9c19a66131792-EFFECT",
+        "DLV-B23-EMIT-a0b9c19a66131792-BIND",
+        "DLV-B23-EMIT-a0b9c19a66131792-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumVulnerabilityAgeMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-a0b9c19a66131792-CMP18-BIND",
+      "originalBodySha256": "986395ed2025a8da25fc38ee31b0ef1245490a7fd0483b80d44df4c94727d947",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-a0b9c19a66131792-VAL",
+        "DLV-B23-EMIT-a0b9c19a66131792-EFFECT",
+        "DLV-B23-EMIT-a0b9c19a66131792-BIND",
+        "DLV-B23-EMIT-a0b9c19a66131792-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumVulnerabilityAgeMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-a0b9c19a66131792-CMP18-MUT",
+      "originalBodySha256": "8dc8803b164673bd497f856c44e43084ecc33845bfdb7de4114a36bed279ef36",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-a0b9c19a66131792-VAL",
+        "DLV-B23-EMIT-a0b9c19a66131792-EFFECT",
+        "DLV-B23-EMIT-a0b9c19a66131792-BIND",
+        "DLV-B23-EMIT-a0b9c19a66131792-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumVulnerabilityAgeMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-f7874c1d6b49b6aa-CMP18-VAL",
+      "originalBodySha256": "8c9775f52563f46172166a25ae24e024a66833c2c17588dff51fcd12282c2854",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-VAL",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-EFFECT",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-BIND",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumJavaAgeMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-f7874c1d6b49b6aa-CMP18-EFFECT",
+      "originalBodySha256": "dd90998db66d9be2ff025206d5b68aa9e95f40a264dea7cce4b62449df3043cd",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-VAL",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-EFFECT",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-BIND",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumJavaAgeMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-f7874c1d6b49b6aa-CMP18-BIND",
+      "originalBodySha256": "490e25c891f863185139518c4e75ba8b1ea229a47e52b7d25abc7589ee1e08f8",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-VAL",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-EFFECT",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-BIND",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumJavaAgeMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-f7874c1d6b49b6aa-CMP18-MUT",
+      "originalBodySha256": "e46d86e47213bf512725eef87b1969dc804d244d5f1779a5707bd18daf01b3ea",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-VAL",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-EFFECT",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-BIND",
+        "DLV-B23-EMIT-f7874c1d6b49b6aa-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumJavaAgeMs",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-7b7ab708c5208cf7-CMP18-VAL",
+      "originalBodySha256": "d94a397a8cc23e4c20a56016503715128f0320fdc2645f1f624c0bcc805595b6",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-7b7ab708c5208cf7-VAL",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-EFFECT",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-BIND",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumDatabaseBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-7b7ab708c5208cf7-CMP18-EFFECT",
+      "originalBodySha256": "39e3b30fb9e231f0212da806b5dc59f73a066673cec1be49853f7e9a7d47d8ae",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-7b7ab708c5208cf7-VAL",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-EFFECT",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-BIND",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumDatabaseBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-7b7ab708c5208cf7-CMP18-BIND",
+      "originalBodySha256": "a6cd6ed6e9186634b734906a13b878171c3e4cd80819a03c5c793b756ca117bc",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-7b7ab708c5208cf7-VAL",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-EFFECT",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-BIND",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumDatabaseBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    },
+    {
+      "caseId": "DLV-B23-EMIT-7b7ab708c5208cf7-CMP18-MUT",
+      "originalBodySha256": "8d74d844092cbd3a072bc09b14325f1ee63456fcee8785a811a7cc5536645322",
+      "originalDeliveryCaseIds": [
+        "DLV-B23-EMIT-7b7ab708c5208cf7-VAL",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-EFFECT",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-BIND",
+        "DLV-B23-EMIT-7b7ab708c5208cf7-MUT"
+      ],
+      "activePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumDatabaseBytes",
+      "result": "not-run",
+      "additionalOracle": "Capture same original registry source before effect/history, match endpoint/reference; HTTPS both named credentials and optional paired worker/Node trust references; HTTP anonymous/noCA. Custom CA regular/no-follow/root/size/revision/drift receipt; unknown/half/absent HTTPS credentials or escaping receipt rejects before I/O. Registry repeat equality including optional CA. Scanner HTTP source maps unsupported marker and pinned scan rejects without unsafe TLS relaxation; health HTTP works anonymously; custom CA scanner --cacert/Node fetch trust remain authentic external receiving checks."
+    }
+  ],
+  "publicShapeOracles": [
+    "custom worker CA with separate nodeCA and both name refs",
+    "anonymous HTTP pair only",
+    "unknown fields rejected",
+    "absent HTTPS pair rejected",
+    "half-pair rejected",
+    "HTTP auth/CA rejected",
+    "ungranted normalized root escape rejected in capture admission (producer still supports absolute path)",
+    "peer/source host mismatch rejected",
+    "HTTP scanner unsupported marker and future effect rejection",
+    "HTTP anonymous health and no unused CA option"
+  ],
+  "missingExternal": "No credentials, key/cert/CA bytes, physical nofollow capture, node/buildkit install, scanner invocation, network or trust delivery tested."
+}

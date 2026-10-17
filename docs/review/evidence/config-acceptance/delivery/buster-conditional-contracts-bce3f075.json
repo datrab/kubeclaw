@@ -1,0 +1,851 @@
+{
+  "scope": "8 active conditional/spreadmembers explicitly inventoried, originalauthor aliases no secretbytes",
+  "records": [
+    {
+      "id": "DLV-BUSTER-ENTRYPOINT-RUNTIME-TRUSTEDPEERSPIFFEIDS",
+      "owner": "buster-entrypoint-runtime",
+      "scope": {
+        "instance": "buster-entrypoint-runtime",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "trustedPeerSpiffeIds",
+        "line": 196,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "current": {
+        "valueOrDefault": "BUSTER_TRUSTED_PEER_SPIFFE_ID truthy\u2192one-element peer list",
+        "precedence": "current exact producer branch/spread order; no inferred live selected mode or secretbytes"
+      },
+      "typeUnitDomain": "runtimeAuthority requires stringArray1..32 nonempty strings; HTTP server exactly one auth mode, peer list nonempty. Proxied SPIFFE authorizer verifies exact header identity and trusted loopback remote; not direct bearer or generic TLS principal parser. SAME ingress/Envoy peer identities must match selected deployment trust. Current shell STILL requires BUSTER_V2_TOKEN before peer branch despite error wording; SPIFFE-only missing token fails earlier producer.",
+      "reader": {
+        "operation": "runtimeAuthority requires stringArray1..32 nonempty strings; HTTP server exactly one auth mode, peer list nonempty. Proxied SPIFFE authorizer verifies exact header identity and trusted loopback remote; not direct bearer or generic TLS principal parser. SAME ingress/Envoy peer identities must match selected deployment trust. Current shell STILL requires BUSTER_V2_TOKEN before peer branch despite error wording; SPIFFE-only missing token fails earlier producer.",
+        "references": [
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/registry-client-config.mjs",
+            "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+            "sha256": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-config-values.ts",
+            "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-command-options.ts",
+            "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+            "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+            "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+            "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+            "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+          },
+          {
+            "path": "skills/worker/core/worker/trust.ts",
+            "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+          }
+        ],
+        "originalProducerAliases": [
+          "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENABLED"
+        ]
+      },
+      "productiveCallerChain": "current entrypoint generation + registryClientContract exactpublicrefs\u2192native production constructor/authority/consumer; field-specific chain above",
+      "validation": {
+        "schema": "manual root/array/ENV plus sourceproducer/native auth/endpoint/trust validators",
+        "semantic": "runtimeAuthority requires stringArray1..32 nonempty strings; HTTP server exactly one auth mode, peer list nonempty. Proxied SPIFFE authorizer verifies exact header identity and trusted loopback remote; not direct bearer or generic TLS principal parser. SAME ingress/Envoy peer identities must match selected deployment trust. Current shell STILL requires BUSTER_V2_TOKEN before peer branch despite error wording; SPIFFE-only missing token fails earlier producer.",
+        "errorContract": "first entrypoint requiredtoken vs actualHTTPmode/token/peer-policy/registry completeness/HTTPS/nativefile errors; primary source inspection not runtimekill"
+      },
+      "target": {
+        "author": "C3 physical extension of SAME existing charts/kubeclaw/files/config/buster-engine.config.json settings.runtimeService peer policy; token/registry/trust members derived from sole original deployment/secret/registry authors above",
+        "reference": "trustedPeerSpiffeIds"
+      },
+      "activationScope": {
+        "current": "native startup JSON/ENV capture; credentials/token lifetime and CA/daemon startup capture distinct",
+        "target": "selected same-generation policy and publicSecret refs frozen before dispatch; no latest credential/config replacement of retainedrunpolicy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "auth/source/registry/trust modes and secret revisions/grants must remain bound across A recovery/Bpublish; token-vs-proxy and source attestation intentionally different authorities",
+      "profileEvalSuitability": "complete retained A/B runtime JSON; missing-peer token-mode third profile must have declared tokenEnvironmentVariable, real valid token/source key separately provisioned; both entrypoint paths still require captured BUSTER_V2_TOKEN. No native key/token/peer/registry execution here.",
+      "migrationAction": "enumerate real conditional/spreadmembers and preserve exactoriginalowner; targetstrict whole selected authmode excludes competing/equal oldrefs and binds Envoy/header/endpoint/CA/auth revisions; missingselectors not silentlydefaulted.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-BUSTER-ENTRYPOINT-RUNTIME-TOKENENVIRONMENTVARIABLE",
+      "owner": "buster-entrypoint-runtime",
+      "scope": {
+        "instance": "buster-entrypoint-runtime",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "secret-reference",
+      "source": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "tokenEnvironmentVariable",
+        "line": 198,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "current": {
+        "valueOrDefault": "BUSTER_V2_TOKEN when peer ENV absent",
+        "precedence": "current exact producer branch/spread order; no inferred live selected mode or secretbytes"
+      },
+      "typeUnitDomain": "Root optionalEnvironment name uppercase; actual env present, createBusterRemotePlanHttpServer tokenlength>=32 and exact bearer authorization. Entrypoint captures required token once then unsets parent env, supplies only child when nopeer; never record bytes. Source attestation ENV MUST differ. Authentic same fixture token needed for both startup paths due unconditional shell require.",
+      "reader": {
+        "operation": "Root optionalEnvironment name uppercase; actual env present, createBusterRemotePlanHttpServer tokenlength>=32 and exact bearer authorization. Entrypoint captures required token once then unsets parent env, supplies only child when nopeer; never record bytes. Source attestation ENV MUST differ. Authentic same fixture token needed for both startup paths due unconditional shell require.",
+        "references": [
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/registry-client-config.mjs",
+            "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+            "sha256": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-config-values.ts",
+            "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-command-options.ts",
+            "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+            "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+            "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+            "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+            "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+          },
+          {
+            "path": "skills/worker/core/worker/trust.ts",
+            "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+          }
+        ],
+        "originalProducerAliases": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE"
+        ]
+      },
+      "productiveCallerChain": "current entrypoint generation + registryClientContract exactpublicrefs\u2192native production constructor/authority/consumer; field-specific chain above",
+      "validation": {
+        "schema": "manual root/array/ENV plus sourceproducer/native auth/endpoint/trust validators",
+        "semantic": "Root optionalEnvironment name uppercase; actual env present, createBusterRemotePlanHttpServer tokenlength>=32 and exact bearer authorization. Entrypoint captures required token once then unsets parent env, supplies only child when nopeer; never record bytes. Source attestation ENV MUST differ. Authentic same fixture token needed for both startup paths due unconditional shell require.",
+        "errorContract": "first entrypoint requiredtoken vs actualHTTPmode/token/peer-policy/registry completeness/HTTPS/nativefile errors; primary source inspection not runtimekill"
+      },
+      "target": {
+        "author": "C3 physical extension of SAME existing charts/kubeclaw/files/config/buster-engine.config.json settings.runtimeService peer policy; token/registry/trust members derived from sole original deployment/secret/registry authors above",
+        "reference": "tokenEnvironmentVariable"
+      },
+      "activationScope": {
+        "current": "native startup JSON/ENV capture; credentials/token lifetime and CA/daemon startup capture distinct",
+        "target": "selected same-generation policy and publicSecret refs frozen before dispatch; no latest credential/config replacement of retainedrunpolicy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "auth/source/registry/trust modes and secret revisions/grants must remain bound across A recovery/Bpublish; token-vs-proxy and source attestation intentionally different authorities",
+      "profileEvalSuitability": "complete retained A/B runtime JSON; missing-peer token-mode third profile must have declared tokenEnvironmentVariable, real valid token/source key separately provisioned; both entrypoint paths still require captured BUSTER_V2_TOKEN. No native key/token/peer/registry execution here.",
+      "migrationAction": "enumerate real conditional/spreadmembers and preserve exactoriginalowner; targetstrict whole selected authmode excludes competing/equal oldrefs and binds Envoy/header/endpoint/CA/auth revisions; missingselectors not silentlydefaulted.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-BUSTER-RUNTIME-CONTAINERBUILD-REGISTRYBASEURL",
+      "owner": "buster-entrypoint-runtime",
+      "scope": {
+        "instance": "buster-entrypoint-runtime",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "containerBuild.registryBaseUrl",
+        "line": 232,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "current": {
+        "valueOrDefault": "registryClientContract.runtime.registryBaseUrl",
+        "precedence": "current exact producer branch/spread order; no inferred live selected mode or secretbytes"
+      },
+      "typeUnitDomain": "Whole JSON spread AFTER buildctlExecutable/buildkitHost BEFORE repository/allowlists; producer normalized origin exact endpoint/transport trust/auth. Option consumer String() plus URLhttp|https no embeddedauth/query/hash nonrootpath; actual reference match+registry HTTP/HTTPS auth restrictions. Derived original Chart registry endpoint, NOT new adjustable URL writer.",
+      "reader": {
+        "operation": "Whole JSON spread AFTER buildctlExecutable/buildkitHost BEFORE repository/allowlists; producer normalized origin exact endpoint/transport trust/auth. Option consumer String() plus URLhttp|https no embeddedauth/query/hash nonrootpath; actual reference match+registry HTTP/HTTPS auth restrictions. Derived original Chart registry endpoint, NOT new adjustable URL writer.",
+        "references": [
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/registry-client-config.mjs",
+            "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+            "sha256": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-config-values.ts",
+            "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-command-options.ts",
+            "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+            "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+            "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+            "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+            "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+          },
+          {
+            "path": "skills/worker/core/worker/trust.ts",
+            "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+          }
+        ],
+        "originalProducerAliases": [
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-ENDPOINT",
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-TRANSPORT"
+        ]
+      },
+      "productiveCallerChain": "current entrypoint generation + registryClientContract exactpublicrefs\u2192native production constructor/authority/consumer; field-specific chain above",
+      "validation": {
+        "schema": "manual root/array/ENV plus sourceproducer/native auth/endpoint/trust validators",
+        "semantic": "Whole JSON spread AFTER buildctlExecutable/buildkitHost BEFORE repository/allowlists; producer normalized origin exact endpoint/transport trust/auth. Option consumer String() plus URLhttp|https no embeddedauth/query/hash nonrootpath; actual reference match+registry HTTP/HTTPS auth restrictions. Derived original Chart registry endpoint, NOT new adjustable URL writer.",
+        "errorContract": "first entrypoint requiredtoken vs actualHTTPmode/token/peer-policy/registry completeness/HTTPS/nativefile errors; primary source inspection not runtimekill"
+      },
+      "target": {
+        "author": "C3 physical extension of SAME existing charts/kubeclaw/files/config/buster-engine.config.json settings.runtimeService peer policy; token/registry/trust members derived from sole original deployment/secret/registry authors above",
+        "reference": "containerBuild.registryBaseUrl"
+      },
+      "activationScope": {
+        "current": "native startup JSON/ENV capture; credentials/token lifetime and CA/daemon startup capture distinct",
+        "target": "selected same-generation policy and publicSecret refs frozen before dispatch; no latest credential/config replacement of retainedrunpolicy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "auth/source/registry/trust modes and secret revisions/grants must remain bound across A recovery/Bpublish; token-vs-proxy and source attestation intentionally different authorities",
+      "profileEvalSuitability": "complete retained A/B runtime JSON; missing-peer token-mode third profile must have declared tokenEnvironmentVariable, real valid token/source key separately provisioned; both entrypoint paths still require captured BUSTER_V2_TOKEN. No native key/token/peer/registry execution here.",
+      "migrationAction": "enumerate real conditional/spreadmembers and preserve exactoriginalowner; targetstrict whole selected authmode excludes competing/equal oldrefs and binds Envoy/header/endpoint/CA/auth revisions; missingselectors not silentlydefaulted.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-BUSTER-RUNTIME-CONTAINERBUILD-REGISTRYREFERENCE",
+      "owner": "buster-entrypoint-runtime",
+      "scope": {
+        "instance": "buster-entrypoint-runtime",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "containerBuild.registryReference",
+        "line": 232,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "current": {
+        "valueOrDefault": "registryClientContract normalized URL.host",
+        "precedence": "current exact producer branch/spread order; no inferred live selected mode or secretbytes"
+      },
+      "typeUnitDomain": "Derived host exactsame endpoint normalized scheme/port; container builder registryReference must match registry URL.host. Endpoint is sole author, reference cannot become competing editablehost. Scanner and networkregistry-health crosschecks actualsamewriter.",
+      "reader": {
+        "operation": "Derived host exactsame endpoint normalized scheme/port; container builder registryReference must match registry URL.host. Endpoint is sole author, reference cannot become competing editablehost. Scanner and networkregistry-health crosschecks actualsamewriter.",
+        "references": [
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/registry-client-config.mjs",
+            "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+            "sha256": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-config-values.ts",
+            "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-command-options.ts",
+            "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+            "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+            "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+            "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+            "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+          },
+          {
+            "path": "skills/worker/core/worker/trust.ts",
+            "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+          }
+        ],
+        "originalProducerAliases": [
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-ENDPOINT"
+        ]
+      },
+      "productiveCallerChain": "current entrypoint generation + registryClientContract exactpublicrefs\u2192native production constructor/authority/consumer; field-specific chain above",
+      "validation": {
+        "schema": "manual root/array/ENV plus sourceproducer/native auth/endpoint/trust validators",
+        "semantic": "Derived host exactsame endpoint normalized scheme/port; container builder registryReference must match registry URL.host. Endpoint is sole author, reference cannot become competing editablehost. Scanner and networkregistry-health crosschecks actualsamewriter.",
+        "errorContract": "first entrypoint requiredtoken vs actualHTTPmode/token/peer-policy/registry completeness/HTTPS/nativefile errors; primary source inspection not runtimekill"
+      },
+      "target": {
+        "author": "C3 physical extension of SAME existing charts/kubeclaw/files/config/buster-engine.config.json settings.runtimeService peer policy; token/registry/trust members derived from sole original deployment/secret/registry authors above",
+        "reference": "containerBuild.registryReference"
+      },
+      "activationScope": {
+        "current": "native startup JSON/ENV capture; credentials/token lifetime and CA/daemon startup capture distinct",
+        "target": "selected same-generation policy and publicSecret refs frozen before dispatch; no latest credential/config replacement of retainedrunpolicy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "auth/source/registry/trust modes and secret revisions/grants must remain bound across A recovery/Bpublish; token-vs-proxy and source attestation intentionally different authorities",
+      "profileEvalSuitability": "complete retained A/B runtime JSON; missing-peer token-mode third profile must have declared tokenEnvironmentVariable, real valid token/source key separately provisioned; both entrypoint paths still require captured BUSTER_V2_TOKEN. No native key/token/peer/registry execution here.",
+      "migrationAction": "enumerate real conditional/spreadmembers and preserve exactoriginalowner; targetstrict whole selected authmode excludes competing/equal oldrefs and binds Envoy/header/endpoint/CA/auth revisions; missingselectors not silentlydefaulted.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-BUSTER-RUNTIME-CONTAINERBUILD-REGISTRYUSERNAMEENVREF",
+      "owner": "buster-entrypoint-runtime",
+      "scope": {
+        "instance": "buster-entrypoint-runtime",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "secret-reference",
+      "source": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "containerBuild.registryUsernameEnvironmentVariable",
+        "line": 232,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "current": {
+        "valueOrDefault": "KUBECLAW_REGISTRY_USERNAME generatedref",
+        "precedence": "current exact producer branch/spread order; no inferred live selected mode or secretbytes"
+      },
+      "typeUnitDomain": "Registryclient credential names uppercase^[A-Z][A-Z0-9_]+$, username/passwordpaired, HTTPSauthrequired HTTP-lab authforbidden. capabilitySources optionalEnvironmentSecret resolves required chosenENV once; runtime loader regex permits one-charname but producer stricter. SecretKeySelector keys/path/grants/revisions separate.",
+      "reader": {
+        "operation": "Registryclient credential names uppercase^[A-Z][A-Z0-9_]+$, username/passwordpaired, HTTPSauthrequired HTTP-lab authforbidden. capabilitySources optionalEnvironmentSecret resolves required chosenENV once; runtime loader regex permits one-charname but producer stricter. SecretKeySelector keys/path/grants/revisions separate.",
+        "references": [
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/registry-client-config.mjs",
+            "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+            "sha256": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-config-values.ts",
+            "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-command-options.ts",
+            "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+            "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+            "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+            "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+            "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+          },
+          {
+            "path": "skills/worker/core/worker/trust.ts",
+            "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+          }
+        ],
+        "originalProducerAliases": [
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-AUTHSECRETNAME",
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-USERNAMEKEY"
+        ]
+      },
+      "productiveCallerChain": "current entrypoint generation + registryClientContract exactpublicrefs\u2192native production constructor/authority/consumer; field-specific chain above",
+      "validation": {
+        "schema": "manual root/array/ENV plus sourceproducer/native auth/endpoint/trust validators",
+        "semantic": "Registryclient credential names uppercase^[A-Z][A-Z0-9_]+$, username/passwordpaired, HTTPSauthrequired HTTP-lab authforbidden. capabilitySources optionalEnvironmentSecret resolves required chosenENV once; runtime loader regex permits one-charname but producer stricter. SecretKeySelector keys/path/grants/revisions separate.",
+        "errorContract": "first entrypoint requiredtoken vs actualHTTPmode/token/peer-policy/registry completeness/HTTPS/nativefile errors; primary source inspection not runtimekill"
+      },
+      "target": {
+        "author": "C3 physical extension of SAME existing charts/kubeclaw/files/config/buster-engine.config.json settings.runtimeService peer policy; token/registry/trust members derived from sole original deployment/secret/registry authors above",
+        "reference": "containerBuild.registryUsernameEnvironmentVariable"
+      },
+      "activationScope": {
+        "current": "native startup JSON/ENV capture; credentials/token lifetime and CA/daemon startup capture distinct",
+        "target": "selected same-generation policy and publicSecret refs frozen before dispatch; no latest credential/config replacement of retainedrunpolicy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "auth/source/registry/trust modes and secret revisions/grants must remain bound across A recovery/Bpublish; token-vs-proxy and source attestation intentionally different authorities",
+      "profileEvalSuitability": "complete retained A/B runtime JSON; missing-peer token-mode third profile must have declared tokenEnvironmentVariable, real valid token/source key separately provisioned; both entrypoint paths still require captured BUSTER_V2_TOKEN. No native key/token/peer/registry execution here.",
+      "migrationAction": "enumerate real conditional/spreadmembers and preserve exactoriginalowner; targetstrict whole selected authmode excludes competing/equal oldrefs and binds Envoy/header/endpoint/CA/auth revisions; missingselectors not silentlydefaulted.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-BUSTER-RUNTIME-CONTAINERBUILD-REGISTRYPASSWORDENVREF",
+      "owner": "buster-entrypoint-runtime",
+      "scope": {
+        "instance": "buster-entrypoint-runtime",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "secret-reference",
+      "source": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "containerBuild.registryPasswordEnvironmentVariable",
+        "line": 232,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "current": {
+        "valueOrDefault": "KUBECLAW_REGISTRY_PASSWORD generatedref",
+        "precedence": "current exact producer branch/spread order; no inferred live selected mode or secretbytes"
+      },
+      "typeUnitDomain": "Same paired HTTPSauthentication producer\u2192optionalEnvironmentSecret; mismatchedpresence rejects BUSTER_CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE. InstalledBuildKit/registry secretuser capability receipts required, never secretbytes.",
+      "reader": {
+        "operation": "Same paired HTTPSauthentication producer\u2192optionalEnvironmentSecret; mismatchedpresence rejects BUSTER_CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE. InstalledBuildKit/registry secretuser capability receipts required, never secretbytes.",
+        "references": [
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/registry-client-config.mjs",
+            "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+            "sha256": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-config-values.ts",
+            "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-command-options.ts",
+            "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+            "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+            "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+            "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+            "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+          },
+          {
+            "path": "skills/worker/core/worker/trust.ts",
+            "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+          }
+        ],
+        "originalProducerAliases": [
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-AUTHSECRETNAME",
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-PASSWORDKEY"
+        ]
+      },
+      "productiveCallerChain": "current entrypoint generation + registryClientContract exactpublicrefs\u2192native production constructor/authority/consumer; field-specific chain above",
+      "validation": {
+        "schema": "manual root/array/ENV plus sourceproducer/native auth/endpoint/trust validators",
+        "semantic": "Same paired HTTPSauthentication producer\u2192optionalEnvironmentSecret; mismatchedpresence rejects BUSTER_CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE. InstalledBuildKit/registry secretuser capability receipts required, never secretbytes.",
+        "errorContract": "first entrypoint requiredtoken vs actualHTTPmode/token/peer-policy/registry completeness/HTTPS/nativefile errors; primary source inspection not runtimekill"
+      },
+      "target": {
+        "author": "C3 physical extension of SAME existing charts/kubeclaw/files/config/buster-engine.config.json settings.runtimeService peer policy; token/registry/trust members derived from sole original deployment/secret/registry authors above",
+        "reference": "containerBuild.registryPasswordEnvironmentVariable"
+      },
+      "activationScope": {
+        "current": "native startup JSON/ENV capture; credentials/token lifetime and CA/daemon startup capture distinct",
+        "target": "selected same-generation policy and publicSecret refs frozen before dispatch; no latest credential/config replacement of retainedrunpolicy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "auth/source/registry/trust modes and secret revisions/grants must remain bound across A recovery/Bpublish; token-vs-proxy and source attestation intentionally different authorities",
+      "profileEvalSuitability": "complete retained A/B runtime JSON; missing-peer token-mode third profile must have declared tokenEnvironmentVariable, real valid token/source key separately provisioned; both entrypoint paths still require captured BUSTER_V2_TOKEN. No native key/token/peer/registry execution here.",
+      "migrationAction": "enumerate real conditional/spreadmembers and preserve exactoriginalowner; targetstrict whole selected authmode excludes competing/equal oldrefs and binds Envoy/header/endpoint/CA/auth revisions; missingselectors not silentlydefaulted.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-BUSTER-RUNTIME-CONTAINERBUILD-REGISTRYCAFILE",
+      "owner": "buster-entrypoint-runtime",
+      "scope": {
+        "instance": "buster-entrypoint-runtime",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "containerBuild.registryCaFile",
+        "line": 232,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "current": {
+        "valueOrDefault": "registryClientContract worker caFile optional projection",
+        "precedence": "current exact producer branch/spread order; no inferred live selected mode or secretbytes"
+      },
+      "typeUnitDomain": "Spread current registryCaFile exists when customCA, but containerBuildOptions does NOT pass this property to build capability; BuildKit daemon trust uses generated BuildKit config/worker Node startup NODE_EXTRA_CA_CERTS. Thus do not claim per-operation builderCAfile reader from fieldname; target preserve sole original paired trust input/real daemon/probe reader.",
+      "reader": {
+        "operation": "Spread current registryCaFile exists when customCA, but containerBuildOptions does NOT pass this property to build capability; BuildKit daemon trust uses generated BuildKit config/worker Node startup NODE_EXTRA_CA_CERTS. Thus do not claim per-operation builderCAfile reader from fieldname; target preserve sole original paired trust input/real daemon/probe reader.",
+        "references": [
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/registry-client-config.mjs",
+            "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+            "sha256": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-config-values.ts",
+            "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-command-options.ts",
+            "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+            "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+            "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+            "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+            "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+          },
+          {
+            "path": "skills/worker/core/worker/trust.ts",
+            "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+          }
+        ],
+        "originalProducerAliases": [
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-CASECRETNAME",
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-NODECAFILE"
+        ]
+      },
+      "productiveCallerChain": "current entrypoint generation + registryClientContract exactpublicrefs\u2192native production constructor/authority/consumer; field-specific chain above",
+      "validation": {
+        "schema": "manual root/array/ENV plus sourceproducer/native auth/endpoint/trust validators",
+        "semantic": "Spread current registryCaFile exists when customCA, but containerBuildOptions does NOT pass this property to build capability; BuildKit daemon trust uses generated BuildKit config/worker Node startup NODE_EXTRA_CA_CERTS. Thus do not claim per-operation builderCAfile reader from fieldname; target preserve sole original paired trust input/real daemon/probe reader.",
+        "errorContract": "first entrypoint requiredtoken vs actualHTTPmode/token/peer-policy/registry completeness/HTTPS/nativefile errors; primary source inspection not runtimekill"
+      },
+      "target": {
+        "author": "C3 physical extension of SAME existing charts/kubeclaw/files/config/buster-engine.config.json settings.runtimeService peer policy; token/registry/trust members derived from sole original deployment/secret/registry authors above",
+        "reference": "containerBuild.registryCaFile"
+      },
+      "activationScope": {
+        "current": "native startup JSON/ENV capture; credentials/token lifetime and CA/daemon startup capture distinct",
+        "target": "selected same-generation policy and publicSecret refs frozen before dispatch; no latest credential/config replacement of retainedrunpolicy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "auth/source/registry/trust modes and secret revisions/grants must remain bound across A recovery/Bpublish; token-vs-proxy and source attestation intentionally different authorities",
+      "profileEvalSuitability": "complete retained A/B runtime JSON; missing-peer token-mode third profile must have declared tokenEnvironmentVariable, real valid token/source key separately provisioned; both entrypoint paths still require captured BUSTER_V2_TOKEN. No native key/token/peer/registry execution here.",
+      "migrationAction": "enumerate real conditional/spreadmembers and preserve exactoriginalowner; targetstrict whole selected authmode excludes competing/equal oldrefs and binds Envoy/header/endpoint/CA/auth revisions; missingselectors not silentlydefaulted.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json"
+      ],
+      "status": "source-traced-declared-unused"
+    },
+    {
+      "id": "DLV-BUSTER-RUNTIME-SECURITYSCAN-REGISTRYCAFILE",
+      "owner": "buster-entrypoint-runtime",
+      "scope": {
+        "instance": "buster-entrypoint-runtime",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "field": "securityScan.registry.registryCaFile",
+        "line": 296,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "current": {
+        "valueOrDefault": "same registryClientContract worker caFile",
+        "precedence": "current exact producer branch/spread order; no inferred live selected mode or secretbytes"
+      },
+      "typeUnitDomain": "securityScan nested samecontract\u2192scannerRegistry directorypath.resolve caFile\u2192SecurityScan invoker fs.access R_OK\u2192onlymatchingregistry Trivy --cacert; actual HTTPScredentials required. This path DOES have reader unlike containerBuild discardedfield; both alias original pairedcustomCA author, not same-field observer omission.",
+      "reader": {
+        "operation": "securityScan nested samecontract\u2192scannerRegistry directorypath.resolve caFile\u2192SecurityScan invoker fs.access R_OK\u2192onlymatchingregistry Trivy --cacert; actual HTTPScredentials required. This path DOES have reader unlike containerBuild discardedfield; both alias original pairedcustomCA author, not same-field observer omission.",
+        "references": [
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/registry-client-config.mjs",
+            "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+            "sha256": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-config-values.ts",
+            "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/production-command-options.ts",
+            "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+            "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+            "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+            "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+            "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+          },
+          {
+            "path": "skills/worker/core/worker/trust.ts",
+            "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+          }
+        ],
+        "originalProducerAliases": [
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-CASECRETNAME",
+          "DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-NODECAFILE"
+        ]
+      },
+      "productiveCallerChain": "current entrypoint generation + registryClientContract exactpublicrefs\u2192native production constructor/authority/consumer; field-specific chain above",
+      "validation": {
+        "schema": "manual root/array/ENV plus sourceproducer/native auth/endpoint/trust validators",
+        "semantic": "securityScan nested samecontract\u2192scannerRegistry directorypath.resolve caFile\u2192SecurityScan invoker fs.access R_OK\u2192onlymatchingregistry Trivy --cacert; actual HTTPScredentials required. This path DOES have reader unlike containerBuild discardedfield; both alias original pairedcustomCA author, not same-field observer omission.",
+        "errorContract": "first entrypoint requiredtoken vs actualHTTPmode/token/peer-policy/registry completeness/HTTPS/nativefile errors; primary source inspection not runtimekill"
+      },
+      "target": {
+        "author": "C3 physical extension of SAME existing charts/kubeclaw/files/config/buster-engine.config.json settings.runtimeService peer policy; token/registry/trust members derived from sole original deployment/secret/registry authors above",
+        "reference": "securityScan.registry.registryCaFile"
+      },
+      "activationScope": {
+        "current": "native startup JSON/ENV capture; credentials/token lifetime and CA/daemon startup capture distinct",
+        "target": "selected same-generation policy and publicSecret refs frozen before dispatch; no latest credential/config replacement of retainedrunpolicy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "auth/source/registry/trust modes and secret revisions/grants must remain bound across A recovery/Bpublish; token-vs-proxy and source attestation intentionally different authorities",
+      "profileEvalSuitability": "complete retained A/B runtime JSON; missing-peer token-mode third profile must have declared tokenEnvironmentVariable, real valid token/source key separately provisioned; both entrypoint paths still require captured BUSTER_V2_TOKEN. No native key/token/peer/registry execution here.",
+      "migrationAction": "enumerate real conditional/spreadmembers and preserve exactoriginalowner; targetstrict whole selected authmode excludes competing/equal oldrefs and binds Envoy/header/endpoint/CA/auth revisions; missingselectors not silentlydefaulted.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    }
+  ],
+  "sourceConsistencyFinding": "entrypoint token require is unconditional even SPIFFE mode; no runtime claim from conditional JSON only"
+}

@@ -1,0 +1,609 @@
+{
+  "recipes": {
+    "captured-chart-local-A": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-5.6-sol",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-agent-observer"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        },
+        "kubeclaw-agent-observer": {
+          "enabled": true,
+          "config": {
+            "enabled": true,
+            "redisNetworkIsolation": "isolated",
+            "maxEventBytes": 3145728,
+            "maxQueuePerStream": 100,
+            "redisCommandTimeoutMs": 5000,
+            "streamMaxLen": 10000,
+            "deadLetterMaxLen": 1000,
+            "controlWriteMaxAttempts": 3,
+            "controlWriteRetryBaseMs": 100,
+            "controlWriteRetryMaxMs": 1000,
+            "hookPriority": -100,
+            "hookTimeoutMs": 1000
+          },
+          "hooks": {
+            "allowConversationAccess": true
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env",
+            "allowlist": [
+              "LITELLM_API_KEY",
+              "DLV_TEST_EMBEDDING_TOKEN",
+              "DLV_TEST_GATEWAY_PASSWORD",
+              "OPENCLAW_GATEWAY_TOKEN"
+            ]
+          },
+          "delivery-test": {
+            "source": "env",
+            "allowlist": [
+              "DLV_TEST_EMBEDDING_TOKEN"
+            ]
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+      "agentRole": "buster",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+      "discordApprovers": [
+        "user:849379821536804864"
+      ],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+    },
+    "captured-chart-local-B": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-6-astra",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-agent-observer"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        },
+        "kubeclaw-agent-observer": {
+          "enabled": true,
+          "config": {
+            "enabled": true,
+            "redisNetworkIsolation": "isolated",
+            "maxEventBytes": 3145728,
+            "maxQueuePerStream": 100,
+            "redisCommandTimeoutMs": 5000,
+            "streamMaxLen": 10000,
+            "deadLetterMaxLen": 1000,
+            "controlWriteMaxAttempts": 3,
+            "controlWriteRetryBaseMs": 100,
+            "controlWriteRetryMaxMs": 1000,
+            "hookPriority": -100,
+            "hookTimeoutMs": 1000
+          },
+          "hooks": {
+            "allowConversationAccess": true
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env",
+            "allowlist": [
+              "LITELLM_API_KEY",
+              "DLV_TEST_EMBEDDING_TOKEN",
+              "DLV_TEST_GATEWAY_PASSWORD",
+              "OPENCLAW_GATEWAY_TOKEN"
+            ]
+          },
+          "delivery-test": {
+            "source": "env",
+            "allowlist": [
+              "DLV_TEST_EMBEDDING_TOKEN"
+            ]
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+      "agentRole": "buster",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+      "discordApprovers": [
+        "user:849379821536804864"
+      ],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+    },
+    "captured-chart-Ready-port-contrast": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-5.6-sol",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-agent-observer"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        },
+        "kubeclaw-agent-observer": {
+          "enabled": true,
+          "config": {
+            "enabled": true,
+            "redisNetworkIsolation": "isolated",
+            "maxEventBytes": 3145728,
+            "maxQueuePerStream": 100,
+            "redisCommandTimeoutMs": 5000,
+            "streamMaxLen": 10000,
+            "deadLetterMaxLen": 1000,
+            "controlWriteMaxAttempts": 3,
+            "controlWriteRetryBaseMs": 100,
+            "controlWriteRetryMaxMs": 1000,
+            "hookPriority": -100,
+            "hookTimeoutMs": 1000
+          },
+          "hooks": {
+            "allowConversationAccess": true
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env",
+            "allowlist": [
+              "LITELLM_API_KEY",
+              "DLV_TEST_EMBEDDING_TOKEN",
+              "DLV_TEST_GATEWAY_PASSWORD",
+              "OPENCLAW_GATEWAY_TOKEN"
+            ]
+          },
+          "delivery-test": {
+            "source": "env",
+            "allowlist": [
+              "DLV_TEST_EMBEDDING_TOKEN"
+            ]
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+      "agentRole": "buster",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+      "discordApprovers": [
+        "user:849379821536804864"
+      ],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+    },
+    "captured-chart-ready-product-off": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-5.6-sol",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-agent-observer"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        },
+        "kubeclaw-agent-observer": {
+          "enabled": true,
+          "config": {
+            "enabled": true,
+            "redisNetworkIsolation": "isolated",
+            "maxEventBytes": 3145728,
+            "maxQueuePerStream": 100,
+            "redisCommandTimeoutMs": 5000,
+            "streamMaxLen": 10000,
+            "deadLetterMaxLen": 1000,
+            "controlWriteMaxAttempts": 3,
+            "controlWriteRetryBaseMs": 100,
+            "controlWriteRetryMaxMs": 1000,
+            "hookPriority": -100,
+            "hookTimeoutMs": 1000
+          },
+          "hooks": {
+            "allowConversationAccess": true
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env",
+            "allowlist": [
+              "LITELLM_API_KEY",
+              "DLV_TEST_EMBEDDING_TOKEN",
+              "DLV_TEST_GATEWAY_PASSWORD",
+              "OPENCLAW_GATEWAY_TOKEN"
+            ]
+          },
+          "delivery-test": {
+            "source": "env",
+            "allowlist": [
+              "DLV_TEST_EMBEDDING_TOKEN"
+            ]
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+      "agentRole": "buster",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+      "discordApprovers": [
+        "user:849379821536804864"
+      ],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+    },
+    "captured-chart-role-off": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-5.6-sol",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-agent-observer"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        },
+        "kubeclaw-agent-observer": {
+          "enabled": true,
+          "config": {
+            "enabled": true,
+            "redisNetworkIsolation": "isolated",
+            "maxEventBytes": 3145728,
+            "maxQueuePerStream": 100,
+            "redisCommandTimeoutMs": 5000,
+            "streamMaxLen": 10000,
+            "deadLetterMaxLen": 1000,
+            "controlWriteMaxAttempts": 3,
+            "controlWriteRetryBaseMs": 100,
+            "controlWriteRetryMaxMs": 1000,
+            "hookPriority": -100,
+            "hookTimeoutMs": 1000
+          },
+          "hooks": {
+            "allowConversationAccess": true
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env",
+            "allowlist": [
+              "LITELLM_API_KEY",
+              "DLV_TEST_EMBEDDING_TOKEN",
+              "DLV_TEST_GATEWAY_PASSWORD",
+              "OPENCLAW_GATEWAY_TOKEN"
+            ]
+          },
+          "delivery-test": {
+            "source": "env",
+            "allowlist": [
+              "DLV_TEST_EMBEDDING_TOKEN"
+            ]
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+      "agentRole": "buster",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+      "discordApprovers": [
+        "user:849379821536804864"
+      ],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+    }
+  },
+  "profiles": [
+    {
+      "profileId": "local-A",
+      "originalControllerProfile": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+        "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+        "pointer": "/profiles/local-A"
+      },
+      "controllerSubsetRetained": true,
+      "explicitManagedPolicyInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+        "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+        "pointer": "/profiles/local-A"
+      },
+      "explicitReadonlyRecipeInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+        "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+        "pointer": "/recipes/A"
+      },
+      "ownGeneratedContextPointer": "/contexts/local-A",
+      "recipeId": "captured-chart-local-A",
+      "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+    },
+    {
+      "profileId": "local-B",
+      "originalControllerProfile": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+        "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+        "pointer": "/profiles/local-B"
+      },
+      "controllerSubsetRetained": true,
+      "explicitManagedPolicyInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+        "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+        "pointer": "/profiles/local-B"
+      },
+      "explicitReadonlyRecipeInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+        "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+        "pointer": "/recipes/B"
+      },
+      "ownGeneratedContextPointer": "/contexts/local-B",
+      "recipeId": "captured-chart-local-B",
+      "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+    },
+    {
+      "profileId": "Ready-port-contrast",
+      "originalControllerProfile": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+        "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+        "pointer": "/profiles/Ready-port-contrast"
+      },
+      "controllerSubsetRetained": true,
+      "explicitManagedPolicyInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+        "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+        "pointer": "/profiles/local-A"
+      },
+      "explicitReadonlyRecipeInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+        "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+        "pointer": "/recipes/A"
+      },
+      "ownGeneratedContextPointer": "/contexts/Ready-port-contrast",
+      "recipeId": "captured-chart-Ready-port-contrast",
+      "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+    },
+    {
+      "profileId": "ready-product-off",
+      "originalControllerProfile": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+        "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+        "pointer": "/profiles/ready-product-off"
+      },
+      "controllerSubsetRetained": true,
+      "explicitManagedPolicyInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+        "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+        "pointer": "/profiles/local-A"
+      },
+      "explicitReadonlyRecipeInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+        "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+        "pointer": "/recipes/A"
+      },
+      "ownGeneratedContextPointer": "/contexts/ready-product-off",
+      "recipeId": "captured-chart-ready-product-off",
+      "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+    },
+    {
+      "profileId": "role-off",
+      "originalControllerProfile": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+        "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+        "pointer": "/profiles/role-off"
+      },
+      "controllerSubsetRetained": true,
+      "explicitManagedPolicyInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+        "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+        "pointer": "/profiles/local-A"
+      },
+      "explicitReadonlyRecipeInput": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+        "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+        "pointer": "/recipes/A"
+      },
+      "ownGeneratedContextPointer": "/contexts/role-off",
+      "recipeId": "captured-chart-role-off",
+      "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+    }
+  ],
+  "supportedRoles": [
+    "buster"
+  ],
+  "otherKnownChartRoleBranches": {
+    "nova": "No Buster/Prism role plugin; explicit independent full source recipe required before declaration, denied here",
+    "prism": "Actual kubeclaw-prism branch requires exact real source/role/host/token/roster tuple; no B-context inference, denied here"
+  },
+  "unknownRoles": "deny"
+}

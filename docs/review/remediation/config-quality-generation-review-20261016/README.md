@@ -1,0 +1,3 @@
+# Independent Quality generation source review attempt
+
+The explicit complete-source datasets and pre-generation baseline are recorded in command.json/source-manifest.json. The helper failed before model admission with `failed to initialize in-process app-server client: Read-only file system (os error 30)` and produced no report. Retained historical successful provider transport reviews do not review the new generation/service map or resolver fix. Acceptance remains OPEN. Probes show /tmp/output writable; the unset CODEX_HOME fallback ~/.codex does not exist on this surface. No credentials/configuration/home substitution or sandbox weakening performed. Do not retry unchanged; require successful runtime initialization on this surface.

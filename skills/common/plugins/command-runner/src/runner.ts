@@ -37,7 +37,16 @@ export class CommandRunner {
 
   constructor(options: CommandRunnerOptions) {
     if (options.cgroupRoot) cgroupRoot(options.cgroupRoot);
-    this.#options = options;
+    // Direct/native callers retain their historical contract; registered adapters
+    // always supply monitoring captured from the original selected Core policy.
+    const monitoring = options.monitoring ?? { maximumOutputRecords: 4096, sampleIntervalMs: 25 };
+    if (!Number.isSafeInteger(monitoring.maximumOutputRecords) || monitoring.maximumOutputRecords < 1
+      || !Number.isSafeInteger(monitoring.sampleIntervalMs) || monitoring.sampleIntervalMs < 1
+      || monitoring.sampleIntervalMs > 2147483647) throw new Error('COMMAND_MONITORING_INVALID');
+    const processCleanup = options.processCleanup ?? { cleanupPollIntervalMs: 10, exitAcknowledgementMs: 1000, sandboxMinimumGraceMs: 250 };
+    if (Object.keys(processCleanup).sort().join(',') !== 'cleanupPollIntervalMs,exitAcknowledgementMs,sandboxMinimumGraceMs'
+      || !Object.values(processCleanup).every(value => Number.isSafeInteger(value) && value > 0 && value <= 2147483647)) throw new Error('COMMAND_CLEANUP_POLICY_INVALID');
+    this.#options = { ...options, monitoring: Object.freeze({ ...monitoring }), processCleanup: Object.freeze({ ...processCleanup }) };
   }
   get stopping(): boolean { return this.#stopping; }
 
@@ -62,8 +71,8 @@ export class CommandRunner {
     const programArgs = spawnArguments(this.#options, request, limits, cgroup);
     const child = spawn(program, programArgs, { cwd: request.cwd, detached: process.platform !== 'win32',
       shell: false, stdio: ['ignore', 'pipe', 'pipe'], env: { ...(request.environment ?? {}) } });
-    const graceMs = this.#options.sandboxExecutable ? Math.max(250, this.#options.terminationGraceMs) : this.#options.terminationGraceMs;
-    const execution = new CommandExecution({ child, signal, limits, graceMs, cgroup, sandboxed: Boolean(this.#options.sandboxExecutable) });
+    const graceMs = this.#options.sandboxExecutable ? Math.max(this.#options.processCleanup!.sandboxMinimumGraceMs, this.#options.terminationGraceMs) : this.#options.terminationGraceMs;
+    const execution = new CommandExecution({ processCleanup: this.#options.processCleanup!, monitoring: this.#options.monitoring!, child, signal, limits, graceMs, cgroup, sandboxed: Boolean(this.#options.sandboxExecutable) });
     this.#active.add(execution);
     void execution.finished.then(() => this.#active.delete(execution), () => this.#active.delete(execution));
     return execution.result;

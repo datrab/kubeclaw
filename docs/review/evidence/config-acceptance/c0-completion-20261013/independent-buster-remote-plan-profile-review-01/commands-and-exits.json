@@ -1,0 +1,19 @@
+{
+  "scope": "unchanged existing finite source/profile/http-shim/serializer/authority checker only",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replays": [
+    {
+      "cmd": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/check-service-definition.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-buster-remote-plan-profile-review-01/replay.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-buster-remote-plan-profile-review-01/replay.stderr",
+      "chunk_id": "82524a",
+      "wall_time_seconds": 2.88156848,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ],
+  "rawStdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-buster-remote-plan-profile-review-01/replay.stdout.json",
+  "rawStderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-buster-remote-plan-profile-review-01/replay.stderr",
+  "inputToolIdentities": "initial-identities.json and end-identities.json",
+  "productiveCasesExecuted": 0,
+  "noOtherRuntimeExecution": true
+}

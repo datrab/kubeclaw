@@ -1,0 +1,46 @@
+{
+  "A": {
+    "schemaVersion": "nova-remote-test-gate-runtime.v1",
+    "endpoint": "https://fixture.invalid/plan",
+    "authentication": "bearer",
+    "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+    "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+    "sourceAuthority": "fixture-source-authority-A",
+    "stateRoot": "./state-A",
+    "pollMilliseconds": 500,
+    "maximumResponseBytes": 16777216,
+    "maximumResultBytes": 16777216,
+    "maximumArchiveBytes": 8388608,
+    "maximumArchiveStoreBytes": 67108864,
+    "maximumEvidenceBytes": 16777216,
+    "maximumEvidenceStoreBytes": 67108864,
+    "recordLimits": {
+      "maximumRecords": 1000,
+      "maximumBytes": 67108864,
+      "maximumRecordBytes": 33554432
+    }
+  },
+  "B": {
+    "schemaVersion": "nova-remote-test-gate-runtime.v1",
+    "endpoint": "http://localhost:18080/plan",
+    "authentication": "spiffe-proxy",
+    "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+    "sourceAuthority": "fixture-source-authority-B",
+    "stateRoot": "./state-B",
+    "pollMilliseconds": 250,
+    "maximumResponseBytes": 8388608,
+    "maximumResultBytes": 8388608,
+    "maximumArchiveBytes": 4194304,
+    "maximumArchiveStoreBytes": 33554432,
+    "maximumEvidenceBytes": 8388608,
+    "maximumEvidenceStoreBytes": 33554432,
+    "recordLimits": {
+      "maximumRecords": 500,
+      "maximumBytes": 33554432,
+      "maximumRecordBytes": 16777216
+    }
+  },
+  "currentParserAcceptanceOnly": "Complete concrete synthetic loader/factory profiles; NOT deployed provider/secret/source authority/role/capacity. ENV values are injected throwaway-memory test values, never actual process.env or stored credentials. Actual constructor parser acceptance does NOT prove complete job/output fits configured archive/result/evidence/store maxima.",
+  "futurePrerequisites": "Exact genuine registered standalone CLI provider/proxy endpoint/source issuer verifier, committed source/job/full native coverage/role grants and artifact/store fixtures remain NOTRUN/user-roster prerequisites. Same task full originals fixed across A/B; archive <=4MiB, full canonical dispatch/import payload<=16MiB, full result/evidence <=8MiB, full encoded record states<=32MiB/count<=500 and authentic retained blobs<=32MiB are REQUIRED predicates to prove this proposed pair; these numbers are declared configured ceilings, NOT measured physical capacity. Prospective same-boundary admission/policy closure must preserve original A6/worst-case/full original evidence and grants; cannot trim source/task/native coverage/history to fit B.",
+  "distinctCallers": "Standalone remote-gate-cli --config reader owns these17 fields. Registered kubeclaw.remote-test-gate:plan does NOT call this loader: directly creates factory with poll500/64MiB/1GiB/10000 literals. Numeric equality or shared library is NOT same CONFIG author; distinct registered policies remain OPEN."
+}

@@ -1,0 +1,20 @@
+{
+  "status": "SOURCE_INPUT_CONTROLS_PASS",
+  "actualSelectedProfile": "runtime",
+  "nativeExecuted": false,
+  "nativeAcceptance": "OPEN",
+  "productiveBootAuthenticated": false,
+  "controls": [
+    "complete A",
+    "immutable capture",
+    "quota B exactly two records",
+    "A unchanged",
+    "valid inactive cannot replace selection",
+    "invalid inactive rejected",
+    "restored A",
+    "missing binding rejected",
+    "retired author rejected"
+  ]
+}
+
+exitCode=0

@@ -5,9 +5,10 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 import type { PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 import { IsolationCgroup } from './cgroup.ts';
-import { runIsolationSession, serializable } from './session.ts';
+import { captureIsolationSessionPolicy, type IsolationSessionPolicy, runIsolationSession, serializable } from './session.ts';
 
 export interface IsolatedInvocation {
+  readonly sessionPolicy: IsolationSessionPolicy;
   readonly packageRoot: string; readonly modulePath: string; readonly exportName: string;
   readonly cgroupRoot?: string;
   readonly surface: 'stage' | 'observer'; readonly argument: unknown; readonly context: PluginInvocationContext; readonly signal?: AbortSignal;
@@ -28,6 +29,7 @@ function canonicalModule(packageRootValue: string, modulePathValue: string): { r
 
 export function invokeIsolated(invocation: IsolatedInvocation): Promise<unknown> {
   if (invocation.signal?.aborted) return Promise.reject(new Error('ISOLATED_PLUGIN_CANCELLED'));
+  invocation = { ...invocation, sessionPolicy: captureIsolationSessionPolicy(invocation.sessionPolicy) };
   const paths = sandboxPaths(); const canonical = canonicalModule(invocation.packageRoot, invocation.modulePath);
   serializable(invocation.argument, 'ARGUMENT'); serializable(invocation.context.contract, 'CONTEXT');
   return runBounded(invocation, paths, canonical);
@@ -44,7 +46,7 @@ async function runBounded(invocation: IsolatedInvocation, paths: ReturnType<type
       `--allow-fs-read=${paths.child}`, `--allow-fs-read=${canonical.packageRoot}`, '--no-addons', paths.child,
     ], { stdio: ['pipe', 'pipe', 'pipe'], env: { NODE_NO_WARNINGS: '1' }, cwd: canonical.packageRoot });
     return await runIsolationSession({
-      child, terminateTree: () => group.kill(), context: invocation.context, ...(invocation.signal ? { signal: invocation.signal } : {}), wallTimeMs: limits.wallTimeMs,
+      child, policy: invocation.sessionPolicy, terminateTree: () => group.kill(), context: invocation.context, ...(invocation.signal ? { signal: invocation.signal } : {}), wallTimeMs: limits.wallTimeMs,
       invocationMessage: { kind: 'invoke', surface: invocation.surface, modulePath: canonical.modulePath, exportName: invocation.exportName,
         argument: invocation.argument, context: invocation.context.contract },
     });

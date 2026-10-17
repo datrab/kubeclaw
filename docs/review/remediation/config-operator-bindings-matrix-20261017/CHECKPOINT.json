@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-17T01:45:02.493949+00:00",
+  "matrixCommit": "c4f2b7b678c5ab85bc9d61cf15cebba3dfdc0574",
+  "matrixRemoteVerified": true,
+  "scope": "Exact11 original deployment operator ENV and secret-file source matrix only; no runtime implementation",
+  "evidence": "docs/review/remediation/config-operator-bindings-matrix-20261017",
+  "originalFields": 11,
+  "databaseExternalSecretEnvReferences": 4,
+  "ordinaryProductOperatorSettings": 4,
+  "kubernetesSecretFiles": 2,
+  "projectedServiceAccountTokenFiles": 1,
+  "checks": {
+    "passed": 15,
+    "total": 15,
+    "restoredDeterministic": true,
+    "all44UnrelatedGroupsUnchanged": true,
+    "historicalGroupsPreserved": 45,
+    "remainingUnresolvedHistoricalGroups": 4,
+    "preservedCounts": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    }
+  },
+  "centralReceivingResiduals": 11,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "independentReview": "OPEN; no native spawn/reviewer callable; parent terminal; CONFIG subagents0; no new independent output; unchanged same-surface EROFS not retried",
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged isolated Linux Docker actual UID1000/GID1000 writable delegated cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL",
+  "writerLock": "SAME nonblocking repository lock; released at command exit; no historical followup"
+}

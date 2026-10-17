@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-16T13:08:59.948007+00:00",
+  "fieldId": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+  "originalValue": 5,
+  "owner": "charts/kubeclaw/values.yaml#/busterNamespaceBroker/controller/policy/runtimeSecurityRefreshSeconds",
+  "change": "Selected captured refresh interval feeds actual runtime-security refresh caller; no local default. Existing five-second future-clock tolerance remains separate unchanged behavior. Original patch-loop tests retained; real delivered A5/B10 boundary and captured policy after owner deletion verified.",
+  "verification": [
+    {
+      "command": [
+        "gofmt",
+        "-w",
+        "cmd/buster-namespace-controller/controller-policy.go",
+        "cmd/buster-namespace-controller/main.go",
+        "cmd/buster-namespace-controller/main_test.go",
+        "cmd/buster-namespace-controller/controller-policy_test.go"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-refresh-20261016/check-0.txt"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-json",
+        "./cmd/buster-namespace-controller"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-refresh-20261016/check-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/deployment/buster-central-delivery.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-refresh-20261016/check-2.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-refresh-20261016/check-3.txt"
+    }
+  ],
+  "independentAcceptance": "OPEN; reviewer EROFS unchanged, no independent acceptance inferred",
+  "writerLock": "same shared nonblocking; released on exit",
+  "nextAction": "Independent controller review; reconcile remaining controller ENV defaults and other repository literals with existing selected owners.",
+  "tests": {
+    "pass": 120,
+    "fail": 0,
+    "skip": 0,
+    "deliveryPass": 5
+  }
+}

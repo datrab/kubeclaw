@@ -1,0 +1,328 @@
+✔ Tailscale exchange requires the trusted ingress path (1.803226ms)
+✔ session signatures and expiry fail closed (0.241547ms)
+✔ v3 validates the complete owner, rejects missing/equal-old authors and unsafe SQL candidate product (50.392566ms)
+✔ original v2 reader remains closed and does not refill missing v3 policy (4.889025ms)
+✔ captured original ranking survives new B and author deletion without a current read (5.89547ms)
+✔ invalid or overflowing explicit ranking rejects before database I/O (0.473143ms)
+✔ embedded PostgreSQL/PGlite preserves A and exercises both SQL branches, coupled candidate bounds and RRF B (1846.795904ms)
+✔ v4 fixed original role domain is mandatory on every selected/unselected profile (59.794656ms)
+✔ original v3 capture and signed tokens retain legacy roles without loading a current owner (9.454752ms)
+✔ selected exchange denies invalid policies and preserves ingress and identity checks (0.309758ms)
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (20.235276ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (2.983446ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (2.665409ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (2.587996ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (2.474244ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (2.061633ms)
+✔ CC1 Control artifactRoot rejects undefined (2.078723ms)
+✔ CC1 Control artifactRoot rejects null (1.906648ms)
+✔ CC1 Control artifactRoot rejects "" (3.13488ms)
+✔ CC1 Control artifactRoot rejects "/" (2.028472ms)
+✔ CC1 Control artifactRoot rejects "relative" (1.869408ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (13.120785ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (4.29084ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (4.493885ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (2.112554ms)
+✔ CC1 Control artifactRoot rejects 1 (1.888888ms)
+✔ CC1 Control studioPublicUrl rejects undefined (2.020861ms)
+✔ CC1 Control studioPublicUrl rejects null (1.847597ms)
+✔ CC1 Control studioPublicUrl rejects "" (1.868147ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (1.96787ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (1.878148ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (1.941969ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (1.840587ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (1.806907ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (1.94415ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (1.810736ms)
+✔ CC1 Control studioPublicUrl rejects 1 (1.765255ms)
+✔ CC1 strict Control object (1.987951ms)
+✔ CC1 strict Control object (1.817327ms)
+✔ CC1 strict Control object (1.94073ms)
+✔ CC1 strict Control object (1.866167ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (1.642542ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (1.425817ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (1.414106ms)
+✔ CC2 authored Control snapshot survives file mutation (13.31257ms)
+✔ central body limits preserve existing sizes (44.588738ms)
+✖ alternate selected limits govern parsing; missing or invalid limits reject (9.741309ms)
+✔ body helper cannot silently omit its limit (0.318978ms)
+✖ selected decoded artifact limit governs upload publication (160.939728ms)
+✖ selected aggregate render budget controls engine and baseline before worker execution (11.035131ms)
+✖ selected dispatch body budget rejects before signature and database work (10.138869ms)
+✔ Studio selected body limit rejects excess bytes before upstream fetch (11.36537ms)
+✖ selected ingestion deadlines govern acquisition and cleanup, including failed publication (7.313126ms)
+✖ selected internal evidence cap controls actual artifact route before storage (6.464865ms)
+✖ selected session lifetime governs signed expiration and both cookie lifetimes (6.093515ms)
+✔ ingestion URL is required centrally and rejects non-HTTP or credential-bearing authors (4.767762ms)
+✔ worker URL is required centrally and rejects non-HTTP or credential-bearing authors (4.625518ms)
+✔ internal Control URL is required centrally and rejects non-HTTP or credential-bearing authors (4.586677ms)
+✖ controller timeout is required positive bounded central policy (8.359284ms)
+✖ selected product history limit governs actual ordered SQL rows (1956.173399ms)
+✖ central product decision lifetime preserves default and rejects missing or invalid policy (5.84754ms)
+✖ central native attempt lifetime controls original claim and queue deadline without fallback (13.71023ms)
+✔ native attempt log ceiling is required and rejects invalid central authors (7.114891ms)
+✖ selected native result and evidence ceilings reach signed envelopes without fallback (8.850986ms)
+✖ central corpus search policy controls result slots and family diversity without hidden defaults (4.542846ms)
+✔ central ingestion deadlines cancel actual HTTP acquisition and cleanup without activation (40029.127854ms)
+ℹ tests 66
+ℹ suites 0
+ℹ pass 53
+ℹ fail 13
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46691.640041
+
+✖ failing tests:
+
+test at tests/verification/reliability/control-http-config.test.mts:22:1
+✖ alternate selected limits govern parsing; missing or invalid limits reject (9.741309ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:30:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /request too large/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:40:1
+✖ selected decoded artifact limit governs upload publication (160.939728ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:50:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /artifact payload/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:55:1
+✖ selected aggregate render budget controls engine and baseline before worker execution (11.035131ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:68:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /render assets exceed/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:74:1
+✖ selected dispatch body budget rejects before signature and database work (10.138869ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /request too large/. Input:
+  
+  'Error: invalid dispatch signature'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:83:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: invalid dispatch signature
+        at authenticateDispatch (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/dispatch-route.ts:142:13)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async dispatchDesign (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/dispatch-route.ts:39:24)
+        at async dispatchRoute (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/dispatch-route.ts:25:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:83:2)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /request too large/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:106:1
+✖ selected ingestion deadlines govern acquisition and cleanup, including failed publication (7.313126ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   30000,
+  +   10000
+  -   123,
+  -   456
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:118:53)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 30000, 10000 ],
+    expected: [ 123, 456 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:123:1
+✖ selected internal evidence cap controls actual artifact route before storage (6.464865ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:133:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /evidence is too large/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:139:1
+✖ selected session lifetime governs signed expiration and both cookie lifetimes (6.093515ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Max-Age=7$/. Input:
+  
+  'prism_session=eyJ1c2VyIjoiZml4dHVyZSIsImF1ZGllbmNlIjoicHJpc20iLCJyb2xlcyI6WyJlZGl0b3IiXSwiZXhwaXJlc0F0IjoxNzkyMTgyMjk2ODQwfQ.ZDzhLmunP-W6WQcMj5tgz2P2Geb7HE3AagRzI0Ndfto; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=900'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:151:68)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'prism_session=eyJ1c2VyIjoiZml4dHVyZSIsImF1ZGllbmNlIjoicHJpc20iLCJyb2xlcyI6WyJlZGl0b3IiXSwiZXhwaXJlc0F0IjoxNzkyMTgyMjk2ODQwfQ.ZDzhLmunP-W6WQcMj5tgz2P2Geb7HE3AagRzI0Ndfto; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=900',
+    expected: /Max-Age=7$/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:186:1
+✖ controller timeout is required positive bounded central policy (8.359284ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  15000 !== 50
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:191:94)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 15000,
+    expected: 50,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:195:1
+✖ selected product history limit governs actual ordered SQL rows (1956.173399ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'new',
+  +   'old'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:209:401)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'new', 'old' ],
+    expected: [ 'new' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:214:1
+✖ central product decision lifetime preserves default and rejects missing or invalid policy (5.84754ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  300000 !== 120000
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:221:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 300000,
+    expected: 120000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:227:1
+✖ central native attempt lifetime controls original claim and queue deadline without fallback (13.71023ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  600000 !== 1
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:245:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 600000,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:277:1
+✖ selected native result and evidence ceilings reach signed envelopes without fallback (8.850986ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   16777216,
+  +   134217728,
+  +   64
+  -   31,
+  -   97,
+  -   3
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:294:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 16777216, 134217728, 64 ],
+    expected: [ 31, 97, 3 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/control-http-config.test.mts:307:1
+✖ central corpus search policy controls result slots and family diversity without hidden defaults (4.542846ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  8 !== 3
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/control-http-config.test.mts:318:38)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 8,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

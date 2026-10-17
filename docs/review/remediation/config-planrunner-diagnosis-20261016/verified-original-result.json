@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 98.99,
+  "timeoutSeconds": 210,
+  "sourceCommit": "46d65b5e1b0d35300877745b7582c669c578b87c",
+  "oracleSha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d",
+  "oracleUnchanged": true,
+  "wholeOriginalCommand": true,
+  "nativeAcceptance": false,
+  "independentAcceptance": false,
+  "fullC0C6Complete": false
+}

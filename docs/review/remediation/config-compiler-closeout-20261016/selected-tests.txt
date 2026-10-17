@@ -1,0 +1,11 @@
+✔ selected compiler preserves original graphs for absent, mixed and all review modules (274.877553ms)
+✔ A/B selection reaches real graph; retained original survives invalid current owner and rejects partial/unknown captures (323.861343ms)
+✔ real runner captures the explicit compiler discriminator and the exact frozen selected policy without live owner I/O (9601.85594ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10806.412963

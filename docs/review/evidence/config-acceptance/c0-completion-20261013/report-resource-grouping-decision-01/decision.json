@@ -1,0 +1,246 @@
+{
+  "scope": "C0 proposal classification decision under mainGOAL behavior-level F-EFFECT grouping; original case bodies and requirements retained",
+  "groups": [
+    {
+      "groupId": "report-descriptor-policy",
+      "originalCasePins": [
+        {
+          "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumOpenFiles",
+          "originalBodySha256": "2b3d3ee600d367d2428b20d6d779d608bab275e7822f157116af627dc11e8cba",
+          "requirementIds": [
+            "F-EFFECT",
+            "F-AUTH",
+            "F-VAL",
+            "D17"
+          ],
+          "phase": "implementation-proposal",
+          "result": "not-run"
+        },
+        {
+          "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumOpenFiles",
+          "originalBodySha256": "6943beaf3b0c898797d9cc140d7fca1399e81fce9e6058aa2ac0928edc06d47c",
+          "requirementIds": [
+            "F-EFFECT",
+            "F-AUTH",
+            "F-VAL",
+            "D17"
+          ],
+          "phase": "implementation-proposal",
+          "result": "not-run"
+        }
+      ],
+      "groupingJustification": "One actual finalization\u2192report adapter resource-policy contract. Minimum/reserve are compatibility constraints, not separately adjustable native inputs through this caller. Preserve scalar IDs and all requirements as members of this explicitly attributed behavior-level group, with independent guard F-VAL controls; do not invent individual native effects.",
+      "completeProfiles": {
+        "A": [
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/A/components/buster-engine.config.json",
+            "sha256": "8ad9667f9deab16481f2cae614ff28ed7e860461c285cc554678cc3a5b5cf2c3"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/A/components/prism-control.config.json",
+            "sha256": "a97991fe58b60a31c35b5f1d7206bb05bf708d4fc70986f792d6796bb3c7dd4c"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/A/components/prism-execution.config.json",
+            "sha256": "0a40faec28e0bba0d2bb617b80a0c0b16ee0dc3a0bad96051904f36334093742"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/A/components/prism-studio.config.json",
+            "sha256": "d5af3d07c0f40400d85897dc4957b58c878d07d91b892791bfce4b3e0195de34"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/A/components/prism-worker.config.json",
+            "sha256": "d9415be5fcc02fbda2c980f9ce6c05f646c960af85708154392a27d5b6d2b038"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/A/components/worker-core.config.json",
+            "sha256": "5710a4e3cd6ce5c17048f04c33b4b4f874949f8e50a944daed0fde9b229a3874"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/A/pipeline.config.json",
+            "sha256": "21a8114a1bc1d4ff376989bd01f9710e78c483e0d041df4fd8b2add67f2f7c09"
+          }
+        ],
+        "B": [
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/B/components/buster-engine.config.json",
+            "sha256": "eec60256349b6f92fa0a41a4ffa829154391719d6d12ba8b7d069bce08fc4fbd"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/B/components/prism-control.config.json",
+            "sha256": "8745bbc9742f87a9b66e8cd35434467119cc1ae85e5c5acf9311d73b84376c96"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/B/components/prism-execution.config.json",
+            "sha256": "449806608639179ee0af7ad07949f082a776de7ea69de27c326c87bff05e7ba0"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/B/components/prism-studio.config.json",
+            "sha256": "d891fbdee3064e2287360852cb9a1a9d8df487ca37d1b176822c3ec1d287ecb5"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/B/components/prism-worker.config.json",
+            "sha256": "937f9faae398fab416d5ec361264a4f813f5a6ac8ca264d60df4387b801537aa"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/B/components/worker-core.config.json",
+            "sha256": "ba46f0448b50265b16e67807d61a6e9e3ffd760773a6c72be92fb82f3b571384"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/minimum-plus-maximum-group/B/pipeline.config.json",
+            "sha256": "1dc0c0de3eeeadd7e072994c0c33edf18b375a8f43fe8bbaddafb71dd6da704e"
+          }
+        ]
+      },
+      "productiveChain": [
+        "actual admitted prepared job/specialist result report artifacts -> finalizeBusterReports",
+        "specialist-report-finalization.ts:59-71 selects policy.maximumOpenFiles/policy.memoryBytes",
+        "ReportAdapterRuntime.adapt -> #adaptWithinDeadline -> actual plugin sandbox report-adapter-child"
+      ],
+      "changedActualInput": {
+        "requestedOpenFiles": {
+          "A": 64,
+          "B": 48
+        }
+      },
+      "nativeObserver": "Future approved real finalization with legitimate registered adapter/artifact/provider closure; observe actual sandbox launch policy and kernel descriptor/memory authority at the report child, plus completed report receipt. Constructor/hash/direct alternate adapt call alone cannot pass.",
+      "guardControls": {
+        "definitionObservations": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-group-observations.json",
+          "sha256": "5eed0e1a0cf777d56d62c609e06051839e07b4356b3cdd3c0244ca27a3fdf1b2"
+        },
+        "meaning": "Equality positive and one-step relation-negative are real config F-VAL controls only; native composite positive remains not-run"
+      },
+      "nativeNegativeAndMutant": "Keep real report child resources fixed to A while B is selected; the group native observation must fail. Bypass minimum/max or reserve/memory relation guard: the exact real-loader relation-negative must fail for intended reason. Restore baseline; no setup error as mutation kill.",
+      "independentJustificationRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/README.md",
+        "sha256": "bfd13f801a72aaed294439d3373ff665a4ebaab9d0018a368b6552b47b749cbd"
+      },
+      "futureExecution": "not-run",
+      "classificationDecision": "Proposed active behavior-level grouping for independent bounded recheck; no global/implementation/native acceptance."
+    },
+    {
+      "groupId": "report-memory-policy",
+      "originalCasePins": [
+        {
+          "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+          "originalBodySha256": "1a2d248b7d455ac63af44f152fcdd245cbe711c0eeb9d7601e347dd86de0acb4",
+          "requirementIds": [
+            "F-EFFECT",
+            "F-AUTH",
+            "F-VAL",
+            "D17"
+          ],
+          "phase": "implementation-proposal",
+          "result": "not-run"
+        },
+        {
+          "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.memoryBytes",
+          "originalBodySha256": "9a7d51b8e8906fb212879573e597c6609f55f104a6465750cb4f5bf7ef648259",
+          "requirementIds": [
+            "F-EFFECT",
+            "F-AUTH",
+            "F-VAL",
+            "D17"
+          ],
+          "phase": "implementation-proposal",
+          "result": "not-run"
+        }
+      ],
+      "groupingJustification": "One actual finalization\u2192report adapter resource-policy contract. Minimum/reserve are compatibility constraints, not separately adjustable native inputs through this caller. Preserve scalar IDs and all requirements as members of this explicitly attributed behavior-level group, with independent guard F-VAL controls; do not invent individual native effects.",
+      "completeProfiles": {
+        "A": [
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/A/components/buster-engine.config.json",
+            "sha256": "8ad9667f9deab16481f2cae614ff28ed7e860461c285cc554678cc3a5b5cf2c3"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/A/components/prism-control.config.json",
+            "sha256": "a97991fe58b60a31c35b5f1d7206bb05bf708d4fc70986f792d6796bb3c7dd4c"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/A/components/prism-execution.config.json",
+            "sha256": "0a40faec28e0bba0d2bb617b80a0c0b16ee0dc3a0bad96051904f36334093742"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/A/components/prism-studio.config.json",
+            "sha256": "d5af3d07c0f40400d85897dc4957b58c878d07d91b892791bfce4b3e0195de34"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/A/components/prism-worker.config.json",
+            "sha256": "d9415be5fcc02fbda2c980f9ce6c05f646c960af85708154392a27d5b6d2b038"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/A/components/worker-core.config.json",
+            "sha256": "5710a4e3cd6ce5c17048f04c33b4b4f874949f8e50a944daed0fde9b229a3874"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/A/pipeline.config.json",
+            "sha256": "21a8114a1bc1d4ff376989bd01f9710e78c483e0d041df4fd8b2add67f2f7c09"
+          }
+        ],
+        "B": [
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/B/components/buster-engine.config.json",
+            "sha256": "690b59a666da7873f366b2d0b44d28e46012af6ca91ee469ec1bee661ec6c2cf"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/B/components/prism-control.config.json",
+            "sha256": "8745bbc9742f87a9b66e8cd35434467119cc1ae85e5c5acf9311d73b84376c96"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/B/components/prism-execution.config.json",
+            "sha256": "449806608639179ee0af7ad07949f082a776de7ea69de27c326c87bff05e7ba0"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/B/components/prism-studio.config.json",
+            "sha256": "d891fbdee3064e2287360852cb9a1a9d8df487ca37d1b176822c3ec1d287ecb5"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/B/components/prism-worker.config.json",
+            "sha256": "937f9faae398fab416d5ec361264a4f813f5a6ac8ca264d60df4387b801537aa"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/B/components/worker-core.config.json",
+            "sha256": "ba46f0448b50265b16e67807d61a6e9e3ffd760773a6c72be92fb82f3b571384"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-groups/reserve-plus-memory-group/B/pipeline.config.json",
+            "sha256": "1dc0c0de3eeeadd7e072994c0c33edf18b375a8f43fe8bbaddafb71dd6da704e"
+          }
+        ]
+      },
+      "productiveChain": [
+        "actual admitted prepared job/specialist result report artifacts -> finalizeBusterReports",
+        "specialist-report-finalization.ts:59-71 selects policy.maximumOpenFiles/policy.memoryBytes",
+        "ReportAdapterRuntime.adapt -> #adaptWithinDeadline -> actual plugin sandbox report-adapter-child"
+      ],
+      "changedActualInput": {
+        "requestedMemoryBytes": {
+          "A": 536870912,
+          "B": 402653184
+        }
+      },
+      "nativeObserver": "Future approved real finalization with legitimate registered adapter/artifact/provider closure; observe actual sandbox launch policy and kernel descriptor/memory authority at the report child, plus completed report receipt. Constructor/hash/direct alternate adapt call alone cannot pass.",
+      "guardControls": {
+        "definitionObservations": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/guard-group-observations.json",
+          "sha256": "5eed0e1a0cf777d56d62c609e06051839e07b4356b3cdd3c0244ca27a3fdf1b2"
+        },
+        "meaning": "Equality positive and one-step relation-negative are real config F-VAL controls only; native composite positive remains not-run"
+      },
+      "nativeNegativeAndMutant": "Keep real report child resources fixed to A while B is selected; the group native observation must fail. Bypass minimum/max or reserve/memory relation guard: the exact real-loader relation-negative must fail for intended reason. Restore baseline; no setup error as mutation kill.",
+      "independentJustificationRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/README.md",
+        "sha256": "bfd13f801a72aaed294439d3373ff665a4ebaab9d0018a368b6552b47b749cbd"
+      },
+      "futureExecution": "not-run",
+      "classificationDecision": "Proposed active behavior-level grouping for independent bounded recheck; no global/implementation/native acceptance."
+    }
+  ],
+  "preservedOriginalScalarNativeAttribution": "No independent native FD change attributed to minimum, or independent memory change attributed to reserve. Historical original per-scalar construction remains visible.",
+  "activeCaseMembershipMeaning": "Each original ID retains all requirements and is evaluated as part of its named actual consumer-policy group plus scalar guard controls; no successful future result is inferred from grouping.",
+  "missingActualInputs": "Genuine admitted job/registered report adapter/sandbox/tool identities and native collection required after approval; this mapping is not that evidence.",
+  "globalC0Accepted": false,
+  "implementationAuthorization": null
+}

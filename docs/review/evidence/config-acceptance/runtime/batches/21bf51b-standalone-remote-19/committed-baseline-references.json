@@ -1,0 +1,23 @@
+{
+  "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "tree": "7a74b82dd26bc9d87dc1ca60e35d2846681d3d78",
+  "inputs": {
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "blob": "899d6d07551a1cb5e18e835c24c143ac0cc7d901",
+      "sha256": "9619343edf808fffaadbff775932b0e4f808daba31ad194324b154df374a46c3"
+    },
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "blob": "109838e779b3f4ebf56da056a04dd6468f8fe0a7",
+      "sha256": "51feea1a4ca73511668255dd0e328581fe18be04c6494a739496e7ca124fc28f"
+    },
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "blob": "0acc1ba5222f44964808623bc7ec0863e296f947",
+      "sha256": "a2b7134c8ff161fa89fdb008fb52907f1c818cdf246d2f4a7b6f760d52365c56"
+    }
+  },
+  "caseBodies": 6201,
+  "noWholeFragmentCopies": true
+}

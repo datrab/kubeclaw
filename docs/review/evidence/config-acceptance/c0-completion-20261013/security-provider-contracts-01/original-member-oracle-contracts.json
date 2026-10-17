@@ -1,0 +1,2804 @@
+{
+  "entries": [
+    {
+      "settingId": "RT-163ebc138c768e21",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-163ebc138c768e21-A",
+        "B": "RT-163ebc138c768e21-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-163ebc138c768e21-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-163ebc138c768e21-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-163ebc138c768e21/A.json",
+        "B": "task-fixtures/pairs/RT-163ebc138c768e21/B.json"
+      },
+      "originalCaseIds": [
+        "RT-163ebc138c768e21-CURRENT-SCHEMA-FIELD",
+        "RT-163ebc138c768e21-BCE3F075-SECURITY-DEFINITION",
+        "RT-163ebc138c768e21-BCE3F075-SECURITY-CONTRACT",
+        "RT-163ebc138c768e21-BCE3F075-SECURITY-ALTERNATE",
+        "RT-163ebc138c768e21-BCE3F075-SECURITY-BINDING",
+        "RT-163ebc138c768e21-BCE3F075-SECURITY-MUTANT",
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-163ebc138c768e21.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-d233d3039be3adc4",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "A",
+        "B": "A"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-d233d3039be3adc4-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-d233d3039be3adc4-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-d233d3039be3adc4/A.json",
+        "B": "task-fixtures/pairs/RT-d233d3039be3adc4/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-d233d3039be3adc4-CURRENT-SCHEMA-FIELD",
+        "RT-d233d3039be3adc4-BCE3F075-SECURITY-DEFINITION",
+        "RT-d233d3039be3adc4-BCE3F075-SECURITY-CONTRACT",
+        "RT-d233d3039be3adc4-BCE3F075-SECURITY-ALTERNATE",
+        "RT-d233d3039be3adc4-BCE3F075-SECURITY-BINDING",
+        "RT-d233d3039be3adc4-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "actual task intent A/B, complete owner constant",
+      "observer": "same real provider native canonical URL/path list or contained project directory/argv/source snapshot, exact response/scan result; task data never CONFIG",
+      "boundary": "path/schema/repository containment before native; real endpoint/target effects afterward"
+    },
+    {
+      "settingId": "RT-6eac87138fc57ac9",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "A",
+        "B": "A"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-6eac87138fc57ac9-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-6eac87138fc57ac9-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-6eac87138fc57ac9/A.json",
+        "B": "task-fixtures/pairs/RT-6eac87138fc57ac9/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-6eac87138fc57ac9-CURRENT-SCHEMA-FIELD",
+        "RT-6eac87138fc57ac9-BCE3F075-SECURITY-DEFINITION",
+        "RT-6eac87138fc57ac9-BCE3F075-SECURITY-CONTRACT",
+        "RT-6eac87138fc57ac9-BCE3F075-SECURITY-ALTERNATE",
+        "RT-6eac87138fc57ac9-BCE3F075-SECURITY-BINDING",
+        "RT-6eac87138fc57ac9-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "actual task intent A/B, complete owner constant",
+      "observer": "same real provider native canonical URL/path list or contained project directory/argv/source snapshot, exact response/scan result; task data never CONFIG",
+      "boundary": "path/schema/repository containment before native; real endpoint/target effects afterward"
+    },
+    {
+      "settingId": "RT-6afb26eb1a7b7271",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-6afb26eb1a7b7271-A",
+        "B": "RT-6afb26eb1a7b7271-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-6afb26eb1a7b7271-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-6afb26eb1a7b7271-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-6afb26eb1a7b7271/A.json",
+        "B": "task-fixtures/pairs/RT-6afb26eb1a7b7271/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-6afb26eb1a7b7271-CURRENT-SCHEMA-FIELD",
+        "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-DEFINITION",
+        "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-CONTRACT",
+        "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-ALTERNATE",
+        "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-BINDING",
+        "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "real provider processing timeout/command cap contrast; actual timed effect remains future",
+      "observer": "headers native payload20/40 under unchanged network120000; real fixed delayed endpoint if authenticated. Scan1000/2000 yields actual native ceil timeout argv1s/2s under unchanged scanner900000; runtime inspect deadline1000/2000 under runtime300000. Real timing/cleanup/remaining-clock receipt required, no fake sleep executable.",
+      "boundary": "current provider forwards; HTTP native rejects excess; security.scan/runtime min with selected native cap; invocation signal/original claim deadline independently cancels. NO assumed provider min(invocation.timeoutMs).",
+      "nativeTimedWitness": "Unobserved authentic same fixed source/tool/controller fixture in discriminating interval; payload/argv/resource policy effects only until real clock/native proof. Original timing/F-EFFECT requirement not waived."
+    },
+    {
+      "settingId": "RT-611f5b01895a7c90",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-611f5b01895a7c90-A",
+        "B": "RT-611f5b01895a7c90-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-611f5b01895a7c90-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-611f5b01895a7c90-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-611f5b01895a7c90/A.json",
+        "B": "task-fixtures/pairs/RT-611f5b01895a7c90/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-611f5b01895a7c90-CURRENT-SCHEMA-FIELD",
+        "RT-611f5b01895a7c90-BCE3F075-SECURITY-DEFINITION",
+        "RT-611f5b01895a7c90-BCE3F075-SECURITY-CONTRACT",
+        "RT-611f5b01895a7c90-BCE3F075-SECURITY-ALTERNATE",
+        "RT-611f5b01895a7c90-BCE3F075-SECURITY-BINDING",
+        "RT-611f5b01895a7c90-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-611f5b01895a7c90.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-93c925a29f21dd8d",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-93c925a29f21dd8d-A",
+        "B": "RT-93c925a29f21dd8d-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-93c925a29f21dd8d-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-93c925a29f21dd8d-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-93c925a29f21dd8d/A.json",
+        "B": "task-fixtures/pairs/RT-93c925a29f21dd8d/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-93c925a29f21dd8d-CURRENT-SCHEMA-FIELD",
+        "RT-93c925a29f21dd8d-BCE3F075-SECURITY-DEFINITION",
+        "RT-93c925a29f21dd8d-BCE3F075-SECURITY-CONTRACT",
+        "RT-93c925a29f21dd8d-BCE3F075-SECURITY-ALTERNATE",
+        "RT-93c925a29f21dd8d-BCE3F075-SECURITY-BINDING",
+        "RT-93c925a29f21dd8d-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-93c925a29f21dd8d.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-d852318fd5b15892",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-d852318fd5b15892-A",
+        "B": "RT-d852318fd5b15892-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-d852318fd5b15892-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-d852318fd5b15892-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-d852318fd5b15892/A.json",
+        "B": "task-fixtures/pairs/RT-d852318fd5b15892/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-d852318fd5b15892-CURRENT-SCHEMA-FIELD",
+        "RT-d852318fd5b15892-BCE3F075-SECURITY-DEFINITION",
+        "RT-d852318fd5b15892-BCE3F075-SECURITY-CONTRACT",
+        "RT-d852318fd5b15892-BCE3F075-SECURITY-ALTERNATE",
+        "RT-d852318fd5b15892-BCE3F075-SECURITY-BINDING",
+        "RT-d852318fd5b15892-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-d852318fd5b15892.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-cd92cb7109a38c4a",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-cd92cb7109a38c4a-A",
+        "B": "RT-cd92cb7109a38c4a-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-cd92cb7109a38c4a-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-cd92cb7109a38c4a-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-cd92cb7109a38c4a/A.json",
+        "B": "task-fixtures/pairs/RT-cd92cb7109a38c4a/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-cd92cb7109a38c4a-CURRENT-SCHEMA-FIELD",
+        "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-DEFINITION",
+        "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-CONTRACT",
+        "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-ALTERNATE",
+        "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-BINDING",
+        "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-cd92cb7109a38c4a.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-8a73cb4fa2939ad4",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-8a73cb4fa2939ad4-A",
+        "B": "RT-8a73cb4fa2939ad4-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-8a73cb4fa2939ad4-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-8a73cb4fa2939ad4-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-8a73cb4fa2939ad4/A.json",
+        "B": "task-fixtures/pairs/RT-8a73cb4fa2939ad4/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-8a73cb4fa2939ad4-CURRENT-SCHEMA-FIELD",
+        "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-DEFINITION",
+        "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-CONTRACT",
+        "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-ALTERNATE",
+        "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-BINDING",
+        "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-8a73cb4fa2939ad4.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-ebb85facca8d1b1b",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-ebb85facca8d1b1b-A",
+        "B": "RT-ebb85facca8d1b1b-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-ebb85facca8d1b1b-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-ebb85facca8d1b1b-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-ebb85facca8d1b1b/A.json",
+        "B": "task-fixtures/pairs/RT-ebb85facca8d1b1b/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-ebb85facca8d1b1b-CURRENT-SCHEMA-FIELD",
+        "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-DEFINITION",
+        "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-CONTRACT",
+        "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-ALTERNATE",
+        "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-BINDING",
+        "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-ebb85facca8d1b1b.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-d87b67b33610f619",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-d87b67b33610f619-A",
+        "B": "RT-d87b67b33610f619-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-d87b67b33610f619-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-d87b67b33610f619-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-d87b67b33610f619/A.json",
+        "B": "task-fixtures/pairs/RT-d87b67b33610f619/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-d87b67b33610f619-CURRENT-SCHEMA-FIELD",
+        "RT-d87b67b33610f619-BCE3F075-SECURITY-DEFINITION",
+        "RT-d87b67b33610f619-BCE3F075-SECURITY-CONTRACT",
+        "RT-d87b67b33610f619-BCE3F075-SECURITY-ALTERNATE",
+        "RT-d87b67b33610f619-BCE3F075-SECURITY-BINDING",
+        "RT-d87b67b33610f619-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-d87b67b33610f619.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-ef66623413223fef",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-ef66623413223fef-A",
+        "B": "RT-ef66623413223fef-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-ef66623413223fef-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-ef66623413223fef-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-ef66623413223fef/A.json",
+        "B": "task-fixtures/pairs/RT-ef66623413223fef/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-ef66623413223fef-CURRENT-SCHEMA-FIELD",
+        "RT-ef66623413223fef-BCE3F075-SECURITY-DEFINITION",
+        "RT-ef66623413223fef-BCE3F075-SECURITY-CONTRACT",
+        "RT-ef66623413223fef-BCE3F075-SECURITY-ALTERNATE",
+        "RT-ef66623413223fef-BCE3F075-SECURITY-BINDING",
+        "RT-ef66623413223fef-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-ef66623413223fef.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-101f7a1f1f29236a",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-101f7a1f1f29236a-A",
+        "B": "RT-101f7a1f1f29236a-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-101f7a1f1f29236a-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-101f7a1f1f29236a-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-101f7a1f1f29236a/A.json",
+        "B": "task-fixtures/pairs/RT-101f7a1f1f29236a/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-101f7a1f1f29236a-CURRENT-SCHEMA-FIELD",
+        "RT-101f7a1f1f29236a-BCE3F075-SECURITY-DEFINITION",
+        "RT-101f7a1f1f29236a-BCE3F075-SECURITY-CONTRACT",
+        "RT-101f7a1f1f29236a-BCE3F075-SECURITY-ALTERNATE",
+        "RT-101f7a1f1f29236a-BCE3F075-SECURITY-BINDING",
+        "RT-101f7a1f1f29236a-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-101f7a1f1f29236a.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-5118b56e0742663b",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-5118b56e0742663b-A",
+        "B": "RT-5118b56e0742663b-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-5118b56e0742663b-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-5118b56e0742663b-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-5118b56e0742663b/A.json",
+        "B": "task-fixtures/pairs/RT-5118b56e0742663b/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-5118b56e0742663b-CURRENT-SCHEMA-FIELD",
+        "RT-5118b56e0742663b-BCE3F075-SECURITY-DEFINITION",
+        "RT-5118b56e0742663b-BCE3F075-SECURITY-CONTRACT",
+        "RT-5118b56e0742663b-BCE3F075-SECURITY-ALTERNATE",
+        "RT-5118b56e0742663b-BCE3F075-SECURITY-BINDING",
+        "RT-5118b56e0742663b-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-5118b56e0742663b.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-584baa9f0f15c058",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-584baa9f0f15c058-A",
+        "B": "RT-584baa9f0f15c058-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-584baa9f0f15c058-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-584baa9f0f15c058-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-584baa9f0f15c058/A.json",
+        "B": "task-fixtures/pairs/RT-584baa9f0f15c058/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-584baa9f0f15c058-CURRENT-SCHEMA-FIELD",
+        "RT-584baa9f0f15c058-BCE3F075-SECURITY-DEFINITION",
+        "RT-584baa9f0f15c058-BCE3F075-SECURITY-CONTRACT",
+        "RT-584baa9f0f15c058-BCE3F075-SECURITY-ALTERNATE",
+        "RT-584baa9f0f15c058-BCE3F075-SECURITY-BINDING",
+        "RT-584baa9f0f15c058-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-584baa9f0f15c058.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-6ecf22c1afd37e91",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-6ecf22c1afd37e91-A",
+        "B": "RT-6ecf22c1afd37e91-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-6ecf22c1afd37e91-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-6ecf22c1afd37e91-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-6ecf22c1afd37e91/A.json",
+        "B": "task-fixtures/pairs/RT-6ecf22c1afd37e91/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-6ecf22c1afd37e91-CURRENT-SCHEMA-FIELD",
+        "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-DEFINITION",
+        "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-CONTRACT",
+        "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-ALTERNATE",
+        "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-BINDING",
+        "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-6ecf22c1afd37e91.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-e702d189d1282e3b",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-e702d189d1282e3b-A",
+        "B": "RT-e702d189d1282e3b-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-e702d189d1282e3b-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-e702d189d1282e3b-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-e702d189d1282e3b/A.json",
+        "B": "task-fixtures/pairs/RT-e702d189d1282e3b/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-e702d189d1282e3b-CURRENT-SCHEMA-FIELD",
+        "RT-e702d189d1282e3b-BCE3F075-SECURITY-DEFINITION",
+        "RT-e702d189d1282e3b-BCE3F075-SECURITY-CONTRACT",
+        "RT-e702d189d1282e3b-BCE3F075-SECURITY-ALTERNATE",
+        "RT-e702d189d1282e3b-BCE3F075-SECURITY-BINDING",
+        "RT-e702d189d1282e3b-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-e702d189d1282e3b.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-58a77efdd8cd5820",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-58a77efdd8cd5820-A",
+        "B": "RT-58a77efdd8cd5820-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-58a77efdd8cd5820-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-58a77efdd8cd5820-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-58a77efdd8cd5820/A.json",
+        "B": "task-fixtures/pairs/RT-58a77efdd8cd5820/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-58a77efdd8cd5820-CURRENT-SCHEMA-FIELD",
+        "RT-58a77efdd8cd5820-BCE3F075-SECURITY-DEFINITION",
+        "RT-58a77efdd8cd5820-BCE3F075-SECURITY-CONTRACT",
+        "RT-58a77efdd8cd5820-BCE3F075-SECURITY-ALTERNATE",
+        "RT-58a77efdd8cd5820-BCE3F075-SECURITY-BINDING",
+        "RT-58a77efdd8cd5820-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-58a77efdd8cd5820.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-95a1b17121581a49",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-95a1b17121581a49-A",
+        "B": "RT-95a1b17121581a49-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-95a1b17121581a49-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-95a1b17121581a49-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-95a1b17121581a49/A.json",
+        "B": "task-fixtures/pairs/RT-95a1b17121581a49/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-95a1b17121581a49-CURRENT-SCHEMA-FIELD",
+        "RT-95a1b17121581a49-BCE3F075-SECURITY-DEFINITION",
+        "RT-95a1b17121581a49-BCE3F075-SECURITY-CONTRACT",
+        "RT-95a1b17121581a49-BCE3F075-SECURITY-ALTERNATE",
+        "RT-95a1b17121581a49-BCE3F075-SECURITY-BINDING",
+        "RT-95a1b17121581a49-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-95a1b17121581a49.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-f4e73c3bb3c19c65",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-f4e73c3bb3c19c65-A",
+        "B": "RT-f4e73c3bb3c19c65-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-f4e73c3bb3c19c65-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-f4e73c3bb3c19c65-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-f4e73c3bb3c19c65/A.json",
+        "B": "task-fixtures/pairs/RT-f4e73c3bb3c19c65/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-f4e73c3bb3c19c65-CURRENT-SCHEMA-FIELD",
+        "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-DEFINITION",
+        "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-CONTRACT",
+        "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-ALTERNATE",
+        "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-BINDING",
+        "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-f4e73c3bb3c19c65.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-0da96fe7ba066ccb",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-0da96fe7ba066ccb-A",
+        "B": "RT-0da96fe7ba066ccb-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-0da96fe7ba066ccb-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-0da96fe7ba066ccb-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-0da96fe7ba066ccb/A.json",
+        "B": "task-fixtures/pairs/RT-0da96fe7ba066ccb/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-0da96fe7ba066ccb-CURRENT-SCHEMA-FIELD",
+        "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-DEFINITION",
+        "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-CONTRACT",
+        "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-ALTERNATE",
+        "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-BINDING",
+        "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "meaningful same-boundary actual rule/preset/waiver source contrast",
+      "responseDefinition": "fixtures/header-oracles/RT-0da96fe7ba066ccb.json",
+      "observer": "real provider resolvedRules/requested responseHeaders, visible findings/severity/IDs/counts/accepted/unused waiver info and real native request/effect receipt; no generic quota/mock substitute",
+      "boundary": "native HTTP response first, then exact header predicates and common.result waiver/OR verdict; all response bytes charged even if header checks fail"
+    },
+    {
+      "settingId": "RT-0c0b02b6fbc2160c",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-0c0b02b6fbc2160c-A",
+        "B": "RT-0c0b02b6fbc2160c-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-0c0b02b6fbc2160c-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-0c0b02b6fbc2160c-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-0c0b02b6fbc2160c/A.json",
+        "B": "task-fixtures/pairs/RT-0c0b02b6fbc2160c/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-0c0b02b6fbc2160c-CURRENT-SCHEMA-FIELD",
+        "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-DEFINITION",
+        "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-CONTRACT",
+        "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-ALTERNATE",
+        "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-BINDING",
+        "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-c9bc44d00a7b9c90",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-c9bc44d00a7b9c90-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-c9bc44d00a7b9c90-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-c9bc44d00a7b9c90/A.json",
+        "B": "task-fixtures/pairs/RT-c9bc44d00a7b9c90/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-c9bc44d00a7b9c90-CURRENT-SCHEMA-FIELD",
+        "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-DEFINITION",
+        "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-CONTRACT",
+        "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-ALTERNATE",
+        "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-BINDING",
+        "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN."
+    },
+    {
+      "settingId": "RT-6b059c9d6ad52058",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-6b059c9d6ad52058-A",
+        "B": "RT-6b059c9d6ad52058-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-6b059c9d6ad52058-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-6b059c9d6ad52058-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-6b059c9d6ad52058/A.json",
+        "B": "task-fixtures/pairs/RT-6b059c9d6ad52058/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-6b059c9d6ad52058-CURRENT-SCHEMA-FIELD",
+        "RT-6b059c9d6ad52058-BCE3F075-SECURITY-DEFINITION",
+        "RT-6b059c9d6ad52058-BCE3F075-SECURITY-CONTRACT",
+        "RT-6b059c9d6ad52058-BCE3F075-SECURITY-ALTERNATE",
+        "RT-6b059c9d6ad52058-BCE3F075-SECURITY-BINDING",
+        "RT-6b059c9d6ad52058-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-cdfcefd44e87996b",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-cdfcefd44e87996b-A",
+        "B": "RT-cdfcefd44e87996b-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-cdfcefd44e87996b-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-cdfcefd44e87996b-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-cdfcefd44e87996b/A.json",
+        "B": "task-fixtures/pairs/RT-cdfcefd44e87996b/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-cdfcefd44e87996b-CURRENT-SCHEMA-FIELD",
+        "RT-cdfcefd44e87996b-BCE3F075-SECURITY-DEFINITION",
+        "RT-cdfcefd44e87996b-BCE3F075-SECURITY-CONTRACT",
+        "RT-cdfcefd44e87996b-BCE3F075-SECURITY-ALTERNATE",
+        "RT-cdfcefd44e87996b-BCE3F075-SECURITY-BINDING",
+        "RT-cdfcefd44e87996b-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-f365121af3c2af9e",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-f365121af3c2af9e-A",
+        "B": "RT-f365121af3c2af9e-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-f365121af3c2af9e-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-f365121af3c2af9e-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-f365121af3c2af9e/A.json",
+        "B": "task-fixtures/pairs/RT-f365121af3c2af9e/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-f365121af3c2af9e-CURRENT-SCHEMA-FIELD",
+        "RT-f365121af3c2af9e-BCE3F075-SECURITY-DEFINITION",
+        "RT-f365121af3c2af9e-BCE3F075-SECURITY-CONTRACT",
+        "RT-f365121af3c2af9e-BCE3F075-SECURITY-ALTERNATE",
+        "RT-f365121af3c2af9e-BCE3F075-SECURITY-BINDING",
+        "RT-f365121af3c2af9e-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-3caa1e915a125dcd",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-3caa1e915a125dcd-A",
+        "B": "RT-3caa1e915a125dcd-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-3caa1e915a125dcd-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-3caa1e915a125dcd-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-3caa1e915a125dcd/A.json",
+        "B": "task-fixtures/pairs/RT-3caa1e915a125dcd/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-3caa1e915a125dcd-CURRENT-SCHEMA-FIELD",
+        "RT-3caa1e915a125dcd-BCE3F075-SECURITY-DEFINITION",
+        "RT-3caa1e915a125dcd-BCE3F075-SECURITY-CONTRACT",
+        "RT-3caa1e915a125dcd-BCE3F075-SECURITY-ALTERNATE",
+        "RT-3caa1e915a125dcd-BCE3F075-SECURITY-BINDING",
+        "RT-3caa1e915a125dcd-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-ea0bcd6957dbc556",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-ea0bcd6957dbc556-A",
+        "B": "RT-ea0bcd6957dbc556-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-ea0bcd6957dbc556-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-ea0bcd6957dbc556-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-ea0bcd6957dbc556/A.json",
+        "B": "task-fixtures/pairs/RT-ea0bcd6957dbc556/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-ea0bcd6957dbc556-CURRENT-SCHEMA-FIELD",
+        "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-DEFINITION",
+        "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-CONTRACT",
+        "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-ALTERNATE",
+        "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-BINDING",
+        "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-4c38b23dda98be93",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "A",
+        "B": "A"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-4c38b23dda98be93-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-4c38b23dda98be93-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-4c38b23dda98be93/A.json",
+        "B": "task-fixtures/pairs/RT-4c38b23dda98be93/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-4c38b23dda98be93-CURRENT-SCHEMA-FIELD",
+        "RT-4c38b23dda98be93-BCE3F075-SECURITY-DEFINITION",
+        "RT-4c38b23dda98be93-BCE3F075-SECURITY-CONTRACT",
+        "RT-4c38b23dda98be93-BCE3F075-SECURITY-ALTERNATE",
+        "RT-4c38b23dda98be93-BCE3F075-SECURITY-BINDING",
+        "RT-4c38b23dda98be93-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "actual task intent A/B, complete owner constant",
+      "observer": "same real provider native canonical URL/path list or contained project directory/argv/source snapshot, exact response/scan result; task data never CONFIG",
+      "boundary": "path/schema/repository containment before native; real endpoint/target effects afterward"
+    },
+    {
+      "settingId": "RT-0e050207e6faa65c",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-0e050207e6faa65c-A",
+        "B": "RT-0e050207e6faa65c-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-0e050207e6faa65c-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-0e050207e6faa65c-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-0e050207e6faa65c/A.json",
+        "B": "task-fixtures/pairs/RT-0e050207e6faa65c/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-0e050207e6faa65c-CURRENT-SCHEMA-FIELD",
+        "RT-0e050207e6faa65c-BCE3F075-SECURITY-DEFINITION",
+        "RT-0e050207e6faa65c-BCE3F075-SECURITY-CONTRACT",
+        "RT-0e050207e6faa65c-BCE3F075-SECURITY-ALTERNATE",
+        "RT-0e050207e6faa65c-BCE3F075-SECURITY-BINDING",
+        "RT-0e050207e6faa65c-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "real provider processing timeout/command cap contrast; actual timed effect remains future",
+      "observer": "headers native payload20/40 under unchanged network120000; real fixed delayed endpoint if authenticated. Scan1000/2000 yields actual native ceil timeout argv1s/2s under unchanged scanner900000; runtime inspect deadline1000/2000 under runtime300000. Real timing/cleanup/remaining-clock receipt required, no fake sleep executable.",
+      "boundary": "current provider forwards; HTTP native rejects excess; security.scan/runtime min with selected native cap; invocation signal/original claim deadline independently cancels. NO assumed provider min(invocation.timeoutMs).",
+      "nativeTimedWitness": "Unobserved authentic same fixed source/tool/controller fixture in discriminating interval; payload/argv/resource policy effects only until real clock/native proof. Original timing/F-EFFECT requirement not waived."
+    },
+    {
+      "settingId": "RT-ec0fc91072a8b630",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-ec0fc91072a8b630-A",
+        "B": "RT-ec0fc91072a8b630-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-ec0fc91072a8b630-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-ec0fc91072a8b630-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-ec0fc91072a8b630/A.json",
+        "B": "task-fixtures/pairs/RT-ec0fc91072a8b630/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-ec0fc91072a8b630-CURRENT-SCHEMA-FIELD",
+        "RT-ec0fc91072a8b630-BCE3F075-SECURITY-DEFINITION",
+        "RT-ec0fc91072a8b630-BCE3F075-SECURITY-CONTRACT",
+        "RT-ec0fc91072a8b630-BCE3F075-SECURITY-ALTERNATE",
+        "RT-ec0fc91072a8b630-BCE3F075-SECURITY-BINDING",
+        "RT-ec0fc91072a8b630-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-1242f6b3245f130e",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-1242f6b3245f130e-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-1242f6b3245f130e-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-1242f6b3245f130e/A.json",
+        "B": "task-fixtures/pairs/RT-1242f6b3245f130e/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-1242f6b3245f130e-CURRENT-SCHEMA-FIELD",
+        "RT-1242f6b3245f130e-BCE3F075-SECURITY-DEFINITION",
+        "RT-1242f6b3245f130e-BCE3F075-SECURITY-CONTRACT",
+        "RT-1242f6b3245f130e-BCE3F075-SECURITY-ALTERNATE",
+        "RT-1242f6b3245f130e-BCE3F075-SECURITY-BINDING",
+        "RT-1242f6b3245f130e-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN."
+    },
+    {
+      "settingId": "RT-3f66e997ecc380c1",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-3f66e997ecc380c1-A",
+        "B": "RT-3f66e997ecc380c1-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-3f66e997ecc380c1-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-3f66e997ecc380c1-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-3f66e997ecc380c1/A.json",
+        "B": "task-fixtures/pairs/RT-3f66e997ecc380c1/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-3f66e997ecc380c1-CURRENT-SCHEMA-FIELD",
+        "RT-3f66e997ecc380c1-BCE3F075-SECURITY-DEFINITION",
+        "RT-3f66e997ecc380c1-BCE3F075-SECURITY-CONTRACT",
+        "RT-3f66e997ecc380c1-BCE3F075-SECURITY-ALTERNATE",
+        "RT-3f66e997ecc380c1-BCE3F075-SECURITY-BINDING",
+        "RT-3f66e997ecc380c1-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-81f4bdf5f3872b9e",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-81f4bdf5f3872b9e-A",
+        "B": "RT-81f4bdf5f3872b9e-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-81f4bdf5f3872b9e-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-81f4bdf5f3872b9e-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-81f4bdf5f3872b9e/A.json",
+        "B": "task-fixtures/pairs/RT-81f4bdf5f3872b9e/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-81f4bdf5f3872b9e-CURRENT-SCHEMA-FIELD",
+        "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-DEFINITION",
+        "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-CONTRACT",
+        "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-ALTERNATE",
+        "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-BINDING",
+        "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-4a23015d6ca86669",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-4a23015d6ca86669-A",
+        "B": "RT-4a23015d6ca86669-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-4a23015d6ca86669-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-4a23015d6ca86669-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-4a23015d6ca86669/A.json",
+        "B": "task-fixtures/pairs/RT-4a23015d6ca86669/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-4a23015d6ca86669-CURRENT-SCHEMA-FIELD",
+        "RT-4a23015d6ca86669-BCE3F075-SECURITY-DEFINITION",
+        "RT-4a23015d6ca86669-BCE3F075-SECURITY-CONTRACT",
+        "RT-4a23015d6ca86669-BCE3F075-SECURITY-ALTERNATE",
+        "RT-4a23015d6ca86669-BCE3F075-SECURITY-BINDING",
+        "RT-4a23015d6ca86669-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-a3dc4204fd2dbc99",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-a3dc4204fd2dbc99-A",
+        "B": "RT-a3dc4204fd2dbc99-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-a3dc4204fd2dbc99-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-a3dc4204fd2dbc99-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-a3dc4204fd2dbc99/A.json",
+        "B": "task-fixtures/pairs/RT-a3dc4204fd2dbc99/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-a3dc4204fd2dbc99-CURRENT-SCHEMA-FIELD",
+        "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-DEFINITION",
+        "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-CONTRACT",
+        "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-ALTERNATE",
+        "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-BINDING",
+        "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-d912c283aeea31d8",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-d912c283aeea31d8-A",
+        "B": "RT-d912c283aeea31d8-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-d912c283aeea31d8-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-d912c283aeea31d8-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-d912c283aeea31d8/A.json",
+        "B": "task-fixtures/pairs/RT-d912c283aeea31d8/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-d912c283aeea31d8-CURRENT-SCHEMA-FIELD",
+        "RT-d912c283aeea31d8-BCE3F075-SECURITY-DEFINITION",
+        "RT-d912c283aeea31d8-BCE3F075-SECURITY-CONTRACT",
+        "RT-d912c283aeea31d8-BCE3F075-SECURITY-ALTERNATE",
+        "RT-d912c283aeea31d8-BCE3F075-SECURITY-BINDING",
+        "RT-d912c283aeea31d8-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-25155a8525353895",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-25155a8525353895-A",
+        "B": "RT-25155a8525353895-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-25155a8525353895-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-25155a8525353895-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-25155a8525353895/A.json",
+        "B": "task-fixtures/pairs/RT-25155a8525353895/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-25155a8525353895-CURRENT-SCHEMA-FIELD",
+        "RT-25155a8525353895-BCE3F075-SECURITY-DEFINITION",
+        "RT-25155a8525353895-BCE3F075-SECURITY-CONTRACT",
+        "RT-25155a8525353895-BCE3F075-SECURITY-ALTERNATE",
+        "RT-25155a8525353895-BCE3F075-SECURITY-BINDING",
+        "RT-25155a8525353895-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "real provider processing timeout/command cap contrast; actual timed effect remains future",
+      "observer": "headers native payload20/40 under unchanged network120000; real fixed delayed endpoint if authenticated. Scan1000/2000 yields actual native ceil timeout argv1s/2s under unchanged scanner900000; runtime inspect deadline1000/2000 under runtime300000. Real timing/cleanup/remaining-clock receipt required, no fake sleep executable.",
+      "boundary": "current provider forwards; HTTP native rejects excess; security.scan/runtime min with selected native cap; invocation signal/original claim deadline independently cancels. NO assumed provider min(invocation.timeoutMs).",
+      "nativeTimedWitness": "Unobserved authentic same fixed source/tool/controller fixture in discriminating interval; payload/argv/resource policy effects only until real clock/native proof. Original timing/F-EFFECT requirement not waived."
+    },
+    {
+      "settingId": "RT-513bbd46b45156b7",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-513bbd46b45156b7-A",
+        "B": "RT-513bbd46b45156b7-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-513bbd46b45156b7-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-513bbd46b45156b7-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-513bbd46b45156b7/A.json",
+        "B": "task-fixtures/pairs/RT-513bbd46b45156b7/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-513bbd46b45156b7-CURRENT-SCHEMA-FIELD",
+        "RT-513bbd46b45156b7-BCE3F075-SECURITY-DEFINITION",
+        "RT-513bbd46b45156b7-BCE3F075-SECURITY-CONTRACT",
+        "RT-513bbd46b45156b7-BCE3F075-SECURITY-ALTERNATE",
+        "RT-513bbd46b45156b7-BCE3F075-SECURITY-BINDING",
+        "RT-513bbd46b45156b7-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-6d1bc088852536a7",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-6d1bc088852536a7-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-6d1bc088852536a7-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-6d1bc088852536a7/A.json",
+        "B": "task-fixtures/pairs/RT-6d1bc088852536a7/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-6d1bc088852536a7-CURRENT-SCHEMA-FIELD",
+        "RT-6d1bc088852536a7-BCE3F075-SECURITY-DEFINITION",
+        "RT-6d1bc088852536a7-BCE3F075-SECURITY-CONTRACT",
+        "RT-6d1bc088852536a7-BCE3F075-SECURITY-ALTERNATE",
+        "RT-6d1bc088852536a7-BCE3F075-SECURITY-BINDING",
+        "RT-6d1bc088852536a7-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN."
+    },
+    {
+      "settingId": "RT-2dc4f91b61e79184",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-2dc4f91b61e79184-A",
+        "B": "RT-2dc4f91b61e79184-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-2dc4f91b61e79184-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-2dc4f91b61e79184-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-2dc4f91b61e79184/A.json",
+        "B": "task-fixtures/pairs/RT-2dc4f91b61e79184/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-2dc4f91b61e79184-CURRENT-SCHEMA-FIELD",
+        "RT-2dc4f91b61e79184-BCE3F075-SECURITY-DEFINITION",
+        "RT-2dc4f91b61e79184-BCE3F075-SECURITY-CONTRACT",
+        "RT-2dc4f91b61e79184-BCE3F075-SECURITY-ALTERNATE",
+        "RT-2dc4f91b61e79184-BCE3F075-SECURITY-BINDING",
+        "RT-2dc4f91b61e79184-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-bd7eee80bc8feca2",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-bd7eee80bc8feca2-A",
+        "B": "RT-bd7eee80bc8feca2-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-bd7eee80bc8feca2-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-bd7eee80bc8feca2-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-bd7eee80bc8feca2/A.json",
+        "B": "task-fixtures/pairs/RT-bd7eee80bc8feca2/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-bd7eee80bc8feca2-CURRENT-SCHEMA-FIELD",
+        "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-DEFINITION",
+        "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-CONTRACT",
+        "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-ALTERNATE",
+        "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-BINDING",
+        "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-53653aa9d3f03c8f",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-53653aa9d3f03c8f-A",
+        "B": "RT-53653aa9d3f03c8f-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-53653aa9d3f03c8f-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-53653aa9d3f03c8f-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-53653aa9d3f03c8f/A.json",
+        "B": "task-fixtures/pairs/RT-53653aa9d3f03c8f/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-53653aa9d3f03c8f-CURRENT-SCHEMA-FIELD",
+        "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-DEFINITION",
+        "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-CONTRACT",
+        "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-ALTERNATE",
+        "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-BINDING",
+        "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-376a55c52779beed",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-376a55c52779beed-A",
+        "B": "RT-376a55c52779beed-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-376a55c52779beed-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-376a55c52779beed-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-376a55c52779beed/A.json",
+        "B": "task-fixtures/pairs/RT-376a55c52779beed/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-376a55c52779beed-CURRENT-SCHEMA-FIELD",
+        "RT-376a55c52779beed-BCE3F075-SECURITY-DEFINITION",
+        "RT-376a55c52779beed-BCE3F075-SECURITY-CONTRACT",
+        "RT-376a55c52779beed-BCE3F075-SECURITY-ALTERNATE",
+        "RT-376a55c52779beed-BCE3F075-SECURITY-BINDING",
+        "RT-376a55c52779beed-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-e8358fe85c80d3d0",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-e8358fe85c80d3d0-A",
+        "B": "RT-e8358fe85c80d3d0-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-e8358fe85c80d3d0-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-e8358fe85c80d3d0-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-e8358fe85c80d3d0/A.json",
+        "B": "task-fixtures/pairs/RT-e8358fe85c80d3d0/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-e8358fe85c80d3d0-CURRENT-SCHEMA-FIELD",
+        "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-DEFINITION",
+        "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-CONTRACT",
+        "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-ALTERNATE",
+        "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-BINDING",
+        "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-2fe8190f12f15510",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-2fe8190f12f15510-A",
+        "B": "RT-2fe8190f12f15510-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-2fe8190f12f15510-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-2fe8190f12f15510-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-2fe8190f12f15510/A.json",
+        "B": "task-fixtures/pairs/RT-2fe8190f12f15510/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-2fe8190f12f15510-CURRENT-SCHEMA-FIELD",
+        "RT-2fe8190f12f15510-BCE3F075-SECURITY-DEFINITION",
+        "RT-2fe8190f12f15510-BCE3F075-SECURITY-CONTRACT",
+        "RT-2fe8190f12f15510-BCE3F075-SECURITY-ALTERNATE",
+        "RT-2fe8190f12f15510-BCE3F075-SECURITY-BINDING",
+        "RT-2fe8190f12f15510-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "real provider processing timeout/command cap contrast; actual timed effect remains future",
+      "observer": "headers native payload20/40 under unchanged network120000; real fixed delayed endpoint if authenticated. Scan1000/2000 yields actual native ceil timeout argv1s/2s under unchanged scanner900000; runtime inspect deadline1000/2000 under runtime300000. Real timing/cleanup/remaining-clock receipt required, no fake sleep executable.",
+      "boundary": "current provider forwards; HTTP native rejects excess; security.scan/runtime min with selected native cap; invocation signal/original claim deadline independently cancels. NO assumed provider min(invocation.timeoutMs).",
+      "nativeTimedWitness": "Unobserved authentic same fixed source/tool/controller fixture in discriminating interval; payload/argv/resource policy effects only until real clock/native proof. Original timing/F-EFFECT requirement not waived."
+    },
+    {
+      "settingId": "RT-8de947a02be68652",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-8de947a02be68652-A",
+        "B": "RT-8de947a02be68652-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-8de947a02be68652-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-8de947a02be68652-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-8de947a02be68652/A.json",
+        "B": "task-fixtures/pairs/RT-8de947a02be68652/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-8de947a02be68652-CURRENT-SCHEMA-FIELD",
+        "RT-8de947a02be68652-BCE3F075-SECURITY-DEFINITION",
+        "RT-8de947a02be68652-BCE3F075-SECURITY-CONTRACT",
+        "RT-8de947a02be68652-BCE3F075-SECURITY-ALTERNATE",
+        "RT-8de947a02be68652-BCE3F075-SECURITY-BINDING",
+        "RT-8de947a02be68652-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-76d0d20d46b9a8e6",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-76d0d20d46b9a8e6-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-76d0d20d46b9a8e6-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-76d0d20d46b9a8e6/A.json",
+        "B": "task-fixtures/pairs/RT-76d0d20d46b9a8e6/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-76d0d20d46b9a8e6-CURRENT-SCHEMA-FIELD",
+        "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-DEFINITION",
+        "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-CONTRACT",
+        "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-ALTERNATE",
+        "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-BINDING",
+        "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN."
+    },
+    {
+      "settingId": "RT-773179d734f2eb77",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-773179d734f2eb77-A",
+        "B": "RT-773179d734f2eb77-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-773179d734f2eb77-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-773179d734f2eb77-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-773179d734f2eb77/A.json",
+        "B": "task-fixtures/pairs/RT-773179d734f2eb77/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-773179d734f2eb77-CURRENT-SCHEMA-FIELD",
+        "RT-773179d734f2eb77-BCE3F075-SECURITY-DEFINITION",
+        "RT-773179d734f2eb77-BCE3F075-SECURITY-CONTRACT",
+        "RT-773179d734f2eb77-BCE3F075-SECURITY-ALTERNATE",
+        "RT-773179d734f2eb77-BCE3F075-SECURITY-BINDING",
+        "RT-773179d734f2eb77-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-9370858078281283",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-9370858078281283-A",
+        "B": "RT-9370858078281283-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-9370858078281283-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-9370858078281283-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-9370858078281283/A.json",
+        "B": "task-fixtures/pairs/RT-9370858078281283/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-9370858078281283-CURRENT-SCHEMA-FIELD",
+        "RT-9370858078281283-BCE3F075-SECURITY-DEFINITION",
+        "RT-9370858078281283-BCE3F075-SECURITY-CONTRACT",
+        "RT-9370858078281283-BCE3F075-SECURITY-ALTERNATE",
+        "RT-9370858078281283-BCE3F075-SECURITY-BINDING",
+        "RT-9370858078281283-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-f036e66205a0fa61",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-f036e66205a0fa61-A",
+        "B": "RT-f036e66205a0fa61-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-f036e66205a0fa61-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-f036e66205a0fa61-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-f036e66205a0fa61/A.json",
+        "B": "task-fixtures/pairs/RT-f036e66205a0fa61/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-f036e66205a0fa61-CURRENT-SCHEMA-FIELD",
+        "RT-f036e66205a0fa61-BCE3F075-SECURITY-DEFINITION",
+        "RT-f036e66205a0fa61-BCE3F075-SECURITY-CONTRACT",
+        "RT-f036e66205a0fa61-BCE3F075-SECURITY-ALTERNATE",
+        "RT-f036e66205a0fa61-BCE3F075-SECURITY-BINDING",
+        "RT-f036e66205a0fa61-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-ffc33c06d6b6a1c2",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-ffc33c06d6b6a1c2-A",
+        "B": "RT-ffc33c06d6b6a1c2-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-ffc33c06d6b6a1c2-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-ffc33c06d6b6a1c2-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-ffc33c06d6b6a1c2/A.json",
+        "B": "task-fixtures/pairs/RT-ffc33c06d6b6a1c2/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-ffc33c06d6b6a1c2-CURRENT-SCHEMA-FIELD",
+        "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-DEFINITION",
+        "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-CONTRACT",
+        "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-ALTERNATE",
+        "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-BINDING",
+        "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-0a39f16498c38979",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-0a39f16498c38979-A",
+        "B": "RT-0a39f16498c38979-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-0a39f16498c38979-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-0a39f16498c38979-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-0a39f16498c38979/A.json",
+        "B": "task-fixtures/pairs/RT-0a39f16498c38979/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-0a39f16498c38979-CURRENT-SCHEMA-FIELD",
+        "RT-0a39f16498c38979-BCE3F075-SECURITY-DEFINITION",
+        "RT-0a39f16498c38979-BCE3F075-SECURITY-CONTRACT",
+        "RT-0a39f16498c38979-BCE3F075-SECURITY-ALTERNATE",
+        "RT-0a39f16498c38979-BCE3F075-SECURITY-BINDING",
+        "RT-0a39f16498c38979-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-c00914a2402f91bf",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-c00914a2402f91bf-A",
+        "B": "RT-c00914a2402f91bf-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-c00914a2402f91bf-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-c00914a2402f91bf-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-c00914a2402f91bf/A.json",
+        "B": "task-fixtures/pairs/RT-c00914a2402f91bf/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-c00914a2402f91bf-CURRENT-SCHEMA-FIELD",
+        "RT-c00914a2402f91bf-BCE3F075-SECURITY-DEFINITION",
+        "RT-c00914a2402f91bf-BCE3F075-SECURITY-CONTRACT",
+        "RT-c00914a2402f91bf-BCE3F075-SECURITY-ALTERNATE",
+        "RT-c00914a2402f91bf-BCE3F075-SECURITY-BINDING",
+        "RT-c00914a2402f91bf-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "real provider processing timeout/command cap contrast; actual timed effect remains future",
+      "observer": "headers native payload20/40 under unchanged network120000; real fixed delayed endpoint if authenticated. Scan1000/2000 yields actual native ceil timeout argv1s/2s under unchanged scanner900000; runtime inspect deadline1000/2000 under runtime300000. Real timing/cleanup/remaining-clock receipt required, no fake sleep executable.",
+      "boundary": "current provider forwards; HTTP native rejects excess; security.scan/runtime min with selected native cap; invocation signal/original claim deadline independently cancels. NO assumed provider min(invocation.timeoutMs).",
+      "nativeTimedWitness": "Unobserved authentic same fixed source/tool/controller fixture in discriminating interval; payload/argv/resource policy effects only until real clock/native proof. Original timing/F-EFFECT requirement not waived."
+    },
+    {
+      "settingId": "RT-8d1e26bc5360c737",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-8d1e26bc5360c737-A",
+        "B": "RT-8d1e26bc5360c737-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-8d1e26bc5360c737-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-8d1e26bc5360c737-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-8d1e26bc5360c737/A.json",
+        "B": "task-fixtures/pairs/RT-8d1e26bc5360c737/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-8d1e26bc5360c737-CURRENT-SCHEMA-FIELD",
+        "RT-8d1e26bc5360c737-BCE3F075-SECURITY-DEFINITION",
+        "RT-8d1e26bc5360c737-BCE3F075-SECURITY-CONTRACT",
+        "RT-8d1e26bc5360c737-BCE3F075-SECURITY-ALTERNATE",
+        "RT-8d1e26bc5360c737-BCE3F075-SECURITY-BINDING",
+        "RT-8d1e26bc5360c737-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-ae78d041c3d0fbd6",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-ae78d041c3d0fbd6-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-ae78d041c3d0fbd6-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-ae78d041c3d0fbd6/A.json",
+        "B": "task-fixtures/pairs/RT-ae78d041c3d0fbd6/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-ae78d041c3d0fbd6-CURRENT-SCHEMA-FIELD",
+        "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-DEFINITION",
+        "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-CONTRACT",
+        "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-ALTERNATE",
+        "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-BINDING",
+        "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN."
+    },
+    {
+      "settingId": "RT-9941fbebdaea1c41",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-9941fbebdaea1c41-A",
+        "B": "RT-9941fbebdaea1c41-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-9941fbebdaea1c41-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-9941fbebdaea1c41-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-9941fbebdaea1c41/A.json",
+        "B": "task-fixtures/pairs/RT-9941fbebdaea1c41/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-9941fbebdaea1c41-CURRENT-SCHEMA-FIELD",
+        "RT-9941fbebdaea1c41-BCE3F075-SECURITY-DEFINITION",
+        "RT-9941fbebdaea1c41-BCE3F075-SECURITY-CONTRACT",
+        "RT-9941fbebdaea1c41-BCE3F075-SECURITY-ALTERNATE",
+        "RT-9941fbebdaea1c41-BCE3F075-SECURITY-BINDING",
+        "RT-9941fbebdaea1c41-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-2672b24a1df6464d",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-2672b24a1df6464d-A",
+        "B": "RT-2672b24a1df6464d-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-2672b24a1df6464d-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-2672b24a1df6464d-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-2672b24a1df6464d/A.json",
+        "B": "task-fixtures/pairs/RT-2672b24a1df6464d/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-2672b24a1df6464d-CURRENT-SCHEMA-FIELD",
+        "RT-2672b24a1df6464d-BCE3F075-SECURITY-DEFINITION",
+        "RT-2672b24a1df6464d-BCE3F075-SECURITY-CONTRACT",
+        "RT-2672b24a1df6464d-BCE3F075-SECURITY-ALTERNATE",
+        "RT-2672b24a1df6464d-BCE3F075-SECURITY-BINDING",
+        "RT-2672b24a1df6464d-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-52731740c2eb92d2",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-52731740c2eb92d2-A",
+        "B": "RT-52731740c2eb92d2-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-52731740c2eb92d2-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-52731740c2eb92d2-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-52731740c2eb92d2/A.json",
+        "B": "task-fixtures/pairs/RT-52731740c2eb92d2/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-52731740c2eb92d2-CURRENT-SCHEMA-FIELD",
+        "RT-52731740c2eb92d2-BCE3F075-SECURITY-DEFINITION",
+        "RT-52731740c2eb92d2-BCE3F075-SECURITY-CONTRACT",
+        "RT-52731740c2eb92d2-BCE3F075-SECURITY-ALTERNATE",
+        "RT-52731740c2eb92d2-BCE3F075-SECURITY-BINDING",
+        "RT-52731740c2eb92d2-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-cc64dd898be55e05",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-cc64dd898be55e05-A",
+        "B": "RT-cc64dd898be55e05-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-cc64dd898be55e05-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-cc64dd898be55e05-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-cc64dd898be55e05/A.json",
+        "B": "task-fixtures/pairs/RT-cc64dd898be55e05/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-cc64dd898be55e05-CURRENT-SCHEMA-FIELD",
+        "RT-cc64dd898be55e05-BCE3F075-SECURITY-DEFINITION",
+        "RT-cc64dd898be55e05-BCE3F075-SECURITY-CONTRACT",
+        "RT-cc64dd898be55e05-BCE3F075-SECURITY-ALTERNATE",
+        "RT-cc64dd898be55e05-BCE3F075-SECURITY-BINDING",
+        "RT-cc64dd898be55e05-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-95d37d46c3d99337",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-95d37d46c3d99337-A",
+        "B": "RT-95d37d46c3d99337-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-95d37d46c3d99337-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-95d37d46c3d99337-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-95d37d46c3d99337/A.json",
+        "B": "task-fixtures/pairs/RT-95d37d46c3d99337/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-95d37d46c3d99337-CURRENT-SCHEMA-FIELD",
+        "RT-95d37d46c3d99337-BCE3F075-SECURITY-DEFINITION",
+        "RT-95d37d46c3d99337-BCE3F075-SECURITY-CONTRACT",
+        "RT-95d37d46c3d99337-BCE3F075-SECURITY-ALTERNATE",
+        "RT-95d37d46c3d99337-BCE3F075-SECURITY-BINDING",
+        "RT-95d37d46c3d99337-BCE3F075-SECURITY-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "waiver identity/reason/absolute expiry/source verdict and visible audit contrast",
+      "observer": "same real provider/authenticated finding ID, visible finding retained, accepted/expired/unused lists and blocking counts; reason affects metadata not verdict; unmatched IDs valid unused controls",
+      "boundary": "after genuine scan/native/header mapping; real Date.now expires<=now even during replay. Pure mapped fixture cannot prove native finding exists.",
+      "nativeEligibility": "Header custom:/a response dictionary can define exact genuine header finding. Scanner/runtime waiver match requires exact authenticated mapped finding receipt under declared actual task; absent/mismatched receipt keeps original F-EFFECT open."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+        "RT-PROVIDER-POLICY10-7c7857e402035d0c"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-7c7857e402035d0c",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-7c7857e402035d0c",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-A",
+        "B": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "safe true\u2192false conservative default retry decision",
+      "observer": "actual resolver default retry count/attempt receipts with no explicit requested unsafe retry; package retrySafe immutable true; explicit acceptUnsafeRetry task meaning not silently removed",
+      "boundary": "eligible resolved plan before attempt; actual retries obey original node/source/claim clocks and effect idempotency"
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+        "RT-PROVIDER-POLICY10-6b769906ae4de25e"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-6b769906ae4de25e",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-6b769906ae4de25e",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-A",
+        "B": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "safe true\u2192false conservative default retry decision",
+      "observer": "actual resolver default retry count/attempt receipts with no explicit requested unsafe retry; package retrySafe immutable true; explicit acceptUnsafeRetry task meaning not silently removed",
+      "boundary": "eligible resolved plan before attempt; actual retries obey original node/source/claim clocks and effect idempotency"
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+        "RT-PROVIDER-POLICY10-3570f245d31280e9"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-3570f245d31280e9",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-3570f245d31280e9",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-A",
+        "B": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "safe true\u2192false conservative default retry decision",
+      "observer": "actual resolver default retry count/attempt receipts with no explicit requested unsafe retry; package retrySafe immutable true; explicit acceptUnsafeRetry task meaning not silently removed",
+      "boundary": "eligible resolved plan before attempt; actual retries obey original node/source/claim clocks and effect idempotency"
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+        "RT-PROVIDER-POLICY10-b413e60898f42d6a"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-b413e60898f42d6a",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-b413e60898f42d6a",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-A",
+        "B": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "safe true\u2192false conservative default retry decision",
+      "observer": "actual resolver default retry count/attempt receipts with no explicit requested unsafe retry; package retrySafe immutable true; explicit acceptUnsafeRetry task meaning not silently removed",
+      "boundary": "eligible resolved plan before attempt; actual retries obey original node/source/claim clocks and effect idempotency"
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+        "RT-PROVIDER-POLICY10-a24be13871ec9023"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-a24be13871ec9023",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-POLICY10-a24be13871ec9023",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-MISSING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-ALT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report."
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-A",
+        "B": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "safe true\u2192false conservative default retry decision",
+      "observer": "actual resolver default retry count/attempt receipts with no explicit requested unsafe retry; package retrySafe immutable true; explicit acceptUnsafeRetry task meaning not silently removed",
+      "boundary": "eligible resolved plan before attempt; actual retries obey original node/source/claim clocks and effect idempotency"
+    },
+    {
+      "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "profiles": {
+        "A": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-A",
+        "B": null
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-A.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS/A.json",
+        "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-MISSING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-ALT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-BINDING",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+        "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "unsupported distinct safe alternate; exact original obligations OPEN/unwaived",
+      "obligation": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN."
+    },
+    {
+      "settingId": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-A",
+        "B": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-SECURITY-COMMON-BLOCKINGSEVERITIES-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-SECURITY-COMMON-BLOCKINGSEVERITIES-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKINGSEVERITIES/A.json",
+        "B": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKINGSEVERITIES/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-SOURCE",
+        "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-CONTRACT",
+        "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-ALTERNATE",
+        "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-BINDING",
+        "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "isolated owned common business OR-arm contract",
+      "observer": "genuine mapped finding same source/provider/task: severity high statusunknown fixedversionpresent for severity arm; low affected nonvulnerability for active arm; low statusunknown vulnerability no fix for missing-fix arm; other OR arms disabled in BOTH full profiles. Findings remain visible.",
+      "boundary": "real provider common.result after native; current common.policy rejects owned flags, proposed receiver migration required. Direct pure result arithmetic is SOURCE assessment only."
+    },
+    {
+      "settingId": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-A",
+        "B": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-SECURITY-COMMON-BLOCKACTIVETHREATS-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-SECURITY-COMMON-BLOCKACTIVETHREATS-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKACTIVETHREATS/A.json",
+        "B": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKACTIVETHREATS/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-SOURCE",
+        "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-CONTRACT",
+        "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-ALTERNATE",
+        "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-BINDING",
+        "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "isolated owned common business OR-arm contract",
+      "observer": "genuine mapped finding same source/provider/task: severity high statusunknown fixedversionpresent for severity arm; low affected nonvulnerability for active arm; low statusunknown vulnerability no fix for missing-fix arm; other OR arms disabled in BOTH full profiles. Findings remain visible.",
+      "boundary": "real provider common.result after native; current common.policy rejects owned flags, proposed receiver migration required. Direct pure result arithmetic is SOURCE assessment only."
+    },
+    {
+      "settingId": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "profiles": {
+        "A": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-A",
+        "B": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/RT-SECURITY-COMMON-BLOCKMISSINGFIXES-A.pipeline.config.json",
+        "B": "fixtures/entries/RT-SECURITY-COMMON-BLOCKMISSINGFIXES-B.pipeline.config.json"
+      },
+      "tasks": {
+        "A": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKMISSINGFIXES/A.json",
+        "B": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKMISSINGFIXES/B.json"
+      },
+      "originalCaseIds": [
+        "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+        "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-SOURCE",
+        "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-CONTRACT",
+        "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-ALTERNATE",
+        "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-BINDING",
+        "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-MUTANT"
+      ],
+      "nativeResult": "not-run",
+      "restoredPositive": "same authenticated original A/task/native/source/grant/clock closure after each negative; no reset/fill from B",
+      "mutation": "ignore selected policy/rules/preset/waiver/timeout/receiver binding, use literal fallback, wrong package/instance/profile or clock-reset mutant must fail ORIGINAL actual-consumer cases; pure helper check is not native mutant proof",
+      "disposition": "isolated owned common business OR-arm contract",
+      "observer": "genuine mapped finding same source/provider/task: severity high statusunknown fixedversionpresent for severity arm; low affected nonvulnerability for active arm; low statusunknown vulnerability no fix for missing-fix arm; other OR arms disabled in BOTH full profiles. Findings remain visible.",
+      "boundary": "real provider common.result after native; current common.policy rejects owned flags, proposed receiver migration required. Direct pure result arithmetic is SOURCE assessment only."
+    }
+  ],
+  "qualification": "Exact89 original members and real application/observer/negative/mutant/restored-positive obligations; no native effect proof or canonical ID mutation"
+}

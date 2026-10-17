@@ -1,0 +1,197 @@
+{
+  "scope": "exact source-resolved final4 source gaps + corrected operative lint override contract; no native parser/effect PASS",
+  "records": [
+    {
+      "id": "DLV-CHART-KUBECLAW-DISCORD-CHANNELID",
+      "class": "task-data",
+      "domain": "Chart optional DISCORD_CHANNEL_ID ENV; no repository selected runtime or full acquired OpenClaw2026.9.5 JS/TS/JSON reader match. Not the configured Discord channel/guild/user allowlist, and cannot prove authorization effect. External custom roster reader must be inventoried if actually selected.",
+      "reader": {
+        "operation": "Declared ENV, presently unused in inspected selected source. Target remove unused misleading route field or explicitly bind task notification receiver through real owned provider; no invented allowlist knob.",
+        "references": [
+          {
+            "path": "charts/kubeclaw/templates/deployment.yaml",
+            "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+            "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+            "sha256": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          }
+        ],
+        "disposition": "selected member/source semantics only; no invented current active extension roster"
+      },
+      "status": "source-traced-declared-unused"
+    },
+    {
+      "id": "DLV-CHART-KUBECLAW-SWARMCONFIG-OVERRIDEONRESTART",
+      "class": "operator-setting",
+      "domain": "Helm defaultfalse then quoted ENV; exact OVERRIDE_SWARM_CONFIG==true. IMPORTANT: operator bundle is mounted readonly and never copied, BUT flag remains operative for persisted Semgrep/ESLint copy. Same source flag is not declared-unused overall.",
+      "reader": {
+        "operation": "Init overrides existing /config/.semgrep.yml and eslint.config.mjs only when true; false preserves existing files. Other lint helper files always recopied. Runtime-config mirrors persisted files. Target generation must distinguish mutable persisted lint policy/artifact from immutable mounted six-owner bundle.",
+        "references": [
+          {
+            "path": "charts/kubeclaw/templates/deployment.yaml",
+            "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+            "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+            "sha256": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          }
+        ],
+        "disposition": "selected member/source semantics only; no invented current active extension roster"
+      },
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-CHART-KUBECLAW-SEMGREPCONFIGYAML",
+      "class": "operator-setting",
+      "domain": "Chart optional string, fallback packaged .semgrep.yml; selected native Semgrep1.170.0 rule_schema_v1.yaml full exact JSONschema (YAML), $refs and additionalProperties/required/disjunctive mode constraints retained primary immutable source. Schema validates rule shape/languages/severity/pattern forms; language parser and actual pattern/rule semantics separate. This is lint rule policy source, not dependency version.",
+      "reader": {
+        "operation": "ConfigMap\u2192init copy IF missing or OVERRIDE_SWARM_CONFIG true into /config/.semgrep.yml\u2192runtime-config copy\u2192Nova lint ctx.tool.config_path\u2192safeExec semgrep scan --config PATH --json --disable-version-check --metrics=off; errors/nonzero reject execution independently from findings. Config path selected by real plugin owner, not automatically every module.",
+        "references": [
+          {
+            "path": "charts/kubeclaw/templates/deployment.yaml",
+            "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+            "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+            "sha256": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/cli/src/semgrep/semgrep_interfaces/rule_schema_v1.yaml",
+            "sha256": "c89688567cbd6f964d0bfe9c032dc45b7318b8ed1e099e2a2ae021e9aacce416"
+          },
+          {
+            "path": "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
+            "sha256": "6148c63c63ab2b8ad4fa258790e95bb89121d4e844969b7a91020f6803527de5"
+          },
+          {
+            "path": "charts/kubeclaw/files/config/.semgrep.yml",
+            "sha256": "430adf26f8a72db1275e92061d33a2e1c66ef29199fcde647e3ac34ec51de58d"
+          },
+          {
+            "path": "docker/python-tools/semgrep-nova.txt",
+            "sha256": "7ba7cb1f5369f6f07c0e30f36f45e13ee8377ea6c6a87d1d0344e5cb27f17e66"
+          }
+        ],
+        "disposition": "selected member/source semantics only; no invented current active extension roster"
+      },
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-CHART-KUBECLAW-ESLINTCONFIGMJS",
+      "class": "operator-setting",
+      "domain": "Chart arbitrary JS module string, fallback packaged eslint-config.mjs; actual selected ESLint10.7.0 flat-config schema/rule metadata and Node module graph must validate/evaluate. Rules severities off/warn/error or0/1/2, rule option schemas; invalid keys/plugin or rule metadata reject. The selected rule policy is operator configuration; executable loader/import modules carry separate immutable code/dependency identities. Do not collapse rules or severity choices into versions or numeric model policy.",
+      "reader": {
+        "operation": "ConfigMap\u2192same persisted /config/eslint.config.mjs precedence\u2192/runtime-config copy\u2192Nova lint exact ctx.tool.config_path\u2192ESLint --config; current generated symlink node_modules imports /opt/kubeclaw-tools locked graph. Changing Chart/checksum does not replace persisted prior config unless override=true. Rules module imported at actual native tool run; trust/package closure must be bound.",
+        "references": [
+          {
+            "path": "charts/kubeclaw/templates/deployment.yaml",
+            "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+            "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+            "sha256": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/config/flat-config-schema.js",
+            "sha256": "0281f44f3c3f2c5f138db9918dec9f2c58669f812e598488b1cf69c7ad651e9d"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/config/config-loader.js",
+            "sha256": "e7af12b81621113b4ccdf13a87bb30a194a9f022f911b334f04aeb397c7678be"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/config/config.js",
+            "sha256": "90807f44ffd3663d4882565c991e02e9c85c7ede3d4de77ff1f3168e9e521009"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/rules/eqeqeq.js",
+            "sha256": "4d7dc86f36ea7cbf0ebdb41843daf0d86835e5ee605904512d03adb0f844e02b"
+          },
+          {
+            "path": "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts",
+            "sha256": "85b1c25c238682acce0fcea59ceea75ba1b2d7aa91f95a8308194a0602cbd184"
+          },
+          {
+            "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+            "sha256": "a042f53e55ca8438e2d2e1af7766c73063b5d34bfaa9c68ab8d21d0fdf4111f8"
+          },
+          {
+            "path": "docker/nova-tools/package.json",
+            "sha256": "45c552450661749c0908f846c2ce49bf8e5bf25a59950950da9ca0adb327b454"
+          },
+          {
+            "path": "docker/nova-tools/package-lock.json",
+            "sha256": "2f6463db041b9c25b14f5f163207eb1a6d22f91e9fc088ad1af7d14b350d8b2d"
+          }
+        ],
+        "disposition": "selected member/source semantics only; no invented current active extension roster"
+      },
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-CHART-KUBECLAW-CUSTOMSKILLS",
+      "class": "version",
+      "domain": "Optional map filename\u2192content strings, to ConfigMap data. Selected Kubernetes data keys [-._a-zA-Z0-9]+ and max serialized ConfigMap size constrain names/text; slash traversal is not legal native ConfigMap data key. Init explicit protected paths pipeline.ts/runtime.ts/contracts/packages/node_modules/plugins and descendants reject; empty map emits no overlay. Arbitrary future source/prompt/module extensions need actual selected package/trust/reader roster, not blanket config-shape closure.",
+      "reader": {
+        "operation": "ConfigMap data mount\u2192find current paths+protected_skill_overlay\u2192copy /init-skills to /skills-merged\u2192actual OpenClaw/role skill discovery. Current authored selected customSkills={} has no active members; unknown external roster is not assumed. Immutable artifact/member/prompt/trust identity captured in same selected runtime payload, not a competing core package patch.",
+        "references": [
+          {
+            "path": "charts/kubeclaw/templates/deployment.yaml",
+            "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+            "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+            "sha256": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          },
+          {
+            "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+            "sha256": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c"
+          }
+        ],
+        "disposition": "selected member/source semantics only; no invented current active extension roster"
+      },
+      "status": "source-traced"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "user": "Davide/Raven",
+  "senderId": "849379821536804864",
+  "messageId": "1559950556435456031",
+  "utc": "2026-10-14T15:26:35Z",
+  "text": "Ich gebe das oben beschriebene CONFIG-Paket C1–C6 zur Implementierung, Verifikation und unabhängigen Abnahme frei. Die genannten Leitplanken und Ausschlüsse bleiben verbindlich. Deployment und Main-Merge sind nicht freigegeben.",
+  "approvedPhases": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6"
+  ],
+  "packageCommit": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
+  "packageHashes": {
+    "PACKAGE-PLAN.md": "812daf18ae1b4cd70379c5f6c223b4ae459c7f3b99f14319b4c8f3aac94a9240",
+    "PACKAGE-GENERATION-CONTRACT.json": "80aeca887f7f77a6eddaa1082e4649beed6e3503f20f4b516ba5002c749db8ba",
+    "PACKAGE-FIELD-CASE-JOINS.json": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9"
+  },
+  "baselineSha256": "68d2a1aabb32747f636ca7d5a6a332365d55a45cfe9dbda50ea46637b2ef0c66",
+  "excluded": [
+    "deployment",
+    "production-host changes",
+    "paid Evals",
+    "main merge",
+    "early TEST-REFACTOR",
+    "D18 worker redesign",
+    "unrelated historical remediation"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "rawInputs": 12,
+  "selectedInputCounts": {
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": 625,
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": 625,
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": 95,
+    "docs/review/remediation/config-acceptance-matrix.json": 356
+  },
+  "drift": [],
+  "canonicalIdSetUnchanged": true,
+  "qualification": "Runtime unrelated append-only batches not frozen; exact selected 625 native bodies/dispositions,95 rows,356 root case metadata and root ID set are unchanged."
+}

@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "rootVersion",
+    "rootRawSha256",
+    "inputGenerationSha256",
+    "receiver",
+    "selection",
+    "ownerRawSha256",
+    "ownerSchemaSha256",
+    "profileSha256",
+    "policy",
+    "authentication"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "prism-agent-service-policy.v1"
+    },
+    "rootVersion": {
+      "const": "pipeline-entry.v8"
+    },
+    "rootRawSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "inputGenerationSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "receiver": {
+      "enum": [
+        "control-agent-jobs",
+        "prism-agent-bridge"
+      ]
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "role",
+        "engineId",
+        "engineInstanceId",
+        "serviceInstanceId",
+        "consumer",
+        "ownerPath",
+        "profileId",
+        "controlComponentInstanceId"
+      ],
+      "properties": {
+        "kind": {
+          "const": "service-launcher"
+        },
+        "role": {
+          "const": "prism-agent"
+        },
+        "engineId": {
+          "const": "prism-openclaw-launcher"
+        },
+        "consumer": {
+          "const": "prism-agent-bridge"
+        },
+        "ownerPath": {
+          "const": "engines/prism-agent.config.json"
+        },
+        "engineInstanceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+        },
+        "serviceInstanceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+        },
+        "profileId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+        },
+        "controlComponentInstanceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+        }
+      }
+    },
+    "ownerRawSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ownerSchemaSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "profileSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "limits",
+        "claimLifetimeMs",
+        "terminationGraceMs",
+        "agentId",
+        "claimHttpTimeoutMs",
+        "finishHttpTimeoutMs"
+      ],
+      "properties": {
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "timeoutMs",
+            "cleanupTimeoutMs",
+            "logBytes",
+            "resultBytes",
+            "evidenceBytes",
+            "evidenceFiles"
+          ],
+          "properties": {
+            "timeoutMs": {
+              "type": "integer",
+              "minimum": 1000,
+              "maximum": 2146970000,
+              "multipleOf": 1000
+            },
+            "cleanupTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "logBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16777216
+            },
+            "resultBytes": {
+              "type": "integer",
+              "minimum": 171,
+              "maximum": 9007199254740991
+            },
+            "evidenceBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "evidenceFiles": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "claimLifetimeMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "terminationGraceMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "agentId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "claimHttpTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "finishHttpTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      }
+    },
+    "authentication": {
+      "enum": [
+        "public-unsealed",
+        "original-delivery-authenticated"
+      ]
+    }
+  },
+  "readOnly": true,
+  "$comment": "Same engineauthor typedreadonlySprojection only; publicstands cannotactivate. No job/claim/task/grant generated, nativeissuer/transport equality mandatory; Jbinding onlyfromauthenticatedoriginalControl admission."
+}

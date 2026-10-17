@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "provider-configuration.v2",
+  "contractId": "kubeclaw.http@1",
+  "taskSchemaDigest": "sha256:a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44",
+  "values": {
+    "url": "https://fixture.invalid",
+    "path": "/ok",
+    "method": "GET",
+    "accept": "application/json",
+    "expectedStatuses": [
+      200
+    ],
+    "expectedText": "C0-local",
+    "expectedContentType": "application/json"
+  },
+  "selectedPolicy": {
+    "schemaVersion": "selected-registration-policy.v1",
+    "binding": {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.http",
+      "registrationId": "kubeclaw.http:request",
+      "instanceId": "fixture.http",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "rootDigest": "sha256:2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+      "ownerDigest": "sha256:e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517",
+      "profileDigest": "sha256:fbfa8f02d9c409ca821b28f654be6f2b3305d3a59abc0ad8d662bd78eea17811",
+      "packageVersion": "1.0.0",
+      "packageContentDigest": "sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b",
+      "ownerSchemaDigest": "sha256:dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c",
+      "taskSchemaDigest": "sha256:a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44",
+      "readerVersion": "pipeline-entry.v7/provider-configuration.v2",
+      "c3RuntimeSchemaDigest": "sha256:af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "c3ReferenceContractDigest": "sha256:d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2"
+    },
+    "processing": {
+      "requestTimeoutMs": 1000,
+      "maximumResponseBytes": 2048,
+      "maximumRequestTimeoutMs": 1000
+    },
+    "declarations": {
+      "evidenceDefaults": {
+        "onPass": [
+          "log"
+        ],
+        "onFail": [
+          "log"
+        ],
+        "onError": [
+          "log"
+        ]
+      },
+      "retrySafe": true,
+      "matrixFields": [
+        "path"
+      ]
+    }
+  }
+}

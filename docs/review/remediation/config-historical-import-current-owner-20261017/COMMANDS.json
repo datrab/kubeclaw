@@ -1,0 +1,33 @@
+[
+  {
+    "argv": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.buster-historical.json"
+    ],
+    "exitCode": 0,
+    "log": "typecheck.txt"
+  },
+  {
+    "argv": [
+      "node",
+      "--test",
+      "tests/verification/reliability/buster-historical-import.test.mts"
+    ],
+    "exitCode": 1,
+    "log": "original-import.txt"
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "tests/verification/reliability/buster-historical-import.test.mts",
+      "tests/verification/reliability/tsconfig.buster-historical.json"
+    ],
+    "exitCode": 0,
+    "log": "diff-check.txt"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "SDKCurrentValidatorCases": 6,
+  "SDKResults": "all passed",
+  "SDKExactAuthorStdoutMatch": true,
+  "SDKStdoutSha256": "8e3bf3759398480f1f84fffaa862e1065f7ea431cfc603374936b53bb3c3efdb",
+  "RuntimeCurrentPureReaderControls": 96,
+  "DeliveryFrozenReceiptSha256": "777092c34cca7c1f81f43dd790d464ca8aae9acb7203867084cf2d93f786b452",
+  "DeliveryOwnedManifestFiles": 1881,
+  "DeliveryDrift": [],
+  "Root269HistoricalMappingsStillBaselineUnlinked": true,
+  "rootMatrixSha256": "1eb9534c1576b6ee0bc621c4b67fe43e3f1592b005ed1ddb85e37012fbd6f998",
+  "limits": "pure/source/identity only; no Runtime/parent/Delivery/root/production/test/tool edits or effect actions"
+}

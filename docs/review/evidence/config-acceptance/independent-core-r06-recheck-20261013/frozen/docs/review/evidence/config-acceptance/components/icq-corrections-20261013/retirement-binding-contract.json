@@ -1,0 +1,77 @@
+{
+  "corrects": "ICQ-03",
+  "source": [
+    {
+      "path": "scripts/retire-admission.mjs",
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96"
+    },
+    {
+      "path": "scripts/retire-attempt-result.mjs",
+      "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a"
+    },
+    {
+      "path": "scripts/retire-telemetry.mjs",
+      "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456"
+    },
+    {
+      "path": "scripts/retire-wait-value.mjs",
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102"
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21"
+    }
+  ],
+  "current": {
+    "admission": "scope.admissionLimits and scope.attemptLimits supplied by local operator; constructed at lines53/54, no verified original-generation comparison",
+    "attempt": "scope.attemptLimits supplied by local operator, parser accepts65536/131072 metadata with same retained intent; no original equality check",
+    "waitOperator": "retainedRun configuration is source of wait/deliveryLimits; do not flatten into admission command authority",
+    "telemetry": "scope.storeLimits supplied by local operator",
+    "actor": "audit, not remote authentication",
+    "lock": "current shared helper literal5, not captured suppliedwait"
+  },
+  "target": {
+    "locator": "store-owned inlineBinding admission-binding.v1 five digest references under original root; original attempt/run bindings resolve digest-addressed immutable full-owner profile manifest; no current/latest locator",
+    "resolvedFields": [
+      "owner",
+      "generationDigest",
+      "profileDigest",
+      "policyDigest",
+      "schemaDigest",
+      "sourceDigest"
+    ],
+    "lookup": "from store original binding BEFORE mutable store constructors, quota-limited allocation, mutation locks with effect, or retirement; bounded read/bootstrap under existing owning run inventory cap, file identity NOFOLLOW/regular and digest checked",
+    "policyEquality": "Resolve full author/profile/schema/source and exact policy projection; command scope quotas must canonical-equal resolved original admission/attempt/record/blob policy including formatter/reserve/lockwait. Alternatively scope omits quotas and uses only original locator. Actor/operation/retained head and source identity remain original checks, not policy authors. Unknown/missing/different owner/source/schema/history rejects.",
+    "migration": "Old unbound states remain read-only under existing bounded caller limits. Never assert command quota is original. Quiescent fenced explicit migration requires independently authenticated original selected author/profile/source/schema evidence and verifies whole state, prior completion/journal/retention and exact quota equality; durable binding plus evidence charged under same original ceilings before new effect. Missing authentic original evidence blocks mutation/reconciliation; no latest, no silently shrink or clear. No extra global author.",
+    "futureOrder": [
+      "bounded original header lookup",
+      "resolve and verify immutable owner/policy and migration evidence",
+      "scope equality and original run/attempt/claim/retained-head validation",
+      "original captured locking",
+      "original store bounded reader and complete source closure authorization",
+      "candidate actual canonical capacity/headroom check",
+      "durable retirement",
+      "same operation replay releases0"
+    ],
+    "changedQuotaNegative": {
+      "source": "independent parser A/B exact inputs frozen below",
+      "sameIntent": true,
+      "AmaximumMetadataBytes": 65536,
+      "BmaximumMetadataBytes": 131072,
+      "target": "B scope with originalA binding rejects before store rewrite; unchanged A positive retires only confirmed redundant copy; repeat A zero release"
+    },
+    "formatterHistory": "Retained A quarantine/overflow bytes remain exactly A; B threshold/prefix never reformats, redigests or clears old history. Same-root quota B cannot reopen legacy A as newboundpolicy.",
+    "headerFieldName": "binding; exact525byte growth fixedv1strictschema, conceptualinlineBinding descriptor is not persistedfieldname",
+    "completeImmutableFixtureProfiles": "retirement-complete-owner-profiles.json helper caps50000/100000 unchanged; eachoriginal binding derived via same canonicalowner-manifest algorithm as immutable-owner-reference-specimens, not all-a trustedhistory"
+  },
+  "negativeAndPositiveInputSource": {
+    "path": "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/retirement-scope-reader.log",
+    "sha256": "e8b76cb53b44350e7a944cbcf9b8e8f2e4e7a86be545c6ff79c2cb9daaf2b8ea"
+  },
+  "futureCases": [
+    "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+    "QC-ADMISSION-REASON-LIMITS-HISTORY",
+    "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+  ],
+  "implementation": "not implemented; parser controls are current evidence only"
+}

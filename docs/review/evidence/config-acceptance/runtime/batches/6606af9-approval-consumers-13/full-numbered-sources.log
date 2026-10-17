@@ -1,0 +1,740 @@
+SOURCE skills/nova/plugins/human-approval/package.json SHA256 875c50f61b076dd058328c8b7c73bba9877bbadc9614cd2add42097418fce306
+1: {
+2:   "name": "@kubeclaw/plugin-human-approval",
+3:   "private": true,
+4:   "type": "module",
+5:   "scripts": {
+6:     "build": "tsc --noEmit -p tsconfig.json",
+7:     "test": "node tests/package-boundary.test.mjs && node tests/approval.unit.test.mjs && node ../../../../tests/verification/integration/architecture-approval.test.mts && node tests/live-function.test.ts"
+8:   },
+9:   "dependencies": {
+10:     "@kubeclaw/plugin-sdk": "*"
+11:   }
+12: }
+SOURCE skills/nova/plugins/human-approval/plugin.json SHA256 a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8
+1: {
+2:   "id": "kubeclaw.human-approval",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "approval",
+8:       "type": "kubeclaw.decision.human-approval",
+9:       "module": "src/stage.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "operator.request",
+13:         "signal.wait"
+14:       ],
+15:       "configSchema": "schemas/config.schema.json",
+16:       "inputSchema": "schemas/input.schema.json",
+17:       "resultSchema": "schemas/result.schema.json"
+18:     },
+19:     {
+20:       "id": "architecture-approval",
+21:       "type": "kubeclaw.decision.architecture-approval",
+22:       "module": "src/architecture-approval.ts",
+23:       "export": "execute",
+24:       "requiredCapabilities": [
+25:         "artifacts.read",
+26:         "operator.request",
+27:         "signal.wait",
+28:         "git.repository.read",
+29:         "artifacts.write"
+30:       ],
+31:       "configSchema": "schemas/config.schema.json",
+32:       "inputSchema": "schemas/architecture-input.schema.json",
+33:       "resultSchema": "schemas/result.schema.json"
+34:     }
+35:   ],
+36:   "observers": [],
+37:   "adapters": []
+38: }
+SOURCE skills/nova/plugins/human-approval/tsconfig.json SHA256 14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472
+1: {
+2:   "extends": "../../../../tsconfig.base.json",
+3:   "compilerOptions": {
+4:     "rootDir": "src"
+5:   },
+6:   "include": [
+7:     "src/**/*.ts"
+8:   ]
+9: }
+SOURCE skills/nova/plugins/human-approval/schemas/result.schema.json SHA256 6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult"}
+SOURCE skills/nova/plugins/human-approval/schemas/input.schema.json SHA256 f4c7e20a48803202f36269ff3b04d3d8b4b4cea8dfdad4816fdddd5c063b3e2f
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": ["summary"],
+6:   "properties": {
+7:     "summary": {
+8:       "type": "string",
+9:       "minLength": 1,
+10:       "maxLength": 10000,
+11:       "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])[\\s\\S]*\\S[\\s\\S]*$"
+12:     }
+13:   }
+14: }
+SOURCE skills/nova/plugins/human-approval/schemas/config.schema.json SHA256 45d20ce3dd08dcecb65fb0b0dbd76bf63b917038a968dce4d20963167b78f581
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "target",
+7:     "issuerId"
+8:   ],
+9:   "properties": {
+10:     "target": {
+11:       "type": "string",
+12:       "minLength": 1,
+13:       "maxLength": 1024,
+14:       "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])\\S(?:[\\s\\S]*\\S)?$"
+15:     },
+16:     "issuerId": {
+17:       "type": "string",
+18:       "minLength": 1,
+19:       "maxLength": 1024,
+20:       "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])\\S(?:[\\s\\S]*\\S)?$"
+21:     },
+22:     "timeoutMinutes": {
+23:       "type": "integer",
+24:       "minimum": 1,
+25:       "maximum": 525600,
+26:       "default": 60
+27:     }
+28:   }
+29: }
+SOURCE skills/nova/plugins/human-approval/schemas/architecture-input.schema.json SHA256 028c18b6829fba9b2acfd72e197558d87ae14e7a56e9fbf6b16add6c7c5bc3ab
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": ["summary", "artifactId", "namespace"],
+6:   "properties": {
+7:     "summary": {
+8:       "type": "string",
+9:       "minLength": 1,
+10:       "maxLength": 4096,
+11:       "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])[\\s\\S]*\\S[\\s\\S]*$"
+12:     },
+13:     "artifactId": {
+14:       "type": "string",
+15:       "minLength": 1,
+16:       "maxLength": 2048,
+17:       "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])[\\s\\S]*\\S[\\s\\S]*$"
+18:     },
+19:     "namespace": {
+20:       "type": "string",
+21:       "minLength": 1,
+22:       "maxLength": 1024,
+23:       "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])[\\s\\S]*\\S[\\s\\S]*$"
+24:     }
+25:   }
+26: }
+SOURCE skills/nova/plugins/human-approval/src/approval.ts SHA256 5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d
+1: import type { StageResult, WaitRequest } from '@kubeclaw/plugin-sdk';
+2: 
+3: export const APPROVAL_SIGNAL_TYPE = 'approval.resolved' as const;
+4: export const DEFAULT_APPROVAL_TIMEOUT_MINUTES = 60;
+5: const MAX_APPROVAL_TIMEOUT_MINUTES = 525_600;
+6: 
+7: type UnknownRecord = Readonly<Record<string, unknown>>;
+8: 
+9: export interface ApprovalInput {
+10:   readonly summary: string;
+11: }
+12: 
+13: export interface ApprovalConfig {
+14:   readonly target: string;
+15:   readonly issuerId: string;
+16:   readonly timeoutMinutes: number;
+17: }
+18: 
+19: interface ApprovalIssuer {
+20:   readonly type: 'operator';
+21:   readonly id: string;
+22: }
+23: 
+24: export type ApprovalGuidance =
+25:   | { readonly decision: 'pending' }
+26:   | {
+27:       readonly decision: 'approved' | 'rejected';
+28:       readonly issuer: ApprovalIssuer;
+29:       readonly reason?: string;
+30:     };
+31: 
+32: function record(value: unknown, label: string): UnknownRecord {
+33:   if (!value || typeof value !== 'object' || Array.isArray(value)) {
+34:     throw new Error(`APPROVAL_${label}_INVALID`);
+35:   }
+36:   return value as UnknownRecord;
+37: }
+38: 
+39: function exactKeys(value: UnknownRecord, allowed: readonly string[], label: string): void {
+40:   const allowedKeys = new Set(allowed);
+41:   const unknown = Object.keys(value).find((key) => !allowedKeys.has(key));
+42:   if (unknown) throw new Error(`APPROVAL_${label}_UNKNOWN_FIELD:${unknown}`);
+43: }
+44: 
+45: function requiredText(value: unknown, label: string, maximum: number): string {
+46:   if (typeof value !== 'string') throw new Error(`APPROVAL_${label}_INVALID`);
+47:   const normalized = value.trim();
+48:   if (
+49:     normalized.length === 0
+50:     || normalized.length > maximum
+51:     || normalized.includes('\0')
+52:     || /[\r\n]/.test(normalized)
+53:   ) {
+54:     throw new Error(`APPROVAL_${label}_INVALID`);
+55:   }
+56:   return normalized;
+57: }
+58: 
+59: export function parseApprovalInput(value: unknown): ApprovalInput {
+60:   const input = record(value, 'INPUT');
+61:   exactKeys(input, ['summary'], 'INPUT');
+62:   return Object.freeze({
+63:     summary: requiredText(input.summary, 'SUMMARY', 10_000),
+64:   });
+65: }
+66: 
+67: export function parseApprovalConfig(value: unknown): ApprovalConfig {
+68:   const config = record(value, 'CONFIG');
+69:   exactKeys(config, ['target', 'issuerId', 'timeoutMinutes'], 'CONFIG');
+70:   const timeout = config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES;
+71:   if (
+72:     !Number.isSafeInteger(timeout)
+73:     || Number(timeout) < 1
+74:     || Number(timeout) > MAX_APPROVAL_TIMEOUT_MINUTES
+75:   ) {
+76:     throw new Error('APPROVAL_TIMEOUT_MINUTES_INVALID');
+77:   }
+78:   return Object.freeze({
+79:     target: requiredText(config.target, 'TARGET', 1_024),
+80:     issuerId: requiredText(config.issuerId, 'ISSUER_ID', 1_024),
+81:     timeoutMinutes: Number(timeout),
+82:   });
+83: }
+84: 
+85: function parseIssuer(value: unknown, expectedIssuerId: string): ApprovalIssuer {
+86:   const issuer = record(value, 'ISSUER');
+87:   exactKeys(issuer, ['type', 'id'], 'ISSUER');
+88:   if (issuer.type !== 'operator') throw new Error('APPROVAL_ISSUER_TYPE_INVALID');
+89:   const id = requiredText(issuer.id, 'ISSUER_ID', 1_024);
+90:   if (id !== expectedIssuerId) throw new Error('APPROVAL_ISSUER_DENIED');
+91:   return Object.freeze({ type: 'operator', id });
+92: }
+93: 
+94: export function parseApprovalGuidance(
+95:   value: unknown,
+96:   expectedIssuerId: string,
+97: ): ApprovalGuidance {
+98:   if (value === undefined) return Object.freeze({ decision: 'pending' });
+99:   const guidance = record(value, 'GUIDANCE');
+100:   const decision = guidance.decision;
+101:   if (decision === 'pending') {
+102:     exactKeys(guidance, ['decision'], 'GUIDANCE');
+103:     return Object.freeze({ decision });
+104:   }
+105:   if (decision !== 'approved' && decision !== 'rejected') {
+106:     throw new Error('APPROVAL_DECISION_INVALID');
+107:   }
+108:   exactKeys(guidance, ['decision', 'issuer', 'reason'], 'GUIDANCE');
+109:   const issuer = parseIssuer(guidance.issuer, expectedIssuerId);
+110:   const reason = guidance.reason === undefined
+111:     ? undefined
+112:     : requiredText(guidance.reason, 'REASON', 4_096);
+113:   return Object.freeze({
+114:     decision,
+115:     issuer,
+116:     ...(reason === undefined ? {} : { reason }),
+117:   });
+118: }
+119: 
+120: export function calculateApprovalExpiresAt(
+121:   now: Date,
+122:   timeoutMinutes: number,
+123: ): string {
+124:   if (Number.isNaN(now.getTime())) throw new Error('APPROVAL_CLOCK_INVALID');
+125:   if (
+126:     !Number.isSafeInteger(timeoutMinutes)
+127:     || timeoutMinutes < 1
+128:     || timeoutMinutes > MAX_APPROVAL_TIMEOUT_MINUTES
+129:   ) {
+130:     throw new Error('APPROVAL_TIMEOUT_MINUTES_INVALID');
+131:   }
+132:   return new Date(now.getTime() + timeoutMinutes * 60_000).toISOString();
+133: }
+134: 
+135: export function resultForApprovalGuidance(
+136:   guidance: Exclude<ApprovalGuidance, { readonly decision: 'pending' }>,
+137: ): StageResult {
+138:   if (guidance.decision === 'approved') {
+139:     return {
+140:       schemaVersion: 'stage-result.v2',
+141:       outcome: 'passed',
+142:       artifacts: [],
+143:     };
+144:   }
+145:   if (guidance.decision !== 'rejected') throw new Error('APPROVAL_DECISION_INVALID');
+146:   return {
+147:     schemaVersion: 'stage-result.v2',
+148:     outcome: 'blocked',
+149:     reason: {
+150:       code: 'approval.rejected',
+151:       message: guidance.reason ?? 'Approval was rejected.',
+152:       details: {
+153:         issuer: guidance.issuer.id,
+154:       },
+155:     },
+156:     artifacts: [],
+157:   };
+158: }
+159: 
+160: export function validateCreatedWait(
+161:   value: unknown,
+162:   expected: {
+163:     readonly issuerId: string;
+164:     readonly expiresAt: string;
+165:     readonly summary: string;
+166:   },
+167: ): WaitRequest {
+168:   const response = record(value, 'WAIT_RESPONSE');
+169:   exactKeys(response, ['created', 'wait'], 'WAIT_RESPONSE');
+170:   if (typeof response.created !== 'boolean') throw new Error('APPROVAL_WAIT_CREATED_INVALID');
+171:   const wait = record(response.wait, 'WAIT_RESPONSE');
+172:   exactKeys(
+173:     wait,
+174:     ['schemaVersion', 'waitId', 'kind', 'signalType', 'authorizedIssuer', 'expiresAt', 'request'],
+175:     'WAIT_RESPONSE',
+176:   );
+177:   if (wait.schemaVersion !== 'wait-request.v2') throw new Error('APPROVAL_WAIT_SCHEMA_INVALID');
+178:   const waitId = requiredText(wait.waitId, 'WAIT_ID', 2_048);
+179:   if (wait.kind !== 'signal') throw new Error('APPROVAL_WAIT_KIND_INVALID');
+180:   if (wait.signalType !== APPROVAL_SIGNAL_TYPE) throw new Error('APPROVAL_WAIT_SIGNAL_INVALID');
+181:   const issuer = parseIssuer(wait.authorizedIssuer, expected.issuerId);
+182:   if (wait.expiresAt !== expected.expiresAt) throw new Error('APPROVAL_WAIT_EXPIRY_INVALID');
+183:   const request = record(wait.request, 'WAIT_REQUEST');
+184:   exactKeys(request, ['summary'], 'WAIT_REQUEST');
+185:   if (request.summary !== expected.summary) throw new Error('APPROVAL_WAIT_REQUEST_INVALID');
+186:   return Object.freeze({
+187:     schemaVersion: 'wait-request.v2',
+188:     waitId,
+189:     kind: 'signal',
+190:     signalType: APPROVAL_SIGNAL_TYPE,
+191:     authorizedIssuer: issuer,
+192:     expiresAt: expected.expiresAt,
+193:     request: Object.freeze({ summary: expected.summary }),
+194:   });
+195: }
+196: 
+197: export function pendingApprovalResult(wait: WaitRequest): StageResult {
+198:   return {
+199:     schemaVersion: 'stage-result.v2',
+200:     outcome: 'wait',
+201:     reason: {
+202:       code: 'approval.pending',
+203:       message: 'Waiting for approval.',
+204:     },
+205:     artifacts: [],
+206:     wait,
+207:   };
+208: }
+SOURCE skills/nova/plugins/human-approval/src/architecture-approval.ts SHA256 3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b
+1: import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
+2: import { canonicalJson, sha256Text, verifyReviewSubject, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
+3: import { execute as executeApproval } from './stage.ts';
+4: 
+5: interface ArchitectureApprovalInput {
+6:   readonly summary: string;
+7:   readonly artifactId: string;
+8:   readonly namespace: string;
+9: }
+10: 
+11: function requiredText(value: unknown, label: string, maximum: number): string {
+12:   if (typeof value !== 'string') throw new Error(`ARCHITECTURE_APPROVAL_${label}_INVALID`);
+13:   const normalized = value.trim();
+14:   if (!normalized || normalized.length > maximum || normalized.includes('\0') || /[\r\n]/u.test(normalized)) {
+15:     throw new Error(`ARCHITECTURE_APPROVAL_${label}_INVALID`);
+16:   }
+17:   return normalized;
+18: }
+19: 
+20: function parseInput(value: unknown): ArchitectureApprovalInput {
+21:   if (!value || typeof value !== 'object' || Array.isArray(value)) {
+22:     throw new Error('ARCHITECTURE_APPROVAL_INPUT_INVALID');
+23:   }
+24:   const input = value as Record<string, unknown>;
+25:   const allowed = new Set(['summary', 'artifactId', 'namespace']);
+26:   const unknown = Object.keys(input).find((key) => !allowed.has(key));
+27:   if (unknown) throw new Error(`ARCHITECTURE_APPROVAL_INPUT_UNKNOWN_FIELD:${unknown}`);
+28:   return Object.freeze({
+29:     summary: requiredText(input.summary, 'SUMMARY', 4_096),
+30:     artifactId: requiredText(input.artifactId, 'ARTIFACT_ID', 2_048),
+31:     namespace: requiredText(input.namespace, 'NAMESPACE', 1_024),
+32:   });
+33: }
+34: 
+35: function reportText(value: unknown, label: string, maximum: number): string {
+36:   if (typeof value !== 'string' || value.includes('\0')) {
+37:     throw new Error(`ARCHITECTURE_APPROVAL_${label}_INVALID`);
+38:   }
+39:   const normalized = value.replace(/\s+/gu, ' ').trim();
+40:   if (!normalized || normalized.length > maximum) {
+41:     throw new Error(`ARCHITECTURE_APPROVAL_${label}_INVALID`);
+42:   }
+43:   return normalized;
+44: }
+45: 
+46: function findingSummary(value: unknown, maximum: number): string {
+47:   if (!value || typeof value !== 'object' || Array.isArray(value)) {
+48:     throw new Error('ARCHITECTURE_APPROVAL_ARTIFACT_INVALID');
+49:   }
+50:   const findings = (value as Record<string, unknown>).findings;
+51:   if (!Array.isArray(findings)) throw new Error('ARCHITECTURE_APPROVAL_FINDINGS_INVALID');
+52:   if (findings.length === 0) return '';
+53:   const fragments = findings.map((entry, index) => {
+54:     if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+55:       throw new Error(`ARCHITECTURE_APPROVAL_FINDING_INVALID:${index}`);
+56:     }
+57:     const finding = entry as Record<string, unknown>;
+58:     if (finding.severity === 'blocking') throw new Error('ARCHITECTURE_APPROVAL_BLOCKING_FINDING');
+59:     if (!['error', 'warn', 'info'].includes(String(finding.severity))) {
+60:       throw new Error('ARCHITECTURE_APPROVAL_FINDING_SEVERITY_INVALID');
+61:     }
+62:     return [
+63:       reportText(finding.severity, `FINDING_${index}_SEVERITY`, 32).toUpperCase(),
+64:       reportText(finding.id, `FINDING_${index}_ID`, 256),
+65:       reportText(finding.explanation, `FINDING_${index}_EXPLANATION`, 8_192),
+66:       `Remediation: ${reportText(finding.remediation, `FINDING_${index}_REMEDIATION`, 8_192)}`,
+67:     ].join(' · ');
+68:   });
+69:   const prefix = `${findings.length} architecture finding${findings.length === 1 ? '' : 's'}: `;
+70:   let rendered = prefix;
+71:   for (const [index, fragment] of fragments.entries()) {
+72:     const separator = index === 0 ? '' : ' | ';
+73:     const remaining = maximum - rendered.length - separator.length;
+74:     if (remaining <= 0) break;
+75:     if (fragment.length <= remaining) {
+76:       rendered += `${separator}${fragment}`;
+77:       continue;
+78:     }
+79:     const suffix = ' … Full details remain in the architecture artifact.';
+80:     const available = Math.max(0, remaining - suffix.length);
+81:     rendered += `${separator}${fragment.slice(0, available).trimEnd()}${suffix}`;
+82:     break;
+83:   }
+84:   return rendered.slice(0, maximum).trimEnd();
+85: }
+86: 
+87: async function approvalReport(
+88:   rawInput: unknown,
+89:   context: PluginInvocationContext,
+90: ) {
+91:   const input = parseInput(rawInput);
+92:   const candidates = context.contract.artifacts.filter((artifact) =>
+93:     artifact.artifactId === input.artifactId && artifact.namespace === input.namespace
+94:     && artifact.producer.runId === context.contract.lease.attempt.runId);
+95:   const producers = new Set(candidates.map((artifact) => artifact.producer.stageId));
+96:   const latest = Math.max(...candidates.map((artifact) => artifact.producer.attemptNumber));
+97:   const selected = candidates.filter((artifact) => artifact.producer.attemptNumber === latest);
+98:   if (producers.size !== 1 || selected.length !== 1) throw new Error('ARCHITECTURE_APPROVAL_REFERENCE_MISSING_OR_AMBIGUOUS');
+99:   const artifact = selected[0]!;
+100:   if (artifact.mediaType !== 'application/json' || !Number.isSafeInteger(artifact.sizeBytes)
+101:     || artifact.sizeBytes < 1 || artifact.sizeBytes > 256 * 1024) throw new Error('ARCHITECTURE_APPROVAL_REFERENCE_INVALID');
+102:   const response = await context.invoke('artifacts.read', {
+103:     operation: 'get_json_bytes',
+104:     resource: { type: 'artifact.object', canonicalId: artifact.artifactId },
+105:     payload: { namespace: artifact.namespace, digest: artifact.digest, reference: artifact },
+106:   });
+107:   const serialized = verifiedArtifactJsonText(response, artifact);
+108:   if (response.digest !== artifact.digest || response.sizeBytes !== artifact.sizeBytes
+109:     || sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) {
+110:     throw new Error('ARCHITECTURE_APPROVAL_CONTENT_INVALID');
+111:   }
+112:   const report = response.value as { verdict?: unknown; subject?: unknown } | null;
+113:   if (!report || report.verdict !== 'passed') throw new Error('ARCHITECTURE_APPROVAL_REPORT_NOT_PASSED');
+114:   return { input, artifact, report };
+115: }
+116: 
+117: export async function execute(rawInput: unknown, context: PluginInvocationContext): Promise<StageResult> {
+118:   const { input, artifact, report } = await approvalReport(rawInput, context);
+119:   const subject = report.subject === undefined ? undefined : await verifyReviewSubject(report.subject, context);
+120:   const approvalPrefix = `${input.summary} Evidence: ${artifact.digest}. Findings: `;
+121:   const findings = findingSummary(report, 10_000 - approvalPrefix.length);
+122:   if (findings && context.contract.guidance?.decision === 'approved') {
+123:     const reason = context.contract.guidance.reason;
+124:     if (typeof reason !== 'string' || !reason.trim()) throw new Error('ARCHITECTURE_APPROVAL_REASON_REQUIRED');
+125:   }
+126:   const result = findings ? await executeApproval({ summary: `${approvalPrefix}${findings}` }, context) : {
+127:       schemaVersion: 'stage-result.v2',
+128:       outcome: 'passed',
+129:       artifacts: [],
+130:     } as StageResult;
+131:   if (result.outcome !== 'passed') return result;
+132:   if (subject) await verifyReviewSubject(subject, context);
+133:   const stored = await context.invoke('artifacts.write', {
+134:     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'architecture-approval' },
+135:     payload: { ...(subject?.identityEncoding ? {encoding:subject.identityEncoding} : {}), namespace: 'kubeclaw.human-approval', mediaType: 'application/json', value: {
+136:       decision: 'approved', subject: subject ?? null, reportDigest: artifact.digest, reportStageId: artifact.producer.stageId,
+137:       guidance: context.contract.guidance ?? null, clean: !findings,
+138:     } },
+139:   });
+140:   return { ...result, artifacts: [stored.artifact as ArtifactRef] };
+141: }
+SOURCE skills/nova/plugins/human-approval/src/stage.ts SHA256 9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd
+1: import type { PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
+2: import {
+3:   APPROVAL_SIGNAL_TYPE,
+4:   calculateApprovalExpiresAt,
+5:   parseApprovalConfig,
+6:   parseApprovalGuidance,
+7:   parseApprovalInput,
+8:   pendingApprovalResult,
+9:   resultForApprovalGuidance,
+10:   validateCreatedWait,
+11: } from './approval.ts';
+12: 
+13: export async function execute(
+14:   rawInput: unknown,
+15:   context: PluginInvocationContext,
+16: ): Promise<StageResult> {
+17:   const input = parseApprovalInput(rawInput);
+18:   const config = parseApprovalConfig(context.contract.config);
+19:   const guidance = parseApprovalGuidance(context.contract.guidance, config.issuerId);
+20:   if (guidance.decision !== 'pending') return resultForApprovalGuidance(guidance);
+21: 
+22:   const attempt = context.contract.lease.attempt;
+23:   const approvalId = `approval:${attempt.runId}:${attempt.stageId}`;
+24:   const expiresAt = calculateApprovalExpiresAt(new Date(), config.timeoutMinutes);
+25:   const response = await context.invoke('signal.wait', {
+26:     operation: 'create',
+27:     resource: { type: 'signal.wait', canonicalId: approvalId },
+28:     payload: {
+29:       kind: 'signal',
+30:       signalType: APPROVAL_SIGNAL_TYPE,
+31:       authorizedIssuer: { type: 'operator', id: config.issuerId },
+32:       expiresAt,
+33:       request: { summary: input.summary },
+34:     },
+35:   });
+36:   const wait = validateCreatedWait(response, {
+37:     issuerId: config.issuerId,
+38:     expiresAt,
+39:     summary: input.summary,
+40:   });
+41:   await context.invoke('operator.request', {
+42:     operation: 'publish',
+43:     resource: { type: 'operator.target', canonicalId: config.target },
+44:     payload: {
+45:       type: 'approval.requested',
+46:       approvalId,
+47:       waitId: wait.waitId,
+48:       summary: input.summary,
+49:       signalType: APPROVAL_SIGNAL_TYPE,
+50:       authorizedIssuer: { type: 'operator', id: config.issuerId },
+51:       expiresAt,
+52:     },
+53:   });
+54:   return pendingApprovalResult(wait);
+55: }
+SOURCE skills/nova/plugins/prism-design/package.json SHA256 54c0031ee6ce2b8bed687d805cadb90ea40c405df36cde653f99fab30303972d
+1: {
+2:   "name": "@kubeclaw/plugin-prism-design",
+3:   "private": true,
+4:   "type": "module",
+5:   "dependencies": {
+6:     "@kubeclaw/plugin-sdk": "*",
+7:     "@kubeclaw/prism-contracts-v1": "*"
+8:   },
+9:   "scripts": {
+10:     "build": "tsc --noEmit -p tsconfig.json",
+11:     "test": "node tests/live-function.test.ts && node ../../../../tests/verification/integration/prism-wait.test.mts && node ../../../../tests/verification/integration/prism-archive.test.mts"
+12:   }
+13: }
+SOURCE skills/nova/plugins/prism-design/plugin.json SHA256 063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9
+1: {
+2:   "id":"kubeclaw.prism-design","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0",
+3:   "stages":[{"id":"design","type":"kubeclaw.design.prism","module":"src/stage.ts","export":"execute",
+4:     "requiredCapabilities":["runtime.dispatch","artifacts.read","artifacts.write","operator.request","signal.wait"],"configSchema":"schemas/config.schema.json",
+5:     "inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"}],
+6:   "observers":[],"adapters":[]
+7: }
+SOURCE skills/nova/plugins/prism-design/tsconfig.json SHA256 6fcce9b8c2807131e39d8aaed282eb5f03906dc757d09d8b4fe54c6460cab2f1
+1: {"extends":"../../../../tsconfig.base.json","compilerOptions":{"noEmit":true},"include":["src/**/*.ts"]}
+SOURCE skills/nova/plugins/prism-design/schemas/result.schema.json SHA256 3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": true,
+5:   "required": ["schemaVersion", "outcome", "artifacts"],
+6:   "properties": {
+7:     "schemaVersion": { "const": "stage-result.v2" },
+8:     "outcome": { "enum": ["passed", "blocked", "wait"] },
+9:     "artifacts": { "type": "array" }
+10:   }
+11: }
+SOURCE skills/nova/plugins/prism-design/schemas/input.schema.json SHA256 0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["runId","projectId","architectureArtifact","requiresDesign"],"properties":{"runId":{"type":"string","minLength":1},"projectId":{"type":"string","minLength":1},"architectureArtifact":{"type":"object","additionalProperties":false,"required":["artifactId","contentDigest","revision"],"properties":{"artifactId":{"type":"string","minLength":1},"contentDigest":{"type":"string","pattern":"^sha256:[0-9a-f]{64}$"},"revision":{"type":"integer","minimum":1}}},"requiresDesign":{"type":"boolean"}}}
+SOURCE skills/nova/plugins/prism-design/schemas/config.schema.json SHA256 15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["agent","target","issuerId","timeoutMinutes"],"properties":{"agent":{"const":"prism"},"target":{"type":"string","minLength":1},"issuerId":{"type":"string","minLength":1},"timeoutMinutes":{"type":"integer","minimum":1,"maximum":525600}}}
+SOURCE skills/nova/plugins/prism-design/src/architecture.ts SHA256 bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f
+1: import {canonicalJson, portableJson, PORTABLE_JSON_ENCODING, sha256Text, type ArtifactRef} from '@kubeclaw/plugin-sdk';
+2: 
+3: /** The expected Core reference owns the codec; it does not change the read effect. */
+4: export function assertArchitectureReferenceEncoding(expected: ArtifactRef): string {
+5:   // Validate descriptors/JSON domain before any getter-prone property access.
+6:   const reference = portableJson(expected);
+7:   if (Object.hasOwn(expected, 'encoding') && expected.encoding !== PORTABLE_JSON_ENCODING) {
+8:     throw new Error('PRISM_DESIGN_ARCHITECTURE_ENCODING_INVALID');
+9:   }
+10:   return reference;
+11: }
+12: 
+13: /** Verify an original get_json result, including a previously completed receipt. */
+14: export function verifiedArchitectureValue(response: unknown, expected: ArtifactRef): unknown {
+15:   const reference = assertArchitectureReferenceEncoding(expected);
+16:   portableJson(response);
+17:   if (!response || typeof response !== 'object' || Array.isArray(response)) throw new Error('PRISM_DESIGN_VALUE_INVALID');
+18:   const result = response as Record<string, unknown>;
+19:   if (['artifact', 'digest', 'sizeBytes', 'value'].some(key => !Object.hasOwn(result, key))) throw new Error('PRISM_DESIGN_ARCHITECTURE_PROOF_INVALID');
+20:   if (portableJson(result.artifact) !== reference) throw new Error('PRISM_DESIGN_ARCHITECTURE_REFERENCE_INVALID');
+21:   // Untagged historical values retain precisely the old verifier and fail closed
+22:   // on cross-locale mismatch. Never guess a collator or infer a run profile.
+23:   const bytes = Object.hasOwn(expected, 'encoding') ? portableJson(result.value) : canonicalJson(result.value);
+24:   if (result.digest !== expected.digest || result.sizeBytes !== expected.sizeBytes
+25:     || sha256Text(bytes) !== expected.digest || Buffer.byteLength(bytes) !== expected.sizeBytes) {
+26:     throw new Error('PRISM_DESIGN_ARCHITECTURE_PROOF_INVALID');
+27:   }
+28:   return result.value;
+29: }
+SOURCE skills/nova/plugins/prism-design/src/archive.ts SHA256 8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e
+1: import { validatePrism } from '@kubeclaw/prism-contracts-v1';
+2: import { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumDigest, assertBaselineChecksumDocument } from '@kubeclaw/prism-contracts-v1/baseline-archive';
+3: import { sha256Bytes, sha256Text } from '@kubeclaw/plugin-sdk';
+4: 
+5: const digest = (bytes: string | Buffer) => typeof bytes === 'string' ? sha256Text(bytes) : sha256Bytes(bytes);
+6: const maximumBytes = 32 * 1024 * 1024;
+7: function object(value: unknown): Record<string, any> {
+8:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('PRISM_ARCHIVE_OBJECT_INVALID');
+9:   return value as Record<string, any>;
+10: }
+11: function filePath(value: string): void {
+12:   if (!value || value.startsWith('/') || value.includes('\\') || value.includes('\0')
+13:     || value.split('/').some(part => !part || part === '.' || part === '..')) throw new Error('PRISM_ARCHIVE_PATH_INVALID');
+14: }
+15: function base64(value: unknown): Buffer {
+16:   if (typeof value !== 'string' || value.length > Math.ceil(maximumBytes / 3) * 4) throw new Error('PRISM_ARCHIVE_SIZE_EXCEEDED');
+17:   const bytes = Buffer.from(value, 'base64');
+18:   if (bytes.length > maximumBytes || bytes.toString('base64') !== value) throw new Error('PRISM_ARCHIVE_ENCODING_INVALID');
+19:   return bytes;
+20: }
+21: 
+22: function archiveManifest(archive: Record<string, any>, approvedDigest: string, projectId: string) {
+23:   if (archive.schema !== BASELINE_V1 && archive.schema !== BASELINE_V2) throw new Error('PRISM_ARCHIVE_SCHEMA_INVALID');
+24:   const manifest = object(archive.manifest);
+25:   const manifestSchema = archive.schema === BASELINE_V1 ? 'prism.baseline-bundle.v1' : 'prism.baseline-bundle.v2';
+26:   if (manifest.schema !== manifestSchema || manifest.digest !== approvedDigest || manifest.projectId !== projectId
+27:     || (archive.schema === BASELINE_V2 && manifest.checksumEncoding !== BASELINE_CHECKSUM_ENCODING)) throw new Error('PRISM_ARCHIVE_MANIFEST_MISMATCH');
+28:   validatePrism('baselineManifest', manifest);
+29:   return manifest;
+30: }
+31: function archiveFiles(archive: Record<string, any>, manifest: Record<string, any>, approvedDigest: string) {
+32:   const textFiles = object(archive.textFiles);
+33:   const binaryFiles = object(archive.binaryFiles);
+34:   const names = [...Object.keys(textFiles), ...Object.keys(binaryFiles)];
+35:   if (names.length > 4096 || new Set(names).size !== names.length) throw new Error('PRISM_ARCHIVE_FILE_SET_INVALID');
+36:   const checksumDocument = object(JSON.parse(textFiles['checksums.json']));
+37:   assertBaselineChecksumDocument(checksumDocument, archive.schema);
+38:   const checksums = object(checksumDocument.files);
+39:   const expected = names.filter(name => name !== 'manifest.json' && name !== 'checksums.json').sort();
+40:   if (JSON.stringify(Object.keys(checksums).sort()) !== JSON.stringify(expected)) throw new Error('PRISM_ARCHIVE_CHECKSUM_SET_INVALID');
+41:   let totalBytes = 0;
+42:   for (const name of names) {
+43:     filePath(name);
+44:     const content = Object.hasOwn(textFiles, name) ? textFiles[name] : base64(binaryFiles[name]);
+45:     if (typeof content !== 'string' && !Buffer.isBuffer(content)) throw new Error('PRISM_ARCHIVE_FILE_INVALID');
+46:     totalBytes += Buffer.byteLength(content);
+47:     if (totalBytes > maximumBytes) throw new Error('PRISM_ARCHIVE_SIZE_EXCEEDED');
+48:     if (Object.hasOwn(checksums, name) && digest(content) !== checksums[name]) throw new Error(`PRISM_ARCHIVE_FILE_DIGEST_MISMATCH:${name}`);
+49:   }
+50:   if (baselineChecksumDigest(checksums, archive.schema) !== approvedDigest) throw new Error('PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH');
+51:   if (JSON.stringify(JSON.parse(textFiles['manifest.json'])) !== JSON.stringify(manifest)) throw new Error('PRISM_ARCHIVE_MANIFEST_MISMATCH');
+52:   return { textFiles, checksums };
+53: }
+54: function manifestMembers(manifest: Record<string, any>, checksums: Record<string, any>): void {
+55:   for (const key of ['designDocument', 'designSpecification', 'acceptanceCriteria', 'previews']) {
+56:     const name = object(manifest[key]).path;
+57:     if (typeof name !== 'string' || !Object.hasOwn(checksums, name)) throw new Error('PRISM_ARCHIVE_REQUIRED_FILE_MISSING');
+58:   }
+59:   for (const asset of Object.values(object(manifest.assets))) {
+60:     const item = object(asset);
+61:     if (typeof item.path !== 'string' || checksums[item.path] !== item.digest) throw new Error('PRISM_ARCHIVE_ASSET_MISMATCH');
+62:   }
+63: }
+64: function archiveDocuments(manifest: Record<string, any>, textFiles: Record<string, any>, checksums: Record<string, any>, projectId: string): void {
+65:   const document = object(validatePrism('designDocument', JSON.parse(textFiles[manifest.designDocument.path])));
+66:   if (document.meta.projectId !== projectId || document.meta.revision !== manifest.revision
+67:     || manifest.designDocument.revision !== manifest.revision) throw new Error('PRISM_ARCHIVE_DOCUMENT_MISMATCH');
+68:   validatePrism('acceptanceCriteria', JSON.parse(textFiles[manifest.acceptanceCriteria.path]));
+69:   const previews = object(validatePrism('previewIndex', JSON.parse(textFiles[manifest.previews.path])));
+70:   if (!previews.previews.length) throw new Error('PRISM_ARCHIVE_PREVIEWS_MISSING');
+71:   for (const preview of previews.previews) {
+72:     if (checksums[preview.path] !== preview.digest || checksums[preview.ariaPath] !== preview.ariaDigest
+73:       || !document.views[preview.view]?.states[preview.state]) throw new Error('PRISM_ARCHIVE_PREVIEW_MISMATCH');
+74:   }
+75: }
+76: 
+77: /** Verify the actual content-addressed archive before publishing a Nova handoff. */
+78: export function verifyBaselineArchive(response: unknown, approvedDigest: string, projectId: string) {
+79:   const result = object(response);
+80:   if (result.bundleDigest !== approvedDigest) throw new Error('PRISM_DESIGN_APPROVED_BUNDLE_MISMATCH');
+81:   const bytes = base64(result.archiveBase64);
+82:   if (result.artifactId !== `artifact:${digest(bytes)}`) throw new Error('PRISM_ARCHIVE_DIGEST_MISMATCH');
+83:   const archive = object(JSON.parse(bytes.toString('utf8')));
+84:   const manifest = archiveManifest(archive, approvedDigest, projectId);
+85:   const { textFiles, checksums } = archiveFiles(archive, manifest, approvedDigest);
+86:   manifestMembers(manifest, checksums);
+87:   archiveDocuments(manifest, textFiles, checksums, projectId);
+88:   return { artifactId: result.artifactId as string, bundleDigest: approvedDigest, archive };
+89: }
+SOURCE skills/nova/plugins/prism-design/src/stage.ts SHA256 20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88
+1: import { verifyBaselineArchive } from './archive.ts';
+2: import { assertArchitectureReferenceEncoding, verifiedArchitectureValue } from './architecture.ts';
+3: import { type ArtifactRef, type PluginInvocationContext, type StageResult, type WaitRequest } from "@kubeclaw/plugin-sdk";
+4: type Input={runId:string;projectId:string;architectureArtifact:{artifactId:string;contentDigest:string;revision:number};requiresDesign:boolean};
+5: type Config={agent:"prism";target:string;issuerId:string;timeoutMinutes:number};
+6: const record=(value:unknown):Record<string,unknown>=>{if(!value||typeof value!=="object"||Array.isArray(value))throw new Error("PRISM_DESIGN_VALUE_INVALID");return value as Record<string,unknown>;};
+7: function config(value:unknown):Config{const item=record(value);if(item.agent!=="prism"||typeof item.target!=="string"||typeof item.issuerId!=="string"||!Number.isSafeInteger(item.timeoutMinutes)||Number(item.timeoutMinutes)<1)return (()=>{throw new Error("PRISM_DESIGN_CONFIG_INVALID");})();return item as unknown as Config;}
+8: function approval(value:unknown,issuerId:string,architectureDigest:string):{approvalId:string;bundleDigest:string}|undefined{if(value===undefined)return undefined;const item=record(value);const issuer=record(item.issuer);if(item.decision!=="approved"||issuer.type!=="operator"||issuer.id!==issuerId||typeof item.approvalId!=="string"||!item.approvalId||item.architectureDigest!==architectureDigest||typeof item.bundleDigest!=="string"||!/^sha256:[a-f0-9]{64}$/u.test(item.bundleDigest))return (()=>{throw new Error("PRISM_DESIGN_APPROVAL_INVALID");})();return {approvalId:item.approvalId,bundleDigest:item.bundleDigest};}
+9: export function waitFrom(value:unknown,expected:{issuerId:string;expiresAt:string;projectId:string}):WaitRequest{const item=record(value);const wait=record(item.wait);const issuer=record(wait.authorizedIssuer);const request=record(wait.request);if(typeof item.created!=="boolean"||wait.schemaVersion!=="wait-request.v2"||typeof wait.waitId!=="string"||!/^wait:[a-f0-9]{64}$/u.test(wait.waitId)||wait.kind!=="signal"||wait.signalType!=="prism.approval.resolved"||issuer.type!=="operator"||issuer.id!==expected.issuerId||wait.expiresAt!==expected.expiresAt||request.projectId!==expected.projectId)throw new Error("PRISM_DESIGN_WAIT_INVALID");return wait as unknown as WaitRequest;}
+10: export async function execute(input:Input,context:PluginInvocationContext):Promise<StageResult>{
+11:   if(!input.requiresDesign)return {schemaVersion:"stage-result.v2",outcome:"passed",artifacts:[]};
+12:   input={...input,runId:context.contract.lease.attempt.runId};
+13:   const settings=config(context.contract.config);const approved=approval(context.contract.guidance,settings.issuerId,input.architectureArtifact.contentDigest);
+14:   try{
+15:     const architectureRef=context.artifact(input.architectureArtifact.artifactId);
+16:     if(architectureRef)assertArchitectureReferenceEncoding(architectureRef);
+17:     if(!architectureRef||architectureRef.producer.runId!==input.runId||architectureRef.mediaType!=="application/json"||architectureRef.sizeBytes>256*1024||architectureRef.digest!==input.architectureArtifact.contentDigest)throw new Error("PRISM_DESIGN_ARCHITECTURE_REFERENCE_INVALID");
+18:     const architectureResponse=await context.invoke("artifacts.read",{operation:"get_json",resource:{type:"artifact.object",canonicalId:architectureRef.artifactId},payload:{namespace:architectureRef.namespace,digest:architectureRef.digest}});
+19:     const architectureContent=verifiedArchitectureValue(architectureResponse,architectureRef);
+20:     const request={schema:"prism.design-request.v1",projectId:input.projectId,architecture:input.architectureArtifact,architectureContent,...approved?{approvalId:approved.approvalId}:{}};
+21:     const phase=approved?`approved:${approved.approvalId}:${input.architectureArtifact.contentDigest}`:"request";
+22:     const response=await context.invoke("runtime.dispatch",withRuntimeDispatchProfile({operation:"dispatch",resource:{type:"runtime.agent",canonicalId:settings.agent},payload:{request,idempotencyKey:`${input.runId}:prism:${input.architectureArtifact.contentDigest}:${phase}`}},context.contract.runtimeDispatchProfile));const result=response.result as Record<string,unknown>;
+23:     if(!approved){
+24:       const waitId=`prism:${input.runId}:${input.projectId}`;const expiresAt=new Date(Date.now()+settings.timeoutMinutes*60_000).toISOString();
+25: 
+26:       const created=await context.invoke("signal.wait",{operation:"create",resource:{type:"signal.wait",canonicalId:waitId},payload:{kind:"signal",signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt,request:{projectId:input.projectId}}});
+27:       const wait=waitFrom(created,{issuerId:settings.issuerId,expiresAt,projectId:input.projectId});
+28:       await context.invoke("operator.request",{operation:"publish",resource:{type:"operator.target",canonicalId:settings.target},payload:{type:"prism.approval.requested",projectId:input.projectId,waitId:wait.waitId,architectureDigest:input.architectureArtifact.contentDigest,signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt}});
+29:       return {schemaVersion:"stage-result.v2",outcome:"wait",reason:{code:"prism_design.approval_pending",message:"Waiting for an approved Prism Baseline Bundle."},artifacts:[],wait};
+30:     }
+31:     const imported=verifyBaselineArchive(result,approved.bundleDigest,input.projectId);
+32:     const stored=await context.invoke("artifacts.write",{operation:"put_json",resource:{type:"artifact.object",canonicalId:`prism-baseline:${input.projectId}:${result.bundleDigest}`},payload:{namespace:"kubeclaw.prism",mediaType:"application/json",value:{...imported,designRequest:request,approvedArchitectureDigest:input.architectureArtifact.contentDigest}}});
+33:     return {schemaVersion:"stage-result.v2",outcome:"passed",artifacts:[stored.artifact as ArtifactRef]};
+34:   }catch(error){return {schemaVersion:"stage-result.v2",outcome:"blocked",reason:{code:"prism_design.dispatch_failed",message:error instanceof Error?error.message:String(error)},artifacts:[]};}
+35: }
+36: import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

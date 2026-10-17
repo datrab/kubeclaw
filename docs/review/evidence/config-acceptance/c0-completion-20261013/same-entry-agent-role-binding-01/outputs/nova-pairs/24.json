@@ -1,0 +1,26 @@
+{
+  "root": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/entries/Nova/24.json",
+    "sha256": "acb6d63d86c57741ac42179fc4ccdb1059dd177dea81108b6a5091ac85d8fa73"
+  },
+  "tuple": {
+    "kind": "stage",
+    "packageId": "kubeclaw.prism-design",
+    "registrationId": "kubeclaw.prism-design:design",
+    "instanceId": "fixture.prism-design",
+    "ownerPath": "plugins/kubeclaw.prism-design.config.json",
+    "profileId": "RT-03fda24ef110ef33-A",
+    "serviceInstanceId": "fixture.service.nova-runtime"
+  },
+  "configuration": {
+    "agent": "prism",
+    "target": "case-operator-a",
+    "issuerId": "case-issuer-a",
+    "timeoutMinutes": 60
+  },
+  "sourceCurrentWire": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-03fda24ef110ef33/A.json",
+    "sha256": "c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894"
+  },
+  "temporalEligibility": "next unstarted M only inside original R/S/H target maps/source/grants/deadlines/counters; no model stopping or originalR reread/reset"
+}

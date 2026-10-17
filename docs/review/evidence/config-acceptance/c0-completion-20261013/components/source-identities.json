@@ -1,0 +1,467 @@
+{
+  "head": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+  "tree": "a42e57276685d526d8c966e14a57ae85a3e0a1ca",
+  "sources": [
+    {
+      "path": "contracts/pipeline-worker-core/v1/package.json",
+      "sha256": "40d234e5ba169853c0c1ca4dcab3590373163c6b7189461157ff569a7aa42df5"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "sha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+      "sha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",
+      "sha256": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v2.mjs",
+      "sha256": "6c3c5720647cc3b74394d0ca7d3dd2fdd42728dd3b9217f31e033ca20518d56a"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "sha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "sha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "sha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "sha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "sha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/candidate-ledger.json",
+      "sha256": "a5066c74fe2dbd60c88c75d1e17264b98f05df352823cf3b6e39bc206fae09d1"
+    },
+    {
+      "path": "docs/review/remediation/acceptance-20260920.md",
+      "sha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda"
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "0eb07e01174594709977e5d7c1690827f3f6eede9803b7c65eaafe41c629614c"
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "b4d9b29911643d08fc6ef439b88dec4ef3e6a4f355ea591ff3f6db9e3f152d1b"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "sha256": "5d6b78d0ab9da185827f35d25c5f2c6da68a4f7e1de8e815b48641b935c298d5"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "sha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+    },
+    {
+      "path": "skills/prism/config/database-bootstrap.ts",
+      "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    },
+    {
+      "path": "skills/prism/config/resource-policy.ts",
+      "sha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f"
+    },
+    {
+      "path": "skills/prism/control/agent-admission.ts",
+      "sha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5"
+    },
+    {
+      "path": "skills/prism/control/agent-jobs.ts",
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+    },
+    {
+      "path": "skills/prism/control/design-generations.ts",
+      "sha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd"
+    },
+    {
+      "path": "skills/prism/control/direction-decisions.ts",
+      "sha256": "fe2067cb0421585e4622e0fad38da7960689b0de92c75d8a71f576177ccf972c"
+    },
+    {
+      "path": "skills/prism/control/native-operation-store.ts",
+      "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+    },
+    {
+      "path": "skills/prism/control/native-operation.ts",
+      "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+    },
+    {
+      "path": "skills/prism/control/pipeline-preference-subject.ts",
+      "sha256": "ded8597750c0e6fb3de823cceb31ecbbff7ece03143f4cdd30037ceff0a77eb3"
+    },
+    {
+      "path": "skills/prism/control/preference-snapshot.ts",
+      "sha256": "e0ac8ed987149afdbc7775d05dd4a31175b57189272d0b92de6301d775288ed2"
+    },
+    {
+      "path": "skills/prism/control/preferences.ts",
+      "sha256": "86b1fd526402e95bef91877fc729d374b035181b5ffc585707528544f5aeaa49"
+    },
+    {
+      "path": "skills/prism/control/product-decisions.ts",
+      "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+    },
+    {
+      "path": "skills/prism/control/session.ts",
+      "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+    },
+    {
+      "path": "skills/prism/control/worker-evidence.ts",
+      "sha256": "391d11ee1ceb0ecb4cc8005237cf52e053039612d6c83c14bf326f4fb33354c2"
+    },
+    {
+      "path": "skills/prism/control/worker-operation-transport.ts",
+      "sha256": "048a23bb132d4d70978e28449a468169ccd87b3a06fa2127fedffbcc992a9958"
+    },
+    {
+      "path": "skills/prism/control/worker-results.ts",
+      "sha256": "6101bf105a8595e75eae682c9a1a479179480ef064da70fca8d691e0634a33c4"
+    },
+    {
+      "path": "skills/prism/corpus/index.ts",
+      "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+    },
+    {
+      "path": "skills/prism/directions/index.ts",
+      "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb"
+    },
+    {
+      "path": "skills/prism/domain/duplicate.ts",
+      "sha256": "50a92dc822d7760655d1e31e451acf621d42dcdad39688157b4c8f3ab0120cc3"
+    },
+    {
+      "path": "skills/prism/domain/index.ts",
+      "sha256": "710ff6fd047d301aef22477cb8cdecfd1fe1c9bd224c069abc6af9d805462838"
+    },
+    {
+      "path": "skills/prism/engine/browser-capture.ts",
+      "sha256": "722f843dabb944aa29725ab178a7718577fb3351112cd929628b3eaae2cdfae2"
+    },
+    {
+      "path": "skills/prism/engine/capture-findings.ts",
+      "sha256": "13202e79eadc41b8b6299d640174cac8390344fb919c9c0e8dbcb6a154e273cf"
+    },
+    {
+      "path": "skills/prism/engine/design-providers.ts",
+      "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+    },
+    {
+      "path": "skills/prism/engine/execution-cache.ts",
+      "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+    },
+    {
+      "path": "skills/prism/engine/index.ts",
+      "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+    },
+    {
+      "path": "skills/prism/engine/render-operation.ts",
+      "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+    },
+    {
+      "path": "skills/prism/engine/worker-binding.ts",
+      "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+    },
+    {
+      "path": "skills/prism/evaluation/index.ts",
+      "sha256": "3c05396fdea1ada5bcc32fa5f45215e9ff2492f73e3c3987a4c0eb994a68416a"
+    },
+    {
+      "path": "skills/prism/openclaw-plugin/index.mjs",
+      "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e"
+    },
+    {
+      "path": "skills/prism/package.json",
+      "sha256": "8d07247f3bd986745352a20a0ee17696afde9b9b33637fe396c547d1a01a8c4d"
+    },
+    {
+      "path": "skills/prism/preferences/index.ts",
+      "sha256": "2a86ae6f5c2fb5e0bc0b6dc2f60a6f7c3dad1d2695e1bde2cf9e00b6134b6c7d"
+    },
+    {
+      "path": "skills/prism/renderer/index.ts",
+      "sha256": "a96197346ae06317f68b5dd3fd68de35bb02780af6d17e2f7ac5683f17751552"
+    },
+    {
+      "path": "skills/prism/server/agent-attempt.ts",
+      "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+    },
+    {
+      "path": "skills/prism/server/agent-bridge.mjs",
+      "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+    },
+    {
+      "path": "skills/prism/server/agent-job-routes.ts",
+      "sha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0"
+    },
+    {
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+    },
+    {
+      "path": "skills/prism/server/agent-process.ts",
+      "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+    },
+    {
+      "path": "skills/prism/server/agent-prompt.d.mts",
+      "sha256": "22910207f059e97e543b53e63c086dc288d774e4b6ca99ab6eb8624de8d562a5"
+    },
+    {
+      "path": "skills/prism/server/agent-prompt.mjs",
+      "sha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9"
+    },
+    {
+      "path": "skills/prism/server/agent-routes.ts",
+      "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17"
+    },
+    {
+      "path": "skills/prism/server/agent-session.ts",
+      "sha256": "9369e1852f7698c04744a435a43dd92d3a5ba3746de3b4ad375b82b5bcb228d2"
+    },
+    {
+      "path": "skills/prism/server/approval-route.ts",
+      "sha256": "302c0e9844dcce2c84f3240632adea81562d077b4efee5eb54a7488ef6993466"
+    },
+    {
+      "path": "skills/prism/server/baseline-archive.ts",
+      "sha256": "5b0a0eca87a986e5a01306e6d9741a8e18948eb87caab2e06f465269a43f0416"
+    },
+    {
+      "path": "skills/prism/server/baseline-route.ts",
+      "sha256": "1bb7412a0e7fe082cb836c7d6357c7d5bd317e38a84c5665270ea91ee3293c42"
+    },
+    {
+      "path": "skills/prism/server/baseline-validation.ts",
+      "sha256": "e0b03764ced2ced6968b7003f84d6aad409df8c5ac8d239d4a188007a0a55b0f"
+    },
+    {
+      "path": "skills/prism/server/bootstrap-database.ts",
+      "sha256": "4cacc0a24266f58196bd6f6a74abeeb4f7bb95f833312fe691e9f6c0a76d28ee"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+    },
+    {
+      "path": "skills/prism/server/control-context.ts",
+      "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02"
+    },
+    {
+      "path": "skills/prism/server/control-http.ts",
+      "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1"
+    },
+    {
+      "path": "skills/prism/server/control-server.ts",
+      "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+    },
+    {
+      "path": "skills/prism/server/corpus-routes.ts",
+      "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+    },
+    {
+      "path": "skills/prism/server/direction-routes.ts",
+      "sha256": "91e731766e8da39e82ce264dba3f9d904fdf77b211e480a3f56365aeef166812"
+    },
+    {
+      "path": "skills/prism/server/dispatch-route.ts",
+      "sha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382"
+    },
+    {
+      "path": "skills/prism/server/document-routes.ts",
+      "sha256": "8436e9f50895e18b9d9eada4a78913ec6e5dd21bfc506fd9bfa51647e5d120a4"
+    },
+    {
+      "path": "skills/prism/server/engine-route.ts",
+      "sha256": "6093e0f6ea9476db40d388a1d1cd1b0ee865c440723e5df05e4703a8aa360ebf"
+    },
+    {
+      "path": "skills/prism/server/ingestion.ts",
+      "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+    },
+    {
+      "path": "skills/prism/server/internal-artifacts.ts",
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8"
+    },
+    {
+      "path": "skills/prism/server/internal-auth.ts",
+      "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72"
+    },
+    {
+      "path": "skills/prism/server/migrate.ts",
+      "sha256": "19eeb8571e604ec548334b4f4ea75bfb65975a6499dabef18052bc02f5a7cb18"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/prism/server/preference-prompt.mjs",
+      "sha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145"
+    },
+    {
+      "path": "skills/prism/server/preference-routes.ts",
+      "sha256": "df2302a68f58536dfb496b8b63199b76c69721f3f2de775ca0c2edcbc0b7ede7"
+    },
+    {
+      "path": "skills/prism/server/product-controller.ts",
+      "sha256": "1b2ccc2bbe84e204b5ca40f749c3faf5308bad4e5052228a3ba40550d1bb77b1"
+    },
+    {
+      "path": "skills/prism/server/product-decisions.ts",
+      "sha256": "04be267143d97a628ff607527ff67166faf3c32405536292d326c52ac5b1283d"
+    },
+    {
+      "path": "skills/prism/server/product-operator-page.ts",
+      "sha256": "d5a9d08d8aafaa992a8ad32f711bd6336ac48f4f4bf67001922a1cff575731fc"
+    },
+    {
+      "path": "skills/prism/server/project-routes.ts",
+      "sha256": "fb836dcb2897eb0e8e55e2da3602c6ef72ec9e43fcb366b4b55064d308be2fc8"
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "sha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465"
+    },
+    {
+      "path": "skills/prism/server/studio-request.ts",
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+    },
+    {
+      "path": "skills/prism/server/worker-artifacts.ts",
+      "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+    },
+    {
+      "path": "skills/prism/server/worker-lifecycle.ts",
+      "sha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a"
+    },
+    {
+      "path": "skills/prism/server/worker-operation.ts",
+      "sha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471"
+    },
+    {
+      "path": "skills/prism/server/worker-readiness.ts",
+      "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4"
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+    },
+    {
+      "path": "skills/prism/storage/artifacts.ts",
+      "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f"
+    },
+    {
+      "path": "skills/prism/storage/index.ts",
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199"
+    },
+    {
+      "path": "skills/prism/storage/migrations/001_prism.sql",
+      "sha256": "02f48a7e783b74fded50a0bc626d418b532515fe9e5456c0a22735a991ee1c41"
+    },
+    {
+      "path": "skills/prism/storage/product-decisions.ts",
+      "sha256": "522e30f6c1e668e145b05b055dcc9d4ca4226df8f4b1183e0918f4f99183c174"
+    },
+    {
+      "path": "skills/prism/studio/agent-revision-client.ts",
+      "sha256": "bd2d6682a9cab1410a97bf0e59cf35c18017d434c4ef55ddc5334fee64fd1d02"
+    },
+    {
+      "path": "skills/prism/studio/app.tsx",
+      "sha256": "5ee08fa855120dfb53f44aa8a5aa48979674d3f4a0ba8c13c2f4717d2663c092"
+    },
+    {
+      "path": "skills/prism/studio/design-round-client.ts",
+      "sha256": "0a37517165fad75fd049dafc9a3519cbd8a7c0f2351c6adaeaab4c4fc2281f46"
+    },
+    {
+      "path": "skills/prism/studio/flows.ts",
+      "sha256": "a48cd934ead75e3cffccbfe3dcf0eae307f08e8f4f6c994575a6542b82cb4159"
+    },
+    {
+      "path": "skills/prism/studio/preview-assets.ts",
+      "sha256": "94b27166a5c76ec23705852bac3828b077abce2eb5a05f2059c2efef8324fbdd"
+    },
+    {
+      "path": "skills/prism/studio/preview.ts",
+      "sha256": "cbf3b6c34c8551bd51201e1dbab869d6cedf79461cf8f3dd808ff7a67e182764"
+    },
+    {
+      "path": "skills/prism/studio/projection.ts",
+      "sha256": "66e3a7b364e00bb6bdd0754f79b67f0533a2e3b66df125a078c3de15b664e0ef"
+    },
+    {
+      "path": "skills/prism/studio/puck-adapter.ts",
+      "sha256": "186602f28c827a7f347eee8ce594234febc0a9b1ed3e91f41554bd5db9b81415"
+    },
+    {
+      "path": "skills/prism/studio/puck-config.tsx",
+      "sha256": "43ceb86960f1de587eebb693281065e3e6ade02dbc7187773b723db37cebb417"
+    },
+    {
+      "path": "skills/prism/studio/round-response.ts",
+      "sha256": "cf0e058fabff7de650214209111370ba43358c894bf24719d7e13297ba2448d0"
+    }
+  ],
+  "qualification": "All hashes establish consulted boundary identity only; no claim every source line independently adjudicated."
+}

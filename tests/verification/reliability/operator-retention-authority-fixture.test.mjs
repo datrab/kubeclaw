@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -14,7 +15,7 @@ import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/fo
 import { reserveDelivery, deliveryReceipt, lookupDelivery } from '../../../skills/common/plugins/operator-messaging/src/delivery-records.ts';
 
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
-const entries = file => new FileJournal(file).records().map(record => record.entry);
+const entries = file => new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().map(record => record.entry);
 const limits = { maximumRecords: 100, maximumBytes: 1024 ** 2, maximumRecordBytes: 2 * 1048576 + 65536 };
 
 // Original installed producers and File journals only. This proves an authority
@@ -40,17 +41,19 @@ export async function fixture(t, options = {}) {
   const operator = 'kubeclaw.operator-messaging:operator', waits = 'kubeclaw.wait-store:waits';
   const network = 'kubeclaw.network-http:http', secrets = 'kubeclaw.secret-resolver:secrets';
   const deliveryRoot = path.join(root, 'deliveries'), waitRoot = path.join(root, 'waits');
-  const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
+  const corePolicyFile = path.join(root, 'core-policy.json');
+  fs.writeFileSync(corePolicyFile, JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,networkHttp:{...TEST_CORE_POLICY.networkHttp,maxRequestBytes:16384,maxResponseBytes:16384,timeoutMs:5000},operatorMessagingPayload:{...TEST_CORE_POLICY.operatorMessagingPayload,targetPayloadProfiles:{fixture:{maxPayloadBytes:16384}}},operatorMessagingStore:{...TEST_CORE_POLICY.operatorMessagingStore,maximumDeliveryRecords:options.maximumRecords ?? limits.maximumRecords,maximumDeliveryBytes:options.maximumBytes ?? limits.maximumBytes}}}}}));
+  const platform = {corePolicySelection: {file:corePolicyFile,profile:'selected'}, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'operator.request': operator, 'signal.wait': waits, 'network.http': network, 'secrets.read': secrets },
     grants: { 'kubeclaw.human-approval:approval': { 'operator.request': { allowedTargets: ['operators'] },
       'signal.wait': { allowedSignalTypes: ['approval.resolved'], allowedIssuerIds: ['operator:local'] } },
       [operator]: { 'network.http': { allowedOrigins: [origin] }, 'secrets.read': { allowedNames: ['operator.webhook'] } } },
-    adapters: { [operator]: { deliveryRoot, maximumDeliveryRecords: options.maximumRecords ?? limits.maximumRecords, maximumDeliveryBytes: options.maximumBytes ?? limits.maximumBytes,
-      targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'operator.webhook', maxPayloadBytes: 16384 } } },
+    adapters: { [operator]: { deliveryRoot,
+      targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'operator.webhook', payloadProfile: 'fixture' } } },
       [waits]: { root: waitRoot }, [secrets]: { environment: { 'operator.webhook': env } },
       [network]: { allowedOrigins: [origin], allowedMethods: ['POST'],
-        allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'], maxRequestBytes: 16384, maxResponseBytes: 16384, timeoutMs: 5000 } },
+        allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] } },
     activeAdapters: [operator, waits, network, secrets], observers: {}, storageRoot: path.join(root, 'state'),
     shutdownTimeoutMs: 5000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };
   const definition = { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:operator-authority', maxConcurrency: 1,
@@ -109,7 +112,7 @@ test('original human approval, real signed HTTP receipt and issuer-authorized Co
   assert.equal(completed[0].payload.result.outcome, 'wait'); assert.equal(completed[1].payload.result.outcome, 'passed');
   assert.equal(completed[0].identity.attemptId, f.request.attempt.attemptId);
   assert.notEqual(completed[1].identity.attemptId, f.request.attempt.attemptId);
-  const created = recoverWaitCreation(f.definition, new FileJournal(path.join(f.run, 'events.jsonl')).records(), f.runId, 'nova', f.wait.waitId);
+  const created = recoverWaitCreation(f.definition, new FileJournal(path.join(f.run, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records(), f.runId, 'nova', f.wait.waitId);
   const resolved = events.filter(event => event.type === 'wait.resolved');
   assert.deepEqual(created.entry, completed[0]); assert.equal(resolved.length, 1);
   assert.equal(resolved[0].identity.waitId, f.wait.waitId);

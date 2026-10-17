@@ -1,0 +1,10 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6727,
+  "errorCount": 1,
+  "errors": [
+    "native historical projection: HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: obsolete case reactivation/acceptance"
+  ]
+}

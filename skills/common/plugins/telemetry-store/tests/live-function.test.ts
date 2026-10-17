@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as TELEMETRY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_TELEMETRY_STORE_POLICY = TELEMETRY_TEST_CORE_POLICY.telemetryStore;
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -8,7 +10,7 @@ const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-telemetry-store-'))
 const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registration: {},
-  config: { root, maxRecordBytes: 1024 },
+  config: { ...TEST_TELEMETRY_STORE_POLICY, root, maxRecordBytes: 1024 },
   async emit() {},
   async invoke() { throw new Error('unexpected dependency'); },
 });

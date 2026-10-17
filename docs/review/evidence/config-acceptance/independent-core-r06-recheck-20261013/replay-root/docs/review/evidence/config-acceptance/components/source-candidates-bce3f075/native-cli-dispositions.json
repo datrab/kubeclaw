@@ -1,0 +1,162 @@
+{
+  "fields": [
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[1]",
+      "class": "generated-binding",
+      "currentAuthority": "bound child scope path",
+      "domain": "normalized absolute genuine cgroup2 root-owned/nonwritable directory; parent worker-UUID and host/helper-UUID name",
+      "validationErrorContract": "WORKER_NATIVE_LAUNCH_SCOPE_INVALID",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[2]",
+      "class": "generated-binding",
+      "currentAuthority": "aggregate kernel device",
+      "domain": "strtoull unsigned device equality against pinned parent stat",
+      "validationErrorContract": "WORKER_NATIVE_LAUNCH_BINDING_INVALID",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[3]",
+      "class": "generated-binding",
+      "currentAuthority": "aggregate kernel inode",
+      "domain": "strtoull unsigned inode equality pinned parent stat",
+      "validationErrorContract": "WORKER_NATIVE_LAUNCH_BINDING_INVALID",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[4]",
+      "class": "generated-binding",
+      "currentAuthority": "child kernel device",
+      "domain": "strtoull unsigned equality child stat",
+      "validationErrorContract": "WORKER_NATIVE_LAUNCH_BINDING_INVALID",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[5]",
+      "class": "generated-binding",
+      "currentAuthority": "child kernel inode",
+      "domain": "strtoull unsigned equality child stat and child parent equals pinned aggregate",
+      "validationErrorContract": "WORKER_NATIVE_LAUNCH_BINDING_INVALID",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[6]",
+      "class": "generated-binding",
+      "currentAuthority": "nonroot role UID",
+      "domain": "decimal1..4294967294; SETUID/GID privilege dropped and getuid/euid confirm",
+      "validationErrorContract": "WORKER_NATIVE_LAUNCH_IDENTITY_INVALID / WORKER_NATIVE_LAUNCH_DROP_PRIVILEGE_FAILED / WORKER_NATIVE_LAUNCH_PRIVILEGE_RETAINED",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[7]",
+      "class": "generated-binding",
+      "currentAuthority": "nonroot role GID",
+      "domain": "decimal1..4294967294; setgroups0; gid/egid confirm",
+      "validationErrorContract": "WORKER_NATIVE_LAUNCH_IDENTITY_INVALID / WORKER_NATIVE_LAUNCH_DROP_PRIVILEGE_FAILED / WORKER_NATIVE_LAUNCH_PRIVILEGE_RETAINED",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[8]",
+      "class": "generated-binding",
+      "currentAuthority": "absolute selected role executable",
+      "domain": "argc>=9; absolute path; trusted supervisor role binary, actual execv",
+      "validationErrorContract": "WORKER_NATIVE_LAUNCH_ARGUMENTS_INVALID / WORKER_NATIVE_LAUNCH_EXEC_FAILED",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "field": "argv[9..]",
+      "class": "generated-binding",
+      "currentAuthority": "role executable argument tail",
+      "domain": "trusted NativeWorkerLaunchCommand.arguments, passed execv tail; never independent CONFIG CLI author",
+      "validationErrorContract": "same role command consumer validation; no ambient fallback",
+      "productiveCallerChain": [
+        "skills/worker/core/worker/native-worker-ownership.ts::#startChild",
+        "skills/worker/core/worker/native-resource-scope.ts::childLaunchArguments",
+        "skills/worker/core/worker/native-worker-launcher.c::main"
+      ],
+      "activation": "captured trusted launch+kernel binding before exec; immutable accepted identity; no operator-provided request path",
+      "migration": "preserve or jointly version in D18 later W; configuration author for role UID/executable remains selected Prism/Buster role, not launcher CLI",
+      "caseStatus": "requires actual root-native positive plus invalid binding/identity/path/parent negatives; unavailable supervisor capabilities is blocked not semantic PASS"
+    }
+  ],
+  "count": 9,
+  "producerSource": "skills/worker/core/worker/native-worker-ownership.ts #startChild",
+  "actualMainSource": "skills/worker/core/worker/native-worker-launcher.c",
+  "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+  "supervisorPID": "Separate trustedENV, NOTargv4/5; argv4/5 actualchild device/inode. Historical initial draft erroneousannotation preserved/corrected."
+}

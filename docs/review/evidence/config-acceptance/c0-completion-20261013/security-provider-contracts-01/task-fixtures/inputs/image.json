@@ -1,0 +1,10 @@
+{
+  "name": "image",
+  "kind": "value",
+  "schemaId": "kubeclaw.container-image@1",
+  "value": {
+    "schemaVersion": "container-image.v1",
+    "reference": "fixture-registry.invalid/kubeclaw/source-fixture@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc",
+    "digest": "sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc"
+  }
+}

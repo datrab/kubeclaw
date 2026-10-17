@@ -1,0 +1,13 @@
+{
+  "receipt": {
+    "path": "docs/review/evidence/config-acceptance/delivery/delivery-stable-controller-milestone-6606af9-20261013.json",
+    "sha256": "777092c34cca7c1f81f43dd790d464ca8aae9acb7203867084cf2d93f786b452"
+  },
+  "source": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+  "field": "selected runtimeSecurity.maximumOutputBytes",
+  "canonicalAuthor": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+  "actualConsumer": "kubectl collect stdout AND stderr combined before JSON.parse; child abort/reject immediately on aggregate excess",
+  "notAlias": "Go compact findings/HTTPresponse/request/diagnostic budgets remain independent selected controller authority, not same value or new Core writer",
+  "newSiblingDefs": "controller-response-epoch-contracts-6606af9-20261013.json and controller-original-epoch-fixture-identities-6606af9-20261013.json",
+  "scope": "stable source/proposed definition handoff ONLY; not review, installed controller/epoch/originalgrant/global acceptance; not part of committed6606 baseline"
+}

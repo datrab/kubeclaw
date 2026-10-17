@@ -1,0 +1,205 @@
+{
+  "artifact-store": {
+    "artifactRoot": "${CASE_ROOT}/artifact",
+    "maxArtifactBytes": 16777216,
+    "maximumRecords": 100000,
+    "maximumStoreBytes": 268435456,
+    "maximumRecordBytes": 65536
+  },
+  "state-store": {
+    "root": "${CASE_ROOT}/state",
+    "maxEntryBytes": 1048576,
+    "maximumRecords": 100000,
+    "maximumStoreBytes": 268435456
+  },
+  "telemetry-store": {
+    "root": "${CASE_ROOT}/telemetry",
+    "maxRecordBytes": 1048576,
+    "maximumRecords": 100000,
+    "maximumStoreBytes": 268435456,
+    "jsonMaximumDepth": 64,
+    "jsonMaximumNodes": 100000
+  },
+  "wait-store": {
+    "root": "${CASE_ROOT}/wait",
+    "maxEntryBytes": 1048576,
+    "maximumRecords": 100000,
+    "maximumStoreBytes": 268435456
+  },
+  "network-http": {
+    "allowedOrigins": [
+      "${HTTP_FIXTURE_ORIGIN}",
+      "${HTTP_FIXTURE_ORIGIN_B}"
+    ],
+    "allowedMethods": [
+      "GET",
+      "POST"
+    ],
+    "allowedHeaders": [
+      "accept",
+      "content-type",
+      "idempotency-key",
+      "authorization",
+      "x-kubeclaw-signature",
+      "x-kubeclaw-target",
+      "x-case"
+    ],
+    "maxRequestBytes": 1048576,
+    "maxResponseBytes": 1048576,
+    "timeoutMs": 30000
+  },
+  "command-runner": {
+    "allowedExecutables": [
+      "${CASE_ROOT}/bin/case-child"
+    ],
+    "executableCatalog": {
+      "case-child": "${CASE_ROOT}/bin/case-child"
+    },
+    "allowedWorkingRoots": [
+      "${CASE_ROOT}/work"
+    ],
+    "maxOutputBytes": 1048576,
+    "maxExecutionMs": 30000,
+    "terminationGraceMs": 1000,
+    "maximumProcesses": 1024,
+    "memoryBytes": 1073741824,
+    "cpuMillis": 30000,
+    "openFiles": 256
+  },
+  "git-workspace": {
+    "allowedRepositoryRoots": [
+      "${CASE_ROOT}/repo"
+    ],
+    "workspaceRoot": "${CASE_ROOT}/worktrees",
+    "gitExecutable": "${REAL_GIT_EXECUTABLE}",
+    "authorName": "Case Author",
+    "authorEmail": "case@example.invalid",
+    "maxExecutionMs": 30000,
+    "maxOutputBytes": 1048576,
+    "terminationGraceMs": 1000
+  },
+  "redis-transport": {
+    "url": "${REDIS_FIXTURE_URL}",
+    "passwordSecret": "case.redis.password",
+    "streamPrefix": "case:events",
+    "maxLen": 100000,
+    "dedupTtlMs": 86400000,
+    "timeoutMs": 30000,
+    "maximumPayloadBytes": 1048576,
+    "maximumBulkReplyBytes": 1048576,
+    "maximumReplyHeaderBytes": 1024
+  },
+  "secret-resolver": {
+    "environment": {
+      "case.secret": "CASE_SECRET_A"
+    }
+  },
+  "transport-publisher": {
+    "deliveryRoot": "${CASE_ROOT}/transport",
+    "maximumDeliveryRecords": 100000,
+    "maximumDeliveryBytes": 268435456,
+    "targets": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+        "signingSecret": "case.signing",
+        "maxPayloadBytes": 262144
+      }
+    },
+    "terminalReservationBytes": 8192,
+    "deliveryMetadataAllowanceBytes": 65536,
+    "jsonMaximumDepth": 64
+  },
+  "operator-messaging": {
+    "deliveryRoot": "${CASE_ROOT}/operator",
+    "maximumDeliveryRecords": 100000,
+    "maximumDeliveryBytes": 268435456,
+    "targets": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+        "tokenSecret": "case.signing",
+        "maxPayloadBytes": 65536,
+        "format": "json",
+        "receiptMode": "disabled"
+      }
+    },
+    "terminalReservationBytes": 8192,
+    "deliveryMetadataAllowanceBytes": 65536,
+    "jsonMaximumDepth": 20,
+    "jsonMaximumContainerEntries": 1000
+  },
+  "notification-observer": {
+    "target": "case-target",
+    "pipelineLabel": "Case Pipeline",
+    "modelLabel": "Case Model",
+    "stageLabels": {
+      "stage:case": "Case Stage"
+    },
+    "maxMessageChars": 8192,
+    "suppressEventTypes": [],
+    "presentationFallbackMode": "event-identity",
+    "unknownSeverity": "info"
+  },
+  "openclaw-agent-events": {
+    "hooks": [
+      "agent_end",
+      "llm_input"
+    ],
+    "maxQueueEvents": 256,
+    "maxQueueBytes": 1048576,
+    "drainTimeoutMs": 5000,
+    "observedFieldsMaximum": 128,
+    "observedFieldNameCharacters": 128,
+    "identityCharactersMaximum": 512
+  },
+  "runtime-dispatch:runtime": {
+    "targets": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/runtime",
+        "authentication": "hmac",
+        "tokenSecret": "case.runtime.hmac",
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576
+      }
+    },
+    "jsonMaximumDepth": 20,
+    "jsonMaximumContainerEntries": 1000,
+    "jsonKeyCharactersMaximum": 128
+  },
+  "runtime-dispatch:openclaw": {
+    "targets": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/tools/invoke",
+        "tokenSecret": "case.gateway.token",
+        "runtime": "subagent",
+        "agentId": "codex",
+        "agentRole": "case-role",
+        "model": "${VALID_INSTALLED_MODEL_A}",
+        "thinking": "high",
+        "controllerSessionKey": "agent:codex:case-controller",
+        "collectorMode": false,
+        "spawnIntervalMs": 1500,
+        "tokenizerEncoding": "o200k_base",
+        "maxPromptBytes": 900000,
+        "maxInputTokens": 120000,
+        "maxOutputTokens": 6000,
+        "maxContextTokens": 128000,
+        "cwd": "${CASE_ROOT}/repo",
+        "repositoryRoot": "${CASE_ROOT}/repo",
+        "workspaceRoot": "${CASE_ROOT}/worktrees",
+        "pollMs": 1000,
+        "maxPollMs": 15000,
+        "maxPolls": 1800,
+        "sessionTimeoutMs": 1800000,
+        "resultPathPrefix": "results/case",
+        "resultMode": "local"
+      }
+    },
+    "sessionListCacheMs": 250,
+    "collectorWaitSeconds": 15,
+    "recentListMinimumMinutes": 10,
+    "recentListMarginMinutes": 5,
+    "pollExponentialMaximumPower": 8,
+    "cleanupPollMs": 50,
+    "maximumResultBytes": 1048576
+  }
+}

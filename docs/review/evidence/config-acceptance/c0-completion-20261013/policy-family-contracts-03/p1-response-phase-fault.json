@@ -1,0 +1,100 @@
+{
+  "id": "P1-N2-post-handshake",
+  "kind": "Proposed future isolated native fault transform, not production policy or current execution",
+  "profilePairs": [
+    "fixtures/kubeclaw-nova-A-values.json",
+    "fixtures/kubeclaw-nova-B-values.json",
+    "fixtures/kubeclaw-buster-A-values.json",
+    "fixtures/kubeclaw-buster-B-values.json",
+    "fixtures/kubeclaw-prism-agent-A-values.json",
+    "fixtures/kubeclaw-prism-agent-B-values.json",
+    "fixtures/prism-A-values.json",
+    "fixtures/prism-B-values.json"
+  ],
+  "transformTarget": "Actual rendered listener worker-trust-self-check, its own HttpConnectionManager http_filters, before original router only. No listener/cluster/socket/TLS/SAN/route/direct_response/connect_timeout replacement.",
+  "prependFilter": {
+    "name": "envoy.filters.http.fault",
+    "typed_config": {
+      "@type": "type.googleapis.com/envoy.extensions.filters.http.fault.v3.HTTPFault",
+      "delay": {
+        "fixed_delay": "6s",
+        "percentage": {
+          "numerator": 100,
+          "denominator": "HUNDRED"
+        }
+      },
+      "headers": [
+        {
+          "name": ":method",
+          "string_match": {
+            "exact": "GET"
+          }
+        },
+        {
+          "name": ":path",
+          "string_match": {
+            "exact": "/ready"
+          }
+        },
+        {
+          "name": "x-config-policy-fault",
+          "string_match": {
+            "exact": "response-stall"
+          }
+        }
+      ],
+      "max_active_faults": 1
+    }
+  },
+  "process": "Original pinned Envoy1.39.0 consumes actual full rendered config plus this explicitly test-only diagnostic overlay in isolated test process. Original TLS listener completes handshake and receives GET/ready before the decoder fault withholds its unchanged direct200 response for6s. No DROP/connect delay, mockTLS responder, altered identity or raised configured timeout. Filter timing is after real transport and HTTP request establishment; it is an upstream-side request-processing hold, not a wire connect fault. Fault matching is the conjunction GET + exact/ready + explicit test header. POST/business negative controls do not enter the delay filter. Run cases sequentially and require active_faults=0 before each; otherwise faults_overflow is a prerequisite failure, never a timeout pass.",
+  "prerequisitesAndObservation": [
+    "Healthy unfaulted readyGET200 first, original peer cert/SAN and listener identity captured",
+    "Every faulted request must show original upstream connection-pool-ready/TLS handshake success BEFORE fault delay and before500ms connect cap",
+    "Original upstream HCM request counter and http.worker_trust_self_check.fault.delays_injected both advance for exact correlated request",
+    "Outer readiness accesslog records original upstream host127.0.0.1:19001, upstream connection ready time, request transmit duration, RESPONSE_CODE/RESPONSE_FLAGS/RESPONSE_CODE_DETAILS/DURATION and selected profile digest; no token/secret bytes"
+  ],
+  "oracle": {
+    "A": {
+      "routeMs": 1000,
+      "allowedDurationMs": [
+        900,
+        1100
+      ]
+    },
+    "B": {
+      "routeMs": 2000,
+      "allowedDurationMs": [
+        1900,
+        2100
+      ]
+    },
+    "toleranceDeclaredBeforeExecutionMs": 100,
+    "requiredResponseCode": 504,
+    "requiredResponseFlag": "UT",
+    "requiredResponseCodeDetails": "upstream_response_timeout",
+    "mustNotContainFlags": [
+      "UF",
+      "UC",
+      "SI"
+    ],
+    "mustNotUseAsPass": [
+      "connect_timeout or TLS establishment failure",
+      "503/connection reset rather than route-timeout504",
+      "client-only timeout",
+      "missing handshake/request/fault counter evidence",
+      "measured scheduling outside fixed100ms tolerance"
+    ]
+  },
+  "termination": "Client request watchdog is7s solely for bounded test teardown; it is not the policy deadline and cannot satisfy the oracle. Restore/unload test-only overlay and verify healthy200 recovery. Repeat each of five denied override headers; none alters original route budget. POST/business remain404 and do not match fault path.",
+  "externalPrerequisites": [
+    "Original pinned Envoy binary with real HTTP fault filter extension and admin/access-log observations",
+    "Original selected TLS identity/source receipt and isolated test process fixture"
+  ],
+  "primaryReferences": [
+    "https://www.envoyproxy.io/docs/envoy/v1.39.0/configuration/http/http_filters/fault_filter",
+    "https://www.envoyproxy.io/docs/envoy/v1.39.0/api-v3/extensions/filters/http/fault/v3/fault.proto",
+    "https://www.envoyproxy.io/docs/envoy/v1.39.0/configuration/advanced/substitution_formatter",
+    "https://www.envoyproxy.io/docs/envoy/v1.39.0/configuration/http/http_conn_man/response_code_details"
+  ],
+  "executed": false
+}

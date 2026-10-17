@@ -1,0 +1,4 @@
+{
+  "source": "skills/buster/plugins/security-providers/tests/live-function.test.ts healthy/vulnerable npm lockfile generation and known CVE-2021-23337 expectation",
+  "qualification": "Deterministic local JSON task definition matching source supported npm-lock format; not npm-generated/signed download/advisory/Trivy observation, no integrity/registry/install facts invented; future native tool/database/source snapshot required"
+}

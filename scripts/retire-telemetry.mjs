@@ -1,3 +1,4 @@
+import { retainedCoreRuntimePolicy } from '../skills/nova/core/execution/engine-snapshots.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -43,7 +44,7 @@ export async function retireTelemetry(input) {
   const root = runRoot(scope.novaStorageRoot,scope.runId,{maximumLegacyBytes:scope.inventoryLimits.maximumSnapshotBytes});
   if (scope.telemetryRoot === root || scope.telemetryRoot.startsWith(root+path.sep) || root.startsWith(scope.telemetryRoot+path.sep)) throw new Error('TELEMETRY_RETIREMENT_ROOT_OVERLAP');
   if (!fs.lstatSync(path.join(scope.telemetryRoot,'records/store.json')).isFile()) throw new Error('TELEMETRY_RETIREMENT_STORE_REQUIRED');
-  return withRunMutationLock(root, async signal => {
+  return withRunMutationLock(root, retainedCoreRuntimePolicy(root), async signal => {
     signal.throwIfAborted();
     const initial = retainedRun(scope,root);
     const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);

@@ -86,3 +86,25 @@ Human message, summary, footer and field values permit tab, LF and CR while othe
 control bytes and identity-field controls remain rejected. Display shortening
 uses an ellipsis inside its length limit. Original canonical event diagnostics
 remain in the event journal under the message's event identity.
+
+
+Durable store config requires explicit `maximumDeliveryRecords` and
+`maximumDeliveryBytes` positive safe integers; no defaults/numeric strings.
+Nova selects these from Core `settings.operatorMessagingStore` before registry validation,
+uses the captured activation config and retains it with the run. Raw Platform
+adapter entries keep deliveryRoot/targets but reject duplicate store policy.
+Direct callers supply both limits. Existing target payload, sender identity,
+receiver receipt, durable reservation and idempotency semantics are unchanged.
+This store-only migration does not claim target-policy or native acceptance.
+
+### Central target payload profiles
+
+Nova selects required `settings.operatorMessagingPayload.targetPayloadProfiles` from the explicit Core selection. Each target requires a `payloadProfile`; per-target `maxPayloadBytes` authors (even equal values) reject. The former 65536-byte default exists only in the central `standard` profile. Profiles and selectors are captured with the original run; resume/recovery uses original selections before current policy validation. Endpoints, secrets, formats and receipts retain their existing validation and pinned identity checks. Direct consumers must supply a complete selected profile map; no implicit fallback exists.
+
+
+Payload structural admission requires captured `payloadStructure` with separate
+positive depth/array/object limits, bounded by the original protocol ceilings
+20/1000/1000. Nova supplies these solely from the central Core policy; equal
+Platform duplicates reject. Direct callers must supply the complete policy.
+Original record projection remains a protocol validator, not a new admission
+route, and does not use today's potentially narrower policy.

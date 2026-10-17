@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 
 export type ArchivePreparationLimits = Pick<BusterPreparationSettings, 'maximumExtractedBytes' | 'tarTimeoutMs'
   | 'maximumArchiveEntries' | 'maximumListingLineBytes' | 'maximumTarStderrBytes'>;

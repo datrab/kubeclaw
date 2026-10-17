@@ -1,0 +1,471 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/check.mjs",
+  "node": "v24.21.0",
+  "results": [
+    {
+      "setting": "RT-3638839f98359efd",
+      "registration": "kubeclaw.agent-observability:ingester",
+      "schema": {
+        "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "source": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "export": "ingest"
+      },
+      "manifest": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-596681e5b34e5066",
+      "registration": "kubeclaw.agent-observability:evidence",
+      "schema": {
+        "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "source": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "export": "recordEvidence"
+      },
+      "manifest": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-7757cf59afecb196",
+      "registration": "kubeclaw.telemetry-observer:telemetry",
+      "schema": {
+        "path": "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "source": {
+        "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+        "export": "observe"
+      },
+      "manifest": {
+        "path": "skills/common/plugins/telemetry-observer/plugin.json",
+        "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-4a2c371d1c272b14",
+      "registration": "kubeclaw.blueprint-sync:sync",
+      "schema": {
+        "path": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "source": {
+        "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+        "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-b7fd151953533329",
+      "registration": "kubeclaw.delivery-lint:delivery-lint",
+      "schema": {
+        "path": "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
+        "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+      },
+      "source": {
+        "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+        "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/delivery-lint/plugin.json",
+        "sha256": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-ddc5f07235cd7d5a",
+      "registration": "kubeclaw.demo-handoff:candidate",
+      "schema": {
+        "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+        "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+      },
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+        "sha256": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/demo-handoff/plugin.json",
+        "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-e206200eaa42040e",
+      "registration": "kubeclaw.demo-handoff:delivery",
+      "schema": {
+        "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+        "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+      },
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+        "sha256": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/demo-handoff/plugin.json",
+        "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-5ca0fcad939b5fd8",
+      "registration": "kubeclaw.demo-handoff:ready",
+      "schema": {
+        "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+        "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+      },
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/ready.ts",
+        "sha256": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/demo-handoff/plugin.json",
+        "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-db48347c4f9c7450",
+      "registration": "kubeclaw.preflight-contract:validate",
+      "schema": {
+        "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/preflight-contract/plugin.json",
+        "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    },
+    {
+      "setting": "RT-699f4317f8aa6e6e",
+      "registration": "kubeclaw.preflight-contract:source",
+      "schema": {
+        "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+        "sha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/preflight-contract/plugin.json",
+        "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c"
+      },
+      "completeCurrentPositive": {},
+      "negatives": [
+        null,
+        [],
+        {
+          "maximumBytes": 1
+        },
+        {
+          "profile": "B"
+        }
+      ],
+      "result": "passed",
+      "scope": "Exactclosed emptyowningschema/no directentry configread/actualmanifest source-export association only. SDK/transitive source/manifest/task/adapterpolicy not declared absent oraccepted"
+    }
+  ],
+  "controls": [
+    {
+      "id": "actual-agent-and-telemetry-pure-projection",
+      "input": {
+        "deliveryId": "delivery:fixture",
+        "observer": {
+          "id": "fixture"
+        },
+        "event": {
+          "eventId": "event:fixture",
+          "type": "stage.started",
+          "sequence": 1,
+          "identity": {
+            "runId": "run:fixture",
+            "stageId": "stage:fixture"
+          },
+          "occurredAt": "2026-10-13T00:00:00.000Z",
+          "causationId": null,
+          "payload": {
+            "value": "safe fixture"
+          }
+        }
+      },
+      "outputs": {
+        "project": {
+          "schemaVersion": "agent-observability-event.v2",
+          "deliveryId": "delivery:fixture",
+          "eventId": "event:fixture",
+          "eventType": "stage.started",
+          "sequence": 1,
+          "identity": {
+            "runId": "run:fixture",
+            "stageId": "stage:fixture"
+          },
+          "occurredAt": "2026-10-13T00:00:00.000Z",
+          "payload": {
+            "value": "safe fixture"
+          }
+        },
+        "envelope": {
+          "schemaVersion": "telemetry-envelope.v2",
+          "deliveryId": "delivery:fixture",
+          "observer": {
+            "id": "fixture"
+          },
+          "event": {
+            "eventId": "event:fixture",
+            "sequence": 1,
+            "type": "stage.started",
+            "identity": {
+              "runId": "run:fixture",
+              "stageId": "stage:fixture"
+            },
+            "occurredAt": "2026-10-13T00:00:00.000Z",
+            "causationId": null,
+            "payload": {
+              "value": "safe fixture"
+            }
+          }
+        }
+      },
+      "scope": "Pureprojection only; no observers/telemetryadapter/artifactwriter/state/effect invocation"
+    },
+    {
+      "id": "actual-blueprint-task-validation",
+      "input": {
+        "blueprintId": "blueprint:fixture",
+        "repositoryRoot": "/fixture/repo",
+        "branchRef": "fixturebranch",
+        "controlPaths": [
+          "control/A.md"
+        ]
+      },
+      "negativeDuplicatePaths": [
+        "same",
+        "same"
+      ],
+      "scope": "Pureinput guard only; no git.sync/commit/state/artifact effects"
+    },
+    {
+      "id": "actual-preflight-declaration-and-delivery-path-helpers",
+      "doc": "```kubeclaw-deliverables\n{\"schemaVersion\":\"forge-deliverables.v1\",\"moduleId\":\"fixture\",\"substep\":null,\"deliverables\":[\"module/Dockerfile\"]}\n```",
+      "declarations": [
+        "module/Dockerfile"
+      ],
+      "scope": "PureactualtaggedJSON parser and taskdeclaredpaths; no repositoryread/subject/metadata effects"
+    },
+    {
+      "id": "actual-demo-retention-public-library-current-default",
+      "acceptedMissing": 604800,
+      "acceptedUpper": 9223372036,
+      "rejected": 9223372037,
+      "scope": "Exactpublichelper API accepts defaultundefined; actualcandidate exactrequiredinput prevents sourcecallmissingunlessdeclaredvalue exists; retainedcontrollerlease policyauthor/domain/dateproof remainOPEN"
+    }
+  ],
+  "passed": 10,
+  "failed": 0,
+  "sourceDigests": {
+    "skills/common/plugins/agent-observability/package.json": "42f723467024f5e13f7d9389d4288dbbc88b47ab2ea4a6ebad2a226ffebea432",
+    "skills/common/plugins/agent-observability/plugin.json": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+    "skills/common/plugins/agent-observability/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+    "skills/common/plugins/agent-observability/schemas/config.schema.json": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "skills/common/plugins/agent-observability/src/observers.ts": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+    "skills/common/plugins/telemetry-observer/package.json": "cdca39d83d0fe501129c2d542032e99dd0673eb34e1e936a8288df8c1238d870",
+    "skills/common/plugins/telemetry-observer/plugin.json": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+    "skills/common/plugins/telemetry-observer/tsconfig.json": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+    "skills/common/plugins/telemetry-observer/schemas/config.schema.json": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "skills/common/plugins/telemetry-observer/src/observer.ts": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+    "skills/nova/plugins/blueprint-sync/package.json": "c4e89b9ab2e86ba1447604272323b8b2a6488ea281fbd3396cde0ed9ef589fd9",
+    "skills/nova/plugins/blueprint-sync/plugin.json": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384",
+    "skills/nova/plugins/blueprint-sync/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/blueprint-sync/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/blueprint-sync/schemas/input.schema.json": "a32c6626b0da18a21ef666d7692f87c53f75cd582471751da650fe5a0ae773fa",
+    "skills/nova/plugins/blueprint-sync/schemas/config.schema.json": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "skills/nova/plugins/blueprint-sync/src/stage.ts": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+    "skills/nova/plugins/delivery-lint/package.json": "2ea2e723d51ac50a81e051ea2866120c5fc913e196c117bb1d7dd05031707830",
+    "skills/nova/plugins/delivery-lint/plugin.json": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9",
+    "skills/nova/plugins/delivery-lint/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/delivery-lint/fixtures/passing.json": "0b6b7fdacad7d5a07e705de97e08cf0e1741f100e600698d10e1fd4ae61eeaa9",
+    "skills/nova/plugins/delivery-lint/fixtures/remediation.json": "850685a04e5864d147af02745e4b869a6ba20bfd7f9553c26f47206aad6b86cf",
+    "skills/nova/plugins/delivery-lint/schemas/result.schema.json": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+    "skills/nova/plugins/delivery-lint/schemas/input.schema.json": "57a650703fe82e66f611097bf32652425a70d4be8ee5cd6cc63788f983a65ce4",
+    "skills/nova/plugins/delivery-lint/schemas/config.schema.json": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+    "skills/nova/plugins/delivery-lint/src/stage.ts": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+    "skills/nova/plugins/delivery-lint/src/dockerfile.ts": "189011bb0e9f89f2144c1ed883a746b5937b662d39d8b484ee9f4e88d9149849",
+    "skills/nova/plugins/demo-handoff/package.json": "0862144204d32c406fb2248b09dff87582d2a67234b2a05a8614d7393167dcf4",
+    "skills/nova/plugins/demo-handoff/plugin.json": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+    "skills/nova/plugins/demo-handoff/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json": "20ef1065dadcf3236d091621eee86a81157f52dd9aca1b7f3535187aa09d3b13",
+    "skills/nova/plugins/demo-handoff/schemas/empty.schema.json": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+    "skills/nova/plugins/demo-handoff/schemas/result.schema.json": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+    "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json": "0c23e4a13b585c3c1acde7410fed759f034c05f90b2202664bcac9dc5e1010c9",
+    "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json": "908e54cafb1d4edac6aeffe49ded47dc578f87e3d37952b247b7520aa4560fa4",
+    "skills/nova/plugins/demo-handoff/schemas/ready.schema.json": "5b61a49b5383f4d4c1b3227104e136ef0119383ec4c9d456658c20df136dcbb0",
+    "skills/nova/plugins/demo-handoff/src/delivery.ts": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+    "skills/nova/plugins/demo-handoff/src/controller-client.ts": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+    "skills/nova/plugins/demo-handoff/src/adapter.ts": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+    "skills/nova/plugins/demo-handoff/src/ready.ts": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+    "skills/nova/plugins/demo-handoff/src/binding.ts": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+    "skills/nova/plugins/demo-handoff/src/protocol.ts": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+    "skills/nova/plugins/demo-handoff/src/candidate.ts": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+    "skills/nova/plugins/preflight-contract/package.json": "0b771a4c4f650e72534ab1a43bb45d96d881ea6366d1c528da6acafe85bf8337",
+    "skills/nova/plugins/preflight-contract/plugin.json": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c",
+    "skills/nova/plugins/preflight-contract/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/preflight-contract/schemas/source-input.schema.json": "f1f1be9585ad9a70d3a2b9fdb43b3a56179f1bf230440c109878d6749271bb44",
+    "skills/nova/plugins/preflight-contract/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/preflight-contract/schemas/input.schema.json": "eaf263b43e77b55cdeadf0d009e89186f28d4a50672e7f358a9106d0561758dc",
+    "skills/nova/plugins/preflight-contract/schemas/config.schema.json": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "skills/nova/plugins/preflight-contract/src/source-stage.ts": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+    "skills/nova/plugins/preflight-contract/src/stage.ts": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+    "skills/nova/plugins/preflight-contract/src/declarations.ts": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+    "skills/nova/core/telemetry/observers.ts": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd",
+    "skills/nova/core/telemetry/observer-delivery.ts": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc",
+    "skills/nova/core/telemetry/observer-recovery.ts": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/check.mjs": "8a2b0d822e7b7b4b338cce75ad6ec1b738f2ddf1d4da2de1a8d9a84399a844db"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts.json": "48b435d409d3a426a63db334169c588c359764c3816aebb828ae765a4c4f3bba",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "scope": "Actualowningempty schemas/manifestcoordinates/directentrysource/pureexports only; no real registration/stage/observer/capability/signedsubject/controller/HTTPS/native/API/host/model or targetbinding acceptance"
+}

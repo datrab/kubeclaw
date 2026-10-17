@@ -1,0 +1,82 @@
+{
+  "checkerSha256": "2ba66bbb4a151cadd4621f4d1a8336738736c69b5c331e40167af96f39146a32",
+  "tests": [
+    {
+      "id": "CHECKER-duplicate-id",
+      "expected": "duplicate ID",
+      "exitCode": 1,
+      "intendedDiagnostics": [
+        "setting: duplicate ID DLV-IMAGE-OPS-POD-TARGETARCH",
+        "setting: duplicate ID DLV-IMAGE-OPS-POD-TARGETARCH",
+        "setting: duplicate ID CMP-prism-control-pipelinePreferenceSubject"
+      ],
+      "result": "passed",
+      "scope": "checker negative, not production semantic mutant"
+    },
+    {
+      "id": "CHECKER-dangling-case",
+      "expected": "dangling case NO-SUCH-CASE",
+      "exitCode": 1,
+      "intendedDiagnostics": [
+        "CMP-prism-control-pipelinePreferenceSubject: dangling case NO-SUCH-CASE"
+      ],
+      "result": "passed",
+      "scope": "checker negative, not production semantic mutant"
+    },
+    {
+      "id": "CHECKER-dangling-requirement",
+      "expected": "dangling requirement NO-SUCH-REQUIREMENT",
+      "exitCode": 1,
+      "intendedDiagnostics": [
+        "CMP-prism-control-pipelinePreferenceSubject: dangling requirement NO-SUCH-REQUIREMENT"
+      ],
+      "result": "passed",
+      "scope": "checker negative, not production semantic mutant"
+    },
+    {
+      "id": "CHECKER-missing-raw-log",
+      "expected": "absent actual-result raw log",
+      "exitCode": 1,
+      "intendedDiagnostics": [
+        "CMP-C1-VAL-prism-control: absent actual-result raw log"
+      ],
+      "result": "passed",
+      "scope": "checker negative, not production semantic mutant"
+    },
+    {
+      "id": "CHECKER-invalid-pass",
+      "expected": "unknown/skip/timeout/empty",
+      "exitCode": 1,
+      "intendedDiagnostics": [
+        "CMP-C1-VAL-prism-control: unknown/skip/timeout/empty is not a valid result"
+      ],
+      "result": "passed",
+      "scope": "checker negative, not production semantic mutant"
+    },
+    {
+      "id": "CHECKER-unresolved-row",
+      "expected": "unresolved semantic inventory",
+      "exitCode": 1,
+      "intendedDiagnostics": [
+        "CMP-prism-control-pipelinePreferenceSubject: unresolved semantic inventory",
+        "CMP-prism-control-artifactRoot: unresolved semantic inventory",
+        "CMP-prism-control-studioPublicUrl: unresolved semantic inventory"
+      ],
+      "result": "passed",
+      "scope": "checker negative, not production semantic mutant"
+    },
+    {
+      "id": "CHECKER-missing-review",
+      "expected": "no independent required review",
+      "exitCode": 1,
+      "intendedDiagnostics": [
+        "CMP-prism-control-pipelinePreferenceSubject: no independent required review",
+        "CMP-prism-control-artifactRoot: no independent required review",
+        "CMP-prism-control-studioPublicUrl: no independent required review"
+      ],
+      "result": "passed",
+      "scope": "checker negative, not production semantic mutant"
+    }
+  ],
+  "limits": "Injected documentation matrix defects only, not F-MUT production mutants."
+}

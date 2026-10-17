@@ -1,0 +1,29 @@
+npm notice run @kubeclaw/openclaw-agent-observer@0.0.0 test
+npm notice run node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts
+{"ok":true,"suite":"observer-clean-source-build","compiler":"actual-typescript"}
+npm notice run @kubeclaw/openclaw-agent-observer@0.0.0 pretypecheck
+npm notice run npm run sync-contract
+npm notice run @kubeclaw/openclaw-agent-observer@0.0.0 sync-contract
+npm notice run node scripts/sync-contract.mjs
+npm notice run @kubeclaw/openclaw-agent-observer@0.0.0 typecheck
+npm notice run tsc --noEmit -p tsconfig.json
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"config"}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"live-function","registrations":{"openclaw:service":["pass","fail","crash"]}}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+0 !== 1
+
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts:137:39 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

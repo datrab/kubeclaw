@@ -1,0 +1,9 @@
+{
+  "meaning": "Exact initial new definition before source-coordinate and replay-order corrections; generation succeeded, these are found definition defects not native failures",
+  "files": {
+    "define-controller-response-epoch-6606af9-20261013.py": "d2c33f13f03306c124e710abffd14b419006c9c93822c8af23ba405cae839076",
+    "controller-response-epoch-contracts-6606af9-20261013.json": "b686a83a0ae04ee778cdc8f8d14b9c0ca29e6989f92fa474dcfe3fd29fb1dab5",
+    "controller-response-epoch-definition-6606af9-20261013-attempt1.stdout": "90d8a6b298987d234d36c48e39409da85552c091ad2f161584cdafb51523b088",
+    "controller-response-epoch-definition-6606af9-20261013-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

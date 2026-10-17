@@ -1,0 +1,23 @@
+{
+  "qualification": "finite proposed original-authority receiving bridge only, not implemented Buster job field/native receipt/CONFIG author/ledger; no public synthetic authenticated value supplied",
+  "sourceCurrent": "BusterRemotePlanRuntime.stop and BusterRemotePlanService.shutdown currently consume relative timeoutMs twice; current service uses Date.now/newDate clock defaults; this is not absolute accepted-R authority",
+  "proposedOperation": "stop(originalTaskAuthorityRef, originalCleanupDeadlineMs, originalClockRef, originalServiceGenerationRef, originalStateWriterRef)",
+  "schema": "original-cleanup-receiving.proposed.schema.json",
+  "originalLookup": "resolve retained original authority by originalTaskAuthorityRef and exact original state writer/source/role/fence, before reading current service policy; missing retained issuer/clock/service generation/job source/claim/grants rejects, no currentB fallback",
+  "bound": "remaining=originalCleanupDeadlineMs-originalClock.nowMs(); finite Date-compatible timestamps and safe integer subtraction. Timer wait=min(originalS.shutdownTimeoutMs,remaining) ifremaining>0; single original expiry passed to listener/service/provider/native cleanup, rechecked afterawait. No deadline minted from now+S budget; no newrun or ledger",
+  "failureCodesProposed": [
+    "BUSTER_C3_ORIGINAL_CLEANUP_REQUIRED",
+    "BUSTER_C3_ORIGINAL_SERVICE_SOURCE_MISMATCH",
+    "BUSTER_C3_ORIGINAL_CLOCK_UNREPRESENTABLE",
+    "BUSTER_C3_ORIGINAL_CLEANUP_EXPIRED",
+    "BUSTER_C3_ORIGINAL_WRITER_MISMATCH"
+  ],
+  "expiry": "no new effect/wait; keep uncertain ownership/source/budgets/locks and explicit cleanup failure until original quiescence proves release, rather than force success",
+  "caseJoins": [
+    "DLV-CASE-BUSTER-GENERATED-SHUTDOWNTIMEOUTMS",
+    "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+    "QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+    "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+  ],
+  "implementationStatus": "local bridge/source callback not implemented; authentic original issuer/clock/history/capacity remain external facts"
+}

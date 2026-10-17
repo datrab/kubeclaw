@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -8,7 +9,7 @@ const base = {
     payload: { message: 'failed because tests failed' },
   },
 };
-assert.deepEqual(lifecycleNotification(base), {
+assert.deepEqual(lifecycleNotification(base, TEST_CORE_POLICY.notificationPresentation.maxMessageChars, TEST_CORE_POLICY.notificationPresentation), {
   type: 'run.failed', eventId: 'event:1', runId: 'run:1', stageId: 'stage:1',
   severity: 'error', title: 'Pipeline run failed',
   summary: 'failed because tests failed',
@@ -24,14 +25,14 @@ assert.equal(lifecycleNotification({
     ...base.event,
     payload: { reasonCode: null, reason_code: 'quota_exceeded' },
   },
-}).reasonCode, 'quota_exceeded');
+}, TEST_CORE_POLICY.notificationPresentation.maxMessageChars, TEST_CORE_POLICY.notificationPresentation).reasonCode, 'quota_exceeded');
 const preview = previewNotification({
   event: {
     eventId: 'event:2', type: 'artifact.created',
     identity: { runId: 'run:1', artifactId: 'artifact:1' },
     payload: { artifact: { artifactId: 'artifact:1', digest: 'sha256:abc', mediaType: 'text/html', secret: 'do-not-forward' } },
   },
-});
+}, TEST_CORE_POLICY.notificationPresentation);
 assert.equal(preview.artifact.digest, 'sha256:abc');
 assert.equal(preview.artifact.secret, undefined);
 assert.doesNotMatch(JSON.stringify(preview), /do-not-forward/);

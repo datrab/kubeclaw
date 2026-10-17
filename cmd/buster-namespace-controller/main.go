@@ -26,12 +26,12 @@ const (
 	serviceAccountTokenPath     = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	serviceAccountCAPath        = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 	leasePlural                 = "busternamespaceleases"
-	runtimeSecurityRefreshAfter = 5 * time.Second
 )
 
 var errNamespaceOwnershipMismatch = errors.New("namespace ownership does not match lease")
 
 type controller struct {
+	policy               controllerPolicy
 	namespace            string
 	apiGroup             string
 	apiVersion           string
@@ -130,6 +130,10 @@ func main() {
 }
 
 func newController() (*controller, error) {
+	policy, err := loadControllerPolicy(os.Getenv("BUSTER_CONTROLLER_POLICY_FILE"))
+	if err != nil {
+		return nil, err
+	}
 	namespace := getenvFile("KUBECLAW_NAMESPACE", serviceAccountNamespacePath, "kubeclaw")
 	token := readFile(serviceAccountTokenPath, "")
 	host := os.Getenv("KUBERNETES_SERVICE_HOST")
@@ -145,14 +149,21 @@ func newController() (*controller, error) {
 		prefixes = []string{"test"}
 	}
 
-	ttlSeconds := envInt("BUSTER_DEFAULT_TTL_SECONDS", 7200)
-	maxTTLSeconds := envInt("BUSTER_MAX_TTL_SECONDS", 86400)
+	ttlSeconds, err := requiredDurationSeconds("BUSTER_DEFAULT_TTL_SECONDS")
+	if err != nil {
+		return nil, err
+	}
+	maxTTLSeconds, err := requiredDurationSeconds("BUSTER_MAX_TTL_SECONDS")
+	if err != nil {
+		return nil, err
+	}
 	pollInterval, err := controllerPollInterval()
 	if err != nil {
 		return nil, err
 	}
 
 	ctrl := &controller{
+		policy:             policy,
 		namespace:          namespace,
 		apiGroup:           apiGroup,
 		apiVersion:         apiVersion,
@@ -188,7 +199,7 @@ func newController() (*controller, error) {
 		ctrl.allowedSourceSecrets[name] = true
 	}
 
-	client, err := kubernetesHTTPClient()
+	client, err := kubernetesHTTPClient(policy)
 	if err != nil {
 		return nil, err
 	}
@@ -196,11 +207,14 @@ func newController() (*controller, error) {
 	return ctrl, nil
 }
 
-func kubernetesHTTPClient() (*http.Client, error) {
-	return kubernetesHTTPClientFromCA(serviceAccountCAPath)
+func kubernetesHTTPClient(policy controllerPolicy) (*http.Client, error) {
+	return kubernetesHTTPClientFromCA(serviceAccountCAPath, policy)
 }
 
-func kubernetesHTTPClientFromCA(caPath string) (*http.Client, error) {
+func kubernetesHTTPClientFromCA(caPath string, policy controllerPolicy) (*http.Client, error) {
+	if policy.HTTPClientTimeoutSeconds < 1 || policy.HTTPClientTimeoutSeconds > int64((1<<63-1)/time.Second) {
+		return nil, errors.New("CONTROLLER_POLICY_INVALID")
+	}
 	caPEM, err := os.ReadFile(caPath)
 	if err != nil {
 		return nil, fmt.Errorf("read Kubernetes ServiceAccount CA: %w", err)
@@ -210,7 +224,7 @@ func kubernetesHTTPClientFromCA(caPath string) (*http.Client, error) {
 		return nil, fmt.Errorf("failed to parse Kubernetes ServiceAccount CA")
 	}
 	return &http.Client{
-		Timeout: 60 * time.Second,
+		Timeout: time.Duration(policy.HTTPClientTimeoutSeconds) * time.Second,
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{RootCAs: roots, MinVersion: tls.VersionTLS12},
 		},
@@ -353,7 +367,7 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 		exposure[key] = value
 	}
 	runtimeSecurity := objectValue(item.Status["runtimeSecurity"])
-	if runtimeSecurityRefreshDue(runtimeSecurity, time.Now().UTC()) {
+	if runtimeSecurityRefreshDue(runtimeSecurity, time.Now().UTC(), time.Duration(c.policy.RuntimeSecurityRefreshSeconds)*time.Second, time.Duration(c.policy.RuntimeSecurityFutureSkewSeconds)*time.Second) {
 		var err error
 		runtimeSecurity, err = c.runtimeSecurityStatus(ctx, item, namespaceName)
 		if err != nil {
@@ -383,7 +397,7 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 	return c.patchLeaseStatus(ctx, item, next)
 }
 
-func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time) bool {
+func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time, refreshAfter time.Duration, futureSkew time.Duration) bool {
 	phase := stringValue(snapshot["phase"])
 	if phase == "Unavailable" {
 		return false
@@ -392,10 +406,10 @@ func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time) b
 		return true
 	}
 	observedAt, err := time.Parse(time.RFC3339, stringValue(snapshot["observedAt"]))
-	if err != nil || observedAt.After(now.Add(5*time.Second)) {
+	if err != nil || observedAt.After(now.Add(futureSkew)) {
 		return true
 	}
-	return now.Sub(observedAt) >= runtimeSecurityRefreshAfter
+	return now.Sub(observedAt) >= refreshAfter
 }
 
 func runtimeSecurityStatusEqual(left interface{}, right map[string]interface{}) bool {
@@ -412,14 +426,14 @@ func securityFinding(id string, severity string, message string, resource string
 	return map[string]interface{}{"id": id, "severity": severity, "message": message, "resource": resource}
 }
 
-func boundedRuntimeSecurityFindings(findings []interface{}) ([]interface{}, int, int) {
+func boundedRuntimeSecurityFindings(findings []interface{}, policy controllerPolicy) ([]interface{}, int, int) {
 	total := len(findings)
 	ordered := append([]interface{}{}, findings...)
 	sort.SliceStable(ordered, func(i, j int) bool {
 		return stringValue(securityObject(ordered[i])["id"]) < stringValue(securityObject(ordered[j])["id"])
 	})
-	const maximumFindings = 4096
-	const maximumSerializedBytes = 512 * 1024
+	maximumFindings := int(policy.RuntimeSecurityMaximumFindings)
+	maximumSerializedBytes := int(policy.RuntimeSecurityMaximumSerializedBytes)
 	bounded := make([]interface{}, 0, min(total, maximumFindings))
 	sizes := make([]int, 0, min(total, maximumFindings))
 	serializedBytes := 2
@@ -569,7 +583,7 @@ func (c *controller) runtimeSecurityStatus(ctx context.Context, item *lease, nam
 		return nil, err
 	}
 	findings, podCount, serviceCount := inspectRuntimeSecurityState(state, immutableImage, expected)
-	findings, totalFindingCount, omittedFindingCount := boundedRuntimeSecurityFindings(findings)
+	findings, totalFindingCount, omittedFindingCount := boundedRuntimeSecurityFindings(findings, c.policy)
 	resultDigest := runtimeSecurityResultDigest(findings, totalFindingCount, omittedFindingCount, podCount, serviceCount)
 	return map[string]interface{}{"phase": "Observed", "observedAt": time.Now().UTC().Format(time.RFC3339),
 		"manifestDigest": manifestDigest, "immutableImage": immutableImage, "findings": findings,
@@ -1469,10 +1483,20 @@ func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, name
 	return c.deleteNamespaceCAS(ctx, namespaceName, namespace)
 }
 
-func (c *controller) waitForNamespaceDeleted(ctx context.Context, namespaceName string) error {
-	deadline := time.Now().Add(2 * time.Minute)
-	for time.Now().Before(deadline) {
+func (c *controller) waitForNamespaceDeleted(parent context.Context, namespaceName string) error {
+	ctx, cancel := context.WithTimeout(parent, time.Duration(c.policy.NamespaceDeletionTimeoutSeconds)*time.Second)
+	defer cancel()
+	timeout := func() error {
+		return fmt.Errorf("namespace %s was not deleted before cleanup timeout: %w", namespaceName, ctx.Err())
+	}
+	for {
+		if ctx.Err() != nil {
+			return timeout()
+		}
 		err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName, nil, "application/json", nil)
+		if ctx.Err() != nil {
+			return timeout()
+		}
 		if err != nil {
 			var apiErr *apiError
 			if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
@@ -1480,9 +1504,14 @@ func (c *controller) waitForNamespaceDeleted(ctx context.Context, namespaceName 
 			}
 			return err
 		}
-		time.Sleep(c.pollInterval)
+		timer := time.NewTimer(c.pollInterval)
+		select {
+		case <-ctx.Done():
+			timer.Stop()
+			return timeout()
+		case <-timer.C:
+		}
 	}
-	return fmt.Errorf("namespace %s was not deleted before cleanup timeout", namespaceName)
 }
 
 func (c *controller) createOrPatch(ctx context.Context, createPath string, patchPath string, manifest map[string]interface{}, out interface{}) error {
@@ -1869,23 +1898,18 @@ func env(name string, fallback string) string {
 	return value
 }
 
-func envInt(name string, fallback int) int {
-	value := strings.TrimSpace(os.Getenv(name))
-	if value == "" {
-		return fallback
+// Helm transports the selected central values. Missing/malformed values never
+// create a second hidden author inside the controller.
+func requiredDurationSeconds(name string) (int64, error) {
+	parsed, err := strconv.ParseInt(strings.TrimSpace(os.Getenv(name)), 10, 64)
+	if err != nil || parsed < 1 || parsed > (1<<63-1)/int64(time.Second) {
+		return 0, fmt.Errorf("%s must be configured as positive duration seconds", name)
 	}
-	parsed, err := strconv.Atoi(value)
-	if err != nil {
-		return fallback
-	}
-	return parsed
+	return parsed, nil
 }
 
 func controllerPollInterval() (time.Duration, error) {
 	value := strings.TrimSpace(os.Getenv("BUSTER_CONTROLLER_POLL_MS"))
-	if value == "" {
-		value = "3000"
-	}
 	pollMs, err := strconv.ParseInt(value, 10, 64)
 	if err != nil || pollMs <= 0 || pollMs > (1<<63-1)/int64(time.Millisecond) {
 		return 0, errors.New("BUSTER_CONTROLLER_POLL_MS must be positive")

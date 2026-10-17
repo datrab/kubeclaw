@@ -1,0 +1,6 @@
+rules:
+  - id: delivery-a
+    languages: [javascript]
+    severity: ERROR
+    message: Delivery fixture finding
+    pattern: eval($X)

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/link-schema-prism-sources.py", line 12, in <module>
+    at=[x for x in coords if x['path']==c['source'] and x['line']==c['line']];assert len(at)==1;cj=at[0];add(c,'protocol-invariant','Exact contract schema '+cj['pointer']+'='+cj['value']+' is current message/type domain. Contract v1/v2/v3 values/profile/task/observation producer ownership remains individually disposed in640logical coordinates; no CONFIG maximum automatically inserted in accepted envelope.',['CMP-WCORE-JS-TIMER-MAX'] if cj['value']=='2147483647' else [],['docs/review/evidence/config-acceptance/components/residual-fragment.json#/schemaFieldDispositions','docs/review/evidence/config-acceptance/components/additional-schema-closure.json#/rows'])
+                                                                                     ^^^^^^^^^^
+AssertionError

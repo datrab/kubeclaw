@@ -1,0 +1,567 @@
+{
+  "records": [
+    {
+      "id": "RT-CANDIDATE-ee26dbe9c251115e",
+      "source": {
+        "path": "skills/nova/core/test-gates/secure-endpoint.ts",
+        "line": 8,
+        "text": "if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password) {",
+        "sha256": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+      "explicitReviewedReason": "Actual assertSecureRemoteEndpoint rejects userinfo/plaintext nonloopback after adapter activation and secrets in productive factory; IPv4 127.* allowed secure-loopback while SPIFFE exact127.0.0.1 only. Helper current rejection distinct from proposed owning validation before effects. Required same-boundary complete real profiles and role/provider fixtures remain open.",
+      "settings": [
+        "RT-2e15274b0c3fffc1",
+        "RT-6ebb8efa65839981",
+        "RT-c3db9bc2b7065738",
+        "RT-3f096cad21fa1e0a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a140b254a5d6f0fa",
+      "source": {
+        "path": "skills/nova/core/test-gates/secure-endpoint.ts",
+        "line": 12,
+        "text": "const loopback = host === 'localhost' || host === '[::1]' || /^127(?:\\.\\d{1,3}){3}$/u.test(host);",
+        "sha256": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+      "explicitReviewedReason": "Actual assertSecureRemoteEndpoint rejects userinfo/plaintext nonloopback after adapter activation and secrets in productive factory; IPv4 127.* allowed secure-loopback while SPIFFE exact127.0.0.1 only. Helper current rejection distinct from proposed owning validation before effects. Required same-boundary complete real profiles and role/provider fixtures remain open.",
+      "settings": [
+        "RT-2e15274b0c3fffc1",
+        "RT-6ebb8efa65839981",
+        "RT-c3db9bc2b7065738",
+        "RT-3f096cad21fa1e0a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c2cd1d70f0c552fc",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 9,
+        "text": "if (typeof value !== 'string' || !path.isAbsolute(value)) throw new Error(code);",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Actual canonicalDirectory resolves symlink then stat directory, invoke canonical root or separator subtree membership. Config roots vs actual requested repo/source/grants distinguished; duplicate raw aliases/empty direct array accepted, proposed nonempty canonical unique owning validation. Authentic source/grants/parent module correlation remains open.",
+      "settings": [
+        "RT-c124a452f32b2547",
+        "RT-7632c25ab65059f4"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c3e830267e2c7b74",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 16,
+        "text": "if (typeof value !== 'string' || value.length === 0) throw new Error(code);",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Actual activation captures normalized URL/path/canonical root array/primitive mode+credential names/authority. Unknown authentication fallback bearer, SPIFFE supplied token ignored, direct unknown keys ignored; schema conditional strict differs. No ENV/default or installed provider/source authority proof inferred; current actual normal platform deepFreeze retained.",
+      "settings": [
+        "RT-2e15274b0c3fffc1",
+        "RT-6ebb8efa65839981",
+        "RT-e8df47351cb76dc9",
+        "RT-a36927a478e7c2f6",
+        "RT-1a85906afb523b43",
+        "RT-61e74f61fde6c7e4",
+        "RT-c124a452f32b2547",
+        "RT-c3db9bc2b7065738",
+        "RT-1bdf1b0c22b0c184",
+        "RT-3f096cad21fa1e0a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-390a36ccdc4ad08e",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 21,
+        "text": "if (!Number.isSafeInteger(value) || Number(value) < 1 || Number(value) > maximum) throw new Error(code);",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "OPEN actual payload per-plan maximumConcurrency safe1..64 and timeoutMs safe1..7200000, generated task workload/operator-resource partition requires actual source/caller owning field/domain/correlated native coverage/deadline/cancellation fixture. Numeric technical guard not independent supported hardware domain.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual payload per-plan maximumConcurrency safe1..64 and timeoutMs safe1..7200000, generated task workload/operator-resource partition requires actual source/caller owning field/domain/correlated native coverage/deadline/cancellation fixture. Numeric technical guard not independent supported hardware domain.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "precise open productive remote policy/domain/owner/typed proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b48bfc50df2bd325",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 33,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('REMOTE_TEST_GATE_GRANTS_INVALID');",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Exact grants map must cover every actual resolved plan node, each capability string array deduplicated sorted. Task proof/input identity not arbitrary configurable fallback; complete original nodes/native coverage/source/package/providers/role grants retained, no missing node or grants trimming to meet budget.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact grants map must cover every actual resolved plan node, each capability string array deduplicated sorted. Task proof/input identity not arbitrary configurable fallback; complete original nodes/native coverage/source/package/providers/role grants retained, no missing node or grants trimming to meet budget.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d5c5d2e2848bea51",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 39,
+        "text": "if (!Array.isArray(item) || item.some((capability) => typeof capability !== 'string')) {",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Exact grants map must cover every actual resolved plan node, each capability string array deduplicated sorted. Task proof/input identity not arbitrary configurable fallback; complete original nodes/native coverage/source/package/providers/role grants retained, no missing node or grants trimming to meet budget.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact grants map must cover every actual resolved plan node, each capability string array deduplicated sorted. Task proof/input identity not arbitrary configurable fallback; complete original nodes/native coverage/source/package/providers/role grants retained, no missing node or grants trimming to meet budget.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8612cad50f1206b0",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 64,
+        "text": "async function execute(context: AdapterActivationContext, config: ReturnType<typeof parseConfig>, invocation: AdapterInvocation) {",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Actual selected capability test.plan.execute/run/test.resolved-plan protocol/fence/cancel boundary, not configurable selection/model dispatch codec. Current plan validation/run/source/coverage then confidential secrets/source/production gate original real consumer; no successful stage invocation performed in C0 narrow controls.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actual selected capability test.plan.execute/run/test.resolved-plan protocol/fence/cancel boundary, not configurable selection/model dispatch codec. Current plan validation/run/source/coverage then confidential secrets/source/production gate original real consumer; no successful stage invocation performed in C0 narrow controls.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-398f5c25cd290c7d",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 66,
+        "text": "if (request.capability !== 'test.plan.execute' || request.operation !== 'run'",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Actual selected capability test.plan.execute/run/test.resolved-plan protocol/fence/cancel boundary, not configurable selection/model dispatch codec. Current plan validation/run/source/coverage then confidential secrets/source/production gate original real consumer; no successful stage invocation performed in C0 narrow controls.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actual selected capability test.plan.execute/run/test.resolved-plan protocol/fence/cancel boundary, not configurable selection/model dispatch codec. Current plan validation/run/source/coverage then confidential secrets/source/production gate original real consumer; no successful stage invocation performed in C0 narrow controls.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b3e3bf61ab91d7e8",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 67,
+        "text": "|| request.resource.type !== 'test.resolved-plan') throw new Error('REMOTE_TEST_GATE_OPERATION_UNSUPPORTED');",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Actual selected capability test.plan.execute/run/test.resolved-plan protocol/fence/cancel boundary, not configurable selection/model dispatch codec. Current plan validation/run/source/coverage then confidential secrets/source/production gate original real consumer; no successful stage invocation performed in C0 narrow controls.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actual selected capability test.plan.execute/run/test.resolved-plan protocol/fence/cancel boundary, not configurable selection/model dispatch codec. Current plan validation/run/source/coverage then confidential secrets/source/production gate original real consumer; no successful stage invocation performed in C0 narrow controls.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-508dcfa5a443193a",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 69,
+        "text": "if (!config.roots.some((root) => repositoryRoot === root || repositoryRoot.startsWith(`${root}${path.sep}`))) {",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Actual canonicalDirectory resolves symlink then stat directory, invoke canonical root or separator subtree membership. Config roots vs actual requested repo/source/grants distinguished; duplicate raw aliases/empty direct array accepted, proposed nonempty canonical unique owning validation. Authentic source/grants/parent module correlation remains open.",
+      "settings": [
+        "RT-c124a452f32b2547",
+        "RT-7632c25ab65059f4"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-75baf335d9d4b4d9",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 86,
+        "text": "pollMilliseconds: 500, maximumResponseBytes: 64 * 1024 * 1024,",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "OPEN actual production factory policy poll500ms, response/result/archive/evidence64MiB, archive/evidence stores1GiB and record10000/1GiB/64MiB; source literals require existing/new distinct Runtime field ownership, quota units/full serialization and original history/no-trimming cases. No umbrella foundation author or physical capacity proof from constructor.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual production factory policy poll500ms, response/result/archive/evidence64MiB, archive/evidence stores1GiB and record10000/1GiB/64MiB; source literals require existing/new distinct Runtime field ownership, quota units/full serialization and original history/no-trimming cases. No umbrella foundation author or physical capacity proof from constructor.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "precise open productive remote policy/domain/owner/typed proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9d1e56313e721607",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 99,
+        "text": "timeoutMs: positiveInteger(request.payload.timeoutMs, 7_200_000, 'REMOTE_TEST_GATE_TIMEOUT_INVALID'), signal });",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "OPEN actual payload per-plan maximumConcurrency safe1..64 and timeoutMs safe1..7200000, generated task workload/operator-resource partition requires actual source/caller owning field/domain/correlated native coverage/deadline/cancellation fixture. Numeric technical guard not independent supported hardware domain.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual payload per-plan maximumConcurrency safe1..64 and timeoutMs safe1..7200000, generated task workload/operator-resource partition requires actual source/caller owning field/domain/correlated native coverage/deadline/cancellation fixture. Numeric technical guard not independent supported hardware domain.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "precise open productive remote policy/domain/owner/typed proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dc4ede9d575301c8",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "line": 106,
+        "text": "const config = parseConfig(context);",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "explicitReviewedReason": "Actual activation captures normalized URL/path/canonical root array/primitive mode+credential names/authority. Unknown authentication fallback bearer, SPIFFE supplied token ignored, direct unknown keys ignored; schema conditional strict differs. No ENV/default or installed provider/source authority proof inferred; current actual normal platform deepFreeze retained.",
+      "settings": [
+        "RT-2e15274b0c3fffc1",
+        "RT-6ebb8efa65839981",
+        "RT-e8df47351cb76dc9",
+        "RT-a36927a478e7c2f6",
+        "RT-1a85906afb523b43",
+        "RT-61e74f61fde6c7e4",
+        "RT-c124a452f32b2547",
+        "RT-c3db9bc2b7065738",
+        "RT-1bdf1b0c22b0c184",
+        "RT-3f096cad21fa1e0a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7d7f75974906980e",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 12,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('DEMO_EVIDENCE_INVALID');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact nonarray object guard for artifact/manifest request protocol, no configurable operator knob or successful actual artifact/import acceptance.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact nonarray object guard for artifact/manifest request protocol, no configurable operator knob or successful actual artifact/import acceptance.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1926a912cedf7b90",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 16,
+        "text": "if(typeof value!=='string'||!value||value.length>2048)throw new Error('DEMO_EVIDENCE_INVALID');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Source nonempty <=2048 UTF16 text vs schema unbounded min1; NUL/control characters pass constructor. Exact producer IDs derived frozen graph/provenance, not independently editable knobs. root captured vs stage ID context rereads distinct; normal platform loader recursive freeze prevents unsupported normal mutation claim.",
+      "settings": [
+        "RT-3595d6c01950c170",
+        "RT-af44787955c47c38",
+        "RT-1e81b0ff7d53468a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9eb87e86239aa321",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 20,
+        "text": "if(ref.namespace!==namespace || ref.mediaType!=='application/json' || ref.producer?.runId!==runId || ref.producer.stageId!==stageId",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact source ArtifactRef namespace/media/run/stage/digest/full UTF8 bytes and final manifest coverage/decision/result/import binding. Original task proof/input integrity rules, not knobs; genuine matching original full manifest/source/native coverage/import fixture remains NOTRUN. No synthetic helper trust acceptance.",
+      "settings": [
+        "RT-af44787955c47c38",
+        "RT-1e81b0ff7d53468a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c6225765b4e9d484",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 21,
+        "text": "|| !Number.isSafeInteger(ref.sizeBytes) || ref.sizeBytes<1 || ref.sizeBytes>8*1024*1024)throw new Error('DEMO_EVIDENCE_ARTIFACT_OWNER_INVALID');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "OPEN actual per artifact8MiB maximum allowed serialized JSON guard; common8MiB owner/reader/source contract vs original task metadata proof/per-store64MiB must be traced and actual full positive/adjacent negative specified. No arbitrary artifact dropping or payload-only hash proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual per artifact8MiB maximum allowed serialized JSON guard; common8MiB owner/reader/source contract vs original task metadata proof/per-store64MiB must be traced and actual full positive/adjacent negative specified. No arbitrary artifact dropping or payload-only hash proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "precise open productive remote policy/domain/owner/typed proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-22f73e152654df23",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 24,
+        "text": "if(canonicalJson(response.artifact)!==canonicalJson(ref) || response.digest!==ref.digest || sha256Text(bytes)!==ref.digest",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact source ArtifactRef namespace/media/run/stage/digest/full UTF8 bytes and final manifest coverage/decision/result/import binding. Original task proof/input integrity rules, not knobs; genuine matching original full manifest/source/native coverage/import fixture remains NOTRUN. No synthetic helper trust acceptance.",
+      "settings": [
+        "RT-af44787955c47c38",
+        "RT-1e81b0ff7d53468a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8f7cd0163a4b7ae2",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 25,
+        "text": "|| response.sizeBytes!==ref.sizeBytes || Buffer.byteLength(bytes)!==ref.sizeBytes)throw new Error('DEMO_EVIDENCE_ARTIFACT_INTEGRITY_INVALID');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact source ArtifactRef namespace/media/run/stage/digest/full UTF8 bytes and final manifest coverage/decision/result/import binding. Original task proof/input integrity rules, not knobs; genuine matching original full manifest/source/native coverage/import fixture remains NOTRUN. No synthetic helper trust acceptance.",
+      "settings": [
+        "RT-af44787955c47c38",
+        "RT-1e81b0ff7d53468a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0888cf6e7a818c41",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 33,
+        "text": "if(request.capability!=='test.plan.evidence'||request.operation!=='demo'||request.resource.type!=='test.plan.evidence')throw new Error('DEMO_EVIDENCE_OPERATION_INVALID');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact test.plan.evidence/demo/resource and stopping/signal/fence lifecycle protocol, not operator permission or generic successful partial evidence fallback. Wrong/cancelled operation rejects before real artifact proof return; real invocation/recovery remains futureNOTRUN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact test.plan.evidence/demo/resource and stopping/signal/fence lifecycle protocol, not operator permission or generic successful partial evidence fallback. Wrong/cancelled operation rejects before real artifact proof return; real invocation/recovery remains futureNOTRUN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d5acd70a47d4adf0",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 36,
+        "text": "if(request.resource.canonicalId!==manifestRef.artifactId || request.payload.namespace!==manifestRef.namespace)throw new Error('DEMO_EVIDENCE_MANIFEST_INVALID');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact source ArtifactRef namespace/media/run/stage/digest/full UTF8 bytes and final manifest coverage/decision/result/import binding. Original task proof/input integrity rules, not knobs; genuine matching original full manifest/source/native coverage/import fixture remains NOTRUN. No synthetic helper trust acceptance.",
+      "settings": [
+        "RT-af44787955c47c38",
+        "RT-1e81b0ff7d53468a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1d8891f5690a9a4e",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 45,
+        "text": "if(decision.state!=='passed'||!decision.coverage||!coveragePassed(decision.coverage)||decision.decisionDigest!==final.decisionDigest",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact source ArtifactRef namespace/media/run/stage/digest/full UTF8 bytes and final manifest coverage/decision/result/import binding. Original task proof/input integrity rules, not knobs; genuine matching original full manifest/source/native coverage/import fixture remains NOTRUN. No synthetic helper trust acceptance.",
+      "settings": [
+        "RT-af44787955c47c38",
+        "RT-1e81b0ff7d53468a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d28eda8ce66293ca",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 46,
+        "text": "|| decision.resultDigest!==final.resultDigest || canonicalJson(decision.coverage)!==canonicalJson(final.coverage))throw new Error('DEMO_EVIDENCE_GATE_NOT_PASSED');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact source ArtifactRef namespace/media/run/stage/digest/full UTF8 bytes and final manifest coverage/decision/result/import binding. Original task proof/input integrity rules, not knobs; genuine matching original full manifest/source/native coverage/import fixture remains NOTRUN. No synthetic helper trust acceptance.",
+      "settings": [
+        "RT-af44787955c47c38",
+        "RT-1e81b0ff7d53468a"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2462c4ea166752f6",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 55,
+        "text": "if(!path.isAbsolute(root)||path.normalize(root)!==root)throw new Error('DEMO_EVIDENCE_STORE_INVALID');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Lexical absolute normalized root at activate, actual invoke realpath==root and FileNovaGateImportStore imports directory shares original plan writer state. Constructor no gate state I/O; current registry config pins and platform loader freeze intact. Historical import/version/grants/retention/capacity obligations remain OPEN.",
+      "settings": [
+        "RT-3595d6c01950c170"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "precise open productive remote policy/domain/owner/typed proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-df791c73e26c8ab7",
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 61,
+        "text": "if(stopping||invocation.signal.aborted)throw new Error('DEMO_EVIDENCE_CANCELLED');",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "explicitReviewedReason": "Exact test.plan.evidence/demo/resource and stopping/signal/fence lifecycle protocol, not operator permission or generic successful partial evidence fallback. Wrong/cancelled operation rejects before real artifact proof return; real invocation/recovery remains futureNOTRUN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact test.plan.evidence/demo/resource and stopping/signal/fence lifecycle protocol, not operator permission or generic successful partial evidence fallback. Wrong/cancelled operation rejects before real artifact proof return; real invocation/recovery remains futureNOTRUN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json",
+      "status": "explicit current source/config/task proof/authority boundary; independent review pending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "thisBatchCount": 26,
+  "additionalActualSourceSeams": [
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "lines": [
+        47,
+        48,
+        49,
+        50,
+        55,
+        68
+      ],
+      "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e",
+      "reason": "Actual recursive deepFreeze/normal load route\u2014not merely shallow AdapterStartup context freeze; prevents invented normal mutable stage-id configuration defect. Direct public constructor caller reference is distinct supported-library seam."
+    },
+    {
+      "source": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "lines": [
+        79,
+        80,
+        83,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92
+      ],
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "reason": "Current validation/payload coverage -> confidential token and key lookup BEFORE late production secure endpoint factory; fixed productive quotas remain distinct unclosed obligations."
+    }
+  ]
+}

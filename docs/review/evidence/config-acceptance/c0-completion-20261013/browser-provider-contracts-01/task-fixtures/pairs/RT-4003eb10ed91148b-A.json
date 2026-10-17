@@ -1,0 +1,8 @@
+{
+  "manifestFile": "manifest-640-a.json",
+  "targets": [
+    "target-a",
+    "target-b"
+  ],
+  "endpointName": "service-a"
+}

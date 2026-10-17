@@ -1,0 +1,646 @@
+skills/buster/engine/test-gates/container-build-runtime.ts:234:      fs.writeFileSync(path.join(dockerConfig, 'config.json'), JSON.stringify({ auths: {
+skills/buster/engine/test-gates/preparation-command.ts:21:  const directory = preparationSourceDirectory(config.sourceRoot, admissionId);
+skills/buster/engine/test-gates/preparation-command.ts:28:  const readRoots = [app, '/usr', '/lib', '/lib64', '/etc/ssl', '/proc', config.cgroupRoot]
+skills/buster/engine/test-gates/preparation-command.ts:30:  if (!readRoots.includes(config.cgroupRoot)) throw new Error('BUSTER_PREPARATION_CGROUP_ROOT_MISSING');
+skills/buster/engine/test-gates/preparation-command.ts:33:    if (real === config.sourceRoot || config.sourceRoot.startsWith(`${real}${path.sep}`)) {
+skills/buster/engine/test-gates/preparation-command.ts:37:  return { launcher: config.launcher, uid: preparationUid, gid: preparationUid, executable: sandbox,
+skills/buster/engine/test-gates/preparation-command.ts:45:      BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT: config.sourceRoot,
+skills/buster/engine/test-gates/preparation-command.ts:46:      BUSTER_PREPARATION_ASSIGNED_TAR: config.tarExecutable,
+skills/buster/engine/test-gates/preparation-command.ts:47:      BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY: config.trustedSourceAuthority,
+skills/buster/engine/test-gates/preparation-command.ts:48:      BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY: config.sourceAttestationPublicKey,
+skills/buster/engine/test-gates/production-config-values.ts:176:    throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness:use buster-engine.config.json settings.dependencyReadiness');
+skills/buster/engine/test-gates/production-config-values.ts:180:      throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use buster-engine.config.json settings.preparation`);
+skills/buster/engine/test-gates/production-config-values.ts:183:    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use buster-engine.config.json settings.admission`);
+skills/buster/engine/test-gates/preparation-supervisor.ts:14:import { nativeBusterPreparationConfig, requireRootBusterSettings, preparationSourceRoot, preparationRuntimeConfig } from './preparation-config.ts';
+skills/common/plugins/openclaw-agent-observer/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/openclaw-agent-observer/tsconfig.build.json:2:  "extends": "./tsconfig.json",
+skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts:2:import type { AgentObserverConfig } from './config.ts';
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:13:import type { AgentObserverConfig } from './config.ts';
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:30:      host: config.redisHost,
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:31:      port: config.redisPort,
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:32:      username: config.redisUsername,
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:33:      password: config.redisPassword,
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:34:      tls: config.redisTls,
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:35:      networkIsolation: config.redisNetworkIsolation,
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:119:    if (this.config.enabled) this.ensureRedisClient();
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:123:    if (!this.config.enabled) {
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:128:    const size = checkAgentObservabilityPayloadSize(event, this.config.maxEventBytes);
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:137:    if (queue.length >= this.config.maxQueuePerStream) {
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:183:      if (this.hasItems() && this.config.enabled) this.scheduleFlush();
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:189:    while (this.config.enabled) {
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:202:    const maxAttempts = item.kind === 'control' ? this.config.controlWriteMaxAttempts : 1;
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:207:        await this.xadd(redis, item.stream, this.config.streamMaxLen, item.data);
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:229:      this.config.redisCommandTimeoutMs,
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:235:    const base = this.config.controlWriteRetryBaseMs;
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:236:    const max = this.config.controlWriteRetryMaxMs;
+skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:250:      await this.xadd(redis, AGENT_OBSERVABILITY_DEADLETTER_STREAM, this.config.deadLetterMaxLen, JSON.stringify(entry));
+skills/common/plugins/openclaw-agent-observer/src/index.ts:6:import { agentObserverRuntimeEnvironment, resolveAgentObserverConfig } from './config.ts';
+skills/common/plugins/openclaw-agent-observer/src/index.ts:7:import type { AgentObserverConfig } from './config.ts';
+skills/common/plugins/openclaw-agent-observer/src/index.ts:73:    if (config.enabled) this.startDiagnostics();
+skills/common/plugins/openclaw-agent-observer/src/index.ts:87:    if (!config.enabled) return;
+skills/common/plugins/openclaw-agent-observer/src/index.ts:108:    if (!config.enabled) return;
+skills/common/plugins/openclaw-agent-observer/src/index.ts:128:    if (!config.enabled) return;
+skills/common/plugins/openclaw-agent-observer/src/index.ts:157:      hookPriority: this.config.hookPriority,
+skills/common/plugins/openclaw-agent-observer/src/index.ts:158:      hookTimeoutMs: this.config.hookTimeoutMs,
+skills/common/plugins/openclaw-agent-observer/src/index.ts:164:      enabled: this.config.enabled,
+skills/common/plugins/openclaw-agent-observer/src/index.ts:169:        configured: Boolean(this.config.redisHost || this.config.redisPort || this.config.redisNetworkIsolation),
+skills/common/plugins/openclaw-agent-observer/scripts/build.mjs:24:      ? [tsc, '-p', path.join(pluginRoot, 'tsconfig.build.json'), '--outDir', output]
+skills/common/plugins/openclaw-agent-observer/scripts/build.mjs:25:      : ['-p', path.join(pluginRoot, 'tsconfig.build.json'), '--outDir', output];
+skills/common/plugins/openclaw-agent-observer/src/config.ts:89:  return config[configKey] !== undefined ? config[configKey] : env[environmentKey];
+skills/common/plugins/openclaw-agent-observer/package.json:25:    "typecheck": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/openclaw-agent-observer/package.json:27:    "test": "node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts"
+skills/buster/engine/test-gates/security-scan-runtime.ts:226:        fs.writeFileSync(path.join(credentialDirectory,'config.json'),JSON.stringify({auths:{[access.registryReference]:{auth:Buffer.from(`${access.username}:${access.password}`).toString('base64')}}}),{mode:0o600});
+skills/common/plugins/transport-publisher/plugin.json:19:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/telemetry-observer/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/transport-publisher/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/telemetry-observer/plugin.json:51:      "configSchema": "schemas/config.schema.json",
+skills/common/plugins/telemetry-observer/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/transport-publisher/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/transport-publisher/src/adapter.ts:73:  if (!plainRecord(config.targets) || Object.keys(config.targets).length === 0) {
+skills/common/plugins/transport-publisher/src/adapter.ts:77:  for (const [id, rawTarget] of Object.entries(config.targets)) {
+skills/common/plugins/transport-publisher/src/adapter.ts:89:  if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {
+skills/common/plugins/transport-publisher/src/adapter.ts:92:  const maximumDeliveryRecords = storeLimit(config.maximumDeliveryRecords, 100_000, 'maximumDeliveryRecords');
+skills/common/plugins/transport-publisher/src/adapter.ts:93:  const maximumDeliveryBytes = storeLimit(config.maximumDeliveryBytes, 256 * 1024 * 1024, 'maximumDeliveryBytes');
+skills/common/plugins/transport-publisher/src/adapter.ts:94:  return { targets, deliveryRoot: config.deliveryRoot, maximumDeliveryRecords, maximumDeliveryBytes };
+skills/common/plugins/transport-publisher/src/adapter.ts:195:  const config = readConfig(context.config);
+skills/common/plugins/transport-publisher/src/adapter.ts:196:  const targets = config.targets;
+skills/common/plugins/transport-publisher/src/adapter.ts:197:  const records = new FileDurableRecordStore(config.deliveryRoot, {
+skills/common/plugins/transport-publisher/src/adapter.ts:198:    maximumRecords: config.maximumDeliveryRecords,
+skills/common/plugins/transport-publisher/src/adapter.ts:199:    maximumBytes: config.maximumDeliveryBytes,
+skills/common/plugins/runtime-dispatch/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/runtime-dispatch/plugin.json:19:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/runtime-dispatch/plugin.json:33:      "configSchema": "schemas/openclaw-config.schema.json"
+skills/common/plugins/runtime-dispatch/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts:4:import { targetsFrom, validTargetId } from './openclaw-config.ts';
+skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts:19:  const targets = targetsFrom(context.config);
+skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:79:export function targetsFrom(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, OpenClawTarget> {
+skills/common/plugins/runtime-dispatch/src/adapter.ts:108:  const targets = config(context.config);
+skills/common/plugins/artifact-store/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/artifact-store/plugin.json:17:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/artifact-store/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/artifact-store/src/adapter.ts:160:  const configured = context.config.artifactRoot;
+skills/common/plugins/artifact-store/src/adapter.ts:162:  const maximum = context.config.maxArtifactBytes ?? 16 * 1024 * 1024;
+skills/common/plugins/artifact-store/src/adapter.ts:164:  const maximumStoreBytes = context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES;
+skills/common/plugins/artifact-store/src/adapter.ts:165:  const maximumRecords = context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS;
+skills/common/plugins/git-workspace/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/network-http/plugin.json:16:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/git-workspace/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/git-workspace/src/adapter.ts:7:  const configuredRoots = context.config.allowedRepositoryRoots;
+skills/common/plugins/git-workspace/src/adapter.ts:10:  const workspaceRoot = canonicalWorkspaceRoot(context.config.workspaceRoot);
+skills/common/plugins/git-workspace/src/adapter.ts:12:    executable: canonicalExecutable(context.config.gitExecutable),
+skills/common/plugins/git-workspace/src/adapter.ts:13:    authorName: identityValue(context.config.authorName, 'authorName'),
+skills/common/plugins/git-workspace/src/adapter.ts:14:    authorEmail: identityValue(context.config.authorEmail, 'authorEmail'),
+skills/common/plugins/git-workspace/src/adapter.ts:15:    maxExecutionMs: positiveInteger(context.config.maxExecutionMs, 'maxExecutionMs'),
+skills/common/plugins/git-workspace/src/adapter.ts:16:    maxOutputBytes: positiveInteger(context.config.maxOutputBytes, 'maxOutputBytes'),
+skills/common/plugins/git-workspace/src/adapter.ts:17:    terminationGraceMs: positiveInteger(context.config.terminationGraceMs, 'terminationGraceMs'),
+skills/common/plugins/network-http/src/adapter.ts:19:  const origins = config.allowedOrigins;
+skills/common/plugins/network-http/src/adapter.ts:23:  const rawHeaders = config.allowedHeaders ?? ['accept', 'content-type', 'idempotency-key'];
+skills/common/plugins/network-http/src/adapter.ts:29:    methods: new Set((config.allowedMethods as string[] | undefined ?? ['GET']).map((method) => method.toUpperCase())),
+skills/common/plugins/network-http/src/adapter.ts:31:    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576),
+skills/common/plugins/network-http/src/adapter.ts:32:    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576),
+skills/common/plugins/network-http/src/adapter.ts:33:    timeoutMs: positiveInteger(config.timeoutMs, 'timeoutMs', 30_000),
+skills/common/plugins/network-http/src/adapter.ts:108:  const config = parseConfig(context.config);
+skills/common/plugins/network-http/src/adapter.ts:118:      if (!config.origins.has(url.origin)) throw new Error(`NETWORK_ORIGIN_DENIED:${url.origin}`);
+skills/common/plugins/network-http/src/adapter.ts:121:      if (!config.methods.has(method)) throw new Error(`NETWORK_METHOD_DENIED:${method}`);
+skills/common/plugins/network-http/src/adapter.ts:122:      const headers = requestHeaders(request.payload.headers, config.headers);
+skills/common/plugins/network-http/src/adapter.ts:124:      if (body && Buffer.byteLength(body, 'utf8') > config.maxRequestBytes) throw new Error('NETWORK_REQUEST_SIZE_EXCEEDED');
+skills/common/plugins/network-http/src/adapter.ts:125:      const { response, text, contentType } = await performRequest(url, method, headers, body, signal, config.timeoutMs, config.maxResponseBytes);
+skills/common/plugins/network-http/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/network-http/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/git-workspace/plugin.json:20:      "configSchema": "schemas/config.schema.json"
+skills/common/plugin-runtime/tsconfig.json:2:  "extends": "../../../tsconfig.base.json",
+skills/common/plugin-runtime/sdk/package.json:6:    "build": "tsc -p tsconfig.build.json",
+skills/common/plugin-runtime/sdk/README.md:24:files and declaration maps into `dist/` using the same `tsconfig.build.json`.
+skills/common/plugins/operator-messaging/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/notification-observer/src/observer.ts:49:  const configured = context.contract.config.target;
+skills/common/plugins/notification-observer/src/observer.ts:76:  return bounded(config[key], maximum);
+skills/common/plugins/notification-observer/src/observer.ts:175:  const suppressed = context.contract.config.suppressEventTypes;
+skills/common/plugins/notification-observer/src/observer.ts:177:  const maximum = context.contract.config.maxMessageChars;
+skills/common/plugins/notification-observer/src/observer.ts:178:  const stageLabels = context.contract.config.stageLabels;
+skills/common/plugins/notification-observer/src/observer.ts:179:  const pipelineLabel = configuredText(context.contract.config, 'pipelineLabel', 256);
+skills/common/plugins/notification-observer/src/observer.ts:180:  const modelLabel = configuredText(context.contract.config, 'modelLabel', 256);
+skills/common/plugins/operator-messaging/src/adapter.ts:8:import { isTargetId, parseConfig, type TargetConfig } from './config.ts';
+skills/common/plugins/operator-messaging/src/adapter.ts:67:  const config = parseConfig(context.config);
+skills/common/plugins/operator-messaging/src/adapter.ts:68:  const targets = config.targets;
+skills/common/plugins/operator-messaging/src/adapter.ts:69:  const records = new FileDurableRecordStore(config.deliveryRoot, {
+skills/common/plugins/operator-messaging/src/adapter.ts:70:    maximumRecords: config.maximumDeliveryRecords,
+skills/common/plugins/operator-messaging/src/adapter.ts:71:    maximumBytes: config.maximumDeliveryBytes,
+skills/common/plugins/operator-messaging/src/config.ts:87:  if (!isRecord(config.targets) || Object.keys(config.targets).length < 1) throw new Error('OPERATOR_CONFIG_INVALID:targets');
+skills/common/plugins/operator-messaging/src/config.ts:88:  if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {
+skills/common/plugins/operator-messaging/src/config.ts:91:  const maximumDeliveryRecords = Number(config.maximumDeliveryRecords ?? 100_000);
+skills/common/plugins/operator-messaging/src/config.ts:92:  const maximumDeliveryBytes = Number(config.maximumDeliveryBytes ?? 256 * 1024 * 1024);
+skills/common/plugins/operator-messaging/src/config.ts:100:    targets: new Map(Object.entries(config.targets).map(([id, raw]) => [id, parseTarget(id, raw)])),
+skills/common/plugins/operator-messaging/src/config.ts:101:    deliveryRoot: config.deliveryRoot,
+skills/common/plugins/notification-observer/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/operator-messaging/plugin.json:20:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/notification-observer/plugin.json:38:      "configSchema": "schemas/config.schema.json",
+skills/common/plugins/notification-observer/plugin.json:59:      "configSchema": "schemas/config.schema.json",
+skills/common/plugins/operator-messaging/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/notification-observer/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/openclaw-agent-events/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugin-runtime/foundation/config/platform.ts:56:    installationRoots: config.installationRoots.map((value) => path.resolve(directory, value)),
+skills/common/plugin-runtime/foundation/config/platform.ts:57:    trustedBuiltinRoots: config.trustedBuiltinRoots.map((value) => path.resolve(directory, value)),
+skills/common/plugin-runtime/foundation/config/platform.ts:58:    storageRoot: path.resolve(directory, config.storageRoot),
+skills/common/plugin-runtime/foundation/config/platform.ts:59:    ...(config.isolation ? { isolation: { cgroupRoot: path.resolve(directory, config.isolation.cgroupRoot) } } : {}),
+skills/common/plugin-runtime/foundation/registry/schema.ts:125:export function resolveReferencedValue(schemaPath: string, value: unknown, schemas: ReferencedSchemaValidators): unknown {
+skills/common/plugin-runtime/foundation/registry/configuration.ts:4:import { resolveReferencedValue, validateReferencedValue } from './schema.ts';
+skills/common/plugin-runtime/foundation/registry/configuration.ts:102:export function resolveTestProviderConfiguration(
+skills/common/plugin-runtime/foundation/registry/configuration.ts:119:    values: resolveReferencedValue(entry.configSchemaPath, value, snapshot.schemas) as Record<string, JsonValue>,
+skills/common/plugin-runtime/foundation/config/README.md:56:`prism-studio.config.json → settings` port, Control origin and proxy deadline. Its role loader
+skills/common/plugin-runtime/foundation/config/README.md:59:preparation path reads `buster-engine.config.json → settings.preparation` through the same schema,
+skills/common/plugin-runtime/foundation/config/README.md:78:by `prism-worker.config.json` `settings.ingress.port`. The shared loader validates
+skills/common/plugin-runtime/foundation/config/swarm.schema.json:57:          "const": "prism-control.config.json"
+skills/common/plugin-runtime/foundation/config/swarm.schema.json:60:          "const": "prism-studio.config.json"
+skills/common/plugin-runtime/foundation/config/swarm.schema.json:63:          "const": "prism-worker.config.json"
+skills/common/plugin-runtime/foundation/config/swarm.schema.json:66:          "const": "prism-execution.config.json"
+skills/common/plugin-runtime/foundation/config/swarm.schema.json:69:          "const": "buster-engine.config.json"
+skills/common/plugin-runtime/foundation/config/swarm.schema.json:72:          "const": "worker-core.config.json"
+skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts:7:    const value = config[key] ?? limits[key];
+skills/common/plugins/openclaw-agent-events/src/adapter.ts:69:  const configured = context.config.hooks;
+skills/common/plugins/openclaw-agent-events/src/adapter.ts:77:  const queue = new IngressQueue<{ hook: string; normalized: NonNullable<ReturnType<typeof normalizeAgentEvent>> }>(ingressLimits(context.config), async ({ hook, normalized }) => {
+skills/common/plugins/openclaw-agent-events/plugin.json:16:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/openclaw-agent-events/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/prompt-contract/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/prompt-contract/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/command-runner/src/adapter.ts:63:  const executables = new Set(stringArray(context.config.allowedExecutables, 'allowedExecutables').map(canonicalExecutable));
+skills/common/plugins/command-runner/src/adapter.ts:64:  const catalog = catalogFrom(context.config.executableCatalog);
+skills/common/plugins/command-runner/src/adapter.ts:66:  const roots = stringArray(context.config.allowedWorkingRoots, 'allowedWorkingRoots').map(canonicalDirectory);
+skills/common/plugins/command-runner/src/adapter.ts:68:    maxOutputBytes: positiveInteger(context.config.maxOutputBytes, 'maxOutputBytes'),
+skills/common/plugins/command-runner/src/adapter.ts:69:    maxExecutionMs: positiveInteger(context.config.maxExecutionMs, 'maxExecutionMs'),
+skills/common/plugins/command-runner/src/adapter.ts:70:    terminationGraceMs: positiveInteger(context.config.terminationGraceMs, 'terminationGraceMs'),
+skills/common/plugins/telemetry-store/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/telemetry-store/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/telemetry-store/plugin.json:16:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/command-runner/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/telemetry-store/src/adapter.ts:6:  const root = context.config.root;
+skills/common/plugins/telemetry-store/src/adapter.ts:8:  const maxRecordBytes = Number(context.config.maxRecordBytes ?? 1_048_576);
+skills/common/plugins/telemetry-store/src/adapter.ts:9:  const maximumRecords = Number(context.config.maximumRecords ?? 100_000);
+skills/common/plugins/telemetry-store/src/adapter.ts:10:  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? 256 * 1024 * 1024);
+skills/common/plugins/command-runner/plugin.json:16:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/agent-observability/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/command-runner/package.json:10:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/agent-observability/plugin.json:36:      "configSchema": "schemas/config.schema.json",
+skills/common/plugins/agent-observability/plugin.json:61:      "configSchema": "schemas/config.schema.json",
+skills/common/plugins/agent-observability/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/redis-transport/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/visual/src/provider.js:52:  if (config.url !== undefined && invocation.inputs.length) throw new Error('VISUAL_TARGET_AMBIGUOUS');
+skills/buster/plugins/visual/src/provider.js:53:  if (typeof config.url === 'string') return origin(config.url, 'VISUAL_TARGET_INVALID');
+skills/buster/plugins/visual/src/provider.js:62:  const selected = config.endpointName === undefined ? value.endpoints[0] : value.endpoints.find((item) => item?.name === config.endpointName);
+skills/buster/plugins/visual/src/provider.js:113:  const name = config.comparisonProfile ?? 'strict-v1'; const base = COMPARISON_PROFILES[name];
+skills/buster/plugins/visual/src/provider.js:114:  if (!base) throw new Error('VISUAL_COMPARISON_PROFILE_INVALID'); const overrides = config.overrides ?? {};
+skills/buster/plugins/visual/src/provider.js:129:  const config = object(invocation.configuration.values, 'VISUAL_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);
+skills/buster/plugins/visual/src/provider.js:132:  const profileMap = profiles(repository, config.profileFile); const baselineManifest = manifest(repository, config.manifestFile, profileMap, invocation.limits);
+skills/buster/plugins/visual/src/provider.js:133:  if (!Array.isArray(config.targets) || !config.targets.length || config.targets.length > 64 || new Set(config.targets).size !== config.targets.length) throw new Error('VISUAL_TARGETS_INVALID');
+skills/buster/plugins/visual/src/provider.js:134:  if ((config.targets.length * 3) + 1 > invocation.limits.artifactFiles) throw new Error('VISUAL_EVIDENCE_FILE_LIMIT_EXCEEDED');
+skills/buster/plugins/visual/src/provider.js:135:  const selected = config.targets.map((id) => baselineManifest.entries.get(id) ?? (() => { throw new Error(`VISUAL_TARGET_NOT_FOUND:${id}`); })());
+skills/buster/plugins/visual/src/provider.js:136:  const masks = new Map(); for (const raw of config.masks ?? []) {
+skills/buster/plugins/visual/src/provider.js:137:    const value = object(raw, 'VISUAL_MASK_INVALID'); if (!config.targets.includes(value.target) || !Array.isArray(value.selectors)) throw new Error('VISUAL_MASK_INVALID');
+skills/buster/plugins/visual/src/provider.js:143:    timeoutMs: config.timeoutMs ?? 30000,
+skills/common/plugins/redis-transport/plugin.json:18:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/redis-transport/plugin.json:30:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/wait-store/src/adapter.ts:199:  const root = context.config.root;
+skills/common/plugins/wait-store/src/adapter.ts:201:  const maxEntryBytes = Number(context.config.maxEntryBytes ?? 1_048_576);
+skills/common/plugins/wait-store/src/adapter.ts:202:  const maximumRecords = Number(context.config.maximumRecords ?? 100_000);
+skills/common/plugins/wait-store/src/adapter.ts:203:  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? 256 * 1024 * 1024);
+skills/common/plugins/redis-transport/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/common/plugins/redis-transport/src/adapter.ts:56:  const options = config(context.config);
+skills/buster/plugins/visual/tsconfig.json:1:{"extends":"../../../../tsconfig.base.json","compilerOptions":{"allowJs":true,"checkJs":false,"noEmit":true},"include":["src/**/*.js","tests/**/*.ts"]}
+skills/buster/plugins/visual/plugin.json:6:    "configSchema":"schemas/config.schema.json",
+skills/common/plugins/wait-store/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/wait-store/plugin.json:16:      "configSchema": "schemas/config.schema.json"
+skills/common/plugins/wait-store/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/buster/plugins/coverage-budget/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/coverage-budget/src/provider.js:51:    const config = invocation.configuration.values;
+skills/buster/plugins/coverage-budget/src/provider.js:52:    const minimum = config.minimumLinePercent;
+skills/buster/plugins/coverage-budget/src/provider.js:79:    const useCombined = config.combine !== false;
+skills/buster/plugins/coverage-budget/plugin.json:8:    "module": "src/provider.js", "export": "provider", "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/coverage-budget/package.json:5:  "scripts": { "build": "tsc --noEmit -p tsconfig.json", "test": "node tests/live-function.test.ts" }
+skills/buster/plugins/axe/plugin.json:6:    "configSchema":"schemas/config.schema.json",
+skills/buster/plugins/lighthouse/plugin.json:6:    "configSchema":"schemas/config.schema.json",
+skills/buster/plugins/playwright/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/playwright/plugin.json:6:    "configSchema":"schemas/config.schema.json",
+skills/buster/plugins/playwright/src/provider.js:12:  if (config.url !== undefined && invocation.inputs.length) throw new Error('PLAYWRIGHT_TARGET_AMBIGUOUS');
+skills/buster/plugins/playwright/src/provider.js:13:  if (typeof config.url === 'string') return origin(config.url, 'PLAYWRIGHT_TARGET_INVALID');
+skills/buster/plugins/playwright/src/provider.js:18:  const selected = config.endpointName === undefined ? value.endpoints[0] : value.endpoints.find((item) => item?.name === config.endpointName);
+skills/buster/plugins/playwright/src/provider.js:50:    const minimumExecuted = Math.max(mode === 'blocking' ? 1 : 0, config.minimumExecutedTests ?? 1);
+skills/buster/plugins/playwright/src/provider.js:52:    for (const title of config.requiredTests ?? []) {
+skills/buster/plugins/playwright/src/provider.js:62:  const config = object(invocation.configuration.values, 'PLAYWRIGHT_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);
+skills/buster/plugins/playwright/src/provider.js:64:  const projectDirectory = inside(repository, relative(config.projectDirectory, 'PLAYWRIGHT_PROJECT_DIRECTORY_INVALID'), 'PLAYWRIGHT_PROJECT_DIRECTORY_INVALID');
+skills/buster/plugins/playwright/src/provider.js:65:  const configFile = inside(projectDirectory, relative(config.configFile, 'PLAYWRIGHT_CONFIG_FILE_INVALID'), 'PLAYWRIGHT_CONFIG_FILE_INVALID');
+skills/buster/plugins/playwright/src/provider.js:67:  const workers = Math.max(1, Math.min(Number.isSafeInteger(config.workers) ? config.workers : 4, Math.max(1, invocation.limits.processes - 4)));
+skills/buster/plugins/playwright/src/provider.js:70:    timeoutMs: Math.min(config.timeoutMs ?? invocation.timeoutMs, invocation.timeoutMs), limits: {
+skills/buster/plugins/lighthouse/tsconfig.json:1:{"extends":"../../../../tsconfig.base.json","compilerOptions":{"allowJs":true,"checkJs":false,"noEmit":true},"include":["src/**/*.js","tests/**/*.ts"]}
+skills/buster/plugins/lighthouse/src/provider.js:16:  if (config.url !== undefined && invocation.inputs.length) throw new Error('LIGHTHOUSE_TARGET_AMBIGUOUS');
+skills/buster/plugins/lighthouse/src/provider.js:17:  if (typeof config.url === 'string') return new URL(config.url).origin;
+skills/buster/plugins/lighthouse/src/provider.js:26:  const selected = config.endpointName === undefined ? value.endpoints[0] : value.endpoints.find((item) => item?.name === config.endpointName);
+skills/buster/plugins/lighthouse/src/provider.js:30:  const bytes = fs.readFileSync(inside(repository, config.settingsFile));
+skills/buster/plugins/lighthouse/src/provider.js:50:  const profile = object(profiles[config.profile], 'LIGHTHOUSE_PROFILE_NOT_FOUND');
+skills/buster/plugins/lighthouse/src/provider.js:65:  if (config.budget !== undefined) {
+skills/buster/plugins/lighthouse/src/provider.js:66:    budget = object(budgets[config.budget], 'LIGHTHOUSE_BUDGET_NOT_FOUND');
+skills/buster/plugins/lighthouse/src/provider.js:68:  return { profile: { ...profile, name: config.profile }, budget };
+skills/buster/plugins/lighthouse/src/provider.js:75:function accepted(config, route, audit) { return (config.acceptances ?? []).find((item) => item.route === route && item.audit === audit && expiryValid(item.expiresAt)) ?? null; }
+skills/buster/plugins/lighthouse/src/provider.js:83:  const config = object(invocation.configuration.values, 'LIGHTHOUSE_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);
+skills/buster/plugins/lighthouse/src/provider.js:87:  const runCount = config.runs ?? (config.purpose === 'performance' ? 3 : 1);
+skills/buster/plugins/lighthouse/src/provider.js:88:  const runs = config.routes.flatMap((route) => Array.from({ length: runCount }, () => ({ route, purpose: config.purpose, profile: resolved.profile })));
+skills/buster/plugins/lighthouse/src/provider.js:90:    payload: { runs, timeoutMs: config.timeoutMs ?? 120000 } });
+skills/buster/plugins/lighthouse/src/provider.js:94:  for (const route of config.routes) {
+skills/buster/plugins/lighthouse/src/provider.js:97:      const file = `lighthouse-${id(`${route}\0${config.purpose}\0${config.profile}\0${index}`)}.json`;
+skills/buster/plugins/lighthouse/src/provider.js:102:    if (config.purpose === 'performance') {
+skills/buster/plugins/lighthouse/src/provider.js:121:      const report = reports[0].report; const categoryScore = score(report, config.purpose); const auditRefs = report.categories?.[config.purpose]?.auditRefs;
+skills/buster/plugins/lighthouse/src/provider.js:141:    summary: `${config.purpose}: ${config.routes.length} route(s), ${response.results.length} report(s), ${failed} failed check(s).`,
+skills/buster/plugins/lighthouse/src/provider.js:147:      values: { purpose: config.purpose, profile: config.profile, routes: routeResults,
+skills/buster/plugins/axe/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/axe/src/provider.js:21:  if (config.url !== undefined && invocation.inputs.length) throw new Error('AXE_TARGET_AMBIGUOUS');
+skills/buster/plugins/axe/src/provider.js:22:  if (typeof config.url === 'string') return new URL(config.url).origin;
+skills/buster/plugins/axe/src/provider.js:31:  const selected = config.endpointName === undefined ? value.endpoints[0]
+skills/buster/plugins/axe/src/provider.js:32:    : value.endpoints.find((item) => item?.name === config.endpointName);
+skills/buster/plugins/axe/src/provider.js:37:  if (config.profileFile !== undefined) {
+skills/buster/plugins/axe/src/provider.js:38:    const bytes = fs.readFileSync(inside(repository, config.profileFile)); if (bytes.byteLength > 262144) throw new Error('AXE_PROFILE_FILE_TOO_LARGE');
+skills/buster/plugins/axe/src/provider.js:53:  const selected = config.profiles ?? ['desktop', 'mobile'];
+skills/buster/plugins/axe/src/provider.js:57:  const acceptance = (config.acceptances ?? []).find((item) => item.rule === rule && item.route === route && item.selector === selector);
+skills/buster/plugins/axe/src/provider.js:70:  const config = object(invocation.configuration.values, 'AXE_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);
+skills/buster/plugins/axe/src/provider.js:74:  const combinations = config.routes.flatMap((route) => profiles.map((profile) => ({ route, profile })));
+skills/buster/plugins/axe/src/provider.js:76:    combinations, tags: config.tags ?? ['wcag2a', 'wcag2aa'], exclude: config.exclude ?? [], timeoutMs: config.timeoutMs ?? 30000,
+skills/buster/plugins/container-build/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/container-build/src/provider.js:50:  const value = object(invocation.configuration.values, 'root');
+skills/buster/plugins/container-build/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/container-build/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/buster/plugins/direct-command/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/direct-command/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/direct-command/src/provider.js:59:  const value = object(invocation.configuration.values, 'root');
+skills/buster/plugins/direct-command/src/provider.js:139:      const workingDirectory = inside(repository, config.workingDirectory, 'workingDirectory');
+skills/buster/plugins/direct-command/src/provider.js:142:        resource: { type: 'command.executable', canonicalId: `catalog:${config.executable}` },
+skills/buster/plugins/direct-command/src/provider.js:144:          args: config.args,
+skills/buster/plugins/direct-command/src/provider.js:147:          environment: config.environment,
+skills/buster/plugins/direct-command/src/provider.js:172:      const declaredFileCount = config.reports.length + config.coverage.length + config.artifacts.length;
+skills/buster/plugins/direct-command/src/provider.js:177:      for (const report of config.reports) {
+skills/buster/plugins/direct-command/src/provider.js:183:      for (const [index, coverage] of config.coverage.entries()) {
+skills/buster/plugins/direct-command/src/provider.js:188:      for (const [index, artifact] of config.artifacts.entries()) {
+skills/buster/plugins/direct-command/src/provider.js:200:        providerDetails: details({ executable: config.executable, resultMode: config.resultMode,
+skills/buster/plugins/direct-command/src/provider.js:201:          reportCount: reports.length, coverageCount: config.coverage.length, artifactCount: config.artifacts.length,
+skills/buster/plugins/openapi/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/openapi/src/provider.js:19:  if (config.url !== undefined && invocation.inputs.length) throw new Error('OPENAPI_TARGET_AMBIGUOUS');
+skills/buster/plugins/openapi/src/provider.js:20:  if (config.url !== undefined) return config.url;
+skills/buster/plugins/openapi/src/provider.js:30:  const selected = config.endpointName === undefined ? (value.endpoints.length === 1 ? value.endpoints[0] : null)
+skills/buster/plugins/openapi/src/provider.js:31:    : value.endpoints.find((item) => item?.name === config.endpointName);
+skills/buster/plugins/openapi/src/provider.js:191:  const config = object(invocation.configuration.values, 'OPENAPI_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);
+skills/buster/plugins/openapi/src/provider.js:193:  const bytes = fs.readFileSync(inside(fs.realpathSync(repositoryPath), config.specFile)); if (bytes.byteLength > 4_194_304) throw new Error('OPENAPI_FILE_TOO_LARGE');
+skills/buster/plugins/openapi/src/provider.js:196:  const catalog = operations(spec); const explicit = Array.isArray(config.operations) ? config.operations : []; const tags = new Set(config.tags ?? []);
+skills/buster/plugins/openapi/src/provider.js:235:      response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url.href }, payload: { method: found.method.toUpperCase(), headers: { ...(selected.headers ?? {}), ...(acceptedTypes.length ? { accept: acceptedTypes.join(', ') } : {}), ...(selected.body === undefined ? {} : { 'content-type': 'application/json' }) }, responseHeaders, body: selected.body === undefined ? undefined : JSON.stringify(selected.body), timeoutMs: Math.min(config.requestTimeoutMs ?? 10_000, invocation.timeoutMs), maximumResponseBytes: config.maximumResponseBytes ?? 1_048_576 } });
+skills/buster/plugins/direct-command/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/buster/plugins/openapi/plugin.json:6:    "module": "src/provider.js", "export": "provider", "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/openapi/package.json:5:  "scripts": { "build": "tsc --noEmit -p tsconfig.json", "test": "node tests/live-function.test.ts && node tests/remediation.test.ts" }
+skills/buster/plugins/security-providers/src/dependency.js:6:  const value = object(invocation.configuration.values, 'DEPENDENCY_SCAN_CONFIG_INVALID');
+skills/buster/plugins/security-providers/src/dependency.js:32:      resource: { type: 'repository.directory', canonicalId: config.projectDirectory },
+skills/buster/plugins/security-providers/src/dependency.js:33:      payload: { projectDirectory: config.projectDirectory, timeoutMs: config.timeoutMs } }), 'DEPENDENCY_SCAN_RESPONSE_INVALID');
+skills/buster/plugins/security-providers/src/dependency.js:35:    return result(invocation, 'dependency-trivy', findings(response.findings), config.policy,
+skills/buster/plugins/security-providers/src/dependency.js:36:      { databaseEvidence: databaseEvidence(response), resultDigest: response.resultDigest, projectDirectory: invocation.configuration.values.projectDirectory });
+skills/buster/plugins/security-providers/src/headers.js:72:  const value = object(invocation.configuration.values, 'SECURITY_HEADERS_CONFIG_INVALID');
+skills/buster/plugins/security-providers/src/headers.js:97:    const responseHeaders = [...new Set(config.rules.map((item) => item.header))];
+skills/buster/plugins/security-providers/src/headers.js:98:    for (const path of config.paths) {
+skills/buster/plugins/security-providers/src/headers.js:99:      const target = new URL(path, `${config.origin}/`);
+skills/buster/plugins/security-providers/src/headers.js:100:      if (target.origin !== config.origin) throw new Error('SECURITY_HEADERS_PATHS_INVALID');
+skills/buster/plugins/security-providers/src/headers.js:103:        resource: { type: 'network.url', canonicalId: url }, payload: { method: 'GET', timeoutMs: config.requestTimeoutMs,
+skills/buster/plugins/security-providers/src/headers.js:107:      for (const item of config.rules) if (!check(headers[item.header], item)) findings.push({
+skills/buster/plugins/security-providers/src/headers.js:113:    return result(invocation, 'headers', findings, config.policy,
+skills/buster/plugins/security-providers/src/headers.js:114:      { profile: config.profile, resolvedRules: config.rules, observations });
+skills/common/plugins/secret-resolver/src/adapter.ts:4:  const mapping = context.config.environment;
+skills/buster/plugins/security-providers/src/kubernetes-runtime.js:26:  const value = object(invocation.configuration.values, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');
+skills/buster/plugins/security-providers/src/kubernetes-runtime.js:47:        manifestDigest: input.digest, timeoutMs: config.timeoutMs,
+skills/buster/plugins/security-providers/src/kubernetes-runtime.js:53:    return result(invocation, 'kubernetes-runtime', findings(response.findings), config.policy,
+skills/buster/plugins/security-providers/src/kubernetes-policy.js:19:  const value = object(invocation.configuration.values, 'KUBERNETES_POLICY_CONFIG_INVALID');
+skills/buster/plugins/security-providers/src/kubernetes-policy.js:39:      payload: { manifestPath: manifest.file, manifestDigest: manifest.digest, timeoutMs: config.timeoutMs } }),
+skills/buster/plugins/security-providers/src/kubernetes-policy.js:42:    return result(invocation, 'kubernetes-policy-trivy', findings(response.findings), config.policy,
+skills/buster/plugins/security-providers/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/secret-resolver/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/security-providers/src/image.js:15:  const value = object(invocation.configuration.values, 'IMAGE_SCAN_CONFIG_INVALID');
+skills/buster/plugins/security-providers/src/image.js:35:      resource: { type: 'container.image', canonicalId: image.image }, payload: { ...image, timeoutMs: config.timeoutMs } }),
+skills/buster/plugins/security-providers/src/image.js:38:    return result(invocation, 'image-trivy', findings(response.findings), config.policy,
+skills/common/plugins/secret-resolver/plugin.json:16:      "configSchema": "schemas/config.schema.json"
+skills/buster/plugins/security-providers/package.json:5:  "scripts": { "build": "tsc --noEmit -p tsconfig.json", "test": "node --test tests/live-function.test.ts tests/database-freshness.test.mts" }
+skills/common/plugins/secret-resolver/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/buster/plugins/api-flow/plugin.json:8:    "module": "src/provider.js", "export": "provider", "configSchema": "schemas/config.schema.json",
+skills/common/plugins/state-store/src/adapter.ts:27:  const configured = context.config.root;
+skills/common/plugins/state-store/src/adapter.ts:29:  const maxEntryBytes = Number(context.config.maxEntryBytes ?? 1_048_576);
+skills/common/plugins/state-store/src/adapter.ts:30:  const maximumRecords = Number(context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS);
+skills/common/plugins/state-store/src/adapter.ts:31:  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES);
+skills/buster/plugins/api-flow/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/common/plugins/state-store/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/api-flow/src/provider.js:30:  if (config.url !== undefined && inputs.length) throw new Error('API_FLOW_TARGET_AMBIGUOUS');
+skills/buster/plugins/api-flow/src/provider.js:31:  if (config.url !== undefined) return String(config.url);
+skills/buster/plugins/api-flow/src/provider.js:41:  const selected = config.endpointName === undefined ? (value.endpoints.length === 1 ? value.endpoints[0] : null)
+skills/buster/plugins/api-flow/src/provider.js:42:    : value.endpoints.find((item) => item?.name === config.endpointName);
+skills/buster/plugins/api-flow/src/provider.js:48:  const bytes = fs.readFileSync(inside(fs.realpathSync(repository), config.flowFile, 'API_FLOW_FILE_DENIED'));
+skills/buster/plugins/api-flow/src/provider.js:124:  const config = object(invocation.configuration.values, 'API_FLOW_CONFIG_INVALID'); const flow = validateFlow(readFlow(invocation, context, config), integer(config.maximumSteps, 64, 1, 256, 'API_FLOW_STEP_LIMIT_INVALID'));
+skills/buster/plugins/api-flow/src/provider.js:137:      const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');
+skills/common/plugins/state-store/plugin.json:17:      "configSchema": "schemas/config.schema.json"
+skills/buster/plugins/api-flow/package.json:5:  "scripts": { "build": "tsc --noEmit -p tsconfig.json", "test": "node tests/live-function.test.ts && node tests/remediation.test.ts" },
+skills/common/plugins/state-store/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/buster/plugins/kubernetes-fixture/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/kubernetes-fixture/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/kubernetes-fixture/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/buster/plugins/kubernetes-fixture/src/provider.js:18:  const value = object(invocation.configuration.values, 'root');
+skills/buster/plugins/kubernetes-fixture/src/provider.js:105:  const names = identity(invocation, config.namespacePrefix);
+skills/buster/plugins/kubernetes-fixture/src/provider.js:108:    payload: { ...names, namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,
+skills/buster/plugins/kubernetes-fixture/src/provider.js:109:      immutableImage: config.immutableImage, imageDigest: config.imageDigest, manifestPath: manifest.file,
+skills/buster/plugins/kubernetes-fixture/src/provider.js:110:      manifestDigest: manifest.artifact.contentDigest, serviceName: config.serviceName, servicePort: config.servicePort,
+skills/buster/plugins/kubernetes-fixture/src/provider.js:111:      ...(config.serviceTargetPort === undefined ? {} : { serviceTargetPort: config.serviceTargetPort }),
+skills/buster/plugins/kubernetes-fixture/src/provider.js:112:      retentionSeconds: config.retentionSeconds, readinessTimeoutMs: Math.min(invocation.timeoutMs, config.readinessTimeoutSeconds * 1000),
+skills/buster/plugins/kubernetes-fixture/src/provider.js:113:      retentionMode: config.retentionMode, secretReferences: config.secretReferences,
+skills/buster/plugins/kubernetes-fixture/src/provider.js:114:      ...(config.testCredentials ? { testCredentials: config.testCredentials } : {}) },
+skills/buster/plugins/kubernetes-fixture/src/provider.js:130:      if (config.testCredentials && !result.generatedCredentials) throw new Error('KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING');
+skills/buster/plugins/kubernetes-fixture/src/provider.js:133:        createdAt: result.createdAt, expiresAt: result.expiresAt, endpoints: [{ name: config.serviceName, url: result.endpoint }],
+skills/buster/plugins/kubernetes-fixture/src/provider.js:134:        secretReferences: config.secretReferences, manifestDigest: manifest.artifact.contentDigest,
+skills/buster/plugins/kubernetes-fixture/src/provider.js:136:        immutableImage: config.immutableImage, retentionMode: config.retentionMode, releaseAction: result.releaseAction };
+skills/buster/plugins/kubernetes-fixture/src/provider.js:146:            value: { schemaVersion: 'container-image.v1', reference: config.immutableImage, digest: config.imageDigest } },
+skills/buster/plugins/kubernetes-fixture/src/provider.js:149:          manifestDigest: manifest.artifact.contentDigest, immutableImage: config.immutableImage,
+skills/buster/plugins/kubernetes-fixture/src/provider.js:150:          retentionMode: config.retentionMode, expiresAt: result.expiresAt }) };
+skills/buster/plugins/kubernetes-fixture/src/provider.js:155:      if (config.retentionMode === 'retain' && disposition === 'completed-fixture') return;
+skills/buster/plugins/kubernetes-fixture/src/provider.js:156:      const names = identity(invocation, config.namespacePrefix);
+skills/buster/plugins/kubernetes-fixture/src/provider.js:159:        payload: { ...names, namespacePrefix: config.namespacePrefix } });
+skills/buster/plugins/demo-auth-smoke/package.json:6:    "build": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../../../tests/verification/integration/tsconfig.demo-auth-smoke.json",
+skills/buster/plugins/demo-auth-smoke/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/junit-report-adapter/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/junit-report-adapter/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/buster/plugins/demo-auth-smoke/tsconfig.json:1:{"extends":"../../../../tsconfig.base.json","include":["src/**/*.js","tests/**/*.ts"],"compilerOptions":{"allowJs":true,"checkJs":false,"noEmit":true}}
+skills/buster/plugins/demo-auth-smoke/src/provider.js:15:  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');
+skills/buster/plugins/demo-auth-smoke/src/provider.js:16:  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');
+skills/buster/plugins/demo-auth-smoke/src/provider.js:29:    const config = protocol(invocation.configuration.values), bound = inputs(invocation);
+skills/buster/plugins/demo-auth-smoke/src/provider.js:43:    const negative = await request(config.protectedPath,'GET',{});
+skills/buster/plugins/demo-auth-smoke/src/provider.js:46:    const login = await request(config.loginPath,'POST',{'content-type':'application/json'},JSON.stringify({[config.usernameKey]:credentials.username,[config.passwordKey]:credentials.password}));
+skills/buster/plugins/demo-auth-smoke/src/provider.js:49:    const authenticated = await request(config.protectedPath,'GET',{cookie});
+skills/buster/plugins/tailscale-exposure/package.json:5:  "scripts": { "build": "tsc --noEmit -p tsconfig.json", "test": "node tests/live-function.test.ts" }
+skills/buster/plugins/http/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/http/src/provider.js:73:  const value = object(invocation.configuration.values, 'HTTP_CONFIG_INVALID');
+skills/buster/plugins/http/src/provider.js:121:  const statusPassed = config.expectedStatuses ? config.expectedStatuses.includes(response.status)
+skills/buster/plugins/http/src/provider.js:123:  const textPassed = config.expectedText === null || response.body.includes(config.expectedText);
+skills/buster/plugins/http/src/provider.js:125:  const contentTypePassed = config.expectedContentType === null || contentType === config.expectedContentType;
+skills/buster/plugins/http/src/provider.js:132:      message: `Content type ${String(contentType)} did not match ${config.expectedContentType}.`, rule: 'http.content-type' }] : []),
+skills/buster/plugins/http/src/provider.js:141:    providerDetails: details({ url: config.url, method: config.method, status: response.status,
+skills/buster/plugins/http/src/provider.js:154:    providerDetails: details({ url: config.url, method: config.method, errorCode: code }) };
+skills/buster/plugins/http/src/provider.js:160:    context.log('stdout', `Requesting ${config.method} ${config.url}.\n`);
+skills/buster/plugins/http/src/provider.js:163:        resource: { type: 'network.url', canonicalId: config.url }, payload: { method: config.method,
+skills/buster/plugins/http/src/provider.js:164:          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),
+skills/buster/plugins/http/src/provider.js:165:          maximumResponseBytes: config.maximumResponseBytes } });
+skills/buster/plugins/tailscale-exposure/src/provider.js:16:  const value = object(invocation.configuration.values, 'root');
+skills/buster/plugins/tailscale-exposure/src/provider.js:72:      const deployment = deploymentInput(invocation, config.endpointName);
+skills/buster/plugins/tailscale-exposure/src/provider.js:75:        payload: { ...deployment, path: config.path, ...(config.hostname ? { hostname: config.hostname } : {}),
+skills/buster/plugins/tailscale-exposure/src/provider.js:76:          ...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}),
+skills/buster/plugins/tailscale-exposure/src/provider.js:77:          readinessTimeoutMs: Math.min(invocation.timeoutMs, config.readinessTimeoutSeconds * 1000) },
+skills/buster/plugins/tailscale-exposure/src/provider.js:87:      if(config.retentionMode==='await-readiness' && (result.handoff?.phase!=='awaiting-readiness'||!Number.isSafeInteger(result.handoff.exposureGeneration)||result.handoff.exposureGeneration<1))throw new Error('TAILSCALE_EXPOSURE_HANDOFF_MISSING');
+skills/buster/plugins/tailscale-exposure/src/provider.js:97:      const deployment = deploymentInput(invocation, config.endpointName);
+skills/buster/plugins/tailscale-exposure/src/provider.js:100:        payload: { ...deployment, path: config.path, ...(config.hostname ? { hostname: config.hostname } : {}),
+skills/buster/plugins/tailscale-exposure/src/provider.js:101:          ...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}) } });
+skills/buster/plugins/tailscale-exposure/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/size-budget/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/buster/plugins/http/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/size-budget/src/provider.js:40:  const value = object(invocation.configuration.values, 'root');
+skills/buster/plugins/size-budget/src/provider.js:63:  if (!['auto', 'file', 'tar', 'tar-gzip'].includes(config.format) || config.largestFiles < 1 || config.largestFiles > 100) {
+skills/buster/plugins/size-budget/src/provider.js:66:  const hasLimit = config.maximumTotalBytes !== null || config.maximumFileCount !== null || config.matchingFiles.length > 0
+skills/buster/plugins/size-budget/src/provider.js:67:    || config.maximumGrowthBytes !== null || config.maximumGrowthPercent !== null;
+skills/buster/plugins/size-budget/src/provider.js:223:  if (config.format === 'auto') return inferred;
+skills/buster/plugins/size-budget/src/provider.js:224:  if (config.format !== inferred && !(config.format === 'file' && artifact.mediaType === 'application/octet-stream')) {
+skills/buster/plugins/size-budget/src/provider.js:227:  return config.format;
+skills/buster/plugins/size-budget/src/provider.js:242:    .slice(0, config.largestFiles);
+skills/buster/plugins/size-budget/src/provider.js:313:      if ((config.maximumGrowthBytes !== null || config.maximumGrowthPercent !== null) && !previous) {
+skills/buster/plugins/size-budget/src/provider.js:320:    if (config.maximumTotalBytes !== null) checks.push({ id: 'total', passed: measured.totalBytes <= config.maximumTotalBytes,
+skills/buster/plugins/size-budget/src/provider.js:321:      message: `${measured.totalBytes} total bytes; maximum ${config.maximumTotalBytes}.` });
+skills/buster/plugins/size-budget/src/provider.js:322:    if (config.maximumFileCount !== null) checks.push({ id: 'file-count', passed: measured.files.length <= config.maximumFileCount,
+skills/buster/plugins/size-budget/src/provider.js:323:      message: `${measured.files.length} files; maximum ${config.maximumFileCount}.` });
+skills/buster/plugins/size-budget/src/provider.js:324:    const matches = config.matchingFiles.map((rule) => {
+skills/buster/plugins/size-budget/src/provider.js:333:    if (config.maximumGrowthBytes !== null) checks.push({ id: 'growth-bytes', passed: change.bytes <= config.maximumGrowthBytes,
+skills/buster/plugins/size-budget/src/provider.js:334:      message: `Growth is ${change.bytes} bytes; maximum ${config.maximumGrowthBytes}.` });
+skills/buster/plugins/size-budget/src/provider.js:335:    if (config.maximumGrowthPercent !== null) checks.push({ id: 'growth-percent',
+skills/buster/plugins/size-budget/src/provider.js:336:      passed: change.percent !== null ? change.percent <= config.maximumGrowthPercent : false,
+skills/buster/plugins/size-budget/src/provider.js:338:        : `Growth is ${change.percent.toFixed(2)}%; maximum ${config.maximumGrowthPercent}%.` });
+skills/buster/plugins/size-budget/src/provider.js:364:        limits: { maximumTotalBytes: config.maximumTotalBytes, maximumFileCount: config.maximumFileCount,
+skills/buster/plugins/size-budget/src/provider.js:365:          maximumGrowthBytes: config.maximumGrowthBytes,
+skills/buster/plugins/size-budget/src/provider.js:366:          maximumGrowthPercent: config.maximumGrowthPercent } }),
+skills/buster/plugins/tailscale-exposure/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/http/package.json:6:    "build": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../../../tests/verification/integration/tsconfig.http.json",
+skills/buster/plugins/size-budget/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/buster/plugins/size-budget/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/buster/plugins/demo-auth-smoke/src/protocol.js:95:  if (!pair.startsWith(`${config.cookieName}=`) || !/^[A-Za-z0-9!#$%&'*+.^_`|~-]+=[\x21\x23-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]+$/u.test(pair)) throw new Error('DEMO_AUTH_SESSION_COOKIE_INVALID');
+skills/buster/plugins/demo-auth-smoke/src/protocol.js:106:  for (const routeValue of [config.loginPath,config.protectedPath]) if (routeValue !== cookiePath && !routeValue.startsWith(cookiePath.endsWith('/') ? cookiePath : `${cookiePath}/`)) throw new Error('DEMO_AUTH_SESSION_COOKIE_SCOPE_INVALID');
+skills/nova/project/compiler.ts:42:  text(config.agent, 'agent');
+skills/nova/project/compiler.ts:43:  if (config.agentRole !== undefined) text(config.agentRole, 'agentRole');
+skills/nova/project/recovery.ts:12:    if (stage.config.reviewSemanticEncoding !== PROJECT_REVIEW_SEMANTIC_ENCODING
+skills/nova/project/recovery.ts:13:      || stage.config.reportArtifactEncoding !== PORTABLE_JSON_ENCODING) throw new Error('PROJECT_RECOVERY_REVIEW_SEMANTICS_INVALID');
+skills/nova/project/recovery.ts:29:    if (stage.config.reportArtifactEncoding !== PORTABLE_JSON_ENCODING) throw new Error('PROJECT_RECOVERY_REPORT_ENCODING_INVALID');
+skills/nova/project/delivery-manifest.ts:29:    || config.deliveryManifestEncoding !== DELIVERY_MANIFEST_ENCODING) {
+skills/nova/tsconfig.json:2:  "extends": "../../tsconfig.base.json",
+skills/nova/project_setup/tsconfig.json:2:  "extends": "../../../tsconfig.base.json",
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:73:  config.serve = {
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:82:  config.serve.dockerfile = relFromRepo(input.repoRoot, dockerfile);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:83:  config.serve.build_context = `Projects/${input.project}/src`;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:88:    config.api = { spec_file: relFromSwarm(path.join(input.projectSrcDir, '.swarm'), path.join(input.moduleDir, 'test-spec.json')) };
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:95:  delete config.k8s;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:96:  delete config.bundle;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:97:  delete config.manifest;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:98:  delete config.api;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:99:  delete config.a11y;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:100:  delete config.perf;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:101:  delete config['visual-reg'];
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:102:  delete config.e2e;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:103:  delete config.security;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:104:  if (isPlainObject(config.serve)) {
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:106:      'smoke_paths', 'smoke_expected_text', 'deployment_yaml', 'secret_yaml']) delete config.serve[field];
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:107:    if (!suites.some((suite) => ['security', 'a11y', 'perf', 'e2e', 'visual-reg'].includes(suite))) delete config.serve;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:113:  const manifest = objectOrEmpty(config.manifest);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:114:  const serve = objectOrEmpty(config.serve);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:129:    if (!selected && !isPlainObject(config.manifest)) continue;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:209:    config.maximumTotalBytes = Math.trunc(thresholds.max_size_kb * 1024);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:212:    config.maximumFileCount = thresholds.max_file_count;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:214:  const blocking = config.maximumTotalBytes !== undefined || config.maximumFileCount !== undefined;
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:236:  const api = objectOrEmpty(config.api);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:237:  const serve = objectOrEmpty(config.serve);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:271:  const a11y = objectOrEmpty(config.a11y);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:306:  const serve = objectOrEmpty(config.serve);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:341:  if (typeof preview.hostname === 'string' && preview.hostname.trim()) config.hostname = preview.hostname.trim();
+skills/nova/project_setup/tools/progress-scaffold-validation.ts:3:import { requireExistingSwarmFile, validateTestConfig } from './progress-scaffold-test-config.ts';
+skills/nova/project_setup/tools/progress-scaffold-validation.ts:188:    if (typeof config.url !== 'string' && !isPlainObject(inputs.deployment)) {
+skills/nova/project_setup/tools/progress-scaffold-validation.ts:189:      diagnostics.push(diagnostic('form_check', `${field}.tests.${id} needs config.url or a deployment input`, `${field}.tests.${id}`));
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:51:  if (!config.serve) return;
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:52:  if (typeof config.serve.project_dir !== 'string') diagnostics.push(diagnostic('form_check', `${field}.serve.project_dir must be a string`, `${field}.serve.project_dir`));
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:53:  if (typeof config.serve.start_cmd !== 'string' && typeof config.serve.build_cmd !== 'string') {
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:56:  if (config.serve.port !== undefined && (!Number.isInteger(config.serve.port) || config.serve.port <= 0)) {
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:59:  if (config.serve.dockerfile) validateRepoPath(context, config.serve.dockerfile, diagnostics, `${field}.serve.dockerfile`);
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:63:  const k8s = objectOrEmpty(config.k8s);
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:81:  if (suites.includes('api')) requireExistingSwarmFile(context, config.api?.spec_file, diagnostics, `${field}.api.spec_file`);
+skills/nova/project_setup/progress-json.md:46:ACP monitor timing is platform-owned and belongs in `swarm.config.json`, not `progress.json`.
+skills/nova/project_setup/progress-json.md:208:**Behavior:** Only runs on fresh starts (skipped on resume when modules already have PASS). progress.json overrides swarm.config.json.
+skills/nova/project_setup/progress-json.md:346:### test_config.k8s
+skills/nova/project_setup/progress-json.md:348:The retired `test_config.k8s` object is not valid for new projects. Use
+skills/nova/core/state/wait-projection-reader.ts:34:    || selected[0]!.provider.registrationId !== 'waits' || config.root !== owner.waitRoot) fail();
+skills/nova/core/state/wait-projection-reader.ts:35:  const maximumEntryBytes = Number(config.maxEntryBytes ?? 1048576);
+skills/nova/core/src/index.ts:13:  resolveTestProviderConfiguration,
+skills/nova/core/src/index.ts:71:export { loadProductionNovaTestGate } from '../test-gates/runtime-config.ts';
+skills/nova/core/test-gates/remote-gate-cli.ts:6:import { loadProductionNovaTestGate } from './runtime-config.ts';
+skills/nova/core/test-gates/resolver.ts:15:import { resolveTestProviderConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';
+skills/nova/core/test-gates/resolver.ts:563:        configuration = resolveTestProviderConfiguration(input.registry, provider.registration.contractId, config);
+skills/nova/core/execution/run-decisions.ts:108:      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), outcome: decision.result.outcome,
+skills/nova/core/execution/run-decisions.ts:115:      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), outcome: decision.result.outcome,
+skills/nova/core/execution/pipeline-loop.ts:126:      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });
+skills/nova/package.json:9:    "typecheck": "tsc --noEmit -p tsconfig.json"
+skills/nova/plugins/delivery-lint/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/delivery-lint/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/delivery-lint/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/remote-test-gate/src/adapter.ts:47:  const endpoint = new URL(string(context.config.endpoint, 'REMOTE_TEST_GATE_CONFIG_INVALID'));
+skills/nova/plugins/remote-test-gate/src/adapter.ts:49:  const stateRoot = path.resolve(string(context.config.stateRoot, 'REMOTE_TEST_GATE_CONFIG_INVALID'));
+skills/nova/plugins/remote-test-gate/src/adapter.ts:50:  const roots = (context.config.allowedRepositoryRoots as unknown[]).map((root) => canonicalDirectory(root,
+skills/nova/plugins/remote-test-gate/src/adapter.ts:52:  const authentication = context.config.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'bearer';
+skills/nova/plugins/remote-test-gate/src/adapter.ts:59:      ? string(context.config.tokenSecret, 'REMOTE_TEST_GATE_CONFIG_INVALID') : undefined,
+skills/nova/plugins/remote-test-gate/src/adapter.ts:60:    privateKeySecret: string(context.config.sourcePrivateKeySecret, 'REMOTE_TEST_GATE_CONFIG_INVALID'),
+skills/nova/plugins/remote-test-gate/src/adapter.ts:61:    sourceAuthority: string(context.config.sourceAuthority, 'REMOTE_TEST_GATE_CONFIG_INVALID') });
+skills/nova/plugins/remote-test-gate/src/adapter.ts:69:  if (!config.roots.some((root) => repositoryRoot === root || repositoryRoot.startsWith(`${root}${path.sep}`))) {
+skills/nova/plugins/remote-test-gate/src/adapter.ts:81:  const token = config.tokenSecret ? await secret(context, config.tokenSecret) : undefined;
+skills/nova/plugins/remote-test-gate/src/adapter.ts:82:  const privateKey = await secret(context, config.privateKeySecret);
+skills/nova/plugins/remote-test-gate/src/adapter.ts:83:  const gate = createProductionNovaTestGate({ stateRoot: config.stateRoot, endpoint: config.endpoint,
+skills/nova/plugins/remote-test-gate/src/adapter.ts:84:    ...(token ? { token } : {}), authentication: config.authentication,
+skills/nova/plugins/remote-test-gate/src/adapter.ts:85:    sourceAuthority: config.sourceAuthority, sourceAttestationPrivateKey: privateKey,
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:37:  const manifestRead=await readArtifact(context,manifestRef,runId,text(context.config.manifestStageId),'kubeclaw.project-summary');
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:38:  const manifest=assertDeliveryManifestForRead(manifestRead.value,{runId,manifestStageId:text(context.config.manifestStageId),
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:39:    gateStageId:text(context.config.gateStageId),expectedRef:manifestRef,bytes:manifestRead.bytes}) as ObjectValue;
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:41:  const refs=manifest.evidence.filter((ref:ArtifactRef)=>ref.namespace==='kubeclaw.buster-quality-gate'&&ref.producer?.stageId===context.config.gateStageId&&ref.artifactId.includes(':decision:'));
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:43:  const decision=parseGateDecision(await read(context,refs[0],runId,text(context.config.gateStageId),'kubeclaw.buster-quality-gate'));
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:44:  assertCoverageDecision(decision,final.expectedCoverage,manifest.sourceRevision,text(context.config.gateStageId));
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:47:  const verified=await store.readVerifiedResult({jobId:decision.jobId,runId,pipelineStageId:text(context.config.gateStageId),
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:54:  const root=text(context.config.stateRoot);
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:56:  text(context.config.manifestStageId);text(context.config.gateStageId);
+skills/nova/plugins/remote-test-gate/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/remote-test-gate/plugin.json:18:      "configSchema": "schemas/config.schema.json"
+skills/nova/plugins/remote-test-gate/plugin.json:30:      "configSchema": "schemas/evidence-config.schema.json"
+skills/nova/plugins/remote-test-gate/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/pipeline-review/src/stage.ts:5:  const agent=context.contract.config.agent;
+skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:17:  const storageRoot = context.config.storageRoot;
+skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:18:  const orchestratorIssuerId = context.config.orchestratorIssuerId;
+skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:19:  const maximumJournalBytes = context.config.maximumJournalBytes;
+skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:20:  const maximumArtifactBytes = context.config.maximumArtifactBytes;
+skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:21:  const maximumBundleBytes = context.config.maximumBundleBytes;
+skills/nova/plugins/pipeline-review/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/pipeline-review/plugin.json:16:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/pipeline-review/plugin.json:33:      "configSchema": "schemas/evidence-config.schema.json"
+skills/nova/plugins/pipeline-review/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/pipeline-review/README.md:20:is determined by the Coordinator, not supplied by callers. See `schemas/evidence-config.schema.json` in pipeline-review.
+skills/nova/plugins/lint/src/stage.ts:19:  const value = config[key];
+skills/nova/plugins/lint/src/stage.ts:69:      policyPath: requiredConfig(context.contract.config, 'policyPath'),
+skills/nova/plugins/lint/src/stage.ts:70:      policyProject: requiredConfig(context.contract.config, 'policyProject'),
+skills/nova/plugins/lint/src/stage.ts:79:      includeDebt: context.contract.config.includeDebt === true,
+skills/nova/plugins/lint/src/stage.ts:80:      includeExperimental: context.contract.config.includeExperimental === true,
+skills/nova/plugins/lint/src/engine/discovery.ts:46:  while (tsconfigDir !== repoRoot && !fs.existsSync(path.join(tsconfigDir, 'tsconfig.json'))) {
+skills/nova/plugins/lint/src/engine/discovery.ts:50:  if (fs.existsSync(path.join(tsconfigDir, 'tsconfig.json'))) {
+skills/nova/plugins/lint/src/engine/tool-registry-core.ts:69:    return findFiles(target, (name: string) => name === 'tsconfig.json', ctx.policyProject.discovery_max_depth);
+skills/nova/plugins/lint/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/lint/src/adapter.ts:11:  const value = config[key];
+skills/nova/plugins/lint/src/adapter.ts:29:  const repositoryRoots = configuredRoots(context.config, 'allowedRepositoryRoots');
+skills/nova/plugins/lint/src/adapter.ts:30:  const policyRoots = configuredRoots(context.config, 'allowedPolicyRoots');
+skills/nova/plugins/lint/plugin.json:16:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/lint/plugin.json:30:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/lint/plugin.json:45:      "configSchema": "schemas/adapter-config.schema.json"
+skills/nova/plugins/lint/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/lint/README.md:18:`charts/kubeclaw/files/config/eslint-config.mjs`. It selects rule levels,
+skills/nova/plugins/lint/README.md:24:The Kubeclaw chart delivers the configuration as `eslint.config.mjs`, the
+skills/nova/plugins/lint/README.md:35:node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint-config.mjs <paths>
+skills/nova/plugins/review/plugin.json:17:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/review/plugin.json:32:      "configSchema": "schemas/repository-audit-config.schema.json",
+skills/nova/plugins/review/plugin.json:47:      "configSchema": "schemas/repository-audit-config.schema.json",
+skills/nova/plugins/review/src/stage.ts:40:  const value = context.contract.config;
+skills/nova/plugins/review/src/review-report-encoding.ts:9:  if (config.reportArtifactEncoding !== PORTABLE_JSON_ENCODING) throw new Error('REVIEW_REPORT_ENCODING_INVALID');
+skills/nova/plugins/review/src/review-semantics.ts:17:  if (config.reviewSemanticEncoding !== REVIEW_SEMANTIC_ENCODING) throw new Error('REVIEW_SEMANTIC_ENCODING_INVALID');
+skills/nova/plugins/review/src/review-semantics.ts:18:  if (config.reportArtifactEncoding !== PORTABLE_JSON_ENCODING) throw new Error('REVIEW_SEMANTIC_REPORT_ENCODING_REQUIRED');
+skills/nova/plugins/review/src/review-local-aliases.ts:46:    ? [supplied] : [supplied, `${supplied}.json`, `${supplied}/tsconfig.json`];
+skills/nova/plugins/review/src/review-local-aliases.ts:88:    const canonical = Number(path.posix.basename(right.path) === 'tsconfig.json')
+skills/nova/plugins/review/src/review-local-aliases.ts:89:      - Number(path.posix.basename(left.path) === 'tsconfig.json');
+skills/nova/plugins/review/src/repository-revalidation-stage.ts:131:  const config = context.contract.config;
+skills/nova/plugins/review/src/repository-revalidation-stage.ts:132:  const target = text(config.agent, 'config.agent');
+skills/nova/plugins/review/src/repository-revalidation-stage.ts:134:    runtime: (config.reviewerRuntime ?? 'subagent') as ReviewRuntimeIdentity['runtime'],
+skills/nova/plugins/review/src/repository-revalidation-stage.ts:135:    agentId: text(config.reviewerAgentId ?? 'codex', 'config.reviewerAgentId'),
+skills/nova/plugins/review/src/repository-revalidation-stage.ts:136:    model: text(config.reviewerModel, 'config.reviewerModel'),
+skills/nova/plugins/review/src/repository-revalidation-stage.ts:137:    thinking: text(config.reviewerThinking ?? 'high', 'config.reviewerThinking'),
+skills/nova/plugins/review/src/repository-audit-stage.ts:112:  const value = context.contract.config;
+skills/nova/plugins/review/src/repository-audit-stage.ts:343:  const expectedRuntime: ReviewRuntimeIdentity = Object.freeze({ targetId: config.agent,
+skills/nova/plugins/review/src/repository-audit-stage.ts:344:    runtime: config.reviewerRuntime, agentId: config.reviewerAgentId,
+skills/nova/plugins/review/src/repository-audit-stage.ts:345:    model: config.reviewerModel, thinking: config.reviewerThinking });
+skills/nova/plugins/review/src/repository-audit-stage.ts:357:  const runtime = { cache, agent: config.agent, context, execution: execution('initial'), expectedRuntime };
+skills/nova/plugins/review/src/repository-audit-stage.ts:689:    const policy = resolveReviewPolicy({ builtIn: getReviewPolicyProfile(config.profile),
+skills/nova/plugins/review/src/repository-audit-stage.ts:690:      ...(config.policy === undefined ? {} : { settingsFile: config.policy }) });
+skills/nova/plugins/review/scripts/generate-policy-schema.mjs:7:const configTarget = new URL('../schemas/config.schema.json', import.meta.url);
+skills/nova/plugins/review/scripts/generate-policy-schema.mjs:8:const repositoryAuditConfigTarget = new URL('../schemas/repository-audit-config.schema.json', import.meta.url);
+skills/nova/plugins/review/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/prism-design/src/stage.ts:13:  const settings=config(context.contract.config);const approved=approval(context.contract.guidance,settings.issuerId,input.architectureArtifact.contentDigest);
+skills/nova/plugins/review/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/prism-design/tsconfig.json:1:{"extends":"../../../../tsconfig.base.json","compilerOptions":{"noEmit":true},"include":["src/**/*.ts"]}
+skills/nova/plugins/prism-design/plugin.json:4:    "requiredCapabilities":["runtime.dispatch","artifacts.read","artifacts.write","operator.request","signal.wait"],"configSchema":"schemas/config.schema.json",
+skills/nova/plugins/prism-design/package.json:10:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/buster-quality-gate/plugin.json:17:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/architecture-validator/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/architecture-validator/plugin.json:17:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/architecture-validator/src/stage.ts:13:  const agent = context.contract.config.agent;
+skills/nova/plugins/architecture-validator/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/buster-quality-gate/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/buster-quality-gate/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/buster-quality-gate/src/stage.ts:15:  const agent = context.contract.config.agent;
+skills/nova/plugins/buster-quality-gate/src/stage.ts:16:  const testAgentEnabled = context.contract.config.testAgentEnabled !== false;
+skills/nova/plugins/demo-handoff/src/adapter.ts:20:  if(request.attempt.stageId!==(request.operation==='deliver'?config.deliveryStageId:config.readyStageId))throw new Error('DEMO_HANDOFF_PRODUCER_DENIED');
+skills/nova/plugins/demo-handoff/src/adapter.ts:24:  return object(await context.invoke('operator.receipt',{operation:'lookup',resource:{type:'operator.target',canonicalId:config.operatorTarget},
+skills/nova/plugins/demo-handoff/src/adapter.ts:25:    payload:{deliveryId:bound.deliveryId,stageId:config.deliveryStageId,payload:bound.payload}}));
+skills/nova/plugins/demo-handoff/src/adapter.ts:44:  const config=configuration(context.config),stopping=new AbortController();
+skills/nova/plugins/demo-handoff/src/adapter.ts:45:  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});
+skills/nova/plugins/demo-handoff/src/adapter.ts:51:      const receipt=recovery?await lookup(reader,bound,config):object(await context.invoke('operator.request',{operation:'publish',resource:{type:'operator.target',canonicalId:config.operatorTarget},payload:bound.payload},{signal,deliveryId:bound.deliveryId}));
+skills/nova/plugins/demo-handoff/src/adapter.ts:62:    const signal=AbortSignal.any([invocation.signal,stopping.signal,AbortSignal.timeout(config.timeoutMs)]);
+skills/nova/plugins/demo-handoff/src/adapter.ts:65:    const signal=AbortSignal.any([stopping.signal,AbortSignal.timeout(config.timeoutMs)]);
+skills/nova/plugins/demo-handoff/src/binding.ts:6:  const candidate=await read(context,reference,runId,config.candidateStageId,NAMESPACE);
+skills/nova/plugins/demo-handoff/src/binding.ts:8:  if(candidate.schemaVersion!=='demo-candidate.v1'||candidate.runId!==runId||candidate.protocol!=='json-session.v1'||target(candidate.operatorTarget)!==config.operatorTarget)throw new Error('DEMO_CANDIDATE_BINDING_INVALID');
+skills/nova/plugins/demo-handoff/src/binding.ts:10:  const manifest=ref(candidate.manifest);if(manifest.producer.stageId!==config.manifestStageId||manifest.producer.runId!==runId)throw new Error('DEMO_MANIFEST_OWNER_INVALID');
+skills/nova/plugins/demo-handoff/src/binding.ts:20:  return {reference,candidate,verified,authentication,payload,payloadDigest,deliveryId:deliveryIdentity(reference,config.operatorTarget)};
+skills/nova/plugins/demo-handoff/src/binding.ts:27:  const value=await read(context,reference,runId,config.deliveryStageId,NAMESPACE);
+skills/nova/plugins/demo-handoff/src/binding.ts:28:  const receipt=object(await context.invoke('operator.receipt',{operation:'lookup',resource:{type:'operator.target',canonicalId:config.operatorTarget},
+skills/nova/plugins/demo-handoff/src/binding.ts:29:    payload:{deliveryId:bound.deliveryId,stageId:config.deliveryStageId,payload:bound.payload}}));
+skills/nova/plugins/demo-handoff/src/controller-client.ts:18:  const ca=await boundedFile(config.caPath,1024**2,signal),token=(await boundedFile(config.tokenPath,16384,signal)).toString('utf8').trim();
+skills/nova/plugins/demo-handoff/src/controller-client.ts:20:  const url=new URL(config.endpoint);if(status)url.pathname+='/status';
+skills/nova/plugins/demo-handoff/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/case-study/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/case-study/plugin.json:16:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/case-study/src/stage.ts:5:  const agent=context.contract.config.agent;if(typeof agent!=='string'||!agent.trim())throw new Error('case study agent is not configured');
+skills/nova/plugins/case-study/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/case-study/README.md:20:is determined by the Coordinator, not supplied by callers. See `schemas/evidence-config.schema.json` in pipeline-review.
+skills/nova/plugins/demo-handoff/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/project-summary/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/human-approval/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/project-summary/src/stage.ts:5:  portableJson(context.contract.config);
+skills/nova/plugins/project-summary/src/stage.ts:6:  const keys=Object.keys(context.contract.config);
+skills/nova/plugins/project-summary/src/stage.ts:8:  const deliveryManifestEncoding:DeliveryManifestEncoding|undefined=Object.hasOwn(context.contract.config,'deliveryManifestEncoding')
+skills/nova/plugins/project-summary/src/stage.ts:9:    ? context.contract.config.deliveryManifestEncoding as DeliveryManifestEncoding:undefined;
+skills/nova/plugins/human-approval/src/stage.ts:18:  const config = parseApprovalConfig(context.contract.config);
+skills/nova/plugins/human-approval/src/stage.ts:19:  const guidance = parseApprovalGuidance(context.contract.guidance, config.issuerId);
+skills/nova/plugins/human-approval/src/stage.ts:24:  const expiresAt = calculateApprovalExpiresAt(new Date(), config.timeoutMinutes);
+skills/nova/plugins/human-approval/src/stage.ts:31:      authorizedIssuer: { type: 'operator', id: config.issuerId },
+skills/nova/plugins/human-approval/src/stage.ts:37:    issuerId: config.issuerId,
+skills/nova/plugins/human-approval/src/stage.ts:43:    resource: { type: 'operator.target', canonicalId: config.target },
+skills/nova/plugins/human-approval/src/stage.ts:50:      authorizedIssuer: { type: 'operator', id: config.issuerId },
+skills/nova/plugins/human-approval/src/approval.ts:70:  const timeout = config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES;
+skills/nova/plugins/human-approval/src/approval.ts:79:    target: requiredText(config.target, 'TARGET', 1_024),
+skills/nova/plugins/human-approval/src/approval.ts:80:    issuerId: requiredText(config.issuerId, 'ISSUER_ID', 1_024),
+skills/nova/plugins/project-summary/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/human-approval/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/human-approval/plugin.json:31:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/project-summary/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/human-approval/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/implementation-agent/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/blueprint-sync/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/implementation-agent/src/stage.ts:85:  const agent = context.contract.config.agent;
+skills/nova/plugins/blueprint-sync/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/blueprint-sync/plugin.json:18:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/implementation-agent/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/implementation-agent/plugin.json:20:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/preflight-contract/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/repository-adapter/src/adapter.ts:68:  const configured = context.config.repositoryRoot;
+skills/nova/plugins/repository-adapter/src/adapter.ts:71:  const expectedHead = context.config.expectedHead;
+skills/nova/plugins/repository-adapter/src/adapter.ts:75:    maxFileBytes: positiveInteger(context.config.maxFileBytes, 4 * 1024 * 1024, 'maxFileBytes'),
+skills/nova/plugins/repository-adapter/src/adapter.ts:76:    maxChangedPaths: positiveInteger(context.config.maxChangedPaths, 2048, 'maxChangedPaths'),
+skills/nova/plugins/preflight-contract/plugin.json:15:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/preflight-contract/plugin.json:28:      "configSchema": "schemas/config.schema.json",
+skills/nova/plugins/repository-adapter/tsconfig.json:2:  "extends": "../../../../tsconfig.base.json",
+skills/nova/plugins/preflight-contract/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",
+skills/nova/plugins/repository-adapter/plugin.json:16:      "configSchema": "schemas/config.schema.json"
+skills/nova/plugins/repository-adapter/package.json:6:    "build": "tsc --noEmit -p tsconfig.json",

@@ -1,6 +1,6 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG OPS_NODE_BASE=node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2
-ARG OPS_TOOLS_GO_BASE=golang:1.26.8-alpine3.24@sha256:ce864e7223ac17b1775e6fd0b4c0db580c2eb50e7953a427916379e4b92a1628
+ARG OPS_TOOLS_GO_BASE=golang:1.26.9-alpine3.24@sha256:3082400e369fa24d5fc60bca20edab3f6d604e0c5a690ec66b295eff4dd87ade
 
 FROM ${OPS_TOOLS_GO_BASE} AS gh-build
 ARG TARGETARCH=amd64
@@ -38,9 +38,9 @@ RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=read
 
 FROM ${OPS_NODE_BASE} AS tools
 ARG TARGETARCH=amd64
-ARG HELM_VERSION=v3.22.0
-ARG HELM_SHA256_AMD64=1e4ab49e429626cf6c6958d914248b78c9730803c2751b87627e171dc800e7bb
-ARG HELM_SHA256_ARM64=f14e804dfee240f55525b667488fe9adca349e63e00c9af634c0beb1421ac310
+ARG HELM_VERSION=v3.22.1
+ARG HELM_SHA256_AMD64=896cf63684a42a723d61c980369d6e588330927deb13676ca0d85006dd6da0ea
+ARG HELM_SHA256_ARM64=4c29e286b279d170fa048ddfc3e4e83dcd069ca9c52102766ba672d7149e694d
 RUN apk add --no-cache curl
 WORKDIR /downloads
 RUN case "$TARGETARCH" in \
@@ -53,13 +53,16 @@ RUN case "$TARGETARCH" in \
 
 FROM ${OPS_NODE_BASE}
 ARG OPS_NPM_TAR_VERSION=7.5.21
-ARG OPS_NPM_BRACE_VERSION=5.0.9
+ARG OPS_NPM_BRACE_VERSION=5.0.11
 ARG OPS_NPM_IP_VERSION=10.3.1
+ARG OPS_NPM_UNDICI_VERSION=6.28.1
+ARG OPS_NPM_CACHE_SEMANTICS_VERSION=4.3.0
 RUN apk upgrade --no-cache \
     && apk add --no-cache bash ca-certificates git openssh-client jq curl python3 tini ripgrep netcat-openbsd \
     && node -e 'const fs=require("fs"),p="/usr/local/lib/node_modules/npm/package.json",v=JSON.parse(fs.readFileSync(p));delete v.devDependencies;fs.writeFileSync(p,JSON.stringify(v));' \
     && npm install --prefix /usr/local/lib/node_modules/npm --omit=dev --ignore-scripts --no-audit --no-fund --save-exact \
-      "tar@${OPS_NPM_TAR_VERSION}" "brace-expansion@${OPS_NPM_BRACE_VERSION}" "ip-address@${OPS_NPM_IP_VERSION}"
+      "tar@${OPS_NPM_TAR_VERSION}" "brace-expansion@${OPS_NPM_BRACE_VERSION}" "ip-address@${OPS_NPM_IP_VERSION}" \
+      "undici@${OPS_NPM_UNDICI_VERSION}" "http-cache-semantics@${OPS_NPM_CACHE_SEMANTICS_VERSION}"
 WORKDIR /opt/codex
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force \
@@ -70,7 +73,7 @@ COPY --from=kubectl-build /out/kubectl /usr/local/bin/kubectl
 COPY --from=gh-build /out/gh /usr/local/bin/gh
 COPY --from=gh-build /src/LICENSE /usr/local/share/licenses/gh/LICENSE
 COPY kubectl-build/LICENSE /usr/local/share/licenses/kubectl/LICENSE
-COPY supervisor.py config.toml shell.sh /opt/codex/
+COPY supervisor.py policy-supervisor.py runtime_policy.py config.toml shell.sh /opt/codex/
 RUN mkdir -p /workspace /home/node/.codex && chown node:node /workspace /home/node/.codex
 ENV HOME=/home/node
 USER 1000:1000

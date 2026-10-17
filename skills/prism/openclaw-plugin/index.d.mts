@@ -10,4 +10,4 @@ export interface PrismTool {
   }>;
 }
 
-export default function register(api: {registerTool(tool: PrismTool): void}): void;
+export default function register(api: {pluginConfig: {controlUrl: string}; registerTool(tool: PrismTool): void}): void;

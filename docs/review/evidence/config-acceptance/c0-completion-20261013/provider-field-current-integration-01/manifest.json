@@ -1,0 +1,28 @@
+{
+  "qualification": "Parent current metadata integration; fresh bounded integration review pending",
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-current-integration-01/README.md",
+      "sha256": "5adcf870c46a00a8231e9b389206aa3eab3d522d4e081654d3faf37a2307e207",
+      "bytes": 1681
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-current-integration-01/conservation.json",
+      "sha256": "07ff8c5163c87af63f86ac115dbe3dd853865dc87ee4b3b40f99a67aa4bbb0e3",
+      "bytes": 1093
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-current-integration-01/current-references.json",
+      "sha256": "ede5375997f1b337d98252fa33f5393fb63a456c4e1de2368b83b1a86d70d0f5",
+      "bytes": 1265
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-current-integration-01/structural.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "bytes": 181
+    }
+  ],
+  "command": "python3 docs/review/evidence/config-acceptance/author/check-matrix.py --structural",
+  "exitCode": 0,
+  "wholeC0Accepted": false
+}

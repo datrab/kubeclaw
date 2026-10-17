@@ -1,16 +1,17 @@
-import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../config/swarm-bundle.mjs';
+import { TEST_CORE_POLICY_SELECTION } from '../core-runtime-policy.mjs';
+import { canonicalPipelineEntry, readTestPipeline, writeTestPipeline } from '../config/pipeline-components.mjs';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
 export function cliProfile(root, admission) {
-  const document = readTestBundle(canonicalSwarmEntry);
-  document['buster-engine'].settings.admission = admission;
-  const swarm = path.join(root, 'swarm.json'), platform = path.join(root, 'platform.json'), runtime = path.join(root, 'runtime.json');
+  const document = readTestPipeline(canonicalPipelineEntry);
+  document['buster-engine'].profiles.runtime.settings.admission = admission;
+  const swarm = path.join(root, 'pipeline.config.json'), platform = path.join(root, 'platform.json'), runtime = path.join(root, 'runtime.json');
   const plugins = path.resolve('skills/buster/plugins');
   const keys = crypto.generateKeyPairSync('ed25519');
-  writeTestBundle(swarm, document);
-  fs.writeFileSync(platform, JSON.stringify({ schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [plugins],
+  writeTestPipeline(swarm, document);
+  fs.writeFileSync(platform, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [plugins],
     trustedBuiltinRoots: [plugins], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: './platform-state',
     shutdownTimeoutMs: 5000, orchestratorIssuerId: 'admission-cli', administrativeDecisionIssuers: [] }));

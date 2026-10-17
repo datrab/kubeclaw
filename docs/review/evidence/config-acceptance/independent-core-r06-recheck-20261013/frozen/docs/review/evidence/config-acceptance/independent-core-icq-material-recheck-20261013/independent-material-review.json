@@ -1,0 +1,430 @@
+{
+  "status": "NOT-ACCEPTED-material-residuals",
+  "independentReviewer": "runtime_closure (not Core author; Runtime not reviewed)",
+  "scope": "All six ICQ corrective findings, corrected nine assignments/all14 questions/22 active original-requirement cases and source/caller/profile counterparts. Exact frozen97 correction artifacts and original145 plus Core13three identities. No globalC0 or implementation acceptance; no claim manual everyline246source audit.",
+  "findings": [
+    {
+      "id": "ICQ-01",
+      "disposition": "bounded-material-correction-resolved",
+      "basis": "Paired tar path B is now under /usr real current read/execute grant; full synthetic Buster runtime/component/Core13 companions and provisioned GNUtar identity/negative/restored case definitions preserve isolation. Runtime declared-unused reader repair is explicitly future NOTRUN; genuine image/host pairing not asserted."
+    },
+    {
+      "id": "ICQ-02",
+      "disposition": "bounded-material-correction-resolved",
+      "basis": "Authoritative dynamic floor validator uses real canonical worst overflow projection plus persisted binding525. Complete8900/reserve8192/quarantine100 admitted; same relation8899 rejects; floors4011/3243; historical8500 and531 failure retained. Secondary check-corrected helper branches only256/128 and is narrow witness control, not authoritative full72..256 domain validator."
+    },
+    {
+      "id": "ICQ-03",
+      "disposition": "bounded-material-correction-resolved",
+      "basis": "Current command-selected quotas distinguished from retained-run readers and future original immutable capture guard. Independent pure current parser accepts65536/131072 with identical intent; zero rejects/restored accepts. Proposed exact original owner/policy/schema/source equality before constructors/effects, no latest/shrink and authentic legacy migration prerequisite are explicit. Store header plus referenced payload accounting remains a parent/module compatibility obligation, not fake current enforcement."
+    },
+    {
+      "id": "ICQ-04",
+      "disposition": "bounded-material-correction-resolved",
+      "basis": "All four real current FileProducerOutbox methods independently executed at2048 with exact1223/1219/51 hashes. Four fresh2049 bounded-reader reject unchanged controls followed by exact current-method omission observations; ack/compact mutate. Target each-method rejection explicitly futureNOTRUN. Existing same API quota/public latent external caller classification retained."
+    },
+    {
+      "id": "ICQ-05",
+      "disposition": "bounded-material-correction-resolved",
+      "basis": "All six actual environment() literal consumers, current exact numbered source and producer statements independently checked; five assigned child projections plus native launcherKUBECLAW_NATIVE_SCOPE. Old empty discovery preserved, document-empty negative rejects/restored passes. No ENV writer/second author inferred."
+    },
+    {
+      "id": "ICQ-06",
+      "disposition": "material-correction-incomplete",
+      "basis": "Exact admission/retirement method inputs,62 source caller coordinates/companions, typed fixed provider receipts and whole metadata bound1964/1963 now substantially specified, but active normal admission oracles and boundary bindings contradict frozen case inputs. See ICQ-R06-01/02; future behavior remains NOTRUN."
+    }
+  ],
+  "remainingMaterialFindings": [
+    {
+      "id": "ICQ-R06-01",
+      "severity": "material-C0-case-definition",
+      "artifact": "admission-method-fixtures.json",
+      "caseIds": [
+        "normal-admit",
+        "normal-admitAndRead"
+      ],
+      "finding": "Active oracle.bytes1940 contradicts exact canonical frozen candidate1934 bytes and selected wholeCap10126=1934+8192. Six-byte difference is historical inlineBinding531 versus corrected binding525. Actual admit returns acknowledgement and admitAndRead acknowledgement+records, not bytes; this is a whole-state oracle, not a current API byte result.",
+      "requiredCorrection": "Preserve historical1940 evidence; supersede active oracle to actual recomputed1934 or supply distinct exact candidate consistent with chosen relation. Rerun semantic contradiction controls, not only SHA/len checks.",
+      "evidence": "independent-definition-controls.json#/contradictions"
+    },
+    {
+      "id": "ICQ-R06-02",
+      "severity": "material-C0-original-binding-definition",
+      "artifact": "admission-method-fixtures.json",
+      "finding": "ALL-WRITES boundary complete author maximumBytes10126 has a different canonical profile/policy digest from frozen prior/candidate binding. Those frozen bytes bind global BusterA maximumBytes268435456 via immutable-owner-reference-specimens. boundaryBindingRule says replace with corresponding boundary original profile, but immutable path/SHA and exact prior unchanged requirement still point globalA. No supplied boundary-specific original generation/profile/policy manifest and regenerated immutable prior/candidate references resolves both requirements.",
+      "requiredCorrection": "Supply canonical per-boundary owner/profile/policy/generation manifests, concrete materialized prior/candidate snapshots with hashes and current-vs-template lifecycle, or explicitly classify global snapshots as shape templates and define exact deterministic preparation+computed identities before baseline. Preserve original global snapshots/history. Negative profiles must define which original policy is captured and when before effects; changing quota of retained originalA is not interchangeable with fresh same-boundary valid history.",
+      "evidence": "independent-definition-controls.json results id boundary-profile-binding-mismatch-reproduced"
+    }
+  ],
+  "questionCoverage": [
+    {
+      "id": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "disposition": "reviewed-bounded-proposal-no-new-material-finding",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "disposition": "active-ALL-WRITES-counterpart-blocked-by-ICQ-R06-01/02",
+      "caseIds": [
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "disposition": "active-ALL-WRITES-counterpart-blocked-by-ICQ-R06-01/02",
+      "caseIds": [
+        "QC-ADMISSION-METADATA-RESERVE-VAL",
+        "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "disposition": "reviewed-bounded-proposal-no-new-material-finding",
+      "caseIds": [
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "disposition": "reviewed-bounded-proposal-no-new-material-finding",
+      "caseIds": [
+        "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+        "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "disposition": "reviewed-bounded-proposal-no-new-material-finding",
+      "caseIds": [
+        "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+        "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+        "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "disposition": "reviewed-bounded-proposal-no-new-material-finding",
+      "caseIds": [
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "disposition": "reviewed-bounded-proposal-no-new-material-finding",
+      "caseIds": [
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "disposition": "reviewed-bounded-proposal-no-new-material-finding",
+      "caseIds": [
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      ],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "disposition": "existing-allowlist-derived-not-new-knob",
+      "caseIds": [],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "disposition": "frozen-crossauthor-input-only-not-acceptance",
+      "caseIds": [],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "disposition": "frozen-crossauthor-input-only-not-acceptance",
+      "caseIds": [],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "disposition": "frozen-crossauthor-input-only-not-acceptance",
+      "caseIds": [],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    },
+    {
+      "id": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "disposition": "frozen-crossauthor-input-only-not-acceptance",
+      "caseIds": [],
+      "scope": "Source/definition review only. Original requirements retained. No whole-source closure inferred."
+    }
+  ],
+  "caseCoverage": [
+    {
+      "id": "QC-FOUNDATION-FLOCK-WAIT-VAL",
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "requirements": [
+        "F-VAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-ADMISSION-REASON-LIMITS-VAL",
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "requirements": [
+        "F-VAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-ADMISSION-REASON-LIMITS-FORMAT",
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-ADMISSION-REASON-LIMITS-HISTORY",
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-ADMISSION-METADATA-RESERVE-VAL",
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "requirements": [
+        "F-VAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+      "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+      "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+      "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+      "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "requirements": [
+        "F-VAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+      "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+      "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+      "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    },
+    {
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+      "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "reviewDisposition": "definition examined; active counterpart subject to named residuals; futureNOTRUN"
+    }
+  ],
+  "controls": {
+    "authorScriptsIndependentlyReplayed": "33 proposed +24 corrected +26 companion +431 integrity narrow checks; copied writer scripts isolated in replay-root; originals never written",
+    "independentDefinitionChecks": 223,
+    "currentOutboxControls": 8,
+    "currentRetirementPureParserControls": 3,
+    "providerStrictSchemaPositiveNegativeRestored": 8,
+    "documentationNegativeRestored": 3,
+    "scope": "None substitutes productive F-EFFECT/F-BIND/F-MUT or future actual providers."
+  },
+  "otherOpenObligations": [
+    "Parent universal business first-logical-module carrier/membership/view/legacy handling; D20 current engine captured graph/package/config safeguards not absent, prepare/activate precedes run lock/equality; Core synthetic store owner binding does not resolve global originalmodule dispatch.",
+    "Exact original immutable referenced payload materialization/accounting under selected existing owning metadata quota and authentic legacy policy evidence; header envelope alone is not payload/store compatibility acceptance.",
+    "Frozen Prism/Delivery snapshots are review inputs, mutable current corresponding directories outside thisfreeze not accepted. Prism spool authority/quota and external role capture/handoffs remain explicit parent obligations.",
+    "External productive/public latent library caller roster and authentic native/image/provider/procfs measurements are genuine future fixture prerequisites; no physical/API capacity inferred."
+  ],
+  "historicalPreservation": "145 originals, three protected Core13, all14 questions/22 original requirement sets and raw syntax/header failures preserved; Runtime batch10 published4 files unchanged."
+}

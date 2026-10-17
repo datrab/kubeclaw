@@ -1,0 +1,41 @@
+{
+  "historicalPackages": [
+    {
+      "package": "c3-buster-complete-profile-01",
+      "manifestSha256": "768207ea26d0591ad00da9f751ae65cd2505dc0f30032e64674ac90c0c0b6928",
+      "exactArtifactMatches": 30
+    },
+    {
+      "package": "c3-buster-complete-profile-02",
+      "manifestSha256": "740d15efcb1e6689a7dd73c023890b4b4f221cb9b5aed457786dbcf26f082f9c",
+      "exactArtifactMatches": 51
+    }
+  ],
+  "reviews": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-01/README.md",
+      "sha256": "8b3725d60a2cd316ea121dbbd802f52d7d7bc3fd8f9c8dda62ff00b7fb800acf"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-02/README.md",
+      "sha256": "75bcd0e526908aea715ea2a4903baf09af0255ad6d915cd8fd30268e0a517470"
+    }
+  ],
+  "canonicalOriginalArrays": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "array": "rows",
+      "sameCount": 2409,
+      "reference": "git a0d5588c4",
+      "qualification": "root metadata intentionally not compared/reclassified"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "array": "cases",
+      "sameCount": 6845,
+      "reference": "git a0d5588c4",
+      "qualification": "root metadata intentionally not compared/reclassified"
+    }
+  ],
+  "definitionInputDrift": []
+}

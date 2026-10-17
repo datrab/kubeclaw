@@ -1,0 +1,17 @@
+{
+  "originalProbeAssertionsUnchanged": [
+    "assert.equal(worker.startupProbe.httpGet.path,'/bootstrapz');assert.equal(worker.readinessProbe.httpGet.path,'/readyz');assert.equal(worker.livenessProbe.httpGet.path,'/healthz');",
+    "assert.equal(worker.readinessProbe.timeoutSeconds,2);"
+  ],
+  "syntax": true,
+  "diffCheck": true,
+  "rosterSha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+  "fields": 2409,
+  "cases": 6845,
+  "requirements": 50,
+  "originalResultsChanged": false,
+  "sourceSha256": {
+    "tests/verification/deployment/buster-readiness-config.test.mjs": "9daa05e91f73a93d4e33eacc976f64ec0dc5f6eae96d9f1fe34ea7338c852780",
+    "tests/verification/deployment/buster-readiness.test.mts": "8ce30085a270a528220dc277f2499bf33bbf0ec504612e957033de1e0b539cb1"
+  }
+}

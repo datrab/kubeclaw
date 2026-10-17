@@ -1,0 +1,38 @@
+{
+  "scope": "bounded C0 documentation/provenance/validator corrections only",
+  "findings": [
+    {
+      "id": "UCORE-001",
+      "status": "corrected-independently-verified",
+      "review": "../independent-four-findings-recheck-20261013/README.md"
+    },
+    {
+      "id": "URUNTIME-001",
+      "status": "corrected-independently-verified",
+      "review": "../independent-four-findings-recheck-20261013/README.md"
+    },
+    {
+      "id": "IR21BF-DC-001",
+      "status": "corrected-independently-verified",
+      "review": "../independent-four-findings-recheck-20261013/README.md"
+    },
+    {
+      "id": "IR21BF-DC-002",
+      "status": "corrected-independently-verified",
+      "review": "../independent-four-findings-recheck-20261013/README.md"
+    },
+    {
+      "id": "IFOUR-ROOT-001",
+      "status": "corrected-independently-verified",
+      "review": "../independent-four-findings-recheck-20261013/root-guard-recheck/README.md"
+    }
+  ],
+  "remainingActionableFindingsInScope": [],
+  "historicalFindingsUnchanged": true,
+  "globalC0Accepted": false,
+  "nativeAccepted": false,
+  "moduleBindingAccepted": false,
+  "productionChanged": false,
+  "C1Approved": false,
+  "autoreviewHelper": "unavailable: codex executable missing; native independent review is separate"
+}

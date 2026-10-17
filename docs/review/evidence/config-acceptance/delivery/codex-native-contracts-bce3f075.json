@@ -1,0 +1,276 @@
+{
+  "scope": "exact selected official parser/consumer source resolves5 source gaps; native OCI/binary/account equality not accepted",
+  "records": [
+    {
+      "id": "DLV-OPS-CODEX-SANDBOX-MODE",
+      "class": "operator-setting",
+      "domain": "Serde SandboxMode kebab-case read-only|workspace-write|danger-full-access. CLI permission_profile/default_permissions conflicts with sandbox_mode reject; profile/layer/admin constraints apply after parsed enum. This controls actual Codex filesystem/network permission profile, NOT Pod isolation or OpenClaw embedded tool policy.",
+      "reader": {
+        "operation": "config file persistent HOME .codex read at app-server/session permission loader; existing container capability-free/nonroot/readonly/PVC mounts are independent outer boundary",
+        "references": [
+          {
+            "path": "ops/pod/config.toml",
+            "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+          },
+          {
+            "path": "ops/pod/supervisor.py",
+            "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+          },
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "ops/pod/package.json",
+            "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+          },
+          {
+            "path": "ops/pod/package-lock.json",
+            "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+          },
+          {
+            "path": "charts/ops-pod/templates/workload.yaml",
+            "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/protocol/src/config_types.rs",
+            "sha256": "96b4050a2498275ba5a11da0021bc75d5fb2fd2c50802f0930629aa7716a282a"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/config_toml.rs",
+            "sha256": "5ff36c12287c453d9421483c62da3377bd3fb9bc7de80defb80e215e0ccf3633"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/loader/mod.rs",
+            "sha256": "6fc44b60c64065994c9aa18df248eb521dba6b0e9917a8cf69fc60e0035ac56a"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+            "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+          }
+        ],
+        "primaryReleaseIdentity": "openai/codex rust-v0.153.4 immutable commit3d2ee51ca2d5db578f328aa75e20aa22c0197c9a; npm lock @openai/codex0.153.4 native binary/OCI equality not established"
+      }
+    },
+    {
+      "id": "DLV-OPS-CODEX-APPROVAL-POLICY",
+      "class": "operator-setting",
+      "domain": "AskForApproval serde on-request, never, granular object; on-failure is alias to OnRequest, NOT historic error-escalation semantics. Protocol retains untrusted variant for internal project policy, but exact core config loader REJECTS explicit cfg.approval_policy=untrusted UnsupportedUntrustedApprovalPolicyError. Granular categories have required/optional boolean schema; admin/execpolicy/project layers constrain effective selection.",
+      "reader": {
+        "operation": "app-server model tool approval policy/session permission profile; does not disable external/native MCP authentication or make Kubernetes grants configurable through model value",
+        "references": [
+          {
+            "path": "ops/pod/config.toml",
+            "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+          },
+          {
+            "path": "ops/pod/supervisor.py",
+            "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+          },
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "ops/pod/package.json",
+            "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+          },
+          {
+            "path": "ops/pod/package-lock.json",
+            "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+          },
+          {
+            "path": "charts/ops-pod/templates/workload.yaml",
+            "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/protocol/src/protocol.rs",
+            "sha256": "3882ad06c5a6312e5ed80d8870c473b6c18d14f2352ff6774d146813db39f20b"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/config_toml.rs",
+            "sha256": "5ff36c12287c453d9421483c62da3377bd3fb9bc7de80defb80e215e0ccf3633"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/loader/mod.rs",
+            "sha256": "6fc44b60c64065994c9aa18df248eb521dba6b0e9917a8cf69fc60e0035ac56a"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+            "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+          }
+        ],
+        "primaryReleaseIdentity": "openai/codex rust-v0.153.4 immutable commit3d2ee51ca2d5db578f328aa75e20aa22c0197c9a; npm lock @openai/codex0.153.4 native binary/OCI equality not established"
+      }
+    },
+    {
+      "id": "DLV-OPS-CODEX-CLI-AUTH-CREDENTIALS-STORE",
+      "class": "operator-setting",
+      "domain": "AuthCredentialsStoreMode lowercase file|keyring|auto|ephemeral, default file; file CODEX_HOME/auth.json, keyring fail if unavailable, auto fallback file, ephemeral process lifetime. Effective shell/executor compatibility can force file from keyring/auto; MCP OAuth credential store is DIFFERENT policy.",
+      "reader": {
+        "operation": "Codex CLI login/account auth store, supervisor login status and native app-server startup. Persistent home PVC preserves old auth/config identity; choosing ephemeral requires actual login/lifetime fixture, not a syntactic guarantee of remote availability",
+        "references": [
+          {
+            "path": "ops/pod/config.toml",
+            "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+          },
+          {
+            "path": "ops/pod/supervisor.py",
+            "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+          },
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "ops/pod/package.json",
+            "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+          },
+          {
+            "path": "ops/pod/package-lock.json",
+            "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+          },
+          {
+            "path": "charts/ops-pod/templates/workload.yaml",
+            "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/types.rs",
+            "sha256": "c5a81049a05861c6a8a4ca7384f410ebcd4438e3712d31a32a32f888e1bb1a7a"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/config_toml.rs",
+            "sha256": "5ff36c12287c453d9421483c62da3377bd3fb9bc7de80defb80e215e0ccf3633"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+            "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/login/src/auth/storage.rs",
+            "sha256": "2e95a8998687e926675d41b5d941c3c3546a652c03d9680e6c7385e59bf459af"
+          }
+        ],
+        "primaryReleaseIdentity": "openai/codex rust-v0.153.4 immutable commit3d2ee51ca2d5db578f328aa75e20aa22c0197c9a; npm lock @openai/codex0.153.4 native binary/OCI equality not established"
+      }
+    },
+    {
+      "id": "DLV-OPS-CODEX-MCP-SERVERS-KUBECLAW-OPS-URL",
+      "class": "generated-binding",
+      "domain": "RawMcpServerConfig Option<String> URL selects StreamableHttp transport, rejects args/env/env_vars/cwd/bearer_token (inline value) combinations. URL string parser alone is not an HTTPS-origin-only grammar: actual HTTP client URL/transport/security binding later. Current trusted localhost HTTP MCP sidecar topology is independent from remote HTTPS source authority.",
+      "reader": {
+        "operation": "supervisor ALWAYS passes -c exact http://127.0.0.1:8080/mcp overriding persisted config/file value; same-shaped alternate file URL never takes effect on current caller. Codex MCP rmcp client handshake/header/redirect/policy authentic native fixture required",
+        "references": [
+          {
+            "path": "ops/pod/config.toml",
+            "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+          },
+          {
+            "path": "ops/pod/supervisor.py",
+            "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+          },
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "ops/pod/package.json",
+            "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+          },
+          {
+            "path": "ops/pod/package-lock.json",
+            "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+          },
+          {
+            "path": "charts/ops-pod/templates/workload.yaml",
+            "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/mcp_types.rs",
+            "sha256": "b9939666f02b5c818053f3127412204be0190d6d66cf395a896ff01a851e3aba"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+            "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/rmcp_client.rs",
+            "sha256": "b7ac2a82e39194390f5a8cc921449e33953f2a3c399fd6cd57faeb5ec27d42dc"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/connection_manager.rs",
+            "sha256": "c06a910bf30d362b40511842edb62572ea41b2a5b7979393537e39de1f974a2d"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/rmcp_client.rs",
+            "sha256": "e199d5265e814ef80f64e85d3188ecb4ae58299fc3d0fe9622bb93447da478b0"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/http_client_adapter.rs",
+            "sha256": "cd59ccc64eb0bd8c966b8fc45a7d5487c421beb8fb13b15ebe3e7d366af4650d"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/http_client_redirect.rs",
+            "sha256": "b09c1a1b507619c8c904bb23d32e5cd8b89664a04c10ce417502c9a0b04c93b5"
+          }
+        ],
+        "primaryReleaseIdentity": "openai/codex rust-v0.153.4 immutable commit3d2ee51ca2d5db578f328aa75e20aa22c0197c9a; npm lock @openai/codex0.153.4 native binary/OCI equality not established"
+      }
+    },
+    {
+      "id": "DLV-OPS-CODEX-MCP-SERVERS-KUBECLAW-OPS-BEARER-TOKEN-ENV-VAR",
+      "class": "secret-reference",
+      "domain": "Option<String> ENV name has no uppercase regex validator in serde; actual resolve_bearer_token env::var rejects missing, empty and nonunicode values before native startup. Direct bearer_token field unsupported. Header syntax/client/account execution context separately constrains actual resolved token.",
+      "reader": {
+        "operation": "supervisor reopens token ONCE at process startup, strips, length>=32; exports KUBECLAW_MCP_TOKEN and ALWAYS overrides -c bearer_token_env_var to that exact name. Ops MCP SERVER reopens token per request; rotation does not update existing Codex process token without restart. No token values retained",
+        "references": [
+          {
+            "path": "ops/pod/config.toml",
+            "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+          },
+          {
+            "path": "ops/pod/supervisor.py",
+            "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+          },
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "ops/pod/package.json",
+            "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+          },
+          {
+            "path": "ops/pod/package-lock.json",
+            "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+          },
+          {
+            "path": "charts/ops-pod/templates/workload.yaml",
+            "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/mcp_types.rs",
+            "sha256": "b9939666f02b5c818053f3127412204be0190d6d66cf395a896ff01a851e3aba"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+            "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/rmcp_client.rs",
+            "sha256": "b7ac2a82e39194390f5a8cc921449e33953f2a3c399fd6cd57faeb5ec27d42dc"
+          },
+          {
+            "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/rmcp_client.rs",
+            "sha256": "e199d5265e814ef80f64e85d3188ecb4ae58299fc3d0fe9622bb93447da478b0"
+          }
+        ],
+        "primaryReleaseIdentity": "openai/codex rust-v0.153.4 immutable commit3d2ee51ca2d5db578f328aa75e20aa22c0197c9a; npm lock @openai/codex0.153.4 native binary/OCI equality not established"
+      }
+    }
+  ],
+  "profiles": {
+    "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/A.toml": "d02672481c4e989fe9985d46631d88d7c23f966a154e6d9e54f594ad75be4098",
+    "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B.toml": "e63e7cb3b972ffefe111a18b507198c186be897a3c8f104603978c0052f74f9f"
+  }
+}

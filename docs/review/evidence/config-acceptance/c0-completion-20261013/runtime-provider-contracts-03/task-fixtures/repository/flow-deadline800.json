@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "kubeclaw.api-flow.v1",
+  "variables": {},
+  "setup": [],
+  "steps": [
+    {
+      "id": "main",
+      "path": "/ok",
+      "method": "GET",
+      "headers": {},
+      "expect": {
+        "status": 200,
+        "bodyContains": "C0-local"
+      },
+      "timeoutMs": 800
+    }
+  ],
+  "cleanup": []
+}

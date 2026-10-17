@@ -1,3 +1,4 @@
+import {validateBusterImageDelivery} from './buster-image-delivery.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -6,15 +7,16 @@ export function collectReceipts(directory, commit, expected) {
   if (!/^[a-f0-9]{40}$/.test(commit)) throw new Error('Full source commit required');
   const receipts = fs.readdirSync(directory, { recursive: true }).filter(file => file.endsWith('.json'))
     .map(file => JSON.parse(fs.readFileSync(path.join(directory, file), 'utf8')));
-  const images = {};
+  const images = {}, imageDeliveries = {};
   for (const receipt of receipts) {
     if (receipt.commit !== commit || !expected.includes(receipt.name) || images[receipt.name]
       || !/^ghcr\.io\/[a-z0-9_-]+\/kubeclaw-[a-z0-9-]+@sha256:[a-f0-9]{64}$/.test(receipt.image)
       || !receipt.image.includes(`/kubeclaw-${receipt.name}@`)) throw new Error('Invalid, duplicate or cross-commit image receipt');
     images[receipt.name] = receipt.image;
+    if(receipt.name==='buster-runtime')imageDeliveries['buster-runtime']=validateBusterImageDelivery(receipt.busterDelivery,commit);
   }
   if (Object.keys(images).length !== expected.length) throw new Error('Release is missing required images');
-  return { schemaVersion: 1, commit, images };
+  return { schemaVersion: 1, commit, images, ...(Object.keys(imageDeliveries).length ? {imageDeliveries} : {}) };
 }
 if (process.argv[1] === import.meta.filename) {
   const [directory, commit, output, family = "runtime"] = process.argv.slice(2);

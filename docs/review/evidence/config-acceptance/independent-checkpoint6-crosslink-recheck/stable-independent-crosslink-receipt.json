@@ -1,0 +1,24 @@
+{
+  "status": "stable bounded guard recheck; C6-RECHECK-01/02 resolved at documentation integration scope",
+  "reportSha256": "18fdd8e7fe80b732020709536caf8274a655074e19861c0b24b0b22f385b25b3",
+  "freezeSha256": "79c45fe5db0fbea72f1048d3b90498c2bc9a04c23d4deed8f01d6e70fa808c13",
+  "globalC0Verdict": null,
+  "noAuthorRootChildWrites": true,
+  "artifactIdentities": {
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/README.md": "7f9c000280d9e91d5c73bdecac63c35f9883dd712170c2b98602a50d412ff3d1",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/check-crosslink-controls.py": "72e4591bdc2a12cf6d6c9de3a3f776237cfdb7649d407da0cdee7d6524ec11da",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/crosslink-controls.json": "e6e16b9842d0e261334cfbee163832ca504c7cc2842061eead4ddcdc7c9249b7",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/crosslink-controls.log": "99a0d95d8fab386abb547d56c5772ddc486771e41f26a602db53670eac709d3e",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/end-input-integrity.json": "03184495cee2e2972a6e07a8152b17aa492025c3bd98ec3ab4789dafc9841861",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/finish.py": "c25d4164819f1055fb21ed76038a31e9c392b2f01d5390fb92ce420f29b620b0",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/independent-crosslink-recheck.json": "18fdd8e7fe80b732020709536caf8274a655074e19861c0b24b0b22f385b25b3",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/input-freeze.json": "79c45fe5db0fbea72f1048d3b90498c2bc9a04c23d4deed8f01d6e70fa808c13",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/parent-correction-receipt-integrity.json": "632f8a32e2c26c6d7639101a9a4207b4b0e19b08ee1b62785b9a4efd00a56240",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/prepare.py": "049369511ffe17c64140348d858e3e2d76a7f7b18267de5b1de02385d6927c25",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/replayed-native-conservation.log": "b9c0a8d1744eb9a7effd4ff93b25ea4a13bb3e2cc3a1f7bd18ecc1b7f0a56de3",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/replayed-strict.log": "f56666e3f3c2da56dcd2323c79f92f915d1ebb79ad02f7d984f35f844b711db4",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/replayed-structural.log": "d5c78f7619fcbb41f645f893d968f5f8f3c132d89906ec3871b6f94ca6667ce8",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/virtual-checker-load-adaptation.py": "c3200f5ad1ccd3cdf374345ec2d3a08bed693a227d71f901d22bf82324c95a72",
+    "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/virtual-native-helper-load-adaptation.py": "81e99414689f34d5a3aaa6d4fb3bc868d7f712513268711f4e78f3d9a1f22455"
+  }
+}

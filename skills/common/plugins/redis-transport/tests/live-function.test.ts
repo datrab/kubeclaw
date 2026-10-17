@@ -1,3 +1,4 @@
+import {TEST_CORE_POLICY} from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import net from 'node:net';
 import { pathToFileURL } from 'node:url';
@@ -17,6 +18,7 @@ const module = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const context = {
   registration: {},
   config: {
+    ...TEST_CORE_POLICY.redisTransport,
     url: `redis://127.0.0.1:${address.port}`,
     passwordSecret: 'redis.password',
     streamPrefix: 'kubeclaw',

@@ -1,0 +1,10 @@
+{
+  "rawInputs": 19,
+  "selectedNativeCases": 625,
+  "selectedDispositions": 625,
+  "selectedRows": 95,
+  "selectedRootMetadata": 356,
+  "immutableBaselineInputs": 3,
+  "drift": [],
+  "scope": "Exact code/guards/review/source and selected live inputs; unrelated mutable Runtime/Delivery batches excluded. Final root not regenerated/reviewed."
+}

@@ -1,0 +1,4 @@
+PASS actual selected-author invalid port undefined rejected BEFORE publication; not entrypoint execution
+PASS actual selected-author invalid port 0 rejected BEFORE publication; not entrypoint execution
+PASS actual selected-author invalid port 65536 rejected BEFORE publication; not entrypoint execution
+PASS restored actual publication; both original PORT values rejected by authentic immutable consumer; isolated guest guard enforced

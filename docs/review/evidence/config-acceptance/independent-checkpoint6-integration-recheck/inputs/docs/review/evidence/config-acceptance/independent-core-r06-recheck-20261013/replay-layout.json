@@ -1,0 +1,13 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root",
+  "copiedDocumentationOnlyWriterTargets": true,
+  "sourceDependenciesReadOnlyUseSymlinks": [
+    "skills",
+    "contracts",
+    "tests",
+    "scripts",
+    "charts",
+    "node_modules"
+  ],
+  "scope": "Copied author scripts allowedwrite ONLY mirrored new controls; original packages frozenunchanged"
+}

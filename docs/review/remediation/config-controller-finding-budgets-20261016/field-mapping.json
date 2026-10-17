@@ -1,0 +1,22 @@
+[
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-RUNTIME-SECURITY-MAXIMUM-FINDINGS",
+    "originalSource": "cmd/buster-namespace-controller/main.go#boundedRuntimeSecurityFindings",
+    "originalValue": 4096,
+    "owner": "charts/kubeclaw/values.yaml#/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumFindings",
+    "transport": "charts/kubeclaw/templates/buster-namespace-controller.yaml#controller-policy.json",
+    "consumer": "cmd/buster-namespace-controller/main.go#runtimeSecurityStatus -> boundedRuntimeSecurityFindings",
+    "classification": "confirmed-source-policy-literal-now-selected",
+    "identityQualification": "Delivery source identities, not a claim of authoritative full-roster reconciliation"
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-RUNTIME-SECURITY-MAXIMUM-SERIALIZED-BYTES",
+    "originalSource": "cmd/buster-namespace-controller/main.go#boundedRuntimeSecurityFindings",
+    "originalValue": 524288,
+    "owner": "charts/kubeclaw/values.yaml#/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumSerializedBytes",
+    "transport": "charts/kubeclaw/templates/buster-namespace-controller.yaml#controller-policy.json",
+    "consumer": "cmd/buster-namespace-controller/main.go#runtimeSecurityStatus -> boundedRuntimeSecurityFindings",
+    "classification": "confirmed-source-policy-literal-now-selected",
+    "identityQualification": "Delivery source identities, not a claim of authoritative full-roster reconciliation"
+  }
+]

@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-16T18:26:37.645594+00:00",
+  "status": "PHYSICAL_GENERATION_TO_NOVA_PLAN_SOURCE_CHECKED_REVIEW_OPEN",
+  "changes": [
+    "Quality registry API version must match exact original manifest",
+    "Quality registration provenance must retain explicit v2 discriminator",
+    "Actual complete captured A/B root tuples to real registry configuration to actual Nova resolver plan; selected task overrides rejected; serialized original A remains A under B"
+  ],
+  "verification": [
+    {
+      "name": "generation-tests",
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/reliability/pipeline-v10-input-set.test.mts"
+      ],
+      "exitCode": 0,
+      "log": "generation-tests.txt"
+    },
+    {
+      "name": "source-typecheck",
+      "command": [
+        "./node_modules/.bin/tsc",
+        "--noEmit",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2024",
+        "--lib",
+        "ESNext,DOM,DOM.Iterable",
+        "--strict",
+        "--types",
+        "node",
+        "--skipLibCheck",
+        "--allowImportingTsExtensions",
+        "--esModuleInterop",
+        "skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts",
+        "skills/nova/core/test-gates/resolver.ts"
+      ],
+      "exitCode": 0,
+      "log": "source-typecheck.txt"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "diff-check.txt"
+    }
+  ],
+  "fullGenerationFileTests": {
+    "passed": 49,
+    "total": 49,
+    "failed": 0,
+    "skipped": 0
+  },
+  "focusedQualityTests": {
+    "passed": 3,
+    "total": 3
+  },
+  "independentSourceReview": "OPEN; no native spawn/review tool exposed, autoreview absent on PATH; recorded unchanged EROFS surface not retried",
+  "productiveRootSuppliesSelection": false,
+  "activationAllowed": false,
+  "QB_R02": "OPEN; genuine sealed inputStore and producer/build/source/baseline association plus original accounting/publication fences not implemented",
+  "fullAcceptance": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "originalCasesNewlyAccepted": 0,
+    "C0C6Complete": false
+  },
+  "externalBlocker": "Unchanged: isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large trusted writable archive parent unavailable; owner Raven; resume on suitable environment",
+  "initialFailures": [
+    "Task example helpers absent from captured original generation: supplied actual direct-command and JUnit packages under a distinct test-only registry root, never relabelled as captured source or installed authority",
+    "Negative assertion used nonexistent TEST_PLAN_PROVIDER_CONFIG_INVALID; corrected to exact existing TEST_PLAN_CONFIGURATION_INVALID without changing production diagnostic"
+  ],
+  "remaining": "Independent review; coordinated authenticated productive boot/delivery and selectedProviderPolicies receiving; QB-R02 and full original/native/archive acceptance",
+  "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+  "deliveredRoles": [
+    {
+      "role": "nova",
+      "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+      "indexedFiles": 1832,
+      "receiverSha256": "72460d228b4478d139186e97c259501cc08922c211b9bf24512abfeb853dffca",
+      "exactSourceBytesAndReceiptDigest": true,
+      "deliveredImport": true,
+      "installedOrNativeAuthority": false
+    },
+    {
+      "role": "buster",
+      "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+      "indexedFiles": 14126,
+      "receiverSha256": "72460d228b4478d139186e97c259501cc08922c211b9bf24512abfeb853dffca",
+      "exactSourceBytesAndReceiptDigest": true,
+      "deliveredImport": true,
+      "installedOrNativeAuthority": false
+    }
+  ]
+}

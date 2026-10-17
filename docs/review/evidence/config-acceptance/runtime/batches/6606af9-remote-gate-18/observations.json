@@ -1,0 +1,958 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/check.mjs",
+  "node": "v24.21.0",
+  "results": [
+    {
+      "setting": "RT-2e15274b0c3fffc1",
+      "field": "endpoint",
+      "schemaPointer": "#/properties/endpoint",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": null,
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-6ebb8efa65839981",
+      "field": "authentication",
+      "schemaPointer": "#/properties/authentication",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": false,
+      "currentNullRejected": false,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": null,
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-e8df47351cb76dc9",
+      "field": "tokenSecret",
+      "schemaPointer": "#/properties/tokenSecret",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": null,
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-a36927a478e7c2f6",
+      "field": "sourcePrivateKeySecret",
+      "schemaPointer": "#/properties/sourcePrivateKeySecret",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": null,
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-1a85906afb523b43",
+      "field": "sourceAuthority",
+      "schemaPointer": "#/properties/sourceAuthority",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": null,
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-61e74f61fde6c7e4",
+      "field": "stateRoot",
+      "schemaPointer": "#/properties/stateRoot",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": null,
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-c124a452f32b2547",
+      "field": "allowedRepositoryRoots",
+      "schemaPointer": "#/properties/allowedRepositoryRoots",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A"
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": null
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-7632c25ab65059f4",
+      "field": "allowedRepositoryRoots[]",
+      "schemaPointer": "#/properties/allowedRepositoryRoots/items",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A"
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": null
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-c3db9bc2b7065738",
+      "field": "authentication",
+      "schemaPointer": "#/allOf/0/if/properties/authentication",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": false,
+      "currentNullRejected": false,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": null,
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-1bdf1b0c22b0c184",
+      "field": "tokenSecret",
+      "schemaPointer": "#/allOf/0/then/properties/tokenSecret",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": null,
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-3f096cad21fa1e0a",
+      "field": "endpoint",
+      "schemaPointer": "#/allOf/0/else/properties/endpoint",
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "nullInput": {
+        "endpoint": null,
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      "owningUnknownRejected": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ],
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-3595d6c01950c170",
+      "field": "stateRoot",
+      "schemaPointer": "#/properties/stateRoot",
+      "A": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A"
+      },
+      "B": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "manifestStageId": "summary:fixture-B",
+        "gateStageId": "gate:fixture-B"
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A"
+      },
+      "nullInput": {
+        "stateRoot": null,
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A"
+      },
+      "owningUnknownRejected": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A",
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-af44787955c47c38",
+      "field": "manifestStageId",
+      "schemaPointer": "#/properties/manifestStageId",
+      "A": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A"
+      },
+      "B": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "manifestStageId": "summary:fixture-B",
+        "gateStageId": "gate:fixture-B"
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "gateStageId": "gate:fixture-A"
+      },
+      "nullInput": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": null,
+        "gateStageId": "gate:fixture-A"
+      },
+      "owningUnknownRejected": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A",
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    },
+    {
+      "setting": "RT-1e81b0ff7d53468a",
+      "field": "gateStageId",
+      "schemaPointer": "#/properties/gateStageId",
+      "A": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A"
+      },
+      "B": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "manifestStageId": "summary:fixture-B",
+        "gateStageId": "gate:fixture-B"
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "missingInput": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": "summary:fixture-A"
+      },
+      "nullInput": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": null
+      },
+      "owningUnknownRejected": {
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A",
+        "unapprovedKnob": true
+      },
+      "directUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Exact owning schema plus actual activate/ready/shutdown only; field conditional/item node links to same full config checks, not independently adjustable author; no real secrets/HTTP/plan/archive/import/manifest/EFFECT acceptance"
+    }
+  ],
+  "passed": 14,
+  "failed": 0,
+  "controls": {
+    "actualConstructorCases": [
+      {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "unknown",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": []
+      },
+      {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A",
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/alias-A"
+        ]
+      },
+      {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "relative-state",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      {
+        "endpoint": "http://remote.fixture.invalid",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      {
+        "endpoint": "https://user:password@fixture.invalid",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-A",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-A"
+        ]
+      },
+      {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ],
+        "tokenSecret": "ignored"
+      },
+      {
+        "endpoint": "https://localhost/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      },
+      {
+        "endpoint": "http://localhost/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/tmp/runtime-c0-remote-qCyVxj/state-B",
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-c0-remote-qCyVxj/repo-B"
+        ]
+      }
+    ],
+    "sourceAuthenticationUnknownMissingNullBearerFallback": true,
+    "sourceRootsEmptyDuplicateAndSymlinkCanonicalAccepted": true,
+    "sourceRelativeRootResolved": true,
+    "sourceSpiffeTokenIgnored": true,
+    "sourceHttpsOrNoportLoopbackSpiffeAcceptedSchemaRejected": true,
+    "owningEndpointPlaintextAndUserinfoAcceptedButLaterExportedSecurityRejected": true,
+    "transportConstructorToken31Rejected32AcceptedNoTransportMethodsCalled": true,
+    "evidence2049TextRejectedButSchemaAccepted": true,
+    "evidenceControlCharStageAccepted": true,
+    "configurationFreezeSource": "Normal loadPlatformConfig recursively deepFreezes; public activation takes config reference. Dynamic stage rereads source-inspected, no productive mutation claim.",
+    "filesystemScope": "Owned temporary repository roots + alias only. Adapter activate creates no gate-state roots; no secrets/source archives/git/HTTP/import/result/artifact files or stage invocation.",
+    "capabilityCalls": 0
+  },
+  "sourceDigests": {
+    "skills/nova/plugins/remote-test-gate/src/adapter.ts": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+    "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+    "skills/nova/plugins/remote-test-gate/src/demo-evidence.ts": "28fc430c4e7840ae1dc0c76698981ebfe35ce08011032ed3380b19799ceb6a63",
+    "skills/nova/plugins/remote-test-gate/schemas/config.schema.json": "282ed6bdc8d07486e6e34b40cec822036a5cc851af4369e55f68ab7f146eef47",
+    "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json": "767de53403900e5b72e8f35bb6d238eed5a889b6cb9141fb18b1ce56aef8461d",
+    "skills/nova/plugins/remote-test-gate/plugin.json": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+    "skills/nova/core/test-gates/secure-endpoint.ts": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+    "skills/nova/core/test-gates/production.ts": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+    "skills/nova/core/test-gates/remote-dispatch.ts": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+    "skills/nova/core/test-gates/remote-result-import.ts": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+    "skills/nova/core/test-gates/remote-dispatch-store.ts": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+    "skills/nova/core/execution/adapter-startup.ts": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+    "skills/nova/core/execution/engine-runtime.ts": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+    "skills/common/plugin-runtime/foundation/config/platform.ts": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e",
+    "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+    "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/check.mjs": "807cb2b76912d74ff31c27e050d250a26841dd2b5bf5efcca46fd74167260e87"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-remote-gate-18/contracts.json": "e5c68288bb818f4986dbc1ae993a0f4c5b1db6ef0a6f6a5a19befd10720aa22d",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "scope": "Current owning schemas/actual constructors + exported endpoint helper/transport constructor only, temporary local repository directory fixture. No invoke/secrets/network/archive/native-plan/genuine source authority/import/manifest/grant/model/generation/EFFECT or physical quota acceptance"
+}

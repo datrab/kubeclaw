@@ -14,7 +14,7 @@ func TestDemoConfiguredInitialRetentionThroughOriginalHTTP(t *testing.T) {
 	t.Run("omitted duration and existing committed records retain seven days", func(t *testing.T) {
 		f := newReadyHTTPFixture(t, credentials)
 		status, result := f.call("/v1/demo-ready", "producer-token", f.request)
-		if status != 200 || result["retentionSeconds"] != float64(defaultDemoRetentionSeconds) {
+		if status != 200 || result["retentionSeconds"] != float64(legacyDemoRetentionSeconds) {
 			t.Fatal(status, result)
 		}
 		f.mu.Lock()

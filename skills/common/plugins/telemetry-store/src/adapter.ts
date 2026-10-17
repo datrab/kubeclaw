@@ -5,12 +5,17 @@ import { telemetryProjection } from './projection.ts';
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const root = context.config.root;
   if (typeof root !== 'string' || root.length === 0) throw new Error('root is required');
-  const maxRecordBytes = Number(context.config.maxRecordBytes ?? 1_048_576);
-  const maximumRecords = Number(context.config.maximumRecords ?? 100_000);
-  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? 256 * 1024 * 1024);
-  if (!Number.isSafeInteger(maxRecordBytes) || maxRecordBytes < 1) throw new Error('maxRecordBytes is invalid');
-  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
-  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
+  const maxRecordBytes = Number(context.config.maxRecordBytes);
+  const maximumRecords = Number(context.config.maximumRecords);
+  const maximumStoreBytes = Number(context.config.maximumStoreBytes);
+  if (typeof context.config.maxRecordBytes !== 'number' || !Number.isSafeInteger(maxRecordBytes) || maxRecordBytes < 1) throw new Error('maxRecordBytes is invalid');
+  if (typeof context.config.maximumRecords !== 'number' || !Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
+  if (typeof context.config.maximumStoreBytes !== 'number' || !Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
+  const maxJsonDepth = context.config.maxJsonDepth;
+  const maxJsonNodes = context.config.maxJsonNodes;
+  if (typeof maxJsonDepth !== 'number' || !Number.isSafeInteger(maxJsonDepth) || maxJsonDepth < 1) throw new Error('maxJsonDepth is invalid');
+  if (typeof maxJsonNodes !== 'number' || !Number.isSafeInteger(maxJsonNodes) || maxJsonNodes < 1) throw new Error('maxJsonNodes is invalid');
+  const jsonLimits = Object.freeze({ maxJsonDepth, maxJsonNodes });
   const store = new FileDurableRecordStore(root, {
     maximumRecords,
     maximumBytes: maximumStoreBytes,
@@ -27,7 +32,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         const committed = await store.append(
           stream,
           request.idempotencyKey,
-          telemetryProjection(request.payload, maxRecordBytes),
+          telemetryProjection(request.payload, maxRecordBytes, jsonLimits),
           request.attempt.runId,
         );
         return { accepted: committed.appended, sequence: committed.record.sequence };

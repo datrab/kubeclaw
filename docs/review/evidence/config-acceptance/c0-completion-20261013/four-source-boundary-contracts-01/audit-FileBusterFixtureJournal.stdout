@@ -1,0 +1,17 @@
+tests/fixtures/buster-fixture-writer.mts:2:import { FileBusterFixtureJournal } from '../../skills/buster/engine/test-gates/native-fixture-journal.ts';
+tests/fixtures/buster-fixture-writer.mts:7:const journal = new FileBusterFixtureJournal(root, { maximumRecords: 32, maximumStateBytes: 262144,
+tests/verification/reliability/buster-fixture-journal.test.mts:10:import { FileBusterFixtureJournal } from '../../../skills/buster/engine/test-gates/native-fixture-journal.ts';
+tests/verification/reliability/buster-fixture-journal.test.mts:30:      const journal = new FileBusterFixtureJournal(root, limits); const before = await journal.snapshot();
+tests/verification/reliability/buster-fixture-journal.test.mts:33:      assert.deepEqual(await new FileBusterFixtureJournal(root, limits).snapshot(), before);
+tests/verification/reliability/buster-fixture-journal.test.mts:45:  const root = path.join(directory, 'fixtures'); const journal = new FileBusterFixtureJournal(root, limits); const value = admission();
+tests/verification/reliability/buster-fixture-journal.test.mts:56:    const reopened = (await new FileBusterFixtureJournal(root, limits).snapshot())[0]!;
+tests/verification/reliability/buster-fixture-journal.test.mts:65:  const journal = new FileBusterFixtureJournal(path.join(directory, 'fixtures'), limits);
+tests/verification/reliability/buster-fixture-journal.test.mts:81:  const root = path.join(directory, 'fixtures'); const journal = new FileBusterFixtureJournal(root, { ...limits, maximumTotalBytes: 950000 });
+tests/verification/reliability/buster-fixture-control.test.mts:10:import { FileBusterFixtureJournal } from '../../../skills/buster/engine/test-gates/native-fixture-journal.ts';
+tests/verification/reliability/buster-fixture-control.test.mts:16:  const journal = new FileBusterFixtureJournal(path.join(root, 'journal'), {
+skills/buster/engine/test-gates/native-fixture-lifetime.ts:4:import type { FileBusterFixtureJournal } from './native-fixture-journal.ts';
+skills/buster/engine/test-gates/native-fixture-lifetime.ts:12:  readonly fixtures: FileBusterFixtureJournal;
+skills/buster/engine/test-gates/native-fixture-journal.ts:20:export class FileBusterFixtureJournal {
+skills/buster/engine/test-gates/native-fixture-control.ts:2:import type { FileBusterFixtureJournal } from './native-fixture-journal.ts';
+skills/buster/engine/test-gates/native-fixture-control.ts:32:  readonly #journal: FileBusterFixtureJournal;
+skills/buster/engine/test-gates/native-fixture-control.ts:43:  constructor(admission: BusterFixtureAdmission, journal: FileBusterFixtureJournal) {

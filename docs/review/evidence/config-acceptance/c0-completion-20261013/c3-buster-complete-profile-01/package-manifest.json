@@ -1,0 +1,158 @@
+{
+  "status": "author proposal complete, independent whole-profile/domain recheck required; not accepted",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/README.md",
+      "sha256": "51fa3046c640c4b99fce2e6771cb2a9f40591ecb5920fdfca35307a3fadc91cf",
+      "bytes": 18659
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/attempt-02-failure.log",
+      "sha256": "e86513e96af72013def36e25bf52bde19ed7bdb4e03a9822e33e111e480a0335",
+      "bytes": 237
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/attempt-02-generated-runtime.schema.json",
+      "sha256": "1b4b4cc46c672d54a66072900f332f33f0c187cf0eb2391b72b69eb03b48458c",
+      "bytes": 20048
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/buster-engine.config.json",
+      "sha256": "d46add5f7d8dd148401a9d90bf1ad1be61ef0ce93e809012a0c9d3de2a9b2fc4",
+      "bytes": 1066620
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "bytes": 4597
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "bytes": 1606
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "bytes": 976
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "bytes": 1270
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/pipeline.config.json",
+      "sha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+      "bytes": 2113
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/definition-checks.json",
+      "sha256": "f9d14f9989decf8c753c99afcc0d243061a3711a941dfa84771762060837f115",
+      "bytes": 3525
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/emitted-current-public-structural.json",
+      "sha256": "f8e91230166d7daa7421feb9fcaee651d88c10653154e6fb0e8133ad903b0ec1",
+      "bytes": 8286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/fixtures/root-B.json",
+      "sha256": "0005a791f6088f500a3c8d6c9e6988a9b6bb64298afb9cbcec49e7136c01a49e",
+      "bytes": 2113
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/future-case-joins.json",
+      "sha256": "ba40ae781c916ecf5ea7873fcb0615601d132f19644b32ac1dc54f902201d7a2",
+      "bytes": 342219
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/generated-role-projections.json",
+      "sha256": "5299415d8dd5938b991344b6a536fa15525d3547e40913323834c8de6ab69fc6",
+      "bytes": 674831
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/browser-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "bytes": 72
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/direct-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "bytes": 72
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-role-inputs.json",
+      "sha256": "aca1a6f30f63fcaa91417e151c438e0c42b0aaf6d4bdafa54d8c9f8e13586d6b",
+      "bytes": 13209
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "bytes": 97220
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/generated-platform-registry.schema.json",
+      "sha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87",
+      "bytes": 1516
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/generated-runtime.schema.json",
+      "sha256": "b4eb9062dd4a2fe118438b2c959e947555607470d4559a2d8280a290af54f1ea",
+      "bytes": 20928
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/pipeline-entry.schema.json",
+      "sha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce",
+      "bytes": 2182
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "bytes": 74117
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "bytes": 48715
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "bytes": 44639
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "bytes": 49101
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "bytes": 45730
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-pins.json",
+      "sha256": "ba5d16283101736a72c34f68c20c824d0c67929d8ef8050cf51ecddf03c9d4a0",
+      "bytes": 5007
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-target-supersession.json",
+      "sha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "bytes": 50948
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/whole-profile-index.json",
+      "sha256": "bad813612d8936104c90316acab663939767ef2b14ad1f07353e8a830976ddfc",
+      "bytes": 53506
+    }
+  ],
+  "productionMutated": false,
+  "runtimeCasesExecuted": false,
+  "implementationAuthorization": null
+}

@@ -1,0 +1,5 @@
+# Original Ops30 chart source lanes
+
+All30 original IDs, hashes, classifications and case lists are preserved. Each field maps to an actual direct or whole-object Helm projection. Three current MCP namespace fields travel through rendered immutable policy.json and the actual file-policy receiver; the old MCP ENV projections are historical, not current. Codex ENV/kubeconfig remain distinct. Resource object projection is not native scheduling/cgroup proof; external Secret references never contain secret bytes.
+
+The deployment-policy owner selects invocation and optional overlay; it is not the central author of these30 chart values. Sole-root deployment/profile/schema/file-set/history receiving remains OPEN for all30. No production source/default changed.46/46 reproducible matrix controls passed.44 unrelated groups unchanged; two historical navigation groups remain unresolved (Kubeclaw/Prism product charts). All2409 fields/6845 cases/50 requirements retained; no original result changed. Required independent/original/history/native/archive/full C0–C6 acceptance remains OPEN. No denied-v10 activation.

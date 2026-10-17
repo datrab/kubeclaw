@@ -6,6 +6,7 @@ import {pathToFileURL} from 'node:url';
 const source=path.resolve(process.argv[2]);
 const load=file=>import(pathToFileURL(path.join(source,file)));
 const {prepareRuntime}=await load('skills/nova/core/execution/engine-runtime.ts');
+const {TEST_CORE_POLICY_SELECTION}=await load('tests/fixtures/core-runtime-policy.mjs');
 const {AdapterRuntime,EffectCoordinator,FileEffectJournal,FileResourceLockManager}=await load('skills/nova/core/src/index.ts');
 const {createPluginInvocationContext}=await load('skills/nova/core/execution/context.ts');
 const {RevocableLease}=await load('skills/nova/core/execution/lease.ts');
@@ -15,15 +16,15 @@ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const origin=`http://127.0.0.1:${server.address().port}`,roots=['common','nova'].map(role=>path.join(source,'skills',role,'plugins'));
 process.env.KUBECLAW_TRANSPORT_PROXY_AUDIT='deliberate-local-test-token';
 const definition={schemaVersion:'pipeline-definition.v2',id:'test:proxy',maxConcurrency:1,stages:[{id:'architecture',type:'kubeclaw.validate.architecture',dependsOn:[],config:{agent:'agent'},input:{task:'Inspect.',architecture:{}},execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000}}]};
-const platform={schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},
+const platform={corePolicySelection:TEST_CORE_POLICY_SELECTION,schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},
   providers:{'runtime.dispatch':'kubeclaw.runtime-dispatch:runtime','network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets','git.repository.read':'kubeclaw.repository-adapter:repository','artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store'},
   grants:{'kubeclaw.architecture-validator:architecture':{'runtime.dispatch':{allowedAgents:['agent']},'git.repository.read':{allowedPrefixes:['.']},'artifacts.read':{allowedNamespaces:['kubeclaw.architecture-validator']},'artifacts.write':{allowedNamespaces:['kubeclaw.architecture-validator']}},
     'kubeclaw.runtime-dispatch:runtime':{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['token']}}},
-  adapters:{'kubeclaw.runtime-dispatch:runtime':{targets:{agent:{endpoint:origin+'/dispatch',tokenSecret:'token'}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type','idempotency-key','x-kubeclaw-signature'],timeoutMs:1000},
+  adapters:{'kubeclaw.runtime-dispatch:runtime':{targets:{agent:{endpoint:origin+'/dispatch',tokenSecret:'token',byteProfile:'standard'}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type','idempotency-key','x-kubeclaw-signature']},
     'kubeclaw.secret-resolver:secrets':{environment:{token:'KUBECLAW_TRANSPORT_PROXY_AUDIT'}},'kubeclaw.repository-adapter:repository':{repositoryRoot:root},'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')}},
   activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:100,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
-const prepared=await prepareRuntime(platform,definition),journal=new FileEffectJournal(path.join(root,'effects.jsonl'));
-const runtime=new AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),effects:new EffectCoordinator(journal,undefined,undefined,new FileResourceLockManager(path.join(root,'locks'))),shutdownTimeoutMs:100,async emitDomainEvent(){throw Error('unexpected event');}});
+const prepared=await prepareRuntime(platform,definition),journal=new FileEffectJournal(path.join(root,'effects.jsonl'),prepared.corePolicy);
+const runtime=new AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),effects:new EffectCoordinator(journal,undefined,undefined,new FileResourceLockManager(path.join(root,'locks'),prepared.corePolicy),300000,prepared.corePolicy.resourceAcquisition),shutdownTimeoutMs:100,async emitDomainEvent(){throw Error('unexpected event');}});
 await runtime.start();const results=[];
 try{
  for(const mode of ['adapter','context']){

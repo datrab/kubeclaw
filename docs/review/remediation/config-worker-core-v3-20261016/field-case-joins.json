@@ -1,0 +1,3170 @@
+{
+  "qualification": "Exact original IDs/references preserved; scoped source/test support is NOT wholesale original-case PASS. Supplemental scaffold IDs not silently inserted into historical2409 roster.",
+  "originalRosterCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "workerFields": [
+    {
+      "id": "CMP-WCORE-DRAIN-POLL-MS",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/drain_poll_ms",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-INPUT-BYTES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/input_bytes",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/journal_diagnostic_units",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-RECORD-BYTES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/journal_record_bytes",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-JSON-DEPTH",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/json_depth",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-JSON-NODES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/json_nodes",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-LOCK-STRIPES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/journalLockHexDigits",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-LOG-PARTS",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/log_parts",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/node_identity_file_bytes",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/ownership_diagnostic_units",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/pool_file_bytes",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-RETAIN-LOGS",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/retain_logs",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/runtime_identity_file_bytes",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/localRuntime/cancellationTimeoutMs",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-worker-core-localRuntime.drainTimeoutMs",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/localRuntime/drainTimeoutMs",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-worker-core-localRuntime.replayLimit",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/localRuntime/replayLimit",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-worker-core-owner",
+      "approvedDisposition": "protocol-envelope-domain",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-worker-core-schemaVersion",
+      "approvedDisposition": "protocol-envelope-domain",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP7-CORE-SCAFFOLD-MAXIMUM-MEMBER-BYTES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/scaffoldPublication/maximumMemberBytes",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP7-CORE-SCAFFOLD-MAXIMUM-POINTER-BYTES",
+      "approvedDisposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/scaffoldPublication/maximumPointerBytes",
+      "sourceImplemented": true,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-CGROUP2-MAGIC",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+      "approvedDisposition": "actual-owner-open-obligation",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-CLOCK-NONCE",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-CONTROL-HEADER",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-CGROUPROOT",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-MEMORYBYTES",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-TASKS",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-NODEIDENTITYFILE",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-NODENAME",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-OWNERSHIPROOT",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-POLICYDIGEST",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-ROLE",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-HOST-SCHEMAVERSION",
+      "approvedDisposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-PROTOCOL",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-JS-TIMER-MAX",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-KERNEL-COUNTERS",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-KERNEL-ISOLATION",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-LAUNCH-NONSETUID",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-LOG-PART-WIRE-UNITS",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-LOG-WIRE-BYTES",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-ID-DOMAIN",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-PROTOCOL",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-PRIVACY-MODES",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-SUPERVISOR-PID",
+      "approvedDisposition": "actual-owner-open-obligation",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    },
+    {
+      "id": "CMP-WCORE-UTF8-PROTOCOL",
+      "approvedDisposition": "exact-protocol-domain-definition",
+      "author": null,
+      "sourceImplemented": false,
+      "completeOriginalCaseAcceptance": false
+    }
+  ],
+  "relatedOriginalCases": [
+    {
+      "id": "CMP-C1-DELIVERY",
+      "fieldIds": [
+        "CMP-prism-control-pipelinePreferenceSubject",
+        "CMP-prism-control-artifactRoot",
+        "CMP-prism-control-studioPublicUrl",
+        "CMP-prism-control-port",
+        "CMP-prism-control-dispatchTimeoutMs",
+        "CMP-prism-studio-port",
+        "CMP-prism-studio-controlTimeoutMs",
+        "CMP-prism-studio-controlUrl",
+        "CMP-prism-worker-ingress.port",
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs",
+        "CMP-prism-worker-ingress.maximumInputBytes",
+        "CMP-prism-worker-supervisor.uid",
+        "CMP-prism-worker-supervisor.gid",
+        "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+        "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+        "CMP-prism-worker-supervisor.maximumOutputBytes",
+        "CMP-prism-worker-supervisor.maximumJournalBytes",
+        "CMP-prism-worker-supervisor.pollIntervalMs",
+        "CMP-prism-worker-supervisor.drainTimeoutMs",
+        "CMP-prism-worker-supervisor.closeTimeoutMs",
+        "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+        "CMP-prism-execution-resourcePolicy.memoryBytes",
+        "CMP-prism-execution-resourcePolicy.tasks",
+        "CMP-prism-execution-maximumResultBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+        "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.tasks",
+        "CMP-buster-engine-preparation.timeoutMs",
+        "CMP-buster-engine-preparation.cleanupTimeoutMs",
+        "CMP-buster-engine-preparation.maximumActivePreparations",
+        "CMP-buster-engine-preparation.maximumPendingAdmissions",
+        "CMP-buster-engine-preparation.maximumRequestBytes",
+        "CMP-buster-engine-preparation.maximumArchiveBytes",
+        "CMP-buster-engine-preparation.maximumExtractedBytes",
+        "CMP-buster-engine-preparation.maximumHeaderBytes",
+        "CMP-buster-engine-preparation.maximumSourceBytes",
+        "CMP-buster-engine-preparation.maximumMetadataBytes",
+        "CMP-buster-engine-preparation.maximumRecords",
+        "CMP-buster-engine-preparation.maximumOwnershipBytes",
+        "CMP-buster-engine-preparation.maximumJournalBytes",
+        "CMP-buster-engine-preparation.maximumInputBytes",
+        "CMP-buster-engine-preparation.maximumOutputBytes",
+        "CMP-buster-engine-preparation.maximumResultBytes",
+        "CMP-buster-engine-preparation.pollIntervalMs",
+        "CMP-buster-engine-preparation.drainTimeoutMs",
+        "CMP-buster-engine-preparation.closeTimeoutMs",
+        "CMP-buster-engine-preparation.tarTimeoutMs",
+        "CMP-buster-engine-preparation.maximumArchiveEntries",
+        "CMP-buster-engine-preparation.maximumListingLineBytes",
+        "CMP-buster-engine-preparation.maximumTarStderrBytes",
+        "CMP-buster-engine-preparation.maximumSourceEntries",
+        "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+        "CMP-buster-engine-preparation.maximumOpenFiles",
+        "CMP-buster-engine-admission.maximumActiveJobs",
+        "CMP-buster-engine-admission.maximumQueuedJobs",
+        "CMP-buster-engine-admission.maximumConcurrentAttempts",
+        "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+        "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+        "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.provider.maximumResultBytes",
+        "CMP-buster-engine-execution.provider.claimGraceMs",
+        "CMP-buster-engine-execution.provider.queueTimeoutMs",
+        "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+        "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+        "CMP-buster-engine-execution.provider.terminationGraceMs",
+        "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+        "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+        "CMP-buster-engine-execution.provider.minimumHeapMiB",
+        "CMP-buster-engine-execution.provider.heapFraction",
+        "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+        "CMP-buster-engine-execution.provider.minimumOpenFiles",
+        "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+        "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+        "CMP-buster-engine-execution.reports.maximumSourceBytes",
+        "CMP-buster-engine-execution.reports.maximumCases",
+        "CMP-buster-engine-execution.reports.maximumFindings",
+        "CMP-buster-engine-execution.reports.maximumCaseFindings",
+        "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+        "CMP-buster-engine-execution.reports.memoryBytes",
+        "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+        "CMP-buster-engine-execution.reports.maximumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumHeapMiB",
+        "CMP-buster-engine-execution.reports.heapFraction",
+        "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+        "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+        "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumResults",
+        "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+        "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+        "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+        "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.processInput.terminationGraceMs",
+        "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+        "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/2",
+      "sha256": "c528d3b4ccd987351246d05d0871f53dcfe0ead42cc5870167a8db49efd30445",
+      "originalResultRef": "D227#/cases/2/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C1-MUT",
+      "fieldIds": [
+        "CMP-prism-control-pipelinePreferenceSubject",
+        "CMP-prism-control-artifactRoot",
+        "CMP-prism-control-studioPublicUrl",
+        "CMP-prism-control-port",
+        "CMP-prism-control-dispatchTimeoutMs",
+        "CMP-prism-studio-port",
+        "CMP-prism-studio-controlTimeoutMs",
+        "CMP-prism-studio-controlUrl",
+        "CMP-prism-worker-ingress.port",
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs",
+        "CMP-prism-worker-ingress.maximumInputBytes",
+        "CMP-prism-worker-supervisor.uid",
+        "CMP-prism-worker-supervisor.gid",
+        "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+        "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+        "CMP-prism-worker-supervisor.maximumOutputBytes",
+        "CMP-prism-worker-supervisor.maximumJournalBytes",
+        "CMP-prism-worker-supervisor.pollIntervalMs",
+        "CMP-prism-worker-supervisor.drainTimeoutMs",
+        "CMP-prism-worker-supervisor.closeTimeoutMs",
+        "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+        "CMP-prism-execution-resourcePolicy.memoryBytes",
+        "CMP-prism-execution-resourcePolicy.tasks",
+        "CMP-prism-execution-maximumResultBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+        "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.tasks",
+        "CMP-buster-engine-preparation.timeoutMs",
+        "CMP-buster-engine-preparation.cleanupTimeoutMs",
+        "CMP-buster-engine-preparation.maximumActivePreparations",
+        "CMP-buster-engine-preparation.maximumPendingAdmissions",
+        "CMP-buster-engine-preparation.maximumRequestBytes",
+        "CMP-buster-engine-preparation.maximumArchiveBytes",
+        "CMP-buster-engine-preparation.maximumExtractedBytes",
+        "CMP-buster-engine-preparation.maximumHeaderBytes",
+        "CMP-buster-engine-preparation.maximumSourceBytes",
+        "CMP-buster-engine-preparation.maximumMetadataBytes",
+        "CMP-buster-engine-preparation.maximumRecords",
+        "CMP-buster-engine-preparation.maximumOwnershipBytes",
+        "CMP-buster-engine-preparation.maximumJournalBytes",
+        "CMP-buster-engine-preparation.maximumInputBytes",
+        "CMP-buster-engine-preparation.maximumOutputBytes",
+        "CMP-buster-engine-preparation.maximumResultBytes",
+        "CMP-buster-engine-preparation.pollIntervalMs",
+        "CMP-buster-engine-preparation.drainTimeoutMs",
+        "CMP-buster-engine-preparation.closeTimeoutMs",
+        "CMP-buster-engine-preparation.tarTimeoutMs",
+        "CMP-buster-engine-preparation.maximumArchiveEntries",
+        "CMP-buster-engine-preparation.maximumListingLineBytes",
+        "CMP-buster-engine-preparation.maximumTarStderrBytes",
+        "CMP-buster-engine-preparation.maximumSourceEntries",
+        "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+        "CMP-buster-engine-preparation.maximumOpenFiles",
+        "CMP-buster-engine-admission.maximumActiveJobs",
+        "CMP-buster-engine-admission.maximumQueuedJobs",
+        "CMP-buster-engine-admission.maximumConcurrentAttempts",
+        "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+        "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+        "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.provider.maximumResultBytes",
+        "CMP-buster-engine-execution.provider.claimGraceMs",
+        "CMP-buster-engine-execution.provider.queueTimeoutMs",
+        "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+        "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+        "CMP-buster-engine-execution.provider.terminationGraceMs",
+        "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+        "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+        "CMP-buster-engine-execution.provider.minimumHeapMiB",
+        "CMP-buster-engine-execution.provider.heapFraction",
+        "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+        "CMP-buster-engine-execution.provider.minimumOpenFiles",
+        "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+        "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+        "CMP-buster-engine-execution.reports.maximumSourceBytes",
+        "CMP-buster-engine-execution.reports.maximumCases",
+        "CMP-buster-engine-execution.reports.maximumFindings",
+        "CMP-buster-engine-execution.reports.maximumCaseFindings",
+        "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+        "CMP-buster-engine-execution.reports.memoryBytes",
+        "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+        "CMP-buster-engine-execution.reports.maximumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumHeapMiB",
+        "CMP-buster-engine-execution.reports.heapFraction",
+        "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+        "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+        "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumResults",
+        "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+        "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+        "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+        "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.processInput.terminationGraceMs",
+        "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+        "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/3",
+      "sha256": "57eed350de3cff11f3c7baa8a07f0b1bbb4ad39bc739b804f2571d8f82d32725",
+      "originalResultRef": "D227#/cases/3/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C5-BIND",
+      "fieldIds": [
+        "CMP-prism-control-pipelinePreferenceSubject",
+        "CMP-prism-control-artifactRoot",
+        "CMP-prism-control-studioPublicUrl",
+        "CMP-prism-control-port",
+        "CMP-prism-control-dispatchTimeoutMs",
+        "CMP-prism-studio-port",
+        "CMP-prism-studio-controlTimeoutMs",
+        "CMP-prism-studio-controlUrl",
+        "CMP-prism-worker-ingress.port",
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs",
+        "CMP-prism-worker-ingress.maximumInputBytes",
+        "CMP-prism-worker-supervisor.uid",
+        "CMP-prism-worker-supervisor.gid",
+        "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+        "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+        "CMP-prism-worker-supervisor.maximumOutputBytes",
+        "CMP-prism-worker-supervisor.maximumJournalBytes",
+        "CMP-prism-worker-supervisor.pollIntervalMs",
+        "CMP-prism-worker-supervisor.drainTimeoutMs",
+        "CMP-prism-worker-supervisor.closeTimeoutMs",
+        "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+        "CMP-prism-execution-resourcePolicy.memoryBytes",
+        "CMP-prism-execution-resourcePolicy.tasks",
+        "CMP-prism-execution-maximumResultBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+        "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.tasks",
+        "CMP-buster-engine-preparation.timeoutMs",
+        "CMP-buster-engine-preparation.cleanupTimeoutMs",
+        "CMP-buster-engine-preparation.maximumActivePreparations",
+        "CMP-buster-engine-preparation.maximumPendingAdmissions",
+        "CMP-buster-engine-preparation.maximumRequestBytes",
+        "CMP-buster-engine-preparation.maximumArchiveBytes",
+        "CMP-buster-engine-preparation.maximumExtractedBytes",
+        "CMP-buster-engine-preparation.maximumHeaderBytes",
+        "CMP-buster-engine-preparation.maximumSourceBytes",
+        "CMP-buster-engine-preparation.maximumMetadataBytes",
+        "CMP-buster-engine-preparation.maximumRecords",
+        "CMP-buster-engine-preparation.maximumOwnershipBytes",
+        "CMP-buster-engine-preparation.maximumJournalBytes",
+        "CMP-buster-engine-preparation.maximumInputBytes",
+        "CMP-buster-engine-preparation.maximumOutputBytes",
+        "CMP-buster-engine-preparation.maximumResultBytes",
+        "CMP-buster-engine-preparation.pollIntervalMs",
+        "CMP-buster-engine-preparation.drainTimeoutMs",
+        "CMP-buster-engine-preparation.closeTimeoutMs",
+        "CMP-buster-engine-preparation.tarTimeoutMs",
+        "CMP-buster-engine-preparation.maximumArchiveEntries",
+        "CMP-buster-engine-preparation.maximumListingLineBytes",
+        "CMP-buster-engine-preparation.maximumTarStderrBytes",
+        "CMP-buster-engine-preparation.maximumSourceEntries",
+        "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+        "CMP-buster-engine-preparation.maximumOpenFiles",
+        "CMP-buster-engine-admission.maximumActiveJobs",
+        "CMP-buster-engine-admission.maximumQueuedJobs",
+        "CMP-buster-engine-admission.maximumConcurrentAttempts",
+        "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+        "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+        "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.provider.maximumResultBytes",
+        "CMP-buster-engine-execution.provider.claimGraceMs",
+        "CMP-buster-engine-execution.provider.queueTimeoutMs",
+        "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+        "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+        "CMP-buster-engine-execution.provider.terminationGraceMs",
+        "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+        "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+        "CMP-buster-engine-execution.provider.minimumHeapMiB",
+        "CMP-buster-engine-execution.provider.heapFraction",
+        "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+        "CMP-buster-engine-execution.provider.minimumOpenFiles",
+        "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+        "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+        "CMP-buster-engine-execution.reports.maximumSourceBytes",
+        "CMP-buster-engine-execution.reports.maximumCases",
+        "CMP-buster-engine-execution.reports.maximumFindings",
+        "CMP-buster-engine-execution.reports.maximumCaseFindings",
+        "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+        "CMP-buster-engine-execution.reports.memoryBytes",
+        "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+        "CMP-buster-engine-execution.reports.maximumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumHeapMiB",
+        "CMP-buster-engine-execution.reports.heapFraction",
+        "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+        "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+        "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumResults",
+        "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+        "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+        "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+        "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.processInput.terminationGraceMs",
+        "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+        "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/4",
+      "sha256": "8589040011d61f682243410de6caeb671cb902816e706a0171e5c9b3178874a4",
+      "originalResultRef": "D227#/cases/4/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C1-VAL-worker-core",
+      "fieldIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit",
+        "CMP-worker-core-schemaVersion",
+        "CMP-worker-core-owner"
+      ],
+      "original": "D227#/cases/158",
+      "sha256": "de5ac2c31d5d3199f39779543cfc554150844df1fc2af7a4a3a49d8f1a2fc815",
+      "originalResultRef": "D227#/cases/158/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C1-EFFECT-worker-core",
+      "fieldIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/159",
+      "sha256": "2425408d2f6a8c2a36d70c8f85fa24f4701f2c9f95f73039286d4b87f915ce84",
+      "originalResultRef": "D227#/cases/159/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C1-EFFECT-worker-core-localRuntime.drainTimeoutMs",
+      "fieldIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs"
+      ],
+      "original": "D227#/cases/160",
+      "sha256": "0c72d28fa85238a2f6c3bdb8769884425ef178a1bc680dff2c617182035c7ae9",
+      "originalResultRef": "D227#/cases/160/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C1-EFFECT-worker-core-localRuntime.cancellationTimeoutMs",
+      "fieldIds": [
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs"
+      ],
+      "original": "D227#/cases/161",
+      "sha256": "57e9947987443e949d66e1bb84c5c251d6e841d187a9a2afc54fb130b7f98673",
+      "originalResultRef": "D227#/cases/161/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C1-EFFECT-worker-core-localRuntime.replayLimit",
+      "fieldIds": [
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/162",
+      "sha256": "96fba657c0a3ab66317266c38e10cab0cafddf3a1508bdac40301af9db474404",
+      "originalResultRef": "D227#/cases/162/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-INPUT-BYTES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/163",
+      "sha256": "caabd545fc172c4a55e78db9497dfc0ea5baf5bd529f6d42a4d407bf9d2d9f11",
+      "originalResultRef": "D227#/cases/163/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-INPUT-BYTES-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/164",
+      "sha256": "b8e52f91fb73668d4703d8b4d9bf3991f84735e9b6a73ca99fdae1ac8c68f2bd",
+      "originalResultRef": "D227#/cases/164/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-INPUT-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/165",
+      "sha256": "c9121c44b9053654286997e2b83bf85ff5ba37687655e1b16cd2bf7f297430ad",
+      "originalResultRef": "D227#/cases/165/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-INPUT-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/166",
+      "sha256": "c0f25aea5c2661cabb3dc80339bdba8c013f16d8d67586c8704b06c1ca33c568",
+      "originalResultRef": "D227#/cases/166/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-INPUT-BYTES-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/167",
+      "sha256": "8fa865e885339c35c18dcaa582d4e834af73fdbc937ab881bb785e85d2b61d3f",
+      "originalResultRef": "D227#/cases/167/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH",
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-DRAIN-POLL-MS",
+        "CMP-WCORE-POOL-FILE-BYTES",
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "original": "D227#/cases/168",
+      "sha256": "e782f5582117f54d8c96b71aa2f1afd317444e0cf791e54357ac3406426266b7",
+      "originalResultRef": "D227#/cases/168/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-BYTE-CONTROL",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/169",
+      "sha256": "0bb9fbaab61cceaf5f2a3e605026a074b052e915cb4cc5673ce3a2846f36d338",
+      "originalResultRef": "D227#/cases/169/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-NODES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/170",
+      "sha256": "ea731c425b862a9b80a13eec21697408d1e8b975cce8b71309c2da4b8f7763a0",
+      "originalResultRef": "D227#/cases/170/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-NODES-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/171",
+      "sha256": "c1d7abb706c6b040bd6d9496806ae375a4621c7200e87dc22fff51369f5f03cc",
+      "originalResultRef": "D227#/cases/171/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-NODES-BOUNDARY",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/172",
+      "sha256": "740be889e3cc4d80fa0bc55d9637a723e91957b043986e293b16a35a431f1117",
+      "originalResultRef": "D227#/cases/172/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-NODES-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/173",
+      "sha256": "028cdb4a3a85b2b0a1d82a755c7aedaa2716237ba1230bb18644b6c639213eb5",
+      "originalResultRef": "D227#/cases/173/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-NODES-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/174",
+      "sha256": "8a9bfed0f8c9d427511e47e654559e82851b113dabf9ffffcc2a288245167e03",
+      "originalResultRef": "D227#/cases/174/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-NODE-CONTROL",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/175",
+      "sha256": "2cb63184f41bfc3547656933382c1b784bdc9d670a52e305af9aaa560de835eb",
+      "originalResultRef": "D227#/cases/175/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-DEPTH-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/176",
+      "sha256": "166c1f2f99743404521037767a201532221f241db3cfa04207c99ef7216d88d3",
+      "originalResultRef": "D227#/cases/176/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-DEPTH-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/177",
+      "sha256": "b1f0c380e59f577b6ee775e324a348769bc95d66a30b35e86ed9c6573714d15e",
+      "originalResultRef": "D227#/cases/177/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-DEPTH-BOUNDARY",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/178",
+      "sha256": "af9f69f5826538558a23b8da1f09a74dc6bd2ab910e2ec6051ecea7785290e7b",
+      "originalResultRef": "D227#/cases/178/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-DEPTH-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/179",
+      "sha256": "b6550e0f990dd2dc79a94c933a57729cdad9f7bc15d46d59061f6e748bea7da2",
+      "originalResultRef": "D227#/cases/179/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-DEPTH-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/180",
+      "sha256": "c1d1c2e841ab3efcf144d39a691065d29bc401fe5a655af723ceb4dc42ebe8c8",
+      "originalResultRef": "D227#/cases/180/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-DEPTH-CONTROL",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/181",
+      "sha256": "f7b07e2e95733dd3ae905a1970a51e4b40e1c00e861adc23c5e2905e43fea028",
+      "originalResultRef": "D227#/cases/181/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-PARTS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PARTS"
+      ],
+      "original": "D227#/cases/182",
+      "sha256": "c5555f9ea9e8b9025d0cb8dc313fe1465007a5f33fd33e45a9266254fbc8d69b",
+      "originalResultRef": "D227#/cases/182/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-PARTS-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PARTS"
+      ],
+      "original": "D227#/cases/183",
+      "sha256": "53d07568550c5690b6e58c33bb7bdb26cc9eba9c39b509c78cda5bdd58d81297",
+      "originalResultRef": "D227#/cases/183/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-LOG-PART-SOURCE",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "original": "D227#/cases/184",
+      "sha256": "b8549fe8194fd6fdd9a11f367ef655f0c52477904a454a0282f684a213a5e4cc",
+      "originalResultRef": "D227#/cases/184/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-PARTS-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PARTS"
+      ],
+      "original": "D227#/cases/185",
+      "sha256": "8d1d3075babf2e52800435528faaedd71e5f04c2c90cc1d2fd479656467bc93f",
+      "originalResultRef": "D227#/cases/185/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RETAIN-LOGS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "original": "D227#/cases/186",
+      "sha256": "2177f705a88593ac3c366a1ee42b7b6190b7677f4479f964f11737008d7e1bb8",
+      "originalResultRef": "D227#/cases/186/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RETAIN-LOGS-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "original": "D227#/cases/187",
+      "sha256": "ed1f9e6100c7d94cd1fbcc8ebbbe21833a1d96c23494ce782d758bafc2341067",
+      "originalResultRef": "D227#/cases/187/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RETAIN-LOGS-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "original": "D227#/cases/188",
+      "sha256": "85ebc6c65fc18183bd7c1b21558dc90e45b70ca48917011ad0478ff3db634506",
+      "originalResultRef": "D227#/cases/188/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-DRAIN-POLL-MS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-DRAIN-POLL-MS"
+      ],
+      "original": "D227#/cases/189",
+      "sha256": "448706b7b8ecc54002027080a312f92ae249ff3ad8ed993a0c46c0c8699982f8",
+      "originalResultRef": "D227#/cases/189/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-DRAIN-POLL-MS-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-DRAIN-POLL-MS"
+      ],
+      "original": "D227#/cases/190",
+      "sha256": "2f083593024b8b8ca78860d847fe092155cea21f0f902c8e9f00ed13c474d7ed",
+      "originalResultRef": "D227#/cases/190/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-DRAIN-POLL-SOURCE",
+      "fieldIds": [
+        "CMP-WCORE-DRAIN-POLL-MS"
+      ],
+      "original": "D227#/cases/191",
+      "sha256": "9abffeaf9363ac3aabfbfc83f2db2d43a75b1d4f7c43f62980f54c41df26dbb1",
+      "originalResultRef": "D227#/cases/191/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-DRAIN-POLL-MS-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-DRAIN-POLL-MS"
+      ],
+      "original": "D227#/cases/192",
+      "sha256": "663eeaf404626cb15d2c6b1aa5bdba5ef7e071146f814d9b7bab57687f3e8922",
+      "originalResultRef": "D227#/cases/192/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/193",
+      "sha256": "3bee107c50ead06044cd05a4eb918982afad96045fcfaf33326a73513c63af99",
+      "originalResultRef": "D227#/cases/193/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/194",
+      "sha256": "ad37475e1c2f1d6b2d2bfc95252149f7ff10a4430e7faa2530884b1a8dc0215f",
+      "originalResultRef": "D227#/cases/194/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-POOL-SIZE-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/195",
+      "sha256": "9e1445f9923e13fbb1eb918a069844c41586ba5cc9c7aaefb6527b81dde47876",
+      "originalResultRef": "D227#/cases/195/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-POOL-SIZE-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/196",
+      "sha256": "94d9806b7971f5cff866067bcce2ffd96664bcbee03c463f2ca53a1cff3700c8",
+      "originalResultRef": "D227#/cases/196/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/197",
+      "sha256": "849744ba79b51e70adac69ad86364e54f293c8581fefead5ba31d74a07c6069c",
+      "originalResultRef": "D227#/cases/197/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-POOL-32768",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/198",
+      "sha256": "5ee0eee5fbdfed63e05431839557f824bf44488dc233dec42b66bc9319c6b094",
+      "originalResultRef": "D227#/cases/198/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-POOL-49152",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/199",
+      "sha256": "92e47f6980272cddc24814a9f27cae494a2bf2cdba07f7d3efa2613ad417818e",
+      "originalResultRef": "D227#/cases/199/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/200",
+      "sha256": "8d18741f271388b9287ac0077fd5c2dc0fbb481e89c1ec9a7169333b21618d12",
+      "originalResultRef": "D227#/cases/200/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/201",
+      "sha256": "38803bb951e0a23bc0c56fc923c773c8c7934ed449ecf2b184c45d632fd1abd2",
+      "originalResultRef": "D227#/cases/201/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-RUNTIME-SIZE-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/202",
+      "sha256": "d71f44dd942ef1572c3daf3da4c769bda3d356826459dd4f7a22bd2327b8d051",
+      "originalResultRef": "D227#/cases/202/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-RUNTIME-SIZE-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/203",
+      "sha256": "b8258c57f3bd0c60d4fc0c4cd0960c4ff087c614ef8071b001744c1e78cdd6d0",
+      "originalResultRef": "D227#/cases/203/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/204",
+      "sha256": "f42b07c46e51175605d0ab9d10599d4043046402147dedcb09796ec1327606fd",
+      "originalResultRef": "D227#/cases/204/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-RUNTIME-2048",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/205",
+      "sha256": "e1dc3765440d24a4d1c0bb90c316af219b03c830c065fc117e236b950bdd5164",
+      "originalResultRef": "D227#/cases/205/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-RUNTIME-3072",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/206",
+      "sha256": "510ee0b93298f0125a26a40498d943de825839246605bfc3fac97a29391a2008",
+      "originalResultRef": "D227#/cases/206/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/207",
+      "sha256": "9be6b96831b625f93985539ea76357ec795102d0caca8337e18e28871f038503",
+      "originalResultRef": "D227#/cases/207/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/208",
+      "sha256": "04d1e8a578ba651911b7b65221a83470458c2f8f94bf7f4d6eaf4ac4d584de24",
+      "originalResultRef": "D227#/cases/208/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-NODE-SIZE-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/209",
+      "sha256": "7bcccb156eb93a2138040d70901f08a95a427c05085d15d6788402dbb2c2660c",
+      "originalResultRef": "D227#/cases/209/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-NODE-SIZE-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/210",
+      "sha256": "d77a8970b14eb50bd1706bf0c4472c2e238af9b6c5a2979e804083d0b65892ec",
+      "originalResultRef": "D227#/cases/210/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/211",
+      "sha256": "5b4ce2863861c088f27701888ba8ef13372cabe99bb693695fcd701f5e0efded",
+      "originalResultRef": "D227#/cases/211/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-NODE-64",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/212",
+      "sha256": "cc83b15655d7e9fb8b5e28e7df39b04b88e21b3800c364661c873743ee6e94c6",
+      "originalResultRef": "D227#/cases/212/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-NODE-96",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/213",
+      "sha256": "6b38ea6596bd6c6fdde6a5eaa48ef7485ea573fca96189886e55e47e7c563209",
+      "originalResultRef": "D227#/cases/213/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-RECORD-BYTES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ],
+      "original": "D227#/cases/214",
+      "sha256": "3779d0fe6f5877f3e9767643358fef63634926332c7bbcf089c1f3fd3c9090f8",
+      "originalResultRef": "D227#/cases/214/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-RECORD-BYTES-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ],
+      "original": "D227#/cases/215",
+      "sha256": "b76ac154380ad631f2d98ae4ede28064b9913e446c509ba7b3c0b5327b7102dc",
+      "originalResultRef": "D227#/cases/215/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-RECORD-SIZE-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ],
+      "original": "D227#/cases/216",
+      "sha256": "2525676300474d0839ea740b48535cf25487e12f9e3cf71de54cf36710f32780",
+      "originalResultRef": "D227#/cases/216/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-RECORD-SIZE-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ],
+      "original": "D227#/cases/217",
+      "sha256": "4da898416f5de5fef41bae07bce3258f9560e3533e24cce9f21ac8c1352a21a7",
+      "originalResultRef": "D227#/cases/217/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-JOURNAL-TERMINAL-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/218",
+      "sha256": "f75eaf6b5f8772c5fafee81b9652d9d0d55a9159cada20c7ce1540d12290343c",
+      "originalResultRef": "D227#/cases/218/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-JOURNAL-TERMINAL-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/219",
+      "sha256": "4284a098e0b69c5e91171102794ab169330adc37ce677935206ac669d8e62efd",
+      "originalResultRef": "D227#/cases/219/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-RECORD-BYTES-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ],
+      "original": "D227#/cases/220",
+      "sha256": "5558a18ec1543b4d06486128c0327c39406f8ce7be2b0f13202be1c39945fabd",
+      "originalResultRef": "D227#/cases/220/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/221",
+      "sha256": "57f25f32c2dec9367c02be0184f501353ad32473f2c79f22c6f25863980d8df9",
+      "originalResultRef": "D227#/cases/221/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/222",
+      "sha256": "2900ede0b982227f339665c94db3ad0faedd699c1fc9f0b07d1368389610b8a2",
+      "originalResultRef": "D227#/cases/222/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-JOURNAL-DIAG-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/223",
+      "sha256": "e4bfd2f58013b0c3cdd659072741b85192752e60bb5b937548b81eb6feef136d",
+      "originalResultRef": "D227#/cases/223/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-JOURNAL-DIAG-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/224",
+      "sha256": "3ebd527c9bb8f3b6ded6ef5d41727a52d49fd5c4e2d83e01d88b3e7c759855b8",
+      "originalResultRef": "D227#/cases/224/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/225",
+      "sha256": "6b50433ac673f55390bf99b9adf62564e45a607ebd010f51653900445c29040d",
+      "originalResultRef": "D227#/cases/225/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/226",
+      "sha256": "7adec23c4daf8954ba7ca94dc8f1d9f071c69a1014258f3e2d67a6fb2a31aafa",
+      "originalResultRef": "D227#/cases/226/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/227",
+      "sha256": "6e2b675e42859b035ecb8e02bcf1ee8ea649b856bc4fa251655b578305d129a8",
+      "originalResultRef": "D227#/cases/227/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-OWNERSHIP-DIAG-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/228",
+      "sha256": "9cc1a7b222b5350d16affea0652c77857c8a0a88f7f45233957e02cb31b00de6",
+      "originalResultRef": "D227#/cases/228/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-OWNERSHIP-DIAG-EXCESS",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/229",
+      "sha256": "8915273209aae0b3d553a35d6e575f36e180e5a8acc57ccd80f30af135ea0b17",
+      "originalResultRef": "D227#/cases/229/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-OWNERSHIP-TERMINAL-POSITIVE",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/230",
+      "sha256": "13ff17486ab01bf21d1aec424b293b73e334061edef08f0c1d32fbb7dc7e6597",
+      "originalResultRef": "D227#/cases/230/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/231",
+      "sha256": "07beb92c32b4506c5604c7d48573f66d3b64f5a7bc14229f531995904166f997",
+      "originalResultRef": "D227#/cases/231/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-WIRE-BYTES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LOG-WIRE-BYTES"
+      ],
+      "original": "D227#/cases/232",
+      "sha256": "b7d1c0e9d474de64f552f736e5c4a564c808382e115bdc05700f05ed4ffedaf0",
+      "originalResultRef": "D227#/cases/232/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-WIRE-BYTES-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-LOG-WIRE-BYTES"
+      ],
+      "original": "D227#/cases/233",
+      "sha256": "eaa507b3cbb34c1093e129b40063878ba2462828e48594f93a4aee112c666431",
+      "originalResultRef": "D227#/cases/233/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-PART-WIRE-UNITS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PART-WIRE-UNITS"
+      ],
+      "original": "D227#/cases/234",
+      "sha256": "9bd3014dbae9ff89a4336b01c2f705dc446223e91cec5d568687857a85b9dbd0",
+      "originalResultRef": "D227#/cases/234/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-PART-WIRE-UNITS-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PART-WIRE-UNITS"
+      ],
+      "original": "D227#/cases/235",
+      "sha256": "8eb509246ad794c38bad99cd5aaeee7d92e11f956404976d91205d9c76ef5419",
+      "originalResultRef": "D227#/cases/235/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS"
+      ],
+      "original": "D227#/cases/236",
+      "sha256": "053cca8e40ff7217c538623f7ccdfaf0696d8524630ae05c9f8792185fca08d5",
+      "originalResultRef": "D227#/cases/236/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS"
+      ],
+      "original": "D227#/cases/237",
+      "sha256": "a9c708e5a33b443892b65112438c98324669f72103c94f2e6b79a5a8982f459e",
+      "originalResultRef": "D227#/cases/237/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JS-TIMER-MAX-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JS-TIMER-MAX"
+      ],
+      "original": "D227#/cases/238",
+      "sha256": "2f81136393367ccbd24918a5632f0c1d90bac48bc3b3e212b5cfa8fc6bf754ba",
+      "originalResultRef": "D227#/cases/238/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JS-TIMER-MAX-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-JS-TIMER-MAX"
+      ],
+      "original": "D227#/cases/239",
+      "sha256": "fa07adc35038d7451fad3fef21100f49a40ea72a5b9293f67b367aac03a687c4",
+      "originalResultRef": "D227#/cases/239/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX"
+      ],
+      "original": "D227#/cases/240",
+      "sha256": "e7c5bb6b668a7ad6ada5cf08e77a8ad3a7f42a7f34348763f7828f860977a294",
+      "originalResultRef": "D227#/cases/240/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX"
+      ],
+      "original": "D227#/cases/241",
+      "sha256": "883b0685e36f996da1ef0f804884689f4e7ad048398e6f40c08bc171e3b3de2a",
+      "originalResultRef": "D227#/cases/241/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-CGROUP2-MAGIC-VAL",
+      "fieldIds": [
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "original": "D227#/cases/242",
+      "sha256": "a49c303bd540c5fa0e826ae6408677af32855b13c2d56beea0113882c8a99682",
+      "originalResultRef": "D227#/cases/242/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-CGROUP2-MAGIC-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "original": "D227#/cases/243",
+      "sha256": "5324dc91566c0be768b34f233185f6985f72185e1fb65444d212a1366a7f2796",
+      "originalResultRef": "D227#/cases/243/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-CONTROL-HEADER-VAL",
+      "fieldIds": [
+        "CMP-WCORE-CONTROL-HEADER"
+      ],
+      "original": "D227#/cases/244",
+      "sha256": "b98170181c234df992a760e58c34cfb1a90ea18a680f2aaf493480a96577af0e",
+      "originalResultRef": "D227#/cases/244/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-CONTROL-HEADER-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-CONTROL-HEADER"
+      ],
+      "original": "D227#/cases/245",
+      "sha256": "d01b2c01a3ffcfa1daf700e9bd3ec0ce000d0aabebee3da30405b939db49981f",
+      "originalResultRef": "D227#/cases/245/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LAUNCH-ROOT-AUTHORITY-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY"
+      ],
+      "original": "D227#/cases/246",
+      "sha256": "f49944ac441706e06f900669708d99b6346725f359080384fd8fc6db54287502",
+      "originalResultRef": "D227#/cases/246/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LAUNCH-ROOT-AUTHORITY-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY"
+      ],
+      "original": "D227#/cases/247",
+      "sha256": "6a920137a4f12aed6a876b877beaade170edfde8ec23285bc931a788e9115958",
+      "originalResultRef": "D227#/cases/247/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LAUNCH-NONSETUID-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LAUNCH-NONSETUID"
+      ],
+      "original": "D227#/cases/248",
+      "sha256": "dc00fb9ae3da351973149b5a7025072c57e1cebf7fe29895225ef479b047fbcb",
+      "originalResultRef": "D227#/cases/248/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LAUNCH-NONSETUID-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-LAUNCH-NONSETUID"
+      ],
+      "original": "D227#/cases/249",
+      "sha256": "2606d313aaa010492b5af4e909622a93fbbf039b04b01f2be37761ad56cb56ce",
+      "originalResultRef": "D227#/cases/249/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-PRIVACY-MODES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-PRIVACY-MODES"
+      ],
+      "original": "D227#/cases/250",
+      "sha256": "0a96eff84e5cc801d427cfd0ba41d255633d54fcd37ffd27a07cb53a0d253dfd",
+      "originalResultRef": "D227#/cases/250/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-PRIVACY-MODES-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-PRIVACY-MODES"
+      ],
+      "original": "D227#/cases/251",
+      "sha256": "056111103fefb36d66d2eb19514a67a090f14263cdf4116ff6fb8679f0fc7bda",
+      "originalResultRef": "D227#/cases/251/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-ID-DOMAIN-VAL",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN"
+      ],
+      "original": "D227#/cases/252",
+      "sha256": "c0f7526c92676536813dfa356f14c9b79e0e23a2c6b4e0ae6db53efc31660170",
+      "originalResultRef": "D227#/cases/252/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-ID-DOMAIN-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN"
+      ],
+      "original": "D227#/cases/253",
+      "sha256": "08909ef89965a0c29b425b815ec532b6c53a3a923c65ee20898806a03818afe9",
+      "originalResultRef": "D227#/cases/253/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-KERNEL-COUNTERS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-KERNEL-COUNTERS"
+      ],
+      "original": "D227#/cases/254",
+      "sha256": "fc4255d74bdec2667ec8e2a2366b830a3f97ca70a573656b573ce0d0f8b5cc12",
+      "originalResultRef": "D227#/cases/254/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-KERNEL-COUNTERS-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-KERNEL-COUNTERS"
+      ],
+      "original": "D227#/cases/255",
+      "sha256": "6572c23a6ec3e179c0e509d5e3a7351e3bd31bb8aac660048dcd2020ccf508fc",
+      "originalResultRef": "D227#/cases/255/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-KERNEL-ISOLATION-VAL",
+      "fieldIds": [
+        "CMP-WCORE-KERNEL-ISOLATION"
+      ],
+      "original": "D227#/cases/256",
+      "sha256": "5bbb3927492f76b35b377e3f047142e81ab009b18c1eb0300bb2f1721e138bce",
+      "originalResultRef": "D227#/cases/256/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-KERNEL-ISOLATION-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-KERNEL-ISOLATION"
+      ],
+      "original": "D227#/cases/257",
+      "sha256": "c8cdc391398cd8359cc8fddfae10d406ebe00525c0de65eede91ab41b826e592",
+      "originalResultRef": "D227#/cases/257/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOCK-STRIPES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "original": "D227#/cases/258",
+      "sha256": "9e6aee5530f9bc68295d23cf931ed79cff3bf50090ebd5ea6e5de73af710082a",
+      "originalResultRef": "D227#/cases/258/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOCK-STRIPES-EFFECT",
+      "fieldIds": [
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "original": "D227#/cases/259",
+      "sha256": "9aa6bc5d09dd529c62232dd943b03dca7c6300a3df2c63cc1037db6688514ab1",
+      "originalResultRef": "D227#/cases/259/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-STRIPE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "original": "D227#/cases/260",
+      "sha256": "ebb41ebb6e4589403aaf983095b33026e2f3506362d7d6b267785dd782c87e03",
+      "originalResultRef": "D227#/cases/260/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOCK-STRIPES-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "original": "D227#/cases/261",
+      "sha256": "0d2aa9387f78e0e946c272a82c5fa2e6cab1809422f8637be3f1142b98133e4a",
+      "originalResultRef": "D227#/cases/261/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-PROTOCOL-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-PROTOCOL"
+      ],
+      "original": "D227#/cases/262",
+      "sha256": "14ca4e1720820ca47b03551be673478e7ae55d682a59e33235dc23a7eeb70921",
+      "originalResultRef": "D227#/cases/262/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-PROTOCOL-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-PROTOCOL"
+      ],
+      "original": "D227#/cases/263",
+      "sha256": "b14300f86eabb9f015299cea5c8914637b56454a226bfd7e64529b5802992407",
+      "originalResultRef": "D227#/cases/263/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-PROTOCOL-VAL",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "original": "D227#/cases/264",
+      "sha256": "8fc5c1c05411a7e2679b12b5e2ebbd2f9f703fcbb6571a49f6dccc0320c781bc",
+      "originalResultRef": "D227#/cases/264/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-PROTOCOL-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "original": "D227#/cases/265",
+      "sha256": "82b39f9db3dd59e03ce1d3cba49cb9ee88f1c50cd40870285897ff8d1fc69435",
+      "originalResultRef": "D227#/cases/265/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-CLOCK-NONCE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-CLOCK-NONCE"
+      ],
+      "original": "D227#/cases/266",
+      "sha256": "5d84009751342e54b5be754ceb662bc2320a248617e83c088439b9bf37452d37",
+      "originalResultRef": "D227#/cases/266/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-CLOCK-NONCE-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-CLOCK-NONCE"
+      ],
+      "original": "D227#/cases/267",
+      "sha256": "773675fc96caf90006c47a4076a250ef9328833ddc374b58043dc92bfe21f40c",
+      "originalResultRef": "D227#/cases/267/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-UTF8-PROTOCOL-VAL",
+      "fieldIds": [
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "original": "D227#/cases/268",
+      "sha256": "bc260bdd967a27dfc3e11f90a473f42d7c1b9431e0fbb3d87430212fcfa34856",
+      "originalResultRef": "D227#/cases/268/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-UTF8-PROTOCOL-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "original": "D227#/cases/269",
+      "sha256": "eebb3a90aa838d5f5cbc346a012f924d0da80b2b5d399502742f7d5842b790ba",
+      "originalResultRef": "D227#/cases/269/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-SCHEMAVERSION-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-SCHEMAVERSION"
+      ],
+      "original": "D227#/cases/270",
+      "sha256": "bbc42ba63044d7e1d1b64b974fdce8feb03837ea7a6018f3c0c357aaeabb2ebe",
+      "originalResultRef": "D227#/cases/270/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-SCHEMAVERSION-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-SCHEMAVERSION"
+      ],
+      "original": "D227#/cases/271",
+      "sha256": "c074b71cee08b3c49375981d8051240934143a98e684de4297d5b3fb8a3ee631",
+      "originalResultRef": "D227#/cases/271/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-ROLE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-ROLE"
+      ],
+      "original": "D227#/cases/272",
+      "sha256": "99076b4a90145a48e1b24b8c54ac3a1542b486d32994588b3e4610511ac9c8b1",
+      "originalResultRef": "D227#/cases/272/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-ROLE-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-ROLE"
+      ],
+      "original": "D227#/cases/273",
+      "sha256": "38b1523bf757c6f8dda3b6ec255c6bf3e08b4aa7e0765380f3b43c6d4d88b507",
+      "originalResultRef": "D227#/cases/273/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-NODENAME-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-NODENAME"
+      ],
+      "original": "D227#/cases/274",
+      "sha256": "e5a38fe404fe4be1a052a4a107caf1587a989e31df7d83edf65fdcb0da9b461d",
+      "originalResultRef": "D227#/cases/274/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-NODENAME-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-NODENAME"
+      ],
+      "original": "D227#/cases/275",
+      "sha256": "30c5e628be4eb920be327bf7a8673d0ae1ed83db67e022681d1ebd9cd6a04343",
+      "originalResultRef": "D227#/cases/275/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-POLICYDIGEST-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-POLICYDIGEST"
+      ],
+      "original": "D227#/cases/276",
+      "sha256": "16529d53d905dc5525a2d4f6d2be3977299a0f5a557a7a84a6a09132f4958ee5",
+      "originalResultRef": "D227#/cases/276/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-POLICYDIGEST-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-POLICYDIGEST"
+      ],
+      "original": "D227#/cases/277",
+      "sha256": "cd70fa48b068ba26a29726e9d52f10ad5f0d3bfdbc37851307e9648c0621b5e3",
+      "originalResultRef": "D227#/cases/277/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-CGROUPROOT-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-CGROUPROOT"
+      ],
+      "original": "D227#/cases/278",
+      "sha256": "d54535514b32c377122afe6ab80fb283e6beb67cc05aa7a210dde6d32f4059a6",
+      "originalResultRef": "D227#/cases/278/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-CGROUPROOT-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-CGROUPROOT"
+      ],
+      "original": "D227#/cases/279",
+      "sha256": "1eb90d0e58f07e45a9eaf14bedada558c4ff28202e97644752ec7977b815919e",
+      "originalResultRef": "D227#/cases/279/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-OWNERSHIPROOT-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-OWNERSHIPROOT"
+      ],
+      "original": "D227#/cases/280",
+      "sha256": "cec7cfbc84a1ded1bc851ea215bd1fe2aa0749d339217c23f0c9359907b4cace",
+      "originalResultRef": "D227#/cases/280/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-OWNERSHIPROOT-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-OWNERSHIPROOT"
+      ],
+      "original": "D227#/cases/281",
+      "sha256": "77cb7ec052c026630296c3612197c6b05279540a6d36776f8f33b5debb848b6f",
+      "originalResultRef": "D227#/cases/281/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-NODEIDENTITYFILE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-NODEIDENTITYFILE"
+      ],
+      "original": "D227#/cases/282",
+      "sha256": "7398ecdbf43d89224b774c5d0b6a713087800d7769df484d1fc268da00c9bf42",
+      "originalResultRef": "D227#/cases/282/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-NODEIDENTITYFILE-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-NODEIDENTITYFILE"
+      ],
+      "original": "D227#/cases/283",
+      "sha256": "b2e5c6fc4d62198f4c6141ca5e5c5a2c6c5546c57f60befcd3b27deb1d4cbfd8",
+      "originalResultRef": "D227#/cases/283/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE"
+      ],
+      "original": "D227#/cases/284",
+      "sha256": "c52c60dcf3ad1736b652eb1a23a5b5adb9a1cad12b97114751a37675915c5fea",
+      "originalResultRef": "D227#/cases/284/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE"
+      ],
+      "original": "D227#/cases/285",
+      "sha256": "742c81ee66f399605827a4d8bdedc6bb513cb2345bcf9347f989b9bdd67dc4aa",
+      "originalResultRef": "D227#/cases/285/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES"
+      ],
+      "original": "D227#/cases/286",
+      "sha256": "8858733852f7efad1be151b538beab7afb63672b7f874be0333a6c7aed899659",
+      "originalResultRef": "D227#/cases/286/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES"
+      ],
+      "original": "D227#/cases/287",
+      "sha256": "9dee98f4aa6a155c5107723ddee1ec00e302d1178a0ffd24e1174b2105560d61",
+      "originalResultRef": "D227#/cases/287/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-MEMORYBYTES-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-LIMITS-MEMORYBYTES"
+      ],
+      "original": "D227#/cases/288",
+      "sha256": "14206b4a8079dd4f861386710ee925ca09098983ed8297e828c4475a0ee45814",
+      "originalResultRef": "D227#/cases/288/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-MEMORYBYTES-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-LIMITS-MEMORYBYTES"
+      ],
+      "original": "D227#/cases/289",
+      "sha256": "b0da528716aba76e855693188275a645fda85171691145f11118225bac2a7384",
+      "originalResultRef": "D227#/cases/289/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-TASKS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-LIMITS-TASKS"
+      ],
+      "original": "D227#/cases/290",
+      "sha256": "18018a66123e97c6733346a27ab9aa954c8f080f0633cd4ff82dc1c34fe45bc5",
+      "originalResultRef": "D227#/cases/290/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-TASKS-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-LIMITS-TASKS"
+      ],
+      "original": "D227#/cases/291",
+      "sha256": "aa3ff13a0ffbc26aece2a5beed4d8948ce55535e15db31227b6466f6b89afff2",
+      "originalResultRef": "D227#/cases/291/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS"
+      ],
+      "original": "D227#/cases/292",
+      "sha256": "6d263ac1836cf076c8fc80b0d8737ae2fffd816fa0873b2e7981f2ff3ed47239",
+      "originalResultRef": "D227#/cases/292/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS"
+      ],
+      "original": "D227#/cases/293",
+      "sha256": "07b442f770b47b95570fa70786436e961daae240f24a58796b4e76c26ffb29c3",
+      "originalResultRef": "D227#/cases/293/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+      "fieldIds": [
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS"
+      ],
+      "original": "D227#/cases/294",
+      "sha256": "363ff5a8a36b51eb0a43ec0798b23b5283ec25588c7c6d3748d77428fa04acc1",
+      "originalResultRef": "D227#/cases/294/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS"
+      ],
+      "original": "D227#/cases/295",
+      "sha256": "76189b6bfc8c1afb34c6692f940bfa71dacaa9107c2e5805338b12b5539787c3",
+      "originalResultRef": "D227#/cases/295/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-SUPERVISOR-PID-VAL",
+      "fieldIds": [
+        "CMP-WCORE-SUPERVISOR-PID"
+      ],
+      "original": "D227#/cases/296",
+      "sha256": "1e6f3a80688d483293806e808f6fb9d395b49fbdb9be7ecd98703c0319c5cab7",
+      "originalResultRef": "D227#/cases/296/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-SUPERVISOR-PID-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-SUPERVISOR-PID"
+      ],
+      "original": "D227#/cases/297",
+      "sha256": "52944ccdb7f760dd6b7b00870893c5c666405365da40bf98460c2a4f30b3c60c",
+      "originalResultRef": "D227#/cases/297/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-CHILD-LIMIT-INHERITANCE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE"
+      ],
+      "original": "D227#/cases/298",
+      "sha256": "134efef13070a82af19617eaafd0a75ba432e9356691ab626bbf8fa45c2a501f",
+      "originalResultRef": "D227#/cases/298/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-CHILD-LIMIT-INHERITANCE-CONTRACT",
+      "fieldIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE"
+      ],
+      "original": "D227#/cases/299",
+      "sha256": "592d981d7c2fb8ee24d7eea186fd7b8ca011560db1871df9bf7de897fee7ae2a",
+      "originalResultRef": "D227#/cases/299/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-COMPLETE-PROFILES",
+      "fieldIds": [
+        "CMP-prism-control-pipelinePreferenceSubject",
+        "CMP-prism-control-artifactRoot",
+        "CMP-prism-control-studioPublicUrl",
+        "CMP-prism-control-port",
+        "CMP-prism-control-dispatchTimeoutMs",
+        "CMP-prism-studio-port",
+        "CMP-prism-studio-controlTimeoutMs",
+        "CMP-prism-studio-controlUrl",
+        "CMP-prism-worker-ingress.port",
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs",
+        "CMP-prism-worker-ingress.maximumInputBytes",
+        "CMP-prism-worker-supervisor.uid",
+        "CMP-prism-worker-supervisor.gid",
+        "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+        "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+        "CMP-prism-worker-supervisor.maximumOutputBytes",
+        "CMP-prism-worker-supervisor.maximumJournalBytes",
+        "CMP-prism-worker-supervisor.pollIntervalMs",
+        "CMP-prism-worker-supervisor.drainTimeoutMs",
+        "CMP-prism-worker-supervisor.closeTimeoutMs",
+        "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+        "CMP-prism-execution-resourcePolicy.memoryBytes",
+        "CMP-prism-execution-resourcePolicy.tasks",
+        "CMP-prism-execution-maximumResultBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+        "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.tasks",
+        "CMP-buster-engine-preparation.timeoutMs",
+        "CMP-buster-engine-preparation.cleanupTimeoutMs",
+        "CMP-buster-engine-preparation.maximumActivePreparations",
+        "CMP-buster-engine-preparation.maximumPendingAdmissions",
+        "CMP-buster-engine-preparation.maximumRequestBytes",
+        "CMP-buster-engine-preparation.maximumArchiveBytes",
+        "CMP-buster-engine-preparation.maximumExtractedBytes",
+        "CMP-buster-engine-preparation.maximumHeaderBytes",
+        "CMP-buster-engine-preparation.maximumSourceBytes",
+        "CMP-buster-engine-preparation.maximumMetadataBytes",
+        "CMP-buster-engine-preparation.maximumRecords",
+        "CMP-buster-engine-preparation.maximumOwnershipBytes",
+        "CMP-buster-engine-preparation.maximumJournalBytes",
+        "CMP-buster-engine-preparation.maximumInputBytes",
+        "CMP-buster-engine-preparation.maximumOutputBytes",
+        "CMP-buster-engine-preparation.maximumResultBytes",
+        "CMP-buster-engine-preparation.pollIntervalMs",
+        "CMP-buster-engine-preparation.drainTimeoutMs",
+        "CMP-buster-engine-preparation.closeTimeoutMs",
+        "CMP-buster-engine-preparation.tarTimeoutMs",
+        "CMP-buster-engine-preparation.maximumArchiveEntries",
+        "CMP-buster-engine-preparation.maximumListingLineBytes",
+        "CMP-buster-engine-preparation.maximumTarStderrBytes",
+        "CMP-buster-engine-preparation.maximumSourceEntries",
+        "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+        "CMP-buster-engine-preparation.maximumOpenFiles",
+        "CMP-buster-engine-admission.maximumActiveJobs",
+        "CMP-buster-engine-admission.maximumQueuedJobs",
+        "CMP-buster-engine-admission.maximumConcurrentAttempts",
+        "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+        "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+        "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.provider.maximumResultBytes",
+        "CMP-buster-engine-execution.provider.claimGraceMs",
+        "CMP-buster-engine-execution.provider.queueTimeoutMs",
+        "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+        "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+        "CMP-buster-engine-execution.provider.terminationGraceMs",
+        "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+        "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+        "CMP-buster-engine-execution.provider.minimumHeapMiB",
+        "CMP-buster-engine-execution.provider.heapFraction",
+        "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+        "CMP-buster-engine-execution.provider.minimumOpenFiles",
+        "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+        "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+        "CMP-buster-engine-execution.reports.maximumSourceBytes",
+        "CMP-buster-engine-execution.reports.maximumCases",
+        "CMP-buster-engine-execution.reports.maximumFindings",
+        "CMP-buster-engine-execution.reports.maximumCaseFindings",
+        "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+        "CMP-buster-engine-execution.reports.memoryBytes",
+        "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+        "CMP-buster-engine-execution.reports.maximumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumHeapMiB",
+        "CMP-buster-engine-execution.reports.heapFraction",
+        "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+        "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+        "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumResults",
+        "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+        "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+        "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+        "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.processInput.terminationGraceMs",
+        "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+        "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/322",
+      "sha256": "22ef10be9a03d62883d24cf0baa446ef2b5393456c89d41cdf425a04f0ede73f",
+      "originalResultRef": "D227#/cases/322/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-REFINED-COMPLETE-PROFILES",
+      "fieldIds": [
+        "CMP-prism-control-pipelinePreferenceSubject",
+        "CMP-prism-control-artifactRoot",
+        "CMP-prism-control-studioPublicUrl",
+        "CMP-prism-control-port",
+        "CMP-prism-control-dispatchTimeoutMs",
+        "CMP-prism-studio-port",
+        "CMP-prism-studio-controlTimeoutMs",
+        "CMP-prism-studio-controlUrl",
+        "CMP-prism-worker-ingress.port",
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs",
+        "CMP-prism-worker-ingress.maximumInputBytes",
+        "CMP-prism-worker-supervisor.uid",
+        "CMP-prism-worker-supervisor.gid",
+        "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+        "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+        "CMP-prism-worker-supervisor.maximumOutputBytes",
+        "CMP-prism-worker-supervisor.maximumJournalBytes",
+        "CMP-prism-worker-supervisor.pollIntervalMs",
+        "CMP-prism-worker-supervisor.drainTimeoutMs",
+        "CMP-prism-worker-supervisor.closeTimeoutMs",
+        "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+        "CMP-prism-execution-resourcePolicy.memoryBytes",
+        "CMP-prism-execution-resourcePolicy.tasks",
+        "CMP-prism-execution-maximumResultBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+        "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.tasks",
+        "CMP-buster-engine-preparation.timeoutMs",
+        "CMP-buster-engine-preparation.cleanupTimeoutMs",
+        "CMP-buster-engine-preparation.maximumActivePreparations",
+        "CMP-buster-engine-preparation.maximumPendingAdmissions",
+        "CMP-buster-engine-preparation.maximumRequestBytes",
+        "CMP-buster-engine-preparation.maximumArchiveBytes",
+        "CMP-buster-engine-preparation.maximumExtractedBytes",
+        "CMP-buster-engine-preparation.maximumHeaderBytes",
+        "CMP-buster-engine-preparation.maximumSourceBytes",
+        "CMP-buster-engine-preparation.maximumMetadataBytes",
+        "CMP-buster-engine-preparation.maximumRecords",
+        "CMP-buster-engine-preparation.maximumOwnershipBytes",
+        "CMP-buster-engine-preparation.maximumJournalBytes",
+        "CMP-buster-engine-preparation.maximumInputBytes",
+        "CMP-buster-engine-preparation.maximumOutputBytes",
+        "CMP-buster-engine-preparation.maximumResultBytes",
+        "CMP-buster-engine-preparation.pollIntervalMs",
+        "CMP-buster-engine-preparation.drainTimeoutMs",
+        "CMP-buster-engine-preparation.closeTimeoutMs",
+        "CMP-buster-engine-preparation.tarTimeoutMs",
+        "CMP-buster-engine-preparation.maximumArchiveEntries",
+        "CMP-buster-engine-preparation.maximumListingLineBytes",
+        "CMP-buster-engine-preparation.maximumTarStderrBytes",
+        "CMP-buster-engine-preparation.maximumSourceEntries",
+        "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+        "CMP-buster-engine-preparation.maximumOpenFiles",
+        "CMP-buster-engine-admission.maximumActiveJobs",
+        "CMP-buster-engine-admission.maximumQueuedJobs",
+        "CMP-buster-engine-admission.maximumConcurrentAttempts",
+        "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+        "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+        "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.provider.maximumResultBytes",
+        "CMP-buster-engine-execution.provider.claimGraceMs",
+        "CMP-buster-engine-execution.provider.queueTimeoutMs",
+        "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+        "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+        "CMP-buster-engine-execution.provider.terminationGraceMs",
+        "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+        "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+        "CMP-buster-engine-execution.provider.minimumHeapMiB",
+        "CMP-buster-engine-execution.provider.heapFraction",
+        "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+        "CMP-buster-engine-execution.provider.minimumOpenFiles",
+        "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+        "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+        "CMP-buster-engine-execution.reports.maximumSourceBytes",
+        "CMP-buster-engine-execution.reports.maximumCases",
+        "CMP-buster-engine-execution.reports.maximumFindings",
+        "CMP-buster-engine-execution.reports.maximumCaseFindings",
+        "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+        "CMP-buster-engine-execution.reports.memoryBytes",
+        "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+        "CMP-buster-engine-execution.reports.maximumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumHeapMiB",
+        "CMP-buster-engine-execution.reports.heapFraction",
+        "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+        "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+        "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumResults",
+        "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+        "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+        "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+        "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.processInput.terminationGraceMs",
+        "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+        "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/323",
+      "sha256": "e2b937685170ef19ca8f71950d37aba82afe6d91c35ec68cffd01d1366576d2d",
+      "originalResultRef": "D227#/cases/323/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-INPUT-BYTES-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/366",
+      "sha256": "5782de6a401d9c216aaeed9af4d83b3cf854b015dddf0442e5543fe6a3d835e8",
+      "originalResultRef": "D227#/cases/366/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-INPUT-BYTES-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/367",
+      "sha256": "273f589c2333c006b15819dfa27ede0ca49098064130e967681dcae0ef374470",
+      "originalResultRef": "D227#/cases/367/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-INPUT-BYTES-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-INPUT-BYTES"
+      ],
+      "original": "D227#/cases/368",
+      "sha256": "ad92e4990989d13df3858968f8c705477e255fef592b31bf96b58cda2309046e",
+      "originalResultRef": "D227#/cases/368/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-NODES-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/369",
+      "sha256": "942f838fad6448c53e41b52751b4181352899de00ec24bebd6f30d78b963fc66",
+      "originalResultRef": "D227#/cases/369/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-NODES-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/370",
+      "sha256": "fc4eb371791e109a601626cdf6e612cf0cb8b69be676c5a97b642cc33b0ffa2a",
+      "originalResultRef": "D227#/cases/370/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-NODES-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-JSON-NODES"
+      ],
+      "original": "D227#/cases/371",
+      "sha256": "572fef604c82643b7a609929d65483180861fc9365d721f8ab7f5afc7e8bda90",
+      "originalResultRef": "D227#/cases/371/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-DEPTH-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/372",
+      "sha256": "ea60ed0ad794bc9874fa236fe2a572b9cbf88cef5118ed2bd5e24cf4a3051347",
+      "originalResultRef": "D227#/cases/372/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-DEPTH-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/373",
+      "sha256": "966a175b711082b0a2bdabb0a13e4449c2e7e42b4374b14f5bcafdde422c2bf4",
+      "originalResultRef": "D227#/cases/373/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JSON-DEPTH-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "original": "D227#/cases/374",
+      "sha256": "2c0f1b5a8fd7203243f5cd3ae40dd54e7895f9dcab9bfa0d7780d1c30638bab0",
+      "originalResultRef": "D227#/cases/374/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-PARTS-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PARTS"
+      ],
+      "original": "D227#/cases/375",
+      "sha256": "d2a35ab8d0803072f51386baeaa8e339ced3ce22fb851be8ea82edfd0bf7a9cd",
+      "originalResultRef": "D227#/cases/375/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-PARTS-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PARTS"
+      ],
+      "original": "D227#/cases/376",
+      "sha256": "82c41f1c9fee8267072d32a2d53925176a834deeaf4bdb0d9fd63f53f6f47936",
+      "originalResultRef": "D227#/cases/376/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOG-PARTS-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PARTS"
+      ],
+      "original": "D227#/cases/377",
+      "sha256": "6932c7cecd731c38a938a90d04c11c4e076b5a9bef8c7576ba5b5241a69b12a9",
+      "originalResultRef": "D227#/cases/377/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RETAIN-LOGS-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "original": "D227#/cases/378",
+      "sha256": "a696082ff03b34b8066a804d9fa63e945d0fd3ac62d8596d8e0c8552b0d6a504",
+      "originalResultRef": "D227#/cases/378/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RETAIN-LOGS-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "original": "D227#/cases/379",
+      "sha256": "f53a5c63822e26f5e7a5b3ae3ff5d0a7ea9a06b78dc9a9d7adf44a9203d3ca01",
+      "originalResultRef": "D227#/cases/379/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RETAIN-LOGS-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "original": "D227#/cases/380",
+      "sha256": "0ac797b4c525f53a341c0c4923dd795db83e26236c9ef93598777a018eb0d77c",
+      "originalResultRef": "D227#/cases/380/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-DRAIN-POLL-MS-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-DRAIN-POLL-MS"
+      ],
+      "original": "D227#/cases/381",
+      "sha256": "946ccaa05505933002808526ad0168bc090fefb4028cc42282cef8bed7228cba",
+      "originalResultRef": "D227#/cases/381/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-DRAIN-POLL-MS-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-DRAIN-POLL-MS"
+      ],
+      "original": "D227#/cases/382",
+      "sha256": "4774ed9c64bcca5ee3380ec310cb3f86482ae8d282095cf58a8fd673e0a305a4",
+      "originalResultRef": "D227#/cases/382/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-DRAIN-POLL-MS-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-DRAIN-POLL-MS"
+      ],
+      "original": "D227#/cases/383",
+      "sha256": "a54573edcd24f3f1681a3395b50190686dc8da8b10e3a79b696457da0c6a69c3",
+      "originalResultRef": "D227#/cases/383/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/384",
+      "sha256": "cddb8246579b2e2689f9307c3a70e3653c8938ea940fceb0b5e4fb9660f38cd9",
+      "originalResultRef": "D227#/cases/384/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/385",
+      "sha256": "2138d8beec60ef175dbfe5968dc752ae8e88bc6294ec66a6fde71cc333d54006",
+      "originalResultRef": "D227#/cases/385/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ],
+      "original": "D227#/cases/386",
+      "sha256": "424f7fc367b5c575a6034a5ee629c63041b96817a3fdf6e0732be6ec01510ae3",
+      "originalResultRef": "D227#/cases/386/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/387",
+      "sha256": "79ffa996af4637ff1f887ac04c0e8ecd3b4d6e4b87c713aaf6e2f72765439ac2",
+      "originalResultRef": "D227#/cases/387/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/388",
+      "sha256": "19fe1c1ec1c20e357e83b3463fb1a19de9fb83a4528886e4db6441d79aff0f5d",
+      "originalResultRef": "D227#/cases/388/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/389",
+      "sha256": "b30796e3e190457996e200916cab85cd10b3f52301b79ef30d5e85fe1d1de51d",
+      "originalResultRef": "D227#/cases/389/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/390",
+      "sha256": "75a4bd16538f4217761af6844e13c87cbf2ecfef737b889054350ea9a5cfb2d9",
+      "originalResultRef": "D227#/cases/390/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/391",
+      "sha256": "c13886ff5ef3bfba143cf0d1f018dd9ab42a4a0801b545b65fd88cb69a983e90",
+      "originalResultRef": "D227#/cases/391/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ],
+      "original": "D227#/cases/392",
+      "sha256": "49043a97602a85424916f69c3d3e256e94e09f49103246598d0939ec153f9013",
+      "originalResultRef": "D227#/cases/392/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-RECORD-BYTES-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ],
+      "original": "D227#/cases/393",
+      "sha256": "351316c45e4648c788dffd3578febe59c768409d265e6117ad6cd7d1a8d7b385",
+      "originalResultRef": "D227#/cases/393/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-RECORD-BYTES-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ],
+      "original": "D227#/cases/394",
+      "sha256": "2d66a433a3d88b3c7e85d39f9743588323e236d1cc759ed40124af4f8c85465c",
+      "originalResultRef": "D227#/cases/394/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-RECORD-BYTES-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ],
+      "original": "D227#/cases/395",
+      "sha256": "1283ce496741de3a88b6ad85e3fd7af8599c35daa4d886fe05fd3fc505a30b22",
+      "originalResultRef": "D227#/cases/395/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/396",
+      "sha256": "5bfad908aceed4c5ed37d763192846ef4d0dba985802a792d4a9266751743d78",
+      "originalResultRef": "D227#/cases/396/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/397",
+      "sha256": "b62b439cbb7314a25eae6d145053bbfd3efa72fbc5af0449b32fe287248df581",
+      "originalResultRef": "D227#/cases/397/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/398",
+      "sha256": "ed0161be59613a9ce191c428433e7c4cfa100f9f73a8d93ee396add5e70fa0c0",
+      "originalResultRef": "D227#/cases/398/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/399",
+      "sha256": "0753f0d48ead6d4fb14ca4eb42ae1d72874926ca5b7491e4b0a43e2eca88e671",
+      "originalResultRef": "D227#/cases/399/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/400",
+      "sha256": "c3d848b1201abbd303565233108d0d2071dd39a59d92373c47f52c2d1de62e32",
+      "originalResultRef": "D227#/cases/400/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "original": "D227#/cases/401",
+      "sha256": "60050482e6eb19b92ee804830d115aaf6b2473b966422928c6a5cfc838d72db1",
+      "originalResultRef": "D227#/cases/401/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOCK-STRIPES-FINITE-VAL",
+      "fieldIds": [
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "original": "D227#/cases/402",
+      "sha256": "adb232905135a9a04e28d2d8cf3a8705b61f2469a08e656cf0fa09a9da8f6c2b",
+      "originalResultRef": "D227#/cases/402/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOCK-STRIPES-FINITE-PROJECTION",
+      "fieldIds": [
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "original": "D227#/cases/403",
+      "sha256": "6784c4ca4ffd0f8abd76f0c97bd4f5b27a270563f1556c1ffaeea3b0c9a8008a",
+      "originalResultRef": "D227#/cases/403/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-WCORE-LOCK-STRIPES-FINITE-CONSUMER",
+      "fieldIds": [
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "original": "D227#/cases/404",
+      "sha256": "1a0fb592eaf3fb7faac8feef3a5b43bff2678fb066bfac4abefd7b16226bf815",
+      "originalResultRef": "D227#/cases/404/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-CORE-ADDITIONAL-CONTRACTS",
+      "fieldIds": [
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-UTF8-PROTOCOL",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/405",
+      "sha256": "99d055638b621c7cf2e47c2900b6f46635655da8fe3437e44fbbdbe45ce6e5cd",
+      "originalResultRef": "D227#/cases/405/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    },
+    {
+      "id": "CMP-C0-REFINED-PROFILES-ICD-CORRECTED",
+      "fieldIds": [
+        "CMP-buster-engine-admission.maximumActiveJobs",
+        "CMP-buster-engine-admission.maximumConcurrentAttempts",
+        "CMP-buster-engine-admission.maximumQueuedJobs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+        "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+        "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+        "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+        "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+        "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+        "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.processInput.terminationGraceMs",
+        "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+        "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+        "CMP-buster-engine-execution.provider.claimGraceMs",
+        "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.provider.heapFraction",
+        "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+        "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+        "CMP-buster-engine-execution.provider.maximumResultBytes",
+        "CMP-buster-engine-execution.provider.minimumHeapMiB",
+        "CMP-buster-engine-execution.provider.minimumOpenFiles",
+        "CMP-buster-engine-execution.provider.queueTimeoutMs",
+        "CMP-buster-engine-execution.provider.terminationGraceMs",
+        "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+        "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+        "CMP-buster-engine-execution.reports.heapFraction",
+        "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+        "CMP-buster-engine-execution.reports.maximumCaseFindings",
+        "CMP-buster-engine-execution.reports.maximumCases",
+        "CMP-buster-engine-execution.reports.maximumFindings",
+        "CMP-buster-engine-execution.reports.maximumOpenFiles",
+        "CMP-buster-engine-execution.reports.maximumSourceBytes",
+        "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+        "CMP-buster-engine-execution.reports.memoryBytes",
+        "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+        "CMP-buster-engine-execution.reports.minimumHeapMiB",
+        "CMP-buster-engine-execution.reports.minimumOpenFiles",
+        "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumRecords",
+        "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+        "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+        "CMP-buster-engine-execution.stores.attempts.maximumResults",
+        "CMP-buster-engine-preparation.cleanupTimeoutMs",
+        "CMP-buster-engine-preparation.closeTimeoutMs",
+        "CMP-buster-engine-preparation.drainTimeoutMs",
+        "CMP-buster-engine-preparation.maximumActivePreparations",
+        "CMP-buster-engine-preparation.maximumArchiveBytes",
+        "CMP-buster-engine-preparation.maximumArchiveEntries",
+        "CMP-buster-engine-preparation.maximumExtractedBytes",
+        "CMP-buster-engine-preparation.maximumHeaderBytes",
+        "CMP-buster-engine-preparation.maximumInputBytes",
+        "CMP-buster-engine-preparation.maximumJournalBytes",
+        "CMP-buster-engine-preparation.maximumListingLineBytes",
+        "CMP-buster-engine-preparation.maximumMetadataBytes",
+        "CMP-buster-engine-preparation.maximumOpenFiles",
+        "CMP-buster-engine-preparation.maximumOutputBytes",
+        "CMP-buster-engine-preparation.maximumOwnershipBytes",
+        "CMP-buster-engine-preparation.maximumPendingAdmissions",
+        "CMP-buster-engine-preparation.maximumRecords",
+        "CMP-buster-engine-preparation.maximumRequestBytes",
+        "CMP-buster-engine-preparation.maximumResultBytes",
+        "CMP-buster-engine-preparation.maximumSourceBytes",
+        "CMP-buster-engine-preparation.maximumSourceEntries",
+        "CMP-buster-engine-preparation.maximumTarStderrBytes",
+        "CMP-buster-engine-preparation.pollIntervalMs",
+        "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+        "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.tasks",
+        "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+        "CMP-buster-engine-preparation.tarTimeoutMs",
+        "CMP-buster-engine-preparation.timeoutMs",
+        "CMP-prism-control-artifactRoot",
+        "CMP-prism-control-dispatchTimeoutMs",
+        "CMP-prism-control-pipelinePreferenceSubject",
+        "CMP-prism-control-port",
+        "CMP-prism-control-studioPublicUrl",
+        "CMP-prism-execution-maximumResultBytes",
+        "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+        "CMP-prism-execution-resourcePolicy.memoryBytes",
+        "CMP-prism-execution-resourcePolicy.tasks",
+        "CMP-prism-studio-controlTimeoutMs",
+        "CMP-prism-studio-controlUrl",
+        "CMP-prism-studio-port",
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.maximumInputBytes",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.port",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs",
+        "CMP-prism-worker-supervisor.closeTimeoutMs",
+        "CMP-prism-worker-supervisor.drainTimeoutMs",
+        "CMP-prism-worker-supervisor.gid",
+        "CMP-prism-worker-supervisor.maximumJournalBytes",
+        "CMP-prism-worker-supervisor.maximumOutputBytes",
+        "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+        "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+        "CMP-prism-worker-supervisor.pollIntervalMs",
+        "CMP-prism-worker-supervisor.uid",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "original": "D227#/cases/406",
+      "sha256": "ec405e008f3ce80be32649c86442faffd928b714e3ecdc32d5dd6e20468d2701",
+      "originalResultRef": "D227#/cases/406/result",
+      "currentAcceptance": "OPEN full original obligations; scoped supporting logs in RESULT.json"
+    }
+  ],
+  "supplementalWorkerIdsNotInHistoricalRoster": [
+    "CMP7-CORE-SCAFFOLD-MAXIMUM-MEMBER-BYTES",
+    "CMP7-CORE-SCAFFOLD-MAXIMUM-POINTER-BYTES"
+  ]
+}

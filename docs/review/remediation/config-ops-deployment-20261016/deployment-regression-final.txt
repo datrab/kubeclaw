@@ -1,0 +1,386 @@
+file:///tmp/deployment-selection-5KVqDq/scripts/generate-prism-chart-config.mjs:78
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                 ^
+
+Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+    at assertPrismChartProjection (file:///tmp/deployment-selection-5KVqDq/scripts/generate-prism-chart-config.mjs:78:82)
+    at file:///tmp/deployment-selection-5KVqDq/scripts/updates/materialize-release.mjs:21:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-6K6ggg/scripts/generate-prism-chart-config.mjs:78
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                 ^
+
+Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+    at assertPrismChartProjection (file:///tmp/deployment-selection-6K6ggg/scripts/generate-prism-chart-config.mjs:78:82)
+    at file:///tmp/deployment-selection-6K6ggg/scripts/updates/materialize-release.mjs:21:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-mFBuyC/scripts/generate-prism-chart-config.mjs:78
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                 ^
+
+Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+    at assertPrismChartProjection (file:///tmp/deployment-selection-mFBuyC/scripts/generate-prism-chart-config.mjs:78:82)
+    at file:///tmp/deployment-selection-mFBuyC/scripts/updates/materialize-release.mjs:21:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-65KSs3/scripts/generate-prism-chart-config.mjs:78
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                 ^
+
+Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+    at assertPrismChartProjection (file:///tmp/deployment-selection-65KSs3/scripts/generate-prism-chart-config.mjs:78:82)
+    at file:///tmp/deployment-selection-65KSs3/scripts/updates/materialize-release.mjs:21:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-GHVbJN/scripts/generate-prism-chart-config.mjs:78
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                 ^
+
+Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+    at assertPrismChartProjection (file:///tmp/deployment-selection-GHVbJN/scripts/generate-prism-chart-config.mjs:78:82)
+    at file:///tmp/deployment-selection-GHVbJN/scripts/updates/materialize-release.mjs:21:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-NAJH0t/scripts/generate-prism-chart-config.mjs:78
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                 ^
+
+Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+    at assertPrismChartProjection (file:///tmp/deployment-selection-NAJH0t/scripts/generate-prism-chart-config.mjs:78:82)
+    at file:///tmp/deployment-selection-NAJH0t/scripts/updates/materialize-release.mjs:21:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-LoYAwF/scripts/generate-prism-chart-config.mjs:78
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                 ^
+
+Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+    at assertPrismChartProjection (file:///tmp/deployment-selection-LoYAwF/scripts/generate-prism-chart-config.mjs:78:82)
+    at file:///tmp/deployment-selection-LoYAwF/scripts/updates/materialize-release.mjs:21:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-tgVW9c/scripts/generate-prism-chart-config.mjs:78
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                 ^
+
+Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+    at assertPrismChartProjection (file:///tmp/deployment-selection-tgVW9c/scripts/generate-prism-chart-config.mjs:78:82)
+    at file:///tmp/deployment-selection-tgVW9c/scripts/updates/materialize-release.mjs:21:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (1176.237483ms)
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (1097.790198ms)
+✖ private operational overlays survive while replaced or removed runtime slots fail (1142.292787ms)
+✖ Prism and Ops reject image overrides even when another value could conceal them (1110.071245ms)
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (1217.92478ms)
+✖ private bundle URL and authentication survive while the selected revision stays fixed (1169.648203ms)
+✖ private extraEnv cannot shadow reserved runtime bundle controls (1132.232128ms)
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (1094.998666ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9218.911197
+
+✖ failing tests:
+
+test at tests/verification/deployment/deployment-release.test.mjs:60:1
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (1176.237483ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-5KVqDq/scripts/generate-prism-chart-config.mjs:78
+    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                   ^
+
+  Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+      at assertPrismChartProjection (file:///tmp/deployment-selection-5KVqDq/scripts/generate-prism-chart-config.mjs:78:82)
+      at file:///tmp/deployment-selection-5KVqDq/scripts/updates/materialize-release.mjs:21:31
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:60:114)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-5KVqDq/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-5KVqDq/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-5KVqDq/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2067217,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-5KVqDq/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-5KVqDq/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-5KVqDq/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:83:1
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (1097.790198ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-6K6ggg/scripts/generate-prism-chart-config.mjs:78
+    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                   ^
+
+  Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+      at assertPrismChartProjection (file:///tmp/deployment-selection-6K6ggg/scripts/generate-prism-chart-config.mjs:78:82)
+      at file:///tmp/deployment-selection-6K6ggg/scripts/updates/materialize-release.mjs:21:31
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:83:134)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-6K6ggg/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-6K6ggg/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-6K6ggg/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2067342,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-6K6ggg/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-6K6ggg/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-6K6ggg/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:95:1
+✖ private operational overlays survive while replaced or removed runtime slots fail (1142.292787ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-mFBuyC/scripts/generate-prism-chart-config.mjs:78
+    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                   ^
+
+  Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+      at assertPrismChartProjection (file:///tmp/deployment-selection-mFBuyC/scripts/generate-prism-chart-config.mjs:78:82)
+      at file:///tmp/deployment-selection-mFBuyC/scripts/updates/materialize-release.mjs:21:31
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:95:97)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-mFBuyC/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-mFBuyC/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-mFBuyC/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2067479,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-mFBuyC/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-mFBuyC/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-mFBuyC/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:108:1
+✖ Prism and Ops reject image overrides even when another value could conceal them (1110.071245ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-65KSs3/scripts/generate-prism-chart-config.mjs:78
+    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                   ^
+
+  Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+      at assertPrismChartProjection (file:///tmp/deployment-selection-65KSs3/scripts/generate-prism-chart-config.mjs:78:82)
+      at file:///tmp/deployment-selection-65KSs3/scripts/updates/materialize-release.mjs:21:31
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:108:95)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-65KSs3/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-65KSs3/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-65KSs3/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2067603,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-65KSs3/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-65KSs3/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-65KSs3/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:126:1
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (1217.92478ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-GHVbJN/scripts/generate-prism-chart-config.mjs:78
+    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                   ^
+
+  Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+      at assertPrismChartProjection (file:///tmp/deployment-selection-GHVbJN/scripts/generate-prism-chart-config.mjs:78:82)
+      at file:///tmp/deployment-selection-GHVbJN/scripts/updates/materialize-release.mjs:21:31
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:126:107)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-GHVbJN/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-GHVbJN/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-GHVbJN/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2067745,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-GHVbJN/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-GHVbJN/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-GHVbJN/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:137:1
+✖ private bundle URL and authentication survive while the selected revision stays fixed (1169.648203ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-NAJH0t/scripts/generate-prism-chart-config.mjs:78
+    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                   ^
+
+  Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+      at assertPrismChartProjection (file:///tmp/deployment-selection-NAJH0t/scripts/generate-prism-chart-config.mjs:78:82)
+      at file:///tmp/deployment-selection-NAJH0t/scripts/updates/materialize-release.mjs:21:31
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:137:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-NAJH0t/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-NAJH0t/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-NAJH0t/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2067870,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-NAJH0t/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-NAJH0t/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-NAJH0t/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:148:1
+✖ private extraEnv cannot shadow reserved runtime bundle controls (1132.232128ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-LoYAwF/scripts/generate-prism-chart-config.mjs:78
+    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                   ^
+
+  Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+      at assertPrismChartProjection (file:///tmp/deployment-selection-LoYAwF/scripts/generate-prism-chart-config.mjs:78:82)
+      at file:///tmp/deployment-selection-LoYAwF/scripts/updates/materialize-release.mjs:21:31
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:148:79)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-LoYAwF/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-LoYAwF/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-LoYAwF/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2067994,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-LoYAwF/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-LoYAwF/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-LoYAwF/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:163:1
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (1094.998666ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-tgVW9c/scripts/generate-prism-chart-config.mjs:78
+    if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');
+                                                                                   ^
+
+  Error: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync
+      at assertPrismChartProjection (file:///tmp/deployment-selection-tgVW9c/scripts/generate-prism-chart-config.mjs:78:82)
+      at file:///tmp/deployment-selection-tgVW9c/scripts/updates/materialize-release.mjs:21:31
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:163:93)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-tgVW9c/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-tgVW9c/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-tgVW9c/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2068118,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-tgVW9c/scripts/generate-prism-chart-config.mjs:78\n  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== bytes) throw new Error('PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync');\n                                                                                 ^\n\nError: PRISM_CHART_PROJECTION_DRIFT:run npm run config:prism:sync\n    at assertPrismChartProjection (file:///tmp/deployment-selection-tgVW9c/scripts/generate-prism-chart-config.mjs:78:82)\n    at file:///tmp/deployment-selection-tgVW9c/scripts/updates/materialize-release.mjs:21:31\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }

@@ -1,4 +1,5 @@
-import { nativeResourcePolicy } from './native/resource-policy.mts';
+import { nativeEngineSettings } from './native/resource-policy.mts';
+import { nativeResourcePolicy, nativeControlSettings } from './native/resource-policy.mts';
 import test from "node:test";
 import assert from "node:assert/strict";
 import fixture from "../../../contracts/prism/v1/fixtures/minimal-web.json" with { type: "json" };
@@ -8,7 +9,7 @@ import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
 import { prismNativeAttempt, prismRequestDigest } from "../engine/worker-envelope.ts";
 import { validateWorkerResourceContractV3 } from "@kubeclaw/pipeline-worker-core-contract";
 test("engine generates, renders, evaluates and publishes idempotently", async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
   const base = {
     contract: "kubeclaw.prism-design-engine@1" as const,
     input: { document: fixture },
@@ -53,7 +54,7 @@ test("engine generates, renders, evaluates and publishes idempotently", async ()
   assert.deepEqual(first, second);
 });
 test("the generic worker carries an opaque Prism operation", async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
   const result = await executePrismOperation(
     engine,
     {
@@ -67,12 +68,12 @@ test("the generic worker carries an opaque Prism operation", async () => {
     },
     "worker:1",
   );
-  assert.match(result.schemaId, /engine-results\.v1\.json#\/\$defs\/render$/);
+  assert.match(result.schemaId, /engine-results\.v1\.json#\/\$defs\/renderSelected$/);
   assert.notEqual(result.schemaDigest, `sha256:${"a".repeat(64)}`);
   assert.match(String(result.values.html), /Deployments/);
 });
 test("the worker binding rejects unknown operations", async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
   await assert.rejects(
     () =>
       executePrismOperation(
@@ -102,7 +103,7 @@ test("concurrent retries share one provider execution", async () => {
       await waiting;
       return [];
     },
-  });
+  }, nativeEngineSettings);
   const request = {
     contract: "kubeclaw.prism-design-engine@1" as const,
     operation: "generate" as const,
@@ -135,7 +136,7 @@ test("the live provider accepts internal LiteLLM without requiring embeddings", 
 });
 
 test("an idempotency key cannot identify different requests", async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
   await engine.execute({
     contract: "kubeclaw.prism-design-engine@1",
     operation: "render",
@@ -155,7 +156,7 @@ test("an idempotency key cannot identify different requests", async () => {
 });
 
 test("Prism creates a valid neutral worker envelope", () => {
-  const attempt = prismNativeAttempt("render", {artifactId:"artifact:sha256:"+"a".repeat(64),type:"prism-engine-input",mediaType:"application/json",contentDigest:"sha256:"+"a".repeat(64),sizeBytes:128,storageUrl:"http://prism-control:8080/v1/internal/artifacts/sha256:"+"a".repeat(64)}, "render-one", nativeResourcePolicy);
+  const attempt = prismNativeAttempt("render", {artifactId:"artifact:sha256:"+"a".repeat(64),type:"prism-engine-input",mediaType:"application/json",contentDigest:"sha256:"+"a".repeat(64),sizeBytes:128,storageUrl:"http://prism-control:8080/v1/internal/artifacts/sha256:"+"a".repeat(64)}, "render-one", nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   validateWorkerResourceContractV3("workerAttemptEnvelope", attempt);
   assert.equal(attempt.operation.contractId, "kubeclaw.prism-design-engine@1");
   assert.notEqual(prismRequestDigest(attempt.operation,`sha256:${"a".repeat(64)}`),prismRequestDigest(attempt.operation,`sha256:${"b".repeat(64)}`));

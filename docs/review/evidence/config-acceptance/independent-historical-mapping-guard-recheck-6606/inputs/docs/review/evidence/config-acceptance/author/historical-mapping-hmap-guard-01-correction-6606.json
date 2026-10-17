@@ -1,0 +1,68 @@
+{
+  "status": "HMAP-GUARD-01 author correction; independent material recheck pending",
+  "finding": "explicit active successor status required; matching successor result/requirement/field/nonacceptance metadata required",
+  "priorIndependentReport": {
+    "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-6606/independent-review.json",
+    "sha256": "1a417863e4f6fe0c33960f78f6a9ff85ee23cc2c68ef197ebccfdfb34c8a1613"
+  },
+  "preservedOriginalInputs": [
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "preservedPath": "docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical_mapping.py",
+      "sha256": "390f8c138c996a109de07b38fb79cc6270d08c439d773cb9aaa2e12d48511e5a"
+    },
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/check-historical-mapping-guards.py",
+      "preservedPath": "docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/check-historical-mapping-guards.py",
+      "sha256": "ea3f14bea66bbb627c8d5cd1afc5040f33f0aff93fed6f581365bbc60248fa43"
+    },
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt1.log",
+      "preservedPath": "docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guards-attempt1.log",
+      "sha256": "231ec3ef2ab26855fdb4847ef923e3f184de2033ecd2dc72d10ff7ae989cd2f1"
+    },
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt1.stderr.log",
+      "preservedPath": "docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guards-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt2.log",
+      "preservedPath": "docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guards-attempt2.log",
+      "sha256": "231ec3ef2ab26855fdb4847ef923e3f184de2033ecd2dc72d10ff7ae989cd2f1"
+    },
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt2.stderr.log",
+      "preservedPath": "docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guards-attempt2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "currentInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "sha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-historical-mapping-guards.py",
+      "sha256": "6dfe885c87d22b59d72dd2975b922158d51e91fdf57a9de0bfcdd81fc1d782a6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt3.log",
+      "sha256": "c4afb1bdab46d1d160004f9c8b65c02aec521ca200f8a1cb667463b55f6ce191"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "controls": {
+    "negativeDocumentationGuards": 23,
+    "restoredPositives": 2,
+    "historicalMappings": 269,
+    "distinctExistingSuccessors": 356
+  },
+  "rootMatrixChanged": false,
+  "globalC0Accepted": false,
+  "implementationCasesExecuted": false,
+  "limits": "Guard-only correction; parent projection not implemented/reviewed. Old receipt refers to pre-correction bytes now preserved at explicit paths above."
+}

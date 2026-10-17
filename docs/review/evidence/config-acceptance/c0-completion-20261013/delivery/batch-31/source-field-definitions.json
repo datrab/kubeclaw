@@ -1,0 +1,1787 @@
+{
+  "scope": "24 original transport/readiness clauses; source definitions only",
+  "rows": [
+    {
+      "candidateId": "SRC-b894dbdf69636bc2",
+      "originalCandidate": {
+        "id": "SRC-b894dbdf69636bc2",
+        "source": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "line": 16,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "line": 16,
+        "expression": "              request_headers_to_remove: [x-envoy-upstream-rq-timeout-ms, x-envoy-upstream-rq-per-try-timeout-ms, x-envoy-retry-on, x-envoy-max-retries, x-envoy-hedge-on-per-try-timeout]",
+        "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+      },
+      "field": "readiness request override header removal",
+      "classification": "protocol-invariant",
+      "currentAuthorOrGeneratedRef": "fixed readiness-only routing boundary, not a user-authored header allowlist",
+      "currentDomainAndRelations": "Exactly five removed request controls: x-envoy-upstream-rq-timeout-ms, x-envoy-upstream-rq-per-try-timeout-ms, x-envoy-retry-on, x-envoy-max-retries, x-envoy-hedge-on-per-try-timeout. Current probe listener routes only GET health/bootstrap/ready plus404 fallback; no business route in this helper.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "line": 16,
+        "expression": "              request_headers_to_remove: [x-envoy-upstream-rq-timeout-ms, x-envoy-upstream-rq-per-try-timeout-ms, x-envoy-retry-on, x-envoy-max-retries, x-envoy-hedge-on-per-try-timeout]",
+        "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+          "line": 22,
+          "expression": "        {{- include \"kubeclaw.trustReadinessListeners\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain $namespace (include \"kubeclaw.fullname\" .)) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+        },
+        {
+          "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+          "line": 122,
+          "expression": "        {{- include \"kubeclaw.trustReadinessCluster\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain $namespace (include \"kubeclaw.fullname\" .)) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+        },
+        {
+          "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+          "line": 12,
+          "expression": "            request_timeout: 2s",
+          "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+        },
+        {
+          "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+          "line": 84,
+          "expression": "  connect_timeout: 0.5s",
+          "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+        },
+        {
+          "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+          "line": 87,
+          "expression": "    thresholds: [{ priority: DEFAULT, max_connections: 4, max_pending_requests: 4, max_requests: 4, max_retries: 0 }]",
+          "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b901a1947bd904b7",
+      "originalCandidate": {
+        "id": "SRC-b901a1947bd904b7",
+        "source": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "line": 26,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "line": 26,
+        "expression": "                      route: { cluster: worker-trust-self-check, timeout: 1s }",
+        "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+      },
+      "field": "readiness self-check route timeout",
+      "classification": "transport-probe-budget-policy",
+      "currentAuthorOrGeneratedRef": "current inline1s readiness route budget; target selected same transport/readiness policy owner",
+      "currentDomainAndRelations": "Current GET /ready routes to worker-trust-self-check with timeout1s. Adjacent helper request/stream timeouts2s, cluster connect0.5s, max_requests_per_connection1, circuit-breaker limits4 and max_retries0 are separate policies/invariants. Target positive finite duration, coherent selected generation; no implicit default budget. This is not Prism/Buster task timeout or grant.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "line": 26,
+        "expression": "                      route: { cluster: worker-trust-self-check, timeout: 1s }",
+        "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+          "line": 22,
+          "expression": "        {{- include \"kubeclaw.trustReadinessListeners\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain $namespace (include \"kubeclaw.fullname\" .)) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+        },
+        {
+          "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+          "line": 122,
+          "expression": "        {{- include \"kubeclaw.trustReadinessCluster\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain $namespace (include \"kubeclaw.fullname\" .)) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+        },
+        {
+          "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+          "line": 12,
+          "expression": "            request_timeout: 2s",
+          "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+        },
+        {
+          "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+          "line": 84,
+          "expression": "  connect_timeout: 0.5s",
+          "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+        },
+        {
+          "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+          "line": 87,
+          "expression": "    thresholds: [{ priority: DEFAULT, max_connections: 4, max_pending_requests: 4, max_requests: 4, max_retries: 0 }]",
+          "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4c83335aa40e71ec",
+      "originalCandidate": {
+        "id": "SRC-4c83335aa40e71ec",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 1,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 1,
+        "expression": "{{- if .Values.workerTrust.spiffe.enabled }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "agent proxy ConfigMap applicability",
+      "classification": "generated-applicability",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.enabled",
+      "currentDomainAndRelations": "Current Helm if truthiness; target strict boolean selects role-compatible proxy generation, not task authority.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 1,
+        "expression": "{{- if .Values.workerTrust.spiffe.enabled }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b632610caacc2ccc",
+      "originalCandidate": {
+        "id": "SRC-b632610caacc2ccc",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 2,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 2,
+        "expression": "{{- if not .Values.serviceAccount.create }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "actual release ServiceAccount requirement",
+      "classification": "deployment-identity-constraint",
+      "currentAuthorOrGeneratedRef": "Values.serviceAccount.create + generated kubeclaw.fullname + Release.Namespace",
+      "currentDomainAndRelations": "When enabled, false create fails. Actual deployment ServiceAccount name and ServiceAccount metadata use the same fullname; genuine SPIRE registration is a separate external fact.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 2,
+        "expression": "{{- if not .Values.serviceAccount.create }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 61,
+          "expression": "      serviceAccountName: {{ include \"kubeclaw.fullname\" . }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/serviceaccount.yaml",
+          "line": 5,
+          "expression": "  name: {{ include \"kubeclaw.fullname\" . }}",
+          "sha256": "7b7b2e4ba4dc139f6d4953fa242ed70ea20de090bbe30287215f5c7f1349a13f"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-54cc11a3a6557096",
+      "originalCandidate": {
+        "id": "SRC-54cc11a3a6557096",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 5,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 5,
+        "expression": "{{- $trustDomain := required \"workerTrust.spiffe.trustDomain is required\" .Values.workerTrust.spiffe.trustDomain }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "agent trust domain",
+      "classification": "approved-transport-reference",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.trustDomain",
+      "currentDomainAndRelations": "Current required checks nonempty only; target exact approved domain consistent with declared principals and real bundle/registrations, not a freely selectable alternate actor.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 5,
+        "expression": "{{- $trustDomain := required \"workerTrust.spiffe.trustDomain is required\" .Values.workerTrust.spiffe.trustDomain }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-fb42a46ec49cebd4",
+      "originalCandidate": {
+        "id": "SRC-fb42a46ec49cebd4",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 17,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 17,
+        "expression": "      cluster: {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "proxy service cluster name",
+      "classification": "generated-role-label",
+      "currentAuthorOrGeneratedRef": "Values.agentRole",
+      "currentDomainAndRelations": "Generated kubeclaw-<role> name; separate from peer authentication. Enabled whole template supports only nova/buster/prism (explicit fail for others).",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 17,
+        "expression": "      cluster: {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4e689b0edf747666",
+      "originalCandidate": {
+        "id": "SRC-4e689b0edf747666",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 23,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 23,
+        "expression": "      {{- if eq .Values.agentRole \"nova\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "Nova egress listener selection",
+      "classification": "generated-role-topology",
+      "currentAuthorOrGeneratedRef": "Values.agentRole == nova",
+      "currentDomainAndRelations": "Fixed two current listeners: buster-plan loopback28891 to buster-plan cluster; prism-agent loopback28080 to prism-agent cluster. Separate installed endpoints and approved peers must agree.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 23,
+        "expression": "      {{- if eq .Values.agentRole \"nova\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4966cf4dc6e33239",
+      "originalCandidate": {
+        "id": "SRC-4966cf4dc6e33239",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 35,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 35,
+        "expression": "      {{- else if eq .Values.agentRole \"buster\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "Buster ingress listener selection",
+      "classification": "generated-role-topology",
+      "currentAuthorOrGeneratedRef": "Values.agentRole == buster",
+      "currentDomainAndRelations": "Current buster-plan ingress0.0.0.0:18891, exact same namespace agent-nova peer, sanitized forwarded URI, local cluster loopback28891. Native certificate/proxy effect is not established by the template.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 35,
+        "expression": "      {{- else if eq .Values.agentRole \"buster\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-2e4b4d469316023b",
+      "originalCandidate": {
+        "id": "SRC-2e4b4d469316023b",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 84,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 84,
+        "expression": "      {{- else if eq .Values.agentRole \"prism\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "Prism agent ingress/egress selection",
+      "classification": "generated-role-topology",
+      "currentAuthorOrGeneratedRef": "Values.agentRole == prism",
+      "currentDomainAndRelations": "Current ingress18082 accepts exact same namespace agent-nova/prism-control/prism-test-runner principals, bridge-local18080; Control egressloopback28080. Identity match does not create actors/grants.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 84,
+        "expression": "      {{- else if eq .Values.agentRole \"prism\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-f2f4d9d329a7f86e",
+      "originalCandidate": {
+        "id": "SRC-f2f4d9d329a7f86e",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 128,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 128,
+        "expression": "            endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }]",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "agent SDS socket",
+      "classification": "installed-provider-location-reference",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.socketPath",
+      "currentDomainAndRelations": "Current quoted Unix pipe path read into spire-agent cluster. Target absolute selected path matching actual CSI mount and installed SPIRE provider; nonempty string/quote alone is no native availability proof.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 128,
+        "expression": "            endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }]",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-c947f4f8079cfe1a",
+      "originalCandidate": {
+        "id": "SRC-c947f4f8079cfe1a",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 129,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 129,
+        "expression": "      {{- if eq .Values.agentRole \"nova\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "Nova remote transport clusters",
+      "classification": "generated-role-topology",
+      "currentAuthorOrGeneratedRef": "Values.agentRole == nova",
+      "currentDomainAndRelations": "Fixed buster-plan hostagent-buster:18891 peeragent-buster and prism-agent hostagent-prism:8080 peeragent-prism, using selected trustDomain/Release.Namespace. Do not replace peer identity with an arbitrary endpoint domain.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 129,
+        "expression": "      {{- if eq .Values.agentRole \"nova\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-91e76b0be42021f6",
+      "originalCandidate": {
+        "id": "SRC-91e76b0be42021f6",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 165,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 165,
+        "expression": "      {{- if eq .Values.agentRole \"buster\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "Buster local transport cluster",
+      "classification": "generated-role-topology",
+      "currentAuthorOrGeneratedRef": "Values.agentRole == buster",
+      "currentDomainAndRelations": "Current buster-plan-local static127.0.0.1:28891, connect_timeout1s; no independently authored remote peer here.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 165,
+        "expression": "      {{- if eq .Values.agentRole \"buster\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-547e648425c947b8",
+      "originalCandidate": {
+        "id": "SRC-547e648425c947b8",
+        "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 175,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 175,
+        "expression": "      {{- if eq .Values.agentRole \"prism\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "field": "Prism agent transport clusters",
+      "classification": "generated-role-topology",
+      "currentAuthorOrGeneratedRef": "Values.agentRole == prism",
+      "currentDomainAndRelations": "Current prism-bridge-local127.0.0.1:18080 and prism-control prism-control-internal:8443 with exact same-namespace prism-control SAN. Endpoint, timeout and peer authorities are distinct.",
+      "actualRendererReaderRef": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "line": 175,
+        "expression": "      {{- if eq .Values.agentRole \"prism\" }}",
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 34,
+          "expression": "        checksum/worker-trust: {{ index ((include (print $.Template.BasePath \"/configmap-worker-trust.yaml\") .) | fromYaml).data \"envoy.yaml\" | sha256sum }}",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1542,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1572,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        },
+        {
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "line": 1650,
+          "expression": "            name: {{ include \"kubeclaw.fullname\" . }}-worker-trust",
+          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "originalCandidate": {
+        "id": "SRC-7ea8f8235dbd60fd",
+        "source": "charts/prism/templates/_worker-trust-readiness.tpl",
+        "line": 16,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+        "line": 16,
+        "expression": "              request_headers_to_remove: [x-envoy-upstream-rq-timeout-ms, x-envoy-upstream-rq-per-try-timeout-ms, x-envoy-retry-on, x-envoy-max-retries, x-envoy-hedge-on-per-try-timeout]",
+        "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+      },
+      "field": "readiness request override header removal",
+      "classification": "protocol-invariant",
+      "currentAuthorOrGeneratedRef": "fixed readiness-only routing boundary, not a user-authored header allowlist",
+      "currentDomainAndRelations": "Exactly five removed request controls: x-envoy-upstream-rq-timeout-ms, x-envoy-upstream-rq-per-try-timeout-ms, x-envoy-retry-on, x-envoy-max-retries, x-envoy-hedge-on-per-try-timeout. Current probe listener routes only GET health/bootstrap/ready plus404 fallback; no business route in this helper.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+        "line": 16,
+        "expression": "              request_headers_to_remove: [x-envoy-upstream-rq-timeout-ms, x-envoy-upstream-rq-per-try-timeout-ms, x-envoy-retry-on, x-envoy-max-retries, x-envoy-hedge-on-per-try-timeout]",
+        "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "line": 14,
+          "expression": "        {{- include \"prism.trustReadinessListeners\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/prism-control\" $trustDomain $namespace) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+        },
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "line": 140,
+          "expression": "        {{- include \"prism.trustReadinessListeners\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/prism-worker\" $trustDomain $namespace) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+        },
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "line": 63,
+          "expression": "        {{- include \"prism.trustReadinessCluster\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/prism-control\" $trustDomain $namespace) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+        },
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "line": 175,
+          "expression": "        {{- include \"prism.trustReadinessCluster\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/prism-worker\" $trustDomain $namespace) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+        },
+        {
+          "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+          "line": 12,
+          "expression": "            request_timeout: 2s",
+          "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+        },
+        {
+          "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+          "line": 84,
+          "expression": "  connect_timeout: 0.5s",
+          "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+        },
+        {
+          "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+          "line": 87,
+          "expression": "    thresholds: [{ priority: DEFAULT, max_connections: 4, max_pending_requests: 4, max_requests: 4, max_retries: 0 }]",
+          "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "originalCandidate": {
+        "id": "SRC-57f67c1e31c9602b",
+        "source": "charts/prism/templates/_worker-trust-readiness.tpl",
+        "line": 26,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+        "line": 26,
+        "expression": "                      route: { cluster: worker-trust-self-check, timeout: 1s }",
+        "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+      },
+      "field": "readiness self-check route timeout",
+      "classification": "transport-probe-budget-policy",
+      "currentAuthorOrGeneratedRef": "current inline1s readiness route budget; target selected same transport/readiness policy owner",
+      "currentDomainAndRelations": "Current GET /ready routes to worker-trust-self-check with timeout1s. Adjacent helper request/stream timeouts2s, cluster connect0.5s, max_requests_per_connection1, circuit-breaker limits4 and max_retries0 are separate policies/invariants. Target positive finite duration, coherent selected generation; no implicit default budget. This is not Prism/Buster task timeout or grant.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+        "line": 26,
+        "expression": "                      route: { cluster: worker-trust-self-check, timeout: 1s }",
+        "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "line": 14,
+          "expression": "        {{- include \"prism.trustReadinessListeners\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/prism-control\" $trustDomain $namespace) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+        },
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "line": 140,
+          "expression": "        {{- include \"prism.trustReadinessListeners\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/prism-worker\" $trustDomain $namespace) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+        },
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "line": 63,
+          "expression": "        {{- include \"prism.trustReadinessCluster\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/prism-control\" $trustDomain $namespace) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+        },
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "line": 175,
+          "expression": "        {{- include \"prism.trustReadinessCluster\" (dict \"identity\" (printf \"spiffe://%s/ns/%s/sa/prism-worker\" $trustDomain $namespace) \"trustDomain\" $trustDomain) | nindent 8 }}",
+          "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+        },
+        {
+          "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+          "line": 12,
+          "expression": "            request_timeout: 2s",
+          "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+        },
+        {
+          "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+          "line": 84,
+          "expression": "  connect_timeout: 0.5s",
+          "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+        },
+        {
+          "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+          "line": 87,
+          "expression": "    thresholds: [{ priority: DEFAULT, max_connections: 4, max_pending_requests: 4, max_requests: 4, max_retries: 0 }]",
+          "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-47899f7dff8985ea",
+      "originalCandidate": {
+        "id": "SRC-47899f7dff8985ea",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 2,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 2,
+        "expression": "{{- if .Values.workerTrust.spiffe.enabled }}",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "Prism proxy ConfigMap applicability",
+      "classification": "generated-applicability",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.enabled",
+      "currentDomainAndRelations": "Current Helm if truthiness, target strict boolean; emits control.yaml/worker.yaml/runner.yaml configurations. Workload role sidecar applicability is independently limited to Control/worker; runner uses its own consumer.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 2,
+        "expression": "{{- if .Values.workerTrust.spiffe.enabled }}",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 168,
+          "expression": "          args: [\"-c\", {{ printf \"/etc/kubeclaw-worker-trust/%s.yaml\" $name | quote }}, \"--service-cluster\", {{ printf \"prism-%s\" $name | quote }}]",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        },
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 186,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-60b5286032daa883",
+      "originalCandidate": {
+        "id": "SRC-60b5286032daa883",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 3,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 3,
+        "expression": "{{- $trustDomain := required \"workerTrust.spiffe.trustDomain is required\" .Values.workerTrust.spiffe.trustDomain }}",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "Prism trust domain",
+      "classification": "approved-transport-reference",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.trustDomain",
+      "currentDomainAndRelations": "Current required nonempty check, not complete domain validation. Same selected domain combines with Release.Namespace and fixed control/worker/test-runner ServiceAccounts, and declared Nova/agent namespace+SA refs. Real trust bundle/registrations external.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 3,
+        "expression": "{{- $trustDomain := required \"workerTrust.spiffe.trustDomain is required\" .Values.workerTrust.spiffe.trustDomain }}",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 168,
+          "expression": "          args: [\"-c\", {{ printf \"/etc/kubeclaw-worker-trust/%s.yaml\" $name | quote }}, \"--service-cluster\", {{ printf \"prism-%s\" $name | quote }}]",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        },
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 186,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-10b93d6c7d1fdeed",
+      "originalCandidate": {
+        "id": "SRC-10b93d6c7d1fdeed",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 32,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 32,
+        "expression": "                          - { san_type: URI, matcher: { exact: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain .Values.workerTrust.spiffe.novaNamespace .Values.workerTrust.spiffe.novaServiceAccount | quote }} } }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "Nova exact transport principal",
+      "classification": "generated-approved-principal",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.trustDomain + novaNamespace/novaServiceAccount",
+      "currentDomainAndRelations": "Exact declared Nova URI SAN generated from same selected domain/namespace/ServiceAccount. Must match original authorized registered actor and corresponding ENV/peer routes. No wildcard or independent SAN override author, no actor/grant expansion. Current printf/quote is not full native identity validation.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 32,
+        "expression": "                          - { san_type: URI, matcher: { exact: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain .Values.workerTrust.spiffe.novaNamespace .Values.workerTrust.spiffe.novaServiceAccount | quote }} } }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 168,
+          "expression": "          args: [\"-c\", {{ printf \"/etc/kubeclaw-worker-trust/%s.yaml\" $name | quote }}, \"--service-cluster\", {{ printf \"prism-%s\" $name | quote }}]",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        },
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 186,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-e6bbd132507d33e1",
+      "originalCandidate": {
+        "id": "SRC-e6bbd132507d33e1",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 36,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 36,
+        "expression": "                          - { san_type: URI, matcher: { exact: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "Prism agent exact transport principal",
+      "classification": "generated-approved-principal",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.trustDomain + agentNamespace/agentServiceAccount",
+      "currentDomainAndRelations": "Exact declared Prism agent URI SAN generated from same selected domain/namespace/ServiceAccount. Must match original authorized registered actor and corresponding ENV/peer routes. No wildcard or independent SAN override author, no actor/grant expansion. Current printf/quote is not full native identity validation.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 36,
+        "expression": "                          - { san_type: URI, matcher: { exact: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 168,
+          "expression": "          args: [\"-c\", {{ printf \"/etc/kubeclaw-worker-trust/%s.yaml\" $name | quote }}, \"--service-cluster\", {{ printf \"prism-%s\" $name | quote }}]",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        },
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 186,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-bc6d7902cba6f0a9",
+      "originalCandidate": {
+        "id": "SRC-bc6d7902cba6f0a9",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 67,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 67,
+        "expression": "          load_assignment: { cluster_name: spire-agent, endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "control SDS socket",
+      "classification": "installed-provider-location-reference",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.socketPath",
+      "currentDomainAndRelations": "Current pipe projection for control config. Target one absolute path compatible with actual selected mount/SPIRE driver; CSI installation, node registration and real SDS/socket availability remain unproven. Not a JS application socket reader.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 67,
+        "expression": "          load_assignment: { cluster_name: spire-agent, endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 168,
+          "expression": "          args: [\"-c\", {{ printf \"/etc/kubeclaw-worker-trust/%s.yaml\" $name | quote }}, \"--service-cluster\", {{ printf \"prism-%s\" $name | quote }}]",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        },
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 186,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-a8eff87f55dc1535",
+      "originalCandidate": {
+        "id": "SRC-a8eff87f55dc1535",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 129,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 129,
+        "expression": "                  default_validation_context: { match_typed_subject_alt_names: [{ san_type: URI, matcher: { exact: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "Prism agent exact transport principal",
+      "classification": "generated-approved-principal",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.trustDomain + agentNamespace/agentServiceAccount",
+      "currentDomainAndRelations": "Exact declared Prism agent URI SAN generated from same selected domain/namespace/ServiceAccount. Must match original authorized registered actor and corresponding ENV/peer routes. No wildcard or independent SAN override author, no actor/grant expansion. Current printf/quote is not full native identity validation.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 129,
+        "expression": "                  default_validation_context: { match_typed_subject_alt_names: [{ san_type: URI, matcher: { exact: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 168,
+          "expression": "          args: [\"-c\", {{ printf \"/etc/kubeclaw-worker-trust/%s.yaml\" $name | quote }}, \"--service-cluster\", {{ printf \"prism-%s\" $name | quote }}]",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        },
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 186,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-ae042bfd054e3908",
+      "originalCandidate": {
+        "id": "SRC-ae042bfd054e3908",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 179,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 179,
+        "expression": "          load_assignment: { cluster_name: spire-agent, endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "worker SDS socket",
+      "classification": "installed-provider-location-reference",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.socketPath",
+      "currentDomainAndRelations": "Current pipe projection for worker config. Target one absolute path compatible with actual selected mount/SPIRE driver; CSI installation, node registration and real SDS/socket availability remain unproven. Not a JS application socket reader.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 179,
+        "expression": "          load_assignment: { cluster_name: spire-agent, endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 168,
+          "expression": "          args: [\"-c\", {{ printf \"/etc/kubeclaw-worker-trust/%s.yaml\" $name | quote }}, \"--service-cluster\", {{ printf \"prism-%s\" $name | quote }}]",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        },
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "line": 186,
+          "expression": "            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }",
+          "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-7650704121e82d78",
+      "originalCandidate": {
+        "id": "SRC-7650704121e82d78",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 220,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 220,
+        "expression": "          load_assignment: { cluster_name: spire-agent, endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "test-runner SDS socket",
+      "classification": "installed-provider-location-reference",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.socketPath",
+      "currentDomainAndRelations": "Current pipe projection for test-runner config. Target one absolute path compatible with actual selected mount/SPIRE driver; CSI installation, node registration and real SDS/socket availability remain unproven. Not a JS application socket reader. Runner deploy script currently fixes driver csi.spiffe.io rather than reading the Chart csiDriver setting; target same-generation provider/location join must migrate or explicitly constrain this separate physical author.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 220,
+        "expression": "          load_assignment: { cluster_name: spire-agent, endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "scripts/deploy.sh",
+          "line": 1951,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/runner.yaml\", \"--service-cluster\", \"prism-test-runner\"]",
+          "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+        },
+        {
+          "path": "scripts/deploy.sh",
+          "line": 1977,
+          "expression": "        - { name: worker-trust-envoy, configMap: { name: prism-worker-trust, defaultMode: 0444 } }",
+          "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+        },
+        {
+          "path": "scripts/deploy.sh",
+          "line": 1979,
+          "expression": "          csi: { driver: csi.spiffe.io, readOnly: true }",
+          "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-69c19ec814a130dd",
+      "originalCandidate": {
+        "id": "SRC-69c19ec814a130dd",
+        "source": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 257,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 257,
+        "expression": "                  default_validation_context: { match_typed_subject_alt_names: [{ san_type: URI, matcher: { exact: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "field": "Prism agent exact transport principal",
+      "classification": "generated-approved-principal",
+      "currentAuthorOrGeneratedRef": "Values.workerTrust.spiffe.trustDomain + agentNamespace/agentServiceAccount",
+      "currentDomainAndRelations": "Exact declared Prism agent URI SAN generated from same selected domain/namespace/ServiceAccount. Must match original authorized registered actor and corresponding ENV/peer routes. No wildcard or independent SAN override author, no actor/grant expansion. Current printf/quote is not full native identity validation.",
+      "actualRendererReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 257,
+        "expression": "                  default_validation_context: { match_typed_subject_alt_names: [{ san_type: URI, matcher: { exact: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "deliveryOrHelperCallerRefs": [
+        {
+          "path": "scripts/deploy.sh",
+          "line": 1951,
+          "expression": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/runner.yaml\", \"--service-cluster\", \"prism-test-runner\"]",
+          "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+        },
+        {
+          "path": "scripts/deploy.sh",
+          "line": 1977,
+          "expression": "        - { name: worker-trust-envoy, configMap: { name: prism-worker-trust, defaultMode: 0444 } }",
+          "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+        }
+      ],
+      "downstreamConsumer": "Selected Envoy image parses generated config; SPIRE/CSI/Kubernetes provider facts and real certificate/socket/route behavior are separate future gates",
+      "nativeConsumerProven": false,
+      "proposedAuthority": "Retain original selected deployment-role/transport-policy owner and approved peer references; generated proxy config cannot compete as author. Whole schema/profile and exact requirement/case joins remain open.",
+      "activation": "Validate complete selected role, image, domain, peer, socket/mount/provider and probe policy generation before delivery. No mutable latest value into an existing module/run.",
+      "recovery": "Recover original image/config generation and authentic provider/peer/namespace/SA identities, without altering actors/grants or reclassifying new values as old run facts.",
+      "remaining": [
+        "whole selected schema and complete role-specific profile joins",
+        "concrete exact setting/requirement/future executable case links",
+        "authentic pinned Envoy/SPIRE/CSI/Kubernetes effect/rejection and recovery evidence",
+        "fresh independent definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    }
+  ],
+  "priorQueueRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  "remainingQueueUnchanged": true,
+  "globalC0Accepted": false
+}

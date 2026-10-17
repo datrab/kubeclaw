@@ -1,0 +1,11 @@
+{
+  "baseEntry": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/config/pipeline.config.json",
+  "baseEntrySha256": "355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5",
+  "baseVersion": "pipeline-entry.v5",
+  "proposedVersion": "pipeline-entry.v6",
+  "delta": "add infrastructureSelections for existing recovery owner only; existing components/bindings/pluginSelections conserved; no seventh component",
+  "ownerResolution": "closed exact ownerPath resolved under immutable delivery root (parent of config); not root config relative ../ escape and not arbitrary path",
+  "C1Separation": "C1 value-preserving current flat v1 delivery still before C3; v6/v2 future reader not implemented; historic v1/v3/v4/v5 replay uses original archived version, no filling/default from new/current",
+  "status": "fresh independent definition review required, no parent root mutation",
+  "dependencyStop": "Frozen provider02 v5 is under corrective provider03 author work (invalid/default-cap profiles and stale active-case refs). This root preserves base identity, does NOT assert all-provider-generation closure. After provider03 independently verified, rejoin exact corrected root/owner/schema/activecase refs additively without changing recovery sameowner23 policies; fresh integration review required."
+}

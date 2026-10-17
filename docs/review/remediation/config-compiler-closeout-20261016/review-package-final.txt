@@ -1,0 +1,94 @@
+npm notice run pretest
+npm notice run node tests/repository-audit-stage.unit.test.mjs && node tests/repository-revalidation.unit.test.mjs
+{"ok":true,"suite":"repository-audit-stage"}
+{"ok":true,"suite":"repository-revalidation"}
+npm notice run test
+npm notice run npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage
+npm notice run test:cluster
+npm notice run node tests/review-cluster-contract.unit.test.mjs && node tests/review-cluster-identity.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-cluster-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-cluster-identity"}
+npm notice run schema:check
+npm notice run node scripts/generate-policy-schema.mjs --check && node scripts/generate-bundle-schema.mjs --check && node scripts/generate-verification-schema.mjs --check
+{"ok":true,"suite":"repository-review-profile"}
+{"ok":true,"suite":"review-prompt-budget"}
+{"ok":true,"suite":"review-quality-corpus"}
+{"ok":true,"suite":"review-snapshot-inventory"}
+{"ok":true,"suite":"review-map-artifacts"}
+{"ok":true,"suite":"review-fact-extractors"}
+{"ok":true,"suite":"review-graph"}
+{"ok":true,"suite":"review-scale-slicing"}
+{"ok":true,"suite":"scalable-review-topology"}
+{"ok":true,"suite":"scalable-review-jobs"}
+{"ok":true,"suite":"scalable-review-verification"}
+{"ok":true,"suite":"review-content-cache"}
+{"ok":true,"suite":"scalable-review-compiler","millionLines":1000000,"files":2000,"slices":100,"boundaries":197,"elapsedMs":39373}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-governor"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-evidence-authority"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-production"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-slicing"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-fact-producer"}
+review report contract unit tests passed
+review report builder unit tests passed
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-miner"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-manifest"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-bundle-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-bundle-snapshot"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-selection"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-production"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-slicing"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"echo-review-output"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"echo-review-verification"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-proposal-preflight"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verification-reconciliation"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verdict-policy"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verified-findings"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-invariants"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-resolver"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-profiles"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-reducer"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-decision-matrix","cases":34}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-contract-parity","echoCases":15,"verificationCases":9,"policyCases":8,"stageResults":4}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-evaluation-metadata"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-stage-input"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-stage-verification"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"protocol-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"stage-unit"}
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:99
+        throw new RegistryError('REGISTRY_RESULT_INVALID', `Value failed schema ${schemaPath}`, {
+              ^
+
+RegistryError: Value failed schema /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/repository-adapter/schemas/config.schema.json
+    at check (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:99:15)
+    at Object.validate (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:105:43)
+    at validateReferencedValue (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:130:44)
+    at #config (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapter-startup.ts:54:5)
+    at #start (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapter-startup.ts:43:34)
+    at AdapterStarter.startAll (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapter-startup.ts:29:90)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async #start (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapters.ts:49:23) {
+  code: 'REGISTRY_RESULT_INVALID',
+  details: {
+    schemaPath: '/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/repository-adapter/schemas/config.schema.json',
+    errors: [
+      {
+        instancePath: '',
+        schemaPath: '#/required',
+        keyword: 'required',
+        params: { missingProperty: 'maxFileBytes' },
+        message: "must have required property 'maxFileBytes'"
+      },
+      {
+        instancePath: '',
+        schemaPath: '#/required',
+        keyword: 'required',
+        params: { missingProperty: 'maxChangedPaths' },
+        message: "must have required property 'maxChangedPaths'"
+      }
+    ]
+  }
+}
+
+Node.js v24.21.0

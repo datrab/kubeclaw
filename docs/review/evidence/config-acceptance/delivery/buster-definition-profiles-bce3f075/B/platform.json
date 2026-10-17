@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "pipeline-platform.v2",
+  "effectLockTtlMs": 600000,
+  "installationRoots": [
+    "/app/skills/buster/plugins"
+  ],
+  "trustedBuiltinRoots": [
+    "/app/skills/buster/plugins"
+  ],
+  "externalTrust": {
+    "allowedSourceDigests": {},
+    "verifiedAttestations": {}
+  },
+  "providers": {},
+  "grants": {},
+  "adapters": {},
+  "activeAdapters": [],
+  "observers": {},
+  "storageRoot": "/tmp/buster-plan-platform",
+  "shutdownTimeoutMs": 10000,
+  "orchestratorIssuerId": "buster",
+  "administrativeDecisionIssuers": []
+}

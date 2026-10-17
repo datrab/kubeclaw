@@ -1,0 +1,113 @@
+{
+  "method": "read-only HTTPS existing exact primary commits, no source build/execution; all HTTP failures raw retained",
+  "pinIdentity": {
+    "path": "docs/review/evidence/config-acceptance/delivery/kubernetes-source-acquisitions.json",
+    "sha256": "53411516c2d2f383743d585c3162b024595c6a6adef3500879a7246085ea28a5"
+  },
+  "records": [
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "staging/src/k8s.io/apimachinery/pkg/api/validation/objectmeta.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/staging/src/k8s.io/apimachinery/pkg/api/validation/objectmeta.go",
+      "scope": "source reader/validator only; NOT actual installed/deployed version or feature/driver/grant/capacity identity",
+      "result": "acquired",
+      "status": 200,
+      "sha256": "19332a99936948911db3219dde7986c825049115650dbc1a9f5e1ccab8b06f72",
+      "bytes": 16149,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-chart-topology-6606af9-20261013/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/validation/objectmeta.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/apis/apps/validation/validation.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/apis/apps/validation/validation.go",
+      "scope": "source reader/validator only; NOT actual installed/deployed version or feature/driver/grant/capacity identity",
+      "result": "acquired",
+      "status": 200,
+      "sha256": "6e492d4084d0ed181b5ba547cb031a0df2a20f98ad8a2643fd554b5ae67ff2ea",
+      "bytes": 47331,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-chart-topology-6606af9-20261013/v1.35.6/pkg/apis/apps/validation/validation.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/registry/core/service/storage/alloc.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/registry/core/service/storage/alloc.go",
+      "scope": "source reader/validator only; NOT actual installed/deployed version or feature/driver/grant/capacity identity",
+      "result": "acquired",
+      "status": 200,
+      "sha256": "b3afcb8fc5d018b42ebe19526aaab6502cd0755a4e98cea7d4d1bf0f34ad035a",
+      "bytes": 38461,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-chart-topology-6606af9-20261013/v1.35.6/pkg/registry/core/service/storage/alloc.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/kubelet/lifecycle/handlers.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/kubelet/lifecycle/handlers.go",
+      "scope": "source reader/validator only; NOT actual installed/deployed version or feature/driver/grant/capacity identity",
+      "result": "acquired",
+      "status": 200,
+      "sha256": "6a8f702b38a7a30c01f1de22a721dcc34ee1da492e55bced4a68b234b0e8bf5c",
+      "bytes": 9886,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-chart-topology-6606af9-20261013/v1.35.6/pkg/kubelet/lifecycle/handlers.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "staging/src/k8s.io/apimachinery/pkg/api/validation/objectmeta.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/staging/src/k8s.io/apimachinery/pkg/api/validation/objectmeta.go",
+      "scope": "source reader/validator only; NOT actual installed/deployed version or feature/driver/grant/capacity identity",
+      "result": "acquired",
+      "status": 200,
+      "sha256": "b73dedf36f43e167cf4726b1455420faeb04d5ad55eddfd1cd5395746741bb55",
+      "bytes": 12317,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-chart-topology-6606af9-20261013/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/validation/objectmeta.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/apis/apps/validation/validation.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/apis/apps/validation/validation.go",
+      "scope": "source reader/validator only; NOT actual installed/deployed version or feature/driver/grant/capacity identity",
+      "result": "acquired",
+      "status": 200,
+      "sha256": "6e492d4084d0ed181b5ba547cb031a0df2a20f98ad8a2643fd554b5ae67ff2ea",
+      "bytes": 47331,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-chart-topology-6606af9-20261013/v1.34.11/pkg/apis/apps/validation/validation.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/registry/core/service/storage/alloc.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/registry/core/service/storage/alloc.go",
+      "scope": "source reader/validator only; NOT actual installed/deployed version or feature/driver/grant/capacity identity",
+      "result": "acquired",
+      "status": 200,
+      "sha256": "346f22ee83868528c63d7511d1478cfb61fb23569bf009fcaeff3678121a659c",
+      "bytes": 38113,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-chart-topology-6606af9-20261013/v1.34.11/pkg/registry/core/service/storage/alloc.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/kubelet/lifecycle/handlers.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/kubelet/lifecycle/handlers.go",
+      "scope": "source reader/validator only; NOT actual installed/deployed version or feature/driver/grant/capacity identity",
+      "result": "acquired",
+      "status": 200,
+      "sha256": "81b9e27c72f343427098b9b51fa5e21c7ef4d52552704c45239eef14eb91c625",
+      "bytes": 8989,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-chart-topology-6606af9-20261013/v1.34.11/pkg/kubelet/lifecycle/handlers.go"
+    }
+  ]
+}

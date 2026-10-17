@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -10,7 +11,7 @@ for (const kind of ['memory', 'file', 'file-sidecar'] as const) {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'effect-ownership-'));
     try {
       const file = path.join(root, 'effects.jsonl');
-      const journal = kind === 'memory' ? new MemoryEffectJournal() : new FileEffectJournal(file);
+      const journal = kind === 'memory' ? new MemoryEffectJournal() : new FileEffectJournal(file, TEST_CORE_POLICY);
       const request = { schemaVersion: 'effect-request.v2' as const, effectId: 'effect:ownership', idempotencyKey: 'ownership',
         attempt: { runId: 'run:ownership', stageId: 'write', attemptId: 'attempt:ownership', attemptNumber: 1 },
         capability: 'artifacts.write', operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'owned' },
@@ -31,12 +32,12 @@ for (const kind of ['memory', 'file', 'file-sidecar'] as const) {
       assert.equal(saved?.result?.nested.value, 'original');
       assert.throws(() => { saved!.result!.nested.value = 'reader mutation'; }, TypeError);
       if (kind !== 'memory') {
-        const reopened = new FileEffectJournal(file);
+        const reopened = new FileEffectJournal(file, TEST_CORE_POLICY);
         assert.deepEqual(await reopened.request('ownership'), returned);
         const replayed = await reopened.receipt('ownership');
         assert.deepEqual(replayed, saved);
         assert.throws(() => { replayed!.result!.nested.value = 'replay mutation'; }, TypeError);
-        assert.deepEqual(await new FileEffectJournal(file).receipt('ownership'), saved);
+        assert.deepEqual(await new FileEffectJournal(file, TEST_CORE_POLICY).receipt('ownership'), saved);
         assert.equal(fs.readFileSync(file, 'utf8').includes('completed-reference'), kind === 'file-sidecar');
       }
     } finally { fs.rmSync(root, { recursive: true, force: true }); }

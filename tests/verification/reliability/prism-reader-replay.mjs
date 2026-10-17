@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -39,23 +40,23 @@ export async function replayOriginalRead({platform,definition,runId,directory,ru
     const root=path.join(directory,`replay-${phase}`);fs.mkdirSync(root);
     const file=path.join(root,'effects.jsonl'),prefix=lines.slice(0,end+1).join('\n')+'\n';
     fs.writeFileSync(file,prefix);
-    const events=new FileJournal(path.join(runDirectory,'events.jsonl'));
-    const gate=()=>assertEffectRecoverySafe(root,runId,definition,events);
+    const events=new FileJournal(path.join(runDirectory,'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+    const gate=()=>assertEffectRecoverySafe(root,runId,definition,events, TEST_CORE_POLICY);
     if(phase==='accepted')await assert.rejects(gate,/RECOVERY_EFFECT_OUTCOME_UNRESOLVED/);
     else await gate();
-    const adapters=createAdapterRuntime(platform,root,runtime,new FileJournal(path.join(root,'replay-audit.jsonl')));
+    const adapters=createAdapterRuntime(platform,root,runtime,new FileJournal(path.join(root,'replay-audit.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs));
     await adapters.start();
     try {
       const invoke=()=>adapters.invoke(read.capability,read.attempt,read.idempotencyKey,
         {operation:read.operation,resource:read.resource,payload:read.payload},new AbortController().signal);
       if(phase==='accepted') {
         await assert.rejects(invoke,/EFFECT_RECOVERY_RECEIPT_UNAVAILABLE/);
-        assert.equal(await new FileEffectJournal(file).receipt(read.idempotencyKey),undefined);
+        assert.equal(await new FileEffectJournal(file, TEST_CORE_POLICY).receipt(read.idempotencyKey),undefined);
         assert.equal(fs.readFileSync(file,'utf8'),prefix);
       } else {
         const result=await invoke();assert.deepEqual(result.artifact,ref);
         assert.deepEqual(verifiedArchitectureValue(result,ref),expected);
-        const reopened=new FileEffectJournal(file);
+        const reopened=new FileEffectJournal(file, TEST_CORE_POLICY);
         assert.deepEqual(await reopened.request(read.idempotencyKey),read);
         assert.deepEqual((await reopened.receipt(read.idempotencyKey)).result,result);
         if(phase==='completed')assert.equal(fs.readFileSync(file,'utf8'),prefix);
@@ -72,7 +73,7 @@ export async function replayOriginalRead({platform,definition,runId,directory,ru
   // Real latest-record ambiguity: same logical ID and exact bytes, different
   // existing pipeline attempt owner. No synthetic returned ArtifactRef/provider.
   const root=path.join(directory,'wrong-owner');fs.mkdirSync(root);
-  const adapters=createAdapterRuntime(platform,root,runtime,new FileJournal(path.join(root,'audit.jsonl')));
+  const adapters=createAdapterRuntime(platform,root,runtime,new FileJournal(path.join(root,'audit.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs));
   await adapters.start();
   try {
     const invoke=(capability,key,request)=>adapters.invoke(capability,read.attempt,key,request,new AbortController().signal);

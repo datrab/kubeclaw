@@ -1,0 +1,14 @@
+{
+  "status": "ORIGINAL_AGGREGATE_COMPLETED_REQUIRED_UID_GATE_FAILED",
+  "command": "npm run verify:config:components",
+  "commandExitCode": null,
+  "testRunnerSummary": {
+    "tests": 652,
+    "pass": 651,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "collectionRecovered": true
+}

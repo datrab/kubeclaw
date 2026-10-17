@@ -1,0 +1,59 @@
+✔ real Prism role package readback drives all service caller compositions (11593.871627ms)
+▶ real Buster role binds parent and child to the same runtime service and owner profile
+  ✖ full inert original archive restoration (requires sufficient trusted storage) (3886.729093ms)
+✖ real Buster role binds parent and child to the same runtime service and owner profile (58760.298209ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70578.879568
+
+✖ failing tests:
+
+test at tests/verification/reliability/pipeline-role-readback.test.mjs:799:11
+✖ full inert original archive restoration (requires sufficient trusted storage) (3886.729093ms)
+  Error: ENOSPC: no space left on device, write
+      at Object.writeSync (node:fs:977:3)
+      at Object.writeFileSync (node:fs:2502:26)
+      at restoreBusterSourceClosure (file:///tmp/pipeline-buster-role-xEpLED/role/skills/packages/plugin-foundation/config/buster-source-replay.mjs:86:16)
+      at Module.materializeBusterBootSourceArchive (file:///tmp/pipeline-buster-role-xEpLED/role/skills/packages/plugin-foundation/config/pipeline-boot.mjs:404:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-role-readback.test.mjs:809:25)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-role-readback.test.mjs:799:11) {
+    errno: -28,
+    syscall: 'write',
+    code: 'ENOSPC'
+  }
+
+test at tests/verification/reliability/pipeline-role-readback.test.mjs:703:1
+✖ real Buster role binds parent and child to the same runtime service and owner profile (58760.298209ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /BUSTER_HANDOFF_SELECTION_MISMATCH/. Input:
+  
+  'Error: WORKER_CORE_VERSIONED_SELECTION_REQUIRED'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-role-readback.test.mjs:1054:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: WORKER_CORE_VERSIONED_SELECTION_REQUIRED
+        at readSwarmBundle (file:///tmp/pipeline-buster-role-xEpLED/role/skills/packages/plugin-foundation/config/swarm-bundle.ts:390:99)
+        at captureSwarmSettings (file:///tmp/pipeline-buster-role-xEpLED/role/skills/packages/plugin-foundation/config/swarm.ts:253:18)
+        at materializePipelineGeneration (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/updates/pipeline-generation.mjs:63:23)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-role-readback.test.mjs:1054:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /BUSTER_HANDOFF_SELECTION_MISMATCH/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

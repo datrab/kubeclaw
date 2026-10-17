@@ -1,0 +1,39 @@
+from pathlib import Path
+import json,hashlib,copy
+R=Path.cwd();O=R/'docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013';C=R/'docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013';load=lambda n:json.loads((C/n).read_text());canonical=lambda x:json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode();sha=lambda x:hashlib.sha256(x).hexdigest();digest=lambda x:'sha256:'+sha(canonical(x));results=[];ledger=[]
+def check(id,ok,details=None):
+ results.append({'id':id,'passed':bool(ok),'details':details});assert ok,id
+rows=load('boundary-owner-reference-specimens.json')['refResolution'];lookup={x['binding']['generationDigest']:x for x in rows};check('13-boundary-manifests',len(rows)==len(lookup)==13)
+for r in rows:
+ for key,obj in [('profileDigest','fullProfile'),('policyDigest','policy'),('generationDigest','generationManifest'),('sourceDigest','sourceManifest')]:check('canonical-digest:'+r['id']+':'+key,r['binding'][key]==digest(r[obj]))
+ check('complete-policy-projection:'+r['id'],r['policy']==r['fullProfile']['settings']['execution']['stores']);check('own-schema-bytes:'+r['id'],r['binding']['schemaDigest']=='sha256:'+sha((R/r['schema']['path']).read_bytes()));a=r['policy']['admission'];check('safe-current-envelope-profile:'+r['id'],a['maximumBytes']>a['metadataReserveBytes']+182+525 and a['metadataReserveBytes']>=4011 and a['maximumQuarantineBytes']<=a['maximumBytes']-a['metadataReserveBytes'])
+def read(ref):
+ raw=(R/ref['path']).read_bytes();check('snapshot-identity:'+ref['path'],sha(raw)==ref['sha256'] and len(raw)==ref['sizeBytes']);v=json.loads(raw);check('snapshot-real-canonical-equivalence:'+ref['path'],canonical(v)==raw);return v
+
+def assertBinding(state,profile):
+ r=lookup[state['binding']['generationDigest']];assert state['binding']==r['binding'];assert r['fullProfile']==profile;assert state['binding']['profileDigest']==digest(profile);return r
+fixtures=load('admission-method-fixtures.json');positiveBindings={}
+for c in fixtures['subcases']:
+ prior=read(c['prior']);r=assertBinding(prior,c['completeOwningAuthor']);check('positive-original-quota:'+c['id'],r['policy']['admission']['maximumBytes']==c['wholeCap']);check('positive-explicit-binding:'+c['id'],prior['binding']==c['originalBinding']);manifest=read(c['originalPolicyManifest']);check('manifest-exactref:'+c['id'],manifest==r);positiveBindings[c['id']]=r
+ if c.get('candidate'):
+  candidate=read(c['candidate']);assertBinding(candidate,c['completeOwningAuthor']);check('same-original-header:'+c['id'],candidate['binding']==prior['binding']);check('candidate-wholecap:'+c['id'],len(canonical(candidate))<=c['wholeCap'])
+ if c['id'].startswith('normal-'):
+  check('whole-state-oracle1934:'+c['id'],c['oracle']['bytes']==len(canonical(candidate))==1934);check('ordinary-same-boundary-equality:'+c['id'],c['wholeCap']==1934+8192);check('ACK-not-byteoracle:'+c['id'],'bytes' not in c['apiReturnFields'] and 'no result.bytes' in c['apiReturnOracle']['byteCountSource'])
+ if c.get('negative'):
+  n=c['negative'];ns=read(n['prior']);nc=read(n['attemptedCandidate']);nr=assertBinding(ns,n['completeOriginalAuthor']);assertBinding(nc,n['completeOriginalAuthor']);check('negative-captured-ownquotalifecycle:'+c['id'],nr['policy']['admission']['maximumBytes']==n['wholeCap']==c['wholeCap']-1 and 'SEPARATE fresh stand' in n['originalSelectionLifecycle']);check('negative-independent-original-binding:'+c['id'],ns['binding']!=prior['binding'] and nc['binding']==ns['binding']);check('negative-same-data-shape:'+c['id'],{k:v for k,v in ns.items() if k!='binding'}=={k:v for k,v in prior.items() if k!='binding'});check('negative-validprior-with-ordinary-headroom:'+c['id'],len(canonical(ns))<=n['wholeCap']-8192);check('negative-candidate-onebyte-overheadroom:'+c['id'],len(canonical(nc))==n['wholeCap']-8192+1)
+  if n.get('accountedOverflowCandidate'):
+   oc=read(n['accountedOverflowCandidate']);assertBinding(oc,n['completeOriginalAuthor']);check('quarantine-negative-actual-overflow-not-unconditionalFULL',len(canonical(oc))<=n['wholeCap'] and oc['quarantineOverflow']['count']==1 and len(oc['quarantine'])==0 and len(oc['overflowUnresolvedItems'])==1)
+  ledger.append({'case':c['id'],'positiveGeneration':prior['binding']['generationDigest'],'negativeGeneration':ns['binding']['generationDigest'],'positiveCap':c['wholeCap'],'negativeCap':n['wholeCap'],'negativePriorBytes':len(canonical(ns)),'attemptedCandidateBytes':len(canonical(nc)),'negativeCapture':'fresh originalnegative selected beforeprep; not rebindingretainedpositive'})
+ for key in ['negativePrior','tamperedSnapshot']:
+  if c.get(key):
+   ref=c[key];raw=(R/ref['path']).read_bytes();check('extra-source-negative-identity:'+c['id']+':'+key,sha(raw)==ref['sha256'] and len(raw)==ref['sizeBytes'])
+   if key=='negativePrior':assertBinding(json.loads(raw),c['completeOwningAuthor'])
+normal=fixtures['subcases'][0];prior=read(normal['prior']);globalProfile=json.loads((R/'docs/review/evidence/config-acceptance/components/icq-corrections-20261013/immutable-owner-reference-specimens.json').read_text())['refResolution'][0]
+def rejected(id,f):
+ try:f()
+ except (AssertionError,KeyError):check(id,True);return
+ raise AssertionError('negative admitted:'+id)
+bad=copy.deepcopy(prior);bad['binding']=globalProfile['binding'];rejected('meaningful-globalA-negative',lambda:assertBinding(bad,normal['completeOwningAuthor']));check('restored-boundary-positive',assertBinding(prior,normal['completeOwningAuthor'])==positiveBindings['normal-admit'])
+mut=copy.deepcopy(normal['completeOwningAuthor']);mut['settings']['execution']['stores']['admission']['maximumBytes']-=1;rejected('meaningful-originalquota-drift-negative',lambda:assertBinding(prior,mut));ns=read(normal['negative']['prior']);bad=copy.deepcopy(ns);bad['binding']=prior['binding'];rejected('meaningful-negativeoriginal-rebind-positiveheader',lambda:assertBinding(bad,normal['negative']['completeOriginalAuthor']));check('restored-negativeoriginal-positive',assertBinding(ns,normal['negative']['completeOriginalAuthor'])['policy']['admission']['maximumBytes']==10125);check('historical1940-negative',1940!=len(canonical(read(normal['candidate']))));check('restored1934-positive',normal['oracle']['bytes']==1934)
+oldcases=json.loads((R/'docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-case-specs.json').read_text())['activeCases'];newcases=load('question-case-specs.json')['activeCases'];check('all22-caseids-and-requirements-conserved',len(newcases)==22 and [(c['id'],c['requirements'])for c in newcases]==[(c['id'],c['requirements'])for c in oldcases]);check('all22futureNOTRUN',all('not-run' in c['implementationStatus'] for c in newcases));check('case-contract-exactmirror',newcases==load('case-input-contracts.json')['activeCases']);check('historical-globalcatalog-labelled',fixtures['targetStates']['classification'].startswith('No global') and 'NEVER active' in fixtures['historicalGlobalSnapshots']['classification'])
+freeze=json.loads((O/'frozen-input-receipt.json').read_text());drift=[p for p,x in freeze['inputs'].items() if sha((R/p).read_bytes())!=x['sha256']];check('all-frozen-inputs-no-drift',not drift,{'count':len(freeze['inputs']),'drift':drift});check('all247-preserved-no-drift',all(sha((R/p).read_bytes())==h for p,h in freeze['preserved247'].items()));check('Runtime4-published-no-drift',all(sha((R/p).read_bytes())==h for p,h in freeze['RuntimeFrozenPublished'].items()));report={'scope':'Independent R06 bounded definition/serializer/profile/case conservation and meaningful docnegative/restored only. Not future runtime enforcement or F-MUT/wholeC0 acceptance','passed':len(results),'failed':0,'results':results,'boundaryLedger':ledger};(O/'independent-boundary-controls.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

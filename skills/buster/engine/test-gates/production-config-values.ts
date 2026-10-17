@@ -1,3 +1,4 @@
+import { createPublicKey } from 'node:crypto';
 import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
 import { buildRegistry } from '@kubeclaw/plugin-foundation/registry/build';
 import { discoverPackages } from '@kubeclaw/plugin-foundation/registry/discovery';
@@ -220,6 +221,14 @@ export function runtimeAuthority(value: Record<string, unknown>, environment: No
   }
   const sourceAttestationPublicKey = environment[sourceKeyName];
   if (!sourceAttestationPublicKey) throw new Error('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING');
+  // Source schema v1 still needs genuine original issuer/key-revision binding;
+  // parsing an Ed25519 key is necessary, never sufficient proof of provenance.
+  try {
+    if (createPublicKey(sourceAttestationPublicKey).asymmetricKeyType !== 'ed25519') throw new Error('wrong key type');
+  } catch (cause) { throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID', { cause }); }
+  if (typeof value.trustedSourceAuthority !== 'string' || !value.trustedSourceAuthority.trim()) {
+    throw new Error('BUSTER_SOURCE_ATTESTATION_AUTHORITY_REQUIRED');
+  }
   return { trustedPeerSpiffeIds, token, sourceAttestationPublicKey };
 }
 

@@ -1,0 +1,63 @@
+{
+  "sourcePins": [
+    {
+      "path": "skills/nova/core/test-gates/resolver.ts",
+      "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+      "sha256": "2613dc8b3a3f252d4afa13415b17e6345de726e8ccb2115e7551615a4578e174"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "sha256": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-result-validation.ts",
+      "sha256": "7063bd5db3614ad76adf2fa3dbdb9b430b34f1ae772e1c9c4b29848766c7ffcc"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-values.ts",
+      "sha256": "e0d381931d7e580113faaafb8ae05fa0e9431e15202a23b97bbc1fb974e27021"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-log-capture.ts",
+      "sha256": "ad5e07e980881a18fc5b4d3b68d888caa80bd988478908b2dd54daf478e5a3d1"
+    }
+  ],
+  "registry": "canonicalTestProvider preserves actual immutable manifest package digest,ports,capability names,safety/evidenceTypes/report support. Selected defaults must NEVER overwrite that immutable support record. Current configuration resolver emits provider-configuration.v1 with schemaDigest and default-injected combined values; v2 is explicit new receiving migration, not current activity.",
+  "NovaLighthouseBudget": {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "lines": [
+      573,
+      576
+    ],
+    "currentError": "TEST_PLAN_LIGHTHOUSE_BUDGET_REQUIRED",
+    "context": "Blocking TASK mode +purposeperformance requires budget before ResolvedPlanNode construction. Direct provider supports no budget; advisory no-budget remains valid domain, NOT independent blocking admission. New resolver must check captured selectedPolicy.byPurpose.performance.selectedBudget not obsolete task configuration.values.budget, before effect. Partial budget choice remains supported; missing metrics do not produce checks.",
+    "profileDomainNotNarrowed": true
+  },
+  "retry": {
+    "currentDefaultRetryCount": 1,
+    "sourceMeaning": "Actual immutable manifest true yields default1, false+no requestedRetries yields0; explicit unsafe requested>0 on actualfalse requires TASK acceptUnsafeRetry=true. Selected conservative false on native-supportedtrue must affect DEFAULT choice only after explicit future reader change; current source still reads manifest and would ignore new selected metadata.",
+    "proposedSingleReaderDelta": "With requestedRetries undefined, selected processing declaration retrySafe=false forces0; otherwise existing caller default retry count preserved. Explicit requestedRetries remains exact TASK intent, and original immutable package.retrySafe governs existing unsafe acknowledgement. No native false->true selected schema arm. Original ceilings/limits and default retry count source ownership remain separate; no new count author or automatic second registration routing.",
+    "currentMaskControl": "Actual native manifesttrue + explicitrequested2 makes conservative default true/false irrelevant. Preserve this exact mask, do not fake a native retry timing contrast."
+  },
+  "evidence": {
+    "currentNova": "evidencePolicy chooses each override outcome or immutable manifest default then validates supported type union only. Current empty outcome override can pass; target partial override schemas require each supplied outcome includes mandatory actual package baseline (incllog), absent outcome inherits sole selected complete owner declaration. This is explicit new admission delta.",
+    "actualRetentionReceiver": "ResolvedPlanNode.evidence -> runner-values.selectedEvidenceTypes -> runner-provider-operation.stageProviderEvidence -> runner-attempt-evidence.collectRunnerAttemptEvidence. Source providers do NOT receive a second evidence-policy author.",
+    "importantActualPostResultErrorPath": "After actual provider result validation, stageProviderEvidence FIRST copies actual result.evidenceFiles selected by onError into error staging, THEN copies normal selected files. A later normal-staging/collection failure can retain genuine cached result artifacts as error evidence; not all onError artifacts are categorically unproducible. Primary provider execute throwing before validresult is DIFFERENT and has no newly staged result evidence.",
+    "AxeErrorBFiniteNativeCase": "Actual visible unaccepted image-alt yields2 genuine native node screenshots (desktop+mobile) +actual axe-results report; original artifactFiles1 admits error Btest-report cache1 then normal onFail report+screenshots3 staging exceeds filecount. AonErrorlog has no reportcache; BonErrorlog+test-report retains real report through actual error path. Genuine native screenshot/tool/grant/result and exact staging error guard must be observed; not executed here.",
+    "LighthouseErrorBFiniteNativeCase": "Actual performance3 runs emits2 performance-report +1 performance-report-representative. Original artifactFiles2 admits BonError performance-report cache2, then normal outcome3 reports staging exceeds count. AonErrorlog lacks reportcache. Real validated audits/role/source/grant and error collector remain required; no syntheticnative LHR delivered.",
+    "PlaywrightVisualErrorB": "Their own provider evidence budget preflight generally prevents simple declared count overflow before valid result; same fakequota trick would be false. SOURCE supports post-valid-result error cache, but concrete safe deterministic later native staging/collection failure with genuine result/clock/cleanup remains an OPEN native fixture qualification. Do not claim primary execute error produced a report or force unverifiable arbitrarynative fault.",
+    "logProduction": "Mandatory log retention does NOT manufacture source log. Axe/Lighthouse/Visual never context.log; Playwright only logs actual nonempty native stdout/stderr. runner log capture with nochunks returnsnull. Current result/error artifact availability remains distinct from default metadata support."
+  },
+  "receiving": "All original actual source/schema/whole-profile/task/package/component/runtime resource/role/service/claim identities must travel registry->Nova task/selected policy resolve->plan->runner/envelope->invocation->actual native source at parentR/module/storedJ. No parent latest-fill/deadline reset/fake installed receipt is introduced. Original fixed Eval/mutant/recovery/effect requirements remain not-run."
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-studio",
+  "profiles": {
+    "standard": {
+      "settings": {
+        "port": 8080,
+        "controlTimeoutMs": 30000,
+        "controlUrl": "http://prism-control:8080",
+        "maximumRequestBodyBytes": 2000000,
+        "browserPolicy": {
+          "maximumPreviewAssetBytes": 6000000,
+          "previewAssetTimeoutMs": 30000,
+          "roundPolling": {
+            "maximumAttempts": 30,
+            "intervalMs": 2000
+          },
+          "revisionPolling": {
+            "maximumAttempts": 300,
+            "intervalMs": 2000
+          },
+          "initialDirectionPolling": {
+            "maximumAttempts": 300,
+            "intervalMs": 2000
+          }
+        }
+      }
+    }
+  }
+}

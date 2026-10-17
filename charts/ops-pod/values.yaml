@@ -44,3 +44,37 @@ tailscale:
   resources:
     requests: {cpu: 25m, memory: 64Mi}
     limits: {cpu: 500m, memory: 256Mi}
+
+# Sole runtime policy author for the Ops MCP, captured once before listening.
+mcpPolicy:
+  server:
+    port: 8080
+    host: 127.0.0.1
+    localOnly: true
+    allowedOrigins: []
+  kubernetes:
+    timeoutMs: 10000
+    maxBytes: 8388608
+  hubble:
+    binary: /usr/local/bin/hubble
+    server: hubble-relay.cilium.svc.cluster.local:4245
+    timeout: 12000
+    maxConcurrentQueries: 2
+    defaultWindowMs: 300000
+    maxWindowMs: 900000
+    maxRawBytes: 2097152
+    maxOutputBytes: 196608
+    maxSummaryBytes: 8192
+    maxStderrBytes: 4096
+  presentation:
+    maxLogBytes: 65536
+    eventPageSize: 500
+  supervisor:
+    controlSocketProbeTimeoutSeconds: 0.5
+    controlStartupTimeoutSeconds: 20
+    controlStartupPollSeconds: 0.2
+    loginStatusTimeoutSeconds: 15
+    loginRetryWaitSeconds: 5
+    controlHealthPollSeconds: 2
+    controlTerminationTimeoutSeconds: 10
+    restartWaitSeconds: 10

@@ -1,0 +1,65 @@
+{
+  "status": "stable exact historical supersession mapping proposal; parentintegration and independentreview pending, NOT ACCEPTED",
+  "UTC": "2026-10-13T03:31:33.301347+00:00",
+  "head": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "tree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "mappingCounts": {
+    "historicalSuperseded": 269,
+    "gradeGeneric": 261,
+    "attestationAlternate": 8
+  },
+  "baselineReferences": {
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "188c10cc8dd25afb162e8cc1cc793fce68ee5d4d",
+      "sha256": "0847f5fe3e8cf3ead350fe7daa6deffad35975c98cecda52888f46f0cd9ea23e"
+    },
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "454a20ee388a7813c03b80f81f120941a95df91b",
+      "sha256": "113c662242195c821e3a0d1623283f643b428e1126818126f9dd509aec8a493c"
+    },
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "feb9c567e8d1d8549443fb4fb6ae485a014b2b51",
+      "sha256": "3b3a5f6c03a74619b737131d2ff3ff6eabe4d1d350629d250e7644958e4101d8"
+    },
+    "docs/review/remediation/config-acceptance-matrix.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "c9fb07af0413a1c687a9cf0e13f030a50de9c3f0",
+      "sha256": "1eb9534c1576b6ee0bc621c4b67fe43e3f1592b005ed1ddb85e37012fbd6f998"
+    }
+  },
+  "rawDirtyPatchSha256": "0c7fac54d00585d1b071cf15dcd67b507889d4f6e68cb96fe5a790b751b2f8e1",
+  "dirtyPatchCompressedSha256": "eba4e8f413224b547a7c015572cf6dfc3ccf47307ebbc3a683593fe1bd0679a6",
+  "currentResolverNarrowControls": 87,
+  "untrackedDeliveryIdentities": {
+    "docs/review/evidence/config-acceptance/author/nova-sdk-envelope-current-6606/check-current-sdk-envelope.mjs": "0ff4475ee9bf64b9d74210be3a105c957a54e0d5b3cbe3e8715258c6a1f8abea",
+    "docs/review/evidence/config-acceptance/delivery/controller-domain-correction-6606af9-20261013.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/delivery/controller-domain-correction-6606af9-20261013.stdout": "671eb77dc388042719f823cc15ea03a1f47734944870400c0f4db5d2c7839b01",
+    "docs/review/evidence/config-acceptance/delivery/controller-domain-dispatch-correction-6606af9-20261013.json": "38cdfebbacec92d9e9703861fc74f1b239f42b8b6e04c66d6cc6b893e857548c",
+    "docs/review/evidence/config-acceptance/delivery/controller-domain-dispatch-correction-6606af9-20261013.patch": "05ff867b595e47f6679e511dfe853beb3d3e8121b9a9e2e58070f425ba7ff6b6",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/README.md": "aa53358e40e10be543d39082755a55f0f75f9000ba15d145b09bd87cf716d0a1",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/baseline-committed-input-identities.json": "569c8ef44bad3e3d6bef8854525b9564e7679ebcf83f4b67b2260f6825e7fc19",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/build-map.py": "e65d68a320c02ed90085624fce7f4d47146332b33abea8e3f9396e4d58964e20",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/check-current-profile-readers.mjs": "5d962fdab178f3a8092ff0b396c611f1788e8af81c0d1546e85e567b3dd02e88",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/current-profile-reader-observations.json": "855394c4b92115b2108fad3e07eea49096d599a0d3036d70fcafcf029d89e4e2",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/dirty-delivery.patch.gz": "eba4e8f413224b547a7c015572cf6dfc3ccf47307ebbc3a683593fe1bd0679a6",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json": "1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3"
+  },
+  "artifacts": {
+    "README.md": "aa53358e40e10be543d39082755a55f0f75f9000ba15d145b09bd87cf716d0a1",
+    "build-map.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "check-current-profile-readers-attempt1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "baseline-committed-input-identities.json": "569c8ef44bad3e3d6bef8854525b9564e7679ebcf83f4b67b2260f6825e7fc19",
+    "build-map.log": "3564ec0f57987a66d41846324b8486a1d5721657d91e0498aef859486c584d1f",
+    "dirty-delivery.patch.gz": "eba4e8f413224b547a7c015572cf6dfc3ccf47307ebbc3a683593fe1bd0679a6",
+    "native-historical-successor-map.json": "1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3",
+    "check-current-profile-readers.mjs": "5d962fdab178f3a8092ff0b396c611f1788e8af81c0d1546e85e567b3dd02e88",
+    "current-profile-reader-observations.json": "855394c4b92115b2108fad3e07eea49096d599a0d3036d70fcafcf029d89e4e2",
+    "check-current-profile-readers-attempt1.log": "57f5ffe736fbd985737d2905121a90b6156d10d07f0db7194ef6ebc923ec4937",
+    "build-map.py": "e65d68a320c02ed90085624fce7f4d47146332b33abea8e3f9396e4d58964e20"
+  },
+  "futureRuntimeAcceptance": false,
+  "remaining": "61 schema consumers;102 untouched supplementary+95priorunaccepted;3924candidates+131reviewed-open. Mappinghistorical requirements not semantic closure."
+}

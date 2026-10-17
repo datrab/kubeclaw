@@ -1,0 +1,114 @@
+{
+  "kind": "bounded-current-source-and-local-persistence-evidence",
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceTree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "workingState": "dirty; exact relevant files identified below; not a whole-tree acceptance freeze",
+  "command": "node docs/review/evidence/config-acceptance/author/check-nova-journal-binding-seam.mjs",
+  "commandExit": 0,
+  "nodeVersion": "v24.21.0",
+  "observations": {
+    "scope": "current FileJournal local persistence only",
+    "observations": [
+      {
+        "id": "CURRENT-JOURNAL-CAPTURE",
+        "result": "passed"
+      },
+      {
+        "id": "CURRENT-JOURNAL-REOPEN",
+        "result": "passed"
+      },
+      {
+        "id": "CURRENT-JOURNAL-TWO-OBJECT-DEDUP",
+        "result": "passed"
+      },
+      {
+        "id": "CURRENT-JOURNAL-CONFLICT-BEFORE-APPEND",
+        "result": "passed"
+      },
+      {
+        "id": "CURRENT-JOURNAL-INCOMPLETE-TAIL-RECOVERY",
+        "result": "passed"
+      },
+      {
+        "id": "CURRENT-JOURNAL-APPENDED-RECORD-NOT-ROLLBACK",
+        "result": "passed"
+      },
+      {
+        "id": "CURRENT-JOURNAL-CALLBACK-CANNOT-ESCAPE",
+        "result": "passed"
+      }
+    ],
+    "fixtureBytes": 543,
+    "fixtureSha256": "eb1d958bd479654cb764ddde106dacaac09d3be1c963b0a7eb75ad6369996fa8",
+    "limitations": [
+      "specimen is not a current LifecycleEvent",
+      "no true multi-process contention or process-kill crash exercised",
+      "transact is synchronous exclusion, not multi-record rollback; no await inside callback",
+      "no proposed module binding, observer, SDK, capacity or deployed-host acceptance"
+    ]
+  },
+  "inputs": [
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "bytes": 14415
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0",
+      "bytes": 5578
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b",
+      "bytes": 5662
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566",
+      "bytes": 5223
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+      "bytes": 7287
+    },
+    {
+      "path": "skills/nova/core/state/file-mutex.ts",
+      "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c",
+      "bytes": 1347
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d",
+      "bytes": 1470
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "bytes": 11148
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+      "bytes": 10717
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-nova-journal-binding-seam.mjs",
+      "sha256": "0a53f348e71abe3af81ad0422591b62bb9b4e955c5c5f7d566a2669ca547a3f6",
+      "bytes": 3388
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-attempt1-20261013.log",
+      "sha256": "4504b28f3d3ba0793a51e5ad02c5d07ab6e6d3852b5fcfb00f18470d2e96509a",
+      "bytes": 1133
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8",
+      "bytes": 7456
+    }
+  ],
+  "independentReview": "not-run",
+  "globalC0": "not-accepted"
+}

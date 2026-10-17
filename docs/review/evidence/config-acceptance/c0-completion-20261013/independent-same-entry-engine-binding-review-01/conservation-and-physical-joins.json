@@ -1,0 +1,33 @@
+{
+  "head": "e42dab0fa474d8bf7c726db2d100efff1c825a65",
+  "at": "2026-10-14T02:47:26.893524+00:00",
+  "qualification": "Independent body/node/input conservation, not author semantic or native acceptance",
+  "manifestPins": 377,
+  "manifestMismatches": [],
+  "inheritedInputPins": 465,
+  "inheritedInputMismatches": [],
+  "originalFieldBodies": 168,
+  "fieldBodyMismatches": [],
+  "originalCaseBodies": 1008,
+  "caseBodyMismatches": [],
+  "currentFieldNodes": 156,
+  "fieldNodeMismatches": [],
+  "currentCaseMemberNodes": 1114,
+  "memberMismatches": [],
+  "actualSourceCopies": 42,
+  "sourceCopyMismatches": [],
+  "original9BindingsExact": true,
+  "original4ProviderContextsExact": true,
+  "BusterOriginalEntireObjectExactExceptTwoProfiles": true,
+  "BusterAddedProfileIds": [
+    "security-https-source-A",
+    "security-source-A"
+  ],
+  "physicalFileSetMembers": 120,
+  "providerWholeEntries": 22,
+  "securityWholeEntries": 163,
+  "PrismWholeContexts": 22,
+  "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+  "ajvVersion": "8.20.0",
+  "ajvEntrySha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a"
+}

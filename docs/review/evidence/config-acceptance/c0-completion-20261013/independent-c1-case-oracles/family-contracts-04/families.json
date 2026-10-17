@@ -1,0 +1,1883 @@
+{
+  "listener-bind": {
+    "family": "listener-bind",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-control-port",
+      "CMP-C1-EFFECT-prism-studio-port",
+      "CMP-C1-EFFECT-prism-worker-ingress.port"
+    ],
+    "productiveAction": "Start actual component entry with each whole profile; request the actual configured HTTP route at its selected port; after shutdown confirm old port is closed. Supply retired PORT separately as a negative startup input. Never submit a numeric port+1 quota witness.",
+    "productiveObserver": "Bound socket address and HTTP response; startup legacy-override error before listener creation.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "A/B actual entry8080/6060, complete valid service backing dependencies; GET real configured route plus socket address before/after close. Other owner URLs remain unchanged in per-port pair, so avoid routing via unchanged upstream URLs; observe owning service directly."
+    },
+    "exactOracle": {
+      "assertions": "Bound socket address and HTTP response; startup legacy-override error before listener creation.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "preference-authorization": {
+    "family": "preference-authorization",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-control-pipelinePreferenceSubject"
+    ],
+    "productiveAction": "Dispatch the same actual order with authenticated subject under null versus explicitly selected preference subject, resolving through authorizePipelinePreferenceSubject and actual dispatch.",
+    "productiveObserver": "Selected authorized preference source/dispatch result; invalid or competing subject rejection before worker dispatch.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same authorized order/project and authenticated subject; Anull selects no platform preference, Buser-aaaaaaaaaaaaaaaaaaaaaaaa selects explicitly authorized preference. Source/profile label is NOT actual user grant; missing actual grant fixture blocks positive effect."
+    },
+    "exactOracle": {
+      "assertions": "Selected authorized preference source/dispatch result; invalid or competing subject rejection before worker dispatch.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "artifact-root": {
+    "family": "artifact-root",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-control-artifactRoot"
+    ],
+    "productiveAction": "Execute actual artifact creation/retrieval through ContentAddressedArtifactStore composed by control-context; use distinct isolated permitted roots.",
+    "productiveObserver": "Content address and exact file/root location; no writes in the unselected root; retained artifact identity unchanged.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same content bytes/digest through actual composed ContentAddressedArtifactStore, isolated permitted original A/B roots, preserved file owner; create then retrieve and compare digest+physical root. No arbitrary filesystem write permission inferred."
+    },
+    "exactOracle": {
+      "assertions": "Content address and exact file/root location; no writes in the unselected root; retained artifact identity unchanged.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "studio-url": {
+    "family": "studio-url",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-control-studioPublicUrl"
+    ],
+    "productiveAction": "Execute actual agent route that creates project/document result with same identifiers.",
+    "productiveObserver": "Returned studioUrl equals selected base plus actual project/document query; no transport capacity test.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual route-produced projectId/documentId; inspect returned studioUrl exactly base?project=<id>&document=<id>. Candidate URL changes pure response identity; external availability not required for local string effect, required for live navigation."
+    },
+    "exactOracle": {
+      "assertions": "Returned studioUrl equals selected base plus actual project/document query; no transport capacity test.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "control-upstream-url": {
+    "family": "control-upstream-url",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-studio-controlUrl"
+    ],
+    "productiveAction": "Make real studio request with pathname/query to two isolated actual Control services selected by whole profiles.",
+    "productiveObserver": "Actual upstream destination and forwarded path/query; unselected service receives nothing.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual incoming pathname/query, headers/body and two legitimate isolated real Control endpoints. Record destination endpoint handling actual request; unselected endpoint must receive nothing. .example hostname alone is not a running endpoint."
+    },
+    "exactOracle": {
+      "assertions": "Actual upstream destination and forwarded path/query; unselected service receives nothing.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "worker-dispatch-abort": {
+    "family": "worker-dispatch-abort",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-control-dispatchTimeoutMs"
+    ],
+    "productiveAction": "Dispatch real worker operation lasting between selected deadlines, with claim and other phase budgets admitting it.",
+    "productiveObserver": "AbortSignal.timeout outcome and actual bounded transport error; capture whether remote work remains unresolved, never equate timeout with reap.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Real actual worker POST request with accepted signed claim/task and bound dispatch675000/900000. Work completion between deadlines; original remote ambiguity recorded. A shorter independently valid full pair may be defined to keep practical duration, never asserted without relation validation."
+    },
+    "exactOracle": {
+      "assertions": "AbortSignal.timeout outcome and actual bounded transport error; capture whether remote work remains unresolved, never equate timeout with reap.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "studio-upstream-abort": {
+    "family": "studio-upstream-abort",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-studio-controlTimeoutMs"
+    ],
+    "productiveAction": "Forward actual studio request whose upstream completion straddles controlTimeoutMs; retain actual upstream cancellation behavior.",
+    "productiveObserver": "Selected setTimeout/controller.abort and returned HTTP/error; no fake timer replacing productive request.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Real studio forwarding to actual Control operation whose completion straddles22500/30000, same caller request; record controller.abort(timeoutError) and resulting response. No stub fetch replacing transport."
+    },
+    "exactOracle": {
+      "assertions": "Selected setTimeout/controller.abort and returned HTTP/error; no fake timer replacing productive request.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "ingress-active-capacity": {
+    "family": "ingress-active-capacity",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-worker-ingress.maximumActiveRequests"
+    ],
+    "productiveAction": "Hold actual ordinary HTTP handlers unresolved; fill maximumActiveRequests and submit one additional ordinary request while connections/bytes/timeouts admit it.",
+    "productiveObserver": "PRISM_WORKER_CAPACITY_EXCEEDED at actual accept; admitted handlers count and subsequent release/re-admission.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Hold12 admitted ordinary real HTTP attempts unresolved; 13th is A16admit/B12capacity503. Keep maximumConnections>=128/96, body and timers below both caps; release admitted work before re-admission control."
+    },
+    "exactOracle": {
+      "assertions": "PRISM_WORKER_CAPACITY_EXCEEDED at actual accept; admitted handlers count and subsequent release/re-admission.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "ingress-probe-reserve": {
+    "family": "ingress-probe-reserve",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-worker-ingress.maximumProbeRequests"
+    ],
+    "productiveAction": "Hold active ordinary requests; submit GET /health,/bootstrap,/ready with no body/transfer-encoding through actual worker entry. Contrast ordinary request and body-bearing probe.",
+    "productiveObserver": "capacity=maximumActiveRequests+(probe?maximumProbeRequests:0); exact 503 capacity result. Probe count is not an independent maximumActiveRequests replacement.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Hold19 actual active work with ordinary/probe mix; body-free GET health/bootstrap/ready gives A16+4=20admit versus B16+3=19reject. Ordinary POST and GET body/transfer-encoding do not receive probe reserve. Do not require19 ordinary admissions when ordinarycap16."
+    },
+    "exactOracle": {
+      "assertions": "capacity=maximumActiveRequests+(probe?maximumProbeRequests:0); exact 503 capacity result. Probe count is not an independent maximumActiveRequests replacement.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "ingress-connections": {
+    "family": "ingress-connections",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-worker-ingress.maximumConnections"
+    ],
+    "productiveAction": "Hold real TCP connections at server.maxConnections with HTTP work below active-request cap; connect additional peer.",
+    "productiveObserver": "Actual socket admission/close behavior and server connection count; no guessed quota diagnostic.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Hold96/128 actual TCP connections with active HTTP work below16. Observe real Node maxConnections socket cutoffs; per-client retry or HTTP503 is not predetermined socket behavior."
+    },
+    "exactOracle": {
+      "assertions": "Actual socket admission/close behavior and server connection count; no guessed quota diagnostic.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "ingress-request-timeout": {
+    "family": "ingress-request-timeout",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-worker-ingress.requestTimeoutMs"
+    ],
+    "productiveAction": "Send real slow/incomplete HTTP request, comparing server.requestTimeout and headersTimeout=min(existing,requestTimeoutMs).",
+    "productiveObserver": "Actual Node HTTP request/header timeout and connection closure; distinguish header bound from body bound.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Slow real incomplete request body and separately incomplete header. Record actual server.requestTimeout and headersTimeout=min(existing header timeout, selected120k/90k); header timeout may be masked by Node existing60k, so use body path for selected difference."
+    },
+    "exactOracle": {
+      "assertions": "Actual Node HTTP request/header timeout and connection closure; distinguish header bound from body bound.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "ingress-shutdown": {
+    "family": "ingress-shutdown",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-worker-ingress.shutdownTimeoutMs"
+    ],
+    "productiveAction": "Start active real requests then actual shutdown. Admission closes synchronously; cancellation/drain completes or exceeds selected deadline.",
+    "productiveObserver": "PRISM_WORKER_SHUTDOWN_DEADLINE or UNRESOLVED, closeAllConnections and durable uncertainty. Connection cutoff never proves arbitrary child reap.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actual active admitted work and connected keepalive; invoke shutdown120k/150k. stopping flag rejects new request synchronously; observe cancellation then actual dependencies/close drain; unresolved cutoff never reported as reap."
+    },
+    "exactOracle": {
+      "assertions": "PRISM_WORKER_SHUTDOWN_DEADLINE or UNRESOLVED, closeAllConnections and durable uncertainty. Connection cutoff never proves arbitrary child reap.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "identity-uid-gid": {
+    "family": "identity-uid-gid",
+    "caseIds": [
+      "CMP-C1-EFFECT-prism-worker-supervisor.gid",
+      "CMP-C1-EFFECT-prism-worker-supervisor.uid"
+    ],
+    "productiveAction": "Run actual native supervisor child through configured identity launch, with authorized isolated host prerequisites.",
+    "productiveObserver": "OS observed uid/gid and ownership record; identity refusal before native effect; cannot model uid/gid as numeric capacity.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actual native process/OS ownership1000/750; selected identity must exist or be allowed by launcher and permissions. Observe actual getuid/getgid and ownership journal; fixture setup missing is blocked, not a quota rejection."
+    },
+    "exactOracle": {
+      "assertions": "OS observed uid/gid and ownership record; identity refusal before native effect; cannot model uid/gid as numeric capacity.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "kernel-resource-policy": {
+    "family": "kernel-resource-policy",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+      "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.memoryBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.tasks",
+      "CMP-C1-EFFECT-prism-execution-resourcePolicy.cpuTimeMs",
+      "CMP-C1-EFFECT-prism-execution-resourcePolicy.memoryBytes",
+      "CMP-C1-EFFECT-prism-execution-resourcePolicy.tasks"
+    ],
+    "productiveAction": "Launch actual native bounded phase with measured CPU, resident/cgroup memory or Linux task usage crossing selected policy; retain claim and cleanup prerequisites.",
+    "productiveObserver": "Actual sandbox/cgroup/kernel termination/resource accounting and persisted result. CPU uses cumulative CPU, not sleeping; tasks count processes/threads, not JSON items.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actual signed task with sandbox process tree; CPU cumulative measured45000/60000 or90000/120000ms, memory resident6GiB/8GiB, Linux tasks1536/2048 or48/64. Such large native tasks require future isolated capacity and task envelope relation checks; no paid/live run from this definition."
+    },
+    "exactOracle": {
+      "assertions": "Actual sandbox/cgroup/kernel termination/resource accounting and persisted result. CPU uses cumulative CPU, not sleeping; tasks count processes/threads, not JSON items.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "heap-floor-fraction": {
+    "family": "heap-floor-fraction",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.provider.heapFraction",
+      "CMP-C1-EFFECT-buster-engine-execution.provider.minimumHeapMiB",
+      "CMP-C1-EFFECT-buster-engine-execution.reports.heapFraction",
+      "CMP-C1-EFFECT-buster-engine-execution.reports.minimumHeapMiB"
+    ],
+    "productiveAction": "Launch actual provider/report child with invocation memory selecting each branch of max(minimumHeapMiB,floor(memoryBytes/1048576*heapFraction)).",
+    "productiveObserver": "Actual child argv and effective V8 heap constraint; hold floor/fraction counterpart to expose the setting. No maximum-quota witness for a minimum.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual invocation512MiB. Provider/report minimum16\u2192512 produces358\u2192512MiB arg; fraction.7\u2192.525 produces358\u2192268. Verify actual native argv/effective allocator budget plus kernel overhead; heap512equals resident cap512 is not full-heap successful allocation proof."
+    },
+    "exactOracle": {
+      "assertions": "Actual child argv and effective V8 heap constraint; hold floor/fraction counterpart to expose the setting. No maximum-quota witness for a minimum.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "provider-openfiles-derived": {
+    "family": "provider-openfiles-derived",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.provider.artifactFileDescriptorReserve",
+      "CMP-C1-EFFECT-buster-engine-execution.provider.minimumOpenFiles"
+    ],
+    "productiveAction": "Launch actual provider child with artifactFiles selecting floor and additive-reserve branches of max(minimumOpenFiles,artifactFiles+artifactFileDescriptorReserve).",
+    "productiveObserver": "Actual sandbox open-file argv/effective RLIMIT, safe-integer rejection; descriptor floor is not a maximum admission cap.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "minimum64\u219248 exposed with artifactFiles1: max(64,1+32)=64 vs48. Reserve32\u219224 exposed with artifactFiles64:96 vs88. Same legitimate provider artifact declaration counts; descriptor baseline/runtime overhead stays admitted."
+    },
+    "exactOracle": {
+      "assertions": "Actual sandbox open-file argv/effective RLIMIT, safe-integer rejection; descriptor floor is not a maximum admission cap.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "report-minimum-openfiles": {
+    "family": "report-minimum-openfiles",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.reports.minimumOpenFiles"
+    ],
+    "productiveAction": "Trace actual finalizeBusterReports caller, which always supplies maximumOpenFiles; observe selected native openFiles=64 for unchanged pair. Define separate whole-profile relation-valid equality and relation-invalid minimum>maximum startup guard controls. No lower-openFiles productive adapter invocation is asserted.",
+    "productiveObserver": "Current valid caller produces identical64; config relation controls may show SWARM_CONFIG_BUSTER_REPORT_DESCRIPTOR_RANGE_INVALID at loader only. Original minimum-specific native F-EFFECT remains OPEN/unreachable through this caller.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "wholePair": "Retain02 Aminimum16/B32, same maximum64 and full typed owners. Actual finalizeBusterReports ALWAYS sends openFiles=maximumOpenFiles. Loader enforces minimum<=maximum.",
+      "guardNegative": "Separate complete relation-invalid input minimumOpenFiles>maximumOpenFiles; same real startup loader rejects SWARM_CONFIG_BUSTER_REPORT_DESCRIPTOR_RANGE_INVALID before any child. This is F-VAL guard proof only, not F-EFFECT."
+    },
+    "exactOracle": {
+      "reachability": "For every currently valid whole policy, callerOpenFiles=maximum>=minimum. Runtime OPEN_FILE_LIMIT_TOO_LOW branch cannot be reached through this caller. Pair16/32 yields same64native setting.",
+      "impossibleObligation": "Independent native effect of minimum floor through this current caller is source-proven unreachable; original F-EFFECT ID stays OPEN/unmet until requirements/classification are explicitly resolved, not waived."
+    },
+    "sourceSpecificNegativeControls": [
+      "Complete valid positive relation at minimum=maximum reaches actual config boundary.",
+      "If grouping maximum changes64\u219232 with min16\u219232, requested32 is maximum effect; do not falsely attribute it independently to minimum."
+    ],
+    "reachabilityLimits": [
+      "No fictitious direct adapt invocation, newcaller or arbitrary domain narrowing.",
+      "Grouped whole policy effect can cover policy composition but cannot replace original minimum-specific F-EFFECT without explicit acceptance decision."
+    ],
+    "independentOriginalNativeRequirement": "OPEN: source-proven unreachable through current valid productive caller, no waiver/domain narrowing."
+  },
+  "report-cpu-derived": {
+    "family": "report-cpu-derived",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs"
+    ],
+    "productiveAction": "Invoke actual report adapter with selected CPU limit and max(minimumCpuTimeMs,floor(maximumTimeoutMs/1000)*1000) ceiling, measuring real child CPU where required.",
+    "productiveObserver": "REPORT_ADAPTER_CPU_LIMIT_BELOW_POLICY versus HARD_LIMIT_EXCEEDED:cpuMillis; actual sandbox CPU limit. Minimum and rounded ceiling are distinct.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Use corrected complete02 floor1000\u219240000 with caller cleanup30k; actual requestedCPU30k\u219240k, wall30k unchanged. Oracle is requested resource policy/native budget when later observed, not CPU40k completion or walltime extension."
+    },
+    "exactOracle": {
+      "assertions": "REPORT_ADAPTER_CPU_LIMIT_BELOW_POLICY versus HARD_LIMIT_EXCEEDED:cpuMillis; actual sandbox CPU limit. Minimum and rounded ceiling are distinct.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "report-memory-reserve": {
+    "family": "report-memory-reserve",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.reports.memoryBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.reports.runtimeMemoryReserveBytes"
+    ],
+    "productiveAction": "Separate the memoryBytes field (actual selected sandbox memory change) from runtimeMemoryReserveBytes guard. Trace real caller supplying full policy.memoryBytes with source/result demands<=validated maxima. Define whole-profile memory relation equality and one-byte-short loader controls; do not invent tiny-memory adapt invocation.",
+    "productiveObserver": "For reserve pair64MiB/48MiB unchanged caller memory512MiB always admits validated demands; no reserve-specific native rejection. Relation guard SWARM_CONFIG_BUSTER_EXECUTION_REPORT_MEMORY_INVALID is validation-only. MemoryBytes field native effect remains independent not-run obligation.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "caller": "Actual finalized reports memoryBytes=policy.memoryBytes; sourceLimit<=policy.maxSource, resultLimit<=policy.maxAggregate; loader requires memory>=reserve+3*maxSource+2*maxAggregate.",
+      "guardNegative": "Separate complete relation-invalid whole input lowers memory below reserve+3*maxSource+2*maxAggregate; SWARM_CONFIG_BUSTER_EXECUTION_REPORT_MEMORY_INVALID before any runtime. F-VAL only.",
+      "memoryField": "For reports.memoryBytes original field actual sandbox memory changes536870912\u2192402653184 while full loader relations admit; direct native memory effect remains future; NOT confused with reserve.",
+      "reservePair": "Reserve64MiB\u219248MiB, caller memory512MiB, maxSource64MiB,result16MiB =>required<=288/272MiB."
+    },
+    "exactOracle": {
+      "reachability": "For every valid loaded policy, caller demands<=schema validated maxima; reserve rejection unreachable at production finalize caller. Changed reserve may alter config admissibility, not actual child memory for this pair.",
+      "impossibleObligation": "Original reserve-specific native F-EFFECT remains OPEN/unmet; source-proven unreachable same caller. Memory field native effect separately required."
+    },
+    "sourceSpecificNegativeControls": [
+      "Boundary-equal whole relation-valid positive; one-byte-short relation-negative at real configloader.",
+      "Group reserve+memory+source+result changes only as explicitly validated full policy; identify actual native outcome as memory/composite effect, never invent independent reserve effect."
+    ],
+    "reachabilityLimits": [
+      "Do not claim direct runtime predicate negatives as productive finalization evidence.",
+      "No requirement ID/domain is changed."
+    ],
+    "independentOriginalNativeRequirement": "OPEN: source-proven unreachable through current valid productive caller, no waiver/domain narrowing."
+  },
+  "claim-window-derived": {
+    "family": "claim-window-derived",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.provider.claimGraceMs"
+    ],
+    "productiveAction": "Run actual runner-attempt-envelope with same node timeout and cleanup phases.",
+    "productiveObserver": "Original issuedAt/claim deadline: node.timeoutMs+completionPhases*cleanupTimeoutMs+claimGraceMs; capture signed persisted envelope, not sleep/no-op boundary.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same real node.timeoutMs, completionPhases and provider.cleanupTimeoutMs, original issuedAt/claim identity. Envelope window=node.timeout+phases*cleanup+claimGrace60000/45000; observe actual signed persisted expiry and real queue/worker acceptance, no recompute latest chronology."
+    },
+    "exactOracle": {
+      "assertions": "Original issuedAt/claim deadline: node.timeoutMs+completionPhases*cleanupTimeoutMs+claimGraceMs; capture signed persisted envelope, not sleep/no-op boundary.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "queue-deadline-derived": {
+    "family": "queue-deadline-derived",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.provider.queueTimeoutMs"
+    ],
+    "productiveAction": "Create actual runner attempt with fixed original issuance chronology.",
+    "productiveObserver": "queueDeadline=issuedAt+queueTimeoutMs in actual envelope and real queue expiration; no claim deadline substitution.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual original issuedAt; queueDeadline adds60000/45000, claim deadline stays independently admitted. Real unscheduled queue operation straddles deadline; retry preservesoriginalattempt/counters."
+    },
+    "exactOracle": {
+      "assertions": "queueDeadline=issuedAt+queueTimeoutMs in actual envelope and real queue expiration; no claim deadline substitution.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "result-wrapper-derived": {
+    "family": "result-wrapper-derived",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.provider.workerResultWrapperBytes"
+    ],
+    "productiveAction": "Create actual attempt envelope with same provider/report result limits.",
+    "productiveObserver": "resultBytes=providerResultLimit+reportResultLimit+workerResultWrapperBytes in signed/persisted envelope; wrapper is additive reserve, not input maximum.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same real provider/result report ceilings; signed envelope resultBytes=sum(provider limit, report aggregate, wrapper4096/3072). Wrapper is reserved encoding overhead, not independent produced result maximum; freeze actual encoded envelope relation."
+    },
+    "exactOracle": {
+      "assertions": "resultBytes=providerResultLimit+reportResultLimit+workerResultWrapperBytes in signed/persisted envelope; wrapper is additive reserve, not input maximum.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "source-reservation-derived": {
+    "family": "source-reservation-derived",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumHeaderBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.sourceEntryReservationBytes"
+    ],
+    "productiveAction": "Run gate/staged/extracted actual preparation reservations and ledger admission with retained records.",
+    "productiveObserver": "reservation=payloadBytes+entries*sourceEntryReservationBytes; extracted adds archive.sizeBytes+maximumExtractedBytes+maximumHeaderBytes+maximumInputBytes with maximumArchiveEntries+7 entries; charged totals and rejection at source ledger. Header is not a direct payload quota here.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Gate entries2; staged entries5; extracted entries=maxArchiveEntries+7. Payload bytes exact formulas in preparation-reservations; header3MiB\u21922.25MiB and per-entry256\u2192192 alter charged aggregate. Choose retained ledger seed whose original valid charged bytes straddle SOURCE_CAPACITY without metadata/count/entries already crossing."
+    },
+    "exactOracle": {
+      "assertions": "reservation=payloadBytes+entries*sourceEntryReservationBytes; extracted adds archive.sizeBytes+maximumExtractedBytes+maximumHeaderBytes+maximumInputBytes with maximumArchiveEntries+7 entries; charged totals and rejection at source ledger. Header is not a direct payload quota here.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "durable-store-admission": {
+    "family": "durable-store-admission",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.reports.maximumSourceBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumIngressBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumRecords",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumClosures",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+      "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumResults",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumJournalBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumMetadataBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumOwnershipBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumRecords",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceEntries",
+      "CMP-C1-EFFECT-prism-worker-supervisor.maximumJournalBytes",
+      "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipBytes",
+      "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipRecords"
+    ],
+    "productiveAction": "Seed identical valid retained records/evidence/journal with original identities; execute actual store admission/write at its measured byte/count/age boundary.",
+    "productiveObserver": "Real store reservation/encoded bytes/count and exact source error; lowering policy must not clear retained evidence/history or reset uncertainty.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceLedger": "Seed via actual ledger API with valid original staged claims, cleanup/group receipts and identities; compute bytes=sum(reservation.bytes), entries=sum(reservation.entries). Metadata=max(byteLength(canonicalJson(state)),byteLength(canonicalJson(terminalMetadataProjection)))+staging-empty*(header+input)+sum(groupMetadataBytes)+unreleasedSlots*cleanupMetadataCapacity(input). Records=reservations.length+sum(groupRecords+cleanup.length+(slotReleased?0:1)).",
+      "attemptMetadata": "Real actual attempt store encoded persistence/projection state; count canonicalJson(encoded) UTF8 bytes, not result bytes/raw input. Preserve completion references, closures and current unprojected counts.",
+      "evidenceAge": "Create actual staged unreferenced evidence at original stagedAt; now-stagedAt<maximumPendingEvidenceAgeMs retained, equality expires; referenced evidence always retained regardless of age.",
+      "nativeJournal": "Actual journal request charged input.byteLength+maximumOutputBytes+maximumResultBytes+65536; requested=usedJournalBytes+pending+reservationBytes+2*maximumStateBytes. Seed retained bytes/records through productive admission; lower limit never clears original history."
+    },
+    "exactOracle": {
+      "sourceLedger": "BUSTER_PREPARATION_SOURCE_CAPACITY",
+      "attemptMetadata": "OBSERVABILITY_ATTEMPT_METADATA_FULL",
+      "journal": "WORKER_NATIVE_JOURNAL_CAPACITY_EXCEEDED",
+      "journalResult": "WORKER_NATIVE_JOURNAL_RESULT_LIMIT",
+      "reclaim": "Persisted retained/reclaimed references and blob identities, no false PASS for history loss."
+    },
+    "sourceSpecificNegativeControls": [
+      "Dangling/corrupt/mismatched digest seeded state is rejected by replay validation before capacity; not intended-cap evidence.",
+      "Referenced old evidence remains under both age profiles; unreferenced same age straddles boundary.",
+      "Two stores for A/B seeded with same ORIGINAL valid retained identities, never reset latest/default counters."
+    ],
+    "reachabilityLimits": [
+      "Exact caller-produced schema-valid encoded object collection/identity/digests remains required per case; numeric capacity midpoint is NOT enough.",
+      "Native journal/ownership quota may encounter record/schema/file/task bound before large byte cap: freeze attainable shape and competing bounds or explicitly leave effect unmet."
+    ]
+  },
+  "preparation-slots": {
+    "family": "preparation-slots",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumActivePreparations"
+    ],
+    "productiveAction": "Hold actual preparations occupying selected slot prefix; submit additional preparation and then release one with actual receipt.",
+    "productiveObserver": "preparationSlots.slice(0,maximumActivePreparations) free-slot selection and persisted ledger; independent pool/request/source budgets admit the case.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Hold one admitted preparation slot then requestsecond: Amax2admit/Bmax1reject or waits as actual ledger branch. Keep original receipts, input reservations and pending-client limit16; release through actual terminal receipt before re-admit."
+    },
+    "exactOracle": {
+      "assertions": "preparationSlots.slice(0,maximumActivePreparations) free-slot selection and persisted ledger; independent pool/request/source budgets admit the case.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "admission-jobs-attempts": {
+    "family": "admission-jobs-attempts",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-admission.maximumActiveJobs",
+      "CMP-C1-EFFECT-buster-engine-admission.maximumConcurrentAttempts",
+      "CMP-C1-EFFECT-buster-engine-admission.maximumQueuedJobs"
+    ],
+    "productiveAction": "Submit actual jobs/attempts via remote plan service until active/queued/concurrent-attempt admission path saturates; release through actual result/cleanup.",
+    "productiveObserver": "Actual admitted/queued/refused job/attempt identity and counter, not synthetic generic counter. Freeze exact corresponding source branch.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Separate actual service queues: one active job then second for2/1;6 queued then seventh for8/6;48 concurrent attempts then49th for64/48. Each requires whole genuine plan/task identities and actual service branch; pending jobs and execution slots are not interchangeable."
+    },
+    "exactOracle": {
+      "assertions": "Actual admitted/queued/refused job/attempt identity and counter, not synthetic generic counter. Freeze exact corresponding source branch.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "pending-capabilities": {
+    "family": "pending-capabilities",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.provider.maximumPendingCapabilities"
+    ],
+    "productiveAction": "Run actual provider capability requests with actual service resolving slowly; reach pending capacity then release.",
+    "productiveObserver": "Real ProviderCapabilities pending set/backpressure/refusal and drain; no mocked generic limiter.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "24 actual outstanding capability invocations from same authorized provider with actual allowed service taking time;25th A32admit/B24refuse. Same granted capability/claim, no callback mock; drain retains unresolved operation identity."
+    },
+    "exactOracle": {
+      "assertions": "Real ProviderCapabilities pending set/backpressure/refusal and drain; no mocked generic limiter.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "poll-cadence": {
+    "family": "poll-cadence",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+      "CMP-C1-EFFECT-buster-engine-execution.observation.processSampleIntervalMs",
+      "CMP-C1-EFFECT-buster-engine-execution.observation.resourceSampleIntervalMs",
+      "CMP-C1-EFFECT-buster-engine-execution.processInput.acknowledgementPollMs",
+      "CMP-C1-EFFECT-buster-engine-preparation.pollIntervalMs",
+      "CMP-C1-EFFECT-prism-worker-supervisor.pollIntervalMs"
+    ],
+    "productiveAction": "Keep actual operation pending under identical accepted claim/deadline; observe repeated productive polls before completion.",
+    "productiveObserver": "Real sample/poll timestamps and corresponding persisted observations; deadline-clamped cadence, not single midpoint timeout.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Pending actual ownership/resource/processInput/cluster operation with selected15/20,18/25 or750/1000 etc ms; record finite sequence of real timestamps/polls and original deadlines, observed deadline clamp. Do not assert exact scheduler equality; contract tolerance must come from actual clock/tool identity, never unbounded widening."
+    },
+    "exactOracle": {
+      "assertions": "Real sample/poll timestamps and corresponding persisted observations; deadline-clamped cadence, not single midpoint timeout.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "runtime-freshness": {
+    "family": "runtime-freshness",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs"
+    ],
+    "productiveAction": "Consume actual runtime-security observation with timestamps at age and future-skew boundaries under fixed observed now and identity.",
+    "productiveObserver": "observedMs<=nowMs+maximumFutureSkewMs && nowMs-observedMs<=maximumObservationAgeMs; readiness acceptance/rejection, no output-size quota.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same valid namespace lease/runtime observation and fixed recorded nowMs; observedAt=now-(lowerAge+1) for age distinction and observedAt=now+(lowerSkew+1) for skew. Actual readiness consumer verifies freshness plus leaseowner; equality is accepted by<=, not synthetic function-onlyPASS."
+    },
+    "exactOracle": {
+      "assertions": "observedMs<=nowMs+maximumFutureSkewMs && nowMs-observedMs<=maximumObservationAgeMs; readiness acceptance/rejection, no output-size quota.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "diagnostic-truncation": {
+    "family": "diagnostic-truncation",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumTarStderrBytes"
+    ],
+    "productiveAction": "Execute actual failing command/tar child with controlled stderr including multibyte text and astral characters.",
+    "productiveObserver": "Actual diagnostic text .slice(0,diagnosticCodeUnits) or bounded stderr retained bytes; code units and UTF-8 bytes are different. Preserve original failure.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actual failure with legitimate error output containing ASCII, multibyte UTF8 and astral codepoints. Capture original stderr and .slice(codeUnits) versus retained bytes, preserving failure code. Tar stderr accumulator retains PREFIXbytes then decoded suffix4096codeunits; profile stderr49k/65k often same final4096suffix and needs actual long differentiating prefix geometry."
+    },
+    "exactOracle": {
+      "assertions": "Actual diagnostic text .slice(0,diagnosticCodeUnits) or bounded stderr retained bytes; code units and UTF-8 bytes are different. Preserve original failure.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "execution-search-path": {
+    "family": "execution-search-path",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath"
+    ],
+    "productiveAction": "Execute actual runtime-security command under selected PATH joined by path.delimiter; use real permitted isolated executables.",
+    "productiveObserver": "Resolved actual executable/process environment; no credential values in evidence, no synthetic string-only assertion.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Real runtime-security selected executable resolution, all original firstthree PATHdirs remain. Added /opt/... only changes resolution if executable absent from originaldirs and actually present in permitted addeddir; same existing binary in earlierdir masks change."
+    },
+    "exactOracle": {
+      "assertions": "Resolved actual executable/process environment; no credential values in evidence, no synthetic string-only assertion.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "kubectl-executable": {
+    "family": "kubectl-executable",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.kubectlExecutable"
+    ],
+    "productiveAction": "Execute actual capability operation using selected permitted kubectl binary in isolated authorized environment.",
+    "productiveObserver": "Actual exec path and command result; shell-free argv. Cluster proof remains blocked absent explicitly authorized cluster inputs.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actual executable `/usr/local/bin/kubectl` vs `/opt/config-acceptance/bin/kubectl` installed/coherent permitted fixture; shellfree argv and actual returned command result. Candidate path alone is not an executable/provider effect."
+    },
+    "exactOracle": {
+      "assertions": "Actual exec path and command result; shell-free argv. Cluster proof remains blocked absent explicitly authorized cluster inputs.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "lease-protocol": {
+    "family": "lease-protocol",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion"
+    ],
+    "productiveAction": "Execute actual lease read/patch through capability caller with selected coherent apiGroup/apiVersion.",
+    "productiveObserver": "Actual requested lease GVK and persisted owner/claim transfer; compatibility is protocol authority, not scalar threshold.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actual authorized fixture cluster with matching CRDAPI group/version and lease bindings; Agroupkubeclaw.../v1alpha1 vs Bgroupconfig... orv1alpha2. Matching lease identity/request must be coherent. Installed CRD compatibility missing blocks, cannot fakekubectlJSON."
+    },
+    "exactOracle": {
+      "assertions": "Actual requested lease GVK and persisted owner/claim transfer; compatibility is protocol authority, not scalar threshold.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "namespace-prefix-policy": {
+    "family": "namespace-prefix-policy",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes"
+    ],
+    "productiveAction": "Invoke actual fixture/exposure/runtime-security capability with namespace accepted by one full profile and denied by the other; preserve signed lease scope.",
+    "productiveObserver": "Exact namespace-policy rejection before cluster mutation; allowed prefix delimiter/source rule, not arbitrary substring matching.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual namespace `config-acceptance-<suffix>` and lease/owner supported profile; A[test]denies/B[test,config-acceptance]accepts when source prefix-delimiter rule permits. Different namespaces cannot be conflated with same-task effect."
+    },
+    "exactOracle": {
+      "assertions": "Exact namespace-policy rejection before cluster mutation; allowed prefix delimiter/source rule, not arbitrary substring matching.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "registry-prefix-policy": {
+    "family": "registry-prefix-policy",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes"
+    ],
+    "productiveAction": "Prepare actual immutable image manifest with allowed/disallowed repository prefix; keep digest/security/service requirements valid.",
+    "productiveObserver": "Manifest inspection/capability image acceptance or source-specific registry denial before apply; no invented mutable image.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same immutable image `<actualRegistryOrigin>/config-acceptance/<repo>@sha256:<actualfixtureDigest>`; A[kubeclaw]denies/Baddsconfigacceptancepermits. Actual registry origin/package identity required; digest placeholder never passedasreal."
+    },
+    "exactOracle": {
+      "assertions": "Manifest inspection/capability image acceptance or source-specific registry denial before apply; no invented mutable image.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "secret-reference-policy": {
+    "family": "secret-reference-policy",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences"
+    ],
+    "productiveAction": "Prepare actual fixture referencing permitted versus denied Secret name with same manifest, never secret bytes.",
+    "productiveObserver": "Actual reference allow-list/entry-count rejection before credentials read/apply; no lexical settings-only assertion.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same valid manifest uses config-acceptance-secret name; Aemptydenies/Ballownamepermits at reference gate. Real Secretstore/grants and entrycap separately required; no Secret bytes invented/logged."
+    },
+    "exactOracle": {
+      "assertions": "Actual reference allow-list/entry-count rejection before credentials read/apply; no lexical settings-only assertion.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "pvc-storage-policy": {
+    "family": "pvc-storage-policy",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes"
+    ],
+    "productiveAction": "Inspect real valid fixture PVCs with class/default selection and exact Kubernetes quantities; exercise per-claim and aggregate total including replicas.",
+    "productiveObserver": "validatePersistentVolumeClaim/inspection result and exact PVC denial; total includes copies; class/default boolean is policy, not numeric cap.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "perClaim": "Valid namespaced PVC spec: resources.requests.storage decimal integer string S bytes, Filesystem, no volumeName/selector/dataSource/ref. Keep class omitted for default=true or choose actual permitted class. S=B and B+1 with total<=both caps.",
+      "aggregate": "Two+ PVCs each<=both claim caps, or StatefulSet.volumeClaimTemplates with replicas R. Charge sum(storageBytes*copies), copies=replicas default1, including separate standalone claims. Choose total=B and B+1 without perclaim crossing.",
+      "quantity": "Compare equal exact integers encoded as decimal/binary/exponent. Parser uses bigint numerator/denominator, exponentabs<=63 and requires numerator>=1 and divisible denominator; fractional byte, malformed or overlong64character quantity fails, never rounded up.",
+      "class": "WholeA allowedStorageClasses[] versus B explicit candidate class; same manifest class can be A denied/B accepted. DefaultAtrue/Bfalse uses SAME omitted storageClassName; empty string is not omission."
+    },
+    "exactOracle": {
+      "perClaim": "KUBERNETES_FIXTURE_PVC_SIZE_DENIED:<name>",
+      "aggregate": "KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED",
+      "class": "KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED:<class>",
+      "default": "KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_DENIED",
+      "quantity": "KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:<quantity>"
+    },
+    "sourceSpecificNegativeControls": [
+      "Equal-byte representations must produce equal measured bigint storage charge.",
+      "Forbidden source/class/security failure below size caps demonstrates separate boundary, not quota success."
+    ],
+    "reachabilityLimits": [
+      "Local manifest inspection can define policy behavior; actual provisioned class/PVC/cluster compatibility is separate authorized live/native prerequisite.",
+      "No external class capacity/revision or installed reference is invented."
+    ]
+  },
+  "service-account-subject": {
+    "family": "service-account-subject",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount"
+    ],
+    "productiveAction": "Construct actual production cluster options then capability authorization for same controllerNamespace with selected runner/credentialReader account.",
+    "productiveObserver": "runnerSubject or credentialReaderSubject=namespace/account and actual RBAC boundary; no fabricated identities or credential access.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual controllerNamespace; production options runnerSubject/credentialReaderSubject=namespace/account. Compare authorized actual RBAC accounts Aagent-buster/agent-nova vs Bnamedfixture; unavailable accounts blocked, not loaderPASS effect."
+    },
+    "exactOracle": {
+      "assertions": "runnerSubject or credentialReaderSubject=namespace/account and actual RBAC boundary; no fabricated identities or credential access.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "host-suffix-policy": {
+    "family": "host-suffix-policy",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes"
+    ],
+    "productiveAction": "Invoke actual exposure with normalized allowed/denied host suffix under same authorized lease and owner.",
+    "productiveObserver": "Actual suffix predicate and denial before exposure effect; retain original release/replay identity.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same lease/exposure host choose `.ts.net` host outside `.config-acceptance.ts.net`: Apermits/Bdenies after actual normalization. Real controller/lease identity and no exposure sideeffect before denial required."
+    },
+    "exactOracle": {
+      "assertions": "Actual suffix predicate and denial before exposure effect; retain original release/replay identity.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "manifest-parser-bounds": {
+    "family": "manifest-parser-bounds",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumResources"
+    ],
+    "productiveAction": "Pass actual YAML manifest through boundedManifestDocuments/flattenDocuments with controlled depth/nodes/aliases/visits/pending/resource count; other grammar and safety constraints admit it.",
+    "productiveObserver": "Exact parser/traversal/resource boundary and error, not settings constructor alone. Each bound needs its own shaped graph and counting convention.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "baseline": "Actual on-disk UTF8 YAML manifest with recorded sha256, permitted immutable image, namespaced workload+matching ClusterIP Service, accepted pod security and original lease identity. Padding via YAML comments changes bytes but not graph counts.",
+      "depth": "Use nested kind:List/items wrappers around otherwise permitted workload/Service resources and vary depth; do NOT place nested objects into ConfigMap.data string fields. Future actual kubectl/server acceptance of the nested List positive is required. Parser listener depth starts at0, counts every open; alias graph counts object-depth from0. Freeze which earlier depth predicate trips; do not equate these two counts.",
+      "nodes": "Wide ConfigMap.data with distinct legal string keys and string values (not object-valued data), plus valid workload/Service. Count actual js-yaml listener open events and object-graph visits separately; stop before manifest-byte ceiling. No assumption JSON item count equals parser nodes.",
+      "aliases": "Candidate anchored acyclic object graph in repeated legitimate pod env objects (scalar-string aliases alone do not count in WeakSet graph); repeated env names/API semantics must be validated by actual positive fixture; alias count increments when seen object occurs again; self-reference must fail ALIAS_CYCLE independently.",
+      "flattenVisits": "Nested kind:List/items graph containing empty Lists plus<=64 legal resources; visits counts each popped document including Lists. Freeze parser depth/nodes/alias gates BEFORE flatten to establish this branch is reachable.",
+      "flattenPending": "List whose child expansion makes pending.length+items.length exceed chosen bound. Pending starts reversed top-level nonnull values and is checked on expansion, not original document count. Other parser/resources caps must admit graph.",
+      "resources": "Valid workload+Service and harmless ConfigMaps up to B resources then B+1; flatten checks out.length>=maximumResources BEFORE push."
+    },
+    "exactOracle": {
+      "parse": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED wrapping MANIFEST_COMPLEXITY_LIMIT",
+      "graph": "MANIFEST_COMPLEXITY_LIMIT or MANIFEST_ALIAS_LIMIT/CYCLE",
+      "flatten": "MANIFEST_COMPLEXITY_LIMIT",
+      "resource": "KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID"
+    },
+    "sourceSpecificNegativeControls": [
+      "Valid tiny positive through actual prepare/inspect, not settings constructor.",
+      "Invalid YAML/scope/image/PVC stays below complexity caps and must fail its separate real safety boundary."
+    ],
+    "reachabilityLimits": [
+      "Flatten75k/100k with parser100k,alias1000,depth64,resources64 cannot be presumed reachable. Exact js-yaml events and graph shape are missing; a coupled valid whole-profile experiment may be necessary. Without that, leave original field effect unmet.",
+      "No YAML graph is executed here."
+    ]
+  },
+  "manifest-output-multiplier": {
+    "family": "manifest-output-multiplier",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier"
+    ],
+    "productiveAction": "Execute actual fixture kubectl read/command path with output limit maximumManifestBytes*commandOutputManifestMultiplier.",
+    "productiveObserver": "Actual child maxBuffer/serialized output bound and safe product validation; multiplier is not itself a byte maximum.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual kubectl output; maxBuffer=maxManifestBytes1MiB*multiplier2/1. Output between1MiB/2MiB straddles. Input YAML1MiB cap is separate; exact kubectlencoding/runtime maxBuffer error observed, not guessed contracterror."
+    },
+    "exactOracle": {
+      "assertions": "Actual child maxBuffer/serialized output bound and safe product validation; multiplier is not itself a byte maximum.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "retention-policy": {
+    "family": "retention-policy",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds"
+    ],
+    "productiveAction": "Prepare actual fixture lease with requested retention near selected limit, preserving owner/deadline/release semantics.",
+    "productiveObserver": "Actual accepted lease retention or policy denial; integer seconds and real cleanup chronology, not wall-ms confusion.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual requested retentionSeconds with maximumB+1<=maximumA, valid lease/owner; actual payload validation denial before apply. Retained actual release/replay chronology unchanged."
+    },
+    "exactOracle": {
+      "assertions": "Actual accepted lease retention or policy denial; integer seconds and real cleanup chronology, not wall-ms confusion.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "report-details": {
+    "family": "report-details",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCaseFindings",
+      "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCases",
+      "CMP-C1-EFFECT-buster-engine-execution.reports.maximumFindings"
+    ],
+    "productiveAction": "Run registered actual report adapter yielding valid cases/findings; isolate total cases, total findings, and per-case findings.",
+    "productiveObserver": "REPORT_ADAPTER_CASE_LIMIT/FINDING_LIMIT/CASE_FINDING_LIMIT and original contract limits (5000/5000/100), no weakened schemas.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Same actual registeredadapter, sourceartifact and reportvalidschema: cases B+1<=A5000, findingsB+1<=A5000, percasefindingsB+1<=A100 separately. Other dimensions staylow. Return real observed CASE_LIMIT/FINDING_LIMIT/CASE_FINDING_LIMIT and whole report bytes below aggregate."
+    },
+    "exactOracle": {
+      "assertions": "REPORT_ADAPTER_CASE_LIMIT/FINDING_LIMIT/CASE_FINDING_LIMIT and original contract limits (5000/5000/100), no weakened schemas.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "bounded-wire-bytes": {
+    "family": "bounded-wire-bytes",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+      "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumOutputBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.provider.maximumProtocolBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.provider.maximumResultBytes",
+      "CMP-C1-EFFECT-buster-engine-execution.reports.maximumAggregateResultBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumInputBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumOutputBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumRequestBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumResultBytes",
+      "CMP-C1-EFFECT-prism-execution-maximumResultBytes",
+      "CMP-C1-EFFECT-prism-worker-ingress.maximumInputBytes",
+      "CMP-C1-EFFECT-prism-worker-supervisor.maximumOutputBytes"
+    ],
+    "productiveAction": "Drive actual owning productive serialization/read/write with witness sized by its actual encoded/framed byte expression and all competing caps admitting it.",
+    "productiveObserver": "Measured exact encoded byte count and actual matching source rejection/positive; unframed input length is insufficient. Freeze exact encoding and diagnostic before harness.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "http": "Prism HTTP worker counts sum(chunk.length) of original raw application/json BEFORE auth/parse; exact-B/B+1 valid JSON plus trailing JSON whitespace is byte-shape recipe. Sign/authenticate exact raw bytes using future approved fixture identity. Positive reaches same service and native dispatch.",
+      "providerProtocol": "Actual provider child emits protocol bytes; counter sums stdout chunks cumulatively before readline semantic processing. Stderr is NOT this protocol counter; use actual permitted initialize/execute/capability stdout records. No raw JSON payload/quota mock.",
+      "providerResult": "validateBusterProviderResult counts UTF8 byteLength(JSON.stringify(result)) BEFORE schema/details/count/report/evidence validation. Whitespace padding outside parsed JSON has zero effect. Need actual registered provider producing schema-valid admitted fields and legitimate counts/artifacts; freeze other artifact/report caps.",
+      "manifest": "Exact regular file size with valid YAML+comments and recomputed sha256; read nofollow/stat size BEFORE digest; same positive passes parser/pod/image/lease constraints.",
+      "nativeOutput": "Real child stdout+stderr totalBytes captured under native-process-output.ts; every chunk adds byteLength, >maximumOutputBytes emits WORKER_NATIVE_OUTPUT_LIMIT before capture append. Encoded persisted journal result is a separate limit.",
+      "preparationRequest": "staged.input.wireBytes vs maximumRequestBytes; parent/host channels have chunk/control framing: frames=ceil(maxRequest/preparationChunkBytes)+3, maxSession=maxRequest+maxResult+frames*21, maxMessage=max(preparationChunkBytes,maxResult)+17. Do not test framed bytes against unframed request cap."
+    },
+    "exactOracle": {
+      "http": "422 error Prism attempt request is too large at maximumInputBytes+1",
+      "providerProtocol": "TEST_PROVIDER_PROTOCOL_LIMIT",
+      "providerResult": "TEST_PROVIDER_RESULT_LIMIT",
+      "manifest": "KUBERNETES_FIXTURE_MANIFEST_SIZE_INVALID",
+      "nativeInput": "WORKER_NATIVE_INPUT_LIMIT before ownership allocation",
+      "nativeJournalResult": "WORKER_NATIVE_JOURNAL_RESULT_LIMIT"
+    },
+    "sourceSpecificNegativeControls": [
+      "Valid exact-count accepted control and count+1 refusal; schema/digest/auth controls kept below caps.",
+      "Provider result whitespace control must NOT change JSON.stringify measured result size.",
+      "Multibyte text record UTF8 bytes separately from JS .length and framing."
+    ],
+    "reachabilityLimits": [
+      "A real protocol-valid provider/task capable of exceeding12.5MiB result or byte cap before other bounds is not established by schema/domain validation; field remains incomplete until produced fixture exists.",
+      "HTTP whitespace shape still needs exact real signing/claim/task identities; no fake grants.",
+      "Native output/result are separately charged and must be isolated; no presumption output==result."
+    ]
+  },
+  "phase-timeout-cleanup": {
+    "family": "phase-timeout-cleanup",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+      "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumExecutionMs",
+      "CMP-C1-EFFECT-buster-engine-execution.processInput.cleanupTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-execution.processInput.terminationGraceMs",
+      "CMP-C1-EFFECT-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-execution.provider.cleanupTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-execution.provider.terminationGraceMs",
+      "CMP-C1-EFFECT-buster-engine-execution.provider.terminationTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-preparation.cleanupTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-preparation.closeTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-preparation.drainTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-preparation.tarTimeoutMs",
+      "CMP-C1-EFFECT-buster-engine-preparation.timeoutMs",
+      "CMP-C1-EFFECT-prism-worker-supervisor.closeTimeoutMs",
+      "CMP-C1-EFFECT-prism-worker-supervisor.drainTimeoutMs"
+    ],
+    "productiveAction": "Drive actual named execution/cleanup/drain/close/termination/acknowledgement phase with same original claim and state; completion straddles selected bound.",
+    "productiveObserver": "Actual corresponding timer, abort/escalation/error and persisted uncertainty; timeout is not cleanup success. Freeze phase and competing deadlines before harness.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "preparation": "Actual native phase selected timeout=settings.timeoutMs+8*cleanupTimeoutMs; record both independent values, original signed claimWindow and close budget. Cleanup reserve is not direct cleanup wall timer here.",
+      "report": "Actual productive adapter deadline=min(report.maximumTimeoutMs,provider.cleanupTimeoutMs); requested CPU=max(minimumCpu,floor(adapterDeadline/1000)*1000). Correct02 timeoutB15000 vs A30000, CPUfloorB40000 vs A30000 with same wall30000.",
+      "providerTerminate": "Real child ignores SIGTERM; SIGKILL scheduled terminationGraceMs, bound rejects TEST_PROVIDER_TERMINATION_TIMEOUT at terminationTimeoutMs; actual close/ownership proof required. Grace and bound independent.",
+      "processInput": "Actual lifecycle deadline now+cleanupTimeoutMs and delayed SIGKILL at terminationGraceMs; preserve unresolved cleanup/error type.",
+      "cluster": "actual exec timeout=min(requested timeout,maximumExecutionMs); short command/readiness additionally clamps deadline-now, delete argv ceil(maximumExecutionMs/1000)s. Freeze actual slow permitted cluster operation and original lease."
+    },
+    "exactOracle": {
+      "archive": "BUSTER_REMOTE_ARCHIVE_TIMEOUT",
+      "dependency": "DEPENDENCY_TIMEOUT",
+      "provider": "TEST_PROVIDER_TERMINATION_TIMEOUT",
+      "nativeClose": "WORKER_NATIVE_PROCESS_DRAIN_TIMEOUT",
+      "nativeWall": "WORKER_ATTEMPT_TIMEOUT",
+      "uncertainty": "Timeout/cutoff never proves reap or new dispatch eligibility; original counter/claim/receipt retained."
+    },
+    "sourceSpecificNegativeControls": [
+      "Actual short successful operation reaches same phase.",
+      "Already-aborted/invalid claim controls reject prior to phase and cannot count as timeout effect.",
+      "CPU workload measured cumulative CPU, not sleep; timer fixture actual work completion, not mocked setTimeout."
+    ],
+    "reachabilityLimits": [
+      "Measured scheduler/kernel/remote timing identity and allowance needed; not arbitrary widened assertions.",
+      "CPU40k requests distinct allocator policy but30k wall remains; cannot assert extra walltime or single-thread CPU40k success.",
+      "No native/time/cluster execution occurred."
+    ]
+  },
+  "replay-history-capacity": {
+    "family": "replay-history-capacity",
+    "caseIds": [
+      "CMP-C1-EFFECT-worker-core-localRuntime.replayLimit"
+    ],
+    "productiveAction": "Use actual LocalWorkerRuntime accepted-attempt identity set at replayLimit then resubmit old/new attempts without erasing history.",
+    "productiveObserver": "acceptedAttemptIds.size>=replayLimit branch and actual replay/overflow behavior; original attempt IDs retained.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Real local runtime acceptedAttemptIds with49152retained identities; next newID A65536eligible/B49152full. Replay originalID mustpreserve known outcome without treatingnew; no wipehistorytoaccept."
+    },
+    "exactOracle": {
+      "assertions": "acceptedAttemptIds.size>=replayLimit branch and actual replay/overflow behavior; original attempt IDs retained.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "local-worker-drain-cancel": {
+    "family": "local-worker-drain-cancel",
+    "caseIds": [
+      "CMP-C1-EFFECT-worker-core-localRuntime.cancellationTimeoutMs",
+      "CMP-C1-EFFECT-worker-core-localRuntime.drainTimeoutMs"
+    ],
+    "productiveAction": "Start real local worker attempt; close using drain then cancellation stage and actual unresolved work.",
+    "productiveObserver": "settleWithin(initial,drainTimeoutMs) then settleWithin(cancelled,cancellationTimeoutMs); actual termination/error/uncertainty, no generic sleep proof.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actualstartedlocalattempt initiallypending; real shutdown waits drainA300k/B225k then cancel stageA30k/B22.5k. Exact realattempt/cancellationcleanup result and finaluncertainty, not sleep-onlypromise."
+    },
+    "exactOracle": {
+      "assertions": "settleWithin(initial,drainTimeoutMs) then settleWithin(cancelled,cancellationTimeoutMs); actual termination/error/uncertainty, no generic sleep proof.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "preparation-projection-dormant": {
+    "family": "preparation-projection-dormant",
+    "caseIds": [
+      "CMP-buster-engine-preparation.attemptEvidenceBytes-DORMANT",
+      "CMP-buster-engine-preparation.attemptEvidenceBytes-PROJECTION",
+      "CMP-buster-engine-preparation.attemptEvidenceBytes-VAL",
+      "CMP-buster-engine-preparation.attemptEvidenceFiles-DORMANT",
+      "CMP-buster-engine-preparation.attemptEvidenceFiles-PROJECTION",
+      "CMP-buster-engine-preparation.attemptEvidenceFiles-VAL",
+      "CMP-buster-engine-preparation.attemptLogBytes-DORMANT",
+      "CMP-buster-engine-preparation.attemptLogBytes-PROJECTION",
+      "CMP-buster-engine-preparation.attemptLogBytes-VAL",
+      "CMP-buster-engine-preparation.completionPhaseAllowance-EFFECT",
+      "CMP-buster-engine-preparation.completionPhaseAllowance-PROJECTION",
+      "CMP-buster-engine-preparation.completionPhaseAllowance-VAL"
+    ],
+    "productiveAction": "Validate actual preparation settings, inspect projection and search named productive consumers; for DORMANT assert bounded absence at current source, not invented execution effect.",
+    "productiveObserver": "Source-specific validation/projection and honest dormant obligation; EFFECT needs actual completion allowance consumer.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Existing original attemptLogBytes/attemptEvidenceBytes/files and completionPhaseAllowance specs: validate/projection/dormant inspection boundary with actualsource/signedshape. Dormantconsumer absent is boundedsourceclassification, not inventednativeeffect; allowance EFFECTneeds real chain."
+    },
+    "exactOracle": {
+      "assertions": "Source-specific validation/projection and honest dormant obligation; EFFECT needs actual completion allowance consumer.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "whole-owner-validation": {
+    "family": "whole-owner-validation",
+    "caseIds": [
+      "CMP-C1-VAL-buster-engine",
+      "CMP-C1-VAL-prism-control",
+      "CMP-C1-VAL-prism-execution",
+      "CMP-C1-VAL-prism-studio",
+      "CMP-C1-VAL-prism-worker",
+      "CMP-C1-VAL-worker-core"
+    ],
+    "productiveAction": "Load each whole selected owner through real bundle/Ajv and semantic validator; remove required fields, add unknown/retired equal-valued input, and violate one actual relation while complete positive reaches same boundary.",
+    "productiveObserver": "Exact source schema/semantic diagnostic before listener/native/cluster effect; input generation identity and same-boundary positive.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Allrequired originalmemberfields plus exact6typedownerA/Bselectedentry. Removeonefield/addunknown/retiredequalENV orviolateoneexactsource relation. Completepositive actualloader beforeI/O, exact rejectedclass diagnostic; preservedphaseonly."
+    },
+    "exactOracle": {
+      "assertions": "Exact source schema/semantic diagnostic before listener/native/cluster effect; input generation identity and same-boundary positive.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "whole-owner-effect-aggregate": {
+    "family": "whole-owner-effect-aggregate",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine",
+      "CMP-C1-EFFECT-prism-control",
+      "CMP-C1-EFFECT-prism-execution",
+      "CMP-C1-EFFECT-prism-studio",
+      "CMP-C1-EFFECT-prism-worker",
+      "CMP-C1-EFFECT-worker-core"
+    ],
+    "productiveAction": "Decompose owner aggregate into linked per-field productive families; execute whole coherent selected generation, not arbitrary union of isolated deltas.",
+    "productiveObserver": "All linked individual observers plus generation identity; aggregate ID is incomplete until finite member roster and executable collection are frozen.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actual sixowners full generation; finite memberIDs are ALLrelatedfieldcases in this ledger, not unionofisolatedB. Grouped policy experiments require separatewholecoherentprofiles and showrelatedrealobservers while everyfieldoriginalrequirement remains accounted."
+    },
+    "exactOracle": {
+      "assertions": "All linked individual observers plus generation identity; aggregate ID is incomplete until finite member roster and executable collection are frozen.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "delivery-generation": {
+    "family": "delivery-generation",
+    "caseIds": [
+      "CMP-C1-DELIVERY"
+    ],
+    "productiveAction": "Materialize complete component authors plus Buster selected runtime and system entry through actual Helm/OCI/buildcontext/release callers; trace every generated byte.",
+    "productiveObserver": "Chart ConfigMap/mount/image payload and CI/release caller closure; missing/old/equal-valued authorities rejected. Existing delivery package must supply finite command/profile/source roster.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Wholeownerentry+selectedBusterruntime through actualexisting chart.ConfigMap/mount/Dockerbuildcontext/CI/release/role packaging paths. Freeze exactcallercommands and materializedbyteidentities; originalmigration/generationdriftnegativecases preserved. No localfixture entrybinding substitutesfordelivery."
+    },
+    "exactOracle": {
+      "assertions": "Chart ConfigMap/mount/image payload and CI/release caller closure; missing/old/equal-valued authorities rejected. Existing delivery package must supply finite command/profile/source roster.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "semantic-mutations": {
+    "family": "semantic-mutations",
+    "caseIds": [
+      "CMP-C1-MUT"
+    ],
+    "productiveAction": "Mutate each actual consumer selection/predicate/formula in isolated future authorized tree, run same positive/negative productive case.",
+    "productiveObserver": "Original case kills corresponding mutant at intended boundary; structural/name checks cannot satisfy F-MUT. Finite real mutant roster remains needed.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Finite mutants are actual selection/predicate/formula changes in originalproductiveconsumer paths matchedtoeachoriginalcase; positive andintendednegative mustkillmutant. No runtimecode mutation here; authorizing C0doesnotauthorize productiontest/nativeimplementation."
+    },
+    "exactOracle": {
+      "assertions": "Original case kills corresponding mutant at intended boundary; structural/name checks cannot satisfy F-MUT. Finite real mutant roster remains needed.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "later-c5-binding": {
+    "family": "later-c5-binding",
+    "caseIds": [
+      "CMP-C5-BIND",
+      "CMP-C5-PREPARATION-CLEANUP-AFTER-BIND",
+      "CMP-C5-PREPARATION-CLEANUP-BEFORE-BIND",
+      "CMP-C5-PREPARATION-CLEANUP-FIXED-EVAL",
+      "CMP-C5-PREPARATION-CLEANUP-HISTORY-CAPACITY",
+      "CMP-C5-PREPARATION-CLEANUP-INVALID-PUBLISH",
+      "CMP-C5-PREPARATION-CLEANUP-PARALLEL-PUBLISH",
+      "CMP-C5-PREPARATION-CLEANUP-PROJECTION",
+      "CMP-C5-PREPARATION-CLEANUP-QUIESCENT-RETRY",
+      "CMP-C5-PREPARATION-CLEANUP-RECEIPT-EFFECT",
+      "CMP-C5-PREPARATION-CLEANUP-RELEASE-REPLAY",
+      "CMP-C5-PREPARATION-CLEANUP-STARTED-RECOVERY",
+      "CMP-C5-PREPARATION-CLEANUP-SUCCESS-RELEASE",
+      "CMP-C5-PREPARATION-CLEANUP-UNCERTAIN-RETRY"
+    ],
+    "productiveAction": "Preserve C5 original generation before dispatch across publish/crash/parallel/recovery/cleanup/Eval as named in original case.",
+    "productiveObserver": "Original durable closure/receipts/claim/counter/uncertainty and fixed Eval generation; never merge this later obligation into C1 authorization.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Use original cleanupBefore/AfterBind,parallel/invalidpublish,startedrecovery,quiescent/uncertainretry,receipt/projection,fixedEval,release/replay/historycases as frozenIDs. Prior originalgenerationclosure durable beforedispatch; no syntheticlatestpolicy/recovery receipt."
+    },
+    "exactOracle": {
+      "assertions": "Original durable closure/receipts/claim/counter/uncertainty and fixed Eval generation; never merge this later obligation into C1 authorization.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "descriptor-ceiling": {
+    "family": "descriptor-ceiling",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-execution.reports.maximumOpenFiles",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumOpenFiles"
+    ],
+    "productiveAction": "Launch actual report/preparation native child through sandbox with selected maximumOpenFiles; real descriptor-opening task crosses that RLIMIT while other limits admit it.",
+    "productiveObserver": "Actual sandbox argv/RLIMIT and OS EMFILE or child outcome; descriptors are neither wire bytes nor task count.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Actual preparation child maximumOpenFiles64/48 or report64/48 with launcher/sandbox and legitimate descriptor-openingtask. KernelEMFILE and child outcome plus effectiveRLIMIT; actor startupbaselinebelow48. Not artifactfilecount."
+    },
+    "exactOracle": {
+      "assertions": "Actual sandbox argv/RLIMIT and OS EMFILE or child outcome; descriptors are neither wire bytes nor task count.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "preparation-client-pending": {
+    "family": "preparation-client-pending",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumPendingAdmissions"
+    ],
+    "productiveAction": "Hold actual preparation client operations pending, submit at maximumPendingAdmissions and one beyond, then release through real response.",
+    "productiveObserver": "Actual client pending admission/backpressure and error; use named client source branch, not active preparation slots.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Hold12 genuine client request IDs awaiting actualparentreply;13th A16admit/B12 BUSTER_PREPARATION_ADMISSION_FULL. Parentloss/mismatchedreply tests separately below12; correctresponse drains pending entry."
+    },
+    "exactOracle": {
+      "assertions": "Actual client pending admission/backpressure and error; use named client source branch, not active preparation slots.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "archive-list-extract": {
+    "family": "archive-list-extract",
+    "caseIds": [
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveEntries",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumExtractedBytes",
+      "CMP-C1-EFFECT-buster-engine-preparation.maximumListingLineBytes"
+    ],
+    "productiveAction": "Execute real tar listing/extraction under preparation-archive with controlled entry count, listing line bytes, and summed extracted bytes; keep archive/request caps admitting it.",
+    "productiveObserver": "Actual BUSTER_REMOTE_ARCHIVE_ENTRY_LIMIT or cited line/size boundary; tar stderr truncation preserves original failure, and entry count is not byte size.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "archiveEntries": "Real gzip/tar with N regular-file/directory entries, safe unique relative paths; list operation counts each nonempty tar -tvzf line; count N including directories. N=B for same-boundary success, B+1 for B reject/A success if all other caps admit.",
+      "extractedBytes": "Regular files with sum of tar-listed integer sizes S; many small safe files or compressible regular file to keep archive<=both archive caps. S=B and B+1; do not use sparse/link/device entries. Extraction must be real, not fabricated tar lines.",
+      "listingBytes": "A real tar member name can force a verbose listing line. Source checks UTF8 byteLength(pending) immediately on each whole stdout chunk BEFORE splitting newlines, so maximumListingLineBytes is accumulated pending/chunk bound, not simply per-line name length. Record real child chunk sizes; long-name helper/extended tar entries may change N and path/type validation.",
+      "archiveBytes": "Use exact repositoryArchive.sizeBytes plus actual verified archive file; B+1 archive bytes must be valid gzip/tar, not appended invalid bytes or changed digest."
+    },
+    "exactOracle": {
+      "entry": "BUSTER_REMOTE_ARCHIVE_ENTRY_LIMIT",
+      "expanded": "BUSTER_REMOTE_ARCHIVE_EXPANDED_SIZE_EXCEEDED",
+      "listing": "BUSTER_REMOTE_ARCHIVE_LISTING_EXCEEDED",
+      "archive": "BUSTER_REMOTE_ARCHIVE_SIZE_EXCEEDED",
+      "positive": "Real safeExtract proceeds listing then --no-same-owner/permissions extraction, with original staged digests and source reservations."
+    },
+    "sourceSpecificNegativeControls": [
+      "Traversal ../, absolute path or unsafe tar type uses PATH_INVALID/TYPE_DENIED below byte/count caps, not target-size evidence.",
+      "A valid exact-B tar reaches identical listing function; count all actual listing lines and chunk bytes."
+    ],
+    "reachabilityLimits": [
+      "Count/expanded/archive shapes are constructible recipe candidates, not created/run artifacts.",
+      "Listing B\u2248786KiB/A1MiB may not be realizable with safe valid Linux paths and actual tar output chunking; source-specific B must be adjusted as a separate valid full profile or classify boundary unreachable. No mock stdout producer substitutes for actual tar."
+    ]
+  },
+  "historical-c0-observation": {
+    "family": "historical-c0-observation",
+    "caseIds": [
+      "CMP-C0-COMPLETE-PROFILES",
+      "CMP-C0-CORE-ADDITIONAL-CONTRACTS",
+      "CMP-C0-PREP-CLEANUP-CURRENT-PROJECTION-GAP",
+      "CMP-C0-PREP-CLEANUP-GATE",
+      "CMP-C0-PREP-CLEANUP-POSITIVE",
+      "CMP-C0-PREP-CLEANUP-PREDECESSOR",
+      "CMP-C0-REFINED-COMPLETE-PROFILES",
+      "CMP-C0-REFINED-PROFILES-ICD-CORRECTED",
+      "CMP-C0-SCHEMA-PRISM-NEW-BUDGET",
+      "CMP-C0-SCHEMA-PRISM-RECOVERED-BUDGET",
+      "CMP-C0-SCHEMA-buster-CLAIM",
+      "CMP-C0-SCHEMA-buster-DIGEST",
+      "CMP-C0-SCHEMA-buster-GRANT",
+      "CMP-C0-SCHEMA-buster-POSITIVE",
+      "CMP-C0-SCHEMA-preparation-CLAIM",
+      "CMP-C0-SCHEMA-preparation-DIGEST",
+      "CMP-C0-SCHEMA-preparation-GRANT",
+      "CMP-C0-SCHEMA-preparation-POSITIVE",
+      "CMP-C0-SCHEMA-preparation-RESULT",
+      "CMP-C0-SCHEMA-preparation-RESULT-CLAIM",
+      "CMP-C0-SCHEMA-preparation-RESULT-POLICY",
+      "CMP-C0-SCHEMA-prism-CLAIM",
+      "CMP-C0-SCHEMA-prism-DIGEST",
+      "CMP-C0-SCHEMA-prism-GRANT",
+      "CMP-C0-SCHEMA-prism-POSITIVE",
+      "CMP-C0-SCHEMA-prism-RESULT",
+      "CMP-C0-SCHEMA-prism-RESULT-CLAIM",
+      "CMP-C0-SCHEMA-prism-RESULT-POLICY"
+    ],
+    "productiveAction": "Preserve original recorded C0 command/raw observation and its exact bounded definition/source scope.",
+    "productiveObserver": "Historical passed result remains passed; no current source/runtime/global acceptance inferred.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "Refer original casebody/rawEvidencePath/sourceidentity andbounded recordedcommand; retain passedresult with no replay or current/nativepromotion. Historicaldisposition doesnot authorizefuture effect."
+    },
+    "exactOracle": {
+      "assertions": "Historical passed result remains passed; no current source/runtime/global acceptance inferred.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  },
+  "qc-source-specific": {
+    "family": "qc-source-specific",
+    "caseIds": [
+      "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+      "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+      "QC-ADMISSION-METADATA-RESERVE-VAL",
+      "QC-ADMISSION-REASON-LIMITS-FORMAT",
+      "QC-ADMISSION-REASON-LIMITS-HISTORY",
+      "QC-ADMISSION-REASON-LIMITS-VAL",
+      "QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+      "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+      "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+      "QC-FIXTURE-SECRET-ENTRY-CAP-BIND",
+      "QC-FIXTURE-SECRET-ENTRY-CAP-VAL",
+      "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+      "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION"
+    ],
+    "productiveAction": "Use actual QC field source, corresponding validator/formatter/history/storage/tar/secret representation path and original whole typed profile package.",
+    "productiveObserver": "Exact source-derived QC boundary; concrete fixture shape/encoding/oracle must be frozen, not replaced by generic maximum formula.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable.",
+    "wholeProfileRule": "Use exact selected whole02pair and296entry selection where provided. Any grouped supplementary profile must be a separate full schema+relations-validated definition; never keywise transplant. No install/deploy/native assumptions from fixture labels.",
+    "negativeControls": [
+      "Complete positive must reach the same exact productive branch before intended negative is eligible.",
+      "Missing/unknown/old equal-valued author rejected by actual startup loader before I/O; this establishes authority/validation, not native effect.",
+      "Invalid task/auth/signature/owner controls kept below measured capacity so they demonstrate their earlier boundary, never counted as capacity PASS."
+    ],
+    "result": "not-run",
+    "contractStatus": "source-grounded future action; exact task/signed fixture and harness identities remain explicit prerequisites",
+    "exactFixtureShape": {
+      "sourceSpecificRecipe": "13originalQCIDs exactreason code-unitformat/historywrites, admissionmetadata reserveoverflow/allwrites, realtardiagnosticbinding, exponentquantity/policybinding, secretentrycap/selectionbinding. Preserve canonicalmember/sourcepackage/schema/fullprofile maps; exactfixturegeneration/command unresolved where noactualfuturefixture frozen."
+    },
+    "exactOracle": {
+      "assertions": "Exact source-derived QC boundary; concrete fixture shape/encoding/oracle must be frozen, not replaced by generic maximum formula.",
+      "selectedBranchRule": "Observed productive values/outcome must follow selected whole profile and exact source context refs. Test setup, skipped/empty collection, source arithmetic or loader-only success never substitutes for native effect."
+    },
+    "reachabilityLimits": [
+      "Original same-boundary fixture/real caller and identities must be fulfilled; missing external/native task prerequisite blocks execution, not necessarily supported tunability.",
+      "This source recipe is not an executed/schema-verified task artifact; explicitly unresolved branches remain open."
+    ]
+  }
+}

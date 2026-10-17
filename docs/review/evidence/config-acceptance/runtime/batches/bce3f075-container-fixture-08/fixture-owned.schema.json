@@ -1,0 +1,52 @@
+{
+  "$defs": {
+    "dnsLabel": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+    },
+    "namespacePrefix": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,40}[a-z0-9])?$",
+      "maxLength": 42
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "namespacePrefix",
+    "retention",
+    "readinessTimeoutSeconds"
+  ],
+  "properties": {
+    "namespacePrefix": {
+      "$ref": "#/$defs/namespacePrefix"
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "delete",
+            "retain"
+          ]
+        },
+        "seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 604800
+        }
+      },
+      "required": [
+        "mode",
+        "seconds"
+      ]
+    },
+    "readinessTimeoutSeconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3600
+    }
+  },
+  "description": "Unapproved complete onefixture-plugin-owned requested namespace/retention/readiness profile; task image/manifest/services/secret/generatedcredential intent andactualS/service/R grant/native caps separate. No null/default/unusedtaskauthor; fullbeforetemplatewrite/cluster effect loader/packaging unimplemented."
+}

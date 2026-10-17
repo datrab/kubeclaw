@@ -1,0 +1,119 @@
+✔ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (4801.186112ms)
+✖ original statically built NRI executable reads the actual generated root-owned policy (1310.83492ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6655.905017
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-native-runtime.test.mjs:101:1
+✖ original statically built NRI executable reads the actual generated root-owned policy (1310.83492ms)
+  Error: Command failed: /usr/local/bin/node scripts/build-native-worker-nri.mjs /tmp/native-nri-binary-DLkpSi/10-kubeclaw-native
+  cloud.google.com/go/compute v1.19.1: missing ziphash: open hash: no such file or directory
+  cloud.google.com/go/compute/metadata v0.2.3: missing ziphash: open hash: no such file or directory
+  github.com/blang/semver/v4 v4.0.0: missing ziphash: open hash: no such file or directory
+  github.com/census-instrumentation/opencensus-proto v0.4.1: missing ziphash: open hash: no such file or directory
+  github.com/cespare/xxhash/v2 v2.2.0: missing ziphash: open hash: no such file or directory
+  github.com/cncf/udpa/go v0.0.0-20220112060539-c52dc94e7fbe: missing ziphash: open hash: no such file or directory
+  github.com/cncf/xds/go v0.0.0-20230607035331-e9ce68804cb4: missing ziphash: open hash: no such file or directory
+  github.com/containerd/log v0.1.0: missing ziphash: open hash: no such file or directory
+  github.com/containerd/nri v0.10.0: missing ziphash: open hash: no such file or directory
+  github.com/containerd/ttrpc v1.2.7: missing ziphash: open hash: no such file or directory
+  github.com/cyphar/filepath-securejoin v0.5.1: missing ziphash: open hash: no such file or directory
+  github.com/davecgh/go-spew v1.1.1: missing ziphash: open hash: no such file or directory
+  github.com/envoyproxy/go-control-plane v0.11.1-0.20230524094728-9239064ad72f: missing ziphash: open hash: no such file or directory
+  github.com/envoyproxy/protoc-gen-validate v0.10.1: missing ziphash: open hash: no such file or directory
+  github.com/go-logr/logr v1.4.2: missing ziphash: open hash: no such file or directory
+  github.com/go-task/slim-sprig/v3 v3.0.0: missing ziphash: open hash: no such file or directory
+  github.com/gogo/protobuf v1.3.2: missing ziphash: open hash: no such file or directory
+  github.com/golang/glog v1.1.0: missing ziphash: open hash: no such file or directory
+  github.com/golang/protobuf v1.5.3: missing ziphash: open hash: no such file or directory
+  github.com/google/go-cmp v0.7.0: missing ziphash: open hash: no such file or directory
+  github.com/google/pprof v0.0.0-20240424215950-a892ee059fd6: missing ziphash: open hash: no such file or directory
+  github.com/google/uuid v1.3.0: missing ziphash: open hash: no such file or directory
+  github.com/hashicorp/errwrap v1.0.0: missing ziphash: open hash: no such file or directory
+  github.com/hashicorp/go-multierror v1.1.1: missing ziphash: open hash: no such file or directory
+  github.com/knqyf263/go-plugin v0.9.0: missing ziphash: open hash: no such file or directory
+  github.com/kr/pretty v0.3.1: missing ziphash: open hash: no such file or directory
+  github.com/mndrix/tap-go v0.0.0-20171203230836-629fa407e90b: missing ziphash: open hash: no such file or directory
+  github.com/moby/sys/mountinfo v0.6.2: missing ziphash: open hash: no such file or directory
+  github.com/mrunalp/fileutils v0.5.0: missing ziphash: open hash: no such file or directory
+  github.com/onsi/ginkgo/v2 v2.19.1: missing ziphash: open hash: no such file or directory
+  github.com/onsi/gomega v1.34.0: missing ziphash: open hash: no such file or directory
+  github.com/opencontainers/runtime-spec v1.1.0: missing ziphash: open hash: no such file or directory
+  github.com/opencontainers/runtime-tools v0.9.0: missing ziphash: open hash: no such file or directory
+  github.com/opencontainers/selinux v1.15.1: missing ziphash: open hash: no such file or directory
+  github.com/planetscale/vtprotobuf v0.4.0: missing ziphash: open hash: no such file or directory
+  github.com/pmezard/go-difflib v1.0.0: missing ziphash: open hash: no such file or directory
+  github.com/prometheus/procfs v0.6.0: missing ziphash: open hash: no such file or directory
+  github.com/rogpeppe/go-internal v1.10.0: missing ziphash: open hash: no such file or directory
+  github.com/sirupsen/logrus v1.9.3: missing ziphash: open hash: no such file or directory
+  github.com/stretchr/objx v0.1.0: missing ziphash: open hash: no such file or directory
+  github.com/stretchr/testify v1.8.4: missing ziphash: open hash: no such file or directory
+  github.com/syndtr/gocapability v0.0.0-20200815063812-42c35b437635: missing ziphash: open hash: no such file or directory
+  github.com/tetratelabs/wazero v1.9.0: missing ziphash: open hash: no such file or directory
+  github.com/urfave/cli v1.19.1: missing ziphash: open hash: no such file or directory
+  github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f: missing ziphash: open hash: no such file or directory
+  github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415: missing ziphash: open hash: no such file or directory
+  github.com/xeipuuv/gojsonschema v1.2.0: missing ziphash: open hash: no such file or directory
+  golang.org/x/net v0.38.0: missing ziphash: open hash: no such file or directory
+  golang.org/x/oauth2 v0.7.0: missing ziphash: open hash: no such file or directory
+  golang.org/x/sync v0.0.0-20190423024810-112230192c58: missing ziphash: open hash: no such file or directory
+  golang.org/x/sys v0.31.0: missing ziphash: open hash: no such file or directory
+  golang.org/x/text v0.23.0: missing ziphash: open hash: no such file or directory
+  golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d: missing ziphash: open hash: no such file or directory
+  golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543: missing ziphash: open hash: no such file or directory
+  google.golang.org/appengine v1.6.7: missing ziphash: open hash: no such file or directory
+  google.golang.org/genproto v0.0.0-20230706204954-ccb25ca9f130: missing ziphash: open hash: no such file or directory
+  google.golang.org/genproto/googleapis/api v0.0.0-20230525234035-dd9d682886f9: missing ziphash: open hash: no such file or directory
+  google.golang.org/genproto/googleapis/rpc v0.0.0-20230731190214-cbb8c96f2d6d: missing ziphash: open hash: no such file or directory
+  google.golang.org/grpc v1.57.1: missing ziphash: open hash: no such file or directory
+  google.golang.org/protobuf v1.34.1: missing ziphash: open hash: no such file or directory
+  gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c: missing ziphash: open hash: no such file or directory
+  gopkg.in/yaml.v2 v2.4.0: missing ziphash: open hash: no such file or directory
+  gopkg.in/yaml.v3 v3.0.1: missing ziphash: open hash: no such file or directory
+  node:internal/errors:986
+    const err = new Error(message);
+                ^
+  
+  Error: Command failed: go mod verify
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/build-native-worker-nri.mjs:17:1
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 2798924,
+    stdout: null,
+    stderr: null
+  }
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-native-runtime.test.mjs:105:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 63 6c 6f 75 64 2e 67 6f 6f 67 6c 65 2e 63 6f 6d 2f 67 6f 2f 63 6f 6d 70 75 74 65 20 76 31 2e 31 39 2e 31 3a 20 6d 69 73 73 69 6e 67 20 7a 69 70 68 61 ... 6819 more bytes> ],
+    pid: 2798912,
+    stdout: <Buffer >,
+    stderr: <Buffer 63 6c 6f 75 64 2e 67 6f 6f 67 6c 65 2e 63 6f 6d 2f 67 6f 2f 63 6f 6d 70 75 74 65 20 76 31 2e 31 39 2e 31 3a 20 6d 69 73 73 69 6e 67 20 7a 69 70 68 61 ... 6819 more bytes>
+  }

@@ -1,0 +1,33 @@
+{
+  "head": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+  "pythonExecutable": "/usr/bin/python3",
+  "pythonVersion": "3.11.2",
+  "scope": "Dirty C0 provenance-only correction; identities do not imply acceptance",
+  "files": {
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/README.md": "d71fb6b46d56affa2efcf75b3998e01e1b49f13a7cd4ff9cdb12ae9f8977805d",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/change-unrelated-row.json.gz": "70b790ccb516727044b14368a1477ec5d0ce166e116337a6892bed0402ec3ae1",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/change-unrelated-row.stderr": "fb2e2ac2916674f7294460ad0ade8ca1d3bce99d8b263a1ef8aa2fd1ae4d4d59",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/change-unrelated-row.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/check-negatives.py": "f3ffb7bf0868a9b427dab99a95adff1748276bf3afeae8e036b7baaa84da1c55",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json": "4e93bec9c9f21a7a7cd4303047d38611b2142b84ac7aacc9155ce2a9deedb3b1",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/drop-correction-provenance.json.gz": "83f8e80db7245cd8fac1df45ca622b9fa5d2328a67326de89b59a8e93b6cc323",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/drop-correction-provenance.stderr": "b0f6005b1fc9ff2b5929b88815b121b480d0386d36a7bd0af21289e5813d9e1d",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/drop-correction-provenance.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/input-digests.json": "8d3dc9f5d972058a7709278a7cf2dc4c53b20957ba0f8f3760c34415942cd5a6",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/integrate-before.py.snapshot": "0c7901395dd6d7fe653287427565952433de4a8b96f6ca10521c89b30060d22f",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/inventory-before.json.gz": "19c8cabf6ea9c390009cea4da5c2815691e05cc7f0ca87eb818bbbf2ef074ce9",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/negative-verification.json": "0808458203b2ae1bda3c43259f5f1350a5a3ff29a805c3d9266e4d601b2fd2d6",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/negative-verification.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/recovery-verification.json": "40187b5fb682fbebbb2dbb3876e066830b409eb3a21bf5409b39483af2cca769",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/recovery-verification.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/repair.py": "d03081613ee1ceff6bfecd43293de487c2457b8933e00a117b6f11610f0aad7e",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/repair.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/repair.stdout": "fc923acb9c6b20a67c7c0c84bfe10242e85633edd21a69cdcdc8fb15b0fd138a",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/restore-incorrect-hash.json.gz": "3d2e3a92ef25bb57a240dc65c3e9cdc017ff3272a69ff97f8a126b9610189e29",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/restore-incorrect-hash.stderr": "09f84ef3018b5a1f7a32badcf34a25c9b396bad61865aae998b74276a818f2cf",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/restore-incorrect-hash.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verification.json": "40187b5fb682fbebbb2dbb3876e066830b409eb3a21bf5409b39483af2cca769",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verification.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py": "f0165add0968b9318767a0a1a9bb3b931d27f32e9e15c922f122109da6a9bf39"
+  }
+}

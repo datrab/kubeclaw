@@ -1,0 +1,6 @@
+worker:
+  native:
+    nodeName: dlv-native-b
+    namespace: dlv-prism-b
+    policyDigest: 82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100
+  replicas: 1

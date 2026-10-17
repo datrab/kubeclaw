@@ -1,0 +1,301 @@
+{
+  "schemaVersion": "dlv-controller-policy.v2-proposal",
+  "settings": {
+    "BUSTER_ALLOWED_NAMESPACE_PREFIXES": [
+      "dlv-b"
+    ],
+    "BUSTER_DEFAULT_TTL_SECONDS": 3600,
+    "BUSTER_MAX_TTL_SECONDS": 43200,
+    "BUSTER_CONTROLLER_POLL_MS": 6000,
+    "BUSTER_ALLOWED_ACCESS_JSON": [
+      {
+        "subject": "dlv-controller-b/agent-buster",
+        "modes": [
+          "tester",
+          "deployer"
+        ]
+      }
+    ],
+    "BUSTER_ALLOWED_SOURCE_SECRETS": [
+      "dlv-source-b"
+    ],
+    "BUSTER_PRODUCT_ENABLED": true,
+    "httpClientTimeoutSeconds": 120,
+    "runtimeSecurityRefreshSeconds": 10,
+    "runtimeSecurityFutureSkewSeconds": 2,
+    "runtimeSecurityMaximumFindings": 2048,
+    "runtimeSecurityMaximumSerializedBytes": 131072,
+    "readyReadHeaderTimeoutSeconds": 10,
+    "readyReadTimeoutSeconds": 40,
+    "readyWriteTimeoutSeconds": 40,
+    "readyIdleTimeoutSeconds": 60,
+    "readyMaxHeaderBytes": 40960,
+    "readyHandlerTimeoutSeconds": 30,
+    "readyMaximumBodyBytes": 8192,
+    "productHandlerTimeoutSeconds": 30,
+    "productMaximumBodyBytes": 8192,
+    "defaultDemoRetentionSeconds": 1209600,
+    "apiResponseMaximumBytes": 16777216,
+    "apiRequestMaximumBytes": 8388608,
+    "apiDiagnosticMaximumBytes": 2048,
+    "authorizationMaximumBytes": 8192,
+    "namespaceDeletionTimeoutSeconds": 180,
+    "readyObservationMaximumAgeSeconds": 180,
+    "productDecisionMaximumValiditySeconds": 120
+  },
+  "readonlyBindings": {
+    "KUBERNETES_SERVICE_HOST": "127.0.0.1",
+    "KUBERNETES_SERVICE_PORT": "18444",
+    "BUSTER_LEASE_API_GROUP": "kubeclaw.forgestack.ai",
+    "BUSTER_LEASE_API_VERSION": "v1alpha1",
+    "KUBECLAW_NAMESPACE": "dlv-controller-b",
+    "BUSTER_CONTROLLER_SERVICE_ACCOUNT": "agent-buster-namespace-controller",
+    "BUSTER_SECRET_ROLE_NAME": "agent-buster-controller-secrets",
+    "BUSTER_DEPLOYER_ROLE_NAME": "agent-buster-namespace-deployer",
+    "BUSTER_TESTER_ROLE_NAME": "agent-buster-namespace-tester",
+    "BUSTER_READY_LISTEN": ":8443",
+    "BUSTER_READY_AUDIENCE": "dlv-ready-b",
+    "BUSTER_READY_PRODUCER": "system:serviceaccount:dlv-controller-b:agent-buster",
+    "BUSTER_READY_TLS_CERT": {
+      "path": "/var/run/kubeclaw/ready-server/tls.crt",
+      "providerRef": "dlv-ready-tls-b",
+      "kind": "publiccertificate"
+    },
+    "BUSTER_READY_TLS_KEY": {
+      "path": "/var/run/kubeclaw/ready-server/tls.key",
+      "providerRef": "dlv-ready-tls-b",
+      "kind": "privatekey-reference-no-bytes"
+    },
+    "BUSTER_PRODUCT_AUDIENCE": "dlv-product-b",
+    "BUSTER_PRODUCT_PRODUCER": "system:serviceaccount:dlv-controller-b:prism-control",
+    "BUSTER_PRODUCT_ISSUER": "dlv-human-authority-b",
+    "BUSTER_PRODUCT_VERIFY_KEY": {
+      "publicTrustRef": "dlv-ed25519-issuer-b",
+      "decodedBytes": 32,
+      "encoding": "strict paddedbase64 decoded once configures trustedpublic key; privatekey never artifact"
+    },
+    "BUSTER_PRODUCT_ACTORS_JSON": [
+      "dlv-operator-b"
+    ],
+    "maximumDemoRetentionSeconds": 9223372036
+  },
+  "runtimeBinding": {
+    "architecture": "linux/amd64",
+    "APIOrigin": "https://127.0.0.1:18444",
+    "credentialRoot": "/var/run/secrets/kubernetes.io/serviceaccount",
+    "providerRef": "dlv-controller-api-b",
+    "sourceRevision": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "requiredBinaryReceiptRef": "future-controller-binary-6606af9-linux-amd64",
+    "requiredOCIReceiptRef": "future-controller-OCI-content-digest",
+    "requiredGoSourceReceiptRef": "future-exact-compiler-stdlib-not-just-golang1.22-tag",
+    "requiredGrantReceiptRef": "future-controller-api-namespace-tokenreview-secret-rbac-grant-b",
+    "requiredPhysicalCapacityReceiptRef": "future-isolated-controller-response-buffer-capacity",
+    "declaredResponseBufferBytes": 67108864,
+    "declaredRequestBufferBytes": 33554432,
+    "metadataAndPrettyOutput": "runtime native witness measures complete get-json stdout plus stderr; no guessed fixed overhead; failclosed limit+1 overflow",
+    "componentReadOnlyAliases": {
+      "shared.leaseApiGroup": {
+        "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "source": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "field": "/settings/clusterInvokers/shared/leaseApiGroup",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+          "profileSources": {
+            "base": {
+              "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+            },
+            "runtime": {
+              "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+              "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+            }
+          }
+        },
+        "caseIds": [
+          "CMP-C1-VAL-buster-engine",
+          "CMP-C1-EFFECT-buster-engine",
+          "CMP-C1-DELIVERY",
+          "CMP-C1-MUT",
+          "CMP-C5-BIND",
+          "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup"
+        ],
+        "mode": "typed read-only primary author alias; no delivery writer",
+        "selectedSourceValue": "kubeclaw.forgestack.ai"
+      },
+      "shared.leaseApiVersion": {
+        "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "source": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "field": "/settings/clusterInvokers/shared/leaseApiVersion",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+          "profileSources": {
+            "base": {
+              "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+            },
+            "runtime": {
+              "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+              "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+            }
+          }
+        },
+        "caseIds": [
+          "CMP-C1-VAL-buster-engine",
+          "CMP-C1-EFFECT-buster-engine",
+          "CMP-C1-DELIVERY",
+          "CMP-C1-MUT",
+          "CMP-C5-BIND",
+          "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion"
+        ],
+        "mode": "typed read-only primary author alias; no delivery writer",
+        "selectedSourceValue": "v1alpha1"
+      },
+      "runtimeSecurity.maximumOutputBytes": {
+        "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+        "source": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "field": "/settings/clusterInvokers/runtimeSecurity/maximumOutputBytes",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+          "profileSources": {
+            "base": {
+              "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+            },
+            "runtime": {
+              "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+              "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+            }
+          }
+        },
+        "caseIds": [
+          "CMP-C1-VAL-buster-engine",
+          "CMP-C1-EFFECT-buster-engine",
+          "CMP-C1-DELIVERY",
+          "CMP-C1-MUT",
+          "CMP-C5-BIND",
+          "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes"
+        ],
+        "mode": "typed read-only primary author alias; no delivery writer",
+        "selectedSourceValue": 16777216
+      },
+      "runtimeSecurity.maximumExecutionMs": {
+        "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+        "source": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "field": "/settings/clusterInvokers/runtimeSecurity/maximumExecutionMs",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+          "profileSources": {
+            "base": {
+              "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+            },
+            "runtime": {
+              "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+              "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+            }
+          }
+        },
+        "caseIds": [
+          "CMP-C1-VAL-buster-engine",
+          "CMP-C1-EFFECT-buster-engine",
+          "CMP-C1-DELIVERY",
+          "CMP-C1-MUT",
+          "CMP-C5-BIND",
+          "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs"
+        ],
+        "mode": "typed read-only primary author alias; no delivery writer",
+        "selectedSourceValue": 300000
+      },
+      "runtimeSecurity.pollIntervalMs": {
+        "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+        "source": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "field": "/settings/clusterInvokers/runtimeSecurity/pollIntervalMs",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+          "profileSources": {
+            "base": {
+              "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+            },
+            "runtime": {
+              "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+              "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+            }
+          }
+        },
+        "caseIds": [
+          "CMP-C1-VAL-buster-engine",
+          "CMP-C1-EFFECT-buster-engine",
+          "CMP-C1-DELIVERY",
+          "CMP-C1-MUT",
+          "CMP-C5-BIND",
+          "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs"
+        ],
+        "mode": "typed read-only primary author alias; no delivery writer",
+        "selectedSourceValue": 1000
+      },
+      "runtimeSecurity.maximumObservationAgeMs": {
+        "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+        "source": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "field": "/settings/clusterInvokers/runtimeSecurity/maximumObservationAgeMs",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+          "profileSources": {
+            "base": {
+              "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+            },
+            "runtime": {
+              "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+              "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+            }
+          }
+        },
+        "caseIds": [
+          "CMP-C1-VAL-buster-engine",
+          "CMP-C1-EFFECT-buster-engine",
+          "CMP-C1-DELIVERY",
+          "CMP-C1-MUT",
+          "CMP-C5-BIND",
+          "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs"
+        ],
+        "mode": "typed read-only primary author alias; no delivery writer",
+        "selectedSourceValue": 10000
+      },
+      "runtimeSecurity.maximumFutureSkewMs": {
+        "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+        "source": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "field": "/settings/clusterInvokers/runtimeSecurity/maximumFutureSkewMs",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+          "profileSources": {
+            "base": {
+              "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+            },
+            "runtime": {
+              "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+              "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+            }
+          }
+        },
+        "caseIds": [
+          "CMP-C1-VAL-buster-engine",
+          "CMP-C1-EFFECT-buster-engine",
+          "CMP-C1-DELIVERY",
+          "CMP-C1-MUT",
+          "CMP-C5-BIND",
+          "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs"
+        ],
+        "mode": "typed read-only primary author alias; no delivery writer",
+        "selectedSourceValue": 5000
+      }
+    },
+    "oldLeaseEpochRef": "future-nonempty-lease-A-policyEpoch-v1",
+    "redirectPolicy": "reject-all",
+    "bodyRepresentation": "decoded response entity bytes exposed by selected Go Transport, not wire/TLS/compressed Content-Length",
+    "grantsStatus": "all named references unresolved until future trusted pre-action receipt validation; no approved universal grant/cleanup aliases"
+  },
+  "fixture": "future scoped same real nativeGo controller build and actual current typed protocol endpoints against isolated HTTPS/API/TokenReview/CRD fixture (positive sourceprotocol only, NOT deployedKubernetes/CNI/RBACacceptance); native ReadyTLSlistener+actual Ed25519 signer/controllerhandler+realnativelease/status/ownership/fence resourceVersion semantics. Ephemeralprivate credentials never evidence/log/hash. Need declaredphysical/service/image/tool/provider/gates/grants beforedeployed/hostproof; unknownfixture setup not semanticnegativekill.",
+  "priorState": "nonempty source fixture A leases including absent ttlSeconds, explicit ttl, historical ready.v1, ready.v2, product extension, deleting UID/finalizer, source Secret selectors, provider A plus failed/uncertain API mutation; complete controller-local policyEpoch proposal captured before first authorized mutation. Legacy epoch missing without authentic original author receipt quarantines, not inferred from latest B."
+}

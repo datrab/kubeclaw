@@ -1,5 +1,6 @@
-import {controlPolicyFixture, writeControlPolicy} from './fixtures/control-policy.mts';
-import {loadControlConfig} from '../server/control-config.ts';
+import {publishedControlConfig} from './fixtures/published-config.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {authorizePipelinePreferenceSubject} from '../control/pipeline-preference-subject.ts';
@@ -36,13 +37,16 @@ test('platform subject automatically selects its real persisted personal history
 });
 
 
-test('Control startup validates and freezes platform subject configuration',t=>{
+test('Control startup validates and freezes platform subject configuration',async t=>{
  const subject=`user-${'a'.repeat(24)}`;
- const environment=controlPolicyFixture(t,{pipelinePreferenceSubject:subject});
- const config=loadControlConfig(environment);
- writeControlPolicy(environment.root,{pipelinePreferenceSubject:`user-${'b'.repeat(24)}`});
+ const f=await publishedControlConfig(t,{pipelinePreferenceSubject:subject});
+ const config=f.loadControlConfig(f.capture,{});
+ const file=path.join(f.author,'components/prism-control.config.json');
+ const changed=JSON.parse(fs.readFileSync(file,'utf8'));changed.profiles.standard.settings.pipelinePreferenceSubject=`user-${'b'.repeat(24)}`;
+ fs.writeFileSync(file,JSON.stringify(changed));
  assert.equal(config.pipelinePreferenceSubject,subject);
  assert.equal(Object.isFrozen(config),true);
- assert.equal(loadControlConfig(controlPolicyFixture(t,{})).pipelinePreferenceSubject,undefined);
- assert.throws(()=>loadControlConfig(controlPolicyFixture(t,{pipelinePreferenceSubject:'operator:wrong'})),/SWARM_CONFIG_INVALID/);
+ const empty=await publishedControlConfig(t,{});
+ assert.equal(empty.loadControlConfig(empty.capture,{}).pipelinePreferenceSubject,undefined);
+ await assert.rejects(publishedControlConfig(t,{pipelinePreferenceSubject:'operator:wrong'}),/SWARM_CONFIG_INVALID/);
 });

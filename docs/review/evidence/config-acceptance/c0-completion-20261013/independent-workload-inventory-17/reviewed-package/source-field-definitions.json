@@ -1,0 +1,1048 @@
+{
+  "schemaVersion": "delivery-source-refinement.v1",
+  "sourceCommit": "263277b0014de5f056c019307c40dc83f0201ef5",
+  "scope": "23 previously unclassified Prism workload clauses; preliminary field-level source definition, not complete case/schema/profile closure",
+  "priorQueueRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  "rows": [
+    {
+      "candidateId": "SRC-d0207096e9428f6e",
+      "originalCandidate": {
+        "id": "SRC-d0207096e9428f6e",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 14,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "1d234b93f35f0a918dc65a4931569cae035c2a0a432ceb907480a693db68d69d",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 14,
+        "expression": "{{- $image := index $.Values.images $name }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "role image lookup",
+      "classification": "generated-release-role-image",
+      "proposedAuthorOrGeneratedRef": "selected immutable release receipt: control/studio/worker",
+      "domainAndRelations": "The role set is the actual fixed three-role loop, not an arbitrary editable module list. Each image reference requires its own repository and sha256 digest; helper rejects missing repository/digest or malformed digest.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/_helpers.tpl",
+        "line": 2,
+        "expression": "{{- define \"prism.imageRef\" -}}",
+        "sha256": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b499bd9d6e0c96f9",
+      "originalCandidate": {
+        "id": "SRC-b499bd9d6e0c96f9",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 22,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "18cc829db58f2444105cee8478e55bfe60db43ab8b36e98e19e858ff51d8c62b",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 22,
+        "expression": "  replicas: {{ (index $.Values $name).replicas }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "per-role replicas",
+      "classification": "deployment-policy-with-current-invariants",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/roles/<role>/replicas",
+      "domainAndRelations": "Control and worker must each remain exactly1 in this current RWO/native topology; Studio is an explicit nonnegative integer Kubernetes replica count. Changing native concurrency or storage topology is not authorized by this replica field.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 3,
+        "expression": "{{- if ne (int .Values.control.replicas) 1 }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4cc5161d3c1135b5",
+      "originalCandidate": {
+        "id": "SRC-4cc5161d3c1135b5",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 31,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "900b0bb2d27bd5294028722e6b9f198957a5b63dbe608c4db377d659d5adf6a0",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 31,
+        "expression": "        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name \"control\") (eq $name \"worker\")) }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "worker trust labels",
+      "classification": "generated-applicability",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "Strict selected boolean applies only control/worker. Generated label is not authentication or permission. Studio remains outside the trust sidecar branch.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 2,
+        "expression": "{{- if .Values.workerTrust.spiffe.enabled }}",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-61a34b698eb6c0ba",
+      "originalCandidate": {
+        "id": "SRC-61a34b698eb6c0ba",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 34,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "de59d6907fff68590ec891bc3e384d76791bdfb30d5db65dc583bc5ac53364de",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 34,
+        "expression": "      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name \"control\") (eq $name \"worker\"))) (eq $name \"control\") (eq $name \"worker\") (eq $name \"studio\") }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "pod annotation applicability",
+      "classification": "generated-applicability",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "Actual condition includes all three named roles even when SPIFFE false. Swarm checksum exists for all; worker policy checksum and Control product checksum have distinct authors. Do not infer all annotations are SPIFFE-controlled.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 36,
+        "expression": "        {{- if has $name (list \"control\" \"worker\" \"studio\") }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-77d139d0c914f975",
+      "originalCandidate": {
+        "id": "SRC-77d139d0c914f975",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 46,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "4f1fb97f217f411ea052e30661949f7f5f80e48bedc96815dd085f934a4bf824",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 46,
+        "expression": "        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name \"control\") (eq $name \"worker\")) }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "worker trust checksum branch",
+      "classification": "generated-applicability",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "Same boolean and control/worker role select rendered proxy config checksum. One selected generation must bind configmap checksum and pod image/role/identity.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 9,
+        "expression": "  control.yaml: |",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-d8463fffaf86f4d5",
+      "originalCandidate": {
+        "id": "SRC-d8463fffaf86f4d5",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 91,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "1f4dbccbcfa558be8c18de5b27c1e4ec979d0b65e9d2df312c83f76bfcfe42b6",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 91,
+        "expression": "            {{- if and (or (eq $name \"control\") (eq $name \"worker\")) (not $.Values.workerTrust.spiffe.enabled) }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "shared-secret branch",
+      "classification": "generated-authentication-mode",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "False emits original worker-secret reference for both Control/worker; true excludes it. This does not remove Control session/ingress/ingestion credentials or independently applicable database credentials.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/control-config.ts",
+        "line": 26,
+        "expression": "function loadTrustConfig(environment: NodeJS.ProcessEnv) {",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-a07d8875fd4a1cb8",
+      "originalCandidate": {
+        "id": "SRC-a07d8875fd4a1cb8",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 97,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "d121741822885fbebce7ff4a1cc9e2c3b15ba6e06af894266342d0c545fd938f",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 97,
+        "expression": "            {{- if $.Values.workerTrust.spiffe.enabled }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "Control proxy route branch",
+      "classification": "generated-authentication-mode",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "True emits loopback18081/18080/18082 routes matching actual proxy listeners. False retains original service URL path/default behavior, not a second independently authored mode.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 53,
+        "expression": "        - name: worker-egress",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-6a63ef0194be3ef9",
+      "originalCandidate": {
+        "id": "SRC-6a63ef0194be3ef9",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 108,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "7f601115d018fb42785583de4afe00e0c311ece5d6a960b49f8aa2b3ba795772",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 108,
+        "expression": "            {{- if not $.Values.workerTrust.spiffe.enabled }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "dispatch-secret branch",
+      "classification": "generated-authentication-mode",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "False requires original PRISM_DISPATCH_SECRET; true excludes it and uses declared proxy peer identities. Not equivalent to deleting any other Secret or changing actor grants.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/control-config.ts",
+        "line": 39,
+        "expression": "    dispatchSecret: spiffeEnabled ? '' : required(environment, 'PRISM_DISPATCH_SECRET'),",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-c2377b06eb763ea8",
+      "originalCandidate": {
+        "id": "SRC-c2377b06eb763ea8",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 121,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "8532b6857d216b4f465a8aea9b4e4768c7ad61924af3ae1b050ef2aa9ed59e20",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 121,
+        "expression": "            - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary \"http://127.0.0.1:18080\" \"http://prism-control:8080\" $.Values.workerTrust.spiffe.enabled | quote }} }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "Worker control URL",
+      "classification": "generated-route",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled + selected Control service topology",
+      "domainAndRelations": "True loopback18080, false prism-control:8080. Current Worker URL fallback remains historical; target renderer must supply the selected explicit route without implicit latest/default authors.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/worker-config.ts",
+        "line": 17,
+        "expression": "    controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),",
+        "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-1b55a3e1ee1d1fd2",
+      "originalCandidate": {
+        "id": "SRC-1b55a3e1ee1d1fd2",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 125,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "34f1b0da58d64cda5cf11b80d19edb31c00fde1e3989a5382a8f8d79bb420938",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 125,
+        "expression": "            {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name \"control\") (eq $name \"worker\")) }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "SPIFFE ENV branch",
+      "classification": "generated-authentication-mode",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "Only control/worker receive true wire flag and identity/socket fields. Current readers test exact string true; target boolean must be strictly validated before wire projection, not arbitrary truthy coercion.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/worker-config.ts",
+        "line": 7,
+        "expression": "  const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';",
+        "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b13789ea3a017a85",
+      "originalCandidate": {
+        "id": "SRC-b13789ea3a017a85",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 126,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "7e8e29cf738567e033db1534cddbd66f6454c5e8ebc6274f24b9086ef8beb020",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 126,
+        "expression": "            - { name: SPIFFE_ENDPOINT_SOCKET, value: {{ printf \"unix://%s\" $.Values.workerTrust.spiffe.socketPath | quote }} }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "workload API socket",
+      "classification": "transport-location-reference",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/socketPath",
+      "domainAndRelations": "Absolute Unix socket path must be inside actual /run/spire/sockets CSI mount and match Envoy SDS pipe. This ENV is not proven consumed by the Prism JS readers; Envoy config is the actual pipe reader. No separate editable unix URI author.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "line": 67,
+        "expression": "          load_assignment: { cluster_name: spire-agent, endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }] }",
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-26a9686365abe960",
+      "originalCandidate": {
+        "id": "SRC-26a9686365abe960",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 129,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "d0da2fe8de8848fa120fc5ea842778748f532c8341e9ab48206c78254ef8de90",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 129,
+        "expression": "            - { name: PRISM_TRUSTED_NOVA_SPIFFE_ID, value: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $.Values.workerTrust.spiffe.trustDomain $.Values.workerTrust.spiffe.novaNamespace $.Values.workerTrust.spiffe.novaServiceAccount | quote }} }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "trusted Nova principal",
+      "classification": "generated-approved-principal",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/trustDomain + novaNamespace/novaServiceAccount",
+      "domainAndRelations": "Exact original declared Nova principal must agree across Control ENV, Envoy SAN matcher and genuine SPIRE registration. Namespace/name strings are transport identity references, not permission to create new actors.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/dispatch-route.ts",
+        "line": 95,
+        "expression": "    trustedNovaSpiffeId,",
+        "sha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-24af8635b20cbc86",
+      "originalCandidate": {
+        "id": "SRC-24af8635b20cbc86",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 130,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "983655439925e18cba6cc505764d9b1bbdba41b1f171377332698929fe1c18be",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 130,
+        "expression": "            - { name: PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID, value: {{ printf \"spiffe://%s/ns/%s/sa/prism-test-runner\" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "trusted test-runner principal",
+      "classification": "generated-role-principal",
+      "proposedAuthorOrGeneratedRef": "selected trust domain + Release namespace + fixed prism-test-runner SA",
+      "domainAndRelations": "Exact generated identity is optionally read by current Control trust config and participates in dispatch authorization. Must agree with actual test-runner SA and Envoy SAN; cannot masquerade as Nova or worker.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/control-config.ts",
+        "line": 38,
+        "expression": "    trustedTestRunnerSpiffeId: environment.PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID ?? '',",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-6700eefd43e4dff9",
+      "originalCandidate": {
+        "id": "SRC-6700eefd43e4dff9",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 131,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "fb21bb736417cb810065252b695b6cf7fa4ac6d6aa5bc1e9a90e2a2da142a002",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 131,
+        "expression": "            - { name: PRISM_TRUSTED_WORKER_SPIFFE_ID, value: {{ printf \"spiffe://%s/ns/%s/sa/prism-worker\" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "trusted worker principal",
+      "classification": "generated-role-principal",
+      "proposedAuthorOrGeneratedRef": "selected trust domain + Release namespace + fixed prism-worker SA",
+      "domainAndRelations": "Exact same Worker SA identity is generated for Control trusted peer and proxy SAN match; does not grant arbitrary dispatch/task rights.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/internal-artifacts.ts",
+        "line": 21,
+        "expression": "        new Set([options.trustedWorkerSpiffeId, options.trustedControlSpiffeId,...(options.trustedPrismAgentSpiffeId?[options.trustedPrismAgentSpiffeId]:[])]));",
+        "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-ff3203dbf7f11afe",
+      "originalCandidate": {
+        "id": "SRC-ff3203dbf7f11afe",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 132,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "80da4bbb3814e46190ce585f371491147acf97884baa49540e2a2bb8439b5ae6",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 132,
+        "expression": "            - { name: PRISM_CONTROL_SPIFFE_ID, value: {{ printf \"spiffe://%s/ns/%s/sa/prism-control\" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "Control own principal",
+      "classification": "generated-role-principal",
+      "proposedAuthorOrGeneratedRef": "selected trust domain + Release namespace + fixed prism-control SA",
+      "domainAndRelations": "Control own identity also participates in engine/direction/dispatch issuer context. Preserve authenticated source and original delegated grant; string equality alone is not a native identity proof.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/engine-route.ts",
+        "line": 107,
+        "expression": "  const { trustedControlSpiffeId } = context.config;",
+        "sha256": "6093e0f6ea9476db40d388a1d1cd1b0ee865c440723e5df05e4703a8aa360ebf"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b1bd21e3a1c1ee3c",
+      "originalCandidate": {
+        "id": "SRC-b1bd21e3a1c1ee3c",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 133,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "ee551059f86793d8931c1290e9b9977c18d4a8aa8e13454b60f644b7f67293bc",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 133,
+        "expression": "            - { name: PRISM_TRUSTED_AGENT_SPIFFE_ID, value: {{ printf \"spiffe://%s/ns/%s/sa/%s\" $.Values.workerTrust.spiffe.trustDomain $.Values.workerTrust.spiffe.agentNamespace $.Values.workerTrust.spiffe.agentServiceAccount | quote }} }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "trusted Prism agent principal",
+      "classification": "generated-approved-principal",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/trustDomain + agentNamespace/agentServiceAccount",
+      "domainAndRelations": "Exact declared Prism agent principal must agree with actual registered agent SA and Envoy peer matcher. No arbitrary trust wildcard or independent ENV override.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/dispatch-route.ts",
+        "line": 96,
+        "expression": "    trustedPrismAgentSpiffeId,",
+        "sha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4c30d386ef699815",
+      "originalCandidate": {
+        "id": "SRC-4c30d386ef699815",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 135,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "de9a57415107ecd3f5319ad544321d160fb547e64c271d8bb75374b769227a01",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 135,
+        "expression": "            - { name: PRISM_TRUSTED_CONTROL_SPIFFE_ID, value: {{ printf \"spiffe://%s/ns/%s/sa/prism-control\" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "Worker trusted Control principal",
+      "classification": "generated-role-principal",
+      "proposedAuthorOrGeneratedRef": "same selected prism-control SA identity as Control/proxy",
+      "domainAndRelations": "Worker authorizes a proxied header AND request socket remoteAddress against exact trustedControlSpiffeId. This application reader does not directly verify the TLS certificate. Proxy sanitization and genuine TLS/SDS identity remain separate native requirements.",
+      "actualReaderRef": {
+        "path": "skills/prism/server/worker-service.ts",
+        "line": 56,
+        "expression": "    if (auth.mode === \"spiffe\") authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress, new Set([auth.trustedControlSpiffeId]));",
+        "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4c6b76f7a12d287c",
+      "originalCandidate": {
+        "id": "SRC-4c6b76f7a12d287c",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 138,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "91a9cd2eef8b07416efbf4e0a2aefb35fee607d0b39825ceb24ba00322ac0d4c",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 138,
+        "expression": "          resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "per-role pod resources",
+      "classification": "deployment-capacity-policy",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/roles/<role>/resources",
+      "domainAndRelations": "Separate requests.cpu/memory and limits.cpu/memory for each of three actual roles; parse native quantities, require nonnegative compatible request<=limit and authentic capacity. These are pod reservations, not Prism execution-task grants or native pool capacity. Existing exact role resource IDs retained.",
+      "actualReaderRef": {
+        "path": "charts/prism/values.yaml",
+        "line": 27,
+        "expression": "  resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: \"4\", memory: 4Gi } }",
+        "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-f5efb3dafa1d8815",
+      "originalCandidate": {
+        "id": "SRC-f5efb3dafa1d8815",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 164,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "a91d35ad71dea3c9bf22b0c294e0638a0af8c04d6968b8ae9905d76d76da38b1",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 164,
+        "expression": "        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name \"control\") (eq $name \"worker\")) }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "proxy container branch",
+      "classification": "generated-applicability",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "Same boolean controls proxy container only for Control/worker and all associated config/SDS mounts; active inputs required before rendering. Disabled mode does not remove independent product authority or native worker host mounts.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 206,
+        "expression": "        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name \"control\") (eq $name \"worker\")) }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-336010687eecb339",
+      "originalCandidate": {
+        "id": "SRC-336010687eecb339",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 166,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "90eaa2ca3c217fe5e8ab2e0344623ba8313d81b924827d06180fbfa94b192d4c",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 166,
+        "expression": "          image: \"{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}@{{ $.Values.workerTrust.spiffe.envoy.digest }}\"",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "proxy image",
+      "classification": "generated-release-role-image",
+      "proposedAuthorOrGeneratedRef": "selected immutable Envoy release receipt",
+      "domainAndRelations": "Current expression is repository:tag@digest, unlike prism.imageRef helper. Repository, tag and digest require exact release/version compatibility; tag cannot replace digest or invent native API compatibility. Source bytes and Envoy protocol validation still need real pinned tool/image evidence.",
+      "actualReaderRef": {
+        "path": "charts/prism/values.yaml",
+        "line": 82,
+        "expression": "    envoy:",
+        "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-031d2d94167393f9",
+      "originalCandidate": {
+        "id": "SRC-031d2d94167393f9",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 167,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "95d45ae1d5df047e3a9374ba00fc97d0ec716b3ed5e329482dec41e0915a676b",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 167,
+        "expression": "          imagePullPolicy: {{ $.Values.workerTrust.spiffe.envoy.pullPolicy }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "proxy image pull policy",
+      "classification": "deployment-fetch-policy",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/envoy/pullPolicy",
+      "domainAndRelations": "Native enum Always|IfNotPresent|Never, explicit selected value. Never needs actual matching cache; digest identity remains unchanged by fetch policy. Different from ordinary Prism role image pull policies.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 166,
+        "expression": "          image: \"{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}@{{ $.Values.workerTrust.spiffe.envoy.digest }}\"",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-d5fada1a98f4c4af",
+      "originalCandidate": {
+        "id": "SRC-d5fada1a98f4c4af",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 206,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "84361755a68e0c35801d1dfab8911a45f0d0be032acc1debce808d84df17fe64",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 206,
+        "expression": "        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name \"control\") (eq $name \"worker\")) }}",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "proxy volume branch",
+      "classification": "generated-applicability",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/enabled",
+      "domainAndRelations": "Same selected boolean and role govern worker-trust ConfigMap, SPIFFE CSI mount and proxy tmp volume. Generated volume names/modes are transport mechanics, not alternate authors for trust identity.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 185,
+        "expression": "          volumeMounts:",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-d0c844cef43e11dc",
+      "originalCandidate": {
+        "id": "SRC-d0c844cef43e11dc",
+        "source": "charts/prism/templates/workloads.yaml",
+        "line": 209,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "originalCandidateSha256": "007cfa2380c355b9ccea4de49ef1c13b5fc1f1e067a472c3cf73179779ff60d7",
+      "sourceRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 209,
+        "expression": "          csi: { driver: {{ $.Values.workerTrust.spiffe.csiDriver | quote }}, readOnly: true }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "field": "SPIFFE CSI driver",
+      "classification": "installed-provider-reference",
+      "proposedAuthorOrGeneratedRef": "config/pipeline.config.json#/operator/deployment/prism/workerTrust/csiDriver",
+      "domainAndRelations": "Nonempty exact selected installed CSI driver name with authentic driver/version/node registration and workload authorization. Declaring driver csi.spiffe.io alone proves no mount/SDS availability. Readonly mount must preserve selected socket path and original trust authority.",
+      "actualReaderRef": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 187,
+        "expression": "            - { name: spiffe-workload-api, mountPath: /run/spire/sockets, readOnly: true }",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "activation": "Complete selected role/config/image/Secret/peer/grant/native provider generation before deployment; existing standing services keep startup-selected generation until compatible controlled replacement.",
+      "recovery": "Recover original immutable generation and actual selected image/namespace/SA/SPIFFE/Secret/host/native policy identities; do not infer latest, change grants or classify new deployment values as old run facts.",
+      "remaining": [
+        "whole selected root/component schema/profile joins",
+        "complete typed role-specific A/B fixtures and executable future source/oracles",
+        "authentic installed image/CSI/SPIRE/Kubernetes identity and same-generation native effect/rejection",
+        "independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    }
+  ],
+  "remainingQueueUnchanged": true,
+  "globalC0Accepted": false
+}

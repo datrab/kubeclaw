@@ -1,7 +1,7 @@
 import {parseReviewSource, portableJson, PORTABLE_JSON_ENCODING, type StageDefinition} from '@kubeclaw/plugin-sdk';
 import {readRunSnapshot,verifyPinnedGraph} from '@kubeclaw/nova-core/run-snapshots';
 import {runRoot} from '@kubeclaw/nova-core/run-root';
-import {compileProject} from './compiler.ts';
+import {compileProject, compileProjectWithCorePolicy} from './compiler.ts';
 import { PROJECT_REVIEW_SEMANTIC_ENCODING, type ProjectReviewSemanticMode } from './review-semantics.ts';
 import { storedDeliveryManifestMode } from './delivery-manifest.ts';
 
@@ -46,7 +46,15 @@ export function compileProjectRecovery(project: unknown, storageRoot: string): R
   const reportMode=storedReportMode(skeleton.definition.stages,snapshot.graph.nodes);
   const semanticMode=storedSemanticMode(snapshot.graph.nodes);
   const deliveryManifestMode=storedDeliveryManifestMode(snapshot.graph.nodes);
-  const compiled=compileProject(project,source.identityEncoding ?? 'legacy',reportMode,semanticMode,deliveryManifestMode);
+  // Original snapshot only: never resolve the current Core locator on recovery.
+  // The paired version marker makes a partial/unknown capture fail closed.
+  const configuration = snapshot.registry.configuration as {corePolicy?: Record<string, unknown>} | undefined;
+  const policy = configuration?.corePolicy;
+  const selected = Object.hasOwn(snapshot.registry, 'projectCompilerVersion');
+  if (selected && snapshot.registry.projectCompilerVersion !== 'project-compiler-runtime.v1') throw new Error('PROJECT_RECOVERY_COMPILER_VERSION_INVALID');
+  const compiled = selected
+    ? compileProjectWithCorePolicy(project, policy, source.identityEncoding ?? 'legacy', reportMode, semanticMode, deliveryManifestMode)
+    : compileProject(project,source.identityEncoding ?? 'legacy',reportMode,semanticMode,deliveryManifestMode);
   verifyPinnedGraph(root,compiled.definition);
   return compiled;
 }

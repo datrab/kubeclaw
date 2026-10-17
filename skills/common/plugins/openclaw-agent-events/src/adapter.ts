@@ -22,50 +22,62 @@ function release(subscription: Subscription | (() => void)): void {
   else if (typeof subscription.dispose === 'function') subscription.dispose();
   else subscription.off?.();
 }
-function optionalIdentity(value: unknown, field: string): Record<string, string> {
-  return typeof value === 'string' && value.length > 0 && value.length <= 512 ? { [field]: value } : {};
+function optionalIdentity(value: unknown, field: string, maximumCharacters: number): Record<string, string> {
+  return typeof value === 'string' && value.length > 0 && value.length <= maximumCharacters ? { [field]: value } : {};
 }
 function firstNonNullish(...values: readonly unknown[]): unknown {
   return values.find((value) => value !== undefined && value !== null);
 }
-function projectEvent(event: Record<string, unknown>): Readonly<Record<string, unknown>> {
+interface ProjectionLimits { readonly maxIdentityCharacters: number; readonly maxObservedFields: number; readonly maxObservedFieldCharacters: number }
+function projectionLimits(config: Readonly<Record<string, unknown>>): ProjectionLimits {
+  const maxIdentityCharacters = config.maxIdentityCharacters;
+  if (typeof maxIdentityCharacters !== 'number' || !Number.isSafeInteger(maxIdentityCharacters) || maxIdentityCharacters < 1 || maxIdentityCharacters > 512) throw new Error('AGENT_EVENT_LIMIT_INVALID:maxIdentityCharacters');
+  const maxObservedFields = config.maxObservedFields;
+  const maxObservedFieldCharacters = config.maxObservedFieldCharacters;
+  for (const [key, value] of Object.entries({maxObservedFields, maxObservedFieldCharacters})) {
+    if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 1 || value > 128) throw new Error(`AGENT_EVENT_LIMIT_INVALID:${key}`);
+  }
+  return Object.freeze({maxIdentityCharacters, maxObservedFields: maxObservedFields as number, maxObservedFieldCharacters: maxObservedFieldCharacters as number});
+}
+function projectEvent(event: Record<string, unknown>, limits: ProjectionLimits): Readonly<Record<string, unknown>> {
   const entries = Object.entries(event)
     .filter(([key]) => !IDENTITY_FIELD.test(key) && !SENSITIVE_FIELD.test(key))
-    .slice(0, 128);
+    .slice(0, limits.maxObservedFields);
   const metrics = Object.fromEntries(entries.filter(
     ([key, value]) => SAFE_METRIC_FIELD.test(key)
       && (typeof value === 'number' && Number.isFinite(value) || typeof value === 'boolean'),
   ));
   return Object.freeze({
     schemaVersion: 'openclaw-agent-event.v2',
-    observedFields: Object.freeze(entries.map(([key]) => key.slice(0, 128)).sort()),
+    observedFields: Object.freeze(entries.map(([key]) => key.slice(0, limits.maxObservedFieldCharacters)).sort()),
     metrics: Object.freeze(metrics),
   });
 }
-export function normalizeAgentEvent(raw: unknown): {
+export function normalizeAgentEvent(raw: unknown, limits: ProjectionLimits): {
   readonly identity: EventIdentity;
   readonly payload: Readonly<Record<string, unknown>>;
 } | undefined {
   const event = record(raw);
   const identity = record(event.identity);
   const runId = firstNonNullish(identity.runId, identity.run_id, event.runId, event.run_id);
-  if (typeof runId !== 'string' || runId.length === 0 || runId.length > 512) return undefined;
+  if (typeof runId !== 'string' || runId.length === 0 || runId.length > limits.maxIdentityCharacters) return undefined;
   return {
     identity: Object.freeze({
       runId,
       ...optionalIdentity(
         firstNonNullish(identity.stageId, identity.stage_id, event.stageId, event.stage_id),
-        'stageId',
+        'stageId', limits.maxIdentityCharacters,
       ),
       ...optionalIdentity(
         firstNonNullish(identity.attemptId, identity.attempt_id, event.attemptId, event.attempt_id),
-        'attemptId',
+        'attemptId', limits.maxIdentityCharacters,
       ),
     }),
-    payload: projectEvent(event),
+    payload: projectEvent(event, limits),
   };
 }
 export function activateWithSdk(context: AdapterActivationContext, sdk: OpenClawSdk): AdapterInstance {
+  const limits = projectionLimits(context.config);
   const configured = context.config.hooks;
   if (!Array.isArray(configured) || configured.length === 0) throw new Error('AGENT_EVENT_HOOKS_INVALID');
   const hooks = configured.map((hook) => {
@@ -85,7 +97,7 @@ export function activateWithSdk(context: AdapterActivationContext, sdk: OpenClaw
         for (const hook of hooks) {
           subscriptions.push(sdk.on(hook, (raw) => {
             if (shuttingDown) return;
-            const normalized = normalizeAgentEvent(raw);
+            const normalized = normalizeAgentEvent(raw, limits);
             if (!normalized) return;
             queue.enqueue({ hook, normalized });
           }));

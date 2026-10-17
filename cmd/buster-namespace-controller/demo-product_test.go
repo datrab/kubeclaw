@@ -172,7 +172,7 @@ func TestProductDecisionCASRecoveryAndLifecycle(t *testing.T) {
 }
 func TestProductClosedSignedWire(t *testing.T) {
 	pub, key, _ := ed25519.GenerateKey(rand.Reader)
-	c := &controller{product: &productConfig{PublicKey: pub, Issuer: "issuer", Actors: map[string]bool{"alice": true}}}
+	c := &controller{policy: testControllerPolicy(t), product: &productConfig{PublicKey: pub, Issuer: "issuer", Actors: map[string]bool{"alice": true}}}
 	now := time.Now().UTC().Truncate(time.Second)
 	d := productDecision{SchemaVersion: "demo-product-decision.v1", Issuer: "issuer", ActorID: "alice", DecisionID: "00000000-0000-4000-8000-000000000001", Action: "accept", LeaseName: "demo", LeaseUID: "uid", SourceRevision: "git:" + strings.Repeat("a", 40), CandidateDigest: "sha256:" + strings.Repeat("a", 64), ResultDigest: "sha256:" + strings.Repeat("a", 64), ReadyDigest: "sha256:" + strings.Repeat("a", 64), Generation: 1, ExpectedExpiry: now.Add(time.Hour).Format(time.RFC3339), ExpectedRevision: "1", IssuedAt: now.Format(time.RFC3339), ExpiresAt: now.Add(time.Minute).Format(time.RFC3339), Reason: "accept"}
 	raw, _ := json.Marshal(d)
@@ -221,7 +221,7 @@ func TestProductTypeScriptInterop(t *testing.T) {
 		if e != nil {
 			t.Fatal(e)
 		}
-		c := &controller{product: &productConfig{PublicKey: key, Issuer: v.Expected.Issuer, Actors: map[string]bool{v.Expected.ActorID: true}}}
+		c := &controller{policy: testControllerPolicy(t), product: &productConfig{PublicKey: key, Issuer: v.Expected.Issuer, Actors: map[string]bool{v.Expected.ActorID: true}}}
 		got, _, e := c.verifyProduct(v.Envelope)
 		if e != nil || !reflect.DeepEqual(got, v.Expected) {
 			t.Fatalf("TS to Go %s: %v %+v", v.Expected.Action, e, got)
@@ -242,7 +242,7 @@ func TestProductTypeScriptInterop(t *testing.T) {
 
 func TestProductConfigurationDenyByDefault(t *testing.T) {
 	t.Setenv("BUSTER_PRODUCT_ENABLED", "")
-	c := &controller{}
+	c := &controller{policy: testControllerPolicy(t)}
 	if e := c.configureProduct(); e != nil || c.product != nil {
 		t.Fatalf("default %v", e)
 	}

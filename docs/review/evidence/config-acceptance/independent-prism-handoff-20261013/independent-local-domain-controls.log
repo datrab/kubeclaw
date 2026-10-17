@@ -1,0 +1,56 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/check-local-domain-definitions.mjs",
+  "node": "v24.21.0",
+  "identities": {
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/check-local-domain-definitions.mjs": "802055bc1dab39eba9cc1f77a01f17135cf5deaf008c7b47b669c8fa3634d024",
+    "contracts/prism/v1/fixtures/minimal-web.json": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5",
+    "skills/prism/directions/index.ts": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb",
+    "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+    "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json": "027e32c78225a1c0afb8b7486477cf9f6d21d5e6393f454331b32cfdcc7bbaeb"
+  },
+  "results": [
+    {
+      "id": "candidate-A3",
+      "result": "passed",
+      "count": 3,
+      "documentDigests": [
+        "80fa5f4cb21c8f4fc1f17e4344725842b3703830287b0c0e720ad07e71b3728e",
+        "20608c020afe38cf23a924d5a27466243ca45d8dd31f7e17b9c5e385c8ef5d0f",
+        "255de9485962a382b0975c8f1b259cd8181e27a6b5a782da6a6e3c0cd44ecefa"
+      ],
+      "pairDistances": [
+        3,
+        3,
+        3
+      ],
+      "scope": "Actual contract document validator and real pure diversityreader only; not HTTP/repository/job/UI acceptance or chosen businesspolicy approval"
+    },
+    {
+      "id": "candidate-B2",
+      "result": "passed",
+      "count": 2,
+      "documentDigests": [
+        "80fa5f4cb21c8f4fc1f17e4344725842b3703830287b0c0e720ad07e71b3728e",
+        "20608c020afe38cf23a924d5a27466243ca45d8dd31f7e17b9c5e385c8ef5d0f"
+      ],
+      "pairDistances": [
+        3
+      ],
+      "scope": "Actual contract document validator and real pure diversityreader only; not HTTP/repository/job/UI acceptance or chosen businesspolicy approval"
+    },
+    {
+      "id": "existing-six-owner-companion-A",
+      "result": "passed",
+      "scope": "Complete existing companions accepted after removal of explicitly unsupported proposedfield; current rejectnewfield verified, NOT targetprofile validator proof"
+    },
+    {
+      "id": "existing-six-owner-companion-B",
+      "result": "passed",
+      "scope": "Complete existing companions accepted after removal of explicitly unsupported proposedfield; current rejectnewfield verified, NOT targetprofile validator proof"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "scope": "Independent narrow currentdocument/diversity/schema source-definition controls only"
+}

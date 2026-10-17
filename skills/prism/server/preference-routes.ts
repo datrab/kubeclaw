@@ -12,7 +12,7 @@ import {
 
 import type { AuthenticatedControlContext } from "./control-context.ts";
 import { body, json, userKey } from "./control-http.ts";
-type RouteContext = Pick<AuthenticatedControlContext, "pool" | "actor">;
+type RouteContext = Pick<AuthenticatedControlContext, "pool" | "actor" | "config">;
 
 export async function preferenceRoutes(
   context: RouteContext,
@@ -41,7 +41,7 @@ async function updatePreferencePolicy(
 ) {
   const { pool, actor } = context;
 
-  const input = (await body(request)) as {
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as {
     projectId?: string;
     personalEnabled?: boolean;
   };
@@ -67,7 +67,7 @@ async function recordPreferenceEvent(
 
   const event = validatePrism<PreferenceEvent>(
     "preferenceEvent",
-    await body(request),
+    await body(request, context.config.maximumJsonBodyBytes),
   );
   if (event.userId !== userKey(actor.user))
     throw new Error("preference user does not match the session");

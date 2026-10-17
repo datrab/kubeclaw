@@ -1,0 +1,6 @@
+npm notice run test
+npm notice run node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+Switched to a new branch 'project/architecture'
+Switched to branch 'main'
+{"ok":true,"plugin":"kubeclaw.blueprint-sync","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.blueprint-sync","suite":"package-boundary"}

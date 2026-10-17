@@ -1,0 +1,138 @@
+{
+  "qualification": "Exact historical declared fixture bytes recovered from retained Git objects; NOT current receiving or activation authority. Contract identities unchanged.",
+  "members": [
+    {
+      "relativePath": "source-current/skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "byteLength": 3167,
+      "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58",
+      "sourcePath": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "gitCommit": "0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/network-http/README.md",
+      "byteLength": 1313,
+      "sha256": "10b1f89e246820bff951b8a95ba671c7f71b65e1cd00395ef908c700892e66a6",
+      "sourcePath": "skills/common/plugins/network-http/README.md",
+      "gitCommit": "76bb9fd75f2f9367a27a48dc67e95b3c76a1c826"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/network-http/schemas/config.schema.json",
+      "byteLength": 747,
+      "sha256": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+      "sourcePath": "skills/common/plugins/network-http/schemas/config.schema.json",
+      "gitCommit": "5fa631f630b0da2cdbbb7c56e2489fc79c3ea3ef"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/network-http/src/adapter.ts",
+      "byteLength": 6527,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "sourcePath": "skills/common/plugins/network-http/src/adapter.ts",
+      "gitCommit": "76bb9fd75f2f9367a27a48dc67e95b3c76a1c826"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/network-http/tests/live-function.test.ts",
+      "byteLength": 3851,
+      "sha256": "d047a9f0a9fd368ad7dcd876b5374f8040c77bc21be5ef17880282fcacb37e98",
+      "sourcePath": "skills/common/plugins/network-http/tests/live-function.test.ts",
+      "gitCommit": "6a06508cf2d5ad76422bd1a8826f03d08c1b89b6"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/network-http/tests/streaming.test.ts",
+      "byteLength": 4505,
+      "sha256": "5732265d9df917410ad613816e9ce8ca179ac5d21392cec38d8bea7d1ab4934c",
+      "sourcePath": "skills/common/plugins/network-http/tests/streaming.test.ts",
+      "gitCommit": "76bb9fd75f2f9367a27a48dc67e95b3c76a1c826"
+    },
+    {
+      "relativePath": "source-current/skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+      "byteLength": 5465,
+      "sha256": "272268fd60cdaa459ce2edb9bf5f77387d901450b45d75f45cde0ccdce383e03",
+      "sourcePath": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+      "gitCommit": "0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493"
+    },
+    {
+      "relativePath": "source-current/skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+      "byteLength": 13008,
+      "sha256": "13ccae41a9d10b740a55d103fdf7deea45df597c91e949682d06652c413c7034",
+      "sourcePath": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+      "gitCommit": "0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493"
+    },
+    {
+      "relativePath": "source-current/skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "byteLength": 4771,
+      "sha256": "9fbc900913cdebd86ea447193f3dedb6ddab231321279df6263be910496c7197",
+      "sourcePath": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "gitCommit": "0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/README.md",
+      "byteLength": 2857,
+      "sha256": "8d35a3f4317061a91daa80dba389e3a4e453052e815ffce9db7a5c23875e8f47",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/README.md",
+      "gitCommit": "700d92958fff206b325ef1ecccc6e9cca0bb9bca"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "byteLength": 1286,
+      "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "gitCommit": "50d1d9f14eaaf8bd40a757d229d5d5969fe01474"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "byteLength": 2661,
+      "sha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "gitCommit": "700d92958fff206b325ef1ecccc6e9cca0bb9bca"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "byteLength": 7189,
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "gitCommit": "28909f62da68f70d94e0672ce7ae12ced8d7b3d9"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "byteLength": 6531,
+      "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "gitCommit": "700d92958fff206b325ef1ecccc6e9cca0bb9bca"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "byteLength": 6651,
+      "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "gitCommit": "700d92958fff206b325ef1ecccc6e9cca0bb9bca"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "byteLength": 15618,
+      "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "gitCommit": "6d5781891c081ed9ba4da03f5f66a8961eb869ce"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "byteLength": 18385,
+      "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "gitCommit": "28909f62da68f70d94e0672ce7ae12ced8d7b3d9"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "byteLength": 4992,
+      "sha256": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "gitCommit": "700d92958fff206b325ef1ecccc6e9cca0bb9bca"
+    },
+    {
+      "relativePath": "source-current/skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "byteLength": 24029,
+      "sha256": "94236bcdf8a08d67bbb7fbaba785d0d03d46f7f6f86846d28b805ae15047b3f9",
+      "sourcePath": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "gitCommit": "0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493"
+    }
+  ]
+}

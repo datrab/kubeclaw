@@ -1,0 +1,325 @@
+[
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/prism/engine/index.ts",
+      "skills/prism/server/baseline-archive.ts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.09,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/initial-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/swarm-input-limit.test.mts",
+      "tests/verification/reliability/config-component-bundle.test.mts"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 2.65,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/initial-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/render-selected-policy.test.mts",
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/swarm-input-limit.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 4.99,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/focused.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/render-selected-policy.test.mts",
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/swarm-input-limit.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 5.58,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/final-focused-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/prism/engine/index.ts",
+      "skills/prism/server/baseline-archive.ts",
+      "skills/prism/tests/render-selected-policy.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 2.18,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/final-focused-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/generate-prism-chart-config.mjs",
+      "--check"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 0.52,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/closeout-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/generate-buster-chart-config.mjs",
+      "--check"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 0.51,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/closeout-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/render-selected-policy.test.mts",
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/swarm-input-limit.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 1,
+    "elapsedSeconds": 5.04,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/closeout-2.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 2.68,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/closeout-3.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-prism-engine.py"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 2.56,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/closeout-4.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 0.13,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/closeout-5.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/render-selected-policy.test.mts",
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/swarm-input-limit.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 5.09,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/final-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/prism/engine/worker-binding.ts",
+      "skills/prism/control/worker-results.ts",
+      "skills/prism/server/baseline-archive.ts",
+      "skills/prism/tests/render-selected-policy.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 2,
+    "elapsedSeconds": 2.31,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/final-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=real Prism role package",
+      "tests/verification/reliability/pipeline-role-readback.test.mjs"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 11.67,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/final-2.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/prism/engine/worker-binding.ts",
+      "skills/prism/control/worker-results.ts",
+      "skills/prism/server/baseline-archive.ts",
+      "skills/prism/tests/render-selected-policy.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 2.06,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/package-0.txt"
+  },
+  {
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 16.57,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/package-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/buster-central-delivery.test.mjs",
+      "tests/verification/deployment/prism-image-generation.test.mjs"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 25.8,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/package-2.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 0.08,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/package-3.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/worker-service.test.mts",
+      "skills/prism/tests/swarm-result-journal.test.mts"
+    ],
+    "environment": {
+      "NODE_ENV": "test"
+    },
+    "exitCode": 0,
+    "elapsedSeconds": 2.1,
+    "log": "docs/review/remediation/config-prism-render-selection-20261016/original-worker-results.txt"
+  }
+]

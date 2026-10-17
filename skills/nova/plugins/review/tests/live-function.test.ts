@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -247,31 +248,32 @@ try {
     granted,
     activated,
     configs: new Map([
-      ['kubeclaw.runtime-dispatch:runtime', {
+      ['kubeclaw.runtime-dispatch:runtime', { ...TEST_CORE_POLICY.httpDispatch,
         targets: {
           reviewer: {
-            endpoint: `${origin}/dispatch`,
+            byteProfile:'standard', endpoint: `${origin}/dispatch`,
             tokenSecret: 'review-token',
           },
         },
       }],
       ['kubeclaw.network-http:http', {
+        ...TEST_CORE_POLICY.networkHttp,
         allowedOrigins: [origin],
         allowedMethods: ['POST'],
         allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'],
       }],
       ['kubeclaw.secret-resolver:secrets', { environment: { 'review-token': secretName } }],
-      ['kubeclaw.repository-adapter:repository', { repositoryRoot: sourceRepository, expectedHead: headRevision }],
-      ['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
+      ['kubeclaw.repository-adapter:repository', {...TEST_CORE_POLICY.repositoryRead, repositoryRoot: sourceRepository, expectedHead: headRevision }],
+      ['kubeclaw.artifact-store:artifact-store', { ...TEST_CORE_POLICY.artifactStore, artifactRoot }],
     ]),
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs: 1000,
     async emitDomainEvent() {},
   });
   await adapters.start();
   try {
-    const initialJournal = new core.FileJournal(path.join(temporary, 'events.jsonl'));
-    const runner = new core.PipelineRunner({
+    const initialJournal = new core.FileJournal(path.join(temporary, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: 'pipeline:review-live',
@@ -340,7 +342,7 @@ try {
       ['lean', 3, 2], ['audit', 5, 0],
     ] as const) {
       const runId = `run:review-live-${profile}`;
-      const profileRunner = new core.PipelineRunner({
+      const profileRunner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
         definition: {
           schemaVersion: 'pipeline-definition.v2', id: `pipeline:review-live-${profile}`, maxConcurrency: 1,
           stages: [{
@@ -360,7 +362,7 @@ try {
           }],
         },
         registry: granted, activated, adapters,
-        journal: new core.FileJournal(path.join(temporary, `${profile}-events.jsonl`)),
+        journal: new core.FileJournal(path.join(temporary, `${profile}-events.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
       });
       const profileResult = await profileRunner.run(runId);
       assert.equal(profileResult.status, 'succeeded');
@@ -378,7 +380,7 @@ try {
     );
 
     reviewScenario = 'blockers';
-    const blockerJournal = new core.FileJournal(path.join(temporary, 'blocker-events.jsonl'));
+    const blockerJournal = new core.FileJournal(path.join(temporary, 'blocker-events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     const gatePolicy = getReviewPolicyProfile('gate');
     const blockerStage = {
       id: 'review', type: 'kubeclaw.decision.review', dependsOn: [],
@@ -397,7 +399,7 @@ try {
       on: { request_fix: 'repair' },
     };
     const { on: _repairRouting, ...repairTemplate } = blockerStage;
-    const blockerRunner = new core.PipelineRunner({
+    const blockerRunner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2', id: 'pipeline:review-live-blockers', maxConcurrency: 1,
         stages: [blockerStage, { ...repairTemplate, id: 'repair', dependsOn: ['review'] }],
@@ -422,7 +424,7 @@ try {
     assert.equal(stageResult.reason.details.repairBatch.omittedFindingCount, 2);
 
     const governedRunId = 'run:review-live-governed';
-    const governedJournal = new core.FileJournal(path.join(temporary, 'governed-events.jsonl'));
+    const governedJournal = new core.FileJournal(path.join(temporary, 'governed-events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     const governedReview = {
       ...blockerStage,
       execution: { maxAttempts: 4, maxRemediationCycles: 4, timeoutMs: 5000 },
@@ -435,7 +437,7 @@ try {
       },
       execution: { maxAttempts: 3, maxRemediationCycles: 0, timeoutMs: 5000 },
     };
-    const governedRunner = new core.PipelineRunner({
+    const governedRunner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2', id: 'pipeline:review-live-governed', maxConcurrency: 1,
         stages: [governedReview, governedRepair],

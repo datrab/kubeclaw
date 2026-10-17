@@ -1,0 +1,250 @@
+{
+  "scope": "Four exact original source lanes, not new implementation or acceptance",
+  "rows": [
+    {
+      "id": "RT-REVIEW-PROMPT-BOUNDARY-RESERVE",
+      "original": "D228#/rows/1013",
+      "originalObjectSha256": "6dec9fac25d0682e8e26f813ffcebe55a36ccda0df828044728436ee2dd839e1",
+      "caseIds": [
+        "RT-REVIEW-PROMPT-BOUNDARY-RESERVE-MISSING",
+        "RT-REVIEW-PROMPT-BOUNDARY-RESERVE-ALT",
+        "RT-REVIEW-PROMPT-BOUNDARY-RESERVE-MUTANT"
+      ],
+      "class": "operator-setting",
+      "owner": "review/runtime-dispatch shared envelope binding",
+      "originalSource": {
+        "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+        "field": "PROMPT_TOKEN_BOUNDARY_RESERVE",
+        "sha256": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "SOURCE_LITERAL_CENTRAL_RECEIVING_OPEN",
+      "currentAuthor": {
+        "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+        "sha256": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a",
+        "anchor": "const PROMPT_TOKEN_BOUNDARY_RESERVE = 64;",
+        "lines": [
+          40
+        ]
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+          "sha256": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a",
+          "anchor": "tokens: measured.tokens + fixedTokens + RUNTIME_RESULT_FILE_MAX_BYTES + PROMPT_TOKEN_BOUNDARY_RESERVE",
+          "lines": [
+            67
+          ]
+        }
+      ],
+      "constraint": "Shared Review/runtime target envelope reservation; must preserve original run binding and nonnegative tuning domain, not invent a Review-only disconnected author."
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-SYSTEM-PROMPT",
+      "original": "D228#/rows/2314",
+      "originalObjectSha256": "d638154c69c74cc5994235e788b6586df3c61ca876bcec1f886db77acaf39d80",
+      "caseIds": [
+        "AUTH-PRISM-DESIGN-SYSTEM-PROMPT-EFFECT"
+      ],
+      "class": "operator-setting",
+      "owner": "prism-engine",
+      "originalSource": {
+        "path": "skills/prism/engine/design-providers.ts",
+        "field": "messages.system.content",
+        "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+        "lines": [
+          32,
+          92,
+          100,
+          103,
+          110,
+          112,
+          113,
+          134
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "DORMANT_PROVIDER_LITERAL_CENTRAL_RECEIVING_OPEN",
+      "currentAuthor": {
+        "path": "skills/prism/engine/design-providers.ts",
+        "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+        "anchor": "Return JSON with an operations array. Use only Prism typed operations. Do not return code or markdown.",
+        "lines": [
+          101
+        ]
+      },
+      "actualEffects": [
+        {
+          "path": "skills/prism/engine/design-providers.ts",
+          "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+          "anchor": "export class OpenAICompatibleDesignProvider",
+          "lines": [
+            38
+          ]
+        }
+      ],
+      "constraint": "Optional HTTP provider instruction remains literal. Dormant constructor/export is not productive composition or nonapplicability; preserve original effect case OPEN, no paid calls."
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-ENABLE",
+      "original": "D228#/rows/2335",
+      "originalObjectSha256": "af6e213dfc5fece0756afdc794df7c0de09e7642a4cedf29894478c098088b3f",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-ENABLE-EFFECT"
+      ],
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_DECISIONS_ENABLED",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          24
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "ENV_AUTHOR_CENTRAL_RECEIVING_OPEN",
+      "currentAuthor": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+        "anchor": "if (env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true') return undefined;",
+        "lines": [
+          24
+        ]
+      },
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/control-config.ts",
+          "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
+          "anchor": "const product = await loadProductAuthorityConfig(snapshot);",
+          "lines": [
+            113
+          ]
+        }
+      ],
+      "constraint": "Enable policy is not a secret; remains ENV author. No boolean central schema/receiving inferred from presence of other Control fields."
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-DECISION-TTL",
+      "original": "D228#/rows/2343",
+      "originalObjectSha256": "b266df209e016a33879a19f5031f40ec966d6aed261bce2fcbdf39779f7acf78",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-DECISION-TTL-EFFECT"
+      ],
+      "class": "operator-setting",
+      "owner": "prism-control",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "signProductIntent.expiry",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          61,
+          62,
+          67
+        ]
+      },
+      "centralPhysicalAuthor": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_EXISTING_CONTROL_LIFETIME_SOURCE_JOIN",
+      "profiles": [
+        {
+          "pointer": "/profiles/standard/settings/productDecisionLifetimeMs",
+          "valueSha256": "6ce318969619d1c360b6144be09e3d3a22674897c7cbfe995716ed8b7ff7c4cf"
+        },
+        {
+          "pointer": "/profiles/spiffe/settings/productDecisionLifetimeMs",
+          "valueSha256": "6ce318969619d1c360b6144be09e3d3a22674897c7cbfe995716ed8b7ff7c4cf"
+        }
+      ],
+      "schema": {
+        "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+        "sha256": "de23f2b21a94cdeef4e550961673e18b0aa0b43048464ca0f179e10d817563b4",
+        "fragments": [
+          {
+            "pointer": "/$defs/prism-control/properties/productDecisionLifetimeMs",
+            "fragmentSha256": "2d54467a92cba7ec9e00ca61f94307fb902f36ec77ae6d648a17b59941ac2215"
+          },
+          {
+            "pointer": "/$defs/prism-control-v3/properties/productDecisionLifetimeMs",
+            "fragmentSha256": "2d54467a92cba7ec9e00ca61f94307fb902f36ec77ae6d648a17b59941ac2215"
+          },
+          {
+            "pointer": "/$defs/prism-control-v4/properties/productDecisionLifetimeMs",
+            "fragmentSha256": "2d54467a92cba7ec9e00ca61f94307fb902f36ec77ae6d648a17b59941ac2215"
+          }
+        ]
+      },
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/control-config.ts",
+          "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
+          "anchor": "productDecisionLifetimeMs: control.productDecisionLifetimeMs,",
+          "lines": [
+            82
+          ]
+        },
+        {
+          "path": "skills/prism/server/control-server.ts",
+          "sha256": "bbb224beca2992684d25c091ab5470db640b7975b34508f7b5d441ca9818975d",
+          "anchor": "productDecisionLifetimeMs: config.productDecisionLifetimeMs",
+          "lines": [
+            80
+          ]
+        },
+        {
+          "path": "skills/prism/server/product-decisions.ts",
+          "sha256": "3731d778183e5417c57a16c4c315db972269c86fd17183c810db9d76f872b255",
+          "anchor": "recordProductIntent(options.db, intent, actor, options.config, options.productDecisionLifetimeMs)",
+          "lines": [
+            62
+          ]
+        },
+        {
+          "path": "skills/prism/storage/product-decisions.ts",
+          "sha256": "dee8b6a7a17fd838cccc3ae47477a9d21cc89f0e776ea5dc93dd6c59ea1c9ab5",
+          "anchor": "signProductIntent(intent, actor, config, lifetimeMs)",
+          "lines": [
+            17
+          ]
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "Math.floor(Math.min(now + lifetimeMs, actor.expiresAt) / 1000) * 1000",
+          "lines": [
+            62
+          ]
+        }
+      ],
+      "capture": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
+        "anchor": "projectControlSettings(capture)",
+        "lines": [
+          14,
+          54
+        ]
+      },
+      "constraint": "Selected lifetime does not centralize product enable/credentials; actor expiry and second flooring unchanged. Stored envelope reuse remains original authority, no backdating."
+    }
+  ],
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "constraint": "One existing selected Control lifetime source join; product enable remains ENV-authored, design instruction remains dormant HTTP-provider literal, Review boundary reserve remains source literal. No new owner or authority, no original outcome changed; original/history/independent/native/full C0-C6 acceptance OPEN.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN"
+}

@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -10,7 +11,7 @@ import {
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-v2-resume-'));
 try {
   const fixtureRoot = path.resolve('tests/fixtures/plugin-system-v2');
-  const platform = {
+  const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION,
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: [fixtureRoot],
     trustedBuiltinRoots: [fixtureRoot],

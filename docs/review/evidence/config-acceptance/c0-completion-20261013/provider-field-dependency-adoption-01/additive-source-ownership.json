@@ -1,0 +1,469 @@
+{
+  "status": "bounded source ownership supplement not old ledger/global acceptance",
+  "records": [
+    {
+      "sourceCoordinateIdentity": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "line": 49,
+        "field": "processing.maximumFlowFileBytes"
+      },
+      "exactHistoricalCandidates": [],
+      "historicalLedgerStatus": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "additiveCurrentOwnership": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/0"
+      },
+      "owner": "kubeclaw.api-flow",
+      "author": {
+        "path": "config/plugins/kubeclaw.api-flow.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumFlowFileBytes"
+      },
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/70"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/74"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/73"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/71"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/72"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/75"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/192"
+        }
+      ],
+      "notTaskAlias": true,
+      "qualification": "Actual bounded additive source ownership only; old scanner ledger unmodified and whole source universe not accepted"
+    },
+    {
+      "sourceCoordinateIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 193,
+        "field": "processing.maximumSpecFileBytes"
+      },
+      "exactHistoricalCandidates": [],
+      "historicalLedgerStatus": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "additiveCurrentOwnership": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/1"
+      },
+      "owner": "kubeclaw.openapi",
+      "author": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumSpecFileBytes"
+      },
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "notTaskAlias": true,
+      "qualification": "Actual bounded additive source ownership only; old scanner ledger unmodified and whole source universe not accepted"
+    },
+    {
+      "sourceCoordinateIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 202,
+        "field": "processing.maximumSelections"
+      },
+      "exactHistoricalCandidates": [],
+      "historicalLedgerStatus": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "additiveCurrentOwnership": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/2"
+      },
+      "owner": "kubeclaw.openapi",
+      "author": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumSelections"
+      },
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/81"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/79"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/78"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/76"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/77"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/80"
+        }
+      ],
+      "notTaskAlias": true,
+      "qualification": "Actual bounded additive source ownership only; old scanner ledger unmodified and whole source universe not accepted"
+    },
+    {
+      "sourceCoordinateIdentity": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "line": 47,
+        "field": "processing.maximumSchemaGraphDepth"
+      },
+      "exactHistoricalCandidates": [],
+      "historicalLedgerStatus": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "additiveCurrentOwnership": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/3"
+      },
+      "owner": "kubeclaw.openapi",
+      "author": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumSchemaGraphDepth"
+      },
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "notTaskAlias": true,
+      "qualification": "Actual bounded additive source ownership only; old scanner ledger unmodified and whole source universe not accepted"
+    },
+    {
+      "sourceCoordinateIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 37,
+        "field": "processing.maximumRefChainDepth"
+      },
+      "exactHistoricalCandidates": [],
+      "historicalLedgerStatus": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "additiveCurrentOwnership": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/4"
+      },
+      "owner": "kubeclaw.openapi",
+      "author": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumRefChainDepth"
+      },
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "notTaskAlias": true,
+      "qualification": "Actual bounded additive source ownership only; old scanner ledger unmodified and whole source universe not accepted"
+    },
+    {
+      "sourceCoordinateIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 70,
+        "field": "processing.maximumPayloadDepth"
+      },
+      "exactHistoricalCandidates": [],
+      "historicalLedgerStatus": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "additiveCurrentOwnership": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/5"
+      },
+      "owner": "kubeclaw.openapi",
+      "author": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumPayloadDepth"
+      },
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "notTaskAlias": true,
+      "qualification": "Actual bounded additive source ownership only; old scanner ledger unmodified and whole source universe not accepted"
+    },
+    {
+      "sourceCoordinateIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 56,
+        "field": "processing.maximumPatternCodeUnits"
+      },
+      "exactHistoricalCandidates": [
+        {
+          "id": "SRC-f08c65e1075873b3",
+          "source": "skills/buster/plugins/openapi/src/provider.js",
+          "line": 56,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": null
+        }
+      ],
+      "historicalLedgerStatus": "exact existing ledger coordinate retained, locally adjudicated processing budget",
+      "additiveCurrentOwnership": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/6"
+      },
+      "owner": "kubeclaw.openapi",
+      "author": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumPatternCodeUnits"
+      },
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "notTaskAlias": true,
+      "qualification": "Actual bounded additive source ownership only; old scanner ledger unmodified and whole source universe not accepted"
+    },
+    {
+      "sourceCoordinateIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 62,
+        "field": "processing.maximumPatternQuantifier"
+      },
+      "exactHistoricalCandidates": [
+        {
+          "id": "SRC-0e9d90225155cbb9",
+          "source": "skills/buster/plugins/openapi/src/provider.js",
+          "line": 62,
+          "kinds": [
+            "fallback-or-expression",
+            "policy-or-input"
+          ],
+          "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": null
+        }
+      ],
+      "historicalLedgerStatus": "exact existing ledger coordinate retained, locally adjudicated processing budget",
+      "additiveCurrentOwnership": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/7"
+      },
+      "owner": "kubeclaw.openapi",
+      "author": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumPatternQuantifier"
+      },
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "notTaskAlias": true,
+      "qualification": "Actual bounded additive source ownership only; old scanner ledger unmodified and whole source universe not accepted"
+    }
+  ]
+}

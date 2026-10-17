@@ -1,0 +1,17 @@
+{
+  "command": "python3 /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py",
+  "scope": "Doc/sourceintegrity, roster/identity/conservation ONLY, no semantic fullC0/runtime acceptance",
+  "passedChecks": 5644,
+  "failed": 0,
+  "markers": 1353,
+  "sourceFiles": 173,
+  "exactOpenQuestions": 14,
+  "counts": {
+    "manually-source-disposed": 1113,
+    "individual-existing-disposition-linked": 214,
+    "upstream-current-producer-handoff": 10,
+    "uncovered-source-obligation": 13,
+    "generated-assignment-source-disposed": 3
+  },
+  "acceptance": "NOT ACCEPTED; independent fullsource review and namedowner/domain/case closure required"
+}

@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "python3",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/preserve-axe-merged-domain.py"
+  ],
+  "exit": 1,
+  "tool": "e5b2dc",
+  "reason": "Author pointer update incorrectly applied owner-schema traversal to TASK url pointer; no production/source/schema/canonical/history edits"
+}

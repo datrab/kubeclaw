@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/runtime/independent-integrity.py", line 23, in <module>
+    for p in prior:assert hashlib.sha256(can(p)).hexdigest()==rows[p['id']]['sourceDefinitionHistory'][-1]['oldRowSHA256']
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

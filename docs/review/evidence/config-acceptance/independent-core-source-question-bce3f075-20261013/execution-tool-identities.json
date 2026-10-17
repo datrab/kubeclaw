@@ -1,0 +1,50 @@
+{
+  "node": {
+    "executable": "/usr/local/bin/node",
+    "realPath": "/usr/local/bin/node",
+    "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "argv": [
+      "/usr/local/bin/node",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "v24.21.0\n",
+    "stderr": ""
+  },
+  "python3": {
+    "executable": "/usr/bin/python3",
+    "realPath": "/usr/bin/python3.11",
+    "sha256": "9bee109da0dce17a7c9eeaca9f420cc6770a9fe143b9382d73bd22fe59b21a5f",
+    "argv": [
+      "/usr/bin/python3",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "Python 3.11.2\n",
+    "stderr": ""
+  },
+  "/usr/bin/tar": {
+    "executable": "/usr/bin/tar",
+    "realPath": "/usr/bin/tar",
+    "sha256": "4e11647a9c86fb8857768bd622c43ed0662d7019f60f5bdd12fb15ac5f087070",
+    "argv": [
+      "/usr/bin/tar",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "tar (GNU tar) 1.34\nCopyright (C) 2021 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by John Gilmore and Jay Fenlason.\n",
+    "stderr": ""
+  },
+  "/usr/bin/flock": {
+    "executable": "/usr/bin/flock",
+    "realPath": "/usr/bin/flock",
+    "sha256": "09f189297bce1f713e2ba9a8607a89f17902edadc54d3c3162d43f76e8d3b6f9",
+    "argv": [
+      "/usr/bin/flock",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "flock from util-linux 2.38.1\n",
+    "stderr": ""
+  }
+}

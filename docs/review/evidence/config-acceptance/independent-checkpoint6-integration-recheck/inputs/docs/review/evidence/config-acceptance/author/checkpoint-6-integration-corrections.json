@@ -1,0 +1,42 @@
+{
+  "scope": "C6-INTEGRATION-01/02/03 parent corrections ready independent material recheck; not global acceptance",
+  "corrections": {
+    "C6-INTEGRATION-01": "Exacttwo resolveddispositions required; immutable reportSHA+independentreviewfreeze pinned, not noGlobalflag proof",
+    "C6-INTEGRATION-02": "Activecases require preserved IDs/requirementsets and identicalactivecontracts; exactreviewed302inputs/receipttied to reviewfreeze, not updatedauthorreceipt hashes alone",
+    "C6-INTEGRATION-03": "Native5793completecases retained matrixsupplemental;5524canonicalrequirements conserved;269unlinkedopen;2229refsvalidated root+package, no result/reviewpromotion"
+  },
+  "identities": {
+    "docs/review/evidence/config-acceptance/author/consolidate.py": "6892b85819eccb4d2f1721df03a09dc2b72d5178c37afab006ca370efcd5424b",
+    "docs/review/evidence/config-acceptance/author/check-matrix.py": "0cbd2f83fc7002f4fdbb83b2d02e4060d6aae59589a0726ae0f7bd3ae95bf72a",
+    "docs/review/evidence/config-acceptance/author/check-core-supersession-integration.py": "8add0e711f2ea064802f02458d33f56e72390fe710807d86153a36d1c4a4ceb6",
+    "docs/review/evidence/config-acceptance/author/check-native-case-integration.py": "90b5c000b006fdeec5162b86c5956c0689b73a703583c7d7c8f1ff50ea058808",
+    "docs/review/remediation/config-semantic-inventory.json": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+    "docs/review/remediation/config-acceptance-matrix.json": "1eb9534c1576b6ee0bc621c4b67fe43e3f1592b005ed1ddb85e37012fbd6f998"
+  },
+  "actualCurrentChecks": {
+    "structural": {
+      "path": "docs/review/evidence/config-acceptance/author/structural-checkpoint-6-attempt3.log",
+      "exit": 0,
+      "errors": 0
+    },
+    "strict": {
+      "path": "docs/review/evidence/config-acceptance/author/strict-checkpoint-6-attempt3.log",
+      "exit": 1,
+      "errors": 98805
+    },
+    "coreGuard": {
+      "path": "docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt7-20261013.log",
+      "exit": 0
+    },
+    "canonical148": {
+      "path": "docs/review/evidence/config-acceptance/author/canonical-refinements-checkpoint-6-attempt2.log",
+      "exit": 0
+    },
+    "nativeConservation": {
+      "path": "docs/review/evidence/config-acceptance/author/native-case-integration-checkpoint-6-attempt1.log",
+      "exit": 0
+    }
+  },
+  "independentMaterialReview": "pending",
+  "wholeC0": "not-accepted"
+}

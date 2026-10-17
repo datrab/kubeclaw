@@ -1,0 +1,838 @@
+{
+  "passed": 206,
+  "total": 206,
+  "negativeControls": [
+    {
+      "name": "alter id",
+      "rejected": true
+    },
+    {
+      "name": "alter original",
+      "rejected": true
+    },
+    {
+      "name": "alter originalObjectSha256",
+      "rejected": true
+    },
+    {
+      "name": "alter caseIds",
+      "rejected": true
+    },
+    {
+      "name": "alter class",
+      "rejected": true
+    },
+    {
+      "name": "alter owner",
+      "rejected": true
+    },
+    {
+      "name": "alter currentValuePath",
+      "rejected": true
+    },
+    {
+      "name": "alter centralPhysicalAuthor",
+      "rejected": true
+    },
+    {
+      "name": "alter runtimeAcceptance",
+      "rejected": true
+    },
+    {
+      "name": "alter actualProjections",
+      "rejected": true
+    },
+    {
+      "name": "alter status",
+      "rejected": true
+    },
+    {
+      "name": "missing row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate row",
+      "rejected": true
+    },
+    {
+      "name": "false full acceptance",
+      "rejected": true
+    },
+    {
+      "name": "false original pass",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AGENTROLE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-IMAGE-PULLPOLICY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-IMAGEPULLSECRETS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-CODEBUNDLE-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-CODEBUNDLE-AUTH-EXISTINGSECRET",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-CODEBUNDLE-AUTH-EXISTINGSECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-ENDPOINT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-TRANSPORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-AUTHSECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-USERNAMEKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-PASSWORDKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-CASECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-CASECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-REGISTRY-NODECAFILE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-DOCKERHUBMIRROR-ENDPOINT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-DOCKERHUBMIRROR-TRANSPORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-DOCKERHUBMIRROR-CASECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-DOCKERHUBMIRROR-CASECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE-DOCKERHUBMIRROR-NODECAFILE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-URL",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-NODEOPTIONS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-COMMAND",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-PORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-BRIDGEPORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-RESOURCES",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PLUGINSEED-INSTALLMODE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-CAPABILITYPROVIDERS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-REPLICACOUNT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-TRUSTDOMAIN",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-SOCKETPATH",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-CSIDRIVER",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-PULLPOLICY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AUTH-TOKEN",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AUTH-EXISTINGSECRET",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AUTH-EXISTINGSECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-LITELLM-ENDPOINT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-LITELLM-APIKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-LITELLM-EXISTINGSECRET",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-LITELLM-EXISTINGSECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-STITCH-EXISTINGSECRET",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-STITCH-EXISTINGSECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-DISCORD-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-DISCORD-CHANNELID",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-DISCORD-EXECAPPROVERS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-DISCORD-TOKEN",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-DISCORD-EXISTINGSECRET",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-DISCORD-EXISTINGSECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-DISCORDWEBHOOK-SECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-DISCORDWEBHOOK-SECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AGENT-PROJECT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AGENT-MODEL-PRIMARY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AGENT-MODEL-FALLBACKS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AGENT-GIT-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AGENT-GIT-SECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-AGENT-GIT-REPOURL",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-REDIS-HOST",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-REDIS-PORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-REDIS-SECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-REDIS-SECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-OVERRIDEONRESTART",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-SOUL",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-AGENTS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-USER",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-TOOLS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-IDENTITY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-WORKSPACE-BOOTSTRAP",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICE-TYPE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICE-GATEWAYPORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICE-GATEWAYTARGETPORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICE-BRIDGEENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICE-BRIDGEPORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICE-NODEPORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICE-BRIDGENODEPORT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICE-EXTRAPORTS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PERSISTENCE-CONFIG-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PERSISTENCE-CONFIG-SIZE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PERSISTENCE-CONFIG-STORAGECLASS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PERSISTENCE-CONFIG-ACCESSMODES",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PERSISTENCE-WORKSPACE-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PERSISTENCE-WORKSPACE-SIZE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PERSISTENCE-WORKSPACE-STORAGECLASS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PERSISTENCE-WORKSPACE-ACCESSMODES",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-RUNASROOT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-STARTUP-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-STARTUP-INITIALDELAYSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-STARTUP-PERIODSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-STARTUP-TIMEOUTSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-STARTUP-FAILURETHRESHOLD",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-READINESS-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-READINESS-INITIALDELAYSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-READINESS-PERIODSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-READINESS-TIMEOUTSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-READINESS-FAILURETHRESHOLD",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-LIVENESS-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-LIVENESS-INITIALDELAYSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-LIVENESS-PERIODSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-LIVENESS-TIMEOUTSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-LIVENESS-FAILURETHRESHOLD",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-GATEWAY-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDIS-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-STREAM",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-MAXLEN",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-LITELLM-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REGISTRIES-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REGISTRIES-ENDPOINTS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SHUTDOWN-TERMINATIONGRACEPERIODSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SHUTDOWN-DRAINFILE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SHUTDOWN-PRESTOPDRAINSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICEACCOUNT-CREATE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SERVICEACCOUNT-AUTOMOUNT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-LEASECLIENT-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-LEASECLIENT-VERIFICATIONREAD-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-LEASECLIENT-VERIFICATIONREAD-TAILSCALEOPERATORNAMESPACE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-LEASECLIENT-VERIFICATIONREAD-TAILSCALEOAUTHSECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-READYCLIENT-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-READYCLIENT-ENDPOINT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-READYCLIENT-AUDIENCE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-READYCLIENT-CASECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-ALLOWEDPREFIXES",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-DEFAULTTTLSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-MAXTTLSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-AUDIENCE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-PRODUCERNAMESPACE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-PRODUCERSERVICEACCOUNT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-ISSUER",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-VERIFYKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-ALLOWEDACTORS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-AUDIENCE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-PRODUCERNAMESPACE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-PRODUCERSERVICEACCOUNT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-TLSSECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-ALLOWEDACCESS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-ALLOWEDSOURCESECRETS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-IMAGE-PULLPOLICY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-POLLINTERVALMS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-COMMANDS-OWNERALLOWFROM",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-COMMANDS-ALLOWFROMDISCORD",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SWARMCONFIG-OVERRIDEONRESTART",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-SEMGREPCONFIGYAML",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-ESLINTCONFIGMJS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-CUSTOMSKILLS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-NODESELECTOR",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-TOLERATIONS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-PODANNOTATIONS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-EXTRAENV",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-EXTRACONTAINERS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-ARCHVIEWER-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-ARCHVIEWER-NETWORKPOLICYPROVIDER",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-ARCHVIEWER-EXISTINGSECRET",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-ARCHVIEWER-HOSTNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-ARCHVIEWER-TAILSCALEOPERATORNAMESPACE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-EXTRAVOLUMES",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-EXTRAVOLUMEMOUNTS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERRUNTIMEPERSISTENCE-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERRUNTIMEPERSISTENCE-CLAIMNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERRUNTIMEPERSISTENCE-SIZE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-BUSTERRUNTIMEPERSISTENCE-STORAGECLASS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "rejected": true
+    }
+  ],
+  "restoredDeterministic": true,
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "fullC0C6Complete": false,
+  "originalCasesNewlyAccepted": 0
+}

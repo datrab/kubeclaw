@@ -1,3 +1,4 @@
+import { nativeBrowserPolicy } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
@@ -22,16 +23,16 @@ test('original round client retains a lost-response request across reload and pe
   response.end(JSON.stringify({items:ready?['one','two','three'].map(id=>({id,generation_id:'round-fixed',source_document_id:`doc-${id}`,title:id,summary:id,state:'proposed'})):[]}));
  });
  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));const address=server.address();if(!address||typeof address==='string')throw new Error('test server missing');
- const client:RoundClient={projectId:'project',userId:'user',csrf:'csrf',origin:`http://127.0.0.1:${address.port}`,storage};
+ const client:RoundClient={projectId:'project',userId:'user',csrf:'csrf',origin:`http://127.0.0.1:${address.port}`,policy:nativeBrowserPolicy,storage};
  try{
   const pending=pendingRound(client,{documentId:'old-doc',expectedRevision:3,parentRoundId:'old-round'});
   await assert.rejects(submitRound(client,pending));
   const reloaded={...client};assert.equal(savedRound(reloaded)?.idempotencyKey,pending.idempotencyKey);
   const accepted=await submitRound(reloaded,savedRound(reloaded)!);
-  assert.equal(await waitForRound(reloaded,accepted,1),null);
+  assert.equal(await waitForRound({...reloaded,policy:{...nativeBrowserPolicy,roundPolling:{maximumAttempts:1,intervalMs:1}}},accepted),null);
   assert.equal(savedRound(reloaded)?.generationId,'round-fixed');
   await submitRound({...client},savedRound(client)!);ready=true;
-  const result=await waitForRound(client,savedRound(client)!,1);
+  const result=await waitForRound({...client,policy:{...nativeBrowserPolicy,roundPolling:{maximumAttempts:1,intervalMs:1}}},savedRound(client)!);
   assert.equal(result?.directions.length,3);assert.equal(savedRound(client),null);
   assert.equal(new Set(requests.map(row=>row.idempotencyKey)).size,1);
   assert.ok(requests.every(row=>row.documentId==='old-doc'&&row.expectedRevision===3&&row.parentRoundId==='old-round'));
@@ -43,7 +44,7 @@ test('original round HTTP calls preserve 400, 500 and text diagnostics and ident
  let status=400;let body='{"error":"parent revision changed","expectedRevision":9}';
  const server=createServer((_request,response)=>{response.statusCode=status;response.end(body);});
  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));const address=server.address();if(!address||typeof address==='string')throw new Error('test server missing');
- const client:RoundClient={projectId:'project-diagnostics',userId:'user',csrf:'csrf',origin:`http://127.0.0.1:${address.port}`,storage:{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}};
+ const client:RoundClient={projectId:'project-diagnostics',userId:'user',csrf:'csrf',origin:`http://127.0.0.1:${address.port}`,policy:nativeBrowserPolicy,storage:{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}};
  try{
   await assert.rejects(submitRound(client,{documentId:'doc',expectedRevision:1,idempotencyKey:'retained-key'}),error=>error instanceof Error&&error.message.includes('Submit design round for project project-diagnostics: HTTP 400')&&error.message.includes(body));
   status=500;body='{"error":"database unavailable","cause":"connection pool exhausted"}';

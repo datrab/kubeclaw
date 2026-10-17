@@ -5,9 +5,9 @@ export interface PrismRolePasswords { migrator: string; runtime: string; readonl
 const roles = ['migrator', 'runtime', 'readonly'] as const;
 const literal = (value: string): string => `'${value.replaceAll("'", "''")}'`;
 
-async function authenticationCode(adminUrl: string, role: string, password: string): Promise<string | null> {
+async function authenticationCode(adminUrl: string, role: string, password: string, connectionTimeoutMillis: number): Promise<string | null> {
   const url = new URL(adminUrl); url.username = role; url.password = password;
-  const client = new Client({ connectionString: url.toString(), connectionTimeoutMillis: 5000 });
+  const client = new Client({ connectionString: url.toString(), connectionTimeoutMillis });
   try { await client.connect(); return null; }
   catch (error) {
     if (error && typeof error === 'object' && 'code' in error) return String(error.code);
@@ -15,16 +15,17 @@ async function authenticationCode(adminUrl: string, role: string, password: stri
   } finally { await client.end(); }
 }
 
-async function verifyCredential(adminUrl: string, role: string, password: string): Promise<void> {
+async function verifyCredential(adminUrl: string, role: string, password: string, connectionTimeoutMillis: number): Promise<void> {
   // A successful connection under trust/peer/certificate-only authentication
   // cannot prove that the supplied password matches the existing role.
-  const wrong = await authenticationCode(adminUrl, role, randomBytes(48).toString('base64url'));
+  const wrong = await authenticationCode(adminUrl, role, randomBytes(48).toString('base64url'), connectionTimeoutMillis);
   if (wrong !== '28P01') throw new Error(`PRISM_ROLE_PASSWORD_AUTH_REQUIRED:${role}`);
-  if (await authenticationCode(adminUrl, role, password) !== null) throw new Error(`PRISM_ROLE_CREDENTIAL_TRANSITION_REQUIRED:${role}`);
+  if (await authenticationCode(adminUrl, role, password, connectionTimeoutMillis) !== null) throw new Error(`PRISM_ROLE_CREDENTIAL_TRANSITION_REQUIRED:${role}`);
 }
 
 /** Bootstrap is additive and transactional; normal upgrades never rotate credentials. */
-export async function bootstrapPrismDatabaseRoles(pool: Pool, adminUrl: string, passwords: PrismRolePasswords): Promise<void> {
+export async function bootstrapPrismDatabaseRoles(pool: Pool, adminUrl: string, passwords: PrismRolePasswords, connectionTimeoutMs: number): Promise<void> {
+  if (!Number.isSafeInteger(connectionTimeoutMs) || connectionTimeoutMs < 1 || connectionTimeoutMs > 2147483647) throw new Error('PRISM_DATABASE_CONNECTION_TIMEOUT_REQUIRED');
   if (roles.some(role => !passwords[role])) throw new Error('PRISM_ROLE_PASSWORD_REQUIRED');
   const client = await pool.connect();
   try {
@@ -33,15 +34,15 @@ export async function bootstrapPrismDatabaseRoles(pool: Pool, adminUrl: string, 
       await client.query("SELECT pg_advisory_xact_lock(hashtextextended('prism-role-bootstrap',0))");
       const existing = new Set((await client.query<{ rolname: string }>(
         "SELECT rolname FROM pg_roles WHERE rolname = ANY($1::text[])", [roles.map(role => `prism_${role}`)])).rows.map(row => row.rolname));
-      await ensureRoles(client, adminUrl, passwords, existing);
+      await ensureRoles(client, adminUrl, passwords, existing, connectionTimeoutMs);
       await grantPrismRoles(client);
       await client.query('COMMIT');
     } catch (error) { await client.query('ROLLBACK'); throw error; }
   } finally { client.release(); }
 }
 
-async function ensureRoles(client: PoolClient, adminUrl: string, passwords: PrismRolePasswords, existing: ReadonlySet<string>): Promise<void> {
-  for (const role of roles) if (existing.has(`prism_${role}`)) await verifyCredential(adminUrl, `prism_${role}`, passwords[role]);
+async function ensureRoles(client: PoolClient, adminUrl: string, passwords: PrismRolePasswords, existing: ReadonlySet<string>, connectionTimeoutMs: number): Promise<void> {
+  for (const role of roles) if (existing.has(`prism_${role}`)) await verifyCredential(adminUrl, `prism_${role}`, passwords[role], connectionTimeoutMs);
   for (const role of roles) if (!existing.has(`prism_${role}`)) await client.query(`CREATE ROLE prism_${role} LOGIN PASSWORD ${literal(passwords[role])}`);
 }
 

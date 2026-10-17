@@ -1,3 +1,4 @@
+import { retainedCoreRuntimePolicy } from '../execution/engine-snapshots.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import { canonicalJson, sha256Text, type LifecycleEvent, type PluginDomainEvent } from '@kubeclaw/plugin-sdk';
@@ -15,7 +16,7 @@ function redact(value: unknown): unknown {
 export function readPipelineAudit(runRoot: string, runId: string) {
   const file = path.join(runRoot, 'events.jsonl');
   if (!fs.existsSync(file)) throw new Error('AUDIT_JOURNAL_MISSING');
-  const records = new FileJournal<LifecycleEvent | PluginDomainEvent>(file).records();
+  const records = new FileJournal<LifecycleEvent | PluginDomainEvent>(file, retainedCoreRuntimePolicy(runRoot).journalAppendLockTimeoutMs).records();
   const selected = records.filter(({ entry }) => entry.identity.runId === runId);
   if (!selected.length) throw new Error('AUDIT_RUN_MISSING');
   const events = selected.map(({ entry, hash }) => ({

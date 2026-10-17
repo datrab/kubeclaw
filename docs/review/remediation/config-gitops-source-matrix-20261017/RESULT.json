@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-17T01:38:55.406755+00:00",
+  "sourceCommit": "175abddb9da290b307403a2b8d67cd10f19375e0",
+  "sourceRemoteVerified": true,
+  "scope": "GitOps8 generated-binding source matrix only; no runtime implementation",
+  "fields": 8,
+  "generatedBindingClassificationPreserved": true,
+  "verifiedBundleDerivedFields": 4,
+  "validatedInvocationInputFields": 2,
+  "explicitNamingWithOriginalFallbackFields": 2,
+  "continuousRevisionMainProjectionRecorded": true,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "all45GroupsPreserved": true,
+  "all44UnrelatedGroupsUnchanged": true,
+  "remainingUnresolvedHistoricalGroups": 5,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; no native spawn/reviewer callable; parent done; CONFIG subagents0; no new independent output; unchanged EROFS not retried",
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged isolated Linux Docker UID1000/GID1000 writable delegated cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL",
+  "writerLock": "SAME nonblocking lock; released at command exit",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false
+}

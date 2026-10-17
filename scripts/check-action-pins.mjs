@@ -7,7 +7,8 @@ import YAML from 'yaml';
 const SHA = /^[a-f0-9]{40}$/u;
 const HASH = /^[a-f0-9]{64}$/u;
 function sourceFiles(root) {
-  const files = execFileSync('git', ['-C', root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z'], { encoding: 'utf8' }).split('\0');
+  const files = execFileSync('git', ['-C', root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z', '--',
+    '.github/workflows/*', ':(glob)**/action.yml', ':(glob)**/action.yaml'], { encoding: 'utf8' }).split('\0');
   return [...new Set(files)].filter(file => /^\.github\/workflows\/[^/]+\.ya?ml$/u.test(file)
     || /(?:^|\/)action\.ya?ml$/u.test(file));
 }

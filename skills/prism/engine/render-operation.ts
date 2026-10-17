@@ -1,3 +1,5 @@
+import type { PrismEngineSettings, PrismRenderSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import { pngDimensions } from './render-dimensions.ts';
 import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
 import { resolveView } from "../domain/index.ts";
 import { renderNode } from "../renderer/index.ts";
@@ -8,6 +10,7 @@ import type { EngineResult } from "./index.ts";
 function renderAssetsFor(
   document: PrismDocument,
   input: Record<string, unknown>,
+  maximumAssetSourceCharacters: number,
 ): Record<string, unknown> {
   const suppliedAssets = (input.assetSources ?? {}) as Record<string, unknown>;
   const renderAssets: Record<string, unknown> = {};
@@ -23,7 +26,7 @@ function renderAssetsFor(
       !asset.mediaType ||
       typeof src !== "string" ||
       !src.startsWith(`data:${asset.mediaType};base64,`) ||
-      src.length > 16_000_000
+      src.length > maximumAssetSourceCharacters
     )
       throw new Error(`render asset is unavailable: ${assetId}`);
     renderAssets[assetId] = {
@@ -37,8 +40,9 @@ function renderAssetsFor(
 function renderHtml(
   document: PrismDocument,
   input: Record<string, unknown>,
+  maximumAssetSourceCharacters: number,
 ): string {
-  const renderAssets = renderAssetsFor(document, input);
+  const renderAssets = renderAssetsFor(document, input, maximumAssetSourceCharacters);
   const safeColor = (value: unknown, fallback: string) =>
     typeof value === "string" &&
     /^(?:#[0-9a-f]{3,8}|rgba?\([0-9., %]+\)|hsla?\([0-9., %a-z]+\)|transparent|currentColor)$/iu.test(
@@ -86,6 +90,7 @@ async function captureHtml(
   html: string,
   input: Record<string, unknown>,
   rendererMetadata: Record<string, unknown>,
+  render: PrismRenderSettings | undefined,
   signal?: AbortSignal,
 ) {
   let screenshotBase64: string | undefined;
@@ -99,15 +104,15 @@ async function captureHtml(
     version: browser.version(),
   };
   try {
-    const widths = { compact: 390, regular: 768, wide: 1440 } as const;
-    const context = await browser.newContext({
-      viewport: {
-        width: widths[String(input.viewport) as keyof typeof widths] ?? 1440,
-        height: 1000,
-      },
-      locale: "en-US",
-      timezoneId: "UTC",
-      reducedMotion: "reduce",
+    // Original captures alone retain their original literal reader and wide fallback.
+    const legacyWidths = { compact: 390, regular: 768, wide: 1440 } as const;
+    const viewport = render ? selectedViewport(render, input.viewport) : {
+      width: legacyWidths[String(input.viewport) as keyof typeof legacyWidths] ?? 1440, height: 1000,
+    };
+    const context = await browser.newContext({ viewport,
+      locale: render ? render.locale : "en-US",
+      timezoneId: render ? render.timezoneId : "UTC",
+      reducedMotion: render ? render.reducedMotion : "reduce",
     });
     const page = await context.newPage();
     await page.setContent(html, { waitUntil: "load" });
@@ -115,9 +120,9 @@ async function captureHtml(
       content:
         "*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}",
     });
-    screenshotBase64 = (
-      await page.screenshot({ type: "png", fullPage: true })
-    ).toString("base64");
+    const screenshot = await page.screenshot({ type: "png", fullPage: true });
+    screenshotBase64 = screenshot.toString("base64");
+    if (render) rendererMetadata = { ...rendererMetadata, image: pngDimensions(screenshot) };
     ariaSnapshot = await page.locator("body").ariaSnapshot();
     accessibilityFindings = await page
       .locator(
@@ -141,9 +146,12 @@ async function captureHtml(
 export async function renderOperation(
   document: PrismDocument,
   input: Record<string, unknown>,
+  policy: PrismEngineSettings,
   signal?: AbortSignal,
 ): Promise<EngineResult> {
-  const html = renderHtml(document, input);
+  const render = policy.render;
+  const viewport = render ? selectedViewport(render, input.viewport) : undefined;
+  const html = renderHtml(document, input, policy.maximumAssetSourceCharacters);
   const capture = input.capture === true;
   let screenshotBase64: string | undefined;
   let ariaSnapshot: string | undefined;
@@ -151,12 +159,13 @@ export async function renderOperation(
   let rendererMetadata: Record<string, unknown> = {
     name: "prism-html",
     version: "v1",
-    locale: "en-US",
-    timezone: "UTC",
-    motion: "reduced",
+    locale: render ? render.locale : "en-US",
+    timezone: render ? render.timezoneId : "UTC",
+    motion: render ? (render.reducedMotion === 'reduce' ? 'reduced' : neverMotion(render.reducedMotion)) : "reduced",
+    ...(render ? { policyVersion: render.schemaVersion, viewport } : {}),
   };
   if (capture) {
-    const captured = await captureHtml(html, input, rendererMetadata, signal);
+    const captured = await captureHtml(html, input, rendererMetadata, render, signal);
     ({
       screenshotBase64,
       ariaSnapshot,
@@ -173,4 +182,10 @@ export async function renderOperation(
       ...(screenshotBase64 ? { screenshotBase64, ariaSnapshot } : {}),
     },
   };
+}
+
+function neverMotion(_value: never): never { throw new Error('PRISM_RENDER_POLICY_INVALID'); }
+function selectedViewport(render: PrismRenderSettings, viewport: unknown) {
+  if (viewport !== 'compact' && viewport !== 'regular' && viewport !== 'wide') throw new Error('PRISM_RENDER_VIEWPORT_INVALID');
+  return { width: render.widths[viewport], height: render.height };
 }

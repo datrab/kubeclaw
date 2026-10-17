@@ -1,0 +1,150 @@
+{
+  "scope": "primary immutable release reader code only, not installed OCI/deployedAPI/flag state",
+  "tailscaleCommit": "53a0d659afa51835dd7a9283873cca44261454f8",
+  "records": [
+    {
+      "url": "https://api.github.com/repos/tailscale/tailscale/git/ref/tags/v1.102.3",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale-tag-v1.102.3.json",
+      "sha256": "d6dcf728f84eff7488ca859c9e2eb6cddabfeebf6c41f8f03a11f71db03230f3",
+      "bytes": 349,
+      "result": "acquired"
+    },
+    {
+      "url": "https://api.github.com/repos/tailscale/tailscale/git/tags/9329c3677031109ff6d0b80abee0cddc8f35ff6f",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale-annotated-tag.json",
+      "sha256": "3cc9d28795bee61395526368e6384abea7da02061c98253794bdaa9b443bfa76",
+      "bytes": 1423,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/containerboot/main.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/main.go",
+      "sha256": "6a446c99206b8fa1028d1b3ea0a04be83710d0f06c34d79b10edccab26303ba0",
+      "bytes": 45226,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/containerboot/settings.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/settings.go",
+      "sha256": "df7f74d7645300831e6250597c9a3d439672a57b2448dc804c2911c6725491c5",
+      "bytes": 20503,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/tailscale/cli/up.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/tailscale/cli/up.go",
+      "sha256": "0078a92a967d42a601e9ed6622278ac1e0ab718fbb8506bc4785deabf4c69f40",
+      "bytes": 42126,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/tailscale/cli/up_test.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/tailscale/cli/up_test.go",
+      "sha256": "08c435b5a8c9af229f84b10da09f9a9045555907c53bdb0bab184f917479b01f",
+      "bytes": 1247,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/apis/networking/validation/validation.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/v1.35.6/pkg/apis/networking/validation/validation.go",
+      "sha256": "b9c4bd763181048f81583d663f209dea3f3c7f8b9aa709c4bb7b365e1bdc0ed1",
+      "bytes": 37095,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/apis/networking/validation/validation.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/v1.34.11/pkg/apis/networking/validation/validation.go",
+      "sha256": "f917efe3919db4da869eeedf66ff86552ceddb38981ffc85feb1f1077e1040b1",
+      "bytes": 36381,
+      "result": "acquired"
+    },
+    {
+      "url": "https://api.github.com/repos/tailscale/tailscale/contents/cmd/containerboot?ref=53a0d659afa51835dd7a9283873cca44261454f8",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale-containerboot-directory.json",
+      "sha256": "f32643899364faaa7c1249d96da40dd7da71dd4afd1680f366697c6fc335c7e9",
+      "bytes": 17083,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/containerboot/egressservices.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/egressservices.go",
+      "sha256": "a6eb33d0e9f3333ff8dabb2cd3ac2bd4f74c827d0bf5a392ddbb055931e882c6",
+      "bytes": 29361,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/containerboot/forwarding.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/forwarding.go",
+      "sha256": "d43e440cf4db0071c5623775629be1b30ede637ef259d1b7a3d0484dbe60bc67",
+      "bytes": 8404,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/containerboot/ingressservices.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/ingressservices.go",
+      "sha256": "0321a90ac5fdc4deabc235f2ed5c04181ff3e15c16258347d9da7e24fc8cbaf6",
+      "bytes": 11720,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/containerboot/kube.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/kube.go",
+      "sha256": "7573f4799b3fb73efeada225c7f9fae864debf2652992b394d7aa55b35ed69e3",
+      "bytes": 9017,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/containerboot/serve.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/serve.go",
+      "sha256": "aa7f9b18a51c359323e4c6fe4ea4b0dd3dbac7c8f3632eef4a4c4b5ff0d764a2",
+      "bytes": 6041,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/cmd/containerboot/tailscaled.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/tailscaled.go",
+      "sha256": "4abc0a783e8eab4320f67df4f16bdd655f079910ffa4a17d1793eb13e0a349e8",
+      "bytes": 8566,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/tailscale/tailscale/53a0d659afa51835dd7a9283873cca44261454f8/util/dnsname/dnsname.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/util/dnsname/dnsname.go",
+      "sha256": "c6d9c12cb8820bf756cb6425eee81a294efce9adace8b95fa4672e3ac73e7f0d",
+      "bytes": 7103,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/apis/core/helper/helpers.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/v1.35.6/pkg/apis/core/helper/helpers.go",
+      "sha256": "7941871d27a613bc44b80b4978a26d92a89d9d93cb681cdf9322a05c9b7ab490",
+      "bytes": 17270,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/apis/core/helper/helpers.go",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/v1.34.11/pkg/apis/core/helper/helpers.go",
+      "sha256": "7941871d27a613bc44b80b4978a26d92a89d9d93cb681cdf9322a05c9b7ab490",
+      "bytes": 17270,
+      "result": "acquired"
+    }
+  ]
+}

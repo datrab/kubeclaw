@@ -1,0 +1,152 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/components/question-closure-bce3f075/validate-proposed-definitions.mjs",
+  "identities": {
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/complete-profiles.json": "508f5e4f01bdbeb9cf1df7cc1c15b689c2fb845c316271fd8b0965bad30a8998",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/proposed-buster-component.schema.json": "fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/proposed-nova-platform.schema.json": "c7e358cb1688302961cc2fac61ca98e46feee2f06a1dbf48c114b6cbc8d9a847",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/validate-proposed-definitions.mjs": "f4edd032255b3d6131f3e930986fa4ed122c55efbcec2ecc9614ef96a2f3c5f0",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/admission-binding.schema.json": "2c3b0e60d390bb6a1ec20e5b4600b2e9da6205508db93160872d58aa8e4cc9a9",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/serialization-envelope-contract.json": "30eee23ca82c1d223dee96b5ca15034165b99418a7b39ecda756da11242edd8f",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/proposed-core-native-lock.schema.json": "d5b00706ae30c1189385390f42a9b3b4d76bb4753d5201d70a9b969be621a6b4",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/proposed-registered-store-lock-schemas.json": "3bbff705054497bcf6cee13b3448313db932954d3be50a5f3f5c41f476f2207a"
+  },
+  "node": "v24.21.0",
+  "emptyAdmissionSerializedBytes": 182,
+  "results": [
+    {
+      "id": "QC-BUSTER-COMPLETE-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-BUSTER-COMPLETE-B",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NOVA-COMPLETE-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NOVA-COMPLETE-B",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-missing",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-zero-wait",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-fraction-wait",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-too-long-wait",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-reason-prefix",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-reserve1024",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-reserve3485",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-whole-state-headroom",
+      "result": "passed"
+    },
+    {
+      "id": "QC-NEGATIVE-quarantine-headroom",
+      "result": "passed"
+    },
+    {
+      "id": "QC-TAR-NEGATIVE-0",
+      "result": "passed"
+    },
+    {
+      "id": "QC-TAR-NEGATIVE-4097",
+      "result": "passed"
+    },
+    {
+      "id": "QC-TAR-NEGATIVE-1.5",
+      "result": "passed"
+    },
+    {
+      "id": "QC-BINDING-COMPLETE",
+      "result": "passed"
+    },
+    {
+      "id": "QC-BINDING-UNKNOWN-FIELD",
+      "result": "passed"
+    },
+    {
+      "id": "QC-BINDING-UNKNOWN-VERSION",
+      "result": "passed"
+    },
+    {
+      "id": "QC-EXISTING-CORE-NATIVE-LOCK-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-EXISTING-CORE-NATIVE-LOCK-B",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-artifact-store-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-artifact-store-B",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-state-store-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-state-store-B",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-telemetry-store-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-telemetry-store-B",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-wait-store-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-wait-store-B",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-transport-publisher-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-transport-publisher-B",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-operator-messaging-A",
+      "result": "passed"
+    },
+    {
+      "id": "QC-REGISTERED-LOCK-operator-messaging-B",
+      "result": "passed"
+    }
+  ],
+  "passed": 33,
+  "failed": 0,
+  "scope": "Strict proposed complete-profile/schema and serializer relation definitions only. NOT actual future consumer projection or F-EFFECT."
+}

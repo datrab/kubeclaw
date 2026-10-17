@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -60,17 +63,17 @@ async function run(id, input) {
     granted,
     activated,
     configs: new Map([
-      ['kubeclaw.repository-adapter:repository', { repositoryRoot: project }],
-      ['kubeclaw.artifact-store:artifact-store', { artifactRoot: artifacts }],
+      ['kubeclaw.repository-adapter:repository', {...ARTIFACT_TEST_CORE_POLICY.repositoryRead, repositoryRoot: project }],
+      ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: artifacts }],
     ]),
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${id}-effects.jsonl`)), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${id}-effects.jsonl`), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs: 1000,
     async emitDomainEvent() {},
   });
   await adapters.start();
   const journalPath = path.join(temporary, `${id}-events.jsonl`);
   try {
-    const runner = new core.PipelineRunner({
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: `pipeline:${id}`,
@@ -98,7 +101,7 @@ async function run(id, input) {
       registry: granted,
       activated,
       adapters,
-      journal: new core.FileJournal(journalPath),
+      journal: new core.FileJournal(journalPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     });
     const result = await runner.run(`run:${id}`);
     const records = fs.readFileSync(journalPath, 'utf8').trim().split('\n').map(JSON.parse);

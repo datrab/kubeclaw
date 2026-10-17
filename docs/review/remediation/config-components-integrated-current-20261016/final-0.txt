@@ -1,0 +1,17 @@
+✔ prism package contains the complete canonical bundle and shared validator (6842.909286ms)
+✔ kubeclaw package contains the complete canonical bundle and shared validator (228.435615ms)
+✔ prism: each component changes real rollout checksum; omitted checksum is detected (6375.449391ms)
+✔ kubeclaw: each component changes real rollout checksum; omitted checksum is detected (11750.35815ms)
+✔ prism: real archive missing a required component fails the complete delivery oracle (1422.039367ms)
+✔ kubeclaw: real archive missing a required component fails the complete delivery oracle (2722.690977ms)
+✔ Buster image COPY contains all authored files; removing one source fails the same structural oracle (1.421906ms)
+✔ prism: worker-core AJV/Helm integer-boundary parity (157.366114ms)
+✔ kubeclaw: worker-core AJV/Helm integer-boundary parity (114.226793ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35105.217288

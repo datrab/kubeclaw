@@ -1,0 +1,193 @@
+{
+  "scope": "material targetdomain/event-preservation correction to fiveexisting agentRole obligations, not businessrole parameter/newauthor/module closure",
+  "entries": [
+    {
+      "setting": "RT-ae11bf913a6050c6",
+      "field": "agentRole",
+      "registration": "kubeclaw.architecture-validator:architecture",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B",
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+        "lines": [
+          125,
+          126
+        ],
+        "expression": "typeof definition.config.agentRole === string -> stage.started payload.agentRole copied EXACT; absent/nonstring omit; happens beforeflush/executor.execute"
+      },
+      "businessSourceAbsence": {
+        "source": {
+          "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+          "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc"
+        },
+        "scope": "Currentpackage businessentry/helper chain no agentRole read; allowedkey/schema/configdigest not runtime-role parameter"
+      },
+      "current": "Business-stage package helpers do not consume agentRole as runtime role/model/backend/thinking parameter, but current PipelineLoop emits EXACT string in stage.started for every applicableStageDefinition BEFOREstageexecutor. Empty/NUL/Unicode/whitespace strings copied ifdirectgraph supplied; owningplugin minLength1 schema distinct. Originalrow already preserved genericCoreEventReader reference; previous targetreject/remove lacked explicit diagnostic effect/history migration. ExecutionGraph clones/deepfreezes wholeconfig and snapshotdigests include it; normalcurrent graph pins are present, not a firstlogicalmodule carrier proof. Compiler agent(module.implementation)/testConfiguration copies task/project values into stageconfig; not inherent businessselector.",
+      "classification": "task-provenance-diagnostic-event-projection-not-business-role-setting",
+      "targetDomain": "Retain exact source/task-provenance diagnostic label under SAME original captured task/graph/module lineage and event schema/version, NOT editablebusinessagentRole/SDK/model selector or duplicateparentauthor. If proposed newoperatorprofile rejects legacyagentRole alias, derived eventvalue MUST migrate/read from authentic SAME task/module provenance carrier; exactcarrier/path/schema/role roster/mandatory-or-optional compatibility remains parentOPEN. No invented renamedfield/universalacceptedID/defaultrole or prefixguess. Historical raw stage.started payloads and digest metadata must remain unchanged; newunsupportedcontext cannot invent history. Source/task role grammar/controlchar/UTF8/full event+referenced metadata quota/grants/version correlations need explicit real owner/domain proof.",
+      "effect": "CurrentrealLoop A string produces stage.started agentRoleA; B string produces agentRoleB in separate genuine newtask graph, NOT model/rolebehavior. Absent/nonstring omit undercurrentsource; schema rejectmissing? agentRoleoptional so currentabsentvalid. Target otherwisecomplete newoperatorprofile with removedalias rejects but derived authenticrole-provenance field (parent exactpathOPEN) yields same required diagnostic event label BEFOREexecutor. Never silentlydrop originalArole/event on remaining stages/attempt/recovery/Eval/cleanup. Realinstalledtask/role/eventjournal/observer/source/grants/metadata quota fixtures NOTRUN.",
+      "productiveCaller": "Current ExecutionGraph.stage/ready -> PipelineLoop#execute captures definition -> append stage.started config.agentRole -> flush -> StageExecutor.execute REFETCHES stage through actualgraph/config; parent bound-view/reread ledger owns futurecross-reader carrier definition. Fiveexisting plugin schemas are stageconfig consumers; actualbusinessplugin no roleparameter read remains scoped sourceabsence.",
+      "binding": "Existingcurrent ExecutionGraph deepfreeze/config digest/enginev4 wholegraph/package/config/grants snapshot+prelock activation retained. stage.started perattempt isNOT firstlogicalmodule acceptance; parentD20 nextunstarted moduleB whilestartedA retainsA entire subsequentstage/attempt/repair/recovery/cleanup needs typedcarrier/membership/view/taskpartition/grant/legacy contract OPEN. Existingevent diagnostic reader mustnotcreate second CONFIG author or pretendmetadata role equals runtime.dispatch selection."
+    },
+    {
+      "setting": "RT-078157b4efb99088",
+      "field": "agentRole",
+      "registration": "kubeclaw.buster-quality-gate:quality",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "testAgentEnabled": true,
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-A",
+          "testAgentEnabled": false,
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+        "lines": [
+          125,
+          126
+        ],
+        "expression": "typeof definition.config.agentRole === string -> stage.started payload.agentRole copied EXACT; absent/nonstring omit; happens beforeflush/executor.execute"
+      },
+      "businessSourceAbsence": {
+        "source": {
+          "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+          "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+        },
+        "scope": "Currentpackage businessentry/helper chain no agentRole read; allowedkey/schema/configdigest not runtime-role parameter"
+      },
+      "current": "Business-stage package helpers do not consume agentRole as runtime role/model/backend/thinking parameter, but current PipelineLoop emits EXACT string in stage.started for every applicableStageDefinition BEFOREstageexecutor. Empty/NUL/Unicode/whitespace strings copied ifdirectgraph supplied; owningplugin minLength1 schema distinct. Originalrow already preserved genericCoreEventReader reference; previous targetreject/remove lacked explicit diagnostic effect/history migration. ExecutionGraph clones/deepfreezes wholeconfig and snapshotdigests include it; normalcurrent graph pins are present, not a firstlogicalmodule carrier proof. Compiler agent(module.implementation)/testConfiguration copies task/project values into stageconfig; not inherent businessselector.",
+      "classification": "task-provenance-diagnostic-event-projection-not-business-role-setting",
+      "targetDomain": "Retain exact source/task-provenance diagnostic label under SAME original captured task/graph/module lineage and event schema/version, NOT editablebusinessagentRole/SDK/model selector or duplicateparentauthor. If proposed newoperatorprofile rejects legacyagentRole alias, derived eventvalue MUST migrate/read from authentic SAME task/module provenance carrier; exactcarrier/path/schema/role roster/mandatory-or-optional compatibility remains parentOPEN. No invented renamedfield/universalacceptedID/defaultrole or prefixguess. Historical raw stage.started payloads and digest metadata must remain unchanged; newunsupportedcontext cannot invent history. Source/task role grammar/controlchar/UTF8/full event+referenced metadata quota/grants/version correlations need explicit real owner/domain proof.",
+      "effect": "CurrentrealLoop A string produces stage.started agentRoleA; B string produces agentRoleB in separate genuine newtask graph, NOT model/rolebehavior. Absent/nonstring omit undercurrentsource; schema rejectmissing? agentRoleoptional so currentabsentvalid. Target otherwisecomplete newoperatorprofile with removedalias rejects but derived authenticrole-provenance field (parent exactpathOPEN) yields same required diagnostic event label BEFOREexecutor. Never silentlydrop originalArole/event on remaining stages/attempt/recovery/Eval/cleanup. Realinstalledtask/role/eventjournal/observer/source/grants/metadata quota fixtures NOTRUN.",
+      "productiveCaller": "Current ExecutionGraph.stage/ready -> PipelineLoop#execute captures definition -> append stage.started config.agentRole -> flush -> StageExecutor.execute REFETCHES stage through actualgraph/config; parent bound-view/reread ledger owns futurecross-reader carrier definition. Fiveexisting plugin schemas are stageconfig consumers; actualbusinessplugin no roleparameter read remains scoped sourceabsence.",
+      "binding": "Existingcurrent ExecutionGraph deepfreeze/config digest/enginev4 wholegraph/package/config/grants snapshot+prelock activation retained. stage.started perattempt isNOT firstlogicalmodule acceptance; parentD20 nextunstarted moduleB whilestartedA retainsA entire subsequentstage/attempt/repair/recovery/cleanup needs typedcarrier/membership/view/taskpartition/grant/legacy contract OPEN. Existingevent diagnostic reader mustnotcreate second CONFIG author or pretendmetadata role equals runtime.dispatch selection."
+    },
+    {
+      "setting": "RT-6442142673149854",
+      "field": "agentRole",
+      "registration": "kubeclaw.implementation-agent:implementation",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B",
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+        "lines": [
+          125,
+          126
+        ],
+        "expression": "typeof definition.config.agentRole === string -> stage.started payload.agentRole copied EXACT; absent/nonstring omit; happens beforeflush/executor.execute"
+      },
+      "businessSourceAbsence": {
+        "source": {
+          "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+          "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870"
+        },
+        "scope": "Currentpackage businessentry/helper chain no agentRole read; allowedkey/schema/configdigest not runtime-role parameter"
+      },
+      "current": "Business-stage package helpers do not consume agentRole as runtime role/model/backend/thinking parameter, but current PipelineLoop emits EXACT string in stage.started for every applicableStageDefinition BEFOREstageexecutor. Empty/NUL/Unicode/whitespace strings copied ifdirectgraph supplied; owningplugin minLength1 schema distinct. Originalrow already preserved genericCoreEventReader reference; previous targetreject/remove lacked explicit diagnostic effect/history migration. ExecutionGraph clones/deepfreezes wholeconfig and snapshotdigests include it; normalcurrent graph pins are present, not a firstlogicalmodule carrier proof. Compiler agent(module.implementation)/testConfiguration copies task/project values into stageconfig; not inherent businessselector.",
+      "classification": "task-provenance-diagnostic-event-projection-not-business-role-setting",
+      "targetDomain": "Retain exact source/task-provenance diagnostic label under SAME original captured task/graph/module lineage and event schema/version, NOT editablebusinessagentRole/SDK/model selector or duplicateparentauthor. If proposed newoperatorprofile rejects legacyagentRole alias, derived eventvalue MUST migrate/read from authentic SAME task/module provenance carrier; exactcarrier/path/schema/role roster/mandatory-or-optional compatibility remains parentOPEN. No invented renamedfield/universalacceptedID/defaultrole or prefixguess. Historical raw stage.started payloads and digest metadata must remain unchanged; newunsupportedcontext cannot invent history. Source/task role grammar/controlchar/UTF8/full event+referenced metadata quota/grants/version correlations need explicit real owner/domain proof.",
+      "effect": "CurrentrealLoop A string produces stage.started agentRoleA; B string produces agentRoleB in separate genuine newtask graph, NOT model/rolebehavior. Absent/nonstring omit undercurrentsource; schema rejectmissing? agentRoleoptional so currentabsentvalid. Target otherwisecomplete newoperatorprofile with removedalias rejects but derived authenticrole-provenance field (parent exactpathOPEN) yields same required diagnostic event label BEFOREexecutor. Never silentlydrop originalArole/event on remaining stages/attempt/recovery/Eval/cleanup. Realinstalledtask/role/eventjournal/observer/source/grants/metadata quota fixtures NOTRUN.",
+      "productiveCaller": "Current ExecutionGraph.stage/ready -> PipelineLoop#execute captures definition -> append stage.started config.agentRole -> flush -> StageExecutor.execute REFETCHES stage through actualgraph/config; parent bound-view/reread ledger owns futurecross-reader carrier definition. Fiveexisting plugin schemas are stageconfig consumers; actualbusinessplugin no roleparameter read remains scoped sourceabsence.",
+      "binding": "Existingcurrent ExecutionGraph deepfreeze/config digest/enginev4 wholegraph/package/config/grants snapshot+prelock activation retained. stage.started perattempt isNOT firstlogicalmodule acceptance; parentD20 nextunstarted moduleB whilestartedA retainsA entire subsequentstage/attempt/repair/recovery/cleanup needs typedcarrier/membership/view/taskpartition/grant/legacy contract OPEN. Existingevent diagnostic reader mustnotcreate second CONFIG author or pretendmetadata role equals runtime.dispatch selection."
+    },
+    {
+      "setting": "RT-4c1a2b66cdab7e18",
+      "field": "agentRole",
+      "registration": "kubeclaw.pipeline-review:review",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B",
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+        "lines": [
+          125,
+          126
+        ],
+        "expression": "typeof definition.config.agentRole === string -> stage.started payload.agentRole copied EXACT; absent/nonstring omit; happens beforeflush/executor.execute"
+      },
+      "businessSourceAbsence": {
+        "source": {
+          "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+          "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a"
+        },
+        "scope": "Currentpackage businessentry/helper chain no agentRole read; allowedkey/schema/configdigest not runtime-role parameter"
+      },
+      "current": "Business-stage package helpers do not consume agentRole as runtime role/model/backend/thinking parameter, but current PipelineLoop emits EXACT string in stage.started for every applicableStageDefinition BEFOREstageexecutor. Empty/NUL/Unicode/whitespace strings copied ifdirectgraph supplied; owningplugin minLength1 schema distinct. Originalrow already preserved genericCoreEventReader reference; previous targetreject/remove lacked explicit diagnostic effect/history migration. ExecutionGraph clones/deepfreezes wholeconfig and snapshotdigests include it; normalcurrent graph pins are present, not a firstlogicalmodule carrier proof. Compiler agent(module.implementation)/testConfiguration copies task/project values into stageconfig; not inherent businessselector.",
+      "classification": "task-provenance-diagnostic-event-projection-not-business-role-setting",
+      "targetDomain": "Retain exact source/task-provenance diagnostic label under SAME original captured task/graph/module lineage and event schema/version, NOT editablebusinessagentRole/SDK/model selector or duplicateparentauthor. If proposed newoperatorprofile rejects legacyagentRole alias, derived eventvalue MUST migrate/read from authentic SAME task/module provenance carrier; exactcarrier/path/schema/role roster/mandatory-or-optional compatibility remains parentOPEN. No invented renamedfield/universalacceptedID/defaultrole or prefixguess. Historical raw stage.started payloads and digest metadata must remain unchanged; newunsupportedcontext cannot invent history. Source/task role grammar/controlchar/UTF8/full event+referenced metadata quota/grants/version correlations need explicit real owner/domain proof.",
+      "effect": "CurrentrealLoop A string produces stage.started agentRoleA; B string produces agentRoleB in separate genuine newtask graph, NOT model/rolebehavior. Absent/nonstring omit undercurrentsource; schema rejectmissing? agentRoleoptional so currentabsentvalid. Target otherwisecomplete newoperatorprofile with removedalias rejects but derived authenticrole-provenance field (parent exactpathOPEN) yields same required diagnostic event label BEFOREexecutor. Never silentlydrop originalArole/event on remaining stages/attempt/recovery/Eval/cleanup. Realinstalledtask/role/eventjournal/observer/source/grants/metadata quota fixtures NOTRUN.",
+      "productiveCaller": "Current ExecutionGraph.stage/ready -> PipelineLoop#execute captures definition -> append stage.started config.agentRole -> flush -> StageExecutor.execute REFETCHES stage through actualgraph/config; parent bound-view/reread ledger owns futurecross-reader carrier definition. Fiveexisting plugin schemas are stageconfig consumers; actualbusinessplugin no roleparameter read remains scoped sourceabsence.",
+      "binding": "Existingcurrent ExecutionGraph deepfreeze/config digest/enginev4 wholegraph/package/config/grants snapshot+prelock activation retained. stage.started perattempt isNOT firstlogicalmodule acceptance; parentD20 nextunstarted moduleB whilestartedA retainsA entire subsequentstage/attempt/repair/recovery/cleanup needs typedcarrier/membership/view/taskpartition/grant/legacy contract OPEN. Existingevent diagnostic reader mustnotcreate second CONFIG author or pretendmetadata role equals runtime.dispatch selection."
+    },
+    {
+      "setting": "RT-2b6e3bc13743e80c",
+      "field": "agentRole",
+      "registration": "kubeclaw.project-summary:summary",
+      "profiles": {
+        "A": {
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "deliveryManifestEncoding": "delivery-manifest.utf16-v1",
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+        "lines": [
+          125,
+          126
+        ],
+        "expression": "typeof definition.config.agentRole === string -> stage.started payload.agentRole copied EXACT; absent/nonstring omit; happens beforeflush/executor.execute"
+      },
+      "businessSourceAbsence": {
+        "source": {
+          "path": "skills/nova/plugins/project-summary/src/stage.ts",
+          "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+        },
+        "scope": "Currentpackage businessentry/helper chain no agentRole read; allowedkey/schema/configdigest not runtime-role parameter"
+      },
+      "current": "Business-stage package helpers do not consume agentRole as runtime role/model/backend/thinking parameter, but current PipelineLoop emits EXACT string in stage.started for every applicableStageDefinition BEFOREstageexecutor. Empty/NUL/Unicode/whitespace strings copied ifdirectgraph supplied; owningplugin minLength1 schema distinct. Originalrow already preserved genericCoreEventReader reference; previous targetreject/remove lacked explicit diagnostic effect/history migration. ExecutionGraph clones/deepfreezes wholeconfig and snapshotdigests include it; normalcurrent graph pins are present, not a firstlogicalmodule carrier proof. Compiler agent(module.implementation)/testConfiguration copies task/project values into stageconfig; not inherent businessselector.",
+      "classification": "task-provenance-diagnostic-event-projection-not-business-role-setting",
+      "targetDomain": "Retain exact source/task-provenance diagnostic label under SAME original captured task/graph/module lineage and event schema/version, NOT editablebusinessagentRole/SDK/model selector or duplicateparentauthor. If proposed newoperatorprofile rejects legacyagentRole alias, derived eventvalue MUST migrate/read from authentic SAME task/module provenance carrier; exactcarrier/path/schema/role roster/mandatory-or-optional compatibility remains parentOPEN. No invented renamedfield/universalacceptedID/defaultrole or prefixguess. Historical raw stage.started payloads and digest metadata must remain unchanged; newunsupportedcontext cannot invent history. Source/task role grammar/controlchar/UTF8/full event+referenced metadata quota/grants/version correlations need explicit real owner/domain proof.",
+      "effect": "CurrentrealLoop A string produces stage.started agentRoleA; B string produces agentRoleB in separate genuine newtask graph, NOT model/rolebehavior. Absent/nonstring omit undercurrentsource; schema rejectmissing? agentRoleoptional so currentabsentvalid. Target otherwisecomplete newoperatorprofile with removedalias rejects but derived authenticrole-provenance field (parent exactpathOPEN) yields same required diagnostic event label BEFOREexecutor. Never silentlydrop originalArole/event on remaining stages/attempt/recovery/Eval/cleanup. Realinstalledtask/role/eventjournal/observer/source/grants/metadata quota fixtures NOTRUN.",
+      "productiveCaller": "Current ExecutionGraph.stage/ready -> PipelineLoop#execute captures definition -> append stage.started config.agentRole -> flush -> StageExecutor.execute REFETCHES stage through actualgraph/config; parent bound-view/reread ledger owns futurecross-reader carrier definition. Fiveexisting plugin schemas are stageconfig consumers; actualbusinessplugin no roleparameter read remains scoped sourceabsence.",
+      "binding": "Existingcurrent ExecutionGraph deepfreeze/config digest/enginev4 wholegraph/package/config/grants snapshot+prelock activation retained. stage.started perattempt isNOT firstlogicalmodule acceptance; parentD20 nextunstarted moduleB whilestartedA retainsA entire subsequentstage/attempt/repair/recovery/cleanup needs typedcarrier/membership/view/taskpartition/grant/legacy contract OPEN. Existingevent diagnostic reader mustnotcreate second CONFIG author or pretendmetadata role equals runtime.dispatch selection."
+    }
+  ],
+  "history": "Batch16 contracts/current narrowcases andallolderoriginal requirements/results/body bytes append-preserved. Thirty oldfuture AGENT16 rolecase oracles supersededwith requirement-conserving event-specific NOTRUN successors; old bodies neverrewrite. Any historical bounded material completeness inference invalidated for alteredroledefinitions; no independent re-review/acceptance carried.",
+  "parentContract": "Exactnewmodule/task rolecarrier path/shape/roster/metadataquota/legacy/crossreader membership stillOPEN; no newparentIDs authored."
+}

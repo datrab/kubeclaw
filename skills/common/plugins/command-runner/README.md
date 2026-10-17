@@ -44,3 +44,21 @@ Zombie/exited entries are nonrunning; PID-namespace-local numbers alone are neve
 used to select proc records. Acknowledgement has an additional one-second budget
 and fails explicitly if proc identity/status cannot be established. Cleanup
 failure rejects both the command and an in-progress shutdown drain.
+
+## Monitoring selection
+
+Nova's registered `kubeclaw.command-runner:command` receives
+`maximumOutputRecords` and `sampleIntervalMs` from the selected Core policy's
+`commandRunnerMonitoring` group. Do not author these fields in Platform adapter
+configuration; they are projected during activation and retained with the run.
+Direct `CommandRunner` callers may supply `monitoring`; omission preserves their
+historical 4096-record / 25-ms contract without reading current configuration.
+Sandbox resource-limit ownership is unchanged.
+
+Selected `commandProcessCleanup` supplies required `cleanupPollIntervalMs` and
+`exitAcknowledgementMs` and `sandboxMinimumGraceMs` to the registered adapter.
+The sandbox SIGTERM floor is selected centrally (original 250ms); raw/native
+callers retain the historical constructor contract. Both are captured with the
+original Core runtime policy; do not author them in Platform adapter config.
+Grace polling and post-kill Linux process-group acknowledgement consume these
+values. Direct/raw callers retain their former 10ms/1000ms API boundary.

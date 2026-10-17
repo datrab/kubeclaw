@@ -1,0 +1,640 @@
+{
+  "status": "proposed not implemented; genuine installed image/execution future prerequisite",
+  "corrects": "ICQ-01",
+  "source": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-command.ts",
+      "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "A",
+      "completeComponent": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 16777216,
+                "maximumRecords": 10000,
+                "maximumBytes": 268435456,
+                "maximumQuarantineRecords": 1000,
+                "maximumQuarantineBytes": 67108864,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "runtimeProjection": {
+        "tarExecutable": "/usr/bin/tar"
+      },
+      "sameAuthor": "existing Buster runtime tarExecutable; delivery image manifest is verified generated companion, not competing path author",
+      "imageProvisioning": {
+        "binary": "/usr/bin/tar",
+        "package": "genuine GNU tar",
+        "identity": "actual packaged binary and dependency manifest hashes must be generated from approved image; fixtures are not installed proof",
+        "ownerUid": 0,
+        "groupWritable": false,
+        "otherWritable": false,
+        "regularFile": true,
+        "symlinkAllowed": false
+      },
+      "sandboxProjection": {
+        "readExecuteRoot": "/usr",
+        "readRootsUnchanged": [
+          "APP_INSTALLATION_ROOT",
+          "/usr",
+          "/lib",
+          "/lib64",
+          "/etc/ssl",
+          "/proc",
+          "CAPTURED_CGROUP_ROOT"
+        ],
+        "sourceAncestorDenied": true,
+        "newReadRoots": []
+      },
+      "futureOracle": {
+        "argv0": "/usr/bin/tar",
+        "benignArchive": "gzip tar with single regular file hello.txt containing UTF8 hello\\n, no symlink/hardlink/devices/absolute/dotdot paths",
+        "resultBytesHex": "68656c6c6f0a",
+        "reject": [
+          "missing binary",
+          "digest mismatch",
+          "non-executable",
+          "symlink escape outside approved roots",
+          "source ancestor read root",
+          "ambient PATH fallback"
+        ]
+      },
+      "completeRuntimeCompanion": {
+        "schemaVersion": "buster-remote-plan-runtime.v1",
+        "platformConfig": "/run/kubeclaw-buster/config/platform.json",
+        "host": "127.0.0.1",
+        "port": 0,
+        "tokenEnvironmentVariable": "ICQ_TEST_TOKEN",
+        "sourceAttestationPublicKeyEnvironmentVariable": "ICQ_TEST_SOURCE_PUBLIC_KEY",
+        "trustedSourceAuthority": "nova:icq-synthetic",
+        "stateRoot": "/var/lib/buster-v2/plan-jobs",
+        "runtimeRoot": "/var/lib/buster-v2/runs",
+        "tarExecutable": "/usr/bin/tar",
+        "allowedCapabilities": [],
+        "recordLimits": {
+          "maximumRecords": 10,
+          "maximumBytes": 1048576,
+          "maximumRecordBytes": 131072
+        },
+        "maximumResultBytes": 65536,
+        "maximumResultStoreBytes": 1048576,
+        "maximumResponseBytes": 65536,
+        "shutdownTimeoutMs": 5000,
+        "storeLockWaitSeconds": 5
+      },
+      "completeWorkerCoreCompanion": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "worker-core",
+        "settings": {
+          "localRuntime": {
+            "drainTimeoutMs": 300000,
+            "cancellationTimeoutMs": 30000,
+            "replayLimit": 65536
+          },
+          "runtime": {
+            "input_bytes": 16777216,
+            "json_nodes": 100000,
+            "json_depth": 64,
+            "log_parts": 10000,
+            "retain_logs": {
+              "prism-native": true,
+              "prism-agent": true,
+              "buster-provider": false,
+              "buster-preparation": false,
+              "buster-historical-import": false,
+              "buster-source-cleanup": false
+            },
+            "drain_poll_ms": 10,
+            "pool_file_bytes": 65536,
+            "runtime_identity_file_bytes": 4096,
+            "node_identity_file_bytes": 128,
+            "journal_record_bytes": 65536,
+            "journal_diagnostic_units": 4096,
+            "ownership_diagnostic_units": 4096,
+            "journalLockHexDigits": 2,
+            "native_store_lock_wait_seconds": 5
+          }
+        }
+      },
+      "pairedRuntimeLayout": {
+        "configuration": "/run/kubeclaw-buster/config/runtime.json regular root-owned nlink1 mode0644, bounded by same selected preparation.maximumInputBytes, immutable digest validated",
+        "sourceRoot": "/var/lib/buster-v2/native-sources (never beneath any read-root)",
+        "sourceKey": "Known fixture Ed25519 seed00..1f -> actual SPKI environment ICQ_TEST_SOURCE_PUBLIC_KEY and same parent signed fixture attestation; not production secret/trust",
+        "platform": "same-existing generated immutable selectedpipeline.config system owner; fullBuster/Nova fixtures from complete-profiles and lock-callers; not secondeditableindex",
+        "launcher": "actual genuine packaged sandbox + /usr/local/libexec/kubeclaw-native-worker-launcher + Node verified identity and pinned dependencies required, no wrapper",
+        "nativePool": "genuine frozenDelivery selected-host fixture must pass existing pool/root identity/capacity validations; physicalhost/imageexecutionfuture, not currentinstalledproof"
+      },
+      "pairedImageManifestContract": {
+        "binaryPath": "/usr/bin/tar",
+        "fileMode": 493,
+        "uid": 0,
+        "gid": 0,
+        "regular": true,
+        "symlink": false,
+        "ociManifestDigest": "actual genuine image-provider digest recorded in futurefixture beforeclaim, not opaque syntheticproof",
+        "binaryCodeDigest": "hash actual genuine packaged GNUtar and captured dependencytree, distinct fromOCI digest",
+        "readExecuteGrant": "unchanged /usr read+execute root; image sourceRoot/var sourceancestordenial unchanged",
+        "genuineExecutableTarget": "both A/B install same approved GNUtar bytes; configured argv0 differs; no equal OCI/codetreeassumption"
+      },
+      "closedParentFixtureEnvironment": {
+        "SWARM_CONFIG": "/run/kubeclaw-buster/config/generated-selected-system-entry.json immutable full6-owner composition/hash checked",
+        "BUSTER_NATIVE_POOL_POLICY_FILE": "/etc/kubeclaw/buster-pool.json genuine frozenDelivery projected pool/host runtimeidentity artifacts",
+        "BUSTER_ENGINE_CONTENT_DIGEST": "current producerOCI digest requires exact syntax; not packagedcode proof. Target code/package and image manifest identities must be distinguished in retained pairedinstallation manifest, verified ratherthan equal-value alias",
+        "ICQ_TEST_SOURCE_PUBLIC_KEY": "actual SPKI generated from known test-only Ed25519 seed00..1f, same fixture attestation signer",
+        "KUBECLAW_BUILD_REVISION": "actual fixtureapprovedsource revision; source predicate40..64hex, not invented installedversion",
+        "ICQ_TEST_TOKEN": "known test-only fixture token, not production credential"
+      }
+    },
+    {
+      "id": "B",
+      "completeComponent": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 2048,
+            "storeLockWaitSeconds": 1
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 1
+              },
+              "admission": {
+                "maximumIngressBytes": 16777216,
+                "maximumRecords": 10000,
+                "maximumBytes": 268435456,
+                "maximumQuarantineRecords": 1000,
+                "maximumQuarantineBytes": 67108864,
+                "reasonThresholdCodeUnits": 128,
+                "reasonPrefixCodeUnits": 56,
+                "metadataReserveBytes": 16384,
+                "lockWaitSeconds": 1
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "runtimeProjection": {
+        "tarExecutable": "/usr/local/libexec/kubeclaw/gnu-tar"
+      },
+      "sameAuthor": "existing Buster runtime tarExecutable; delivery image manifest is verified generated companion, not competing path author",
+      "imageProvisioning": {
+        "binary": "/usr/local/libexec/kubeclaw/gnu-tar",
+        "package": "genuine GNU tar",
+        "identity": "actual packaged binary and dependency manifest hashes must be generated from approved image; fixtures are not installed proof",
+        "ownerUid": 0,
+        "groupWritable": false,
+        "otherWritable": false,
+        "regularFile": true,
+        "symlinkAllowed": false
+      },
+      "sandboxProjection": {
+        "readExecuteRoot": "/usr",
+        "readRootsUnchanged": [
+          "APP_INSTALLATION_ROOT",
+          "/usr",
+          "/lib",
+          "/lib64",
+          "/etc/ssl",
+          "/proc",
+          "CAPTURED_CGROUP_ROOT"
+        ],
+        "sourceAncestorDenied": true,
+        "newReadRoots": []
+      },
+      "futureOracle": {
+        "argv0": "/usr/local/libexec/kubeclaw/gnu-tar",
+        "benignArchive": "gzip tar with single regular file hello.txt containing UTF8 hello\\n, no symlink/hardlink/devices/absolute/dotdot paths",
+        "resultBytesHex": "68656c6c6f0a",
+        "reject": [
+          "missing binary",
+          "digest mismatch",
+          "non-executable",
+          "symlink escape outside approved roots",
+          "source ancestor read root",
+          "ambient PATH fallback"
+        ]
+      },
+      "completeRuntimeCompanion": {
+        "schemaVersion": "buster-remote-plan-runtime.v1",
+        "platformConfig": "/run/kubeclaw-buster/config/platform.json",
+        "host": "127.0.0.1",
+        "port": 0,
+        "tokenEnvironmentVariable": "ICQ_TEST_TOKEN",
+        "sourceAttestationPublicKeyEnvironmentVariable": "ICQ_TEST_SOURCE_PUBLIC_KEY",
+        "trustedSourceAuthority": "nova:icq-synthetic",
+        "stateRoot": "/var/lib/buster-v2/plan-jobs",
+        "runtimeRoot": "/var/lib/buster-v2/runs",
+        "tarExecutable": "/usr/local/libexec/kubeclaw/gnu-tar",
+        "allowedCapabilities": [],
+        "recordLimits": {
+          "maximumRecords": 10,
+          "maximumBytes": 1048576,
+          "maximumRecordBytes": 131072
+        },
+        "maximumResultBytes": 65536,
+        "maximumResultStoreBytes": 1048576,
+        "maximumResponseBytes": 65536,
+        "shutdownTimeoutMs": 5000,
+        "storeLockWaitSeconds": 1
+      },
+      "completeWorkerCoreCompanion": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "worker-core",
+        "settings": {
+          "localRuntime": {
+            "drainTimeoutMs": 300000,
+            "cancellationTimeoutMs": 30000,
+            "replayLimit": 65536
+          },
+          "runtime": {
+            "input_bytes": 16777216,
+            "json_nodes": 100000,
+            "json_depth": 64,
+            "log_parts": 10000,
+            "retain_logs": {
+              "prism-native": true,
+              "prism-agent": true,
+              "buster-provider": false,
+              "buster-preparation": false,
+              "buster-historical-import": false,
+              "buster-source-cleanup": false
+            },
+            "drain_poll_ms": 10,
+            "pool_file_bytes": 65536,
+            "runtime_identity_file_bytes": 4096,
+            "node_identity_file_bytes": 128,
+            "journal_record_bytes": 65536,
+            "journal_diagnostic_units": 4096,
+            "ownership_diagnostic_units": 4096,
+            "journalLockHexDigits": 2,
+            "native_store_lock_wait_seconds": 1
+          }
+        }
+      },
+      "pairedRuntimeLayout": {
+        "configuration": "/run/kubeclaw-buster/config/runtime.json regular root-owned nlink1 mode0644, bounded by same selected preparation.maximumInputBytes, immutable digest validated",
+        "sourceRoot": "/var/lib/buster-v2/native-sources (never beneath any read-root)",
+        "sourceKey": "Known fixture Ed25519 seed00..1f -> actual SPKI environment ICQ_TEST_SOURCE_PUBLIC_KEY and same parent signed fixture attestation; not production secret/trust",
+        "platform": "same-existing generated immutable selectedpipeline.config system owner; fullBuster/Nova fixtures from complete-profiles and lock-callers; not secondeditableindex",
+        "launcher": "actual genuine packaged sandbox + /usr/local/libexec/kubeclaw-native-worker-launcher + Node verified identity and pinned dependencies required, no wrapper",
+        "nativePool": "genuine frozenDelivery selected-host fixture must pass existing pool/root identity/capacity validations; physicalhost/imageexecutionfuture, not currentinstalledproof"
+      },
+      "pairedImageManifestContract": {
+        "binaryPath": "/usr/local/libexec/kubeclaw/gnu-tar",
+        "fileMode": 493,
+        "uid": 0,
+        "gid": 0,
+        "regular": true,
+        "symlink": false,
+        "ociManifestDigest": "actual genuine image-provider digest recorded in futurefixture beforeclaim, not opaque syntheticproof",
+        "binaryCodeDigest": "hash actual genuine packaged GNUtar and captured dependencytree, distinct fromOCI digest",
+        "readExecuteGrant": "unchanged /usr read+execute root; image sourceRoot/var sourceancestordenial unchanged",
+        "genuineExecutableTarget": "both A/B install same approved GNUtar bytes; configured argv0 differs; no equal OCI/codetreeassumption"
+      },
+      "closedParentFixtureEnvironment": {
+        "SWARM_CONFIG": "/run/kubeclaw-buster/config/generated-selected-system-entry.json immutable full6-owner composition/hash checked",
+        "BUSTER_NATIVE_POOL_POLICY_FILE": "/etc/kubeclaw/buster-pool.json genuine frozenDelivery projected pool/host runtimeidentity artifacts",
+        "BUSTER_ENGINE_CONTENT_DIGEST": "current producerOCI digest requires exact syntax; not packagedcode proof. Target code/package and image manifest identities must be distinguished in retained pairedinstallation manifest, verified ratherthan equal-value alias",
+        "ICQ_TEST_SOURCE_PUBLIC_KEY": "actual SPKI generated from known test-only Ed25519 seed00..1f, same fixture attestation signer",
+        "KUBECLAW_BUILD_REVISION": "actual fixtureapprovedsource revision; source predicate40..64hex, not invented installedversion",
+        "ICQ_TEST_TOKEN": "known test-only fixture token, not production credential"
+      }
+    }
+  ],
+  "negativeOutsideGrant": "historical /opt/kubeclaw/tools/tar remains rejected without explicit new verified leastprivilege grant; no isolation waiver",
+  "fullProfileClaimLimits": "Complete selected bounded Core/Buster author/runtime/grant-layout fixtures define exact tarpolicy witness. Authentic opaque installed image/node/package/pool identity and source attestation observations remain mandatory futurefixture inputs, explicitly not supplied or pass. No globalhost/prism/C0acceptance."
+}

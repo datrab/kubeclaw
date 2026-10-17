@@ -1,0 +1,17 @@
+✔ Core requires explicit valid drainTimeoutMs (11.742435ms)
+✔ Core requires explicit valid cancellationTimeoutMs (0.590436ms)
+✔ Core requires explicit valid replayLimit (0.449962ms)
+✔ real drain/cancellation 10/40 (77.665773ms)
+✔ real replay saturation/reclaim 1 (1.366516ms)
+✔ real drain/cancellation 40/10 (51.949157ms)
+✔ real replay saturation/reclaim 2 (2.29866ms)
+{"ok":true,"phase":"5.5-D","states":["starting","ready","draining","stopped","unhealthy"]}
+✔ tests/verification/contracts/check-pipeline-worker-local-runtime.mts (294.865955ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 371.78876

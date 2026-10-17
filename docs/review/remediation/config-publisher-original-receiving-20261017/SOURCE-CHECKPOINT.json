@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "d549215ca460cab54b01678d5f5c86cee82259d2",
+  "branch": "codex/config-c0-semantic-inventory-20261012",
+  "remoteHead": "d549215ca460cab54b01678d5f5c86cee82259d2",
+  "verified": true,
+  "sourceHashes": {
+    "skills/nova/core/execution/publisher-runtime-binding.ts": "c0720cceb3968e377c880c49002ed1298464d938e97519cd234b7f1d5d4a4779",
+    "skills/nova/core/execution/engine-runtime.ts": "269e8235d0292e9b79681c8a8c2abd08f0432e33a00cee999682245656f0d7a5",
+    "skills/nova/core/execution/engine-snapshots.ts": "293ce91beacb2f6302e3bd316a91cd9cde394a32844e124c147b7d0c5b02fa3a",
+    "skills/nova/core/execution/engine-run.ts": "1dda5abc45a082974376dc87f0d72ee05d55933ca450f176f5ffe5d6ae8d513e",
+    "skills/nova/core/execution/engine-admin.ts": "ecf7b77bc366832f531fccc6e474eddf63b5ce35d41cc0d0d4bec305e3a4576d",
+    "tests/verification/reliability/nova-publisher-original-recovery.test.mjs": "49cbe4b1dd452a9455acf71ec00bf41adc089f09591de8cd8f315e4f28a68cb6"
+  }
+}

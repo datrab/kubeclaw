@@ -1,0 +1,689 @@
+{
+  "members": [
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "sourceSha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "line": 29,
+      "parameter": "now",
+      "initializer": "Date.now()",
+      "currentCallerReason": "Public Ed25519 trust verification now=Date.now actual clockmechanism; schema/expectedissuer/key callers mandatory separately, no serviceproducer of trustenvelope helpers discovered.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sourceSha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd",
+      "line": 32,
+      "parameter": "timeout",
+      "initializer": "this.#settings.maximumExecutionMs",
+      "currentCallerReason": "Optional#kubectlRun timeout defaults selected this.#settings.maximumExecutionMs; explicit supplieddeadline wins, no code-owned constant tuning.",
+      "canonicalIds": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs"
+      ],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "same selected policy projected to optional method timeout; explicit remainingdeadline maylower, no newauthor",
+      "unresolved": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "sourceSha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad",
+      "line": 15,
+      "parameter": "maximum",
+      "initializer": "1024",
+      "currentCallerReason": "Latent1024 textmaximum default: all actual productive repository helpercalls pass explicit field-specific bound. Currenttaskdomain bounds and uncoveredrequested-secret count32 preserved separately.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sourceSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+      "line": 31,
+      "parameter": "code",
+      "initializer": "'KUBERNETES_RUNTIME_SECURITY_RESPONSE_INVALID'",
+      "currentCallerReason": "Default invalidobject diagnostic code only; no inputsettings supplied.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sourceSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+      "line": 36,
+      "parameter": "maximum",
+      "initializer": "2048",
+      "currentCallerReason": "Actual immutableImage taskguard uses2048 default; other calls supply63/253/4096/71. Currentrequestdomain not claimed universal URI max; sourcepolicy classification remains independently challengeable.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "duplicate current same-field versioned wire/domain guard, not independent Core operator policy and not universal OCI max",
+      "unresolved": {
+        "owner": "parent infra701/Delivery fixture CRD protocol + original carrier/grants",
+        "reason": "parent infra701 canonical CRD field ID/sole-author protocol-version placement + actual installed schema/source/authentic original grants and universal carrier/taskpartition/historical compatibility remain open"
+      },
+      "supersedesTentativeClassification": {
+        "previousGap": "CORE6606-DEFAULT-RUNTIME-SECURITY-IMAGE-TEXT",
+        "historicalArtifact": "author-before-image-wire-handoff/parameter-default-canonical-contracts.json",
+        "reason": "source semantic relation was previously not yet traced; new exact same-field CRD+producer+copy evidence distinguishes wire-bound guard from independent operator knob",
+        "historyStatus": "deterministically reconstructed from exact prior add-source generator, not original pre-edit snapshot"
+      },
+      "contract": {
+        "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/runtime-security-image-wire-handoff.json",
+        "sha256": "15eba24dc9c2df12a4495453a763c2134c207563607409385fd7f4e9d723e0cb"
+      },
+      "actualSourceDefinitionEvidence": {
+        "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/image-wire-current-attempt1.log",
+        "sha256": "871e4ff93b57817acb529978bb2a135d76e7db21fa0e827994e6ae4e417025ab",
+        "controls": 4,
+        "scope": "actual source predicates/producers/copy + isolated unmodified private pure text function via TS transpile; no Go/controller/API/image action; syntax-domain strings NOT genuine installed/pullable2048 OCI image proof"
+      }
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-client.ts",
+      "sourceSha256": "31b1bec56dc09daafb7e0ba425243009b86f7f73eb693ae0e74617c1cac6f6dd",
+      "line": 123,
+      "parameter": "content",
+      "initializer": "Buffer.alloc(0)",
+      "currentCallerReason": "EmptyBuffer only genuinely absent requestcontent; frame quota comes from selected preparationServiceChannelLimits, not bufferdefault.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-command.ts",
+      "sourceSha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+      "line": 19,
+      "parameter": "phase",
+      "initializer": "'prepare'",
+      "currentCallerReason": "Default phase prepare selects immutable image entrypoint; historical/cleanup actual callers explicitly choose separate phase. No default currentpolicy fills originalrecovery.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "line": 50,
+      "parameter": "maximum",
+      "initializer": "1024",
+      "currentCallerReason": "Latent1024 textmaximum default, all actual productive helpercalls explicitly pass63/64/1024/2048. Neither default callback nor maxsupplies operator policy.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "line": 121,
+      "parameter": "timeout",
+      "initializer": "this.#maximumExecutionMs",
+      "currentCallerReason": "Actual#run/#lease selected this.#maximumExecutionMs default already captured from sole selected Busterpolicy; per-callremaining window suppliedwhere applicable.",
+      "canonicalIds": [
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs"
+      ],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "same selected role policy, sourcecalls explicit remainingdeadline/capturedmaximum; no numericfallback author",
+      "unresolved": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "line": 132,
+      "parameter": "timeout",
+      "initializer": "this.#maximumExecutionMs",
+      "currentCallerReason": "Actual#run/#lease selected this.#maximumExecutionMs default already captured from sole selected Busterpolicy; per-callremaining window suppliedwhere applicable.",
+      "canonicalIds": [
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs"
+      ],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "same selected role policy, sourcecalls explicit remainingdeadline/capturedmaximum; no numericfallback author",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "sourceSha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "line": 93,
+      "parameter": "missingRanges",
+      "initializer": "[]",
+      "currentCallerReason": "Missingranges request emptyarray means no supplied additional reports, not invented observedcompleteness; actual requiredclosures stillchecked.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "sourceSha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "line": 94,
+      "parameter": "unresolvedItems",
+      "initializer": "[]",
+      "currentCallerReason": "Absent externalunresolveditems emptyarray doesnot erase actual stored/missing closure/evidence constraints; sourcecompleteness still computes actualstate.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "sourceSha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+      "line": 120,
+      "parameter": "readPrefix",
+      "initializer": "readAttemptJournalPrefix",
+      "currentCallerReason": "Default exact real readAttemptJournalPrefix implementation enforces requiredmaximumBytes and immutablefile/prefix; callable seam trustedimplementation binding, no optionalunbounded quota.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "sourceSha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+      "line": 146,
+      "parameter": "closureProjections",
+      "initializer": "new Map()",
+      "currentCallerReason": "FreshemptyMap initial projection state before loadingretained metadata; not operator-retention policy.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "line": 68,
+      "parameter": "validatedProjectedResults",
+      "initializer": "0",
+      "currentCallerReason": "Actual replayvalidation bookkeeping starts0 projected results; pendingprojections added fromretained state, no invented successfulvalidation.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "line": 68,
+      "parameter": "validatedProjectedClosures",
+      "initializer": "0",
+      "currentCallerReason": "Actual replayvalidation bookkeeping starts0 projectedclosures; countcomparedactualretainedrecords, not cap/default.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "line": 29,
+      "parameter": "completionIntent",
+      "initializer": "null",
+      "currentCallerReason": "Optional legacycompletionIntent=null structuralabsence, cannotretire/claim bound completion withoutactual requiredintent.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "genuine legacy nullstructuralabsence, not authenticoriginal CONFIG closure",
+      "unresolved": {
+        "owner": "parentSDK + originalstoreauthor",
+        "reason": "legacy null cannot invent original owner/binding/completion or account referencedmanifest. Authentic legacy source and migration quota proof required, otherwise block."
+      }
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "line": 30,
+      "parameter": "owner",
+      "initializer": "null",
+      "currentCallerReason": "Optionallegacy owner=null structuralabsence; actualretirement requires sourceplan/node/owner binding, not defaultidentity.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "genuine legacy nullstructuralabsence, not authenticoriginal CONFIG closure",
+      "unresolved": {
+        "owner": "parentSDK + originalstoreauthor",
+        "reason": "legacy null cannot invent original owner/binding/completion or account referencedmanifest. Authentic legacy source and migration quota proof required, otherwise block."
+      }
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sourceSha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "line": 96,
+      "parameter": "completionIntent",
+      "initializer": "null",
+      "currentCallerReason": "Public storeResult forwards genuine completionIntent orlegacy null to actualresultbinding validator; no syntheticproof.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "genuine legacy nullstructuralabsence, not authenticoriginal CONFIG closure",
+      "unresolved": {
+        "owner": "parentSDK + originalstoreauthor",
+        "reason": "legacy null cannot invent original owner/binding/completion or account referencedmanifest. Authentic legacy source and migration quota proof required, otherwise block."
+      }
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sourceSha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "line": 97,
+      "parameter": "owner",
+      "initializer": "null",
+      "currentCallerReason": "Public storeResult optionalowner null legacy structuralrepresentation; no current-config owner substitution.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "genuine legacy nullstructuralabsence, not authenticoriginal CONFIG closure",
+      "unresolved": {
+        "owner": "parentSDK + originalstoreauthor",
+        "reason": "legacy null cannot invent original owner/binding/completion or account referencedmanifest. Authentic legacy source and migration quota proof required, otherwise block."
+      }
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sourceSha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "line": 174,
+      "parameter": "missingRanges",
+      "initializer": "[]",
+      "currentCallerReason": "Facade forwards explicit empty additionalmissingranges; real sourceclosures/evidence still evaluated.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sourceSha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "line": 175,
+      "parameter": "unresolvedItems",
+      "initializer": "[]",
+      "currentCallerReason": "Facade forwards optionaladditional externalreports empty only ifabsent; actualstored unresolved state not cleared.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "line": 475,
+      "parameter": "attributeToRun",
+      "initializer": "true",
+      "currentCallerReason": "Quarantineoverflow defaulttrue attempts attribution fromactualdecodable source; explicitfalse usedfor conflicts prevents falsely associating source to run. Not allowlist/budget fallback.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "sourceSha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+      "line": 15,
+      "parameter": "precedingSequence",
+      "initializer": "0",
+      "currentCallerReason": "Completejournal origin0; Nova continuationpasses actualpriorrecord count, retirementhelper fulljournal uses0. Structural hashchain origin, no tunablepolicy.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "sourceSha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+      "line": 15,
+      "parameter": "precedingHash",
+      "initializer": "null",
+      "currentCallerReason": "Completejournal genesisnull; continuationpasses actualpriorhash; validates everyactualnextrecord chain.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 7,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 15,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 28,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 10,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 45,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 66,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 71,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "sourceSha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "line": 6,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/worker-config.ts",
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "line": 5,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/worker-config.ts",
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "line": 22,
+      "parameter": "environment",
+      "initializer": "process.env",
+      "currentCallerReason": "Actualstartup environment input API defaults process.env; individual fields delegated to parent21trust/endpoints/roleproducer/sourceProof, not numerical/credential fallback synthesized here.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "line": 14,
+      "parameter": "code",
+      "initializer": "'PRISM_WORKER_STOPPING'",
+      "currentCallerReason": "DefaultHTTP unavailable errorlabel PRISM_WORKER_STOPPING only, not timeout/retry budget.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "line": 20,
+      "parameter": "limits",
+      "initializer": "workerIngressLimits()",
+      "currentCallerReason": "Actualstartup workerIngressLimits reads samewholecomponent owner; createManagedWorkerServer explicitworkerstartup limits supplied fromcapture. No hardcoded numeric defaults.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/prism/server/worker-service.ts",
+      "sourceSha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "line": 20,
+      "parameter": "limits",
+      "initializer": "workerIngressLimits()",
+      "currentCallerReason": "CompatibilityAPI invokes actualwholeowner workerIngressLimits(), not individualfield fallback; realworkerstartup supplies actualvalidatedselectedlimits.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "parent Prism actualwholeauthor/startup environment input or generatedlimits mechanism",
+      "unresolved": {
+        "owner": "parent Prism",
+        "reason": "exact field producer/runtime materialization owner handoff in parent trust/role/native source definitions; parent sourcewide closure not inferred from default process.env or limits() mechanism"
+      }
+    },
+    {
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "line": 99,
+      "parameter": "message",
+      "initializer": "code",
+      "currentCallerReason": "AttemptFault message defaults to exact error code, not execution policy.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/native-attempt-journal.ts",
+      "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "line": 40,
+      "parameter": "validateNewAdmission",
+      "initializer": "() => {}",
+      "currentCallerReason": "New native admission supplies callback via executeNativeWorkerAttempt; recovery/cleanup paths deliberately omit to preserve accepted historical claim/envelope. No current CONFIG refill of history.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/native-process-launches.ts",
+      "sourceSha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155",
+      "line": 10,
+      "parameter": "controlPipe",
+      "initializer": "false",
+      "currentCallerReason": "IPC fourth pipe derived from role-owned control presence, not adjustable resource budget; no control implies three stdio pipes.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/native-resource-scope.ts",
+      "sourceSha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "line": 107,
+      "parameter": "aggregate",
+      "initializer": "false",
+      "currentCallerReason": "Actual NativeWorkerOwnership.#recover supplies record.topology.kind===aggregate.v1; omission false unused by productive owner recovery. Legacy leaf cannot gain aggregate launch authority.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/native-resource-scope.ts",
+      "sourceSha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "line": 117,
+      "parameter": "aggregate",
+      "initializer": "false",
+      "currentCallerReason": "Actual owner supplies persisted topology discriminator, not current policy; omitted false unused at productive owner recovery.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/native-worker-ownership.ts",
+      "sourceSha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "line": 58,
+      "parameter": "settled",
+      "initializer": "() => {}",
+      "currentCallerReason": "Callback notification supplied by supervisor allocation/release-capacity composition; no-op is mechanism if absent, not numeric limit.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/native-worker-ownership.ts",
+      "sourceSha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "line": 66,
+      "parameter": "controlPipe",
+      "initializer": "false",
+      "currentCallerReason": "NativeWorkerProcess passes control!==undefined; trusted helper launches derive pipe ownership from role callback.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/ownership-capacity.ts",
+      "sourceSha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "line": 32,
+      "parameter": "maximumBytes",
+      "initializer": "maximumInteger",
+      "currentCallerReason": "Current exported helper fallback MAX_SAFE_INTEGER is latent unbounded quota; both production FileWorkerOwnershipStore callers pass this.#maximumBytes. Remove optional default in approved C3; aliases existing ownership byte author, never new quota author.",
+      "canonicalIds": [
+        "CMP-API-OWNERSHIP-TERMINAL-CAPACITY-REQUIRED-QUOTA"
+      ],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "existing supplied APIquota repair explicitlydefined",
+      "unresolved": null,
+      "contract": {
+        "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/public-api-consumer-obligations.json",
+        "sha256": "4ed15afa2ca6b2a9de399946902102996bad02b9def6795b392a2c261d4e1c98",
+        "rfc6901Pointer": "/ownershipCapacity"
+      }
+    },
+    {
+      "source": "skills/worker/core/worker/ownership-store.ts",
+      "sourceSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "line": 129,
+      "parameter": "options",
+      "initializer": "{}",
+      "currentCallerReason": "Omitted {} means existing-record transition, while admission transitions explicitly request terminal capacity check; no limit synthesized.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/phase-deadline.ts",
+      "sourceSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "line": 18,
+      "parameter": "maintenance",
+      "initializer": "false",
+      "currentCallerReason": "Ordinary phase is claim-bound; cleanup explicitly maintenance=true only bounded neutralization. No configured retry/claim refresh.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/resource-accounting.ts",
+      "sourceSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "line": 7,
+      "parameter": "message",
+      "initializer": "'Worker resource observation is missing or invalid'",
+      "currentCallerReason": "Failure diagnostic text constant for missing/invalid sensor, not fabricated zero or tunable policy.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    },
+    {
+      "source": "skills/worker/core/worker/resource-accounting.ts",
+      "sourceSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "line": 16,
+      "parameter": "previous",
+      "initializer": "{}",
+      "currentCallerReason": "Empty previous means first observation has no prior monotonic baseline; missing measurements still invalid/unavailable. Later actual measurement supplies previous; not zero resource budget replacement.",
+      "canonicalIds": [],
+      "proposedDefaultPolicy": "No selectedpolicy field filled from default; each existing source/caller mechanism separately classified",
+      "sourceDefinitionStatus": "nonoperator explicit current mechanism/data origin only",
+      "unresolved": null
+    }
+  ],
+  "count": 50,
+  "noLexicalOrCountsAcceptance": true
+}

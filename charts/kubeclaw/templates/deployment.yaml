@@ -29,6 +29,9 @@ spec:
         kubeclaw.dev/native-worker-policy: {{ .Values.busterNative.policyDigest | quote }}
         {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
+        {{- if eq .Values.agentRole "buster" }}
+        checksum/pipeline-delivery: {{ include (print $.Template.BasePath "/configmap-pipeline-delivery.yaml") . | sha256sum }}
+        {{- end }}
         checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
         {{- if .Values.workerTrust.spiffe.enabled }}
         checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") .) | fromYaml).data "envoy.yaml" | sha256sum }}
@@ -277,8 +280,6 @@ spec:
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: NODE_PATH
               value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
-            - name: SWARM_CONFIG
-              value: "/etc/kubeclaw/swarm/swarm.config.json"
             - name: LITELLM_API_KEY
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
             - name: OPENCLAW_GATEWAY_TOKEN
@@ -902,7 +903,7 @@ spec:
                 if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
               } else {
                 await check('runtime openclaw config', () => requirePath('/home/node/.openclaw/openclaw.json', 'file'));
-                await check('runtime swarm config', () => requirePath(process.env.SWARM_CONFIG, 'file'));
+                await check('runtime lint/config directory', () => requirePath('/runtime-config', 'dir'));
                 await check('code bundle', checkCodeBundle);
                 await check('skills', () => requirePath('/app/skills', 'dir'));
                 if (mode === 'startup') {
@@ -1230,9 +1231,6 @@ spec:
             - name: init-swarm-config
               mountPath: /init-swarm-config
               readOnly: true
-            - name: init-swarm-config
-              mountPath: /etc/kubeclaw/swarm
-              readOnly: true
             - name: tmp
               mountPath: /tmp
             - name: tmp
@@ -1362,8 +1360,6 @@ spec:
                   name: {{ .Values.discordWebhook.secretName }}
                   key: {{ .Values.discordWebhook.secretKey | default "discordWebhook" }}
             {{- end }}
-            - name: SWARM_CONFIG
-              value: "/etc/kubeclaw/swarm/swarm.config.json"
             - name: GATEWAY_PORT
               value: {{ .Values.gateway.port | quote }}
             - name: KUBECLAW_DRAIN_FILE
@@ -1418,9 +1414,6 @@ spec:
             {{- include "kubeclaw.demoReadyClientMounts" . | nindent 12 }}
             - name: config
               mountPath: /home/node/.openclaw
-            - name: init-swarm-config
-              mountPath: /etc/kubeclaw/swarm
-              readOnly: true
             - name: runtime-config
               mountPath: /runtime-config
               readOnly: true
@@ -1579,6 +1572,9 @@ spec:
       # ---------------------------------------------------------------
       volumes:
         {{- if eq .Values.agentRole "buster" }}
+        - name: buster-delivery-receipt
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-pipeline-delivery
         - { name: buster-native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster, type: Directory } }
         - { name: buster-native-ownership, hostPath: { path: /var/lib/kubeclaw/native/buster, type: Directory } }
         - { name: buster-native-policy, hostPath: { path: /etc/kubeclaw/buster-pool.json, type: File } }

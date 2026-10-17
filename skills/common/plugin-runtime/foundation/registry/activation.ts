@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { captureIsolationSessionPolicy, type IsolationSessionPolicy } from '../isolation/session.ts';
 import { invokeIsolated } from '../isolation/runner.ts';
 import { auditTrustedRegistrationImports } from './import-audit.ts';
 import { computePackageDigest } from './digest.ts';
@@ -51,6 +52,7 @@ async function load(
     readonly registration: { readonly module: string; readonly export: string };
   },
   isolation?: IsolationPolicy,
+  sessionPolicy?: IsolationSessionPolicy,
 ): Promise<ActivatedRegistration> {
   if (entry.package.provenance.trustScope !== 'trusted_first_party') {
     if (surface === 'adapter') {
@@ -77,6 +79,7 @@ async function load(
           modulePath: path.join(entry.package.root, entry.registration.module),
           exportName: entry.registration.export,
           surface,
+          sessionPolicy: captureIsolationSessionPolicy(sessionPolicy),
           ...(isolation ? { cgroupRoot: isolation.cgroupRoot } : {}),
           argument,
           context: context as PluginInvocationContext,
@@ -104,7 +107,9 @@ export async function activateRegistry(
   snapshot: RegistrySnapshot,
   enabledRegistrations: ReadonlySet<string>,
   isolation?: IsolationPolicy,
+  sessionPolicy?: IsolationSessionPolicy,
 ): Promise<ActivatedRegistry> {
+  sessionPolicy = sessionPolicy === undefined ? undefined : captureIsolationSessionPolicy(sessionPolicy);
   const enabledPackages = new Map<string, RegistrySnapshot['packages'] extends ReadonlyMap<string, infer V> ? V : never>();
   const enabledEntries = [
     ...[...snapshot.stages].filter(([, entry]) => enabledRegistrations.has(`${entry.package.manifest.id}:${entry.registration.id}`)),
@@ -122,13 +127,13 @@ export async function activateRegistry(
   assertPackageIntegrity(enabledPackages.values());
   const stageEntries = await Promise.all([...snapshot.stages]
     .filter(([, entry]) => enabledRegistrations.has(`${entry.package.manifest.id}:${entry.registration.id}`))
-    .map(async ([id, entry]) => [id, await load('stage', entry, isolation)] as const));
+    .map(async ([id, entry]) => [id, await load('stage', entry, isolation, sessionPolicy)] as const));
   const observerEntries = await Promise.all([...snapshot.observers]
     .filter(([id]) => enabledRegistrations.has(id))
-    .map(async ([id, entry]) => [id, await load('observer', entry, isolation)] as const));
+    .map(async ([id, entry]) => [id, await load('observer', entry, isolation, sessionPolicy)] as const));
   const adapterEntries = await Promise.all([...snapshot.adapters]
     .filter(([id]) => enabledRegistrations.has(id))
-    .map(async ([id, entry]) => [id, await load('adapter', entry, isolation)] as const));
+    .map(async ([id, entry]) => [id, await load('adapter', entry, isolation, sessionPolicy)] as const));
   return Object.freeze({
     snapshot,
     stages: new FrozenMap(stageEntries),

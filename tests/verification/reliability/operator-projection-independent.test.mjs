@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -20,7 +21,7 @@ function selection(f) {
       deliveryRoot: f.deliveryRoot, waitRoot: f.waitRoot, effectKey: f.request.idempotencyKey,
       expectedPayloadDigest: records.find(record => record.payload.schemaVersion === 'notification-delivery-request.v1').payloadDigest,
       terminalPayloadDigest: records.find(record => record.payload.schemaVersion === 'notification-delivery-receipt.v1').payloadDigest,
-      runJournalHead: new FileJournal(path.join(f.run, 'events.jsonl')).records().at(-1).hash,
+      runJournalHead: new FileJournal(path.join(f.run, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().at(-1).hash,
       snapshotDigest: json(path.join(f.run, 'run-snapshot.json')).digest } };
 }
 
@@ -31,7 +32,7 @@ test('independent conflicting original signal idempotency key cannot authorize p
   // Deliberate corruption of a genuine completed run: original recordSignal
   // would reject this same key with changed content. Generic FileJournal keeps
   // an honest chain; this is not fabricated successful producer history.
-  const signals = new FileJournal(path.join(f.run, 'signals.jsonl'));
+  const signals = new FileJournal(path.join(f.run, 'signals.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   signals.append({ ...f.signal, signalId: 'signal:conflicting', waitId: 'wait:conflicting' });
   assert.equal(signals.records().length, 2);
   await assert.rejects(retireOperatorRequest(scope));

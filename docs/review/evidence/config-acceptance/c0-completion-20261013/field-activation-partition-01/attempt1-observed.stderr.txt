@@ -1,0 +1,2 @@
+Observed tool-visible author build failure, transcribed (not an original redirected stderr file):
+AttributeError: str object has no attribute get at original r.scope.registration lookup; corrected to preserve source string/object distinction. No source/canonical/schema/test changed.

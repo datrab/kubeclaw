@@ -1,0 +1,294 @@
+{
+  "schemaVersion": "pipeline-registration-policy.v1",
+  "packageId": "kubeclaw.http",
+  "registrationId": "kubeclaw.http:request",
+  "instanceId": "fixture.http",
+  "profiles": {
+    "A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "B": {
+      "processing": {
+        "requestTimeoutMs": 500,
+        "maximumResponseBytes": 1024,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "RT-6b6f0761a77de324-A": {
+      "processing": {
+        "maximumResponseBytes": 32,
+        "requestTimeoutMs": 1000,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "RT-6b6f0761a77de324-B": {
+      "processing": {
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "RT-6a3cdfc223a3c24b-A": {
+      "processing": {
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 50,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "RT-6a3cdfc223a3c24b-B": {
+      "processing": {
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 500,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "deadline-ceiling-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "deadline-ceiling-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumRequestTimeoutMs": 500
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "retry-conservative-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "retry-conservative-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "matrix-conservative-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": [
+          "path"
+        ]
+      }
+    },
+    "matrix-conservative-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumRequestTimeoutMs": 1000
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": []
+      }
+    }
+  }
+}

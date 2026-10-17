@@ -1,0 +1,21 @@
+{
+  "qualification": "34 native future subcases are defined inside unchanged contracts package, not asserted to be standalone canonical proposed-cases IDs. Attempt1 selected wrong case-ID universe and is preserved as reviewer setup error. Here checks exact six advertised canonical container cases.",
+  "observations": [
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/inventory-fragment.json",
+      "selectedCount": 49,
+      "requiredCount": 49,
+      "missingFrozen": [],
+      "missingCurrent": [],
+      "changedSelectedIds": []
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/proposed-cases.json",
+      "selectedCount": 6,
+      "requiredCount": 6,
+      "missingFrozen": [],
+      "missingCurrent": [],
+      "changedSelectedIds": []
+    }
+  ]
+}

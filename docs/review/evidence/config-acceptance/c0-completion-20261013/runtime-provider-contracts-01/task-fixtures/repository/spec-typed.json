@@ -1,0 +1,193 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "C0 local task definition",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ok": {
+      "get": {
+        "operationId": "checkOk",
+        "tags": [
+          "proof"
+        ],
+        "responses": {
+          "200": {
+            "description": "expected task response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "business"
+                  ],
+                  "properties": {
+                    "business": {
+                      "type": "string",
+                      "enum": [
+                        "C0-local"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/{value}": {
+      "get": {
+        "operationId": "typedParameters",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          {
+            "name": "x-proof",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "expected task response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "business"
+                  ],
+                  "properties": {
+                    "business": {
+                      "type": "string",
+                      "enum": [
+                        "C0-local"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/submit": {
+      "post": {
+        "operationId": "submit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "business"
+                ],
+                "properties": {
+                  "business": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "expected task response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "business"
+                  ],
+                  "properties": {
+                    "business": {
+                      "type": "string",
+                      "enum": [
+                        "C0-local"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cleanup": {
+      "get": {
+        "operationId": "cleanCheck",
+        "responses": {
+          "200": {
+            "description": "expected task response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "business"
+                  ],
+                  "properties": {
+                    "business": {
+                      "type": "string",
+                      "enum": [
+                        "C0-local"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

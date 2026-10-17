@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "containerdVersion": "2.3.0",
+  "roles": {
+    "buster": {
+      "namespace": "dlv-buster-b",
+      "container": "buster-v2-runtime",
+      "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100"
+    },
+    "prism": {
+      "namespace": "dlv-prism-b",
+      "container": "worker",
+      "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100"
+    }
+  }
+}

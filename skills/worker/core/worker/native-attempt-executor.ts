@@ -36,7 +36,11 @@ export async function executeNativeWorkerAttempt(options: NativeWorkerAttemptExe
       }
       const spool = await NativeWorkerOutputSpool.create(context.outputRoot, limits.maximumOutputBytes);
       try {
-        const process = await runNativeWorkerProcess({ ...options.process, limits, outputCapture: spool,
+        const environment = {...options.process.command.environment};
+        delete environment.KUBECLAW_ASSIGNED_WORKER_CORE_POLICY;
+        if (context.workerCore) environment.KUBECLAW_ASSIGNED_WORKER_CORE_POLICY = JSON.stringify(context.workerCore);
+        const process = await runNativeWorkerProcess({ ...options.process,
+          command: {...options.process.command, environment}, limits, outputCapture: spool,
           identity: journalIdentity(envelope), input: Buffer.from(JSON.stringify(envelope)) });
         const completed = new Date();
         await spool.flush();

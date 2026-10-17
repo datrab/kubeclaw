@@ -1,0 +1,91 @@
+{
+  "scope": "document integrity only",
+  "controls": [
+    {
+      "batch": "01",
+      "control": "positive-before",
+      "exitCode": 0,
+      "expected": "pass",
+      "inputSHA256": "0099b776affbaa6b8507fa0ab3a479f98f7ac19a8b6d10cf3ed82fa04dfc89a2"
+    },
+    {
+      "batch": "01",
+      "control": "member-loss",
+      "exitCode": 1,
+      "expected": "reject",
+      "inputSHA256": "468023c567e3b2f83b41cd27c6af2f7c13b423e18803ee00109b0ee79636b30b"
+    },
+    {
+      "batch": "01",
+      "control": "member-duplicate",
+      "exitCode": 1,
+      "expected": "reject",
+      "inputSHA256": "5fbe8dcada1f19ca4876396e51050af64dec818fd6a1262ae4af51be1433522e"
+    },
+    {
+      "batch": "01",
+      "control": "wrong-profile",
+      "exitCode": 1,
+      "expected": "reject",
+      "inputSHA256": "c2db4c21266943c794ae486576ebf82cc3506f4571c2b5b4e2e1d89c91fb0011"
+    },
+    {
+      "batch": "01",
+      "control": "coordinate-loss",
+      "exitCode": 1,
+      "expected": "reject",
+      "inputSHA256": "9da3e61253ac866f1b9af8735adbd6105ca884200696c705f729e8282813074b"
+    },
+    {
+      "batch": "01",
+      "control": "positive-recovery",
+      "exitCode": 0,
+      "expected": "pass",
+      "inputSHA256": "0099b776affbaa6b8507fa0ab3a479f98f7ac19a8b6d10cf3ed82fa04dfc89a2"
+    },
+    {
+      "batch": "02",
+      "control": "positive-before",
+      "exitCode": 0,
+      "expected": "pass",
+      "inputSHA256": "6a3524bd48015dd9c53d3086bb9523a895bc3789491efab908b4f5b1ff8d5f44"
+    },
+    {
+      "batch": "02",
+      "control": "member-loss",
+      "exitCode": 1,
+      "expected": "reject",
+      "inputSHA256": "dd81a718ef8703160aea2857c04b5b41dec59f8e280bfdb169863aee5f7a56b4"
+    },
+    {
+      "batch": "02",
+      "control": "member-duplicate",
+      "exitCode": 1,
+      "expected": "reject",
+      "inputSHA256": "ef6dc0a88ad968c78f73d79b8ba14ec510f637812c5a5accb7900175c320dd70"
+    },
+    {
+      "batch": "02",
+      "control": "wrong-profile",
+      "exitCode": 1,
+      "expected": "reject",
+      "inputSHA256": "a4135c59044c797a125cd7a4ce6af877a83c6cfb9e804c92fc5b9dad32e63537"
+    },
+    {
+      "batch": "02",
+      "control": "coordinate-loss",
+      "exitCode": 1,
+      "expected": "reject",
+      "inputSHA256": "fe50f7449c3b5e780200362f02b9e77ce21e38ca5caa5c4078d49dc311e90ff1"
+    },
+    {
+      "batch": "02",
+      "control": "positive-recovery",
+      "exitCode": 0,
+      "expected": "pass",
+      "inputSHA256": "6a3524bd48015dd9c53d3086bb9523a895bc3789491efab908b4f5b1ff8d5f44"
+    }
+  ],
+  "canonicalInputDrift": false,
+  "globalC0Accepted": false
+}

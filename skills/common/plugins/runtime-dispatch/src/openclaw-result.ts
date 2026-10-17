@@ -63,7 +63,7 @@ function terminalAssistantText(value: unknown): string {
 async function localResult(context: AdapterActivationContext, target: OpenClawTarget,
   relative: string, key: string, token: string, state: OpenClawSessionState): Promise<JsonRecord> {
   if (target.workspaceReference) {
-    const content = readResult(target.cwd, relative);
+    const content = readResult(target.cwd, relative, target.resultReadMaximumBytes);
     if (content !== undefined) {
       parseJsonText(content);
       // Preserve the established repository result record before Git cleanup.

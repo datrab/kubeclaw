@@ -1,0 +1,22 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,
+  "required":["manifestFile","profileFile","targets"],
+  "properties":{
+    "url":{"type":"string","pattern":"^https?://","maxLength":2048},
+    "endpointName":{"type":"string","pattern":"^[A-Za-z0-9][A-Za-z0-9._-]*$","maxLength":64},
+    "manifestFile":{"type":"string","minLength":1,"maxLength":4096,"pattern":"^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+    "profileFile":{"type":"string","minLength":1,"maxLength":4096,"pattern":"^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+    "targets":{"type":"array","minItems":1,"maxItems":64,"uniqueItems":true,"items":{"type":"string","pattern":"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"}},
+    "comparisonProfile":{"enum":["strict-v1","balanced-v1"],"default":"strict-v1"},
+    "overrides":{"type":"object","additionalProperties":false,"properties":{
+      "maximumDifferencePercent":{"type":"number","minimum":0,"maximum":100},
+      "pixelThreshold":{"type":"number","minimum":0,"maximum":1},
+      "uncertaintyMarginPercent":{"type":"number","minimum":0,"maximum":100}
+    }},
+    "masks":{"type":"array","maxItems":64,"items":{"type":"object","additionalProperties":false,"required":["target","selectors"],"properties":{
+      "target":{"type":"string","pattern":"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+      "selectors":{"type":"array","minItems":1,"maxItems":32,"uniqueItems":true,"items":{"type":"string","minLength":1,"maxLength":512}}
+    }}},
+    "timeoutMs":{"type":"integer","minimum":1000,"maximum":120000,"default":30000}
+  }
+}

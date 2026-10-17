@@ -1,0 +1,229 @@
+{
+  "scope": "pure frozen guards in memory; no root/author/native actions",
+  "observations": [
+    {
+      "id": "frozen-selected-baseline",
+      "result": "passed"
+    },
+    {
+      "id": "native-omission",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: missing historical input"
+    },
+    {
+      "id": "successor-omission",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: dangling successor"
+    },
+    {
+      "id": "field-omission",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: reviewed field material drift"
+    },
+    {
+      "id": "disposition-omission",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: missing historical input"
+    },
+    {
+      "id": "duplicate-native_cases",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:duplicate native case"
+    },
+    {
+      "id": "duplicate-rows",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:duplicate field"
+    },
+    {
+      "id": "duplicate-dispositions",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:duplicate disposition"
+    },
+    {
+      "id": "historical-result",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: historical body drift"
+    },
+    {
+      "id": "successor-result",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor material drift"
+    },
+    {
+      "id": "historical-scope",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: historical body drift"
+    },
+    {
+      "id": "successor-scope",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor material drift"
+    },
+    {
+      "id": "historical-requirements",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: historical body drift"
+    },
+    {
+      "id": "successor-requirements",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor material drift"
+    },
+    {
+      "id": "field-source-drift",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: reviewed field material drift"
+    },
+    {
+      "id": "field-case-loss",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: reviewed field material drift"
+    },
+    {
+      "id": "original-reactivated",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: obsolete case reactivation/acceptance"
+    },
+    {
+      "id": "successor-no-longer-canonical",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: dangling successor"
+    },
+    {
+      "id": "successor-explicit-superseded",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "nonactive-successor-'quarantined'",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "nonactive-successor-'inactive'",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "nonactive-successor-'unknown'",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "nonactive-successor-'historical-source-evidence'",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "nonactive-successor-''",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "nonactive-successor-None",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "successor-disposition-countsTowardAcceptance",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "successor-disposition-activeSettingLinks",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "successor-disposition-evidenceResultPreserved",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "successor-disposition-originalRequirementsPreserved",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "successor-disposition-supersededBy",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "pinned-artifact-or-source-tamper-docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:reviewed artifact drift: docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json"
+    },
+    {
+      "id": "pinned-artifact-or-source-tamper-docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/stable-independent-review-receipt.json",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:reviewed artifact drift: docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/stable-independent-review-receipt.json"
+    },
+    {
+      "id": "pinned-artifact-or-source-tamper-docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:reviewed artifact drift: docs/review/remediation/independent-runtime-historical-links-6606.md"
+    },
+    {
+      "id": "pinned-artifact-or-source-tamper-skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:reviewed productive source drift: skills/nova/plugins/review/schemas/repository-audit-config.schema.json"
+    },
+    {
+      "id": "pinned-artifact-or-source-tamper-skills/nova/plugins/review/src/repository-review-profile.ts",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:reviewed productive source drift: skills/nova/plugins/review/src/repository-review-profile.ts"
+    },
+    {
+      "id": "public-loader-successor-disposition-'quarantined'",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "public-loader-successor-disposition-'inactive'",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "public-loader-successor-disposition-'unknown'",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: inactive successor"
+    },
+    {
+      "id": "public-loader-successor-countsTowardAcceptance-True",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "public-loader-successor-activeSettingLinks-[]",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "public-loader-successor-evidenceResultPreserved-'passed'",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "public-loader-successor-originalRequirementsPreserved-[]",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "public-loader-successor-supersededBy-['RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING']",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: successor disposition metadata drift"
+    },
+    {
+      "id": "restored-selected-and-public-loader",
+      "result": "passed"
+    }
+  ],
+  "summary": {
+    "observations": 44,
+    "intendedRejections": 42,
+    "escapedActiveGuards": 0,
+    "uncheckedSuccessorDispositionMetadata": 0
+  }
+}

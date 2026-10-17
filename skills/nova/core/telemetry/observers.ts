@@ -20,6 +20,7 @@ export interface ObserverDeliveryRecord {
   readonly recordedAt: string; readonly error: string | null;
 }
 export interface ObserverRuntimeOptions {
+  readonly memoryBytes: number;
   readonly registry: GrantedRegistry; readonly activated: ActivatedRegistry; readonly adapters: AdapterRuntime; readonly events: FileJournal<CanonicalEvent>;
   readonly checkpoints: FileJournal<ObserverCheckpoint>; readonly deliveries: FileJournal<ObserverDeliveryRecord>;
   readonly configs: ReadonlyMap<string, Readonly<Record<string, unknown>>>; readonly now?: () => Date; readonly wait?: (milliseconds: number) => Promise<void>;
@@ -35,7 +36,8 @@ export class ObserverRuntime {
   readonly #options: ObserverRuntimeOptions; readonly #now: () => Date; readonly #wait: (milliseconds: number) => Promise<void>;
   readonly #checkpoints: Map<string, ObserverCheckpoint>; readonly #attempts: Map<string, number>; readonly #completed: Set<string>;
   constructor(options: ObserverRuntimeOptions) {
-    this.#options = options; this.#now = options.now ?? (() => new Date());
+    if (!Number.isSafeInteger(options.memoryBytes) || options.memoryBytes < 1) throw new Error('CORE_OBSERVER_MEMORY_REQUIRED');
+    this.#options = Object.freeze({ ...options }); this.#now = options.now ?? (() => new Date());
     this.#wait = options.wait ?? ((milliseconds) => new Promise((resolve) => { const timer = setTimeout(resolve, milliseconds); timer.unref(); }));
     const recovered = recoverObservers(options); this.#checkpoints = recovered.checkpoints; this.#attempts = recovered.attempts; this.#completed = recovered.completed;
   }

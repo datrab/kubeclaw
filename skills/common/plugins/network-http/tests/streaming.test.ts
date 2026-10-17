@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { createGzip, gzipSync, constants } from 'node:zlib';
@@ -44,7 +45,7 @@ const server = http.createServer((request, response) => {
 await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
 const origin = `http://127.0.0.1:${server.address().port}`;
 function adapter(timeoutMs) {
-  return activate({ config: { allowedOrigins: [origin], maxResponseBytes: 128, timeoutMs } });
+  return activate({ config: { ...TEST_CORE_POLICY.networkHttp, allowedOrigins: [origin], maxResponseBytes: 128, timeoutMs } });
 }
 function invoke(instance, pathname, signal = new AbortController().signal) {
   return instance.invoke({ confidential: true, signal,

@@ -1,0 +1,164 @@
+{
+  "cases": [
+    {
+      "id": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "lifecycle": {
+        "state": "active-actual-source-control",
+        "required": true
+      },
+      "requirements": [
+        "C0.1",
+        "C0.2",
+        "F-VERIFY"
+      ],
+      "boundary": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts actual FileObservabilityAdmissionStore constructor",
+      "invocation": {
+        "argv": [
+          "node",
+          "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-foundation-source-controls.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "environment": {},
+        "requiredCollection": {
+          "exactCaseId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+          "countMustBePositive": true,
+          "skipsTimeoutSetupNeverPass": true
+        }
+      },
+      "input": {
+        "rejectedTotal": 1024,
+        "admittedConstructorTotal": 1025,
+        "scope": "Actual constructor boundary only; NOT sufficiently provisioned complete live operation or adjustable future reserve policy"
+      },
+      "priorState": "Freshactualtemporaryfile/directory; realmetadata/no broker/host/cgroupchanges; actualrecordshape andlimits describedscript",
+      "oracles": {
+        "id": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+        "result": "passed",
+        "observed": {
+          "rejectedTotal": 1024,
+          "admittedConstructorTotal": 1025,
+          "scope": "Actual constructor boundary only; NOT sufficiently provisioned complete live operation or adjustable future reserve policy"
+        }
+      },
+      "sourceIdentities": {
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+        "skills/common/plugin-runtime/foundation/observability/replay-validation.ts": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+        "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-foundation-source-controls.mjs": "392ed040a6d0cc211500876f6fda31d3699fd222d39639b18339810b6e68fc48",
+        "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+      },
+      "rawEvidencePath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/foundation-source-controls-attempt1.log",
+      "rawEvidenceSha256": "0c1f69c0076e65a5270aec314f55e1b1603abb1a01fac54a47581513355f5d50",
+      "result": "passed",
+      "proofLimit": "Current source/consumernegative+positivecontrol, NOT configuredfuturepolicyPASS or F-MUT/businessruntimeacceptance"
+    },
+    {
+      "id": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "lifecycle": {
+        "state": "active-actual-source-control",
+        "required": true
+      },
+      "requirements": [
+        "C0.1",
+        "C0.2",
+        "F-VERIFY"
+      ],
+      "boundary": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts actual FileProducerOutbox.pending/readDurableState",
+      "invocation": {
+        "argv": [
+          "node",
+          "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-foundation-source-controls.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "environment": {},
+        "requiredCollection": {
+          "exactCaseId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+          "countMustBePositive": true,
+          "skipsTimeoutSetupNeverPass": true
+        }
+      },
+      "input": {
+        "actualFileBytes": 32833,
+        "configuredMaximumBytes": 1024,
+        "actualPending": [],
+        "explicitBoundedRead": "rejects snapshot-size",
+        "scope": "Real productive outbox.pending() uses omitted cap and genuine kernel flock; demonstrates current unresolved read-bound gap, NOT target PASS"
+      },
+      "priorState": "Freshactualtemporaryfile/directory; realmetadata/no broker/host/cgroupchanges; actualrecordshape andlimits describedscript",
+      "oracles": {
+        "id": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+        "result": "passed",
+        "observed": {
+          "actualFileBytes": 32833,
+          "configuredMaximumBytes": 1024,
+          "actualPending": [],
+          "explicitBoundedRead": "rejects snapshot-size",
+          "scope": "Real productive outbox.pending() uses omitted cap and genuine kernel flock; demonstrates current unresolved read-bound gap, NOT target PASS"
+        }
+      },
+      "sourceIdentities": {
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+        "skills/common/plugin-runtime/foundation/observability/replay-validation.ts": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+        "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-foundation-source-controls.mjs": "392ed040a6d0cc211500876f6fda31d3699fd222d39639b18339810b6e68fc48",
+        "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+      },
+      "rawEvidencePath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/foundation-source-controls-attempt1.log",
+      "rawEvidenceSha256": "0c1f69c0076e65a5270aec314f55e1b1603abb1a01fac54a47581513355f5d50",
+      "result": "passed",
+      "proofLimit": "Current source/consumernegative+positivecontrol, NOT configuredfuturepolicyPASS or F-MUT/businessruntimeacceptance"
+    },
+    {
+      "id": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "lifecycle": {
+        "state": "active-actual-source-control",
+        "required": true
+      },
+      "requirements": [
+        "C0.1",
+        "C0.2",
+        "F-VERIFY"
+      ],
+      "boundary": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts actual withDurableStoreLock/acquireKernelLock",
+      "invocation": {
+        "argv": [
+          "node",
+          "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-foundation-source-controls.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "environment": {},
+        "requiredCollection": {
+          "exactCaseId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+          "countMustBePositive": true,
+          "skipsTimeoutSetupNeverPass": true
+        }
+      },
+      "input": {
+        "elapsedMs": 5004.645552999999,
+        "error": "Error: OBSERVABILITY_STORE_LOCK_FAILED:/tmp/c0-source-controls-opx2R1/lock-control/state.json:OBSERVABILITY_STORE_LOCKED:1:",
+        "currentCommandWaitSeconds": 5,
+        "scope": "Two actual storage calls contend on same real kernel flock, second rejects; elapsed recorded, no strict scheduling timing claim, no future adjustable policy execution"
+      },
+      "priorState": "Freshactualtemporaryfile/directory; realmetadata/no broker/host/cgroupchanges; actualrecordshape andlimits describedscript",
+      "oracles": {
+        "id": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+        "result": "passed",
+        "observed": {
+          "elapsedMs": 5004.645552999999,
+          "error": "Error: OBSERVABILITY_STORE_LOCK_FAILED:/tmp/c0-source-controls-opx2R1/lock-control/state.json:OBSERVABILITY_STORE_LOCKED:1:",
+          "currentCommandWaitSeconds": 5,
+          "scope": "Two actual storage calls contend on same real kernel flock, second rejects; elapsed recorded, no strict scheduling timing claim, no future adjustable policy execution"
+        }
+      },
+      "sourceIdentities": {
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+        "skills/common/plugin-runtime/foundation/observability/replay-validation.ts": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+        "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-foundation-source-controls.mjs": "392ed040a6d0cc211500876f6fda31d3699fd222d39639b18339810b6e68fc48",
+        "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+      },
+      "rawEvidencePath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/foundation-source-controls-attempt1.log",
+      "rawEvidenceSha256": "0c1f69c0076e65a5270aec314f55e1b1603abb1a01fac54a47581513355f5d50",
+      "result": "passed",
+      "proofLimit": "Current source/consumernegative+positivecontrol, NOT configuredfuturepolicyPASS or F-MUT/businessruntimeacceptance"
+    }
+  ],
+  "futureCaseDefinitionStatus": "Each14named source obligation identifies missing exactsole-owner/domain/profile/consumer/case definition. Thosefuturecases NOTactiveacceptedruntime and require additionaldefinition, no inventedcompleteprofile."
+}

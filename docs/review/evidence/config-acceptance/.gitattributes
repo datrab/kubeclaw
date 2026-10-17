@@ -1,0 +1,80 @@
+# Preserve exact raw command/diff bytes, including empty output/trailing context.
+# Python/JS/JSON/Markdown remain subject to ordinary whitespace checks.
+*.patch -whitespace
+*.log -whitespace
+*.txt -whitespace
+# Exact captured command streams/render output and acquired upstream source.
+# These are evidence bytes, not authored implementation files; do not trim them.
+*.stdout -whitespace
+*.stderr -whitespace
+delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-*.yaml -whitespace
+delivery/snapshots/*/raw/DLV-C0-BOUNDARY-RENDER-*.yaml -whitespace
+delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs -whitespace
+delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs -whitespace
+# Exact checkpoint-6 byte-sized fixtures, upstream source snapshots and Helm output.
+# Keep their recorded digests/padding; authored checkers still use normal checks.
+components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
+components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes -whitespace
+delivery/pinned-lint-reader-bce3f075/cli/src/semgrep/semgrep_interfaces/rule_schema_v2_adapter.ml -whitespace
+delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-A.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-B.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-A.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-B.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-A.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-B.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-A.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-B.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-A.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-B.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-A.yaml -whitespace
+delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-B.yaml -whitespace
+independent-core-icq-material-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
+independent-core-icq-material-recheck-20261013/frozen/skills/buster/engine/test-gates/historical-plan-store.ts -whitespace
+independent-core-icq-material-recheck-20261013/frozen/skills/buster/engine/test-gates/preparation-archive.ts -whitespace
+independent-core-icq-material-recheck-20261013/frozen/skills/buster/engine/test-gates/prepared-plan-store.ts -whitespace
+independent-core-icq-material-recheck-20261013/frozen/skills/buster/engine/test-gates/provider-process-session.ts -whitespace
+independent-core-icq-material-recheck-20261013/frozen/skills/buster/engine/test-gates/runner-types.ts -whitespace
+independent-core-icq-material-recheck-20261013/frozen/skills/common/plugin-runtime/foundation/observability/durable-records.ts -whitespace
+independent-core-icq-material-recheck-20261013/frozen/tests/verification/reliability/attempt-retirement-fixture.mjs -whitespace
+independent-core-icq-material-recheck-20261013/frozen/tests/verification/reliability/review-report-crash-independent.test.mjs -whitespace
+independent-core-icq-material-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
+independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
+independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes -whitespace
+independent-core-r06-recheck-20261013/frozen/skills/common/plugin-runtime/foundation/observability/durable-records.ts -whitespace
+independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
+independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/buster/engine/test-gates/historical-plan-store.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/buster/engine/test-gates/preparation-archive.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/buster/engine/test-gates/preparation-cleanup-binding.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/buster/engine/test-gates/prepared-plan-store.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/buster/engine/test-gates/provider-process-session.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/buster/engine/test-gates/runner-types.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/buster/engine/test-gates/runner-worker-profile.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/common/plugin-runtime/foundation/observability/durable-records.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/prism/control/native-operation.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/skills/prism/engine/worker-envelope.ts -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/tests/verification/reliability/attempt-retirement-fixture.mjs -whitespace
+independent-core-source-question-bce3f075-20261013/frozen/tests/verification/reliability/review-report-crash-independent.test.mjs -whitespace
+independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-A.yaml -whitespace
+independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-B.yaml -whitespace
+independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-A.yaml -whitespace
+independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-B.yaml -whitespace
+independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-PRISM-A.yaml -whitespace
+independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-PRISM-B.yaml -whitespace
+independent-prism-handoff-20261013/inputs/skills/prism/control/native-operation.ts -whitespace
+independent-prism-handoff-20261013/inputs/skills/prism/engine/worker-envelope.ts -whitespace
+independent-prism-handoff-recheck-20261013/inputs/skills/prism/control/native-operation.ts -whitespace
+independent-prism-handoff-recheck-20261013/inputs/skills/prism/engine/worker-envelope.ts -whitespace
+independent-prism-temporal-recheck-20261013/inputs/skills/prism/control/native-operation.ts -whitespace
+independent-prism-temporal-recheck-20261013/inputs/skills/prism/engine/worker-envelope.ts -whitespace
+# Exact additional independent checkpoint snapshots; original source bytes preserved.
+independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
+independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes -whitespace
+independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
+independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes -whitespace
+independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/skills/common/plugin-runtime/foundation/observability/durable-records.ts -whitespace
+independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
+independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes -whitespace
+
+# Exact unchanged Helm-render observation; preserve original bytes.
+delivery/chart-topology-nova-A-6606af9-20261013-attempt1.yaml -whitespace

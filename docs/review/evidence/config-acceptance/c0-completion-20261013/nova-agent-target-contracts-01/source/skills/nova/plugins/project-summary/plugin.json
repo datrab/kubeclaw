@@ -1,0 +1,22 @@
+{
+  "id": "kubeclaw.project-summary",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "summary",
+      "type": "kubeclaw.report.project-summary",
+      "module": "src/stage.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "artifacts.read",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

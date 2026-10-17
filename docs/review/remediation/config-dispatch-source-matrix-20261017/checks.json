@@ -1,0 +1,343 @@
+{
+  "passed": 66,
+  "total": 66,
+  "negativeControls": [
+    {
+      "name": "missing RT-20b9ad8b0de71e60",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-b4a4c190d5327eef",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-811424859e2b8e12",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-7bf750afaa2acece",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-6f606ecb42591563",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-4ae6e81930cb55df",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-b5e77bf6e3b4023e",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-f97126234123f8c3",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-b55e80f6fa92fb22",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-72ea7fb2b806e9be",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-b3f4212a5c1c0e9c",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-ba128d546b0c0958",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-5dd888323602fcb0",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-7b5d494eae67159d",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-1e9776be6c1d997d",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-331350a782d1e18b",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-889c83e23be50148",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-835aba66d51b9e5b",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-cb53ff8dac9b8144",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-838197376f68e4a2",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-358f9081695f8703",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-671b7ce4e2aa02a2",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-6d4934d73ec165e6",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-d7a39fcd094662e4",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-fb6d0fce3b9e2cd9",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-b86ed6b7457ef6fc",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-a7c746c48003f145",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-3683aabfbafa8fab",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-f72ae0fd088c9c65",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-bbe7b4706efa257f",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-4a6bb21eea8e1b01",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-27fffc024fe2e554",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-3cafd75f2079b320",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-af08af7aec0d41b6",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-d1a36abf922578fa",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-f0111c4803cfd0a7",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-d815b693cf75c75f",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-85bf86430cdc9475",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-dd0ae3cebdfdf35f",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-549874e9f0d2c907",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-93c98519785b41f3",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing RT-RUNTIME-RESULT-PATH-BYTES",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "original id",
+      "rejected": true,
+      "error": "'foreign'"
+    },
+    {
+      "name": "original original",
+      "rejected": true,
+      "error": "Dispatch original drift: RT-20b9ad8b0de71e60"
+    },
+    {
+      "name": "original originalObjectSha256",
+      "rejected": true,
+      "error": "Dispatch original drift: RT-20b9ad8b0de71e60"
+    },
+    {
+      "name": "original class",
+      "rejected": true,
+      "error": "Dispatch original drift: RT-20b9ad8b0de71e60"
+    },
+    {
+      "name": "original caseIds",
+      "rejected": true,
+      "error": "Dispatch original drift: RT-20b9ad8b0de71e60"
+    },
+    {
+      "name": "original owner",
+      "rejected": true,
+      "error": "Dispatch original drift: RT-20b9ad8b0de71e60"
+    },
+    {
+      "name": "duplicate field",
+      "rejected": true,
+      "error": "Dispatch original roster drift"
+    },
+    {
+      "name": "missing central runtimemaxRequestBytes",
+      "rejected": true,
+      "error": "'maxRequestBytes'"
+    },
+    {
+      "name": "missing central runtimemaxResponseBytes",
+      "rejected": true,
+      "error": "'maxResponseBytes'"
+    },
+    {
+      "name": "empty central targetByteProfiles",
+      "rejected": true,
+      "error": "Dispatch empty central profile set"
+    },
+    {
+      "name": "wrong actual receiver runtime",
+      "rejected": true,
+      "error": "Dispatch actual registration drift"
+    },
+    {
+      "name": "missing central openclawmaxPollMs",
+      "rejected": true,
+      "error": "'maxPollMs'"
+    },
+    {
+      "name": "missing central openclawmaxPolls",
+      "rejected": true,
+      "error": "'maxPolls'"
+    },
+    {
+      "name": "missing central openclawpollMs",
+      "rejected": true,
+      "error": "'pollMs'"
+    },
+    {
+      "name": "missing central openclawsessionTimeoutMs",
+      "rejected": true,
+      "error": "'sessionTimeoutMs'"
+    },
+    {
+      "name": "missing central openclawspawnIntervalMs",
+      "rejected": true,
+      "error": "'spawnIntervalMs'"
+    },
+    {
+      "name": "empty central targetTimingProfiles",
+      "rejected": true,
+      "error": "Dispatch empty central profile set"
+    },
+    {
+      "name": "wrong actual receiver openclaw",
+      "rejected": true,
+      "error": "Dispatch actual registration drift"
+    },
+    {
+      "name": "missing targets schema config.schema.json",
+      "rejected": true,
+      "error": "'targets'"
+    },
+    {
+      "name": "missing targets schema openclaw-config.schema.json",
+      "rejected": true,
+      "error": "'targets'"
+    },
+    {
+      "name": "full roster fields loss",
+      "rejected": true,
+      "error": "Incomplete fields"
+    },
+    {
+      "name": "full roster cases loss",
+      "rejected": true,
+      "error": "Incomplete cases"
+    },
+    {
+      "name": "full roster requirements loss",
+      "rejected": true,
+      "error": "Incomplete requirements"
+    }
+  ],
+  "restoredDeterministic": true,
+  "originalFields": 42,
+  "exactExistingCentralProfileJoins": 7,
+  "centralReceivingResiduals": 35,
+  "fullRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; author controls only"
+}

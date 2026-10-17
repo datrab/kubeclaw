@@ -1,0 +1,58 @@
+[
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/validate-adjustable-core-definitions.mjs"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/adjustable-profiles.log"
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/check-adjustability-source-controls.mjs"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/current-reader-controls.log"
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/validate-refined-profile-definitions.mjs"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/refined-profiles.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/check-icd-corrections.py"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/author-integrity.log"
+  },
+  {
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-worker-core-contracts.mts"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/additional-contracts.log"
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/enumerate-api.mjs"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/api-enumeration.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/enumerate-schema.py"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/schema-enumeration.log"
+  }
+]

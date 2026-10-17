@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.9.5"
+  },
+  "wizard": {
+    "lastRunAt": "2026-03-26T19:20:27.474Z",
+    "lastRunVersion": "2026.3.24",
+    "lastRunCommand": "configure",
+    "lastRunMode": "local"
+  },
+  "auth": {
+    "profiles": {
+      "openai:d.trabucco@tutamail.com": {
+        "provider": "openai",
+        "mode": "oauth",
+        "email": "d.trabucco@tutamail.com"
+      },
+      "openai:chatgpt-d.trabucco@tutamail.com": {
+        "provider": "openai",
+        "mode": "oauth"
+      }
+    },
+    "order": {
+      "openai": [
+        "openai:d.trabucco@tutamail.com",
+        "openai:chatgpt-d.trabucco@tutamail.com"
+      ]
+    }
+  },
+  "acp": {
+    "enabled": true,
+    "backend": "acpx",
+    "defaultAgent": "codex",
+    "allowedAgents": [
+      "claude",
+      "codex",
+      "kimi",
+      "gemini",
+      "pi"
+    ]
+  },
+  "memory": {
+    "search": {
+      "enabled": true,
+      "experimental": {
+        "sessionMemory": true
+      },
+      "sources": [
+        "memory",
+        "sessions"
+      ],
+      "provider": "openai-compatible",
+      "remote": {
+        "baseUrl": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+        "apiKey": {
+          "source": "env",
+          "provider": "default",
+          "id": "LITELLM_API_KEY"
+        }
+      },
+      "model": "gemini-embedding-001"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "thinkingDefault": "off",
+      "reasoningDefault": "off",
+      "model": {
+        "primary": "openai/gpt-5.6-sol",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ]
+      },
+      "modelPolicy": {
+        "allow": [
+          "openai/gpt-5.6-sol",
+          "openai/gpt-5.5"
+        ]
+      },
+      "models": {
+        "openai/gpt-5.6-sol": {
+          "agentRuntime": {
+            "id": "codex"
+          }
+        },
+        "openai/gpt-5.5": {
+          "agentRuntime": {
+            "id": "codex"
+          }
+        }
+      },
+      "workspace": "/home/node/.openclaw/workspace",
+      "embeddedAgent": {
+        "executionContract": "strict-agentic"
+      },
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "2h"
+      },
+      "compaction": {
+        "mode": "safeguard",
+        "keepRecentTokens": 140000,
+        "memoryFlush": {
+          "enabled": true
+        }
+      },
+      "subagents": {
+        "maxConcurrent": 2,
+        "archiveAfterMinutes": 240,
+        "runTimeoutSeconds": 43200,
+        "maxSpawnDepth": 3
+      },
+      "contextInjection": "never"
+    },
+    "entries": {
+      "main": {
+        "subagents": {
+          "allowAgents": [
+            "*"
+          ]
+        },
+        "skills": [],
+        "skillsLimits": {
+          "maxSkillsPromptChars": 1200
+        }
+      }
+    }
+  },
+  "bindings": [
+    {
+      "agentId": "main",
+      "match": {
+        "channel": "discord",
+        "accountId": "default"
+      }
+    }
+  ],
+  "tools": {
+    "profile": "coding",
+    "sessions": {
+      "visibility": "all"
+    },
+    "sessions_spawn": {
+      "attachments": {
+        "enabled": true
+      }
+    },
+    "exec": {
+      "timeoutSeconds": 604800,
+      "mode": "full"
+    },
+    "agentToAgent": {
+      "enabled": true
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerAllowFrom": [],
+    "allowFrom": {
+      "discord": []
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer",
+    "resetByType": {
+      "group": {
+        "mode": "idle",
+        "idleMinutes": 43200
+      }
+    },
+    "threadBindings": {
+      "enabled": true,
+      "idleHours": 999,
+      "maxAgeHours": 0
+    }
+  },
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "token": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "allowFrom": [],
+      "groupPolicy": "allowlist",
+      "streaming": {
+        "mode": "partial"
+      },
+      "inboundWorker": {
+        "runTimeoutMs": 43200000
+      },
+      "guilds": {
+        "*": {
+          "requireMention": true
+        }
+      },
+      "threadBindings": {
+        "enabled": true,
+        "idleHours": 999,
+        "spawnSessions": true
+      },
+      "execApprovals": {
+        "enabled": true,
+        "approvers": [],
+        "target": "dm"
+      }
+    }
+  },
+  "gateway": {
+    "port": 18781,
+    "mode": "local",
+    "bind": "loopback",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      }
+    },
+    "tools": {
+      "allow": [
+        "sessions_spawn",
+        "sessions_send",
+        "session_status",
+        "group:openclaw"
+      ]
+    },
+    "tailscale": {
+      "mode": "off"
+    }
+  },
+  "plugins": {
+    "allow": [
+      "discord",
+      "acpx",
+      "codex",
+      "openai"
+    ],
+    "entries": {
+      "discord": {
+        "enabled": true
+      },
+      "acpx": {
+        "enabled": true,
+        "config": {
+          "permissionMode": "approve-all"
+        }
+      },
+      "openai": {
+        "enabled": true
+      },
+      "codex": {
+        "enabled": true
+      }
+    }
+  },
+  "messages": {
+    "groupChat": {
+      "visibleReplies": "automatic"
+    }
+  }
+}

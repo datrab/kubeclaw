@@ -1,0 +1,58 @@
+[
+  {
+    "packageId": "kubeclaw.api-flow",
+    "registrationId": "kubeclaw.api-flow:flow",
+    "instanceId": "fixture.api-flow",
+    "packageVersion": "1.0.0",
+    "contentDigest": "sha256:404cc68fce4f287cc47d68f6661cc1ae6c848cf83fc4b098b73ee360a6f5881a",
+    "sourceSchemaDigest": "sha256:8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc",
+    "targetOwnerSchemaDigest": "sha256:feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31",
+    "requiredCapabilities": [
+      "network.http"
+    ],
+    "providesCapabilities": [],
+    "qualification": "Actual local selected package bytes and manifest facts only; not externally installed/authorized grant/trust/role activation. Source contract immutability required across original snapshot."
+  },
+  {
+    "packageId": "kubeclaw.http",
+    "registrationId": "kubeclaw.http:request",
+    "instanceId": "fixture.http",
+    "packageVersion": "1.0.0",
+    "contentDigest": "sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b",
+    "sourceSchemaDigest": "sha256:56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f",
+    "targetOwnerSchemaDigest": "sha256:dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c",
+    "requiredCapabilities": [
+      "network.http"
+    ],
+    "providesCapabilities": [],
+    "qualification": "Actual local selected package bytes and manifest facts only; not externally installed/authorized grant/trust/role activation. Source contract immutability required across original snapshot."
+  },
+  {
+    "packageId": "kubeclaw.openapi",
+    "registrationId": "kubeclaw.openapi:operations",
+    "instanceId": "fixture.openapi",
+    "packageVersion": "1.0.0",
+    "contentDigest": "sha256:624f09f03ee1b4d80c0c9b2828e4e9b35661bdf4caab5f117b3b3a33645e49bb",
+    "sourceSchemaDigest": "sha256:7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29",
+    "targetOwnerSchemaDigest": "sha256:5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+    "requiredCapabilities": [
+      "network.http"
+    ],
+    "providesCapabilities": [],
+    "qualification": "Actual local selected package bytes and manifest facts only; not externally installed/authorized grant/trust/role activation. Source contract immutability required across original snapshot."
+  },
+  {
+    "packageId": "kubeclaw.network-http",
+    "registrationId": "kubeclaw.network-http:http",
+    "instanceId": "fixture.network-http",
+    "packageVersion": "1.0.0",
+    "contentDigest": "sha256:424e4fd5cb5502ecd574d759a0e8aed0da1cf227cc16676a9766f806a04cd6fd",
+    "sourceSchemaDigest": "sha256:a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+    "targetOwnerSchemaDigest": "sha256:dce2ee99d8e3bbaa073b8cfb5aee20715b96bb2e3838a259a7c05c5ccf982892",
+    "requiredCapabilities": [],
+    "providesCapabilities": [
+      "network.http"
+    ],
+    "qualification": "Actual local selected package bytes and manifest facts only; not externally installed/authorized grant/trust/role activation. Source contract immutability required across original snapshot."
+  }
+]

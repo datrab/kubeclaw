@@ -8,13 +8,18 @@ import { invokeDurableEffect } from './durable-invocation.ts';
 export type { EffectModeAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
 export { MemoryResourceLockManager } from './memory-locks.ts';
 
+import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
+
 export class EffectCoordinator {
+  readonly #resourceAcquisition: CoreRuntimePolicy['resourceAcquisition'];
   readonly #journal: EffectJournal; readonly #now: () => Date; readonly #audit: EffectModeAuditSink | undefined;
   readonly #locks: EffectLockManager; readonly #lockTtlMs: number;
 
-  constructor(journal: EffectJournal, now: (() => Date) | undefined, audit: EffectModeAuditSink | undefined, locks: EffectLockManager | undefined, lockTtlMs: number) {
+  constructor(journal: EffectJournal, now: (() => Date) | undefined, audit: EffectModeAuditSink | undefined, locks: EffectLockManager | undefined, lockTtlMs: number, resourceAcquisition: CoreRuntimePolicy['resourceAcquisition']) {
     if (!locks) throw new Error('EFFECT_RESOURCE_LOCK_MANAGER_REQUIRED');
     if (!Number.isSafeInteger(lockTtlMs) || lockTtlMs <= 0) throw new Error('EFFECT_LOCK_TTL_INVALID');
+    if (!resourceAcquisition || Object.keys(resourceAcquisition).sort().join(',') !== 'pollIntervalMs,timeoutMs' || ![resourceAcquisition.timeoutMs, resourceAcquisition.pollIntervalMs].every(value => Number.isSafeInteger(value) && value > 0 && value <= 2147483647)) throw new Error('EFFECT_RESOURCE_WAIT_POLICY_INVALID');
+    this.#resourceAcquisition = Object.freeze({...resourceAcquisition});
     this.#journal = journal; this.#now = now === undefined ? () => new Date() : now; this.#audit = audit; this.#locks = locks; this.#lockTtlMs = lockTtlMs;
   }
 
@@ -29,6 +34,7 @@ export class EffectCoordinator {
       } } : {}),
       locks: this.#locks,
       lockTtlMs: this.#lockTtlMs,
+      resourceAcquisition: this.#resourceAcquisition,
     }, adapter, adapterOwner, invocation, signal);
   }
 

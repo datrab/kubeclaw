@@ -1,3 +1,8 @@
+import { TEST_CORE_POLICY as STATE_WAIT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_STATE_STORE_POLICY = STATE_WAIT_TEST_CORE_POLICY.stateStore;
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -57,18 +62,18 @@ const adapters = new core.AdapterRuntime({
   configs: new Map([
     ['kubeclaw.git-workspace:git', {
       allowedRepositoryRoots: [repository], workspaceRoot: workspaces, gitExecutable: '/usr/bin/git',
-      authorName: 'KubeClaw Test', authorEmail: 'kubeclaw@example.invalid',
+      errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'KubeClaw Test', authorEmail: 'kubeclaw@example.invalid',
       maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100,
     }],
-    ['kubeclaw.state-store:state', { root: path.join(temporary, 'state') }],
-    ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
+    ['kubeclaw.state-store:state', { ...TEST_STATE_STORE_POLICY, root: path.join(temporary, 'state') }],
+    ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(temporary, 'artifacts') }],
   ]),
-  effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1000, async emitDomainEvent() {},
 });
 try {
   await adapters.start();
-  const runner = new core.PipelineRunner({
+  const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
     definition: {
       schemaVersion: 'pipeline-definition.v2', id: 'pipeline:blueprint-sync', maxConcurrency: 1,
       stages: [{
@@ -80,7 +85,7 @@ try {
         execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000 },
       }],
     },
-    registry: granted, activated, adapters, journal: new core.FileJournal(path.join(temporary, 'events.jsonl')),
+    registry: granted, activated, adapters, journal: new core.FileJournal(path.join(temporary, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
   });
   const result = await runner.run('run:blueprint');
   assert.equal(result.status, 'succeeded', fs.readFileSync(path.join(temporary, 'effects.jsonl'), 'utf8'));

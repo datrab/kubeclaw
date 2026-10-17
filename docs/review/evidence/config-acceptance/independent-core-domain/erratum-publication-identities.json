@@ -1,0 +1,14 @@
+{
+  "atUtc": "2026-10-12T21:35:08.023585+00:00",
+  "reportBeforeSha256": "8232caa55d1d9d0c70d66f1682e478db25bfdbc4a582c7ead931d09cfbc67043",
+  "reportAfterSha256": "c728683197df2a178100c15aaed8687384bc2ad36cab8f3393b81311031793b6",
+  "files": {
+    "docs/review/evidence/config-acceptance/independent-core-domain/erratum-reachability-0.log": "1430a492eb06480f8ee7956d8c20d3857da85e3e5aa07c9436fb6ac8acdf8dca",
+    "docs/review/evidence/config-acceptance/independent-core-domain/erratum-reachability-1.log": "991cdbfb323d49c37dc22284bd0d033c2fe9025162869ef76d85d8e960ee29fb",
+    "docs/review/evidence/config-acceptance/independent-core-domain/erratum-reachability-2.log": "6e7b9c7ef0125e6f370371a0b9dccbd21339513db453fd83cb48b7354fdfd877",
+    "docs/review/evidence/config-acceptance/independent-core-domain/erratum-reachability-3.log": "99fdc1f72e10995ffff45a699bb7715874bdaf8af36caecd66d29e8a81c8c3ec",
+    "docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.json": "6039e3a2ceaae8f0b4d8855036d41b472c799743ceb2b452b07b383bac9f4a8c",
+    "docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.log": "e6a835fa82a9ffcb03b6cc0bf4e612033279d904dc2f30acff36b66dca8c66db",
+    "docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.py": "1fcedc18be6b5b704a1ecc3b55195ffe7d2a7879c55f7b9c216fedaa07c15e74"
+  }
+}

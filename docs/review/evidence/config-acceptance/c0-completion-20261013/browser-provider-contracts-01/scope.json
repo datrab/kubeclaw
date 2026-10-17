@@ -1,0 +1,2644 @@
+{
+  "groups": {
+    "kubeclaw.axe": [
+      {
+        "id": "RT-dab100380f6a024f",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/url",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-dab100380f6a024f-CURRENT-SCHEMA-FIELD",
+          "RT-dab100380f6a024f-BROWSER04-DEFINITION",
+          "RT-dab100380f6a024f-BROWSER04-CONTRACT",
+          "RT-dab100380f6a024f-BROWSER04-ALTERNATE",
+          "RT-dab100380f6a024f-BROWSER04-BINDING",
+          "RT-dab100380f6a024f-BROWSER04-MUTANT",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN"
+        ]
+      },
+      {
+        "id": "RT-6776ec7160ea0036",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/endpointName",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-6776ec7160ea0036-CURRENT-SCHEMA-FIELD",
+          "RT-6776ec7160ea0036-BROWSER04-DEFINITION",
+          "RT-6776ec7160ea0036-BROWSER04-CONTRACT",
+          "RT-6776ec7160ea0036-BROWSER04-ALTERNATE",
+          "RT-6776ec7160ea0036-BROWSER04-BINDING",
+          "RT-6776ec7160ea0036-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-b6eb30fbf6be03e1",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/routes",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-b6eb30fbf6be03e1-CURRENT-SCHEMA-FIELD",
+          "RT-b6eb30fbf6be03e1-BROWSER04-DEFINITION",
+          "RT-b6eb30fbf6be03e1-BROWSER04-CONTRACT",
+          "RT-b6eb30fbf6be03e1-BROWSER04-ALTERNATE",
+          "RT-b6eb30fbf6be03e1-BROWSER04-BINDING",
+          "RT-b6eb30fbf6be03e1-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-0d37b61a9e8bc451",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/routes/items",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-0d37b61a9e8bc451-CURRENT-SCHEMA-FIELD",
+          "RT-0d37b61a9e8bc451-BROWSER04-DEFINITION",
+          "RT-0d37b61a9e8bc451-BROWSER04-CONTRACT",
+          "RT-0d37b61a9e8bc451-BROWSER04-ALTERNATE",
+          "RT-0d37b61a9e8bc451-BROWSER04-BINDING",
+          "RT-0d37b61a9e8bc451-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-ce85d1e95781cb1b",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/profiles",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-ce85d1e95781cb1b-CURRENT-SCHEMA-FIELD",
+          "RT-ce85d1e95781cb1b-BROWSER04-DEFINITION",
+          "RT-ce85d1e95781cb1b-BROWSER04-CONTRACT",
+          "RT-ce85d1e95781cb1b-BROWSER04-ALTERNATE",
+          "RT-ce85d1e95781cb1b-BROWSER04-BINDING",
+          "RT-ce85d1e95781cb1b-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-735e529045f176ca",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/profiles/items",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-735e529045f176ca-CURRENT-SCHEMA-FIELD",
+          "RT-735e529045f176ca-BROWSER04-DEFINITION",
+          "RT-735e529045f176ca-BROWSER04-CONTRACT",
+          "RT-735e529045f176ca-BROWSER04-ALTERNATE",
+          "RT-735e529045f176ca-BROWSER04-BINDING",
+          "RT-735e529045f176ca-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-6053515db8e5f294",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/profileFile",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-6053515db8e5f294-CURRENT-SCHEMA-FIELD",
+          "RT-6053515db8e5f294-BROWSER04-DEFINITION",
+          "RT-6053515db8e5f294-BROWSER04-CONTRACT",
+          "RT-6053515db8e5f294-BROWSER04-ALTERNATE",
+          "RT-6053515db8e5f294-BROWSER04-BINDING",
+          "RT-6053515db8e5f294-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-b523246a8e584359",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/tags",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-b523246a8e584359-CURRENT-SCHEMA-FIELD",
+          "RT-b523246a8e584359-BROWSER04-DEFINITION",
+          "RT-b523246a8e584359-BROWSER04-CONTRACT",
+          "RT-b523246a8e584359-BROWSER04-ALTERNATE",
+          "RT-b523246a8e584359-BROWSER04-BINDING",
+          "RT-b523246a8e584359-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-0f8819569bb41402",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/tags/items",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-0f8819569bb41402-CURRENT-SCHEMA-FIELD",
+          "RT-0f8819569bb41402-BROWSER04-DEFINITION",
+          "RT-0f8819569bb41402-BROWSER04-CONTRACT",
+          "RT-0f8819569bb41402-BROWSER04-ALTERNATE",
+          "RT-0f8819569bb41402-BROWSER04-BINDING",
+          "RT-0f8819569bb41402-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-bb8352234e6c6200",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/exclude",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-bb8352234e6c6200-CURRENT-SCHEMA-FIELD",
+          "RT-bb8352234e6c6200-BROWSER04-DEFINITION",
+          "RT-bb8352234e6c6200-BROWSER04-CONTRACT",
+          "RT-bb8352234e6c6200-BROWSER04-ALTERNATE",
+          "RT-bb8352234e6c6200-BROWSER04-BINDING",
+          "RT-bb8352234e6c6200-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-e32df097509e32fe",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/exclude/items",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-e32df097509e32fe-CURRENT-SCHEMA-FIELD",
+          "RT-e32df097509e32fe-BROWSER04-DEFINITION",
+          "RT-e32df097509e32fe-BROWSER04-CONTRACT",
+          "RT-e32df097509e32fe-BROWSER04-ALTERNATE",
+          "RT-e32df097509e32fe-BROWSER04-BINDING",
+          "RT-e32df097509e32fe-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-ea6c994234263250",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/acceptances",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-ea6c994234263250-CURRENT-SCHEMA-FIELD",
+          "RT-ea6c994234263250-BROWSER04-DEFINITION",
+          "RT-ea6c994234263250-BROWSER04-CONTRACT",
+          "RT-ea6c994234263250-BROWSER04-ALTERNATE",
+          "RT-ea6c994234263250-BROWSER04-BINDING",
+          "RT-ea6c994234263250-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-3d366b22c4baadb6",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-3d366b22c4baadb6-CURRENT-SCHEMA-FIELD",
+          "RT-3d366b22c4baadb6-BROWSER04-DEFINITION",
+          "RT-3d366b22c4baadb6-BROWSER04-CONTRACT",
+          "RT-3d366b22c4baadb6-BROWSER04-ALTERNATE",
+          "RT-3d366b22c4baadb6-BROWSER04-BINDING",
+          "RT-3d366b22c4baadb6-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-ace0dff341a51674",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/rule",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-ace0dff341a51674-CURRENT-SCHEMA-FIELD",
+          "RT-ace0dff341a51674-BROWSER04-DEFINITION",
+          "RT-ace0dff341a51674-BROWSER04-CONTRACT",
+          "RT-ace0dff341a51674-BROWSER04-ALTERNATE",
+          "RT-ace0dff341a51674-BROWSER04-BINDING",
+          "RT-ace0dff341a51674-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-e2d010126067fa17",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/route",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-e2d010126067fa17-CURRENT-SCHEMA-FIELD",
+          "RT-e2d010126067fa17-BROWSER04-DEFINITION",
+          "RT-e2d010126067fa17-BROWSER04-CONTRACT",
+          "RT-e2d010126067fa17-BROWSER04-ALTERNATE",
+          "RT-e2d010126067fa17-BROWSER04-BINDING",
+          "RT-e2d010126067fa17-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-36d7d882e2bd6da2",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/selector",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-36d7d882e2bd6da2-CURRENT-SCHEMA-FIELD",
+          "RT-36d7d882e2bd6da2-BROWSER04-DEFINITION",
+          "RT-36d7d882e2bd6da2-BROWSER04-CONTRACT",
+          "RT-36d7d882e2bd6da2-BROWSER04-ALTERNATE",
+          "RT-36d7d882e2bd6da2-BROWSER04-BINDING",
+          "RT-36d7d882e2bd6da2-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-a31018709bf73a5c",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/reason",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-a31018709bf73a5c-CURRENT-SCHEMA-FIELD",
+          "RT-a31018709bf73a5c-BROWSER04-DEFINITION",
+          "RT-a31018709bf73a5c-BROWSER04-CONTRACT",
+          "RT-a31018709bf73a5c-BROWSER04-ALTERNATE",
+          "RT-a31018709bf73a5c-BROWSER04-BINDING",
+          "RT-a31018709bf73a5c-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-3eeda647e60d7d1b",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/expiresAt",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-3eeda647e60d7d1b-CURRENT-SCHEMA-FIELD",
+          "RT-3eeda647e60d7d1b-BROWSER04-DEFINITION",
+          "RT-3eeda647e60d7d1b-BROWSER04-CONTRACT",
+          "RT-3eeda647e60d7d1b-BROWSER04-ALTERNATE",
+          "RT-3eeda647e60d7d1b-BROWSER04-BINDING",
+          "RT-3eeda647e60d7d1b-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-28216d3eec81ad18",
+        "source": {
+          "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+          "field": "#/properties/timeoutMs",
+          "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-28216d3eec81ad18-CURRENT-SCHEMA-FIELD",
+          "RT-28216d3eec81ad18-BROWSER04-DEFINITION",
+          "RT-28216d3eec81ad18-BROWSER04-CONTRACT",
+          "RT-28216d3eec81ad18-BROWSER04-ALTERNATE",
+          "RT-28216d3eec81ad18-BROWSER04-BINDING",
+          "RT-28216d3eec81ad18-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS",
+        "source": {
+          "path": "skills/buster/plugins/axe/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onPass",
+          "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+          "RT-PROVIDER-POLICY10-6053ac0d0c3ae291"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL",
+        "source": {
+          "path": "skills/buster/plugins/axe/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onFail",
+          "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-POLICY10-6053ac0d0c3ae291",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR",
+        "source": {
+          "path": "skills/buster/plugins/axe/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onError",
+          "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-POLICY10-6053ac0d0c3ae291",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE",
+        "source": {
+          "path": "skills/buster/plugins/axe/plugin.json",
+          "field": "testProviders[0].retrySafe",
+          "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-MISSING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-ALT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS",
+        "source": {
+          "path": "skills/buster/plugins/axe/plugin.json",
+          "field": "testProviders[0].matrixFields",
+          "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-MISSING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-ALT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+        ]
+      }
+    ],
+    "kubeclaw.axe one owned browserprofilecomponent, stronger browser runtime capability/exe/grant authority separate": [
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-BROWSER",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.browser",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-BROWSER-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-BROWSER-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-BROWSER-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-BROWSER-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-BROWSER-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.viewport.width",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.viewport.height",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.colorScheme",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.reducedMotion",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-LOCALE",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.locale",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-LOCALE-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-LOCALE-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-LOCALE-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-LOCALE-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-LOCALE-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.timezoneId",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-HASTOUCH",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.hasTouch",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-ISMOBILE",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.isMobile",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.desktop.deviceScaleFactor",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-SOURCE",
+          "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-CONTRACT",
+          "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-ALTERNATE",
+          "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-BINDING",
+          "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-BROWSER",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.browser",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-BROWSER-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-BROWSER-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-BROWSER-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-BROWSER-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-BROWSER-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.viewport.width",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.viewport.height",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-COLORSCHEME",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.colorScheme",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.reducedMotion",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-LOCALE",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.locale",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-LOCALE-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-LOCALE-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-LOCALE-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-LOCALE-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-LOCALE-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-TIMEZONEID",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.timezoneId",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-HASTOUCH",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.hasTouch",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-HASTOUCH-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-HASTOUCH-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-HASTOUCH-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-HASTOUCH-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-HASTOUCH-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-ISMOBILE",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.isMobile",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-ISMOBILE-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-ISMOBILE-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-ISMOBILE-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-ISMOBILE-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-ISMOBILE-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR",
+        "source": {
+          "path": "skills/buster/plugins/axe/src/provider.js",
+          "field": "BUILTIN_PROFILES.mobile.deviceScaleFactor",
+          "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-SOURCE",
+          "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-CONTRACT",
+          "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-ALTERNATE",
+          "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-BINDING",
+          "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-MUTANT"
+        ]
+      }
+    ],
+    "kubeclaw.lighthouse": [
+      {
+        "id": "RT-45cbcce6c9a8143a",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/purpose",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-45cbcce6c9a8143a-CURRENT-SCHEMA-FIELD",
+          "RT-45cbcce6c9a8143a-BROWSER04-DEFINITION",
+          "RT-45cbcce6c9a8143a-BROWSER04-CONTRACT",
+          "RT-45cbcce6c9a8143a-BROWSER04-ALTERNATE",
+          "RT-45cbcce6c9a8143a-BROWSER04-BINDING",
+          "RT-45cbcce6c9a8143a-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-c5c2b774e067d6c3",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/url",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-c5c2b774e067d6c3-CURRENT-SCHEMA-FIELD",
+          "RT-c5c2b774e067d6c3-BROWSER04-DEFINITION",
+          "RT-c5c2b774e067d6c3-BROWSER04-CONTRACT",
+          "RT-c5c2b774e067d6c3-BROWSER04-ALTERNATE",
+          "RT-c5c2b774e067d6c3-BROWSER04-BINDING",
+          "RT-c5c2b774e067d6c3-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-f513e45a2c34c183",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/endpointName",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-f513e45a2c34c183-CURRENT-SCHEMA-FIELD",
+          "RT-f513e45a2c34c183-BROWSER04-DEFINITION",
+          "RT-f513e45a2c34c183-BROWSER04-CONTRACT",
+          "RT-f513e45a2c34c183-BROWSER04-ALTERNATE",
+          "RT-f513e45a2c34c183-BROWSER04-BINDING",
+          "RT-f513e45a2c34c183-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-91356268eda2cde6",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/routes",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-91356268eda2cde6-CURRENT-SCHEMA-FIELD",
+          "RT-91356268eda2cde6-BROWSER04-DEFINITION",
+          "RT-91356268eda2cde6-BROWSER04-CONTRACT",
+          "RT-91356268eda2cde6-BROWSER04-ALTERNATE",
+          "RT-91356268eda2cde6-BROWSER04-BINDING",
+          "RT-91356268eda2cde6-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-9bca7a8727abb08f",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/routes/items",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-9bca7a8727abb08f-CURRENT-SCHEMA-FIELD",
+          "RT-9bca7a8727abb08f-BROWSER04-DEFINITION",
+          "RT-9bca7a8727abb08f-BROWSER04-CONTRACT",
+          "RT-9bca7a8727abb08f-BROWSER04-ALTERNATE",
+          "RT-9bca7a8727abb08f-BROWSER04-BINDING",
+          "RT-9bca7a8727abb08f-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-b8fe49d2862e13fe",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/settingsFile",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-b8fe49d2862e13fe-CURRENT-SCHEMA-FIELD",
+          "RT-b8fe49d2862e13fe-BROWSER04-DEFINITION",
+          "RT-b8fe49d2862e13fe-BROWSER04-CONTRACT",
+          "RT-b8fe49d2862e13fe-BROWSER04-ALTERNATE",
+          "RT-b8fe49d2862e13fe-BROWSER04-BINDING",
+          "RT-b8fe49d2862e13fe-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-c245ed3eed7a76c8",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/profile",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-c245ed3eed7a76c8-CURRENT-SCHEMA-FIELD",
+          "RT-c245ed3eed7a76c8-BROWSER04-DEFINITION",
+          "RT-c245ed3eed7a76c8-BROWSER04-CONTRACT",
+          "RT-c245ed3eed7a76c8-BROWSER04-ALTERNATE",
+          "RT-c245ed3eed7a76c8-BROWSER04-BINDING",
+          "RT-c245ed3eed7a76c8-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-858b7c0d83228aea",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/budget",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-858b7c0d83228aea-CURRENT-SCHEMA-FIELD",
+          "RT-858b7c0d83228aea-BROWSER04-DEFINITION",
+          "RT-858b7c0d83228aea-BROWSER04-CONTRACT",
+          "RT-858b7c0d83228aea-BROWSER04-ALTERNATE",
+          "RT-858b7c0d83228aea-BROWSER04-BINDING",
+          "RT-858b7c0d83228aea-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-d1ed31f756f931f4",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/runs",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-d1ed31f756f931f4-CURRENT-SCHEMA-FIELD",
+          "RT-d1ed31f756f931f4-BROWSER04-DEFINITION",
+          "RT-d1ed31f756f931f4-BROWSER04-CONTRACT",
+          "RT-d1ed31f756f931f4-BROWSER04-ALTERNATE",
+          "RT-d1ed31f756f931f4-BROWSER04-BINDING",
+          "RT-d1ed31f756f931f4-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-91b918f8698f70dd",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/acceptances",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-91b918f8698f70dd-CURRENT-SCHEMA-FIELD",
+          "RT-91b918f8698f70dd-BROWSER04-DEFINITION",
+          "RT-91b918f8698f70dd-BROWSER04-CONTRACT",
+          "RT-91b918f8698f70dd-BROWSER04-ALTERNATE",
+          "RT-91b918f8698f70dd-BROWSER04-BINDING",
+          "RT-91b918f8698f70dd-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-8138a8b093bfc06d",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-8138a8b093bfc06d-CURRENT-SCHEMA-FIELD",
+          "RT-8138a8b093bfc06d-BROWSER04-DEFINITION",
+          "RT-8138a8b093bfc06d-BROWSER04-CONTRACT",
+          "RT-8138a8b093bfc06d-BROWSER04-ALTERNATE",
+          "RT-8138a8b093bfc06d-BROWSER04-BINDING",
+          "RT-8138a8b093bfc06d-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-323256cac3d5065d",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/audit",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-323256cac3d5065d-CURRENT-SCHEMA-FIELD",
+          "RT-323256cac3d5065d-BROWSER04-DEFINITION",
+          "RT-323256cac3d5065d-BROWSER04-CONTRACT",
+          "RT-323256cac3d5065d-BROWSER04-ALTERNATE",
+          "RT-323256cac3d5065d-BROWSER04-BINDING",
+          "RT-323256cac3d5065d-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-398b1cee6b5ad261",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/route",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-398b1cee6b5ad261-CURRENT-SCHEMA-FIELD",
+          "RT-398b1cee6b5ad261-BROWSER04-DEFINITION",
+          "RT-398b1cee6b5ad261-BROWSER04-CONTRACT",
+          "RT-398b1cee6b5ad261-BROWSER04-ALTERNATE",
+          "RT-398b1cee6b5ad261-BROWSER04-BINDING",
+          "RT-398b1cee6b5ad261-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-1412bca48fc1b08d",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/reason",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-1412bca48fc1b08d-CURRENT-SCHEMA-FIELD",
+          "RT-1412bca48fc1b08d-BROWSER04-DEFINITION",
+          "RT-1412bca48fc1b08d-BROWSER04-CONTRACT",
+          "RT-1412bca48fc1b08d-BROWSER04-ALTERNATE",
+          "RT-1412bca48fc1b08d-BROWSER04-BINDING",
+          "RT-1412bca48fc1b08d-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-bfc739d422a140ce",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/acceptances/items/properties/expiresAt",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-bfc739d422a140ce-CURRENT-SCHEMA-FIELD",
+          "RT-bfc739d422a140ce-BROWSER04-DEFINITION",
+          "RT-bfc739d422a140ce-BROWSER04-CONTRACT",
+          "RT-bfc739d422a140ce-BROWSER04-ALTERNATE",
+          "RT-bfc739d422a140ce-BROWSER04-BINDING",
+          "RT-bfc739d422a140ce-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-088d813a8d6ff7ca",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/properties/timeoutMs",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-088d813a8d6ff7ca-CURRENT-SCHEMA-FIELD",
+          "RT-088d813a8d6ff7ca-BROWSER04-DEFINITION",
+          "RT-088d813a8d6ff7ca-BROWSER04-CONTRACT",
+          "RT-088d813a8d6ff7ca-BROWSER04-ALTERNATE",
+          "RT-088d813a8d6ff7ca-BROWSER04-BINDING",
+          "RT-088d813a8d6ff7ca-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-a8b0c90a7a729d20",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/allOf/0/if/properties/purpose",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-a8b0c90a7a729d20-CURRENT-SCHEMA-FIELD",
+          "RT-a8b0c90a7a729d20-BROWSER04-DEFINITION",
+          "RT-a8b0c90a7a729d20-BROWSER04-CONTRACT",
+          "RT-a8b0c90a7a729d20-BROWSER04-ALTERNATE",
+          "RT-a8b0c90a7a729d20-BROWSER04-BINDING",
+          "RT-a8b0c90a7a729d20-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-14d3d815490102e1",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/allOf/0/then/properties/runs",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-14d3d815490102e1-CURRENT-SCHEMA-FIELD",
+          "RT-14d3d815490102e1-BROWSER04-DEFINITION",
+          "RT-14d3d815490102e1-BROWSER04-CONTRACT",
+          "RT-14d3d815490102e1-BROWSER04-ALTERNATE",
+          "RT-14d3d815490102e1-BROWSER04-BINDING",
+          "RT-14d3d815490102e1-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-97dfffc2083d51ea",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/allOf/1/if/properties/purpose",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-97dfffc2083d51ea-CURRENT-SCHEMA-FIELD",
+          "RT-97dfffc2083d51ea-BROWSER04-DEFINITION",
+          "RT-97dfffc2083d51ea-BROWSER04-CONTRACT",
+          "RT-97dfffc2083d51ea-BROWSER04-ALTERNATE",
+          "RT-97dfffc2083d51ea-BROWSER04-BINDING",
+          "RT-97dfffc2083d51ea-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-480d76acac6850a9",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+          "field": "#/allOf/1/then/properties/runs",
+          "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-480d76acac6850a9-CURRENT-SCHEMA-FIELD",
+          "RT-480d76acac6850a9-BROWSER04-DEFINITION",
+          "RT-480d76acac6850a9-BROWSER04-CONTRACT",
+          "RT-480d76acac6850a9-BROWSER04-ALTERNATE",
+          "RT-480d76acac6850a9-BROWSER04-BINDING",
+          "RT-480d76acac6850a9-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onPass",
+          "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+          "RT-PROVIDER-POLICY10-024bf9c776dfc0ca"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onFail",
+          "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-POLICY10-024bf9c776dfc0ca",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onError",
+          "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-POLICY10-024bf9c776dfc0ca",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/plugin.json",
+          "field": "testProviders[0].retrySafe",
+          "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-MISSING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-ALT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS",
+        "source": {
+          "path": "skills/buster/plugins/lighthouse/plugin.json",
+          "field": "testProviders[0].matrixFields",
+          "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-MISSING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-ALT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+        ]
+      }
+    ],
+    "kubeclaw.playwright": [
+      {
+        "id": "RT-f6fd1dec2d2c6b35",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/url",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-f6fd1dec2d2c6b35-CURRENT-SCHEMA-FIELD",
+          "RT-f6fd1dec2d2c6b35-BROWSER04-DEFINITION",
+          "RT-f6fd1dec2d2c6b35-BROWSER04-CONTRACT",
+          "RT-f6fd1dec2d2c6b35-BROWSER04-ALTERNATE",
+          "RT-f6fd1dec2d2c6b35-BROWSER04-BINDING",
+          "RT-f6fd1dec2d2c6b35-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-d17ed366e09f9e72",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/endpointName",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-d17ed366e09f9e72-CURRENT-SCHEMA-FIELD",
+          "RT-d17ed366e09f9e72-BROWSER04-DEFINITION",
+          "RT-d17ed366e09f9e72-BROWSER04-CONTRACT",
+          "RT-d17ed366e09f9e72-BROWSER04-ALTERNATE",
+          "RT-d17ed366e09f9e72-BROWSER04-BINDING",
+          "RT-d17ed366e09f9e72-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-0960971aa584ed2a",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/projectDirectory",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-0960971aa584ed2a-CURRENT-SCHEMA-FIELD",
+          "RT-0960971aa584ed2a-BROWSER04-DEFINITION",
+          "RT-0960971aa584ed2a-BROWSER04-CONTRACT",
+          "RT-0960971aa584ed2a-BROWSER04-ALTERNATE",
+          "RT-0960971aa584ed2a-BROWSER04-BINDING",
+          "RT-0960971aa584ed2a-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-c226799a77c2da3b",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/configFile",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-c226799a77c2da3b-CURRENT-SCHEMA-FIELD",
+          "RT-c226799a77c2da3b-BROWSER04-DEFINITION",
+          "RT-c226799a77c2da3b-BROWSER04-CONTRACT",
+          "RT-c226799a77c2da3b-BROWSER04-ALTERNATE",
+          "RT-c226799a77c2da3b-BROWSER04-BINDING",
+          "RT-c226799a77c2da3b-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-fbdecaab60720898",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/workers",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-fbdecaab60720898-CURRENT-SCHEMA-FIELD",
+          "RT-fbdecaab60720898-BROWSER04-DEFINITION",
+          "RT-fbdecaab60720898-BROWSER04-CONTRACT",
+          "RT-fbdecaab60720898-BROWSER04-ALTERNATE",
+          "RT-fbdecaab60720898-BROWSER04-BINDING",
+          "RT-fbdecaab60720898-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-d46f4334df4967fa",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/timeoutMs",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-d46f4334df4967fa-CURRENT-SCHEMA-FIELD",
+          "RT-d46f4334df4967fa-BROWSER04-DEFINITION",
+          "RT-d46f4334df4967fa-BROWSER04-CONTRACT",
+          "RT-d46f4334df4967fa-BROWSER04-ALTERNATE",
+          "RT-d46f4334df4967fa-BROWSER04-BINDING",
+          "RT-d46f4334df4967fa-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-e4dcfff9aa6b1ef0",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/minimumExecutedTests",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-e4dcfff9aa6b1ef0-CURRENT-SCHEMA-FIELD",
+          "RT-e4dcfff9aa6b1ef0-BROWSER04-DEFINITION",
+          "RT-e4dcfff9aa6b1ef0-BROWSER04-CONTRACT",
+          "RT-e4dcfff9aa6b1ef0-BROWSER04-ALTERNATE",
+          "RT-e4dcfff9aa6b1ef0-BROWSER04-BINDING",
+          "RT-e4dcfff9aa6b1ef0-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-28f9b2da06d59a77",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/requiredTests",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-28f9b2da06d59a77-CURRENT-SCHEMA-FIELD",
+          "RT-28f9b2da06d59a77-BROWSER04-DEFINITION",
+          "RT-28f9b2da06d59a77-BROWSER04-CONTRACT",
+          "RT-28f9b2da06d59a77-BROWSER04-ALTERNATE",
+          "RT-28f9b2da06d59a77-BROWSER04-BINDING",
+          "RT-28f9b2da06d59a77-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-d348d41c2ab35c8b",
+        "source": {
+          "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+          "field": "#/properties/requiredTests/items",
+          "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-d348d41c2ab35c8b-CURRENT-SCHEMA-FIELD",
+          "RT-d348d41c2ab35c8b-BROWSER04-DEFINITION",
+          "RT-d348d41c2ab35c8b-BROWSER04-CONTRACT",
+          "RT-d348d41c2ab35c8b-BROWSER04-ALTERNATE",
+          "RT-d348d41c2ab35c8b-BROWSER04-BINDING",
+          "RT-d348d41c2ab35c8b-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS",
+        "source": {
+          "path": "skills/buster/plugins/playwright/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onPass",
+          "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+          "RT-PROVIDER-POLICY10-f97889905ea7a512"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL",
+        "source": {
+          "path": "skills/buster/plugins/playwright/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onFail",
+          "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-POLICY10-f97889905ea7a512",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR",
+        "source": {
+          "path": "skills/buster/plugins/playwright/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onError",
+          "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-POLICY10-f97889905ea7a512",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE",
+        "source": {
+          "path": "skills/buster/plugins/playwright/plugin.json",
+          "field": "testProviders[0].retrySafe",
+          "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-MISSING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-ALT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS",
+        "source": {
+          "path": "skills/buster/plugins/playwright/plugin.json",
+          "field": "testProviders[0].matrixFields",
+          "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-MISSING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-ALT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+        ]
+      }
+    ],
+    "kubeclaw.visual": [
+      {
+        "id": "RT-42fd37c34f097e2d",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/url",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-42fd37c34f097e2d-CURRENT-SCHEMA-FIELD",
+          "RT-42fd37c34f097e2d-BROWSER04-DEFINITION",
+          "RT-42fd37c34f097e2d-BROWSER04-CONTRACT",
+          "RT-42fd37c34f097e2d-BROWSER04-ALTERNATE",
+          "RT-42fd37c34f097e2d-BROWSER04-BINDING",
+          "RT-42fd37c34f097e2d-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-4003eb10ed91148b",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/endpointName",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-4003eb10ed91148b-CURRENT-SCHEMA-FIELD",
+          "RT-4003eb10ed91148b-BROWSER04-DEFINITION",
+          "RT-4003eb10ed91148b-BROWSER04-CONTRACT",
+          "RT-4003eb10ed91148b-BROWSER04-ALTERNATE",
+          "RT-4003eb10ed91148b-BROWSER04-BINDING",
+          "RT-4003eb10ed91148b-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-7055bd224779ebc9",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/manifestFile",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-7055bd224779ebc9-CURRENT-SCHEMA-FIELD",
+          "RT-7055bd224779ebc9-BROWSER04-DEFINITION",
+          "RT-7055bd224779ebc9-BROWSER04-CONTRACT",
+          "RT-7055bd224779ebc9-BROWSER04-ALTERNATE",
+          "RT-7055bd224779ebc9-BROWSER04-BINDING",
+          "RT-7055bd224779ebc9-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-e044f6419f72c0e0",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/profileFile",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-e044f6419f72c0e0-CURRENT-SCHEMA-FIELD",
+          "RT-e044f6419f72c0e0-BROWSER04-DEFINITION",
+          "RT-e044f6419f72c0e0-BROWSER04-CONTRACT",
+          "RT-e044f6419f72c0e0-BROWSER04-ALTERNATE",
+          "RT-e044f6419f72c0e0-BROWSER04-BINDING",
+          "RT-e044f6419f72c0e0-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-bf905e47ed35863a",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/targets",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-bf905e47ed35863a-CURRENT-SCHEMA-FIELD",
+          "RT-bf905e47ed35863a-BROWSER04-DEFINITION",
+          "RT-bf905e47ed35863a-BROWSER04-CONTRACT",
+          "RT-bf905e47ed35863a-BROWSER04-ALTERNATE",
+          "RT-bf905e47ed35863a-BROWSER04-BINDING",
+          "RT-bf905e47ed35863a-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-165dd3d0da855565",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/targets/items",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-165dd3d0da855565-CURRENT-SCHEMA-FIELD",
+          "RT-165dd3d0da855565-BROWSER04-DEFINITION",
+          "RT-165dd3d0da855565-BROWSER04-CONTRACT",
+          "RT-165dd3d0da855565-BROWSER04-ALTERNATE",
+          "RT-165dd3d0da855565-BROWSER04-BINDING",
+          "RT-165dd3d0da855565-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-1ef5ab4a60156159",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/comparisonProfile",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-1ef5ab4a60156159-CURRENT-SCHEMA-FIELD",
+          "RT-1ef5ab4a60156159-BROWSER04-DEFINITION",
+          "RT-1ef5ab4a60156159-BROWSER04-CONTRACT",
+          "RT-1ef5ab4a60156159-BROWSER04-ALTERNATE",
+          "RT-1ef5ab4a60156159-BROWSER04-BINDING",
+          "RT-1ef5ab4a60156159-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-e747f65a9f069ccd",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/overrides",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-e747f65a9f069ccd-CURRENT-SCHEMA-FIELD",
+          "RT-e747f65a9f069ccd-BROWSER04-DEFINITION",
+          "RT-e747f65a9f069ccd-BROWSER04-CONTRACT",
+          "RT-e747f65a9f069ccd-BROWSER04-ALTERNATE",
+          "RT-e747f65a9f069ccd-BROWSER04-BINDING",
+          "RT-e747f65a9f069ccd-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-9bc4832efb4988b7",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/overrides/properties/maximumDifferencePercent",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-9bc4832efb4988b7-CURRENT-SCHEMA-FIELD",
+          "RT-9bc4832efb4988b7-BROWSER04-DEFINITION",
+          "RT-9bc4832efb4988b7-BROWSER04-CONTRACT",
+          "RT-9bc4832efb4988b7-BROWSER04-ALTERNATE",
+          "RT-9bc4832efb4988b7-BROWSER04-BINDING",
+          "RT-9bc4832efb4988b7-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-fe646415d23cc642",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/overrides/properties/pixelThreshold",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-fe646415d23cc642-CURRENT-SCHEMA-FIELD",
+          "RT-fe646415d23cc642-BROWSER04-DEFINITION",
+          "RT-fe646415d23cc642-BROWSER04-CONTRACT",
+          "RT-fe646415d23cc642-BROWSER04-ALTERNATE",
+          "RT-fe646415d23cc642-BROWSER04-BINDING",
+          "RT-fe646415d23cc642-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-6e3cc348f44734f5",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/overrides/properties/uncertaintyMarginPercent",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-6e3cc348f44734f5-CURRENT-SCHEMA-FIELD",
+          "RT-6e3cc348f44734f5-BROWSER04-DEFINITION",
+          "RT-6e3cc348f44734f5-BROWSER04-CONTRACT",
+          "RT-6e3cc348f44734f5-BROWSER04-ALTERNATE",
+          "RT-6e3cc348f44734f5-BROWSER04-BINDING",
+          "RT-6e3cc348f44734f5-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-be3717baf421a9dd",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/masks",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-be3717baf421a9dd-CURRENT-SCHEMA-FIELD",
+          "RT-be3717baf421a9dd-BROWSER04-DEFINITION",
+          "RT-be3717baf421a9dd-BROWSER04-CONTRACT",
+          "RT-be3717baf421a9dd-BROWSER04-ALTERNATE",
+          "RT-be3717baf421a9dd-BROWSER04-BINDING",
+          "RT-be3717baf421a9dd-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-fa24eda72114411c",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/masks/items",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-fa24eda72114411c-CURRENT-SCHEMA-FIELD",
+          "RT-fa24eda72114411c-BROWSER04-DEFINITION",
+          "RT-fa24eda72114411c-BROWSER04-CONTRACT",
+          "RT-fa24eda72114411c-BROWSER04-ALTERNATE",
+          "RT-fa24eda72114411c-BROWSER04-BINDING",
+          "RT-fa24eda72114411c-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-d57032dd890b6f18",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/masks/items/properties/target",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-d57032dd890b6f18-CURRENT-SCHEMA-FIELD",
+          "RT-d57032dd890b6f18-BROWSER04-DEFINITION",
+          "RT-d57032dd890b6f18-BROWSER04-CONTRACT",
+          "RT-d57032dd890b6f18-BROWSER04-ALTERNATE",
+          "RT-d57032dd890b6f18-BROWSER04-BINDING",
+          "RT-d57032dd890b6f18-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-3f0dfb808c23e5e0",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/masks/items/properties/selectors",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-3f0dfb808c23e5e0-CURRENT-SCHEMA-FIELD",
+          "RT-3f0dfb808c23e5e0-BROWSER04-DEFINITION",
+          "RT-3f0dfb808c23e5e0-BROWSER04-CONTRACT",
+          "RT-3f0dfb808c23e5e0-BROWSER04-ALTERNATE",
+          "RT-3f0dfb808c23e5e0-BROWSER04-BINDING",
+          "RT-3f0dfb808c23e5e0-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-086164702f20b582",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/masks/items/properties/selectors/items",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-086164702f20b582-CURRENT-SCHEMA-FIELD",
+          "RT-086164702f20b582-BROWSER04-DEFINITION",
+          "RT-086164702f20b582-BROWSER04-CONTRACT",
+          "RT-086164702f20b582-BROWSER04-ALTERNATE",
+          "RT-086164702f20b582-BROWSER04-BINDING",
+          "RT-086164702f20b582-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-b1bebfd3aa463e09",
+        "source": {
+          "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+          "field": "#/properties/timeoutMs",
+          "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+        },
+        "originalCaseIds": [
+          "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+          "RT-b1bebfd3aa463e09-CURRENT-SCHEMA-FIELD",
+          "RT-b1bebfd3aa463e09-BROWSER04-DEFINITION",
+          "RT-b1bebfd3aa463e09-BROWSER04-CONTRACT",
+          "RT-b1bebfd3aa463e09-BROWSER04-ALTERNATE",
+          "RT-b1bebfd3aa463e09-BROWSER04-BINDING",
+          "RT-b1bebfd3aa463e09-BROWSER04-MUTANT"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS",
+        "source": {
+          "path": "skills/buster/plugins/visual/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onPass",
+          "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+          "RT-PROVIDER-POLICY10-c27f819372bcf801"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL",
+        "source": {
+          "path": "skills/buster/plugins/visual/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onFail",
+          "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-POLICY10-c27f819372bcf801",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR",
+        "source": {
+          "path": "skills/buster/plugins/visual/plugin.json",
+          "field": "testProviders[0].evidenceDefaults.onError",
+          "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-POLICY10-c27f819372bcf801",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-MISSING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-ALT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE",
+        "source": {
+          "path": "skills/buster/plugins/visual/plugin.json",
+          "field": "testProviders[0].retrySafe",
+          "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-MISSING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-ALT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS",
+        "source": {
+          "path": "skills/buster/plugins/visual/plugin.json",
+          "field": "testProviders[0].matrixFields",
+          "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90"
+        },
+        "originalCaseIds": [
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-MISSING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-ALT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-BINDING",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+          "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-DEFINITION"
+        ]
+      }
+    ]
+  },
+  "originalFieldIds": [
+    "RT-dab100380f6a024f",
+    "RT-6776ec7160ea0036",
+    "RT-b6eb30fbf6be03e1",
+    "RT-0d37b61a9e8bc451",
+    "RT-ce85d1e95781cb1b",
+    "RT-735e529045f176ca",
+    "RT-6053515db8e5f294",
+    "RT-b523246a8e584359",
+    "RT-0f8819569bb41402",
+    "RT-bb8352234e6c6200",
+    "RT-e32df097509e32fe",
+    "RT-ea6c994234263250",
+    "RT-3d366b22c4baadb6",
+    "RT-ace0dff341a51674",
+    "RT-e2d010126067fa17",
+    "RT-36d7d882e2bd6da2",
+    "RT-a31018709bf73a5c",
+    "RT-3eeda647e60d7d1b",
+    "RT-28216d3eec81ad18",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS",
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT",
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME",
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION",
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE",
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID",
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH",
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE",
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR",
+    "RT-AXE-BUILTIN-MOBILE-BROWSER",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT",
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME",
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION",
+    "RT-AXE-BUILTIN-MOBILE-LOCALE",
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID",
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH",
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE",
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR",
+    "RT-45cbcce6c9a8143a",
+    "RT-c5c2b774e067d6c3",
+    "RT-f513e45a2c34c183",
+    "RT-91356268eda2cde6",
+    "RT-9bca7a8727abb08f",
+    "RT-b8fe49d2862e13fe",
+    "RT-c245ed3eed7a76c8",
+    "RT-858b7c0d83228aea",
+    "RT-d1ed31f756f931f4",
+    "RT-91b918f8698f70dd",
+    "RT-8138a8b093bfc06d",
+    "RT-323256cac3d5065d",
+    "RT-398b1cee6b5ad261",
+    "RT-1412bca48fc1b08d",
+    "RT-bfc739d422a140ce",
+    "RT-088d813a8d6ff7ca",
+    "RT-a8b0c90a7a729d20",
+    "RT-14d3d815490102e1",
+    "RT-97dfffc2083d51ea",
+    "RT-480d76acac6850a9",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS",
+    "RT-f6fd1dec2d2c6b35",
+    "RT-d17ed366e09f9e72",
+    "RT-0960971aa584ed2a",
+    "RT-c226799a77c2da3b",
+    "RT-fbdecaab60720898",
+    "RT-d46f4334df4967fa",
+    "RT-e4dcfff9aa6b1ef0",
+    "RT-28f9b2da06d59a77",
+    "RT-d348d41c2ab35c8b",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS",
+    "RT-42fd37c34f097e2d",
+    "RT-4003eb10ed91148b",
+    "RT-7055bd224779ebc9",
+    "RT-e044f6419f72c0e0",
+    "RT-bf905e47ed35863a",
+    "RT-165dd3d0da855565",
+    "RT-1ef5ab4a60156159",
+    "RT-e747f65a9f069ccd",
+    "RT-9bc4832efb4988b7",
+    "RT-fe646415d23cc642",
+    "RT-6e3cc348f44734f5",
+    "RT-be3717baf421a9dd",
+    "RT-fa24eda72114411c",
+    "RT-d57032dd890b6f18",
+    "RT-3f0dfb808c23e5e0",
+    "RT-086164702f20b582",
+    "RT-b1bebfd3aa463e09",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS"
+  ],
+  "originalCaseIds": [
+    "RT-086164702f20b582-BROWSER04-ALTERNATE",
+    "RT-086164702f20b582-BROWSER04-BINDING",
+    "RT-086164702f20b582-BROWSER04-CONTRACT",
+    "RT-086164702f20b582-BROWSER04-DEFINITION",
+    "RT-086164702f20b582-BROWSER04-MUTANT",
+    "RT-086164702f20b582-CURRENT-SCHEMA-FIELD",
+    "RT-088d813a8d6ff7ca-BROWSER04-ALTERNATE",
+    "RT-088d813a8d6ff7ca-BROWSER04-BINDING",
+    "RT-088d813a8d6ff7ca-BROWSER04-CONTRACT",
+    "RT-088d813a8d6ff7ca-BROWSER04-DEFINITION",
+    "RT-088d813a8d6ff7ca-BROWSER04-MUTANT",
+    "RT-088d813a8d6ff7ca-CURRENT-SCHEMA-FIELD",
+    "RT-0960971aa584ed2a-BROWSER04-ALTERNATE",
+    "RT-0960971aa584ed2a-BROWSER04-BINDING",
+    "RT-0960971aa584ed2a-BROWSER04-CONTRACT",
+    "RT-0960971aa584ed2a-BROWSER04-DEFINITION",
+    "RT-0960971aa584ed2a-BROWSER04-MUTANT",
+    "RT-0960971aa584ed2a-CURRENT-SCHEMA-FIELD",
+    "RT-0d37b61a9e8bc451-BROWSER04-ALTERNATE",
+    "RT-0d37b61a9e8bc451-BROWSER04-BINDING",
+    "RT-0d37b61a9e8bc451-BROWSER04-CONTRACT",
+    "RT-0d37b61a9e8bc451-BROWSER04-DEFINITION",
+    "RT-0d37b61a9e8bc451-BROWSER04-MUTANT",
+    "RT-0d37b61a9e8bc451-CURRENT-SCHEMA-FIELD",
+    "RT-0f8819569bb41402-BROWSER04-ALTERNATE",
+    "RT-0f8819569bb41402-BROWSER04-BINDING",
+    "RT-0f8819569bb41402-BROWSER04-CONTRACT",
+    "RT-0f8819569bb41402-BROWSER04-DEFINITION",
+    "RT-0f8819569bb41402-BROWSER04-MUTANT",
+    "RT-0f8819569bb41402-CURRENT-SCHEMA-FIELD",
+    "RT-1412bca48fc1b08d-BROWSER04-ALTERNATE",
+    "RT-1412bca48fc1b08d-BROWSER04-BINDING",
+    "RT-1412bca48fc1b08d-BROWSER04-CONTRACT",
+    "RT-1412bca48fc1b08d-BROWSER04-DEFINITION",
+    "RT-1412bca48fc1b08d-BROWSER04-MUTANT",
+    "RT-1412bca48fc1b08d-CURRENT-SCHEMA-FIELD",
+    "RT-14d3d815490102e1-BROWSER04-ALTERNATE",
+    "RT-14d3d815490102e1-BROWSER04-BINDING",
+    "RT-14d3d815490102e1-BROWSER04-CONTRACT",
+    "RT-14d3d815490102e1-BROWSER04-DEFINITION",
+    "RT-14d3d815490102e1-BROWSER04-MUTANT",
+    "RT-14d3d815490102e1-CURRENT-SCHEMA-FIELD",
+    "RT-165dd3d0da855565-BROWSER04-ALTERNATE",
+    "RT-165dd3d0da855565-BROWSER04-BINDING",
+    "RT-165dd3d0da855565-BROWSER04-CONTRACT",
+    "RT-165dd3d0da855565-BROWSER04-DEFINITION",
+    "RT-165dd3d0da855565-BROWSER04-MUTANT",
+    "RT-165dd3d0da855565-CURRENT-SCHEMA-FIELD",
+    "RT-1ef5ab4a60156159-BROWSER04-ALTERNATE",
+    "RT-1ef5ab4a60156159-BROWSER04-BINDING",
+    "RT-1ef5ab4a60156159-BROWSER04-CONTRACT",
+    "RT-1ef5ab4a60156159-BROWSER04-DEFINITION",
+    "RT-1ef5ab4a60156159-BROWSER04-MUTANT",
+    "RT-1ef5ab4a60156159-CURRENT-SCHEMA-FIELD",
+    "RT-28216d3eec81ad18-BROWSER04-ALTERNATE",
+    "RT-28216d3eec81ad18-BROWSER04-BINDING",
+    "RT-28216d3eec81ad18-BROWSER04-CONTRACT",
+    "RT-28216d3eec81ad18-BROWSER04-DEFINITION",
+    "RT-28216d3eec81ad18-BROWSER04-MUTANT",
+    "RT-28216d3eec81ad18-CURRENT-SCHEMA-FIELD",
+    "RT-28f9b2da06d59a77-BROWSER04-ALTERNATE",
+    "RT-28f9b2da06d59a77-BROWSER04-BINDING",
+    "RT-28f9b2da06d59a77-BROWSER04-CONTRACT",
+    "RT-28f9b2da06d59a77-BROWSER04-DEFINITION",
+    "RT-28f9b2da06d59a77-BROWSER04-MUTANT",
+    "RT-28f9b2da06d59a77-CURRENT-SCHEMA-FIELD",
+    "RT-323256cac3d5065d-BROWSER04-ALTERNATE",
+    "RT-323256cac3d5065d-BROWSER04-BINDING",
+    "RT-323256cac3d5065d-BROWSER04-CONTRACT",
+    "RT-323256cac3d5065d-BROWSER04-DEFINITION",
+    "RT-323256cac3d5065d-BROWSER04-MUTANT",
+    "RT-323256cac3d5065d-CURRENT-SCHEMA-FIELD",
+    "RT-36d7d882e2bd6da2-BROWSER04-ALTERNATE",
+    "RT-36d7d882e2bd6da2-BROWSER04-BINDING",
+    "RT-36d7d882e2bd6da2-BROWSER04-CONTRACT",
+    "RT-36d7d882e2bd6da2-BROWSER04-DEFINITION",
+    "RT-36d7d882e2bd6da2-BROWSER04-MUTANT",
+    "RT-36d7d882e2bd6da2-CURRENT-SCHEMA-FIELD",
+    "RT-398b1cee6b5ad261-BROWSER04-ALTERNATE",
+    "RT-398b1cee6b5ad261-BROWSER04-BINDING",
+    "RT-398b1cee6b5ad261-BROWSER04-CONTRACT",
+    "RT-398b1cee6b5ad261-BROWSER04-DEFINITION",
+    "RT-398b1cee6b5ad261-BROWSER04-MUTANT",
+    "RT-398b1cee6b5ad261-CURRENT-SCHEMA-FIELD",
+    "RT-3d366b22c4baadb6-BROWSER04-ALTERNATE",
+    "RT-3d366b22c4baadb6-BROWSER04-BINDING",
+    "RT-3d366b22c4baadb6-BROWSER04-CONTRACT",
+    "RT-3d366b22c4baadb6-BROWSER04-DEFINITION",
+    "RT-3d366b22c4baadb6-BROWSER04-MUTANT",
+    "RT-3d366b22c4baadb6-CURRENT-SCHEMA-FIELD",
+    "RT-3eeda647e60d7d1b-BROWSER04-ALTERNATE",
+    "RT-3eeda647e60d7d1b-BROWSER04-BINDING",
+    "RT-3eeda647e60d7d1b-BROWSER04-CONTRACT",
+    "RT-3eeda647e60d7d1b-BROWSER04-DEFINITION",
+    "RT-3eeda647e60d7d1b-BROWSER04-MUTANT",
+    "RT-3eeda647e60d7d1b-CURRENT-SCHEMA-FIELD",
+    "RT-3f0dfb808c23e5e0-BROWSER04-ALTERNATE",
+    "RT-3f0dfb808c23e5e0-BROWSER04-BINDING",
+    "RT-3f0dfb808c23e5e0-BROWSER04-CONTRACT",
+    "RT-3f0dfb808c23e5e0-BROWSER04-DEFINITION",
+    "RT-3f0dfb808c23e5e0-BROWSER04-MUTANT",
+    "RT-3f0dfb808c23e5e0-CURRENT-SCHEMA-FIELD",
+    "RT-4003eb10ed91148b-BROWSER04-ALTERNATE",
+    "RT-4003eb10ed91148b-BROWSER04-BINDING",
+    "RT-4003eb10ed91148b-BROWSER04-CONTRACT",
+    "RT-4003eb10ed91148b-BROWSER04-DEFINITION",
+    "RT-4003eb10ed91148b-BROWSER04-MUTANT",
+    "RT-4003eb10ed91148b-CURRENT-SCHEMA-FIELD",
+    "RT-42fd37c34f097e2d-BROWSER04-ALTERNATE",
+    "RT-42fd37c34f097e2d-BROWSER04-BINDING",
+    "RT-42fd37c34f097e2d-BROWSER04-CONTRACT",
+    "RT-42fd37c34f097e2d-BROWSER04-DEFINITION",
+    "RT-42fd37c34f097e2d-BROWSER04-MUTANT",
+    "RT-42fd37c34f097e2d-CURRENT-SCHEMA-FIELD",
+    "RT-45cbcce6c9a8143a-BROWSER04-ALTERNATE",
+    "RT-45cbcce6c9a8143a-BROWSER04-BINDING",
+    "RT-45cbcce6c9a8143a-BROWSER04-CONTRACT",
+    "RT-45cbcce6c9a8143a-BROWSER04-DEFINITION",
+    "RT-45cbcce6c9a8143a-BROWSER04-MUTANT",
+    "RT-45cbcce6c9a8143a-CURRENT-SCHEMA-FIELD",
+    "RT-480d76acac6850a9-BROWSER04-ALTERNATE",
+    "RT-480d76acac6850a9-BROWSER04-BINDING",
+    "RT-480d76acac6850a9-BROWSER04-CONTRACT",
+    "RT-480d76acac6850a9-BROWSER04-DEFINITION",
+    "RT-480d76acac6850a9-BROWSER04-MUTANT",
+    "RT-480d76acac6850a9-CURRENT-SCHEMA-FIELD",
+    "RT-6053515db8e5f294-BROWSER04-ALTERNATE",
+    "RT-6053515db8e5f294-BROWSER04-BINDING",
+    "RT-6053515db8e5f294-BROWSER04-CONTRACT",
+    "RT-6053515db8e5f294-BROWSER04-DEFINITION",
+    "RT-6053515db8e5f294-BROWSER04-MUTANT",
+    "RT-6053515db8e5f294-CURRENT-SCHEMA-FIELD",
+    "RT-6776ec7160ea0036-BROWSER04-ALTERNATE",
+    "RT-6776ec7160ea0036-BROWSER04-BINDING",
+    "RT-6776ec7160ea0036-BROWSER04-CONTRACT",
+    "RT-6776ec7160ea0036-BROWSER04-DEFINITION",
+    "RT-6776ec7160ea0036-BROWSER04-MUTANT",
+    "RT-6776ec7160ea0036-CURRENT-SCHEMA-FIELD",
+    "RT-6e3cc348f44734f5-BROWSER04-ALTERNATE",
+    "RT-6e3cc348f44734f5-BROWSER04-BINDING",
+    "RT-6e3cc348f44734f5-BROWSER04-CONTRACT",
+    "RT-6e3cc348f44734f5-BROWSER04-DEFINITION",
+    "RT-6e3cc348f44734f5-BROWSER04-MUTANT",
+    "RT-6e3cc348f44734f5-CURRENT-SCHEMA-FIELD",
+    "RT-7055bd224779ebc9-BROWSER04-ALTERNATE",
+    "RT-7055bd224779ebc9-BROWSER04-BINDING",
+    "RT-7055bd224779ebc9-BROWSER04-CONTRACT",
+    "RT-7055bd224779ebc9-BROWSER04-DEFINITION",
+    "RT-7055bd224779ebc9-BROWSER04-MUTANT",
+    "RT-7055bd224779ebc9-CURRENT-SCHEMA-FIELD",
+    "RT-735e529045f176ca-BROWSER04-ALTERNATE",
+    "RT-735e529045f176ca-BROWSER04-BINDING",
+    "RT-735e529045f176ca-BROWSER04-CONTRACT",
+    "RT-735e529045f176ca-BROWSER04-DEFINITION",
+    "RT-735e529045f176ca-BROWSER04-MUTANT",
+    "RT-735e529045f176ca-CURRENT-SCHEMA-FIELD",
+    "RT-8138a8b093bfc06d-BROWSER04-ALTERNATE",
+    "RT-8138a8b093bfc06d-BROWSER04-BINDING",
+    "RT-8138a8b093bfc06d-BROWSER04-CONTRACT",
+    "RT-8138a8b093bfc06d-BROWSER04-DEFINITION",
+    "RT-8138a8b093bfc06d-BROWSER04-MUTANT",
+    "RT-8138a8b093bfc06d-CURRENT-SCHEMA-FIELD",
+    "RT-858b7c0d83228aea-BROWSER04-ALTERNATE",
+    "RT-858b7c0d83228aea-BROWSER04-BINDING",
+    "RT-858b7c0d83228aea-BROWSER04-CONTRACT",
+    "RT-858b7c0d83228aea-BROWSER04-DEFINITION",
+    "RT-858b7c0d83228aea-BROWSER04-MUTANT",
+    "RT-858b7c0d83228aea-CURRENT-SCHEMA-FIELD",
+    "RT-91356268eda2cde6-BROWSER04-ALTERNATE",
+    "RT-91356268eda2cde6-BROWSER04-BINDING",
+    "RT-91356268eda2cde6-BROWSER04-CONTRACT",
+    "RT-91356268eda2cde6-BROWSER04-DEFINITION",
+    "RT-91356268eda2cde6-BROWSER04-MUTANT",
+    "RT-91356268eda2cde6-CURRENT-SCHEMA-FIELD",
+    "RT-91b918f8698f70dd-BROWSER04-ALTERNATE",
+    "RT-91b918f8698f70dd-BROWSER04-BINDING",
+    "RT-91b918f8698f70dd-BROWSER04-CONTRACT",
+    "RT-91b918f8698f70dd-BROWSER04-DEFINITION",
+    "RT-91b918f8698f70dd-BROWSER04-MUTANT",
+    "RT-91b918f8698f70dd-CURRENT-SCHEMA-FIELD",
+    "RT-97dfffc2083d51ea-BROWSER04-ALTERNATE",
+    "RT-97dfffc2083d51ea-BROWSER04-BINDING",
+    "RT-97dfffc2083d51ea-BROWSER04-CONTRACT",
+    "RT-97dfffc2083d51ea-BROWSER04-DEFINITION",
+    "RT-97dfffc2083d51ea-BROWSER04-MUTANT",
+    "RT-97dfffc2083d51ea-CURRENT-SCHEMA-FIELD",
+    "RT-9bc4832efb4988b7-BROWSER04-ALTERNATE",
+    "RT-9bc4832efb4988b7-BROWSER04-BINDING",
+    "RT-9bc4832efb4988b7-BROWSER04-CONTRACT",
+    "RT-9bc4832efb4988b7-BROWSER04-DEFINITION",
+    "RT-9bc4832efb4988b7-BROWSER04-MUTANT",
+    "RT-9bc4832efb4988b7-CURRENT-SCHEMA-FIELD",
+    "RT-9bca7a8727abb08f-BROWSER04-ALTERNATE",
+    "RT-9bca7a8727abb08f-BROWSER04-BINDING",
+    "RT-9bca7a8727abb08f-BROWSER04-CONTRACT",
+    "RT-9bca7a8727abb08f-BROWSER04-DEFINITION",
+    "RT-9bca7a8727abb08f-BROWSER04-MUTANT",
+    "RT-9bca7a8727abb08f-CURRENT-SCHEMA-FIELD",
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-SOURCE",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-ALTERNATE",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-BINDING",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-CONTRACT",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-MUTANT",
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-BROWSER-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-BROWSER-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-BROWSER-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-BROWSER-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-BROWSER-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-LOCALE-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-LOCALE-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-LOCALE-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-LOCALE-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-LOCALE-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-SOURCE",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-ALTERNATE",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-BINDING",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-CONTRACT",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-MUTANT",
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-SOURCE",
+    "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+    "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-ALT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-MISSING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-ALT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-MISSING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-ALT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-MISSING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-ALT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-MISSING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-ALT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-MISSING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-ALT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-MISSING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-ALT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-MISSING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-ALT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-MISSING",
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-ALT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-MISSING",
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+    "RT-PROVIDER-POLICY10-024bf9c776dfc0ca",
+    "RT-PROVIDER-POLICY10-6053ac0d0c3ae291",
+    "RT-PROVIDER-POLICY10-c27f819372bcf801",
+    "RT-PROVIDER-POLICY10-f97889905ea7a512",
+    "RT-a31018709bf73a5c-BROWSER04-ALTERNATE",
+    "RT-a31018709bf73a5c-BROWSER04-BINDING",
+    "RT-a31018709bf73a5c-BROWSER04-CONTRACT",
+    "RT-a31018709bf73a5c-BROWSER04-DEFINITION",
+    "RT-a31018709bf73a5c-BROWSER04-MUTANT",
+    "RT-a31018709bf73a5c-CURRENT-SCHEMA-FIELD",
+    "RT-a8b0c90a7a729d20-BROWSER04-ALTERNATE",
+    "RT-a8b0c90a7a729d20-BROWSER04-BINDING",
+    "RT-a8b0c90a7a729d20-BROWSER04-CONTRACT",
+    "RT-a8b0c90a7a729d20-BROWSER04-DEFINITION",
+    "RT-a8b0c90a7a729d20-BROWSER04-MUTANT",
+    "RT-a8b0c90a7a729d20-CURRENT-SCHEMA-FIELD",
+    "RT-ace0dff341a51674-BROWSER04-ALTERNATE",
+    "RT-ace0dff341a51674-BROWSER04-BINDING",
+    "RT-ace0dff341a51674-BROWSER04-CONTRACT",
+    "RT-ace0dff341a51674-BROWSER04-DEFINITION",
+    "RT-ace0dff341a51674-BROWSER04-MUTANT",
+    "RT-ace0dff341a51674-CURRENT-SCHEMA-FIELD",
+    "RT-b1bebfd3aa463e09-BROWSER04-ALTERNATE",
+    "RT-b1bebfd3aa463e09-BROWSER04-BINDING",
+    "RT-b1bebfd3aa463e09-BROWSER04-CONTRACT",
+    "RT-b1bebfd3aa463e09-BROWSER04-DEFINITION",
+    "RT-b1bebfd3aa463e09-BROWSER04-MUTANT",
+    "RT-b1bebfd3aa463e09-CURRENT-SCHEMA-FIELD",
+    "RT-b523246a8e584359-BROWSER04-ALTERNATE",
+    "RT-b523246a8e584359-BROWSER04-BINDING",
+    "RT-b523246a8e584359-BROWSER04-CONTRACT",
+    "RT-b523246a8e584359-BROWSER04-DEFINITION",
+    "RT-b523246a8e584359-BROWSER04-MUTANT",
+    "RT-b523246a8e584359-CURRENT-SCHEMA-FIELD",
+    "RT-b6eb30fbf6be03e1-BROWSER04-ALTERNATE",
+    "RT-b6eb30fbf6be03e1-BROWSER04-BINDING",
+    "RT-b6eb30fbf6be03e1-BROWSER04-CONTRACT",
+    "RT-b6eb30fbf6be03e1-BROWSER04-DEFINITION",
+    "RT-b6eb30fbf6be03e1-BROWSER04-MUTANT",
+    "RT-b6eb30fbf6be03e1-CURRENT-SCHEMA-FIELD",
+    "RT-b8fe49d2862e13fe-BROWSER04-ALTERNATE",
+    "RT-b8fe49d2862e13fe-BROWSER04-BINDING",
+    "RT-b8fe49d2862e13fe-BROWSER04-CONTRACT",
+    "RT-b8fe49d2862e13fe-BROWSER04-DEFINITION",
+    "RT-b8fe49d2862e13fe-BROWSER04-MUTANT",
+    "RT-b8fe49d2862e13fe-CURRENT-SCHEMA-FIELD",
+    "RT-bb8352234e6c6200-BROWSER04-ALTERNATE",
+    "RT-bb8352234e6c6200-BROWSER04-BINDING",
+    "RT-bb8352234e6c6200-BROWSER04-CONTRACT",
+    "RT-bb8352234e6c6200-BROWSER04-DEFINITION",
+    "RT-bb8352234e6c6200-BROWSER04-MUTANT",
+    "RT-bb8352234e6c6200-CURRENT-SCHEMA-FIELD",
+    "RT-be3717baf421a9dd-BROWSER04-ALTERNATE",
+    "RT-be3717baf421a9dd-BROWSER04-BINDING",
+    "RT-be3717baf421a9dd-BROWSER04-CONTRACT",
+    "RT-be3717baf421a9dd-BROWSER04-DEFINITION",
+    "RT-be3717baf421a9dd-BROWSER04-MUTANT",
+    "RT-be3717baf421a9dd-CURRENT-SCHEMA-FIELD",
+    "RT-bf905e47ed35863a-BROWSER04-ALTERNATE",
+    "RT-bf905e47ed35863a-BROWSER04-BINDING",
+    "RT-bf905e47ed35863a-BROWSER04-CONTRACT",
+    "RT-bf905e47ed35863a-BROWSER04-DEFINITION",
+    "RT-bf905e47ed35863a-BROWSER04-MUTANT",
+    "RT-bf905e47ed35863a-CURRENT-SCHEMA-FIELD",
+    "RT-bfc739d422a140ce-BROWSER04-ALTERNATE",
+    "RT-bfc739d422a140ce-BROWSER04-BINDING",
+    "RT-bfc739d422a140ce-BROWSER04-CONTRACT",
+    "RT-bfc739d422a140ce-BROWSER04-DEFINITION",
+    "RT-bfc739d422a140ce-BROWSER04-MUTANT",
+    "RT-bfc739d422a140ce-CURRENT-SCHEMA-FIELD",
+    "RT-c226799a77c2da3b-BROWSER04-ALTERNATE",
+    "RT-c226799a77c2da3b-BROWSER04-BINDING",
+    "RT-c226799a77c2da3b-BROWSER04-CONTRACT",
+    "RT-c226799a77c2da3b-BROWSER04-DEFINITION",
+    "RT-c226799a77c2da3b-BROWSER04-MUTANT",
+    "RT-c226799a77c2da3b-CURRENT-SCHEMA-FIELD",
+    "RT-c245ed3eed7a76c8-BROWSER04-ALTERNATE",
+    "RT-c245ed3eed7a76c8-BROWSER04-BINDING",
+    "RT-c245ed3eed7a76c8-BROWSER04-CONTRACT",
+    "RT-c245ed3eed7a76c8-BROWSER04-DEFINITION",
+    "RT-c245ed3eed7a76c8-BROWSER04-MUTANT",
+    "RT-c245ed3eed7a76c8-CURRENT-SCHEMA-FIELD",
+    "RT-c5c2b774e067d6c3-BROWSER04-ALTERNATE",
+    "RT-c5c2b774e067d6c3-BROWSER04-BINDING",
+    "RT-c5c2b774e067d6c3-BROWSER04-CONTRACT",
+    "RT-c5c2b774e067d6c3-BROWSER04-DEFINITION",
+    "RT-c5c2b774e067d6c3-BROWSER04-MUTANT",
+    "RT-c5c2b774e067d6c3-CURRENT-SCHEMA-FIELD",
+    "RT-ce85d1e95781cb1b-BROWSER04-ALTERNATE",
+    "RT-ce85d1e95781cb1b-BROWSER04-BINDING",
+    "RT-ce85d1e95781cb1b-BROWSER04-CONTRACT",
+    "RT-ce85d1e95781cb1b-BROWSER04-DEFINITION",
+    "RT-ce85d1e95781cb1b-BROWSER04-MUTANT",
+    "RT-ce85d1e95781cb1b-CURRENT-SCHEMA-FIELD",
+    "RT-d17ed366e09f9e72-BROWSER04-ALTERNATE",
+    "RT-d17ed366e09f9e72-BROWSER04-BINDING",
+    "RT-d17ed366e09f9e72-BROWSER04-CONTRACT",
+    "RT-d17ed366e09f9e72-BROWSER04-DEFINITION",
+    "RT-d17ed366e09f9e72-BROWSER04-MUTANT",
+    "RT-d17ed366e09f9e72-CURRENT-SCHEMA-FIELD",
+    "RT-d1ed31f756f931f4-BROWSER04-ALTERNATE",
+    "RT-d1ed31f756f931f4-BROWSER04-BINDING",
+    "RT-d1ed31f756f931f4-BROWSER04-CONTRACT",
+    "RT-d1ed31f756f931f4-BROWSER04-DEFINITION",
+    "RT-d1ed31f756f931f4-BROWSER04-MUTANT",
+    "RT-d1ed31f756f931f4-CURRENT-SCHEMA-FIELD",
+    "RT-d348d41c2ab35c8b-BROWSER04-ALTERNATE",
+    "RT-d348d41c2ab35c8b-BROWSER04-BINDING",
+    "RT-d348d41c2ab35c8b-BROWSER04-CONTRACT",
+    "RT-d348d41c2ab35c8b-BROWSER04-DEFINITION",
+    "RT-d348d41c2ab35c8b-BROWSER04-MUTANT",
+    "RT-d348d41c2ab35c8b-CURRENT-SCHEMA-FIELD",
+    "RT-d46f4334df4967fa-BROWSER04-ALTERNATE",
+    "RT-d46f4334df4967fa-BROWSER04-BINDING",
+    "RT-d46f4334df4967fa-BROWSER04-CONTRACT",
+    "RT-d46f4334df4967fa-BROWSER04-DEFINITION",
+    "RT-d46f4334df4967fa-BROWSER04-MUTANT",
+    "RT-d46f4334df4967fa-CURRENT-SCHEMA-FIELD",
+    "RT-d57032dd890b6f18-BROWSER04-ALTERNATE",
+    "RT-d57032dd890b6f18-BROWSER04-BINDING",
+    "RT-d57032dd890b6f18-BROWSER04-CONTRACT",
+    "RT-d57032dd890b6f18-BROWSER04-DEFINITION",
+    "RT-d57032dd890b6f18-BROWSER04-MUTANT",
+    "RT-d57032dd890b6f18-CURRENT-SCHEMA-FIELD",
+    "RT-dab100380f6a024f-BROWSER04-ALTERNATE",
+    "RT-dab100380f6a024f-BROWSER04-BINDING",
+    "RT-dab100380f6a024f-BROWSER04-CONTRACT",
+    "RT-dab100380f6a024f-BROWSER04-DEFINITION",
+    "RT-dab100380f6a024f-BROWSER04-MUTANT",
+    "RT-dab100380f6a024f-CURRENT-SCHEMA-FIELD",
+    "RT-e044f6419f72c0e0-BROWSER04-ALTERNATE",
+    "RT-e044f6419f72c0e0-BROWSER04-BINDING",
+    "RT-e044f6419f72c0e0-BROWSER04-CONTRACT",
+    "RT-e044f6419f72c0e0-BROWSER04-DEFINITION",
+    "RT-e044f6419f72c0e0-BROWSER04-MUTANT",
+    "RT-e044f6419f72c0e0-CURRENT-SCHEMA-FIELD",
+    "RT-e2d010126067fa17-BROWSER04-ALTERNATE",
+    "RT-e2d010126067fa17-BROWSER04-BINDING",
+    "RT-e2d010126067fa17-BROWSER04-CONTRACT",
+    "RT-e2d010126067fa17-BROWSER04-DEFINITION",
+    "RT-e2d010126067fa17-BROWSER04-MUTANT",
+    "RT-e2d010126067fa17-CURRENT-SCHEMA-FIELD",
+    "RT-e32df097509e32fe-BROWSER04-ALTERNATE",
+    "RT-e32df097509e32fe-BROWSER04-BINDING",
+    "RT-e32df097509e32fe-BROWSER04-CONTRACT",
+    "RT-e32df097509e32fe-BROWSER04-DEFINITION",
+    "RT-e32df097509e32fe-BROWSER04-MUTANT",
+    "RT-e32df097509e32fe-CURRENT-SCHEMA-FIELD",
+    "RT-e4dcfff9aa6b1ef0-BROWSER04-ALTERNATE",
+    "RT-e4dcfff9aa6b1ef0-BROWSER04-BINDING",
+    "RT-e4dcfff9aa6b1ef0-BROWSER04-CONTRACT",
+    "RT-e4dcfff9aa6b1ef0-BROWSER04-DEFINITION",
+    "RT-e4dcfff9aa6b1ef0-BROWSER04-MUTANT",
+    "RT-e4dcfff9aa6b1ef0-CURRENT-SCHEMA-FIELD",
+    "RT-e747f65a9f069ccd-BROWSER04-ALTERNATE",
+    "RT-e747f65a9f069ccd-BROWSER04-BINDING",
+    "RT-e747f65a9f069ccd-BROWSER04-CONTRACT",
+    "RT-e747f65a9f069ccd-BROWSER04-DEFINITION",
+    "RT-e747f65a9f069ccd-BROWSER04-MUTANT",
+    "RT-e747f65a9f069ccd-CURRENT-SCHEMA-FIELD",
+    "RT-ea6c994234263250-BROWSER04-ALTERNATE",
+    "RT-ea6c994234263250-BROWSER04-BINDING",
+    "RT-ea6c994234263250-BROWSER04-CONTRACT",
+    "RT-ea6c994234263250-BROWSER04-DEFINITION",
+    "RT-ea6c994234263250-BROWSER04-MUTANT",
+    "RT-ea6c994234263250-CURRENT-SCHEMA-FIELD",
+    "RT-f513e45a2c34c183-BROWSER04-ALTERNATE",
+    "RT-f513e45a2c34c183-BROWSER04-BINDING",
+    "RT-f513e45a2c34c183-BROWSER04-CONTRACT",
+    "RT-f513e45a2c34c183-BROWSER04-DEFINITION",
+    "RT-f513e45a2c34c183-BROWSER04-MUTANT",
+    "RT-f513e45a2c34c183-CURRENT-SCHEMA-FIELD",
+    "RT-f6fd1dec2d2c6b35-BROWSER04-ALTERNATE",
+    "RT-f6fd1dec2d2c6b35-BROWSER04-BINDING",
+    "RT-f6fd1dec2d2c6b35-BROWSER04-CONTRACT",
+    "RT-f6fd1dec2d2c6b35-BROWSER04-DEFINITION",
+    "RT-f6fd1dec2d2c6b35-BROWSER04-MUTANT",
+    "RT-f6fd1dec2d2c6b35-CURRENT-SCHEMA-FIELD",
+    "RT-fa24eda72114411c-BROWSER04-ALTERNATE",
+    "RT-fa24eda72114411c-BROWSER04-BINDING",
+    "RT-fa24eda72114411c-BROWSER04-CONTRACT",
+    "RT-fa24eda72114411c-BROWSER04-DEFINITION",
+    "RT-fa24eda72114411c-BROWSER04-MUTANT",
+    "RT-fa24eda72114411c-CURRENT-SCHEMA-FIELD",
+    "RT-fbdecaab60720898-BROWSER04-ALTERNATE",
+    "RT-fbdecaab60720898-BROWSER04-BINDING",
+    "RT-fbdecaab60720898-BROWSER04-CONTRACT",
+    "RT-fbdecaab60720898-BROWSER04-DEFINITION",
+    "RT-fbdecaab60720898-BROWSER04-MUTANT",
+    "RT-fbdecaab60720898-CURRENT-SCHEMA-FIELD",
+    "RT-fe646415d23cc642-BROWSER04-ALTERNATE",
+    "RT-fe646415d23cc642-BROWSER04-BINDING",
+    "RT-fe646415d23cc642-BROWSER04-CONTRACT",
+    "RT-fe646415d23cc642-BROWSER04-DEFINITION",
+    "RT-fe646415d23cc642-BROWSER04-MUTANT",
+    "RT-fe646415d23cc642-CURRENT-SCHEMA-FIELD"
+  ],
+  "implementationAuthorization": null,
+  "globalC0Accepted": false,
+  "futureCases": "not-run"
+}

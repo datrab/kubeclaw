@@ -1,0 +1,69 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/define-correction.py"
+      ],
+      "exit": 0,
+      "toolOutput": "3f8cd9 (initial) /5142cb (corrected)"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/check-definition.mjs"
+      ],
+      "exit": 1,
+      "receipt": "first-command.json",
+      "toolOutput": "34ddc7",
+      "preservedFailure": "failed-attempt-01/"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/check-definition.mjs"
+      ],
+      "exit": 0,
+      "checks": 3119,
+      "toolOutput": "c003d9",
+      "qualification": "Earlier bounded replay before additional163 closure hashes; final4606 expands only added definitions"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/complete-receiving-closure.py"
+      ],
+      "exit": 0,
+      "toolOutput": "e9ee7d"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/extend-checks.py"
+      ],
+      "exit": 0,
+      "toolOutput": "7ca01b"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/check-definition.mjs"
+      ],
+      "exit": 0,
+      "stdout": "logs/final-replay.stdout",
+      "stderr": "logs/final-replay.stderr",
+      "toolOutput": "7ca01b",
+      "checks": 4606
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/freeze-correction.py"
+      ],
+      "exit": 0,
+      "rawLog": "logs/final-freeze.stdout"
+    }
+  ],
+  "qualification": "Source-definition author-local only; no effect, provider.execute, native invoke, activation, tool/CLI/API/network/browser/credentials/Eval; Python tooling is local file/definition bookkeeping"
+}

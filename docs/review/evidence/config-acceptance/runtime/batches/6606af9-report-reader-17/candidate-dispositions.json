@@ -1,0 +1,1012 @@
+{
+  "records": [
+    {
+      "id": "RT-CANDIDATE-2dac0707d92ebda0",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 38,
+        "text": "if (!stat.isFile() || stat.size > maximumBytes) throw new Error('RUN_EVIDENCE_FILE_OR_BUDGET_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "ExactpublicreadRunEvidence valid positiveSafeintegerbudget beforefs; currentcombinedevents+snapshot+effects rawbytesremaining calculation, extraallocatedbyte+stat invariants. Realresource/Buffer/grant/retainedsource feasibility andgenuinecompletedrun adjacentcase remainOPEN, constructor/syntheticbundle notbudgetacceptance.",
+      "settings": [
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "precise open readonlycompletedsource/budget/owner/domain/metadata proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c13fd6b1f541f9c3",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 46,
+        "text": "if (total !== stat.size || !sameFile(stat, fs.fstatSync(descriptor))) throw new Error('RUN_EVIDENCE_CHANGED');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a855870e7b5af68f",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 56,
+        "text": "if (!stat.isDirectory() || stat.isSymbolicLink()) throw new Error('RUN_EVIDENCE_ROOT_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d67ea6dbd44df42f",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 64,
+        "text": "if (attempt.identity.attemptId !== entry.identity.attemptId || attempt.identity.runId !== runId",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dd5c66f346a360fa",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 65,
+        "text": "|| attempt.identity.stageId !== entry.identity.stageId || open.has(attempt.identity.attemptId)) throw new Error('RUN_EVIDENCE_ATTEMPT_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-32bc765735568b16",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 76,
+        "text": "const request=entry.request!; if(request.schemaVersion!=='effect-request.v2'||!validEffectIdentity(request))throw new Error('RUN_EVIDENCE_EFFECT_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2377de6b3402ecf0",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 82,
+        "text": "return {...read,head:records.at(-1)?.hash??null,effects};",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-481df9692f47504b",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 85,
+        "text": "const key=entry.request?.idempotencyKey??entry.receipt?.idempotencyKey;",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5a32fc85323d6aae",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 87,
+        "text": "if(!effect||effect.receipt)throw new Error('RUN_EVIDENCE_EFFECT_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-564ec86266cdda3d",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 89,
+        "text": "if(effect.accepted||canonicalJson(entry.request)!==canonicalJson(effect.request))throw new Error('RUN_EVIDENCE_EFFECT_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b039466515d52baf",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 92,
+        "text": "if(!['completed','completed-reference'].includes(entry.type)||!effect.accepted)throw new Error('RUN_EVIDENCE_EFFECT_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-299a9bec222e69b4",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 100,
+        "text": "if(event.identity.runId!==request.attempt.runId||event.identity.stageId!==request.attempt.stageId",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-36929217f4fb2ebe",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 101,
+        "text": "||event.identity.attemptId!==request.attempt.attemptId)return false;",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9fea3d062932dcaf",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 109,
+        "text": "if(typeof capability!=='string'||!Array.isArray(registry.selectedProviders))return false;",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d315b265b241f5ed",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 118,
+        "text": "const completed=events.find(event=>event.type==='effect.completed'||event.type==='effect.failed');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-988c5f217dd38222",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 119,
+        "text": "if(events.length!==3||!requested||!accepted||!completed)return false;",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-573794e6904836a5",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 120,
+        "text": "if(events[0]!==requested||events[1]!==accepted||events[2]!==completed",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6adba32e4097d905",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 121,
+        "text": "||events.some(event=>event.payload.executionMode!=='confidential'||canonicalJson(event.identity)!==canonicalJson(requested.identity)))return false;",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-94e99f509c3891ac",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 126,
+        "text": "return resource?.canonicalId==='[confidential]'&&(result?.confidential===true||error?.code==='adapter.confidential_effect_failed');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-56683ba4606278e3",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 133,
+        "text": "if(entry.schemaVersion!=='lifecycle-event.v2'||!entry.type.startsWith('effect.'))continue;",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6fe4b48ee0f23ad8",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 135,
+        "text": "audit.set(id,[...(audit.get(id)??[]),entry]);",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a87a89c0f1d2e8b4",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 145,
+        "text": "const events=audit.get(effect.request.effectId)??[];",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e689c9b915598af4",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 146,
+        "text": "if(!events.some(event=>event.type==='effect.requested')||!events.some(event=>event.type==='effect.completed'||event.type==='effect.failed'))throw new Error('RUN_EVIDENCE_EFFECT_AUDIT_MISMATCH');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7ca3033da8657db3",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 159,
+        "text": "if (!Number.isSafeInteger(options.maximumBytes) || options.maximumBytes < 1) throw new Error('RUN_EVIDENCE_BUDGET_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "ExactpublicreadRunEvidence valid positiveSafeintegerbudget beforefs; currentcombinedevents+snapshot+effects rawbytesremaining calculation, extraallocatedbyte+stat invariants. Realresource/Buffer/grant/retainedsource feasibility andgenuinecompletedrun adjacentcase remainOPEN, constructor/syntheticbundle notbudgetacceptance.",
+      "settings": [
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "precise open readonlycompletedsource/budget/owner/domain/metadata proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2af6291d91dc15fe",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 160,
+        "text": "if (!path.isAbsolute(options.storageRoot) || !/^sha256:[a-f0-9]{64}$/u.test(selection.journalHead)",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-fd023daf4db90d95",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 161,
+        "text": "|| !/^sha256:[a-f0-9]{64}$/u.test(selection.snapshotDigest)) throw new Error('RUN_EVIDENCE_SELECTION_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-70817702c5587a69",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 166,
+        "text": "if (!current.isDirectory() || stat.dev !== current.dev || stat.ino !== current.ino) throw new Error('RUN_EVIDENCE_CHANGED');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-44c8df56b8d1c112",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 183,
+        "text": "if (!identity || identity.stageId !== entry.identity.stageId) throw new Error('RUN_EVIDENCE_ATTEMPT_INVALID');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttypedattempt identities/run/stage/duplicate/openrecords; completeeffectrequested-accepted-completed/reference+schema/digest/idempotency/coordinator audit andconfidentialthreeorderedredactedreceipt rules. Empty effectheadnull representsexplicitabsence, not missingbudget/success fallback; originalrecords/commit/sourceproof retained. No lexical/source count accepts controller/runtimeeffects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c43f7b3fa90a94ad",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 198,
+        "text": "export function readRunEvidence(input: RunEvidenceSelection, configured: ReadOptions): RunEvidenceProjection {",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "ExactpublicreadRunEvidence valid positiveSafeintegerbudget beforefs; currentcombinedevents+snapshot+effects rawbytesremaining calculation, extraallocatedbyte+stat invariants. Realresource/Buffer/grant/retainedsource feasibility andgenuinecompletedrun adjacentcase remainOPEN, constructor/syntheticbundle notbudgetacceptance.",
+      "settings": [
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "precise open readonlycompletedsource/budget/owner/domain/metadata proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8ba063ab37a97dfc",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 213,
+        "text": "if (!records.length || records.at(-1)!.hash !== selection.journalHead) throw new Error('RUN_EVIDENCE_HEAD_MISMATCH');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-17f7256440f9e424",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 215,
+        "text": "if (!terminal || !['run.succeeded', 'run.failed', 'run.cancelled'].includes(terminal)) throw new Error('RUN_EVIDENCE_NOT_COMPLETED');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7e3e27502a91f35c",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 221,
+        "text": "if (!sameFile(events.stat, fs.lstatSync(eventsFile)) || !sameFile(snapshotRead.stat, fs.lstatSync(snapshotFile))) throw new Error('RUN_EVIDENCE_CHANGED');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-943f5d458b9f9136",
+      "source": {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "line": 225,
+        "text": "if (!sameFile(events.stat, fs.lstatSync(eventsFile)) || !sameFile(snapshotRead.stat, fs.lstatSync(snapshotFile))) throw new Error('RUN_EVIDENCE_CHANGED');",
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "explicitReviewedReason": "Actual NOFOLLOW file/no symlinkancestor/physicalinode+stat/head/digest/terminalcompletedrun/coordinator-mode root/sourcechecks. Existingreader sourcegrants andcapture, notpermission/fundamentalnewknob; allcurrentv4config/pkg/graph/grants pins retained, no allbindingsabsent assertion.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-36accddb567c892f"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b66384e20f403d4a",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "line": 9,
+        "text": "if (canonicalJson(response.artifact) !== canonicalJson(ref) || response.digest !== ref.digest || sha256Text(bytes) !== ref.digest",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "explicitReviewedReason": "ActualreturnedArtifactRef/fullserializedbytes/source digest+UTF8size exactbeforevalue/projection use; typedformat/signedsource data boundary, notconfigurablepermission. C0syntheticpurehelper no actualartifact reader/realresponse acceptance.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "ActualreturnedArtifactRef/fullserializedbytes/source digest+UTF8size exactbeforevalue/projection use; typedformat/signedsource data boundary, notconfigurablepermission. C0syntheticpurehelper no actualartifact reader/realresponse acceptance.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d589f562282756f0",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "line": 10,
+        "text": "|| response.sizeBytes !== ref.sizeBytes || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('REPORT_ARTIFACT_INTEGRITY_INVALID');",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "explicitReviewedReason": "ActualreturnedArtifactRef/fullserializedbytes/source digest+UTF8size exactbeforevalue/projection use; typedformat/signedsource data boundary, notconfigurablepermission. C0syntheticpurehelper no actualartifact reader/realresponse acceptance.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "ActualreturnedArtifactRef/fullserializedbytes/source digest+UTF8size exactbeforevalue/projection use; typedformat/signedsource data boundary, notconfigurablepermission. C0syntheticpurehelper no actualartifact reader/realresponse acceptance.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-62ed054196146b42",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "line": 14,
+        "text": "if (ref.mediaType !== 'application/json' || !Number.isSafeInteger(total) || total > maximum) throw new Error('REPORT_ARTIFACT_BUDGET_EXCEEDED');",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "explicitReviewedReason": "ActualALL selectedartifactrefs aggregate safeinteger total+JSONmedia/cap before nextread; noteachartifactQ/perphysicalcapacity. Genuineverifiedrefs/encodedresponse/source/latestattempt andrequiredselectedcoverage stillneeded. No shrink or fictitiouspayload counters.",
+      "settings": [
+        "RT-81d42184c1081430"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-650a9b5c780f6039",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "line": 22,
+        "text": "if (typeof storageRoot !== 'string' || typeof orchestratorIssuerId !== 'string' || !orchestratorIssuerId",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "explicitReviewedReason": "ActualpositiveSafeinteger/nonemptyissuer/typeonlystorage root currentconstructor; sourceDirectrootempty/relative accepted, owningemptyreject; currentdirectunknownignored butowningreject. Sourcecapture primitives not wholeimmutablefile/source proof. Originalwriteridentity generatedprojection mustnot become secondeditabletrustedissuer.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-96698b5568aba94d",
+        "RT-36accddb567c892f",
+        "RT-81d42184c1081430",
+        "RT-41d93665317a7d07"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d80786c459ce28e9",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "line": 23,
+        "text": "|| [maximumJournalBytes, maximumArtifactBytes, maximumBundleBytes].some(value => !Number.isSafeInteger(value) || Number(value) < 1)) throw new Error('REPORT_READER_CONFIG_INVALID');",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "explicitReviewedReason": "ActualpositiveSafeinteger/nonemptyissuer/typeonlystorage root currentconstructor; sourceDirectrootempty/relative accepted, owningemptyreject; currentdirectunknownignored butowningreject. Sourcecapture primitives not wholeimmutablefile/source proof. Originalwriteridentity generatedprojection mustnot become secondeditabletrustedissuer.",
+      "settings": [
+        "RT-8750f030bf25ecae",
+        "RT-96698b5568aba94d",
+        "RT-36accddb567c892f",
+        "RT-81d42184c1081430",
+        "RT-41d93665317a7d07"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-23fb754cec43020d",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "line": 27,
+        "text": "if (stopped || invocation.signal.aborted) throw new Error('REPORT_READER_CANCELLED');",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "explicitReviewedReason": "Actualfence/stopped/signal/capabilityoperationresource guards andcancel check beforebundle aftersecondprojection. Lifecycle/protocol/inputvalidation, not operatorfallback or successfulpartialsource export; realcancellation/file/actor proof remainsNOTRUN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualfence/stopped/signal/capabilityoperationresource guards andcancel check beforebundle aftersecondprojection. Lifecycle/protocol/inputvalidation, not operatorfallback or successfulpartialsource export; realcancellation/file/actor proof remainsNOTRUN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4e4fc1423eee3a85",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "line": 29,
+        "text": "if (request.capability !== 'report.evidence.read' || request.operation !== 'snapshot' || request.resource.type !== 'pipeline.run') throw new Error('REPORT_READER_OPERATION_INVALID');",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "explicitReviewedReason": "Actualfence/stopped/signal/capabilityoperationresource guards andcancel check beforebundle aftersecondprojection. Lifecycle/protocol/inputvalidation, not operatorfallback or successfulpartialsource export; realcancellation/file/actor proof remainsNOTRUN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualfence/stopped/signal/capabilityoperationresource guards andcancel check beforebundle aftersecondprojection. Lifecycle/protocol/inputvalidation, not operatorfallback or successfulpartialsource export; realcancellation/file/actor proof remainsNOTRUN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9d3ea41b38743f63",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "line": 43,
+        "text": "if (invocation.signal.aborted || stopped) throw new Error('REPORT_READER_CANCELLED');",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "explicitReviewedReason": "Actualfence/stopped/signal/capabilityoperationresource guards andcancel check beforebundle aftersecondprojection. Lifecycle/protocol/inputvalidation, not operatorfallback or successfulpartialsource export; realcancellation/file/actor proof remainsNOTRUN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualfence/stopped/signal/capabilityoperationresource guards andcancel check beforebundle aftersecondprojection. Lifecycle/protocol/inputvalidation, not operatorfallback or successfulpartialsource export; realcancellation/file/actor proof remainsNOTRUN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9af6b9a2ee5dfab2",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 11,
+        "text": "if (!value || Object.keys(value).sort().join(',') !== 'artifacts,journalHead,runId,snapshotDigest,sourceRevision,sourceStageId'",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-321e17af8e8deb11",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 12,
+        "text": "|| typeof value.runId !== 'string' || !value.runId || typeof value.sourceStageId !== 'string' || !value.sourceStageId",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-fbbe9d3ea351da42",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 13,
+        "text": "|| !/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/u.test(value.sourceRevision)",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-41edad2cf7dd6670",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 14,
+        "text": "|| !Array.isArray(value.artifacts) || !value.artifacts.length || value.artifacts.length > 128",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "OPEN actualmax128 selectedartifactRefs planning/processingcapacity, not fundamentalprotocol/physicalbudget or permission totrimmandatoryevidence. Needexistingowner/domain/fullsameconsumerpositive-adjacentnegative/rawsource+metadata/coverage accounting beforeclosure.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actualmax128 selectedartifactRefs planning/processingcapacity, not fundamentalprotocol/physicalbudget or permission totrimmandatoryevidence. Needexistingowner/domain/fullsameconsumerpositive-adjacentnegative/rawsource+metadata/coverage accounting beforeclosure.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "precise open readonlycompletedsource/budget/owner/domain/metadata proof obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2e994048f1fd8f44",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 15,
+        "text": "|| new Set(value.artifacts.map(ref => canonicalJson(ref))).size !== value.artifacts.length) throw new Error('REPORT_SOURCE_SELECTION_INVALID');",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-fc11afba2e9c2f42",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 21,
+        "text": "if (!stage || ref.producer.attemptNumber !== stage.attempts) throw new Error('REPORT_ARTIFACT_STALE_ATTEMPT');",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3fecce5fbc897ebb",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 25,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('REPORT_SOURCE_CONTENT_INVALID');",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6b29f5d218c7ca1c",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 29,
+        "text": "if (!Number.isSafeInteger(value) || Number(value) < 0) throw new Error('REPORT_SOURCE_COUNT_INVALID');",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-92901be7a97473b4",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 34,
+        "text": "if (decision.runId !== selection.runId || decision.coverage?.sourceRevision !== `git:${selection.sourceRevision}`",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-74b7c4ef63a32836",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 35,
+        "text": "|| decision.coverage.pipelineStageId !== ref.producer.stageId) throw new Error('REPORT_GATE_SOURCE_MISMATCH');",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-943074e20ee1f99f",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+        "line": 45,
+        "text": "if (value.sourceRevision !== selection.sourceRevision || value.status !== 'ready_for_testing') throw new Error('REPORT_SOURCE_REVISION_MISMATCH');",
+        "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "explicitReviewedReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactfullsixkey selection/run/source40or64hex/nonemptydistinctrefs/latestattempt, source/lint/nativegate fact type+counts+stage/run/coverage/revision andready-for-testing. Source/task/typeddata predicates, not arbitrarysettings; synthetichelpers onlydemonstrate structure, no completedsource/evidence/grants proof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json",
+      "status": "explicitcurrent source/config/typedformat/audit/authority boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "thisBatchCount": 52,
+  "additionalActualSourceSeams": [
+    {
+      "source": "skills/nova/core/state/read-run-evidence.ts",
+      "line": 219,
+      "settings": [
+        "RT-96698b5568aba94d"
+      ],
+      "reason": "ActualrecoverStageStates usesconfiguredreaderissuer; registryconfiguration capturesadapters readerissuer but platformwriterissuer outsidethatexplicitconfiguration subset. Same originalwriteridentity/capture/legacygeneratedprojection remainsOPEN, no fakeclosedalias.",
+      "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065"
+    },
+    {
+      "source": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+      "lines": [
+        42,
+        44,
+        45
+      ],
+      "settings": [
+        "RT-41d93665317a7d07"
+      ],
+      "reason": "Actualsecondsourceprojection equality thenfullcanonicalencodedbundlebyte cap+digest beforeexport; genuinecompleteallfacts/omittedmetadata/source guard source proof required",
+      "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c"
+    }
+  ]
+}

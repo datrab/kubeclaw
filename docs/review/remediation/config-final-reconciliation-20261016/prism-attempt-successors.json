@@ -1,0 +1,1614 @@
+{
+  "scope": "19 original native/agent fields;17 exact existing source mappings and2 explicit residuals, no new settings or runtime passes",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-FIELD-CASE-JOINS.json",
+      "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9"
+    },
+    {
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json",
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e"
+    }
+  ],
+  "counts": {
+    "originalFields": 19,
+    "exactSourceJoins": 17,
+    "remainingOriginalFields": 2
+  },
+  "rows": [
+    {
+      "id": "AUTH-PRISM-ATTEMPT-timeoutMs",
+      "original": "D228#/rows/2305",
+      "originalObjectSha256": "6a80f16c4609a26eb44b7856aa58a6553eecfcfc59d4526bd4b3b9179732678d",
+      "class": "operator-setting",
+      "owner": "prism-execution",
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-timeoutMs-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-execution.config.json",
+      "originalSource": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.timeoutMs",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "originalHistoryObligation": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nativeAttemptTimeoutMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/nativeAttemptTimeoutMs",
+          "valueSha256": "6ce318969619d1c360b6144be09e3d3a22674897c7cbfe995716ed8b7ff7c4cf"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nativeAttemptTimeoutMs",
+          "valueSha256": "6ce318969619d1c360b6144be09e3d3a22674897c7cbfe995716ed8b7ff7c4cf"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "limits: { timeoutMs, cleanupTimeoutMs, logBytes, resultBytes, evidenceBytes, evidenceFiles }",
+        "lines": [
+          50
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "config.nativeAttemptTimeoutMs",
+        "lines": [
+          17
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "nativeAttemptTimeoutMs: control.nativeAttemptTimeoutMs",
+        "lines": [
+          66
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "attemptSpecDigest: workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          59
+        ]
+      },
+      "originalReservation": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "requestWorkerResult(config, reserved.attempt)",
+        "lines": [
+          25
+        ]
+      },
+      "ownerCorrection": "Actual attempt limits/lifetime are Control-owned; adjacent prism-execution.resourcePolicy owns CPU/memory/tasks, not these original limits."
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs",
+      "original": "D228#/rows/2306",
+      "originalObjectSha256": "96e58681571cf8987eb9af6581189f1a5c1d5a866a103ff6e0f90facaaa78bd5",
+      "class": "operator-setting",
+      "owner": "prism-execution",
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-execution.config.json",
+      "originalSource": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.cleanupTimeoutMs",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "originalHistoryObligation": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nativeAttemptCleanupTimeoutMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/nativeAttemptCleanupTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nativeAttemptCleanupTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "limits: { timeoutMs, cleanupTimeoutMs, logBytes, resultBytes, evidenceBytes, evidenceFiles }",
+        "lines": [
+          50
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "config.nativeAttemptCleanupTimeoutMs",
+        "lines": [
+          17
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "nativeAttemptCleanupTimeoutMs: control.nativeAttemptCleanupTimeoutMs",
+        "lines": [
+          67
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "attemptSpecDigest: workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          59
+        ]
+      },
+      "originalReservation": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "requestWorkerResult(config, reserved.attempt)",
+        "lines": [
+          25
+        ]
+      },
+      "ownerCorrection": "Actual attempt limits/lifetime are Control-owned; adjacent prism-execution.resourcePolicy owns CPU/memory/tasks, not these original limits."
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-logBytes",
+      "original": "D228#/rows/2307",
+      "originalObjectSha256": "45a692b594960e707732da46b8358d44b394f086ff0c7aa75b0170cd3e3714ce",
+      "class": "operator-setting",
+      "owner": "prism-execution",
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-logBytes-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-execution.config.json",
+      "originalSource": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.logBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "originalHistoryObligation": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nativeAttemptLogBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/nativeAttemptLogBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nativeAttemptLogBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "limits: { timeoutMs, cleanupTimeoutMs, logBytes, resultBytes, evidenceBytes, evidenceFiles }",
+        "lines": [
+          50
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "config.nativeAttemptLogBytes",
+        "lines": [
+          17
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "nativeAttemptLogBytes: control.nativeAttemptLogBytes",
+        "lines": [
+          68
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "attemptSpecDigest: workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          59
+        ]
+      },
+      "originalReservation": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "requestWorkerResult(config, reserved.attempt)",
+        "lines": [
+          25
+        ]
+      },
+      "ownerCorrection": "Actual attempt limits/lifetime are Control-owned; adjacent prism-execution.resourcePolicy owns CPU/memory/tasks, not these original limits."
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-resultBytes",
+      "original": "D228#/rows/2308",
+      "originalObjectSha256": "69b2233853edeb96d15ae06bc02662cd6281aac6b46168204553cdf56a828975",
+      "class": "operator-setting",
+      "owner": "prism-execution",
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-resultBytes-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-execution.config.json",
+      "originalSource": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.resultBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "originalHistoryObligation": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nativeAttemptResultBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/nativeAttemptResultBytes",
+          "valueSha256": "9641f70524a01757c47c6b10fe7f1c97c36f877ec9b8f7c73e010416540183da"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nativeAttemptResultBytes",
+          "valueSha256": "9641f70524a01757c47c6b10fe7f1c97c36f877ec9b8f7c73e010416540183da"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "limits: { timeoutMs, cleanupTimeoutMs, logBytes, resultBytes, evidenceBytes, evidenceFiles }",
+        "lines": [
+          50
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "config.nativeAttemptResultBytes",
+        "lines": [
+          17
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "nativeAttemptResultBytes: control.nativeAttemptResultBytes",
+        "lines": [
+          69
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "attemptSpecDigest: workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          59
+        ]
+      },
+      "originalReservation": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "requestWorkerResult(config, reserved.attempt)",
+        "lines": [
+          25
+        ]
+      },
+      "ownerCorrection": "Actual attempt limits/lifetime are Control-owned; adjacent prism-execution.resourcePolicy owns CPU/memory/tasks, not these original limits."
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-evidenceBytes",
+      "original": "D228#/rows/2309",
+      "originalObjectSha256": "82e5ae05bc1d69a862aeb5e131cdf93573e7b108c3742943364639b399f54b39",
+      "class": "operator-setting",
+      "owner": "prism-execution",
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-evidenceBytes-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-execution.config.json",
+      "originalSource": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.evidenceBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "originalHistoryObligation": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nativeAttemptEvidenceBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/nativeAttemptEvidenceBytes",
+          "valueSha256": "efc2a522d1bd2ac5211b9e6b6ccffc9ebaecf1a26446b107667176346e5f796a"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nativeAttemptEvidenceBytes",
+          "valueSha256": "efc2a522d1bd2ac5211b9e6b6ccffc9ebaecf1a26446b107667176346e5f796a"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "limits: { timeoutMs, cleanupTimeoutMs, logBytes, resultBytes, evidenceBytes, evidenceFiles }",
+        "lines": [
+          50
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "config.nativeAttemptEvidenceBytes",
+        "lines": [
+          17
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "nativeAttemptEvidenceBytes: control.nativeAttemptEvidenceBytes",
+        "lines": [
+          70
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "attemptSpecDigest: workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          59
+        ]
+      },
+      "originalReservation": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "requestWorkerResult(config, reserved.attempt)",
+        "lines": [
+          25
+        ]
+      },
+      "ownerCorrection": "Actual attempt limits/lifetime are Control-owned; adjacent prism-execution.resourcePolicy owns CPU/memory/tasks, not these original limits."
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-evidenceFiles",
+      "original": "D228#/rows/2310",
+      "originalObjectSha256": "42b6995c5ed67f42ce49b2c0347e1bbe82c27dc0c76ff92d7bfa9028667221fd",
+      "class": "operator-setting",
+      "owner": "prism-execution",
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-evidenceFiles-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-execution.config.json",
+      "originalSource": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.evidenceFiles",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "originalHistoryObligation": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nativeAttemptEvidenceFiles",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/nativeAttemptEvidenceFiles",
+          "valueSha256": "a68b412c4282555f15546cf6e1fc42893b7e07f271557ceb021821098dd66c1b"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nativeAttemptEvidenceFiles",
+          "valueSha256": "a68b412c4282555f15546cf6e1fc42893b7e07f271557ceb021821098dd66c1b"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "limits: { timeoutMs, cleanupTimeoutMs, logBytes, resultBytes, evidenceBytes, evidenceFiles }",
+        "lines": [
+          50
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "config.nativeAttemptEvidenceFiles",
+        "lines": [
+          17
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "nativeAttemptEvidenceFiles: control.nativeAttemptEvidenceFiles",
+        "lines": [
+          71
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "attemptSpecDigest: workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          59
+        ]
+      },
+      "originalReservation": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "requestWorkerResult(config, reserved.attempt)",
+        "lines": [
+          25
+        ]
+      },
+      "ownerCorrection": "Actual attempt limits/lifetime are Control-owned; adjacent prism-execution.resourcePolicy owns CPU/memory/tasks, not these original limits."
+    },
+    {
+      "id": "AUTH-PRISM-CLAIM-LIFETIME",
+      "original": "D228#/rows/2311",
+      "originalObjectSha256": "4257753e9c06bf92f3397362290e7fb2cc5ccdb327dcb66cf24130899f9546f0",
+      "class": "operator-setting",
+      "owner": "prism-execution",
+      "caseIds": [
+        "AUTH-PRISM-CLAIM-LIFETIME-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-execution.config.json",
+      "originalSource": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "expires",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          35,
+          41,
+          50
+        ]
+      },
+      "originalHistoryObligation": "Claim expiry and queue admission share producer expiry; changes apply new operation only.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/nativeAttemptLifetimeMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/nativeAttemptLifetimeMs",
+          "valueSha256": "a3c25177bb8fb18ab261743d2296eb0edb79ee7234493f24f20b8f85b5b9a9d8"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/nativeAttemptLifetimeMs",
+          "valueSha256": "a3c25177bb8fb18ab261743d2296eb0edb79ee7234493f24f20b8f85b5b9a9d8"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "now.getTime() + lifetimeMs",
+        "lines": [
+          42
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "actualCaller": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "config.nativeAttemptLifetimeMs",
+        "lines": [
+          17
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "nativeAttemptLifetimeMs: control.nativeAttemptLifetimeMs",
+        "lines": [
+          65
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127",
+        "anchor": "attemptSpecDigest: workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          59
+        ]
+      },
+      "originalReservation": {
+        "path": "skills/prism/control/native-operation.ts",
+        "sha256": "8aebf5aad0b2863e210452d29df13a12a4559edf2fca31b75913c037dc3d377b",
+        "anchor": "requestWorkerResult(config, reserved.attempt)",
+        "lines": [
+          25
+        ]
+      },
+      "ownerCorrection": "Actual attempt limits/lifetime are Control-owned; adjacent prism-execution.resourcePolicy owns CPU/memory/tasks, not these original limits."
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "original": "D228#/rows/2353",
+      "originalObjectSha256": "ea7b510a4e9f7f52aee3d9685fe05b5267e73644e96ed9966929971f14d281d0",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-LIMIT-timeoutMs-EFFECT",
+        "AUTH-PRISM-AGENT-C0-DEFINITION"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.timeoutMs",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "originalHistoryObligation": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentLauncher/limits/timeoutMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentLauncher/limits/timeoutMs",
+          "valueSha256": "d1d282f04815e254882e9fee0144155003a6c2383f1614c3c3a8f575b6f2db2f"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentLauncher/limits/timeoutMs",
+          "valueSha256": "d1d282f04815e254882e9fee0144155003a6c2383f1614c3c3a8f575b6f2db2f"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "limits:{...limits}",
+        "lines": [
+          37
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "agentLauncher: control.agentLauncher",
+        "lines": [
+          59
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "attemptSpecDigest:workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          41
+        ]
+      },
+      "durableCapture": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "attempt_envelope=$5::jsonb",
+        "lines": [
+          52
+        ]
+      },
+      "originalClaimReceiver": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "const envelope=job.attempt_envelope;",
+        "lines": [
+          34
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "original": "D228#/rows/2354",
+      "originalObjectSha256": "31131f6d3214b887ef1e65df2510d85580a0c407dfdafa3bfbc1902a2fc80bac",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.cleanupTimeoutMs",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "originalHistoryObligation": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentLauncher/limits/cleanupTimeoutMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentLauncher/limits/cleanupTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentLauncher/limits/cleanupTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "limits:{...limits}",
+        "lines": [
+          37
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "agentLauncher: control.agentLauncher",
+        "lines": [
+          59
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "attemptSpecDigest:workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          41
+        ]
+      },
+      "durableCapture": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "attempt_envelope=$5::jsonb",
+        "lines": [
+          52
+        ]
+      },
+      "originalClaimReceiver": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "const envelope=job.attempt_envelope;",
+        "lines": [
+          34
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "original": "D228#/rows/2355",
+      "originalObjectSha256": "22e1c00e7c770ef4aa66987a0d347f7105c059d2bedf2bd861c9308c34550c91",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-logBytes-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.logBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "originalHistoryObligation": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentLauncher/limits/logBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentLauncher/limits/logBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentLauncher/limits/logBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "limits:{...limits}",
+        "lines": [
+          37
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "agentLauncher: control.agentLauncher",
+        "lines": [
+          59
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "attemptSpecDigest:workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          41
+        ]
+      },
+      "durableCapture": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "attempt_envelope=$5::jsonb",
+        "lines": [
+          52
+        ]
+      },
+      "originalClaimReceiver": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "const envelope=job.attempt_envelope;",
+        "lines": [
+          34
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "original": "D228#/rows/2356",
+      "originalObjectSha256": "69e2131bdc5cbadc5c7c35d0702e9a828588b386aac29bf8d51dec2a0faab24c",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-resultBytes-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.resultBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "originalHistoryObligation": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentLauncher/limits/resultBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentLauncher/limits/resultBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentLauncher/limits/resultBytes",
+          "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "limits:{...limits}",
+        "lines": [
+          37
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "agentLauncher: control.agentLauncher",
+        "lines": [
+          59
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "attemptSpecDigest:workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          41
+        ]
+      },
+      "durableCapture": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "attempt_envelope=$5::jsonb",
+        "lines": [
+          52
+        ]
+      },
+      "originalClaimReceiver": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "const envelope=job.attempt_envelope;",
+        "lines": [
+          34
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "original": "D228#/rows/2357",
+      "originalObjectSha256": "7f9a11ab9074a7133a0540bc3b31b95955b90476fd591e6afa6a837d1e8808f0",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-evidenceBytes-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.evidenceBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "originalHistoryObligation": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentLauncher/limits/evidenceBytes",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentLauncher/limits/evidenceBytes",
+          "valueSha256": "107f41ed92e01eb58d3a28ed9f2bb1c4094d3cbd74ff828bb4c85186079d6d79"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentLauncher/limits/evidenceBytes",
+          "valueSha256": "107f41ed92e01eb58d3a28ed9f2bb1c4094d3cbd74ff828bb4c85186079d6d79"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "limits:{...limits}",
+        "lines": [
+          37
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "agentLauncher: control.agentLauncher",
+        "lines": [
+          59
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "attemptSpecDigest:workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          41
+        ]
+      },
+      "durableCapture": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "attempt_envelope=$5::jsonb",
+        "lines": [
+          52
+        ]
+      },
+      "originalClaimReceiver": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "const envelope=job.attempt_envelope;",
+        "lines": [
+          34
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "original": "D228#/rows/2358",
+      "originalObjectSha256": "3a6fa03af870926aa087e5f393c6275f239b8876562be6816af520b7f2c8b58d",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-evidenceFiles-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.evidenceFiles",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "originalHistoryObligation": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentLauncher/limits/evidenceFiles",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentLauncher/limits/evidenceFiles",
+          "valueSha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentLauncher/limits/evidenceFiles",
+          "valueSha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "limits:{...limits}",
+        "lines": [
+          37
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "agentLauncher: control.agentLauncher",
+        "lines": [
+          59
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "attemptSpecDigest:workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          41
+        ]
+      },
+      "durableCapture": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "attempt_envelope=$5::jsonb",
+        "lines": [
+          52
+        ]
+      },
+      "originalClaimReceiver": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "const envelope=job.attempt_envelope;",
+        "lines": [
+          34
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "original": "D228#/rows/2359",
+      "originalObjectSha256": "2a015f6b7cb314dca79c02e9980cd1fa53cd8c3f6eb2ae9e3d5d601d39ec72ff",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-CLAIM-LIFETIME-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "field": "claimLifetimeMs",
+        "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+        "lines": [
+          48
+        ]
+      },
+      "originalHistoryObligation": "Fixed SQL interval; expired running job becomes needs_nova, never accepted/requeued. Result commit requires live fenced claim.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentLauncher/attemptLifetimeMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentLauncher/attemptLifetimeMs",
+          "valueSha256": "869fb57a0393c2222ba565887c14418dd989c22157afda5a0f16149bc35dcafb"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentLauncher/attemptLifetimeMs",
+          "valueSha256": "869fb57a0393c2222ba565887c14418dd989c22157afda5a0f16149bc35dcafb"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "[config.agentLauncher.attemptLifetimeMs]",
+        "lines": [
+          49
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "agentLauncher: control.agentLauncher",
+        "lines": [
+          59
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "attemptSpecDigest:workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          41
+        ]
+      },
+      "durableCapture": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "attempt_envelope=$5::jsonb",
+        "lines": [
+          52
+        ]
+      },
+      "originalClaimReceiver": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "const envelope=job.attempt_envelope;",
+        "lines": [
+          34
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "original": "D228#/rows/2360",
+      "originalObjectSha256": "e82978656adc3971dbb9e6db2d2b26b7047c83eb51f0b9fa68baa583b5df2bb0",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "AUTH-PRISM-AGENT-KILL-GRACE-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-process.ts",
+        "field": "terminationGraceMs",
+        "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+        "lines": [
+          33
+        ]
+      },
+      "originalHistoryObligation": "Fixed delay, ESRCH ignored only; waits actual child close. This does not cancel remote gateway work.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentLauncher/terminationGraceMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentLauncher/terminationGraceMs",
+          "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentLauncher/terminationGraceMs",
+          "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-process.ts",
+        "sha256": "e5724fcfd0cd28af32cd494f35fc0506fd86379d74d85ffa25fdc5b141a07c41",
+        "anchor": "setTimeout(()=>kill('SIGKILL'),this.terminationGraceMs)",
+        "lines": [
+          37
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e",
+        "anchor": "agentLauncher: control.agentLauncher",
+        "lines": [
+          59
+        ]
+      },
+      "envelopeDigest": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "attemptSpecDigest:workerAttemptSpecDigest(unsigned)",
+        "lines": [
+          41
+        ]
+      },
+      "durableCapture": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214",
+        "anchor": "attempt_envelope=$5::jsonb",
+        "lines": [
+          52
+        ]
+      },
+      "originalClaimReceiver": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "const envelope=job.attempt_envelope;",
+        "lines": [
+          34
+        ]
+      },
+      "originalOperationCapture": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42",
+        "anchor": "terminationGraceMs:config.agentLauncher.terminationGraceMs",
+        "lines": [
+          39
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "original": "D228#/rows/2362",
+      "originalObjectSha256": "52142383f91071851f8681df8fb5d5e258469d257edb57ef4521a90ac8a5ce8f",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "AUTH-PRISM-AGENT-CLI-OWNER-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "agentId",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          38
+        ]
+      },
+      "originalHistoryObligation": "Current fixed main; external installed agent roster required for alternate valid identity. Session key generated from namespace/project is task binding, not operator author.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "PRISM_ATTEMPT_RECEIVING_IMPLEMENTATION_OPEN",
+      "selectedOwner": null,
+      "actualLiteral": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "'agent','--agent','main'",
+        "lines": [
+          43
+        ]
+      },
+      "constraint": "CLI target main remains literal; do not confuse random bridge runnerId/claim owner with selected OpenClaw agent target. Needs selected target receiving and original launch identity capture/delivery; no agent authority redesign."
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "original": "D228#/rows/2363",
+      "originalObjectSha256": "6be94f2ea0611a5c77a5f4b9f552d853ed640fe0bdd3010fc14e7409c90bafc8",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "AUTH-PRISM-AGENT-CLAIM-HTTP-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "claimHttpTimeoutMs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          28
+        ]
+      },
+      "originalHistoryObligation": "Fixed timeout; response must be ok JSON; claim may already be durable when transport fails. Next tick only obtains accepted unstarted work; running remains fenced.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentBridge/controlRequestTimeoutMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentBridge/controlRequestTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentBridge/controlRequestTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "'/v1/agent/jobs/claim',{runnerId:this.runnerId},AbortSignal.timeout(this.config.controlRequestTimeoutMs)",
+        "lines": [
+          29
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-agent-bridge')",
+        "lines": [
+          50
+        ]
+      },
+      "serviceEntry": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "8fb68db8e3a85b43cd1b6c0de0c3b6d8d8cf913c420af029164f49ee5764fe99",
+        "anchor": "new AgentJobRunner(config)",
+        "lines": [
+          6
+        ]
+      },
+      "qualification": "Both HTTP timeouts use the same selected bridge request timeout; startup policy, not original per-job HTTP-policy recovery proof"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "original": "D228#/rows/2364",
+      "originalObjectSha256": "06fe539d0866d953ee2310fd5617d8e2527d802437e9c0d1deeddf55b91730de",
+      "class": "operator-setting",
+      "owner": "prism-agent-launcher",
+      "caseIds": [
+        "AUTH-PRISM-AGENT-FINISH-HTTP-EFFECT"
+      ],
+      "historicalLocator": "config/engines/prism-agent.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "finishHttpTimeoutMs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          44
+        ]
+      },
+      "originalHistoryObligation": "Fixed timeout after local result; Control receipt validates against accepted envelope. Network failure cannot establish remote failure or authorize repeat launch.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "EXACT_PRISM_ATTEMPT_SOURCE_JOIN",
+      "selectedOwner": {
+        "path": "config/components/prism-control.config.json",
+        "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+      },
+      "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentBridge/controlRequestTimeoutMs",
+      "authoredProfileLeaves": [
+        {
+          "profile": "spiffe",
+          "pointer": "/profiles/spiffe/settings/agentBridge/controlRequestTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        },
+        {
+          "profile": "standard",
+          "pointer": "/profiles/standard/settings/agentBridge/controlRequestTimeoutMs",
+          "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+        }
+      ],
+      "actualReceivingEffect": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e",
+        "anchor": "/finish`,{fence:job.fence,outcome},AbortSignal.timeout(this.config.controlRequestTimeoutMs)",
+        "lines": [
+          49
+        ]
+      },
+      "startupCapture": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+        "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+        "anchor": "verifiedCaptures.add(result)",
+        "lines": [
+          143
+        ]
+      },
+      "composition": {
+        "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+        "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+        "anchor": "assertPipelineBootCapture(capture, 'prism-agent-bridge')",
+        "lines": [
+          50
+        ]
+      },
+      "serviceEntry": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "8fb68db8e3a85b43cd1b6c0de0c3b6d8d8cf913c420af029164f49ee5764fe99",
+        "anchor": "new AgentJobRunner(config)",
+        "lines": [
+          6
+        ]
+      },
+      "qualification": "Both HTTP timeouts use the same selected bridge request timeout; startup policy, not original per-job HTTP-policy recovery proof"
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE",
+      "original": "D228#/rows/2369",
+      "originalObjectSha256": "826b0097a397b37d35261e444890fd0a93585c12df646a384ba92bd1a700143c",
+      "class": "operator-setting",
+      "owner": "prism-execution",
+      "caseIds": [
+        "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE-VAL",
+        "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE-PROJECTION",
+        "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE-RECOVERY"
+      ],
+      "historicalLocator": "config/engines/prism-execution.config.json",
+      "originalSource": {
+        "path": "skills/prism/server/native-worker-execution.ts",
+        "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+        "field": "timeoutMs: envelope.limits.timeoutMs + 8 * envelope.limits.cleanupTimeoutMs",
+        "lines": [
+          29
+        ]
+      },
+      "originalHistoryObligation": "Does not create claim/queue expiry. AUTH-PRISM-CLAIM-LIFETIME owns ten-minute producer deadline; acceptedLimits clips parent timer to remaining original claim. Preserve original resource grant and stored attempt across recovery.",
+      "runtimeAcceptance": "NOT_INFERRED; zero original cases executed; original results unchanged",
+      "historyAcceptance": "OPEN; source envelope/storage anchors are not executed original recovery proof",
+      "status": "PRISM_ATTEMPT_RECEIVING_IMPLEMENTATION_OPEN",
+      "selectedOwner": null,
+      "actualLiteral": {
+        "path": "skills/prism/server/native-worker-execution.ts",
+        "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f",
+        "anchor": "timeoutMs: envelope.limits.timeoutMs + 8 * envelope.limits.cleanupTimeoutMs",
+        "lines": [
+          32
+        ]
+      },
+      "constraint": "Multiplier8 remains literal. Existing selected cleanupTimeoutMs is not an authored completion-phase count. Versioned native supervisor receiving and original attempt/history binding required; do not change deadline semantics or weaken native gate."
+    }
+  ],
+  "independentReview": "OPEN; native spawn unavailable; unchanged direct reviewer EROFS not retried",
+  "fullAcceptance": "OPEN; all2409/6845/50/fullC0-C6 and original history/native/archive mandatory"
+}

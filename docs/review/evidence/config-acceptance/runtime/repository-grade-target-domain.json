@@ -1,0 +1,69 @@
+{
+  "sourceSchema": "skills/nova/plugins/review/schemas/repository-audit-input.schema.json",
+  "sourceSchemaSha256": "f95e29e1e8dc9d9116f0be4b4713cdaf70826b455f4e3f9dd69d9055e4e02f8a",
+  "status": "proposed C4 owner-domain/compatibility delta only, not implemented source acceptance",
+  "requiredSemanticRelations": [
+    "selected bound runtime target: explicit implemented encoder + positive safe integer prompt/input/output/context ceilings and input+output<=runtime context",
+    "grade encoder equals that one retained runtime target encoder",
+    "grade output reserve equals same retained target returned-output quota; no second review writer",
+    "grade input quota<=runtime input ceiling; grade context quota<=runtime context ceiling; grade context quota>derived output reserve; measured reservation input+output must fit role context quota",
+    "grade prompt byte quota<=runtime byte ceiling",
+    "each phase token quota<=combined token quota; no absent/unknown/old alias/task override fallback",
+    "role input quota need NOT fit in role context quota by itself: effective per-job input allowance=min(role input quota,role context quota-output reserve)"
+  ],
+  "currentToTargetDeltas": [
+    "repository-review-profile runtimeOutputTokens/tokenizerEncoding reject alternatives today; migrate exact guard with shared runtime target parser/projection, no unsupported current A/B claim",
+    "replace operationalLimits configured-maxima relation with independent review workload quota + measured-request guard already present in real compiler/ReviewDispatchBudget/declared prompt validator",
+    "actual runtime target fixed tuple guards are operational policy today, not digest/wire identities; keep current selected values as preserved control, allow only explicitly supported implemented encoders and bounded returned-output policies under approved same-owner migration",
+    "returned-output cap affects actual post-read tokenizer/check, reserve and estimated cost; do not claim generation max_tokens sent to gateway",
+    "typed runtime/module closure + durable spent budget/deadline before effect are future C5; actual current stage invocations can recreate in-memory counters/deadline"
+  ],
+  "currentSDKCodecBoundary": "runtimeDispatchProfile is EXACT finite schemaVersion/encoding metadata only. It contains NO model, target ID, token ceiling or CONFIG generation. Current actual target policy comes from adapter config.targets selected by request.resource.canonicalId and privately captured once for its run/service activation. Target immutable module dependency must refer to THAT retained target/profile/instance (new C5 binding contract), not overload the codec marker.",
+  "authorVsProjection": "review author schema forbids tokenizerEncoding and maxOutputTokensPerJob; effective schema requires generated projections from same actual selected runtime target policy. runtimeDispatchProfile marker remains protocol-only. Review context quota is separately owned workload admission policy, not actual model/API capacity.",
+  "supportedBackendLimit": "Existing token/prompt/output source probes cover OpenClaw adapter functions. Generic HTTP runtime targets have no current token contract fields; without an explicitly validated target quota contract, reject target compatibility rather than synthesize review defaults or claim an unsupported service/model parameter.",
+  "A6_FVAL_delta": {
+    "status": "proposed/unapproved C4 semantic validator change, not implemented and not an accepted relaxation",
+    "currentGuard": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "lines": [
+        286,
+        312,
+        313
+      ],
+      "relation": "configured maxInputTokensPerJob + maxOutputTokensPerJob <= maxContextTokensPerJob; current A14000/B18000 reject with input120000/output6000"
+    },
+    "targetMeaning": "local review context quota only; input quota and context quota jointly bound each actual reserved task via measuredInput <= min(inputQuota,contextQuota-outputReserve). Retained CONFIGURED target context ceiling remains128000. No model API context setting or parameter support inferred.",
+    "actualPreservedEnforcement": [
+      {
+        "path": "skills/nova/plugins/review/src/scalable-review-compiler.ts",
+        "lines": [
+          184,
+          185,
+          229,
+          234
+        ],
+        "math": "maximum actual compiled job tokens <= input quota and maximum tokens+output reserve<=review context quota; mismatched/incomplete snapshot coverage rejects rather than truncates"
+      },
+      {
+        "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+        "lines": [
+          125,
+          133,
+          134,
+          135,
+          166,
+          168
+        ],
+        "math": "measure exact reserved prompt; input+output<=review context quota BEFORE reservation counters and before productive dispatch"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "math": "prepareOpenClawTask remeasures declared prompt, requires same encoder/output and verifies actual prompt bytes/input/context<=both declaration and retained target ceilings before dispatch"
+      }
+    ],
+    "whyNotSilentWeakening": "The current configured-maxima guarantee that every hypothetical input-quota-sized task fits is deliberately changed, not claimed preserved. Proposed definition instead explicitly defines effective input admission as intersection of two quotas. Actual bounded task safety, full compilation coverage and source evidence are retained; smaller quota rejects oversized or incomplete work, never deletes lenses/files/relations or silently caps measured input to manufacture success. Grant/resource selection and catalog/package/source/prepared identities unchanged. User approval and fresh A6/F-VAL reviewer disposition required before implementation; if they require original worst-case configured-maxima relation, retain it and mark independent context effect impossible instead.",
+    "actualControls": "all87 complete preserved/A/B target definition positives, per-task small A positive and measured task A reject/B admit, unchanged runtime helper B positive plus oversized same helper negative; current resolver context A/B rejection separately recorded",
+    "futureRequired": "actual admitted full compiler/stage source/coverage and exact retained grant/target identities; over-budget rejects before Core effect admission; mutation removing measured-input guard must fail; historical/current source math does not satisfy future behavioral gate"
+  },
+  "externalLimits": "Source/schema controls use declared isolated target limits to prove type/relation definitions and existing arithmetic only. Actual deployed/installed model/runtime/operator profiles are unknown; live compatible activation requires exact real inputs, not invented model capacity or attestation string."
+}

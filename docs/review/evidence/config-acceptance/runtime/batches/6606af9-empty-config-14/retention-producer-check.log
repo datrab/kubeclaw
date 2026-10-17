@@ -1,0 +1,40 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/retention-producer-check.mjs",
+  "setting": "RT-PROJECT-DEMO-RETENTIONSECONDS",
+  "A": {
+    "authNodeId": "auth:fixture",
+    "protocol": "json-session.v1",
+    "operatorTarget": "operators",
+    "retentionSeconds": 604800
+  },
+  "B": {
+    "authNodeId": "auth:fixture",
+    "protocol": "json-session.v1",
+    "operatorTarget": "operators",
+    "retentionSeconds": 1209600
+  },
+  "negativeRetentionInputs": [
+    null,
+    0,
+    -1,
+    0.5,
+    9223372037,
+    "604800"
+  ],
+  "maximumCurrent": 9223372036,
+  "sourceDigests": {
+    "skills/nova/project/demo.ts": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566",
+    "skills/nova/plugins/demo-handoff/src/candidate.ts": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+    "skills/nova/plugins/demo-handoff/src/protocol.ts": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+    "skills/nova/plugins/demo-handoff/src/binding.ts": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+    "skills/nova/plugins/demo-handoff/src/controller-client.ts": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+    "cmd/buster-namespace-controller/demo-retention.go": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+    "cmd/buster-namespace-controller/demo-readiness.go": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/retention-producer-check.mjs": "cd8154454cf3eeb91cd626d0d5ca6a438d661700560e8e4202dc7cce28cc1730"
+  },
+  "node": "v24.21.0",
+  "result": "passed",
+  "scope": "Actual exported normalizeDemo parser/currentdefault+literal source chain only; Go controller/source/signatures/CRD/HTTP/time arithmetic inspected but not executed. No genuine fixture/legacy/handoff/modulecarrier/lease/host/API or targetacceptance."
+}

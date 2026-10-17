@@ -6,6 +6,8 @@
     "artifactRoot": "/var/lib/prism/artifacts",
     "studioPublicUrl": "https://prism-studio",
     "port": 8080,
-    "dispatchTimeoutMs": 900000
+    "dispatchTimeoutMs": 900000,
+    "maximumJsonBodyBytes": 2000000,
+    "maximumArtifactUploadBodyBytes": 8500000
   }
 }

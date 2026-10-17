@@ -1,0 +1,66 @@
+{
+  "scope": "Only pure existing collector, exact-function narrow probes, read-only conservation and navigation; no provider/native activation",
+  "commands": [
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/check-generation.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/replay.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/replay.stderr",
+      "exit": 0,
+      "toolChunk": "cc785b"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/probes.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/probes.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/probes.stderr",
+      "exit": 0,
+      "toolChunk": "0b1855",
+      "qualification": "initial three variants, raw output retained; script later expanded"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/probes.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/probes-expanded.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/probes-expanded.stderr",
+      "exit": 0,
+      "toolChunk": "b20ea0"
+    },
+    {
+      "command": "python /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/capture.py > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/capture.stdout 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/capture.stderr",
+      "exit": 0,
+      "toolChunk": "29c008"
+    },
+    {
+      "command": "read-only Python fresh SHA256 comparison of every read-identities input; git rev-parse HEAD",
+      "exit": 0,
+      "output": "end-input-stability.json"
+    }
+  ],
+  "navigationErrors": [
+    {
+      "toolChunk": "ca96e7",
+      "error": "guessed check-definition.mjs absent; correct collector check-generation.mjs subsequently inspected"
+    },
+    {
+      "toolChunks": [
+        "468e16",
+        "426551"
+      ],
+      "error": "guessed charts config Prism-worker agent-openclaw profile paths absent; actual agentAttempt and Prism values/source witnesses used instead"
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/check-generation.mjs",
+      "sha256": "2b87f52eed59ebf657315b716f103e8e845e017b224cd99579cdf9a28622eda2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/inherited-definition-functions.mjs",
+      "sha256": "f9f1d0f082e3a7987fbeb1fa55910d19939fb275e334ef537550049daeacae48"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/inherited-recovery-relations.mjs",
+      "sha256": "b1fabffa4c99c7936eedf4ae8290b467b71a507518cede1af69156d0e3f78494"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/probes.mjs",
+      "sha256": "c32f72c15ec803f1a06602d432590063cf027b424f847bd9b6306a68f11e36af"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-01/capture.py",
+      "sha256": "d931a34c82bbb68aff91aa9aa19ceddc87d7a8be99cfab64ab1915e1ea961f30"
+    }
+  ]
+}

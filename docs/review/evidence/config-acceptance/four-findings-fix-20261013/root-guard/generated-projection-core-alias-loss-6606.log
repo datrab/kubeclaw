@@ -1,0 +1,10 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6845,
+  "errorCount": 1,
+  "errors": [
+    "Core canonical question link/alias conservation drift"
+  ]
+}

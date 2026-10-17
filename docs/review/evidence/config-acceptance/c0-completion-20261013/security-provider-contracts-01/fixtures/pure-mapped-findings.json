@@ -1,0 +1,48 @@
+{
+  "qualification": "Pure current findings/result helper inputs only; NOT observed native scanner output, never fed to provider.execute",
+  "header": [
+    {
+      "id": "header:custom:/a",
+      "severity": "high",
+      "message": "/a does not satisfy security-header rule custom.",
+      "category": "header",
+      "status": "affected"
+    }
+  ],
+  "dependency": [
+    {
+      "id": "CVE-2021-23337",
+      "package": "lodash",
+      "installedVersion": "4.17.20",
+      "fixedVersion": "4.17.21",
+      "sourceFile": "task-fixtures/repository/vulnerable/package-lock.json",
+      "severity": "high",
+      "status": "unknown"
+    }
+  ],
+  "image": [
+    {
+      "id": "CVE-1",
+      "package": "openssl",
+      "installedVersion": "1",
+      "sourceFile": "os-packages",
+      "severity": "high"
+    }
+  ],
+  "kubernetes-policy": [
+    {
+      "id": "KSV-0001",
+      "sourceFile": "task-fixtures/repository/checked-manifest.yaml",
+      "line": 1,
+      "severity": "high",
+      "message": "unsafe"
+    }
+  ],
+  "kubernetes-runtime": [
+    {
+      "id": "fixture-rule",
+      "severity": "low",
+      "message": "source-shape fixture"
+    }
+  ]
+}

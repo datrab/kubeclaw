@@ -1,0 +1,10 @@
+{
+  "sourceGrammarWitness": ".00000000000000000000000000000000000000000000000000000001e64",
+  "actualAsciiUnits": 60,
+  "exactValue": "100000000",
+  "equivalence512Mi": "536870912",
+  "equivalenceHalfGi": "536870912",
+  "ceilingEquality": true,
+  "oneByteBelowReject": true,
+  "meaning": "Literal finite rational arithmetic only, no proposed parser/Go/Kubernetes/provider import or execution"
+}

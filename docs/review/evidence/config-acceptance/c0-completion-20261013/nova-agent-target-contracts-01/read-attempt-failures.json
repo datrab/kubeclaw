@@ -1,0 +1,25 @@
+{
+  "qualification": "Navigation mistakes retained honestly; commands returned mixed-result exit 0 where later independent reads succeeded. These were not runtime/production faults. Exact final source paths resolved.",
+  "attempts": [
+    {
+      "toolChunkId": "24b610",
+      "stderr": "skills/nova/engine: No such file or directory; sdk/src: No such file or directory",
+      "resolution": "skills/nova/core; skills/common/plugin-runtime/sdk/src"
+    },
+    {
+      "toolChunkId": "c06eeb",
+      "stderr": "browser-provider-contracts-01/check-pure.mjs: No such file or directory",
+      "resolution": "browser-provider-contracts-01/check-definition.mjs"
+    },
+    {
+      "toolChunkId": "ed9c96",
+      "stderr": "skills/nova/core/state/run-evidence.ts: No such file or directory",
+      "resolution": "skills/nova/core/state/read-run-evidence.ts"
+    },
+    {
+      "toolChunkId": "3be69d",
+      "stderr": "contracts/pipeline-test-gate/v1/src/schema.ts: No such file or directory",
+      "resolution": "contracts/pipeline-test-gate/v1/src/validation.ts and actual schema JSON"
+    }
+  ]
+}

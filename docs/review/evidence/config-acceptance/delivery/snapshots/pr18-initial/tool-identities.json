@@ -1,0 +1,8 @@
+{
+  "node": "v24.21.0",
+  "helm": "v3.18.4+gd80839c",
+  "go": "absent (exit127)",
+  "docker": "absent",
+  "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+  "sourceTree": "89fa8e4d683cf442deb189d60ce8b7cc1ff05327"
+}

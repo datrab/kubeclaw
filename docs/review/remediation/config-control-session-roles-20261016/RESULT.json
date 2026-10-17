@@ -1,0 +1,80 @@
+{
+  "at": "2026-10-16T20:13:24.852286+00:00",
+  "sourceCommit": "898dcb967e77bb054a0f32b857a1e3f5b603bc87",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-control-session-roles-20261016",
+  "implemented": "Component-v4 explicitly requires original fixed-domain sessionDefaultRoles [editor] in both central profiles; selected verified capture -> actual Control composition -> actual delivered session HTTP route -> explicit original roles in token writer. V2/v3 exchange and signed-token readers retained unchanged without current-owner refill. No new grant/authentication authority or denied-v10 activation.",
+  "checks": {
+    "focusedAndOriginalTests": {
+      "passed": 66,
+      "total": 66,
+      "failed": 0,
+      "skipped": 0
+    },
+    "normalPackagedRoleBootAndDeliveredSessionHttp": {
+      "passed": 1,
+      "total": 1
+    },
+    "normalPrismAndBusterImageDelivery": {
+      "passed": 8,
+      "total": 8
+    },
+    "strictSourceAndRegressionTypecheck": true,
+    "normalGeneratorsAndChecks": true,
+    "exactFullRosterPreservation": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0
+    },
+    "exactControlSourceMatrix": {
+      "originalFields": 14,
+      "sourceJoins": 14,
+      "remainingRoleField": 0,
+      "negativeControlsRejected": 8
+    }
+  },
+  "initialFailures": [
+    "Original Control HTTP fixture changed standard despite actual spiffe binding: 13 failed assertions, corrected to mutate actual selected profile. Two original standard URL assertions still explicitly inspect standard so their original expectations are preserved. No production oracle changed.",
+    "Test-only Record<string,unknown> capture cast to fixed tuple required unknown intermediate; corrected and strict typecheck passed.",
+    "Successor reconciliation correctly rejected old13+1 expected cardinality; updated to exact14+0 only after source joins, no original result rewrite."
+  ],
+  "independentReview": "OPEN: no native spawn/reviewer tool exposed; active/recent CONFIG reviewers0; no new independent output. Known unchanged direct helper EROFS not retried. Author tests are NOT independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allSemanticObligationsAccepted": false
+  },
+  "qualitySealedInputStoreImplemented": false,
+  "qualityProductiveBootImplemented": false,
+  "qualityActivationAllowed": false,
+  "fullC0C6Complete": false,
+  "remaining": [
+    "Genuine QB-R02 original producer/source/build/baseline/inputStore reservation and accounting/sealed snapshots/publication fence; BUDGET_SOURCE_RECEIPT_REQUIRED remains.",
+    "Coordinated sole-root/all-profile/schema/file-set/actual Nova receiving and delivery without denied-v10 promotion.",
+    "Other original source/semantic joins and original history/native/archive/fullC0-C6 independent gates remain OPEN."
+  ],
+  "externalInfrastructure": "UNCHANGED: owner Raven; isolated Linux Docker/UID1000/delegated writable cgroup plus sufficiently large genuinely root-trusted writable archive filesystem; resume when supplied.",
+  "writerLock": "same shared nonblocking exclusive lock held for mutations/checks/commits; released at process exit",
+  "sourceHashes": {
+    "config/components/prism-control.config.json": "da16215bd4148ac1c920cdd0612defd877163d52895ac4e521eccda4928d058b",
+    "charts/kubeclaw/files/pipeline/buster-topology.json": "1d23c3841af9bcf6e08f1bf7828844f7bd0c541ac8c305541f466077213e0604",
+    "charts/prism/files/pipeline/prism-topology.json": "31173d91cfcbb622f3c54549e4a16a7db9ee0389f666ad0e5fe13c567038fb9f",
+    "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts": "b117d6caf29214c86e8221ef87f1ff4d1bfeba0962d8c808b8829eb94c50df87",
+    "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "4f420ff27cf622e4ac2b5404fc7e360086f358268650515458e87673b63632af",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "c2ef83937b45bdf32e649f946ed81745a7c908526584d5d679d47bfcf6dfef28",
+    "skills/prism/control/session.ts": "95ea305a8e213c75a7130a05e2c37632f7f7b5987a6f0e0fdcf6a78a16b0e42f",
+    "skills/prism/server/control-config.ts": "6df39efc0ad13bfe095af8758d3f29a253eeb87d7036b1ac68aff2c7fd22a7fd",
+    "skills/prism/server/session-routes.ts": "fcd1a12c0cc164abc779ec1c76f967a784fd02e7f2adcde724cac91ffaa0a659",
+    "skills/prism/tests/corpus-ranking-policy.test.mts": "1bd3ee4ce6e573fc4dd0a6a660a49bd97fbae508dc4eedf937549e57e7d39dc9",
+    "skills/prism/tests/session-selected-policy.test.mts": "e38513aa03bfe84c09b58a3cbb45bff0da4e2f99276365efafdb8f1c08529f5d",
+    "tests/verification/reliability/control-http-config.test.mts": "b2658d2b40075baef54028274767bb1e05327bbb1aababd4faaf06ac705582c6",
+    "tests/verification/reliability/pipeline-role-readback.test.mjs": "f0586125881df9c3a1f764430948f94754f3fc2e19a58416c40c023d18d0639e",
+    "docs/review/remediation/config-final-reconciliation-20261016/reconcile-prism-control.py": "c63a8773cb892d9e17a838b01442a86c7e544545577d2a2ebc861b138bd28cf8",
+    "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py": "b6f81f22b4d9cbab412ff235e3b18b4118ca0c00ccc99595ededfb70e10a365b",
+    "docs/review/remediation/config-final-reconciliation-20261016/prism-control-successors.json": "d1e02acc22bda11c3fd41bae121fc14e834dfe7f5c2251e4d337a91cfd38a74f",
+    "docs/review/remediation/config-final-reconciliation-20261016/semantic-successors.json": "097070000c28555e14382735820867236d3e5a9718f49d6857bb18d9cb746975"
+  }
+}

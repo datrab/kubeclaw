@@ -1,0 +1,933 @@
+{
+  "head": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+  "candidateFrozenManifestUnchanged": true,
+  "checks": 31,
+  "guardFalsePositiveIsNotNegativePass": "runtime-history-drift",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-case-loss.input.json.gz",
+      "sha256": "5ba5628ee115131e29bd1899cb24ad197d4d5f7d6407d0e14b584348255cc7cc",
+      "bytes": 34064
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-case-loss.stderr",
+      "sha256": "7eeeac4e1814a3f3ef27154c7b5afecc410b7253148b8c8662ee20a899a71371",
+      "bytes": 1313
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-case-loss.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-coordinate-delete.input.json.gz",
+      "sha256": "ea867cde96de1dcae435aa7531cd1176ee8e73c951dc1962e0c77d8eb0a65491",
+      "bytes": 28627
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-coordinate-delete.stderr",
+      "sha256": "7fc65f3aa22d4af610362c3fcee6e12ad9853c58b383f971e0d1c95041eb8d1f",
+      "bytes": 1124
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-coordinate-delete.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-field-drift.input.json.gz",
+      "sha256": "0d129607a1f36021596d2fb6118bb2b6bf36da16f9190891ccca73cc7c072490",
+      "bytes": 34068
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-field-drift.stderr",
+      "sha256": "7fbffd223d42cbe64ad006e48cd9247786c40bc473c29755d6475599d9a35ce9",
+      "bytes": 1334
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-field-drift.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-member-delete.input.json.gz",
+      "sha256": "d49df9534f04164f337eb7cd0230a49b81f63c503ac796b962785a2fa4832f88",
+      "bytes": 34008
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-member-delete.stderr",
+      "sha256": "163db18d3fb3a5a7cdc190eff319586ea241549f8698b7c1aba49c2831120c8d",
+      "bytes": 1183
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-member-delete.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-member-duplicate.input.json.gz",
+      "sha256": "8a21efcf1d4bfaf863ffc4276c945047cf08f2dbe20810257e348a0d035e8c68",
+      "bytes": 34113
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-member-duplicate.stderr",
+      "sha256": "163db18d3fb3a5a7cdc190eff319586ea241549f8698b7c1aba49c2831120c8d",
+      "bytes": 1183
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-member-duplicate.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-owner-drift.input.json.gz",
+      "sha256": "4ada50c5e636d45211d66405977f6753b10c01ac39c838ddf48b42a06455f50f",
+      "bytes": 34077
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-owner-drift.stderr",
+      "sha256": "2cd5006179d17d6f92d93603678baa0f247dc7e5136393aabd68480154ad2d62",
+      "bytes": 1324
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-owner-drift.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-persisted-unrelated-profile-content.input.json.gz",
+      "sha256": "6cf966abb2fa670a463bfe187a87ec154e3a221ce11fb8fd9ae9f5692de4930a",
+      "bytes": 34057
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-persisted-unrelated-profile-content.stderr",
+      "sha256": "03d428e7bb8e60d5736542d75f26d93dd2d5dcababf27d4cf89a65c4eaa790e5",
+      "bytes": 1645
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-persisted-unrelated-profile-content.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-positive-after.input.json.gz",
+      "sha256": "6cf966abb2fa670a463bfe187a87ec154e3a221ce11fb8fd9ae9f5692de4930a",
+      "bytes": 34057
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-positive-after.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-positive-after.stdout",
+      "sha256": "a9429089a4192eb3dd3d7808f7b2cca160cd8713adff8690dcaff52a279c0c8a",
+      "bytes": 299
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-positive-before.input.json.gz",
+      "sha256": "6cf966abb2fa670a463bfe187a87ec154e3a221ce11fb8fd9ae9f5692de4930a",
+      "bytes": 34057
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-positive-before.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-positive-before.stdout",
+      "sha256": "a9429089a4192eb3dd3d7808f7b2cca160cd8713adff8690dcaff52a279c0c8a",
+      "bytes": 299
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-same-owner-wrong-field.input.json.gz",
+      "sha256": "ffaad3ca55db8685a416f1bf05d2d135f55ea7bd49d38403eade5e1b601787de",
+      "bytes": 34059
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-same-owner-wrong-field.stderr",
+      "sha256": "c64309cbe05eff7b7a30f6f70b4964af52d5a7bc487f2fa43a7c999090abe2f7",
+      "bytes": 1624
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-same-owner-wrong-field.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-unrelated-profile-content.json.gz",
+      "sha256": "cb83eaf2ce9d8b861ecbbf9311605f00cb951c4e8917e4ee4c1f8c357aa2010e",
+      "bytes": 24354
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-unrelated-profile.input.json.gz",
+      "sha256": "70f8efbd976d8ffb4d61e729d23ce31cd1ff1777c101646892aafa9809af817e",
+      "bytes": 34075
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-unrelated-profile.stderr",
+      "sha256": "c64309cbe05eff7b7a30f6f70b4964af52d5a7bc487f2fa43a7c999090abe2f7",
+      "bytes": 1624
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/01-unrelated-profile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-case-loss.input.json.gz",
+      "sha256": "2310be7f02b97af941d67d6094ddf6437722c9f6b9beee166bb9f8e44f7f2126",
+      "bytes": 31505
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-case-loss.stderr",
+      "sha256": "1ec23f1187129928080ff2ed6a3b58ca1c44fff4071ff3d91338e5441d19a330",
+      "bytes": 1313
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-case-loss.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-coordinate-delete.input.json.gz",
+      "sha256": "296b7c9b4357c6b282aa80afb47e273d0106f668bd9cee4bbd9eb997c74b5fa1",
+      "bytes": 31296
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-coordinate-delete.stderr",
+      "sha256": "7ebbff95e691024ea7c8d9e0d864a75664c6889f3c4da09f55a3f4773c53daff",
+      "bytes": 1124
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-coordinate-delete.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-field-drift.input.json.gz",
+      "sha256": "a525d86ca3ba275187fff40540be2d43a5804d6ed0314693321e96e192896a90",
+      "bytes": 31516
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-field-drift.stderr",
+      "sha256": "ca3de523a5641280939535c687e4cc72d40deb2b6343d2a21ef7705acf336b8f",
+      "bytes": 1334
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-field-drift.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-member-delete.input.json.gz",
+      "sha256": "a62a0bb1acbbcbe7c67eed9026eb5d83ddfbf79031d8ba0568da2847a13dd787",
+      "bytes": 31415
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-member-delete.stderr",
+      "sha256": "cf3662d007bfef6ba16a4fbb8e9c36cfa4a1e046cdf34cfcd3e0a7bfae8f351c",
+      "bytes": 1183
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-member-delete.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-member-duplicate.input.json.gz",
+      "sha256": "3f9edf780aebd30fe650cf773c227ff6da7770f071e03f7fea4e110b898d31c6",
+      "bytes": 31752
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-member-duplicate.stderr",
+      "sha256": "cf3662d007bfef6ba16a4fbb8e9c36cfa4a1e046cdf34cfcd3e0a7bfae8f351c",
+      "bytes": 1183
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-member-duplicate.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-owner-drift.input.json.gz",
+      "sha256": "c31436e606c5bd4e1f5491ab3b14c289a18ef723d01cf68bf0b8653cd0845a3b",
+      "bytes": 31519
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-owner-drift.stderr",
+      "sha256": "08151b0caeffd97c581d176d0633e07d3bb4007ef42c6bf10044ea0a48c65b5a",
+      "bytes": 1324
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-owner-drift.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-persisted-unrelated-profile-content.input.json.gz",
+      "sha256": "59633acf2fdb4b5d0be447db26f7dfaaee8b0d29dbd3bb5217436cb54459444d",
+      "bytes": 31512
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-persisted-unrelated-profile-content.stderr",
+      "sha256": "45e8e53d43e6e99352682e1cc06f3f3e355a54f1775ff9344a56a308f7d8b7d3",
+      "bytes": 1645
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-persisted-unrelated-profile-content.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-positive-after.input.json.gz",
+      "sha256": "59633acf2fdb4b5d0be447db26f7dfaaee8b0d29dbd3bb5217436cb54459444d",
+      "bytes": 31512
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-positive-after.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-positive-after.stdout",
+      "sha256": "ad625b36f9064f0b4c26aac2e4cdc75066fd2c6f87fc3e0ea39ec8ff3f9ddf83",
+      "bytes": 300
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-positive-before.input.json.gz",
+      "sha256": "59633acf2fdb4b5d0be447db26f7dfaaee8b0d29dbd3bb5217436cb54459444d",
+      "bytes": 31512
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-positive-before.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-positive-before.stdout",
+      "sha256": "ad625b36f9064f0b4c26aac2e4cdc75066fd2c6f87fc3e0ea39ec8ff3f9ddf83",
+      "bytes": 300
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-same-owner-wrong-field.input.json.gz",
+      "sha256": "f9944af33160fe2353e2f6a0c349921b56341c1dfd9b741b625c81d3a4a7d834",
+      "bytes": 31529
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-same-owner-wrong-field.stderr",
+      "sha256": "457d7e65b62f6301701d29f3d163d4f75adcb90089f2ec4fee1f98ac2ba0a1a9",
+      "bytes": 1616
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-same-owner-wrong-field.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-unrelated-profile-content.json.gz",
+      "sha256": "cb83eaf2ce9d8b861ecbbf9311605f00cb951c4e8917e4ee4c1f8c357aa2010e",
+      "bytes": 24354
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-unrelated-profile.input.json.gz",
+      "sha256": "723d3a374d17f033c4d15109d36f1f26ea91ffa5bb6703fe5b27c1b9b0ada6e0",
+      "bytes": 31520
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-unrelated-profile.stderr",
+      "sha256": "457d7e65b62f6301701d29f3d163d4f75adcb90089f2ec4fee1f98ac2ba0a1a9",
+      "bytes": 1616
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/02-unrelated-profile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/README.md",
+      "sha256": "6650bbaf74066dd19d7246d3017e9b368d04ee130cd770bf46ffb9409952b799",
+      "bytes": 6855
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/all17-independent-provenance.json",
+      "sha256": "d98b7d374e7ff2d1ab97cc29ebdb383d29cb466b17c0e690e102db21bfd0f37a",
+      "bytes": 4318
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-case-loss.input.json.gz",
+      "sha256": "5ba5628ee115131e29bd1899cb24ad197d4d5f7d6407d0e14b584348255cc7cc",
+      "bytes": 34064
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-case-loss.stderr",
+      "sha256": "2d569a95b083dfc63dfaf29e308a7d1a409b4e543370ccb2cd2c168381b90ea2",
+      "bytes": 1313
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-case-loss.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-coordinate-delete.input.json.gz",
+      "sha256": "ea867cde96de1dcae435aa7531cd1176ee8e73c951dc1962e0c77d8eb0a65491",
+      "bytes": 28627
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-coordinate-delete.stderr",
+      "sha256": "683f358dd06fd7e5f09ac230129fd91e1a7c18d4d8e2d260252cd452d6c10a21",
+      "bytes": 1124
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-coordinate-delete.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-field-drift.input.json.gz",
+      "sha256": "0d129607a1f36021596d2fb6118bb2b6bf36da16f9190891ccca73cc7c072490",
+      "bytes": 34068
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-field-drift.stderr",
+      "sha256": "e2a8f2d233e1380d9d02bf8fa88ef4e591370cfd5dcd12549c847ff48e08795d",
+      "bytes": 1334
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-field-drift.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-member-delete.input.json.gz",
+      "sha256": "d49df9534f04164f337eb7cd0230a49b81f63c503ac796b962785a2fa4832f88",
+      "bytes": 34008
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-member-delete.stderr",
+      "sha256": "e591884ede7455808773b5c7f7628086ca677d59e46ca84dfcdd79e194fb368a",
+      "bytes": 1183
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-member-delete.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-member-duplicate.input.json.gz",
+      "sha256": "8a21efcf1d4bfaf863ffc4276c945047cf08f2dbe20810257e348a0d035e8c68",
+      "bytes": 34113
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-member-duplicate.stderr",
+      "sha256": "e591884ede7455808773b5c7f7628086ca677d59e46ca84dfcdd79e194fb368a",
+      "bytes": 1183
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-member-duplicate.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-owner-drift.input.json.gz",
+      "sha256": "4ada50c5e636d45211d66405977f6753b10c01ac39c838ddf48b42a06455f50f",
+      "bytes": 34077
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-owner-drift.stderr",
+      "sha256": "2091e0612d4206dec46a9d10020b71b8da4514ffc1023e45e29527230daeba33",
+      "bytes": 1324
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-owner-drift.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-persisted-unrelated-profile-content.input.json.gz",
+      "sha256": "6cf966abb2fa670a463bfe187a87ec154e3a221ce11fb8fd9ae9f5692de4930a",
+      "bytes": 34057
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-persisted-unrelated-profile-content.stderr",
+      "sha256": "4124b4013eda8ef5944e01ba6f30ed1a7cbdf3ea50990f1d1d4b1cfbce87b485",
+      "bytes": 1645
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-persisted-unrelated-profile-content.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-positive-after.input.json.gz",
+      "sha256": "6cf966abb2fa670a463bfe187a87ec154e3a221ce11fb8fd9ae9f5692de4930a",
+      "bytes": 34057
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-positive-after.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-positive-after.stdout",
+      "sha256": "a9429089a4192eb3dd3d7808f7b2cca160cd8713adff8690dcaff52a279c0c8a",
+      "bytes": 299
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-positive-before.input.json.gz",
+      "sha256": "6cf966abb2fa670a463bfe187a87ec154e3a221ce11fb8fd9ae9f5692de4930a",
+      "bytes": 34057
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-positive-before.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-positive-before.stdout",
+      "sha256": "a9429089a4192eb3dd3d7808f7b2cca160cd8713adff8690dcaff52a279c0c8a",
+      "bytes": 299
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-same-owner-wrong-field.input.json.gz",
+      "sha256": "ffaad3ca55db8685a416f1bf05d2d135f55ea7bd49d38403eade5e1b601787de",
+      "bytes": 34059
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-same-owner-wrong-field.stderr",
+      "sha256": "d2f9233926f0993c23131085c4655599db590830e68064ab6ff4327261fa3035",
+      "bytes": 1624
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-same-owner-wrong-field.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-unrelated-profile-content.json.gz",
+      "sha256": "cb83eaf2ce9d8b861ecbbf9311605f00cb951c4e8917e4ee4c1f8c357aa2010e",
+      "bytes": 24354
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-unrelated-profile.input.json.gz",
+      "sha256": "70f8efbd976d8ffb4d61e729d23ce31cd1ff1777c101646892aafa9809af817e",
+      "bytes": 34075
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-unrelated-profile.stderr",
+      "sha256": "d2f9233926f0993c23131085c4655599db590830e68064ab6ff4327261fa3035",
+      "bytes": 1624
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/01-unrelated-profile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-case-loss.input.json.gz",
+      "sha256": "2310be7f02b97af941d67d6094ddf6437722c9f6b9beee166bb9f8e44f7f2126",
+      "bytes": 31505
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-case-loss.stderr",
+      "sha256": "708a44bee13fa3b20a831a58fd8c11bb38420534d7e9ae97579017ca0b39f7a3",
+      "bytes": 1313
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-case-loss.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-coordinate-delete.input.json.gz",
+      "sha256": "296b7c9b4357c6b282aa80afb47e273d0106f668bd9cee4bbd9eb997c74b5fa1",
+      "bytes": 31296
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-coordinate-delete.stderr",
+      "sha256": "6a1d2aa826d4ac65cf7d8da8444eacea39131b3f362ade1bad6a21de8232eadc",
+      "bytes": 1124
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-coordinate-delete.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-field-drift.input.json.gz",
+      "sha256": "a525d86ca3ba275187fff40540be2d43a5804d6ed0314693321e96e192896a90",
+      "bytes": 31516
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-field-drift.stderr",
+      "sha256": "e35a1783b308cf7478ad4a59aa2de01ab52a9924728c8c26a594130ae207bd5b",
+      "bytes": 1334
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-field-drift.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-member-delete.input.json.gz",
+      "sha256": "a62a0bb1acbbcbe7c67eed9026eb5d83ddfbf79031d8ba0568da2847a13dd787",
+      "bytes": 31415
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-member-delete.stderr",
+      "sha256": "c68a358bf8084d81e5939ac1ce3df8231e1bb694f6f69399f159551a75673ab5",
+      "bytes": 1183
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-member-delete.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-member-duplicate.input.json.gz",
+      "sha256": "3f9edf780aebd30fe650cf773c227ff6da7770f071e03f7fea4e110b898d31c6",
+      "bytes": 31752
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-member-duplicate.stderr",
+      "sha256": "c68a358bf8084d81e5939ac1ce3df8231e1bb694f6f69399f159551a75673ab5",
+      "bytes": 1183
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-member-duplicate.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-owner-drift.input.json.gz",
+      "sha256": "c31436e606c5bd4e1f5491ab3b14c289a18ef723d01cf68bf0b8653cd0845a3b",
+      "bytes": 31519
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-owner-drift.stderr",
+      "sha256": "ec9f12586f7bb906090894b81b90137c608a4b74c5fe7b2ee0dc832b50086c73",
+      "bytes": 1324
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-owner-drift.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-persisted-unrelated-profile-content.input.json.gz",
+      "sha256": "59633acf2fdb4b5d0be447db26f7dfaaee8b0d29dbd3bb5217436cb54459444d",
+      "bytes": 31512
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-persisted-unrelated-profile-content.stderr",
+      "sha256": "07548ea1a38d28a4960a5c4f3471fe9cc8ff9c616c8a88b7d81a93a1a4739abb",
+      "bytes": 1645
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-persisted-unrelated-profile-content.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-positive-after.input.json.gz",
+      "sha256": "59633acf2fdb4b5d0be447db26f7dfaaee8b0d29dbd3bb5217436cb54459444d",
+      "bytes": 31512
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-positive-after.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-positive-after.stdout",
+      "sha256": "ad625b36f9064f0b4c26aac2e4cdc75066fd2c6f87fc3e0ea39ec8ff3f9ddf83",
+      "bytes": 300
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-positive-before.input.json.gz",
+      "sha256": "59633acf2fdb4b5d0be447db26f7dfaaee8b0d29dbd3bb5217436cb54459444d",
+      "bytes": 31512
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-positive-before.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-positive-before.stdout",
+      "sha256": "ad625b36f9064f0b4c26aac2e4cdc75066fd2c6f87fc3e0ea39ec8ff3f9ddf83",
+      "bytes": 300
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-same-owner-wrong-field.input.json.gz",
+      "sha256": "f9944af33160fe2353e2f6a0c349921b56341c1dfd9b741b625c81d3a4a7d834",
+      "bytes": 31529
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-same-owner-wrong-field.stderr",
+      "sha256": "18c6e1020b9c7fe21a07763e8b500dc8d31e838cdd471a8f062e43601b6df051",
+      "bytes": 1616
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-same-owner-wrong-field.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-unrelated-profile-content.json.gz",
+      "sha256": "cb83eaf2ce9d8b861ecbbf9311605f00cb951c4e8917e4ee4c1f8c357aa2010e",
+      "bytes": 24354
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-unrelated-profile.input.json.gz",
+      "sha256": "723d3a374d17f033c4d15109d36f1f26ea91ffa5bb6703fe5b27c1b9b0ada6e0",
+      "bytes": 31520
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-unrelated-profile.stderr",
+      "sha256": "18c6e1020b9c7fe21a07763e8b500dc8d31e838cdd471a8f062e43601b6df051",
+      "bytes": 1616
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/02-unrelated-profile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/all17-independent-provenance.json",
+      "sha256": "d98b7d374e7ff2d1ab97cc29ebdb383d29cb466b17c0e690e102db21bfd0f37a",
+      "bytes": 4318
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/harness-failure.txt",
+      "sha256": "b7ffd47293973172c028040eb713f005c11a504065e7630deabae097ecb574b6",
+      "bytes": 446
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/input-identities.json",
+      "sha256": "79b54ab7b43be61d4bccdc5b7b08e5477d54783abc138722f99f0766e95d4c39",
+      "bytes": 392
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/native-conservation.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/native-conservation.stdout",
+      "sha256": "066a5ee7cf6fd65a65481801b38da54af129d111495e8824113469b38eee4a14",
+      "bytes": 625
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/root-structural.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/root-structural.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/runtime-history-drift.inventory.json.gz",
+      "sha256": "8e162889d781dac5aaf41af05314576a4921734c31439191de0bcd3593a291d4",
+      "bytes": 2273678
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/runtime-history-drift.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/runtime-history-drift.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/runtime-row-delete.inventory.json.gz",
+      "sha256": "4e10696cf6c17d4768d4535784f65658c173980dd4ac74920ed5bffa7bcc5467",
+      "bytes": 2272716
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/runtime-row-delete.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/attempt1/runtime-row-delete.stdout",
+      "sha256": "df528b39bf36bae92e597e9ea7ae2b208d08d2c4add3bd83fcfcc01e93eb629c",
+      "bytes": 1179
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/audit-components.py",
+      "sha256": "dc2e3507612d1316241d59a53899c48949d9cb693c0f0c054a8aa96121d1a4c6",
+      "bytes": 5550
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/audit-components.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/audit-components.stdout",
+      "sha256": "21c87c4785562e6408ba6f0a589d338c99900ba32f4837739f2915bf35da7124",
+      "bytes": 378
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/checks.json",
+      "sha256": "cd515b36de3a523d150677753fd28ed3eb25bf1d0ebc903c21ed27a989762595",
+      "bytes": 12567
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/findings.json",
+      "sha256": "cfd1add4353c2202dba877c9c5b0b7a2947ba78dc337b1c7857eb5bb61d515f9",
+      "bytes": 2219
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/input-identities.json",
+      "sha256": "ebc0207c67a18750cfc276f4a379ce9669d9fb3b671528093ef9fd5d2173d9e3",
+      "bytes": 392
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/native-conservation.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/native-conservation.stdout",
+      "sha256": "066a5ee7cf6fd65a65481801b38da54af129d111495e8824113469b38eee4a14",
+      "bytes": 625
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/native-spec-delete.matrix.json.gz",
+      "sha256": "0961549105e47130ae51db20a19a75836cc0d54abd1d47a0bc2d55d5c34954a3",
+      "bytes": 4133433
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/native-spec-delete.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/native-spec-delete.stdout",
+      "sha256": "81251623eede75564bed47decbfe1912ed5dd069fb336907fbd11716dee92973",
+      "bytes": 435
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/recheck.py",
+      "sha256": "0ca8773a6fbe8c600f15f2127586f0b798a610c0082c344abc8dd6a4a4d568a8",
+      "bytes": 11936
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/recheck.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/recheck.stdout",
+      "sha256": "d582908958837e98b7e5454eb258982096e97bddd5bb97aba72f7c5f61406db1",
+      "bytes": 107
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/recovery-identities.json",
+      "sha256": "0abec16bdf5e530cdd0fea0c709e2cacdb88b5820a277ae2efd5041dde2cd52f",
+      "bytes": 327
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-structural.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/root-structural.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-drop-correction.json.gz",
+      "sha256": "8f672cebf13cb477454697bd059faa0770a0feb4d6e334c9d70d94b3d5e80b1a",
+      "bytes": 997700
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-drop-correction.stderr",
+      "sha256": "b0f6005b1fc9ff2b5929b88815b121b480d0386d36a7bd0af21289e5813d9e1d",
+      "bytes": 349
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-drop-correction.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-original-hash.json.gz",
+      "sha256": "1e6734987ad3a4f4c19204c4e44e9d21c6c7ba893390a4e3f51fa20bdb3f3dad",
+      "bytes": 997765
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-original-hash.stderr",
+      "sha256": "09f84ef3018b5a1f7a32badcf34a25c9b396bad61865aae998b74276a818f2cf",
+      "bytes": 419
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-original-hash.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-restored-positive.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-restored-positive.stdout",
+      "sha256": "40187b5fb682fbebbb2dbb3876e066830b409eb3a21bf5409b39483af2cca769",
+      "bytes": 784
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-unrelated-row.json.gz",
+      "sha256": "f0f00b1b81678d6af7583118beb1e51feb154db95678ec9f7892cd3dca8dc2f6",
+      "bytes": 997767
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-unrelated-row.stderr",
+      "sha256": "fb2e2ac2916674f7294460ad0ade8ca1d3bce99d8b263a1ef8aa2fd1ae4d4d59",
+      "bytes": 361
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-unrelated-row.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-history-drift.inventory.json.gz",
+      "sha256": "8e162889d781dac5aaf41af05314576a4921734c31439191de0bcd3593a291d4",
+      "bytes": 2273678
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-history-drift.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-history-drift.stdout",
+      "sha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-row-delete.inventory.json.gz",
+      "sha256": "4e10696cf6c17d4768d4535784f65658c173980dd4ac74920ed5bffa7bcc5467",
+      "bytes": 2272716
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-row-delete.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-row-delete.stdout",
+      "sha256": "df528b39bf36bae92e597e9ea7ae2b208d08d2c4add3bd83fcfcc01e93eb629c",
+      "bytes": 1179
+    }
+  ]
+}

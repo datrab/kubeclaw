@@ -1,0 +1,11 @@
+✔ real terminal approval projects Wait bytes, uses actual Core-owned adapter reader and keeps late duplicate identity (12740.059114ms)
+✔ retained original prefix mutation, truncation and same-byte inode replacement fail without rewriting the projected Wait (10693.196764ms)
+✔ original projected Wait resolves through actual Core adapter despite a relocated current B wait root (6799.120605ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30948.764708

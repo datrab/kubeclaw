@@ -1,0 +1,17 @@
+[
+  {
+    "command": "node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs",
+    "exitCode": 0,
+    "log": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-compiler-closeout-20261016/review-final-remaining-0.txt"
+  },
+  {
+    "command": "node tests/package-boundary.test.mjs",
+    "exitCode": 0,
+    "log": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-compiler-closeout-20261016/review-final-remaining-1.txt"
+  },
+  {
+    "command": "node tests/remediation.test.mjs",
+    "exitCode": 0,
+    "log": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-compiler-closeout-20261016/review-final-remaining-2.txt"
+  }
+]

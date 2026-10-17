@@ -1,0 +1,284 @@
+{
+  "axe": {
+    "manifest": {
+      "id": "kubeclaw.axe",
+      "apiVersion": "pipeline-plugin-v2",
+      "packageVersion": "1.0.0",
+      "stages": [],
+      "observers": [],
+      "adapters": [],
+      "testProviders": [
+        {
+          "id": "axe",
+          "contractId": "kubeclaw.axe@1",
+          "kind": "test",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "browser.axe"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    "sourcePackageDigest": "sha256:676c664a3378ab87ba99fb72bd160814a788579fb72c0daccb02b32cbeb8a29b",
+    "manifestSha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7",
+    "currentSchemaSha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d",
+    "sourceModuleSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+    "targetOwnerSchemaSha256": "61075591db9551653910a6a7244a41eaf610c2aa8f598d17e4b3650cbff1debb",
+    "qualification": "Actual local source package bytes, NOT installed roster/native browser/modules/executable/trust facts"
+  },
+  "lighthouse": {
+    "manifest": {
+      "id": "kubeclaw.lighthouse",
+      "apiVersion": "pipeline-plugin-v2",
+      "packageVersion": "1.0.0",
+      "stages": [],
+      "observers": [],
+      "adapters": [],
+      "testProviders": [
+        {
+          "id": "lighthouse",
+          "contractId": "kubeclaw.lighthouse@1",
+          "kind": "test",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "browser.lighthouse"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onFail": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    "sourcePackageDigest": "sha256:c0b8f848ff18b35ee217246d6e38f2c70c1a49c9d9b81c8d8fb9a41261ae7d9c",
+    "manifestSha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1",
+    "currentSchemaSha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958",
+    "sourceModuleSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+    "targetOwnerSchemaSha256": "df0b5256208f9eba4c23b30568cb05f89d42dad3fd90e98e9ab2d5dfc5e6dd1b",
+    "qualification": "Actual local source package bytes, NOT installed roster/native browser/modules/executable/trust facts"
+  },
+  "playwright": {
+    "manifest": {
+      "id": "kubeclaw.playwright",
+      "apiVersion": "pipeline-plugin-v2",
+      "packageVersion": "1.0.0",
+      "stages": [],
+      "observers": [],
+      "adapters": [],
+      "testProviders": [
+        {
+          "id": "playwright",
+          "contractId": "kubeclaw.playwright@1",
+          "kind": "test",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "browser.playwright"
+          ],
+          "retrySafe": false,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    "sourcePackageDigest": "sha256:6a57e70b6e95041f7c09ca4f397d36a8414541f7e7b4de8a89e51c737fe6a7ef",
+    "manifestSha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9",
+    "currentSchemaSha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977",
+    "sourceModuleSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+    "targetOwnerSchemaSha256": "b5b3e59b42d722a7d1e6767447f41777d41a62f6c940bb7335d35335d262a100",
+    "qualification": "Actual local source package bytes, NOT installed roster/native browser/modules/executable/trust facts"
+  },
+  "visual": {
+    "manifest": {
+      "id": "kubeclaw.visual",
+      "apiVersion": "pipeline-plugin-v2",
+      "packageVersion": "1.0.0",
+      "stages": [],
+      "observers": [],
+      "adapters": [],
+      "testProviders": [
+        {
+          "id": "visual",
+          "contractId": "kubeclaw.visual@1",
+          "kind": "test",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "browser.visual"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    "sourcePackageDigest": "sha256:bad99128dd2f6434a4fe8b96969ea1053ddd43eae745aefb997ee9de5ff389e4",
+    "manifestSha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90",
+    "currentSchemaSha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da",
+    "sourceModuleSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+    "targetOwnerSchemaSha256": "e682efc481dc65e4e19b273f3d31b5c99d16d7bff474ce554c54878543465ff3",
+    "qualification": "Actual local source package bytes, NOT installed roster/native browser/modules/executable/trust facts"
+  }
+}

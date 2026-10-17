@@ -1,0 +1,58 @@
+{
+  "verdict": "VERIFIED at bounded WCR04 definition scope",
+  "materialFindings": [],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "e64030186456163b001cd0619a64b635a67a71f6ce9812b4a1250a89e18859b6",
+      "bytes": 285
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "6f94534a83c11da3d7093bf67d35ad46471f144c8ef4d2a4f50e7661acce6b7a",
+      "bytes": 8292
+    },
+    {
+      "path": "commands-and-exits.json",
+      "sha256": "984aac5359acb33026ae0789e307b879baf412d7d2a619ce61a5663d5fa415f3",
+      "bytes": 1137
+    },
+    {
+      "path": "end-identities.json",
+      "sha256": "1932b8d8607b240b173e862c4c8a09d899b512e89fc6343afae3e872b42ecd1e",
+      "bytes": 31109
+    },
+    {
+      "path": "independent-conservation.json",
+      "sha256": "32f3506034f004f1879b742845741d2a7d79da919da05ae1088683df26e087c9",
+      "bytes": 7911
+    },
+    {
+      "path": "independent-pair-joins.json",
+      "sha256": "8e040c93eb3b6421eb9e4559eba0c2b7d89faac8ec539f0bebaa7880e580036b",
+      "bytes": 2582
+    },
+    {
+      "path": "inspection-navigation-error.txt",
+      "sha256": "69c15b7310e7d2d91622b45194588013937983e3862cf01793df8c906fea32da",
+      "bytes": 217
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "5eeb84f7db58bd37ba99ff25159fe579048009987dfd1fefc7381a64deca9307",
+      "bytes": 31713
+    },
+    {
+      "path": "replay-definition.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "replay-definition.stdout",
+      "sha256": "bd240126aca37125745cc2817d5bd9e8b0ff1bf152386f4f020c1cd9bc0cccd2",
+      "bytes": 459
+    }
+  ],
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

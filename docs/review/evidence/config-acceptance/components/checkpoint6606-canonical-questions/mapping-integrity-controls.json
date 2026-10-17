@@ -1,0 +1,63 @@
+{
+  "scope": "author documentation integrity/conservation guards, NOT independent semantic review or F-MUT",
+  "observations": [
+    {
+      "id": "positive-exact-13-fields-27-cases",
+      "passed": true
+    },
+    {
+      "id": "negative-case-loss",
+      "passed": true,
+      "intendedReject": "original case missing"
+    },
+    {
+      "id": "negative-requirement-loss",
+      "passed": true,
+      "intendedReject": "original requirement loss"
+    },
+    {
+      "id": "negative-inline-contract-loss",
+      "passed": true,
+      "intendedReject": "original case contract loss"
+    },
+    {
+      "id": "negative-field-case-link-loss",
+      "passed": true,
+      "intendedReject": "missing field/case projection"
+    },
+    {
+      "id": "negative-B-witness-mismatch",
+      "passed": true,
+      "intendedReject": "witness/profile contradiction"
+    },
+    {
+      "id": "negative-acceptance-promotion",
+      "passed": true,
+      "intendedReject": "author acceptance"
+    },
+    {
+      "id": "restored-positive",
+      "passed": true
+    },
+    {
+      "id": "whole173-source-1353-marker-exact-membership-and-current-identities",
+      "passed": true,
+      "notSemanticClosure": true
+    },
+    {
+      "id": "193-committed-input-identities-not-rewritten",
+      "passed": true
+    },
+    {
+      "id": "verified97-55-plus-receipts-Core13-committed-inputs-unchanged",
+      "passed": true,
+      "files": 157
+    }
+  ],
+  "rows": 13,
+  "cases": 27,
+  "futureCasesNotRun": 25,
+  "actualNarrowCurrentCases": 2,
+  "remainingExactMarkerLinks": 808,
+  "sourceCountsNeverClosure": true
+}

@@ -1,0 +1,67 @@
+{
+  "qualification": "Unchanged Gateway02 exact elapsed/source admission controls only, no native timer/transcript/provider effect",
+  "observations": [
+    {
+      "name": "consumer elapsed admission beyond2^31 age below",
+      "pass": true
+    },
+    {
+      "name": "consumer elapsed admission beyond2^31 exact threshold",
+      "pass": true
+    },
+    {
+      "name": "consumer elapsed admission zero disables",
+      "pass": true
+    },
+    {
+      "name": "consumer elapsed admission no last touch zero sentinel",
+      "pass": true
+    },
+    {
+      "name": "consumer elapsed admission off mode",
+      "pass": true
+    },
+    {
+      "name": "consumer elapsed admission ineligible no guard",
+      "pass": true
+    },
+    {
+      "name": "consumer elapsed admission no new rounds",
+      "pass": true
+    },
+    {
+      "name": "consumer elapsed admission clock regression native not expired",
+      "pass": true
+    },
+    {
+      "name": "consumer elapsed admission safe duration beyond Date maximum comparison not timer",
+      "pass": true
+    },
+    {
+      "name": "consumer timestamp/duration rejection nonfinite now",
+      "pass": true,
+      "error": "TIMESTAMP_REPRESENTABILITY"
+    },
+    {
+      "name": "consumer timestamp/duration rejection Date overflow",
+      "pass": true,
+      "error": "TIMESTAMP_REPRESENTABILITY"
+    },
+    {
+      "name": "consumer timestamp/duration rejection subtraction precision overflow",
+      "pass": true,
+      "error": "ELAPSED_SUBTRACTION_NOT_REPRESENTABLE"
+    },
+    {
+      "name": "consumer timestamp/duration rejection negative parsed duration",
+      "pass": true,
+      "error": "PARSED_DURATION_DOMAIN"
+    },
+    {
+      "name": "actual cache source no timer and malformed native fallback remains counterexample",
+      "pass": true,
+      "detail": "target exact parse rejects before native fallback; elapsed guard proof only, provider/transcript/native effects unrun"
+    }
+  ],
+  "productiveActions": 0
+}

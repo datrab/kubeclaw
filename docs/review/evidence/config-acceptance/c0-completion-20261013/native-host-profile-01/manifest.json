@@ -1,0 +1,399 @@
+{
+  "qualification": "bounded original19 native-host source/receiving author definition only; prospective same-existing-owner current-v8 extension unaccepted; fresh independent material review required; no native/implementation/globalC0 acceptance",
+  "frozenUTC": "2026-10-14T05:07:02.557982+00:00",
+  "files": [
+    {
+      "relativePath": "README.md",
+      "sha256": "5618e853bb6eade5fbe0943f0a87c92ea825817601906e07e0edbd6107245eb6",
+      "bytes": 9218
+    },
+    {
+      "relativePath": "SOURCE-RECEIVING-CONTRACT.md",
+      "sha256": "6a73b0a2ad6b0417cd0f5d48cc906ca4c2cd124cc75d56ccb182c92f1b7f0573",
+      "bytes": 16308
+    },
+    {
+      "relativePath": "author-host-definition.py",
+      "sha256": "12337cd556499ea0f30f1d47c3ecb1d9281cc999b22dc19c26e9d5635267e812",
+      "bytes": 9067
+    },
+    {
+      "relativePath": "author.stdout.json",
+      "sha256": "ccef65c5054a56ab8f4deed434b679787255db784466c2d93bb5337ad70a2c81",
+      "bytes": 207
+    },
+    {
+      "relativePath": "check-host-definition.mjs",
+      "sha256": "25931a1ef4e3e033ca0db513265424e59a9ddc293c571550de42439611c9f382",
+      "bytes": 16281
+    },
+    {
+      "relativePath": "commands-and-exits.json",
+      "sha256": "ad9576b69a816b19c9a3e630bcf6f1b047bb2b584e1aad64bf90d9616a9862c3",
+      "bytes": 5659
+    },
+    {
+      "relativePath": "conservation-and-end-identities.json",
+      "sha256": "9db6a76fc6a329f9b94353c75339fb1ed250259d46bf50e6b0fc1f09235e2fd2",
+      "bytes": 705343
+    },
+    {
+      "relativePath": "current-source-and-inactive-template.json",
+      "sha256": "f686ddbe9516f0b780f2748f902ba95d14640b8729f9eced4af413a3ebf19281",
+      "bytes": 1805
+    },
+    {
+      "relativePath": "extension-and-cases.py",
+      "sha256": "c54ec39ae7b08e5221cd493b8db6a9e44fcbad85ae52da7793f9f9ede030a001",
+      "bytes": 12822
+    },
+    {
+      "relativePath": "field19-physical-contracts.json",
+      "sha256": "a1b56ff521eeb91447b064961f196d83ef4a9905c326481ebf1dd122685c9af8",
+      "bytes": 74299
+    },
+    {
+      "relativePath": "freeze-conservation.py",
+      "sha256": "04808ace042439656bf9edd9b89dc74bf470556e445965b12bda7a12ce232e0b",
+      "bytes": 3664
+    },
+    {
+      "relativePath": "future19-source-case-plans.json",
+      "sha256": "81c43758cd37444cc99e39e883f7a7370f98b38721b38b943801dc45090e3a79",
+      "bytes": 79240
+    },
+    {
+      "relativePath": "native-host-owner.schema.json",
+      "sha256": "d123d2508cb5d50ea507e3390e17b013ee11f262e696e482d7907d5a63d6bfd5",
+      "bytes": 6053
+    },
+    {
+      "relativePath": "native-host-policy.schema.json",
+      "sha256": "0cbf8b3313dafbed050ada4a994edb62ec2e78a0312fd1d1181e8b7ce9a691be",
+      "bytes": 4472
+    },
+    {
+      "relativePath": "native-host-selection.proposed.schema.json",
+      "sha256": "c7b5ab18e281404f026d20f1a147f863cfa340a5836a4bd3f124f92b112f8923",
+      "bytes": 656
+    },
+    {
+      "relativePath": "original-shared-case-bodies.json",
+      "sha256": "f24df1443c3b27fca324e00f569b9afbf272af4cf3069ea325b259c89e44ab65",
+      "bytes": 4660
+    },
+    {
+      "relativePath": "original19-field-bodies.json",
+      "sha256": "26a9f9e0a2bdb744af6560aed3d9cdce17b5825bd624d5cb9e3dc30fbb3e8f66",
+      "bytes": 139236
+    },
+    {
+      "relativePath": "pure-source-projection-views.json",
+      "sha256": "837a7085d19bf5cf267e2e4ade7a9b8ec008fda76d1612c57dd79dd1ab8153a0",
+      "bytes": 17140
+    },
+    {
+      "relativePath": "raw/attempt1-owner.schema.json",
+      "sha256": "a1b4ce4dff8930f7f5ad12a489d332dd10bfd50c6bc42b2c6cf091e8ed170f35",
+      "bytes": 6501
+    },
+    {
+      "relativePath": "raw/attempt1-policy.schema.json",
+      "sha256": "8bd78494dbc766f105391beed2888cf20c65a3cff82529997b2b8c2d879a8588",
+      "bytes": 4848
+    },
+    {
+      "relativePath": "raw/check-01.json",
+      "sha256": "f5c111f5dc6be435ba5a441c771c3614f6330886d11b9720563b0be708d6451c",
+      "bytes": 103915
+    },
+    {
+      "relativePath": "raw/check-01.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "relativePath": "raw/check-02.json",
+      "sha256": "d38b4a5f0fc604a9bf0737abea47a8a4c27a54090bda0b408efb617d6adc660a",
+      "bytes": 56750
+    },
+    {
+      "relativePath": "raw/check-02.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "relativePath": "raw/check-03.json",
+      "sha256": "32b36373ad5ec1381e36180acbb279983a7c3b2add1c6241beeb596ee1c71cc3",
+      "bytes": 65329
+    },
+    {
+      "relativePath": "raw/check-03.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "relativePath": "raw/check-04.json",
+      "sha256": "3aada432b8164cdbfbae1b707db28f7b6f4d087e13f834fab707b3b657bc18e7",
+      "bytes": 65786
+    },
+    {
+      "relativePath": "raw/check-04.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "relativePath": "read-identities.json",
+      "sha256": "26945d03c052711cbc9fe12ae5aa7f07ff28b2a88a275862311b686df061d673",
+      "bytes": 12252
+    },
+    {
+      "relativePath": "role-source-coupling.json",
+      "sha256": "d8d58277fec725b7198168c67e4daafaeceb2127201a1ab463fab4e77f3b72c4",
+      "bytes": 2866
+    },
+    {
+      "relativePath": "same-existing-owner.proposed.json",
+      "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+      "bytes": 3375
+    },
+    {
+      "relativePath": "shared-case-supplements.json",
+      "sha256": "081193d9610b6daa395f5a4c7cea5922a6dd9b5ce6e260e080b8b2214a3b3533",
+      "bytes": 177311
+    },
+    {
+      "relativePath": "shared-v8-native-host-extension.proposed.json",
+      "sha256": "e5ecf0f9da934eddc670f280e64ae04e2eee16dce49777c6afbe819d081074fc",
+      "bytes": 239805
+    },
+    {
+      "relativePath": "software-native-source-binding.json",
+      "sha256": "145936ff70c41429bc164125e605d638f7e1cb4ab10160c9e503fb37dda01e21",
+      "bytes": 849
+    },
+    {
+      "relativePath": "source-current/charts/kubeclaw/templates/_buster-native.tpl",
+      "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "bytes": 2737
+    },
+    {
+      "relativePath": "source-current/charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "bytes": 85514
+    },
+    {
+      "relativePath": "source-current/charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "bytes": 14944
+    },
+    {
+      "relativePath": "source-current/gitops/production/overlays/prism-ax41.yaml",
+      "sha256": "df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401",
+      "bytes": 311
+    },
+    {
+      "relativePath": "source-current/my-values/infra/native-worker-pools-ax41.yaml",
+      "sha256": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+      "bytes": 851
+    },
+    {
+      "relativePath": "source-current/my-values/infra/native-worker-pools.yaml",
+      "sha256": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888",
+      "bytes": 831
+    },
+    {
+      "relativePath": "source-current/node_modules/ajv/dist/2020.js",
+      "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "bytes": 2894
+    },
+    {
+      "relativePath": "source-current/node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "bytes": 4405
+    },
+    {
+      "relativePath": "source-current/node_modules/yaml/package.json",
+      "sha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "bytes": 3254
+    },
+    {
+      "relativePath": "source-current/scripts/activate-native-worker-ax41.sh",
+      "sha256": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "bytes": 6676
+    },
+    {
+      "relativePath": "source-current/scripts/build-native-worker-nri.mjs",
+      "sha256": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "bytes": 1185
+    },
+    {
+      "relativePath": "source-current/scripts/gitops.mjs",
+      "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+      "bytes": 15348
+    },
+    {
+      "relativePath": "source-current/scripts/install/README.md",
+      "sha256": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7",
+      "bytes": 7282
+    },
+    {
+      "relativePath": "source-current/scripts/install-native-worker-pools-stage.sh",
+      "sha256": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a",
+      "bytes": 3637
+    },
+    {
+      "relativePath": "source-current/scripts/native-buster-deployment-preflight.mjs",
+      "sha256": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+      "bytes": 3250
+    },
+    {
+      "relativePath": "source-current/scripts/native-worker-deployment-preflight.mjs",
+      "sha256": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+      "bytes": 3236
+    },
+    {
+      "relativePath": "source-current/scripts/native-worker-node-capacity.mjs",
+      "sha256": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+      "bytes": 4800
+    },
+    {
+      "relativePath": "source-current/scripts/native-worker-node-policy.mjs",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "bytes": 3383
+    },
+    {
+      "relativePath": "source-current/scripts/native-worker-node-preflight.mjs",
+      "sha256": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "bytes": 3497
+    },
+    {
+      "relativePath": "source-current/scripts/prepare-ax41-buster-browser.sh",
+      "sha256": "13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8",
+      "bytes": 1484
+    },
+    {
+      "relativePath": "source-current/scripts/prepare-native-worker-pools.mjs",
+      "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "bytes": 9521
+    },
+    {
+      "relativePath": "source-current/scripts/render-native-worker-node.mjs",
+      "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+      "bytes": 3979
+    },
+    {
+      "relativePath": "source-current/scripts/repair-native-worker-pools-lifetime.sh",
+      "sha256": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
+      "bytes": 2949
+    },
+    {
+      "relativePath": "source-current/skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "bytes": 4936
+    },
+    {
+      "relativePath": "source-current/skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "bytes": 5244
+    },
+    {
+      "relativePath": "source-current/skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "bytes": 3841
+    },
+    {
+      "relativePath": "source-current/skills/prism/config/resource-policy.ts",
+      "sha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "bytes": 1300
+    },
+    {
+      "relativePath": "source-current/skills/prism/server/worker.ts",
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "bytes": 2915
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-hierarchy-events.ts",
+      "sha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "bytes": 1517
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-node-identity.ts",
+      "sha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "bytes": 923
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-owned-children.ts",
+      "sha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "bytes": 4305
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-pool-policy.ts",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "bytes": 2508
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-resource-observation.ts",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "bytes": 3048
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-resource-pool.ts",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "bytes": 3100
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-resource-scope.ts",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "bytes": 9294
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-runtime-identity.ts",
+      "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "bytes": 1345
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/native-worker-launcher.c",
+      "sha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "bytes": 5297
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/ownership-store.ts",
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "bytes": 11075
+    },
+    {
+      "relativePath": "source-current/skills/worker/core/worker/resource-reservations.ts",
+      "sha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "bytes": 1474
+    },
+    {
+      "relativePath": "source-current/tools/native-worker-nri/go.mod",
+      "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "bytes": 1039
+    },
+    {
+      "relativePath": "source-current/tools/native-worker-nri/main.go",
+      "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+      "bytes": 5682
+    },
+    {
+      "relativePath": "source-current/versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "bytes": 12594
+    }
+  ],
+  "originalCounts": {
+    "nativeHostFields": 19,
+    "sharedCases": 2,
+    "universeFields": 2409,
+    "universeCases": 6845,
+    "requirements": 50
+  },
+  "latestPureObservations": 215,
+  "latestPureFailures": 0,
+  "sourceReadPins": 61,
+  "nativeActivationAllowed": false,
+  "globalC0Accepted": false,
+  "implementationAuthorization": null
+}

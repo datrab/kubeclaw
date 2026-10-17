@@ -1,0 +1,1549 @@
+skills/nova/project/compiler.ts SHA256 9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5
+1	import {demoStages,normalizeDemo} from './demo.ts';
+2	import {sourceStages} from './source.ts';
+3	import { cumulativeStages, projectCoverage, testConfiguration } from './coverage.ts';
+4	import { assertProjectReviewModes, projectReviewConfig, type ProjectReviewSemanticMode } from './review-semantics.ts';
+5	import path from 'node:path';
+6	import { PORTABLE_JSON_ENCODING, canonicalJson, sha256Text, type SourceBinding, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
+7	import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
+8	import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+9	import { assertProjectDeliveryManifestMode, type ProjectDeliveryManifestMode } from './delivery-manifest.ts';
+10	
+11	type ObjectValue = Record<string, any>;
+12	function object(value: unknown, fields: string[], label: string): ObjectValue {
+13	  if (!value || typeof value !== 'object' || Array.isArray(value)
+14	    || Object.keys(value).some(key => !fields.includes(key))) throw new Error(`PROJECT_OBJECT_INVALID:${label}`);
+15	  return value as ObjectValue;
+16	}
+17	function text(value: unknown, label: string): string {
+18	  if (typeof value !== 'string' || !value.trim()) throw new Error(`PROJECT_TEXT_REQUIRED:${label}`);
+19	  return value;
+20	}
+21	function id(value: unknown): string {
+22	  const result = text(value, 'id');
+23	  if (!/^[a-z][a-z0-9-]{0,47}$/u.test(result)) throw new Error(`PROJECT_ID_INVALID:${result}`);
+24	  return result;
+25	}
+26	function absolute(value: unknown, label: string): string {
+27	  const result = text(value, label);
+28	  if (!path.isAbsolute(result) || path.normalize(result) !== result) throw new Error(`PROJECT_ABSOLUTE_PATH_REQUIRED:${label}`);
+29	  return result;
+30	}
+31	function strings(value: unknown, label: string, allowEmpty = false): string[] {
+32	  if (!Array.isArray(value) || (!allowEmpty && value.length === 0)
+33	    || value.some(item => typeof item !== 'string' || !item.trim()) || new Set(value).size !== value.length) throw new Error(`PROJECT_LIST_INVALID:${label}`);
+34	  return [...value];
+35	}
+36	function relative(value: string): string {
+37	  if (path.posix.isAbsolute(value) || value.includes('\\') || value.split('/').some(part => !part || part === '.' || part === '..')) throw new Error(`PROJECT_OWNERSHIP_INVALID:${value}`);
+38	  return value;
+39	}
+40	function agent(value: unknown): ObjectValue {
+41	  const config = object(value, ['agent', 'agentRole'], 'agent');
+42	  text(config.agent, 'agent');
+43	  if (config.agentRole !== undefined) text(config.agentRole, 'agentRole');
+44	  return config;
+45	}
+46	
+47	interface ModuleContext { readonly reviewSemanticMode: ProjectReviewSemanticMode; readonly reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING; readonly sourceBinding: SourceBinding; readonly projectId: string; readonly runId: string; readonly repository: string; readonly workspaces: string; readonly baseline: string; readonly previousGate: string | undefined; }
+48	function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinition[] {
+49	  const { projectId, runId, repository, workspaces, baseline, previousGate } = context;
+50	  const runNamespace = sha256Text(runId).slice(7, 23);
+51	  const stages: StageDefinition[] = [];
+52	  const implementationId = `implement-${module.id}`;
+53	  const lintId = `lint-${module.id}`;
+54	  const reviewId = `review-${module.id}`;
+55	  const testId = `test-${module.id}`;
+56	  const evidence = { projectId, moduleId: module.id, baseRevision: baseline, requirements: module.requirements };
+57	  const expectedCoverage = projectCoverage(projectId, baseline, [module], module.test);
+58	  const categories = { lint: 2, ...(module.review ? { review: 2 } : {}), test: 2 };
+59	  const repairBudget = { categories, maximumOrchestratorOrders: 1 };
+60	  // The former maxAttempts:2 allowed one technical retry. Preserve that
+61	  // allowance independently of initial work, repair orders and rechecks.
+62	  const maxTechnicalRetries = 1;
+63	  const maximumOrders = Object.values(categories).reduce((sum, limit) => sum + limit, 0) + 1;
+64	  const execution = { maxAttempts: 1 + maximumOrders + maxTechnicalRetries,
+65	    maxRemediationCycles: maximumOrders, maxTechnicalRetries, timeoutMs: 1_800_000 };
+66	  stages.push({ id: implementationId, type: 'kubeclaw.agent.implementation',
+67	    dependsOn: [...new Set([...(previousGate ? [previousGate] : []), ...module.dependsOn.map((dependency: string) => `test-${dependency}`)])].sort(),
+68	    config: module.implementation, input: { runId, moduleId: module.id, attempt: 1, headBefore: baseline, sourceBinding: context.sourceBinding,
+69	      task: `${module.task}\n\nRead the source-bound Forge blueprint(s) under ${module.blueprint.modulePath}${module.blueprint.substeps ? ` in substeps ${module.blueprint.substeps.join(', ')}` : ''}.\nOwned paths: ${module.ownedPaths.join(', ')}\nRequirements:\n${canonicalJson(module.requirements)}`,
+70	      workspace: { repositoryRoot: repository, workspacePath: path.join(workspaces, runNamespace, module.id),
+71	        branch: `nova/${projectId}/${runNamespace}/${module.id}`, baseRef: 'HEAD', mergeTarget: repository,
+72	        commitMessage: `[forge:${module.id}] ${projectId}` } }, execution: { ...execution, repairBudget } });
+73	  stages.push({ id: lintId, type: 'kubeclaw.lint.full', dependsOn: [implementationId], config: module.lint,
+74	    input: { workingDirectory: repository, project: projectId, sourceStageId: implementationId }, execution: { ...execution, repairCategory: 'lint' }, on: { request_fix: implementationId } });
+75	  if (module.review) stages.push({ id: reviewId, type: 'kubeclaw.decision.review', dependsOn: [lintId],
+76	    config: projectReviewConfig(module.review, context.reportArtifactEncoding, context.reviewSemanticMode),
+77	    input: { task: { id: module.id, statement: module.task }, revisions: { sourceStageId: implementationId },
+78	      scope: { allowedPrefixes: coverageReviewPrefixes(expectedCoverage), ownershipPrefixes: coverageReviewPrefixes(expectedCoverage) }, requirements: coverageReviewRequirements(expectedCoverage),
+79	      evidence: [{ kind: 'project-requirements', digest: sha256Text(canonicalJson(evidence)), content: evidence }, { kind: 'gate-coverage', digest: sha256Text(canonicalJson(expectedCoverage)), content: expectedCoverage }], contextCandidates: [] },
+80	    execution: { ...execution, repairCategory: 'review' }, on: { request_fix: implementationId } });
+81	  stages.push({ id: testId, type: 'kubeclaw.test.quality-evaluation', dependsOn: [module.review ? reviewId : lintId],
+82	    config: testConfiguration(module.test),
+83	    input: { gateId: testId, task: module.task, expectedCoverage,
+84	      providerPlan: { ...module.test.providerPlan, repositoryRoot: repository, sourceStageId: implementationId } },
+85	    execution: { ...execution, repairCategory: 'test' }, on: { request_fix: implementationId } });
+86	  return stages;
+87	}
+88	
+89	function validateRequirements(module: ObjectValue, moduleId: string): void {
+90	  if (!Array.isArray(module.requirements) || !module.requirements.length) throw new Error(`PROJECT_REQUIREMENTS_REQUIRED:${moduleId}`);
+91	  const requirementIds = new Set<string>();
+92	  for (const requirement of module.requirements) {
+93	    const r = object(requirement, ['id', 'statement'], 'requirement');
+94	    text(r.id, 'requirement.id'); text(r.statement, 'requirement.statement');
+95	    if (requirementIds.has(r.id)) throw new Error('PROJECT_REQUIREMENT_DUPLICATE');
+96	    requirementIds.add(r.id);
+97	  }
+98	}
+99	
+100	function validateModuleRuntime(module: ObjectValue, moduleId: string, runId: string, projectId: string): void {
+101	  agent(module.implementation);
+102	  if (module.review !== undefined) { object(module.review, ['agent'], 'review'); text(module.review.agent, 'review.agent'); }
+103	  const lint = object(module.lint, ['policyPath', 'policyProject'], 'lint');
+104	  absolute(lint.policyPath, 'lint.policyPath'); text(lint.policyProject, 'lint.policyProject');
+105	  const test = object(module.test, ['agent', 'agentRole', 'testAgentEnabled', 'requiredChecks', 'providerPlan'], 'test');
+106	  testConfiguration(test);
+107	  const provider = object(test.providerPlan, ['repositoryId', 'plan', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs'], 'providerPlan');
+108	  validatePipelineTestGateContract('resolvedTestPlan', provider.plan);
+109	  const plan = provider.plan as ResolvedTestPlanV1;
+110	  const { planDigest, ...unsigned } = plan;
+111	  if (resolvedTestPlanDigest(unsigned) !== planDigest) throw new Error('PROJECT_PLAN_DIGEST_MISMATCH');
+112	  if (plan.runId !== runId || plan.project !== projectId || plan.scope.moduleId !== moduleId || plan.scope.gateId !== null) throw new Error(`PROJECT_PLAN_SCOPE_MISMATCH:${moduleId}`);
+113	  if (!plan.nodes.some(node => node.kind === 'test' && node.mode === 'blocking' && node.skipReason === null)) throw new Error(`PROJECT_BLOCKING_TEST_REQUIRED:${moduleId}`);
+114	}
+115	
+116	function projectModules(project: ObjectValue, runId: string, projectId: string): Map<string, ObjectValue> {
+117	  if (!Array.isArray(project.modules) || !project.modules.length || project.modules.length > 128) throw new Error('PROJECT_MODULES_INVALID');
+118	  const modules = new Map<string, ObjectValue>();
+119	  const owned: { module: string; prefix: string }[] = [];
+120	  for (const value of project.modules) {
+121	    const module = object(value, ['id', 'dependsOn', 'task', 'ownedPaths', 'requirements', 'implementation', 'lint', 'review', 'test', 'blueprint'], 'module');
+122	    const moduleId = id(module.id);
+123	    if (modules.has(moduleId)) throw new Error(`PROJECT_MODULE_DUPLICATE:${moduleId}`);
+124	    text(module.task, 'task');
+125	    strings(module.dependsOn, 'dependsOn', true).forEach(id);
+126	    for (const prefix of strings(module.ownedPaths, 'ownedPaths').map(relative)) {
+127	      if (owned.some(item => prefix === item.prefix || prefix.startsWith(`${item.prefix}/`) || item.prefix.startsWith(`${prefix}/`))) throw new Error(`PROJECT_OWNERSHIP_OVERLAP:${moduleId}:${prefix}`);
+128	      owned.push({ module: moduleId, prefix });
+129	    }
+130	    validateRequirements(module, moduleId);
+131	    validateModuleRuntime(module, moduleId, runId, projectId);
+132	    modules.set(moduleId, module);
+133	  }
+134	  return modules;
+135	}
+136	
+137	function orderedModules(modules: ReadonlyMap<string, ObjectValue>): ObjectValue[] {
+138	  // Stable topological order, independent of JSON object/array declaration order.
+139	  const ordered: ObjectValue[] = [];
+140	  const remaining = new Set([...modules.keys()].sort());
+141	  for (const module of modules.values()) for (const dependency of module.dependsOn) {
+142	    if (!modules.has(dependency)) throw new Error(`PROJECT_DEPENDENCY_UNKNOWN:${dependency}`);
+143	  }
+144	  while (remaining.size) {
+145	    const next = [...remaining].find(key => modules.get(key)!.dependsOn.every((dependency: string) => !remaining.has(dependency)));
+146	    if (next === undefined) throw new Error('PROJECT_DEPENDENCY_CYCLE');
+147	    ordered.push(modules.get(next)!); remaining.delete(next);
+148	  }
+149	  return ordered;
+150	}
+151	
+152	/** Product-owned compiler; the lifecycle core remains independent of stage names.
+153	 * A project is a single repository publication lane. Explicit pipeline graphs
+154	 * retain their existing concurrency semantics.
+155	 */
+156	export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
+157	  reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
+158	  reviewSemanticMode: ProjectReviewSemanticMode = 'legacy',
+159	  deliveryManifestEncoding: ProjectDeliveryManifestMode = 'legacy'): { runId: string; definition: PipelineDefinition } {
+160	  assertProjectReviewModes(reportArtifactEncoding, reviewSemanticMode);
+161	  assertProjectDeliveryManifestMode(deliveryManifestEncoding);
+162	  const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final', 'architecture', 'demo'], 'project');
+163	  if (project.schemaVersion !== 'nova-project.v2') throw new Error('PROJECT_SCHEMA_UNSUPPORTED:nova-project.v2 requires explicit architecture and module blueprint declarations; legacy inputs need authored migration');
+164	  const projectId = id(project.id);
+165	  const runId = text(project.runId, 'runId');
+166	  const repository = absolute(project.repositoryRoot, 'repositoryRoot');
+167	  const workspaces = absolute(project.workspaceRoot, 'workspaceRoot');
+168	  if (workspaces === repository || workspaces.startsWith(`${repository}${path.sep}`)) throw new Error('PROJECT_WORKSPACES_INSIDE_REPOSITORY');
+169	  const baseline = text(project.baseRevision, 'baseRevision');
+170	  if (!/^[a-f0-9]{40}$/u.test(baseline)) throw new Error('PROJECT_BASE_REVISION_INVALID');
+171	  const ordered = orderedModules(projectModules(project, runId, projectId));
+172	  const final = object(project.final, ['lint', 'test', 'review', 'integrationRequirements'], 'final');
+173	  if (!Array.isArray(final.integrationRequirements)) throw new Error('PROJECT_INTEGRATION_REQUIREMENTS_REQUIRED');
+174	  const finalLint = object(final.lint, ['policyPath', 'policyProject'], 'final.lint');
+175	  absolute(finalLint.policyPath, 'final.lint.policyPath'); text(finalLint.policyProject, 'final.lint.policyProject');
+176	  if (final.review !== undefined) { object(final.review, ['agent'], 'final.review'); text(final.review.agent, 'final.review.agent'); }
+177	  object(final.test, ['agent', 'agentRole', 'testAgentEnabled', 'requiredChecks', 'providerPlan'], 'final.test');
+178	  object(final.test.providerPlan, ['repositoryId', 'plan', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs'], 'final.providerPlan');
+179	  const demo = normalizeDemo(project.demo);
+180	  const source = sourceStages(project, ordered, demo, sourceIdentity);
+181	  const stages: StageDefinition[] = [...source.stages];
+182	  let previousGate: string | undefined = 'blueprint-sync';
+183	  for (const module of ordered) {
+184	    stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding, reportArtifactEncoding, reviewSemanticMode }));
+185	    previousGate = `test-${module.id}`;
+186	  }
+187	  stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`, reportArtifactEncoding,
+188	    reviewSemanticMode, deliveryManifestEncoding));
+189	  stages.push(...demoStages(demo,final.test.providerPlan.plan));
+190	  const definition = { schemaVersion: 'pipeline-definition.v2', id: `project:${projectId}`, maxConcurrency: 1, stages } as PipelineDefinition;
+191	  validateContractValue('pipelineDefinition', definition);
+192	  return { runId, definition: structuredClone(definition) };
+193	}
+skills/nova/core/execution/engine-run.ts SHA256 eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819
+1	import crypto from 'node:crypto';
+2	import fs from 'node:fs';
+3	import path from 'node:path';
+4	import type { AdministrativeReopenDecision, LifecycleEvent, PipelineDefinition, PluginDomainEvent, ResumeSignal } from '@kubeclaw/plugin-sdk';
+5	import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
+6	import { recoverStageStates, recoverWaitCreation } from '../lifecycle/recovery.ts';
+7	import { authorizedRepair } from '../lifecycle/repair-authorization.ts';
+8	import type { StageRuntimeState } from '../lifecycle/reducer.ts';
+9	import { assertEffectRecoverySafe } from './effect-recovery.ts';
+10	import { FileJournal } from '../state/journal.ts';
+11	import type { PipelineRunResult, PipelineRunnerOptions } from './runner.ts';
+12	import { PipelineRunner } from './runner.ts';
+13	import { createAdapterRuntime, prepareRuntime, serializedObserverDrainer, type PreparedRuntime } from './engine-runtime.ts';
+14	import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, readRunSnapshot, recordedPackageUpgrades, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
+15	import { withRunMutationLock } from './run-mutation.ts';
+16	import { runRoot as resolveRunRoot } from './run-root.ts';
+17	import { reconcileNovaObservabilityOnRecovery } from '../observability/reconciler.ts';
+18	
+19	export interface ExecutionContext { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly leaseSignal: AbortSignal; readonly events: FileJournal<LifecycleEvent | PluginDomainEvent> }
+20	
+21	export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted' | 'runtimeDispatchProfile' | 'reviewCacheProfile'>): Promise<PipelineRunResult> {
+22	  const pinnedGraph = verifyPinnedGraph(context.runRoot, context.definition);
+23	  const snapshot = readRunSnapshot(context.runRoot);
+24	  const runtimeDispatchProfile = snapshot.schemaVersion === 'run-snapshot.v3' || snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.runtimeDispatchProfile : undefined;
+25	  const reviewCacheProfile = snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.reviewCacheProfile : undefined;
+26	  await assertEffectRecoverySafe(context.runRoot, context.runId, context.definition, context.events);
+27	  const adapters = createAdapterRuntime(context.platform, context.runRoot, context.runtime, context.events); await adapters.start();
+28	  const flush = serializedObserverDrainer(context.platform, context.runRoot, context.runtime, adapters, context.events);
+29	  try { return await new PipelineRunner({ definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
+30	    adapters, journal: context.events, orchestratorIssuerId: context.platform.orchestratorIssuerId, signal: context.leaseSignal,
+31	    onEventsCommitted: flush, ...options, graphSnapshotVersion: pinnedGraph.schemaVersion,
+32	    runtimeDispatchProfile, reviewCacheProfile }).run(context.runId); }
+33	  finally { try { await flush(); } finally { await adapters.shutdown(); } }
+34	}
+35	
+36	export async function runNewPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId?: string, signal?: AbortSignal): Promise<PipelineRunResult> {
+37	  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
+38	  const effectiveRunId = runId ?? `run:${crypto.randomUUID()}`; const runRoot = resolveRunRoot(platform.storageRoot, effectiveRunId);
+39	  return withRunMutationLock(runRoot, async (leaseSignal) => {
+40	    fs.mkdirSync(runRoot, { recursive: true }); const graph = graphSnapshot(definition); writeRunSnapshots(runRoot, graph, frozenRegistryRecord(runtime, definition, graph));
+41	    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl'));
+42	    return executePrepared({ platform, definition, runtime, runId: effectiveRunId, runRoot, leaseSignal: signal ? AbortSignal.any([signal, leaseSignal]) : leaseSignal, events }, {});
+43	  });
+44	}
+45	
+46	function assertRecoverableRun(events: FileJournal<LifecycleEvent | PluginDomainEvent>, runId: string, prefix: 'RECOVERY' | 'WAIT'): void {
+47	  const boundary = [...events.records()].reverse().find(({ entry }) => entry.schemaVersion === 'lifecycle-event.v2' && entry.identity.runId === runId
+48	    && ['run.resumed', 'run.succeeded', 'run.failed', 'run.blocked', 'run.cancelled'].includes(entry.type));
+49	  if (boundary && boundary.entry.type !== 'run.resumed') throw new Error(`${prefix}_RUN_TERMINAL:${runId}:${boundary.entry.type}`);
+50	}
+51	
+52	function recoveryStates(definition: PipelineDefinition, events: FileJournal<LifecycleEvent | PluginDomainEvent>, runId: string, issuer: string): Map<string, StageRuntimeState> {
+53	  return new Map(recoverStageStates(definition, events.records(), runId, issuer));
+54	}
+55	
+56	export async function recoverPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId: string): Promise<PipelineRunResult> {
+57	  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
+58	  const runRoot = resolveRunRoot(platform.storageRoot, runId);
+59	  return withRunMutationLock(runRoot, async (leaseSignal) => {
+60	    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'));
+61	    verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
+62	    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl')); assertRecoverableRun(events, runId, 'RECOVERY');
+63	    // Phase 7 persists this run's test-attempt reconciliation plan before
+64	    // dispatch. The recovery hook is active now; it is a no-op for legacy runs.
+65	    await reconcileNovaObservabilityOnRecovery(runRoot, runId);
+66	    const initialStates = dueRecoveryStates(recoveryStates(definition, events, runId, platform.orchestratorIssuerId));
+67	    const wait = [...initialStates.values()].find((state) => state.wait)?.wait; if (wait) throw new Error(`RECOVERY_SIGNAL_REQUIRED:${wait.waitId}`);
+68	    return executePrepared({ platform, definition, runtime, runId, runRoot, leaseSignal, events }, { initialStates, resume: true, resumePayload: { recovery: 'journal' } });
+69	  });
+70	}
+71	
+72	function dueRecoveryStates(recovered: ReadonlyMap<string, StageRuntimeState>): Map<string, StageRuntimeState> {
+73	  const states = new Map<string, StageRuntimeState>();
+74	  for (const [stageId, state] of recovered) {
+75	    if (!state.retryAt) { states.set(stageId, state); continue; }
+76	    if (Date.now() < Date.parse(state.retryAt)) throw new Error(`RECOVERY_COOLDOWN_NOT_DUE:${stageId}:${state.retryAt}`);
+77	    const { retryAt: _retryAt, ...withoutCooldown } = state; states.set(stageId, { ...withoutCooldown, status: 'pending' });
+78	  }
+79	  return states;
+80	}
+81	
+82	export async function resumePipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId: string, signal: ResumeSignal): Promise<PipelineRunResult> {
+83	  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
+84	  const runRoot = resolveRunRoot(platform.storageRoot, runId);
+85	  return withRunMutationLock(runRoot, async (leaseSignal) => {
+86	    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'));
+87	    verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
+88	    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl')); assertRecoverableRun(events, runId, 'WAIT');
+89	    const recovered = recoveryStates(definition, events, runId, platform.orchestratorIssuerId); const waiting = recoveredWait(recovered, signal.waitId);
+90	    const created = validateWaitHistory(events, runId, signal.waitId, definition, platform.orchestratorIssuerId); validateSignal(waiting.wait!, signal, created.entry.occurredAt); leaseSignal.throwIfAborted();
+91	    authorizedRepair(definition.stages, recovered, waiting, signal);
+92	    recordSignal(runRoot, signal); recordWaitResolution(events, runId, waiting, signal, leaseSignal);
+93	    const initialStates = recoveryStates(definition, events, runId, platform.orchestratorIssuerId);
+94	    return executePrepared({ platform, definition, runtime, runId, runRoot, leaseSignal, events }, { initialStates,
+95	      resumeGuidance: new Map([[waiting.stageId, signal.payload]]), resume: true });
+96	  });
+97	}
+98	
+99	function recoveredWait(states: ReadonlyMap<string, StageRuntimeState>, waitId: string): StageRuntimeState {
+100	  const waiting = [...states.values()].find((state) => state.wait?.waitId === waitId); if (!waiting?.wait) throw new Error(`WAIT_UNKNOWN_OR_STALE:${waitId}`); return waiting;
+101	}
+102	function validateWaitHistory(events: FileJournal<LifecycleEvent | PluginDomainEvent>, runId: string, waitId: string, definition: PipelineDefinition, issuer: string) {
+103	  const terminal = [...events.records()].reverse().find(({ entry }) => entry.schemaVersion === 'lifecycle-event.v2' && entry.identity.runId === runId
+104	    && ['run.succeeded', 'run.failed', 'run.blocked', 'run.cancelled'].includes(entry.type));
+105	  const created = recoverWaitCreation(definition, events.records(), runId, issuer, waitId);
+106	  if (terminal && (!created || created.sequence <= terminal.sequence)) throw new Error(`WAIT_INVALIDATED_BY_TERMINAL_RUN:${waitId}`);
+107	  if (!created) throw new Error(`WAIT_CREATION_RECORD_MISSING:${waitId}`); return created;
+108	}
+109	function recordSignal(runRoot: string, signal: ResumeSignal): void {
+110	  new FileJournal<ResumeSignal>(path.join(runRoot, 'signals.jsonl')).transact((records, append) => {
+111	    const duplicate = records.find(({ entry }) => entry.idempotencyKey === signal.idempotencyKey)?.entry;
+112	    if (duplicate) { if (canonicalJson(duplicate) !== canonicalJson(signal)) throw new Error(`WAIT_SIGNAL_CONFLICT:${signal.idempotencyKey}`); return; }
+113	    if (records.some(({ entry }) => entry.waitId === signal.waitId)) throw new Error(`WAIT_ALREADY_RESOLVED:${signal.waitId}`); append(signal);
+114	  });
+115	}
+116	function recordWaitResolution(events: FileJournal<LifecycleEvent | PluginDomainEvent>, runId: string, waiting: StageRuntimeState, signal: ResumeSignal, lease: AbortSignal): void {
+117	  const exists = events.records().some(({ entry }) => entry.schemaVersion === 'lifecycle-event.v2' && entry.type === 'wait.resolved'
+118	    && entry.identity.runId === runId && entry.identity.waitId === signal.waitId && entry.causationId === signal.signalId);
+119	  if (exists) return; lease.throwIfAborted(); events.appendSequenced((sequence) => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`,
+120	    sequence, type: 'wait.resolved', identity: { runId, stageId: waiting.stageId, waitId: signal.waitId },
+121	    occurredAt: new Date().toISOString(), causationId: signal.signalId, payload: { signal } }));
+122	}
+skills/nova/core/execution/engine-runtime.ts SHA256 96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613
+1	import { resolveRetainedCoreWait } from '../state/wait-projection-reader.ts';
+2	import crypto from 'node:crypto';
+3	import path from 'node:path';
+4	import type { EffectRequest, LifecycleEvent, ObserverCheckpoint, PipelineDefinition, PluginDomainEvent } from '@kubeclaw/plugin-sdk';
+5	import { activateRegistry } from '@kubeclaw/plugin-foundation/registry/activation';
+6	import { buildRegistry } from '@kubeclaw/plugin-foundation/registry/build';
+7	import { resolveCapabilityGrants, type CapabilityPolicy } from '@kubeclaw/plugin-foundation/registry/capabilities';
+8	import { discoverPackages } from '@kubeclaw/plugin-foundation/registry/discovery';
+9	import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
+10	import { validateRuntimeRegistrationConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';
+11	import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
+12	import { FileEffectJournal } from '../effects/journal.ts';
+13	import { EffectCoordinator } from '../effects/coordinator.ts';
+14	import { FileResourceLockManager } from '../effects/locks.ts';
+15	import { FileJournal } from '../state/journal.ts';
+16	import { ObserverRuntime, type ObserverDeliveryRecord } from '../telemetry/observers.ts';
+17	import { AdapterRuntime } from './adapters.ts';
+18	
+19	function nestedMap(value: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, unknown>>>>>>): ReadonlyMap<string, ReadonlyMap<string, Readonly<Record<string, unknown>>>> {
+20	  return new Map(Object.entries(value).map(([id, grants]) => [id, new Map(Object.entries(grants))]));
+21	}
+22	export function objectMap(value: Readonly<Record<string, Readonly<Record<string, unknown>>>>): ReadonlyMap<string, Readonly<Record<string, unknown>>> { return new Map(Object.entries(value)); }
+23	
+24	export interface PreparedRuntime {
+25	  readonly configuration: Readonly<Record<string, unknown>>;
+26	  readonly snapshot: ReturnType<typeof buildRegistry>; readonly granted: ReturnType<typeof resolveCapabilityGrants>;
+27	  readonly activated: Awaited<ReturnType<typeof activateRegistry>>;
+28	}
+29	
+30	export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition): Promise<PreparedRuntime> {
+31	  validateContractValue('pipelineDefinition', definition);
+32	  const packages = discoverPackages({ installationRoots: platform.installationRoots, trustPolicy: {
+33	    trustedBuiltinRoots: platform.trustedBuiltinRoots, allowedSourceDigests: new Map(Object.entries(platform.externalTrust.allowedSourceDigests)),
+34	    verifiedAttestations: new Map(Object.entries(platform.externalTrust.verifiedAttestations)), verifierId: 'kubeclaw-platform-v2',
+35	  } });
+36	  const snapshot = buildRegistry(packages); const enabled = enabledRegistrations(platform, definition, snapshot);
+37	  const policy: CapabilityPolicy = { enabledRegistrations: enabled, grants: nestedMap(platform.grants), providers: new Map(Object.entries(platform.providers)) };
+38	  const granted = resolveCapabilityGrants(snapshot, policy);
+39	  validateRuntimeRegistrationConfiguration(snapshot, granted.enabledRegistrations, {
+40	    stages: definition.stages.map((stage) => ({ type: stage.type, config: stage.config })), observers: objectMap(platform.observers), adapters: objectMap(platform.adapters),
+41	  });
+42	  return { configuration: { providers: platform.providers, grants: platform.grants, adapters: platform.adapters, activeAdapters: platform.activeAdapters, observers: platform.observers, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted, activated: await activateRegistry(snapshot, new Set(granted.grants.keys()), platform.isolation) };
+43	}
+44	
+45	function enabledRegistrations(platform: PlatformConfig, definition: PipelineDefinition, snapshot: ReturnType<typeof buildRegistry>): Set<string> {
+46	  const enabled = new Set<string>(Object.keys(platform.observers)); platform.activeAdapters.forEach((id) => enabled.add(id));
+47	  for (const stage of definition.stages) {
+48	    const owner = snapshot.stages.get(stage.type); if (!owner) throw new Error(`PIPELINE_STAGE_OWNER_MISSING:${stage.type}`);
+49	    enabled.add(`${owner.package.manifest.id}:${owner.registration.id}`);
+50	  }
+51	  return enabled;
+52	}
+53	
+54	function effectAppender(events: FileJournal<LifecycleEvent | PluginDomainEvent>): (type: 'effect.requested' | 'effect.accepted' | 'effect.completed' | 'effect.failed', request: EffectRequest, payload: Readonly<Record<string, unknown>>) => void {
+55	  return (type, request, payload) => {
+56	    if (request.attempt.attemptId.startsWith('observer:')) return;
+57	    events.appendSequenced((sequence) => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence,
+58	      type, identity: { runId: request.attempt.runId, stageId: request.attempt.stageId, attemptId: request.attempt.attemptId, effectId: request.effectId },
+59	      occurredAt: new Date().toISOString(), causationId: request.attempt.attemptId, payload }));
+60	  };
+61	}
+62	
+63	function auditResult(result: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {
+64	  const serialized = Buffer.from(JSON.stringify(result));
+65	  if (serialized.length <= 16 * 1024) return result;
+66	  const contentDigest = `sha256:${crypto.createHash('sha256').update(serialized).digest('hex')}`;
+67	  return Object.freeze({
+68	    schemaVersion: 'effect-result-summary.v1',
+69	    contentDigest,
+70	    artifactRef: `effect-result:${contentDigest}`,
+71	    bytes: serialized.length,
+72	    externalized: true,
+73	  });
+74	}
+75	
+76	export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): AdapterRuntime {
+77	  const append = effectAppender(events);
+78	  const effects = new EffectCoordinator(new FileEffectJournal(path.join(runRoot, 'effects.jsonl')), () => new Date(), {
+79	    requested: (request, executionMode) => append('effect.requested', request, { executionMode, capability: request.capability, operation: request.operation, resource: request.resource }),
+80	    accepted: (request, executionMode) => append('effect.accepted', request, { executionMode }),
+81	    completed: (request, receipt, executionMode) => append(receipt.status === 'completed' ? 'effect.completed' : 'effect.failed', request,
+82	      receipt.status === 'completed' ? { executionMode, adapter: receipt.adapter, result: auditResult(receipt.result ?? {}) } : { executionMode, adapter: receipt.adapter, error: receipt.error ?? {} }),
+83	  }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks')), platform.effectLockTtlMs);
+84	  return new AdapterRuntime({ granted: runtime.granted, activated: runtime.activated, configs: objectMap(platform.adapters), effects,
+85	    resolveRetainedWait: source => {
+86	      const waitRoot = platform.adapters?.['kubeclaw.wait-store:waits']?.root;
+87	      if (typeof waitRoot !== 'string') throw new Error('WAIT_RETAINED_CORE_EVIDENCE_INVALID');
+88	      return resolveRetainedCoreWait(source, { storageRoot: platform.storageRoot, waitRoot,
+89	        orchestratorIssuerId: platform.orchestratorIssuerId });
+90	    },
+91	    shutdownTimeoutMs: platform.shutdownTimeoutMs, emitDomainEvent: async (registration, type, identity, payload) => { events.appendSequenced((sequence) => ({
+92	      schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence, type,
+93	      producer: registration, identity, occurredAt: new Date().toISOString(), causationId: null, payload,
+94	    })); } });
+95	}
+96	
+97	export async function drainObservers(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, adapters: AdapterRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): Promise<void> {
+98	  const observers = new ObserverRuntime({ registry: runtime.granted, activated: runtime.activated, adapters, events,
+99	    checkpoints: new FileJournal<ObserverCheckpoint>(path.join(runRoot, 'observer-checkpoints.jsonl')),
+100	    deliveries: new FileJournal<ObserverDeliveryRecord>(path.join(runRoot, 'observer-deliveries.jsonl')), configs: objectMap(platform.observers) });
+101	  await observers.drain();
+102	}
+103	
+104	export function serializedObserverDrainer(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, adapters: AdapterRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): () => Promise<void> {
+105	  let pending = Promise.resolve(); return () => { pending = pending.then(() => drainObservers(platform, runRoot, runtime, adapters, events)); return pending; };
+106	}
+skills/nova/core/execution/engine-snapshots.ts SHA256 50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd
+1	import crypto from 'node:crypto';
+2	import fs from 'node:fs';
+3	import path from 'node:path';
+4	import { CURRENT_RUNTIME_DISPATCH_PROFILE, CURRENT_REVIEW_CACHE_PROFILE, parseRuntimeDispatchProfile, parseReviewCacheProfile, portableJson, type RuntimeDispatchProfile, type ReviewCacheProfile, type AdministrativeReopenDecision, type PipelineDefinition, type ResumeSignal } from '@kubeclaw/plugin-sdk';
+5	import type { StageRuntimeState } from '../lifecycle/reducer.ts';
+6	import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
+7	import { ExecutionGraph, type ExecutionGraphSnapshot } from './graph.ts';
+8	import type { PreparedRuntime } from './engine-runtime.ts';
+9	
+10	export function deepFreeze<T>(value: T): T {
+11	  if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value;
+12	  for (const nested of Object.values(value as Record<string, unknown>)) deepFreeze(nested); return Object.freeze(value);
+13	}
+14	export function canonicalJson(value: unknown): string {
+15	  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
+16	  if (value && typeof value === 'object') return `{${Object.entries(value as Record<string, unknown>).sort(([a], [b]) => a.localeCompare(b)).map(([key, nested]) => `${JSON.stringify(key)}:${canonicalJson(nested)}`).join(',')}}`;
+17	  return JSON.stringify(value);
+18	}
+19	export function graphSnapshot(definition: PipelineDefinition, version?: ExecutionGraphSnapshot['schemaVersion']): ExecutionGraphSnapshot {
+20	  return ExecutionGraph.fromDefinition(definition).snapshot(definition.id, definition.maxConcurrency, version);
+21	}
+22	
+23	interface PinnedPackage { readonly package: { readonly packageVersion: string; readonly contentDigest: string } }
+24	type PackageUpgrade = NonNullable<Extract<AdministrativeReopenDecision, { continuation: 'retry' | 'cancel' }>['packageUpgrades']>[number];
+25	export function recordedPackageUpgrades(decisions: readonly AdministrativeReopenDecision[]): readonly PackageUpgrade[] {
+26	  return decisions.flatMap((decision) => decision.continuation === 'retry' ? decision.packageUpgrades ?? [] : []);
+27	}
+28	export function verifyPinnedPackages(runRoot: string, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[] = []): void {
+29	  const stored = readRunSnapshot(runRoot).registry as unknown;
+30	  if (!stored || typeof stored !== 'object' || (stored as Record<string, unknown>).dependencyIdentityVersion !== 'parent-invocation.v1') throw new Error('RECOVERY_DEPENDENCY_IDENTITY_MISMATCH:drain existing runs with their original runtime; automatic migration is unsupported');
+31	  const packages = stored && typeof stored === 'object' && !Array.isArray(stored) ? (stored as { packages?: unknown }).packages : undefined;
+32	  if (!Array.isArray(packages)) throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
+33	  if (canonicalJson((stored as Record<string, unknown>).configuration) !== canonicalJson(runtime.configuration)) throw new Error('RECOVERY_RUNTIME_CONFIGURATION_MISMATCH');
+34	  const pinned = new Map<string, PinnedPackage>(); packages.forEach((value) => addPinnedPackage(value, pinned));
+35	  if (canonicalJson([...runtime.snapshot.packages.keys()].sort()) !== canonicalJson([...pinned.keys()].sort())) throw new Error('RECOVERY_PINNED_PACKAGE_SET_MISMATCH');
+36	  for (const pluginId of new Set(upgrades.map(({ pluginId }) => pluginId))) {
+37	    if (!pinned.has(pluginId)) throw new Error(`RECOVERY_PACKAGE_UPGRADE_UNKNOWN:${pluginId}`);
+38	  }
+39	  for (const [pluginId, provenance] of pinned) assertPinnedPackage(pluginId, provenance, runtime,
+40	    upgrades.filter((upgrade) => upgrade.pluginId === pluginId));
+41	}
+42	
+43	function addPinnedPackage(value: unknown, pinned: Map<string, PinnedPackage>): void {
+44	  if (!Array.isArray(value) || value.length !== 2 || typeof value[0] !== 'string' || pinned.has(value[0])) throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
+45	  const provenance = value[1] as { package?: { packageVersion?: unknown; contentDigest?: unknown } } | null;
+46	  if (!provenance?.package || typeof provenance.package.packageVersion !== 'string' || typeof provenance.package.contentDigest !== 'string') throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
+47	  pinned.set(value[0], provenance as PinnedPackage);
+48	}
+49	function assertPinnedPackage(pluginId: string, provenance: PinnedPackage, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[]): void {
+50	  const current = runtime.snapshot.packages.get(pluginId); if (!current) throw new Error(`RECOVERY_PINNED_PACKAGE_MISSING:${pluginId}`);
+51	  let expected = { pluginId, apiVersion: current.provenance.package.apiVersion,
+52	    packageVersion: provenance.package.packageVersion, contentDigest: provenance.package.contentDigest };
+53	  for (const upgrade of upgrades) {
+54	    if (canonicalJson(upgrade.from) !== canonicalJson(expected) || upgrade.pluginId !== pluginId
+55	      || upgrade.to.pluginId !== pluginId || upgrade.to.apiVersion !== expected.apiVersion) {
+56	      throw new Error(`RECOVERY_PACKAGE_UPGRADE_MISMATCH:${pluginId}`);
+57	    }
+58	    expected = upgrade.to;
+59	  }
+60	  if (upgrades.length > 0) {
+61	    if (canonicalJson(current.provenance.package) !== canonicalJson(expected)) throw new Error(`RECOVERY_PACKAGE_UPGRADE_MISMATCH:${pluginId}`);
+62	    return;
+63	  }
+64	  if (current.provenance.package.packageVersion !== provenance.package.packageVersion) throw new Error(`RECOVERY_PINNED_PACKAGE_VERSION_MISMATCH:${pluginId}`);
+65	  if (current.provenance.package.contentDigest !== provenance.package.contentDigest) throw new Error(`RECOVERY_PINNED_PACKAGE_DIGEST_MISMATCH:${pluginId}`);
+66	}
+67	
+68	export function verifyPinnedGraph(runRoot: string, definition: PipelineDefinition): ExecutionGraphSnapshot {
+69	  const stored = readRunSnapshot(runRoot).graph as ExecutionGraphSnapshot; const current = graphSnapshot(definition, stored.schemaVersion);
+70	  if (!['execution-graph-snapshot.v2', 'execution-graph-snapshot.v3'].includes(stored.schemaVersion)) throw new Error('RECOVERY_GRAPH_SNAPSHOT_INVALID');
+71	  if (stored.pipelineId !== current.pipelineId) throw new Error(`RECOVERY_PIPELINE_ID_MISMATCH:${stored.pipelineId}:${current.pipelineId}`);
+72	  if (stored.digest !== current.digest) throw new Error(`RECOVERY_GRAPH_DIGEST_MISMATCH:${stored.digest}:${current.digest}`); return current;
+73	}
+74	
+75	interface RunSnapshotBase { readonly graph: ExecutionGraphSnapshot; readonly registry: Readonly<Record<string, unknown>>; readonly digest: string }
+76	export type RunSnapshot = RunSnapshotBase & (
+77	  { readonly schemaVersion: 'run-snapshot.v1' | 'run-snapshot.v2'; readonly runtimeDispatchProfile?: never; readonly reviewCacheProfile?: never }
+78	  | { readonly schemaVersion: 'run-snapshot.v3'; readonly runtimeDispatchProfile: RuntimeDispatchProfile; readonly reviewCacheProfile?: never }
+79	  | { readonly schemaVersion: 'run-snapshot.v4'; readonly runtimeDispatchProfile: RuntimeDispatchProfile; readonly reviewCacheProfile: ReviewCacheProfile }
+80	);
+81	function snapshotDigest(value: unknown, version: RunSnapshot['schemaVersion']): string {
+82	  if (!['run-snapshot.v1', 'run-snapshot.v2', 'run-snapshot.v3', 'run-snapshot.v4'].includes(version)) throw new Error('RUN_SNAPSHOT_VERSION_INVALID');
+83	  return `sha256:${crypto.createHash('sha256').update(version === 'run-snapshot.v1' ? canonicalJson(value) : portableJson(value)).digest('hex')}`;
+84	}
+85	export function assertRunSnapshot(snapshot: RunSnapshot): void {
+86	  const { digest, ...unsigned } = snapshot;
+87	  if (!['run-snapshot.v1', 'run-snapshot.v2', 'run-snapshot.v3', 'run-snapshot.v4'].includes(snapshot.schemaVersion)
+88	    || !['execution-graph-snapshot.v2', 'execution-graph-snapshot.v3'].includes(snapshot.graph?.schemaVersion)
+89	    || digest !== snapshotDigest(unsigned, snapshot.schemaVersion)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+90	  if (snapshot.schemaVersion === 'run-snapshot.v4') {
+91	    parseRuntimeDispatchProfile(snapshot.runtimeDispatchProfile); parseReviewCacheProfile(snapshot.reviewCacheProfile);
+92	    validateContractValue('runtimeRunSnapshotV4', snapshot);
+93	  }
+94	  else if (snapshot.schemaVersion === 'run-snapshot.v3') {
+95	    parseRuntimeDispatchProfile(snapshot.runtimeDispatchProfile); validateContractValue('runtimeRunSnapshot', snapshot);
+96	  }
+97	  else if (Object.hasOwn(snapshot, 'runtimeDispatchProfile')) throw new Error('RUN_SNAPSHOT_LEGACY_PROFILE_INVALID');
+98	  if (snapshot.schemaVersion !== 'run-snapshot.v4' && Object.hasOwn(snapshot, 'reviewCacheProfile')) throw new Error('RUN_SNAPSHOT_LEGACY_CACHE_PROFILE_INVALID');
+99	}
+100	export function readRunSnapshot(runRoot: string): RunSnapshot {
+101	  const snapshot = JSON.parse(fs.readFileSync(path.join(runRoot, 'run-snapshot.json'), 'utf8')) as RunSnapshot;
+102	  assertRunSnapshot(snapshot);
+103	  return snapshot;
+104	}
+105	export function writeRunSnapshots(runRoot: string, graph: ExecutionGraphSnapshot, registry: Readonly<Record<string, unknown>>): void {
+106	  if (['run-snapshot.json', 'graph-snapshot.json', 'registry-snapshot.json'].some((name) => fs.existsSync(path.join(runRoot, name)))) throw new Error(`RUN_ALREADY_EXISTS:${runRoot}`);
+107	  const unsigned = { schemaVersion: 'run-snapshot.v4' as const, graph, registry, runtimeDispatchProfile: CURRENT_RUNTIME_DISPATCH_PROFILE, reviewCacheProfile: CURRENT_REVIEW_CACHE_PROFILE };
+108	  const snapshot = { ...unsigned, digest: snapshotDigest(unsigned, unsigned.schemaVersion) };
+109	  assertRunSnapshot(snapshot);
+110	  const file = path.join(runRoot, 'run-snapshot.json');
+111	  const temporary = path.join(runRoot, `.snapshot-${crypto.randomUUID()}.tmp`);
+112	  const descriptor = fs.openSync(temporary, 'wx', 0o600);
+113	  try { fs.writeFileSync(descriptor, JSON.stringify(snapshot)); fs.fsyncSync(descriptor); }
+114	  finally { fs.closeSync(descriptor); }
+115	  try {
+116	    // Atomic no-replace publication: readers can never see half a snapshot pair.
+117	    fs.linkSync(temporary, file);
+118	    const directory = fs.openSync(runRoot, 'r');
+119	    try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
+120	  } finally { fs.unlinkSync(temporary); }
+121	}
+122	
+123	export function frozenRegistryRecord(runtime: PreparedRuntime, definition: PipelineDefinition, graph: ExecutionGraphSnapshot): Readonly<Record<string, unknown>> {
+124	  const registrations = {
+125	    stages: [...runtime.snapshot.stages].map(([stageType, entry]) => ({ stageType, registration: entry.registration, provenance: entry.provenance })),
+126	    observers: [...runtime.snapshot.observers].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
+127	    adapters: [...runtime.snapshot.adapters].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
+128	  };
+129	  return Object.freeze({ effectAuditVersion: 'coordinator-mode.v1', dependencyIdentityVersion: 'parent-invocation.v1', configuration: runtime.configuration, apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,
+130	    enabledRegistrations: [...runtime.granted.enabledRegistrations].sort(), grants: [...runtime.granted.grants],
+131	    selectedProviders: [...runtime.granted.selectedProviders].map(([capability, entry]) => ({ capability, provider: entry.provenance })),
+132	    executionGraph: { pipelineId: graph.pipelineId, digest: graph.digest }, configuredStages: definition.stages.map((stage) => {
+133	      const owner = runtime.snapshot.stages.get(stage.type)!; return { stageId: stage.id, stageType: stage.type, owner: owner.provenance };
+134	    }) });
+135	}
+136	
+137	export function validateSignal(wait: NonNullable<StageRuntimeState['wait']>, signal: ResumeSignal, waitCreatedAt: string): void {
+138	  validateContractValue('resumeSignal', signal);
+139	  if (signal.waitId !== wait.waitId) throw new Error(`WAIT_SIGNAL_MISMATCH:${signal.waitId}`);
+140	  if (signal.signalType !== wait.signalType) throw new Error(`WAIT_SIGNAL_TYPE_MISMATCH:${signal.signalType}`);
+141	  if (signal.issuer.type !== wait.authorizedIssuer.type || signal.issuer.id !== wait.authorizedIssuer.id) throw new Error(`WAIT_ISSUER_DENIED:${signal.issuer.type}:${signal.issuer.id}`);
+142	  if (wait.expiresAt !== null && Date.now() >= Date.parse(wait.expiresAt)) throw new Error(`WAIT_EXPIRED:${wait.waitId}`);
+143	  if (Date.parse(signal.issuedAt) < Date.parse(waitCreatedAt)) throw new Error(`WAIT_SIGNAL_STALE:${signal.signalId}`);
+144	}
+skills/nova/core/execution/graph.ts SHA256 680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af
+1	import crypto from 'node:crypto';
+2	import { portableJson, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
+3	import { FrozenMap } from '@kubeclaw/plugin-foundation/registry/frozen-map';
+4	import { buildGraph } from './graph-build.ts';
+5	
+6	function canonical(value: unknown): string {
+7	  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
+8	  if (value && typeof value === 'object') return `{${Object.entries(value as Record<string, unknown>).sort(([left], [right]) => left.localeCompare(right)).map(([key, entry]) => `${JSON.stringify(key)}:${canonical(entry)}`).join(',')}}`;
+9	  return JSON.stringify(value) ?? 'null';
+10	}
+11	function deepFreeze<T>(value: T): T { if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value; for (const nested of Object.values(value as Record<string, unknown>)) deepFreeze(nested); return Object.freeze(value); }
+12	
+13	export interface ExecutionGraphSnapshot {
+14	  readonly schemaVersion: 'execution-graph-snapshot.v2' | 'execution-graph-snapshot.v3'; readonly pipelineId: string; readonly maxConcurrency: number;
+15	  readonly nodes: readonly StageDefinition[]; readonly ordinaryEdges: readonly Readonly<{ readonly from: string; readonly to: string }>[];
+16	  readonly remediationEdges: readonly Readonly<{ readonly from: string; readonly to: string }>[]; readonly digest: string;
+17	}
+18	
+19	export class ExecutionGraph {
+20	  readonly #stages: ReadonlyMap<string, StageDefinition>; readonly #dependents: ReadonlyMap<string, readonly string[]>;
+21	  readonly #ordinaryEdges: ExecutionGraphSnapshot['ordinaryEdges']; readonly #remediationEdges: ExecutionGraphSnapshot['remediationEdges'];
+22	  readonly #remediationOnlyTargets: ReadonlySet<string>;
+23	  constructor(stages: readonly StageDefinition[]) {
+24	    const built = buildGraph(stages);
+25	    this.#remediationOnlyTargets = built.remediationOnly;
+26	    this.#stages = new FrozenMap([...built.stages].sort(([left], [right]) => left.localeCompare(right)));
+27	    this.#dependents = new FrozenMap([...built.dependents].sort(([left], [right]) => left.localeCompare(right)).map(([id, values]) => [id, Object.freeze([...values].sort())]));
+28	    this.#ordinaryEdges = Object.freeze(built.ordinaryEdges.sort((left, right) => left.from.localeCompare(right.from) || left.to.localeCompare(right.to)));
+29	    this.#remediationEdges = Object.freeze(built.remediationEdges.sort((left, right) => left.from.localeCompare(right.from) || left.to.localeCompare(right.to)));
+30	    Object.freeze(this);
+31	  }
+32	  static fromDefinition(definition: PipelineDefinition): ExecutionGraph { if (!Number.isInteger(definition.maxConcurrency) || definition.maxConcurrency < 1) throw new Error('GRAPH_CONCURRENCY_INVALID'); return new ExecutionGraph(definition.stages); }
+33	  stage(id: string): StageDefinition { const stage = this.#stages.get(id); if (!stage) throw new Error(`GRAPH_STAGE_MISSING:${id}`); return stage; }
+34	  stages(): readonly StageDefinition[] { return Object.freeze([...this.#stages.values()]); }
+35	  dependents(id: string): readonly string[] { return this.#dependents.get(id) ?? Object.freeze([]); }
+36	  ordinaryEdges(): ExecutionGraphSnapshot['ordinaryEdges'] { return this.#ordinaryEdges; }
+37	  remediationEdges(): ExecutionGraphSnapshot['remediationEdges'] { return this.#remediationEdges; }
+38	  isRemediationOnlyTarget(id: string): boolean { return this.#remediationOnlyTargets.has(id); }
+39	  activation(id: string): StageDefinition['activation'] { return this.stage(id).activation; }
+40	  snapshot(pipelineId: string, maxConcurrency: number, version: ExecutionGraphSnapshot['schemaVersion'] = 'execution-graph-snapshot.v3'): ExecutionGraphSnapshot {
+41	    if (!Number.isInteger(maxConcurrency) || maxConcurrency < 1) throw new Error('GRAPH_CONCURRENCY_INVALID');
+42	    if (!['execution-graph-snapshot.v2', 'execution-graph-snapshot.v3'].includes(version)) throw new Error('GRAPH_SNAPSHOT_VERSION_INVALID');
+43	    const portable = version === 'execution-graph-snapshot.v3';
+44	    const compare = (left: string, right: string): number => left < right ? -1 : left > right ? 1 : 0;
+45	    const edges = (entries: ExecutionGraphSnapshot['ordinaryEdges']) => portable
+46	      ? [...entries].sort((left, right) => compare(left.from, right.from) || compare(left.to, right.to)) : entries;
+47	    const content = { schemaVersion: version, pipelineId, maxConcurrency,
+48	      nodes: portable ? [...this.stages()].sort((left, right) => compare(left.id, right.id)) : this.stages(),
+49	      ordinaryEdges: edges(this.#ordinaryEdges), remediationEdges: edges(this.#remediationEdges) };
+50	    return deepFreeze({ ...content, digest: `sha256:${crypto.createHash('sha256').update(portable ? portableJson(content) : canonical(content)).digest('hex')}` });
+51	  }
+52	  ready(completed: ReadonlySet<string>, active: ReadonlySet<string>): readonly StageDefinition[] {
+53	    return Object.freeze([...this.#stages.values()].filter((stage) => !completed.has(stage.id) && !active.has(stage.id)).filter((stage) => !this.#remediationOnlyTargets.has(stage.id)).filter((stage) => stage.dependsOn.every((dependency) => completed.has(dependency))).sort((left, right) => left.id.localeCompare(right.id)));
+54	  }
+55	}
+skills/nova/core/execution/pipeline-loop.ts SHA256 129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530
+1	import type { LifecycleEvent, StageDefinition, StageResult } from '@kubeclaw/plugin-sdk';
+2	import type { StageRuntimeState } from '../lifecycle/reducer.ts';
+3	import type { ExecutionGraph } from './graph.ts';
+4	import type { PipelineRunIdentity, PipelineRunResult, PipelineRunnerOptions } from './runner.ts';
+5	import { DecisionRecorder, type CompletedStageDecision } from './run-decisions.ts';
+6	import type { AppendLifecycleEvent, StageExecutor } from './stage-executor.ts';
+7	import type { ArtifactCheckpointRecorder } from './artifact-checkpoints.ts';
+8	
+9	interface LoopServices {
+10	  readonly options: PipelineRunnerOptions; readonly graph: ExecutionGraph; readonly maxConcurrency: number;
+11	  readonly overrides: Set<string>; readonly append: AppendLifecycleEvent; readonly flush: () => Promise<void>;
+12	  readonly checkpoints: ArtifactCheckpointRecorder;
+13	  readonly executor: StageExecutor; readonly result: (identity: PipelineRunIdentity, status: PipelineRunResult['status'], states: ReadonlyMap<string, StageRuntimeState>) => PipelineRunResult;
+14	}
+15	
+16	export class PipelineLoop {
+17	  readonly #services: LoopServices; readonly #states: Map<string, StageRuntimeState>; readonly #forced: string[] = []; readonly #forcedIds = new Set<string>();
+18	  constructor(services: LoopServices) { this.#services = services; this.#states = this.#initialStates(); }
+19	
+20	  async run(identity: PipelineRunIdentity): Promise<PipelineRunResult> {
+21	    this.#recordRunStart(identity); await this.#services.flush(); this.#restoreRemediation();
+22	    for (;;) {
+23	      const cancelled = await this.#cancelled(identity); if (cancelled) return cancelled;
+24	      const selection = await this.#selectReady(identity.runId); if (selection === 'continue') continue;
+25	      if (selection.length === 0) break;
+26	      const decisions = await Promise.all(selection.slice(0, this.#services.maxConcurrency).map((stage) => this.#execute(identity.runId, stage)));
+27	      const recorder = new DecisionRecorder(this.#states, this.#services.append, this.#services.options.orchestratorIssuerId,
+28	        (id) => this.#force(id), this.#services.checkpoints, this.#services.graph);
+29	      // Record completed siblings before repair invalidation so their old results
+30	      // cannot overwrite a newly pending evaluation in this batch.
+31	      decisions.sort((a, b) => Number(a.decision.action.type === 'schedule_remediation') - Number(b.decision.action.type === 'schedule_remediation'));
+32	      decisions.forEach((decision) => recorder.record(identity.runId, decision)); await this.#services.flush();
+33	      const outcome = recorder.outcome();
+34	      if (outcome.terminal) return this.#terminal(identity, outcome.terminal);
+35	      if (outcome.paused) return this.#services.result(identity, 'waiting', this.#states);
+36	    }
+37	    return this.#finalize(identity);
+38	  }
+39	
+40	  #initialStates(): Map<string, StageRuntimeState> {
+41	    return new Map(this.#services.options.initialStates ?? this.#services.graph.stages().map((stage) => [stage.id, {
+42	      stageId: stage.id, status: 'pending' as const, attemptNumber: 0, attemptsUsed: 0, remediationCyclesUsed: 0,
+43	    }] as const));
+44	  }
+45	
+46	  #recordRunStart(identity: PipelineRunIdentity): void {
+47	    const options = this.#services.options;
+48	    if (options.resume) {
+49	      if (!options.resumeEventAlreadyRecorded) this.#services.append('run.resumed', { runId: identity.runId }, { runIdentity: identity, ...(options.resumePayload ?? {}) });
+50	      return;
+51	    }
+52	    this.#services.append('run.created', { runId: identity.runId }, { runIdentity: identity }); this.#services.append('run.started', { runId: identity.runId });
+53	  }
+54	
+55	  #restoreRemediation(): void {
+56	    for (const [stageId, state] of this.#states) {
+57	      if (state.status !== 'waiting' || !state.remediationTarget) continue;
+58	      const target = this.#states.get(state.remediationTarget);
+59	      if (!target) throw new Error(`GRAPH_REMEDIATION_MISSING:${stageId}:${state.remediationTarget}`);
+60	      if (!target.remediationReturnTo) this.#states.set(state.remediationTarget, { ...target, status: 'pending', remediationReturnTo: stageId });
+61	    }
+62	    for (const [stageId, state] of this.#states) this.#restoreReturn(stageId, state);
+63	  }
+64	
+65	  #restoreReturn(stageId: string, state: StageRuntimeState): void {
+66	    if (!state.remediationReturnTo) return;
+67	    if (state.status === 'pending') { this.#force(stageId); return; }
+68	    if (state.status !== 'succeeded') return;
+69	    const requester = this.#states.get(state.remediationReturnTo); if (!requester) return;
+70	    const { remediationTarget: _target, ...requesterWithoutTarget } = requester;
+71	    const { remediationReturnTo, ...stageWithoutReturn } = state;
+72	    this.#states.set(remediationReturnTo, { ...requesterWithoutTarget, status: 'pending' }); this.#states.set(stageId, stageWithoutReturn);
+73	  }
+74	
+75	  async #cancelled(identity: PipelineRunIdentity): Promise<PipelineRunResult | undefined> {
+76	    if (!this.#services.options.signal?.aborted) return undefined;
+77	    for (const [stageId, state] of this.#states) {
+78	      if (['skipped', 'succeeded', 'failed', 'blocked', 'cancelled'].includes(state.status)) continue;
+79	      this.#states.set(stageId, { ...state, status: 'cancelled' });
+80	      this.#services.append('stage.cancelled', { runId: identity.runId, stageId }, { attemptsUsed: state.attemptsUsed, remediationCyclesUsed: state.remediationCyclesUsed });
+81	    }
+82	    this.#services.append('run.cancelled', { runId: identity.runId }); await this.#services.flush();
+83	    return this.#services.result(identity, 'cancelled', this.#states);
+84	  }
+85	
+86	  async #selectReady(runId: string): Promise<readonly StageDefinition[] | 'continue'> {
+87	    const completed = new Set([...this.#states].filter(([, state]) => state.status === 'succeeded' || state.status === 'skipped').map(([id]) => id));
+88	    const active = new Set([...this.#states].filter(([, state]) => !['pending', 'skipped', 'succeeded'].includes(state.status)).map(([id]) => id));
+89	    let ready = this.#forcedReady(completed, active);
+90	    const skipped = ready.filter((stage) => this.#shouldSkip(stage));
+91	    skipped.forEach((stage) => this.#skip(runId, stage));
+92	    if (skipped.length === 0) return ready;
+93	    const skippedIds = new Set(skipped.map(({ id }) => id)); ready = ready.filter(({ id }) => !skippedIds.has(id)); await this.#services.flush();
+94	    return ready.length === 0 ? 'continue' : ready;
+95	  }
+96	
+97	  #forcedReady(completed: ReadonlySet<string>, active: ReadonlySet<string>): readonly StageDefinition[] {
+98	    const forced = this.#nextForced(); if (!forced) return this.#services.graph.ready(completed, active);
+99	    const definition = this.#services.graph.stage(forced); const returnTo = this.#states.get(forced)?.remediationReturnTo;
+100	    const dependenciesReady = definition.dependsOn.every((dependency) => dependency === returnTo || completed.has(dependency));
+101	    if (dependenciesReady) return [definition];
+102	    this.#force(forced); return this.#services.graph.ready(completed, active);
+103	  }
+104	
+105	  #shouldSkip(definition: StageDefinition): boolean {
+106	    const activation = this.#services.graph.activation(definition.id); if (!activation) return false;
+107	    const source = this.#states.get(activation.sourceStage); return !source?.facts || !Object.is(source.facts[activation.fact], activation.equals);
+108	  }
+109	
+110	  #skip(runId: string, definition: StageDefinition): void {
+111	    const current = this.#states.get(definition.id)!; const activation = this.#services.graph.activation(definition.id)!;
+112	    const observed = this.#states.get(activation.sourceStage)?.facts?.[activation.fact]; this.#states.set(definition.id, { ...current, status: 'skipped' });
+113	    this.#services.append('stage.skipped', { runId, stageId: definition.id }, { stageType: definition.type, reason: { code: 'core.activation_condition_not_met', details: {
+114	      sourceStage: activation.sourceStage, fact: activation.fact, equals: activation.equals, factPresent: observed !== undefined, ...(observed !== undefined ? { observed } : {}),
+115	    } }, attemptsUsed: current.attemptsUsed, remediationCyclesUsed: current.remediationCyclesUsed });
+116	  }
+117	
+118	  async #execute(runId: string, definition: StageDefinition): Promise<CompletedStageDecision> {
+119	    const current = this.#states.get(definition.id)!; const override = this.#services.overrides.delete(definition.id);
+120	    if (current.attemptsUsed >= definition.execution.maxAttempts && !override) return { definition, administrativeOverride: false, decision: {
+121	      state: { ...current, status: 'blocked' }, action: { type: 'stop' }, result: { schemaVersion: 'stage-result.v2', outcome: 'blocked',
+122	        reason: { code: 'core.attempt_budget_exhausted', message: `Attempt budget exhausted for ${definition.id}` }, artifacts: [] },
+123	    } };
+124	    this.#states.set(definition.id, { ...current, status: 'running' });
+125	    this.#services.append('stage.started', { runId, stageId: definition.id }, { stageType: definition.type,
+126	      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });
+127	    await this.#services.flush();
+128	    const decision = await this.#services.executor.execute(runId, current, current.continuationGuidance ?? this.#services.options.resumeGuidance?.get(definition.id));
+129	    return { definition, decision, administrativeOverride: override };
+130	  }
+131	
+132	  async #terminal(identity: PipelineRunIdentity, status: 'failed' | 'blocked' | 'cancelled'): Promise<PipelineRunResult> {
+133	    this.#services.append(`run.${status}` as LifecycleEvent['type'], { runId: identity.runId }); await this.#services.flush();
+134	    return this.#services.result(identity, status, this.#states);
+135	  }
+136	
+137	  async #finalize(identity: PipelineRunIdentity): Promise<PipelineRunResult> {
+138	    const statuses = [...this.#states.values()].map(({ status }) => status);
+139	    const complete = [...this.#states].every(([id, state]) => state.status === 'succeeded' || state.status === 'skipped'
+140	      || (state.status === 'pending' && this.#services.graph.isRemediationOnlyTarget(id) && !state.remediationReturnTo));
+141	    const status: PipelineRunResult['status'] = complete ? 'succeeded' : ['failed', 'blocked', 'cancelled', 'waiting'].find((candidate) => statuses.includes(candidate as StageRuntimeState['status'])) as PipelineRunResult['status'] ?? 'failed';
+142	    if (status !== 'waiting') this.#services.append(`run.${status}` as LifecycleEvent['type'], { runId: identity.runId });
+143	    await this.#services.flush(); return this.#services.result(identity, status, this.#states);
+144	  }
+145	
+146	  #force(stageId: string): void { if (!this.#forcedIds.has(stageId)) { this.#forcedIds.add(stageId); this.#forced.push(stageId); } }
+147	  #nextForced(): string | undefined { const id = this.#forced.shift(); if (id) this.#forcedIds.delete(id); return id; }
+148	}
+skills/nova/core/state/journal.ts SHA256 25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf
+1	import {hashJournalRecord as recordHash, parseHashJournal} from '@kubeclaw/plugin-foundation/observability/hash-journal';
+2	import fs from 'node:fs';
+3	import path from 'node:path';
+4	import { FileMutex } from './file-mutex.ts';
+5	import { snapshotJson } from './json-value.ts';
+6	
+7	export interface JournalRecord<T> {
+8	  readonly sequence: number;
+9	  readonly previousHash: string | null;
+10	  readonly hash: string;
+11	  readonly entry: T;
+12	}
+13	
+14	export function parseJournalRecords<T>(buffer: Buffer, records: JournalRecord<T>[], file: string): void {
+15	    for (const record of parseHashJournal<T>(buffer,file,records.length,records.at(-1)?.hash??null)) {
+16	      records.push(snapshotJson(record));
+17	    }
+18	  }
+19	
+20	
+21	export class FileJournal<T> {
+22	  readonly #file: string;
+23	  readonly #mutex: FileMutex;
+24	  #records: JournalRecord<T>[];
+25	  #offset: number;
+26	  #identity: string | undefined;
+27	  #mtimeMs: number | undefined;
+28	  #ctimeMs: number | undefined;
+29	
+30	  constructor(file: string, appendLockTimeoutMs = 5_000) {
+31	    if (!Number.isSafeInteger(appendLockTimeoutMs) || appendLockTimeoutMs < 1) {
+32	      throw new Error('JOURNAL_APPEND_LOCK_TIMEOUT_INVALID');
+33	    }
+34	    this.#file = path.resolve(file);
+35	    fs.mkdirSync(path.dirname(this.#file), { recursive: true });
+36	    this.#mutex = new FileMutex(`${this.#file}.append-lock`, appendLockTimeoutMs, `JOURNAL_APPEND_LOCK_TIMEOUT:${this.#file}`);
+37	    const loaded = this.#mutex.withLock(() => this.#load());
+38	    this.#records = loaded.records;
+39	    this.#offset = loaded.offset;
+40	    this.#identity = loaded.identity;
+41	    this.#mtimeMs = loaded.mtimeMs;
+42	    this.#ctimeMs = loaded.ctimeMs;
+43	  }
+44	
+45	  #fileState(): { identity: string; size: number; mtimeMs: number; ctimeMs: number } | undefined {
+46	    try {
+47	      const stat = fs.statSync(this.#file);
+48	      return { identity: `${stat.dev}:${stat.ino}`, size: stat.size, mtimeMs: stat.mtimeMs, ctimeMs: stat.ctimeMs };
+49	    } catch (error) {
+50	      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
+51	      throw error;
+52	    }
+53	  }
+54	
+55	  #parse(buffer: Buffer, records: JournalRecord<T>[]): void {
+56	    parseJournalRecords(buffer, records, this.#file);
+57	  }
+58	
+59	  #recoverIncompleteTail(buffer: Buffer): Buffer {
+60	    if (buffer.length === 0 || buffer.at(-1) === 0x0a) return buffer;
+61	    const committedBytes = buffer.lastIndexOf(0x0a) + 1;
+62	    const descriptor = fs.openSync(this.#file, 'r+');
+63	    try {
+64	      fs.ftruncateSync(descriptor, committedBytes);
+65	      fs.fsyncSync(descriptor);
+66	    } finally {
+67	      fs.closeSync(descriptor);
+68	    }
+69	    return buffer.subarray(0, committedBytes);
+70	  }
+71	
+72	  #load(): { records: JournalRecord<T>[]; offset: number; identity: string | undefined; mtimeMs: number | undefined; ctimeMs: number | undefined } {
+73	    if (!fs.existsSync(this.#file)) return { records: [], offset: 0, identity: undefined, mtimeMs: undefined, ctimeMs: undefined };
+74	    const buffer = this.#recoverIncompleteTail(fs.readFileSync(this.#file));
+75	    const records: JournalRecord<T>[] = [];
+76	    this.#parse(buffer, records);
+77	    const state = this.#fileState();
+78	    if (!state || state.size !== buffer.length) throw new Error(`JOURNAL_CHANGED_DURING_READ:${this.#file}`);
+79	    return { records, offset: buffer.length, identity: state.identity, mtimeMs: state.mtimeMs, ctimeMs: state.ctimeMs };
+80	  }
+81	
+82	  #adoptReloaded(loaded: { records: JournalRecord<T>[]; offset: number; identity: string | undefined; mtimeMs: number | undefined; ctimeMs: number | undefined }): void {
+83	    if (loaded.records.length < this.#records.length
+84	      || this.#records.some((record, index) => loaded.records[index]?.hash !== record.hash)) {
+85	      throw new Error(`JOURNAL_REWIND_OR_DIVERGENCE:${this.#file}`);
+86	    }
+87	    this.#records = loaded.records;
+88	    this.#offset = loaded.offset;
+89	    this.#identity = loaded.identity;
+90	    this.#mtimeMs = loaded.mtimeMs;
+91	    this.#ctimeMs = loaded.ctimeMs;
+92	  }
+93	
+94	  #synchronize(): void {
+95	    const state = this.#fileState();
+96	    if (state === undefined) {
+97	      if (this.#offset !== 0 || this.#records.length !== 0) throw new Error(`JOURNAL_REMOVED:${this.#file}`);
+98	      return;
+99	    }
+100	    if (state.identity !== this.#identity || state.size < this.#offset
+101	      || (state.size === this.#offset && (state.mtimeMs !== this.#mtimeMs || state.ctimeMs !== this.#ctimeMs))) {
+102	      this.#adoptReloaded(this.#load());
+103	      return;
+104	    }
+105	    if (state.size === this.#offset) return;
+106	    const length = state.size - this.#offset;
+107	    const descriptor = fs.openSync(this.#file, 'r');
+108	    try {
+109	      const buffer = Buffer.allocUnsafe(length);
+110	      const read = fs.readSync(descriptor, buffer, 0, length, this.#offset);
+111	      if (read !== length) throw new Error(`JOURNAL_TAIL_READ_INCOMPLETE:${this.#file}`);
+112	      if (buffer.at(-1) !== 0x0a) {
+113	        this.#adoptReloaded(this.#load());
+114	        return;
+115	      }
+116	      this.#parse(buffer, this.#records);
+117	      this.#offset = state.size;
+118	      this.#mtimeMs = state.mtimeMs;
+119	      this.#ctimeMs = state.ctimeMs;
+120	    } finally {
+121	      fs.closeSync(descriptor);
+122	    }
+123	  }
+124	
+125	  #appendUnlocked(entry: T): JournalRecord<T> {
+126	    entry = snapshotJson(entry);
+127	    const sequence = this.#records.length + 1;
+128	    const previousHash = this.#records.at(-1)?.hash ?? null;
+129	    const record: JournalRecord<T> = Object.freeze({
+130	      sequence,
+131	      previousHash,
+132	      hash: recordHash(sequence, previousHash, entry),
+133	      entry,
+134	    });
+135	    const serialized = Buffer.from(`${JSON.stringify(record)}\n`);
+136	    const descriptor = fs.openSync(this.#file, 'a');
+137	    try {
+138	      let written = 0;
+139	      while (written < serialized.length) {
+140	        const count = fs.writeSync(descriptor, serialized, written, serialized.length - written);
+141	        if (count < 1) throw new Error(`JOURNAL_APPEND_WRITE_INCOMPLETE:${this.#file}`);
+142	        written += count;
+143	      }
+144	      fs.fsyncSync(descriptor);
+145	    } finally {
+146	      fs.closeSync(descriptor);
+147	    }
+148	    this.#records.push(record);
+149	    this.#offset += serialized.length;
+150	    const state = this.#fileState();
+151	    if (!state || state.size !== this.#offset) throw new Error(`JOURNAL_APPEND_SIZE_MISMATCH:${this.#file}`);
+152	    this.#identity = state.identity;
+153	    this.#mtimeMs = state.mtimeMs;
+154	    this.#ctimeMs = state.ctimeMs;
+155	    return record;
+156	  }
+157	
+158	  transact<R>(
+159	    operation: (
+160	      records: readonly JournalRecord<T>[],
+161	      append: (entry: T) => JournalRecord<T>,
+162	    ) => R,
+163	  ): R {
+164	    return this.#mutex.withLock(() => {
+165	      this.#synchronize();
+166	      let active = true;
+167	      try {
+168	        return operation(
+169	          Object.freeze([...this.#records]),
+170	          (entry) => {
+171	            if (!active) throw new Error('JOURNAL_TRANSACTION_CLOSED');
+172	            return this.#appendUnlocked(entry);
+173	          },
+174	        );
+175	      } finally { active = false; }
+176	    });
+177	  }
+178	
+179	  append(entry: T): JournalRecord<T> {
+180	    return this.transact((_records, append) => append(entry));
+181	  }
+182	
+183	  appendSequenced<U extends T>(create: (sequence: number) => U): JournalRecord<U> {
+184	    return this.transact((records, append) => append(create(records.length + 1))) as JournalRecord<U>;
+185	  }
+186	
+187	  records(): readonly JournalRecord<T>[] {
+188	    return Object.freeze([...this.#records]);
+189	  }
+190	
+191	  refresh(): readonly JournalRecord<T>[] {
+192	    return this.#mutex.withLock(() => {
+193	      this.#synchronize();
+194	      return this.records();
+195	    });
+196	  }
+197	}
+skills/common/plugin-runtime/sdk/src/values.ts SHA256 b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f
+1	import { createHash } from 'node:crypto';
+2	import { types } from 'node:util';
+3	
+4	export type OptionalAbsenceReader<T> = () => T;
+5	export type ValueRecord = Record<string, any>;
+6	
+7	export function selectDefinedValue<T>(...readers: Array<OptionalAbsenceReader<T>>): T {
+8	  let lastValue: T | undefined;
+9	  for (const reader of readers) {
+10	    const value = reader();
+11	    lastValue = value;
+12	    if (value !== undefined && value !== null) return value;
+13	  }
+14	  return lastValue as T;
+15	}
+16	
+17	export function selectTruthyValue<T>(...readers: Array<OptionalAbsenceReader<T>>): T {
+18	  let lastValue: T | undefined;
+19	  for (const reader of readers) {
+20	    const value = reader();
+21	    lastValue = value;
+22	    if (value) return value;
+23	  }
+24	  return lastValue as T;
+25	}
+26	
+27	export function arrayValue<T = any>(value: unknown): T[] {
+28	  return Array.isArray(value) ? value as T[] : [];
+29	}
+30	
+31	export function objectRecord(value: unknown): ValueRecord {
+32	  return value && typeof value === 'object' && !Array.isArray(value) ? value as ValueRecord : {};
+33	}
+34	
+35	export function textValue(value: unknown): string {
+36	  return typeof value === 'string' ? value : '';
+37	}
+38	
+39	export function selectPresentValue(...values: unknown[]): string {
+40	  return values.find((value) => typeof value === 'string' && value.length > 0) as string | undefined ?? '';
+41	}
+42	
+43	// Preserve the existing ordering: these bytes already identify durable artifacts
+44	// and effect payloads. A portable ordering requires a separately versioned cutover.
+45	export function canonicalJson(value: unknown): string {
+46	  return serializeJsonValue(value, new Set(), (left, right) => left.localeCompare(right));
+47	}
+48	
+49	function dataProperty(value: object, key: PropertyKey): unknown {
+50	  const descriptor = Object.getOwnPropertyDescriptor(value, key);
+51	  if (!descriptor || !('value' in descriptor) || !descriptor.enumerable) {
+52	    throw new Error('CANONICAL_JSON_PROPERTY_INVALID');
+53	  }
+54	  return descriptor.value;
+55	}
+56	
+57	type KeyOrder = (left: string, right: string) => number;
+58	
+59	/** Named UTF-16 code-unit ordering; JSON scalar rules and validation match the legacy codec. */
+60	export const PORTABLE_JSON_ENCODING = 'kubeclaw-json.utf16.v1' as const;
+61	export function portableJson(value: unknown): string {
+62	  return serializeJsonValue(value, new Set(), (left, right) => left < right ? -1 : left > right ? 1 : 0);
+63	}
+64	
+65	function serializeJsonValue(value: unknown, seen: Set<object>, order: KeyOrder): string {
+66	  if (value === null || typeof value === 'string' || typeof value === 'boolean') return JSON.stringify(value);
+67	  if (typeof value === 'number') {
+68	    if (!Number.isFinite(value)) throw new Error('CANONICAL_JSON_NUMBER_INVALID');
+69	    return JSON.stringify(value);
+70	  }
+71	  if (typeof value !== 'object') throw new Error('CANONICAL_JSON_VALUE_UNSUPPORTED');
+72	  if (types.isProxy(value)) throw new Error('CANONICAL_JSON_PROXY_UNSUPPORTED');
+73	  if (seen.has(value)) throw new Error('CANONICAL_JSON_CYCLE');
+74	  seen.add(value);
+75	  try {
+76	    const keys = Reflect.ownKeys(value);
+77	    if (Array.isArray(value)) return serializeJsonArray(value, keys, seen, order);
+78	    const prototype = Object.getPrototypeOf(value);
+79	    if (prototype !== Object.prototype && prototype !== null) throw new Error('CANONICAL_JSON_PROTOTYPE_INVALID');
+80	    if (keys.some((key) => typeof key !== 'string')) throw new Error('CANONICAL_JSON_PROPERTY_INVALID');
+81	    return `{${(keys as string[]).sort(order)
+82	      .map((key) => `${JSON.stringify(key)}:${serializeJsonValue(dataProperty(value, key), seen, order)}`)
+83	      .join(',')}}`;
+84	  } finally {
+85	    seen.delete(value);
+86	  }
+87	}
+88	
+89	function serializeJsonArray(value: unknown[], keys: PropertyKey[], seen: Set<object>, order: KeyOrder): string {
+90	  if (Object.getPrototypeOf(value) !== Array.prototype) throw new Error('CANONICAL_JSON_PROTOTYPE_INVALID');
+91	  if (keys.length !== value.length + 1) throw new Error('CANONICAL_JSON_ARRAY_INVALID');
+92	  const entries: string[] = [];
+93	  for (let index = 0; index < value.length; index++) {
+94	    entries.push(serializeJsonValue(dataProperty(value, String(index)), seen, order));
+95	  }
+96	  return `[${entries.join(',')}]`;
+97	}
+98	
+99	export function sha256Text(value: string): `sha256:${string}` {
+100	  return `sha256:${createHash('sha256').update(value).digest('hex')}`;
+101	}
+102	
+103	export function sha256Bytes(value: Uint8Array): `sha256:${string}` {
+104	  return `sha256:${createHash('sha256').update(value).digest('hex')}`;
+105	}
+106	
+107	const DEFAULT_SENSITIVE_KEY = /(?:authorization|cookie|password|secret|token|api[_-]?key|credential)/i;
+108	
+109	function redact(value: unknown, depth: number): unknown {
+110	  if (depth > 16) return '[truncated]';
+111	  if (Array.isArray(value)) {
+112	    return value.slice(0, 1_000).map((entry) => redact(entry, depth + 1));
+113	  }
+114	  if (value && typeof value === 'object') {
+115	    return Object.fromEntries(Object.entries(value as Record<string, unknown>)
+116	      .slice(0, 1_000)
+117	      .map(([key, entry]) => [
+118	        key,
+119	        DEFAULT_SENSITIVE_KEY.test(key) ? '[redacted]' : redact(entry, depth + 1),
+120	      ]));
+121	  }
+122	  if (typeof value === 'string' && value.length > 65_536) return `${value.slice(0, 65_536)}[truncated]`;
+123	  return value;
+124	}
+125	
+126	export function redactStructuredValue(value: unknown): unknown {
+127	  return redact(value, 0);
+128	}
+contracts/pipeline-worker-core/v1/src/digest.ts SHA256 10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780
+1	import crypto from 'node:crypto';
+2	
+3	function compareText(left: string, right: string): number {
+4	  // RFC 8785 section 3.2.3 requires raw UTF-16 code-unit ordering.
+5	  return left < right ? -1 : left > right ? 1 : 0;
+6	}
+7	
+8	function encodeString(value: string): string {
+9	  for (let index = 0; index < value.length; index += 1) {
+10	    const unit = value.charCodeAt(index);
+11	    if (unit >= 0xd800 && unit <= 0xdbff) {
+12	      const next = value.charCodeAt(index + 1);
+13	      if (!(next >= 0xdc00 && next <= 0xdfff)) throw new TypeError('RFC8785_INVALID_UNICODE');
+14	      index += 1;
+15	    } else if (unit >= 0xdc00 && unit <= 0xdfff) {
+16	      throw new TypeError('RFC8785_INVALID_UNICODE');
+17	    }
+18	  }
+19	  return JSON.stringify(value);
+20	}
+21	
+22	export function canonicalJson(value: unknown): string {
+23	  if (value === null) return 'null';
+24	  if (typeof value === 'string') return encodeString(value);
+25	  if (typeof value === 'boolean') return value ? 'true' : 'false';
+26	  if (typeof value === 'number') {
+27	    if (!Number.isFinite(value)) throw new TypeError('RFC8785_INVALID_NUMBER');
+28	    return JSON.stringify(value);
+29	  }
+30	  if (typeof value !== 'object') throw new TypeError('RFC8785_INVALID_TYPE');
+31	  if (Array.isArray(value)) {
+32	    const items: string[] = [];
+33	    for (let index = 0; index < value.length; index += 1) {
+34	      if (!Object.hasOwn(value, index)) throw new TypeError('RFC8785_INVALID_ARRAY');
+35	      items.push(canonicalJson(value[index]));
+36	    }
+37	    return `[${items.join(',')}]`;
+38	  }
+39	  const prototype = Object.getPrototypeOf(value);
+40	  if (prototype !== Object.prototype && prototype !== null) throw new TypeError('RFC8785_INVALID_OBJECT');
+41	  return `{${Object.entries(value as Record<string, unknown>)
+42	    .sort(([left], [right]) => compareText(left, right))
+43	    .map(([key, child]) => `${encodeString(key)}:${canonicalJson(child)}`)
+44	    .join(',')}}`;
+45	}
+46	
+47	export function sha256Digest(value: unknown): string {
+48	  return `sha256:${crypto.createHash('sha256').update(canonicalJson(value)).digest('hex')}`;
+49	}
+50	
+51	export function sha256Text(value: string): string {
+52	  return `sha256:${crypto.createHash('sha256').update(value, 'utf8').digest('hex')}`;
+53	}
+54	
+55	export function workerProfileDigest(profile: Readonly<object>): string {
+56	  const { profileDigest: _profileDigest, ...unsigned } = profile as Readonly<Record<string, unknown>>;
+57	  return sha256Digest(unsigned);
+58	}
+59	
+60	export function workerAttemptSpecDigest(envelope: Readonly<object>): string {
+61	  const { attemptSpecDigest: _attemptSpecDigest, claim: _claim, ...unsigned }
+62	    = envelope as Readonly<Record<string, unknown>>;
+63	  return sha256Digest(unsigned);
+64	}
+65	
+66	export function workerAttemptResultDigest(result: Readonly<object>): string {
+67	  const { resultDigest: _resultDigest, receipt: _receipt, ...unsigned }
+68	    = result as Readonly<Record<string, unknown>>;
+69	  return sha256Digest(unsigned);
+70	}
+docs/review/remediation/decisions.md SHA256 b4d9b29911643d08fc6ef439b88dec4ef3e6a4f355ea591ff3f6db9e3f152d1b
+1	# Bestätigte Zielentscheidungen
+2	
+3	Stand: 2026-09-09. Vom Auftraggeber in der Planungssitzung ausdrücklich bestätigt, einschließlich seiner Korrekturen. **Zielvorgaben für die Behebung, keine Behauptung bereits implementierten Verhaltens.** Historische Reviewberichte bleiben unverändert. Technische Ausgestaltung erfolgt in den zugeordneten Arbeitspaketen; Abweichungen von diesen Entscheidungen benötigen eine neue ausdrückliche Entscheidung.
+4	
+5	## D01 — Vollständige Diagnose, Demo-Credentials und Logsammlung
+6	
+7	- Relevant ausgeführte Aktionen nachvollziehbar erfassen: wer, was, wo, wann und wie; Projekt, Run, Modul, Stage, Versuch und externe Auftragsidentität soweit anwendbar mitführen. Eingaben, Ausgaben, Zustandsänderungen, Fehlerursache und Fortsetzung müssen nachvollziehbar bleiben.
+8	- Fehler explizit berichten: betroffene Operation, Originalursache und Diagnose erhalten; nicht hinter generischen Fehlermeldungen verbergen.
+9	- Ausschließlich **von der Pipeline erzeugte Demo-Zugangsdaten** dürfen ungeschwärzt in Logs und autorisierten Operatorbenachrichtigungen stehen. Langlebige Plattform-Secrets, GitHub-/Modellanbieter-/Tailscale-Tokens, Plattform-DBzugänge und echte Benutzerdaten bleiben geschützt. Kein pauschales Abschalten von Schutzmechanismen. Die Ausnahme richtet sich nach Herkunft/Zweck des Credentials, nicht allein nach Namespace oder Feldname.
+10	- Clawdeck übernimmt die dauerhafte Logsammlung. Es wird kein zusätzlicher zentraler Pipeline-Logspeicher als Produktanforderung eingeführt. Vorhandene lokale Log-/Artefaktverträge müssen dennoch konsistent funktionieren; keine Dummy-Speicherung oder stiller Logverlust zur Erfüllung eines Pflichtcallbacks.
+11	- Große Ausgaben vollständig als Dateien/Artefakte erhalten und aus Ereignissen/Benachrichtigungen verlinken. Anzeigeverkürzung ausdrücklich kennzeichnen; sie darf keine unbemerkte Kürzung des gespeicherten Originals sein. Relevante konkrete Fehler und Ergebnisse bleiben in Nachrichten sichtbar.
+12	- Diese Regel erlaubt keine öffentliche Veröffentlichung von Logs, Secrets oder Betreiberkonfiguration. Sie betrifft den vorgesehenen privaten Diagnose-/Operatorpfad.
+13	
+14	## D02 — Technische Lieferung und menschliche Abnahme
+15	
+16	- **Bereit zur Abnahme:** Implementation abgeschlossen, verpflichtende Prüfungen bestanden, exakt der geprüfte Stand als Demo erreichbar und URL samt Demo-Zugangsdaten dem Operator zugestellt.
+17	- **Abgenommen:** ausdrückliche Zustimmung des Operators zu genau dieser Version.
+18	- Änderungswünsche erzeugen weitere Arbeit und erneute Prüfung des geänderten Stands. Eine alte Abnahme ist keine Freigabe einer neuen Version.
+19	- Pipeline Review und Case Study bleiben optional. Eine abgelaufene Demo wird als abgelaufen dargestellt; bereits erteilte Abnahme bleibt historisch gültig.
+20	
+21	## D03 — Pflichtprüfungen und optionale Agenten
+22	
+23	- Lint nach jeder Moduländerung verpflichtend, einschließlich Reparaturen.
+24	- Deterministische Tests mit ausdrücklich definiertem Pflichtumfang pro Modul. Vor technischer Lieferung zusätzlich kumulative Prüfung des integrierten Projekts. Testauswahl ist projektspezifisch; nicht jede vorhandene Suite muss für jede Anwendung laufen. Übersprungene Pflichtprüfungen zählen nicht als bestanden. Pflichtumfang nicht stillschweigend reduzieren.
+25	- Architektur: **nur der deterministische Teil ist Pflicht**, um erforderliche Struktur, Konfiguration und Referenzen zu prüfen. Agentisches Architekturreview ist optional. Die frühere Empfehlung eines generell verpflichtenden agentischen Architekturreviews wurde ausdrücklich korrigiert.
+26	- Echo-Code-Review: optional, standardmäßig **aus**.
+27	- Buster einschließlich Test-Agent: standardmäßig **an**. Der Test-Agent bleibt separat abschaltbar; vereinbarte deterministische Pflichtprüfungen bleiben verbindlich. Buster ist nicht allein mit seinem optionalen Test-Agent gleichzusetzen.
+28	- Aktivierte Review-/Agentprüfungen sind verbindlich gemäß D10. Pipeline Review und Case Study sind optionale Abschlussauswertungen, keine Ersatztests.
+29	
+30	## D04 — Getrennte Reparaturbudgets und einmalige Nova-Eskalation
+31	
+32	- Pro Modul gibt es getrennte Budgets: **zwei Lint-Reparaturrunden, zwei Review-Reparaturrunden und zwei Test-Reparaturrunden**. Reviewbudget nur bei aktiviertem Review. Keine gemeinsame Zweiergrenze und keine drei Standardrunden.
+33	- Erstimplementation und reine Wiederprüfungen zählen nicht als Reparatur. Eine Reparatur wird dem auslösenden Prüfschritt zugerechnet; danach erforderliche andere Prüfungen bleiben verpflichtend. Bereits verbrauchte Budgets bleiben erhalten, auch bei Invalidierung oder Neustart.
+34	- Eine weitere notwendige Reparatur über ein ausgeschöpftes Kategorienbudget führt zu **Needs Nova** mit vollständiger Fehler-/Änderungshistorie. Erfolg nach der letzten erlaubten Reparatur wird nicht allein wegen des Zählerstands blockiert.
+35	- Nova darf **einmal pro Modul genau einen zusätzlichen Reparaturauftrag** geben. Führt dieser einschließlich aller notwendigen Wiederprüfungen nicht zum Erfolg, folgt **blocked**; weitere Arbeit benötigt die Entscheidung des Operators. Keine zwei zusätzlichen Nova-Runden und kein automatischer Reset aller Budgets.
+36	- Nova darf Anforderungen oder Pflichtprüfungen nicht eigenständig abschwächen. Fachliche Entscheidung und bewilligter zusätzlicher Auftrag müssen dauerhaft nachvollziehbar sein.
+37	
+38	## D05 — Parallele Module und kontrollierte Integration
+39	
+40	- Unabhängige Module in getrennten autorisierten Worktrees parallel bearbeiten.
+41	- Kurze gemeinsame Gitintegrationen serialisieren; normale Lockkonkurrenz kontrolliert behandeln.
+42	- Abhängige Module erst nach bestandenen Pflichtprüfungen ihrer Voraussetzungen starten.
+43	- Maximalparallelität konfigurierbar. Den tatsächlich integrierten Stand anschließend kumulativ prüfen.
+44	
+45	## D06 — Demo-Lebensdauer
+46	
+47	- Standardmäßig **eine Woche (sieben Tage) ab Bereit zur Abnahme**, pro Projekt konfigurierbar und verlängerbar.
+48	- Operator kann jederzeit vorzeitig bereinigen. Vor Ablauf benachrichtigen.
+49	- Namespace, Zugangs-URL/Exposure und Demo-Credentials haben denselben Lebenszyklus. Planende darf die übertragene Operator-Exposure nicht vorzeitig löschen.
+50	- Nach Ablauf beziehungsweise expliziter Bereinigung Demo-Ressourcen entfernen. Code, Berichte, Logs und Abnahmestatus folgen D07; die Demo-TTL ist keine Log-TTL.
+51	
+52	## D07 — Aufbewahrung ohne automatische Loglöschung
+53	
+54	- Logs auf Disk oder in Git bleiben **auf unbestimmte Zeit bis zur manuellen Bereinigung durch den Operator**. Die vorgeschlagene automatische 30-Tage-Löschung wurde verworfen.
+55	- Code, finale Berichte, Entscheidungen und Abnahmehistorie bleiben bis zur ausdrücklichen Projektlöschung erhalten.
+56	- Solange ein Run auf Entscheidung wartet, seine zur Fortsetzung/Prüfung erforderlichen Belege erhalten. Explizite Bereinigung darf nicht unbemerkt einen fortsetzbaren Run unbrauchbar machen; Konsequenz sichtbar machen.
+57	- Vollständige große Ausgaben wie in D01; Clawdeck bleibt Logsammlung. Eine konkrete Clawdeck-interne Löschfrist wurde nicht festgelegt.
+58	- Nicht alle Caches, entpackten Quellen oder temporären Buildverzeichnisse sind Logs. D07 erklärt diese nicht pauschal für unbefristet aufzubewahren. Speicherbudgets, Backpressure und explizite Kapazitätsfehler dürfen Datenverlust nicht durch stille Kürzung/Löschung verdecken.
+59	
+60	## D08 — Technische Wiederaufnahme
+61	
+62	- Sicher wiederholbare Arbeit automatisch fortsetzen.
+63	- Bei möglicherweise bereits ausgeführten externen Aktionen zuerst tatsächlichen Zustand ermitteln und vorhandene Arbeit übernehmen, beispielsweise Git-Push oder angenommener Buster-Auftrag.
+64	- Bleibt der Ausgang unklar: Needs Nova mit konkreter Diagnose, keine blinde Wiederholung ungewisser Seiteneffekte. Auch ein zusätzlicher Auftrag nach D04 hebt diese Integritätsgrenze nicht auf.
+65	- Technische Wiederholungen verbrauchen kein fachliches Reparaturbudget; eigene konfigurierbare Zeit-/Versuchslimits verhindern Endlosschleifen.
+66	
+67	## D09 — Generischer Worker-Core
+68	
+69	- Derselbe Core für Buster, Prism und weitere Worker: Auftragsidentität, Status, Timeout, Abbruch, Wiederaufnahme und Ergebnisübergabe.
+70	- Fachlogik in getrennten Engines. Workerfähigkeiten und Ressourcen pro Worker konfigurierbar.
+71	- Nova steuert den Gesamtprozess; Worker führen Aufträge aus. Generischer Core importiert keine konkreten Plugins.
+72	- Dauerhafter Ausführungszustand besteht unabhängig von Clawdeck. Logsammlung ist keine Voraussetzung für korrekte Recovery; benötigte Auftrags-/Ergebnisbelege sind trotzdem zuverlässig zu persistieren.
+73	
+74	## D10 — Bewusste Risikoakzeptanz
+75	
+76	- Ausschließlich der Operator darf fachliche Qualitätsrisiken bewusst akzeptieren, mit Begründung und Bindung an den geprüften Stand. Nova darf diese Freigabe nicht selbst erteilen.
+77	- Fehlgeschlagene Pflichtprüfungen bleiben fehlgeschlagen. Änderungen an Anforderungen/Pflichtumfang ausdrücklich entscheiden und betroffenen Stand erneut prüfen; kein force-passed.
+78	- Beschädigte Evidenz, falsche Ergebniszuordnung oder fehlende Autorisierung sind nicht durch Risikoakzeptanz übersteuerbar.
+79	
+80	## D11 — Persönliche Designpräferenzen
+81	
+82	- Gespeicherte persönliche Präferenzen gelten projektübergreifend; pro Projekt überschreibbar oder deaktivierbar.
+83	- Explizite Projektvorgaben haben Vorrang. Jede Generierung hält fest, welchen Präferenzstand sie tatsächlich verwendet hat.
+84	- Projektübergreifende Verwendung hebt Nutzer-, Projekt-/Ereignisherkunft und Generationsidentität nicht auf. Keine zufällige Aggregation durch kollidierende Schlüssel.
+85	
+86	## Noch benötigte Umgebungsdaten, keine neuen stillen Produktentscheidungen
+87	
+88	Die Pipelinevorgaben reichen für den Behebungsplan. Konkrete Hostkapazität/Paperless-Reserve, externe Tailnetregeln, unabhängiger Recoveryzugang, Backupziel und akzeptierte Wiederherstellungszeiten sowie verfügbare Clawdeck-Schnittstelle sind vor den jeweiligen Betriebsnachweisen zu erheben. Keine neue VM, kostenpflichtige Ressource, Backupgarantie oder externe Zugriffsregel wird aus diesem Dokument als bereits genehmigt/vorhanden abgeleitet. Technische Vorschläge hierfür gehören mit Begründung in WP09/WP12/WP13.
+89	
+90	## D12 — Lokaler Abschluss und separate Live-Abnahme
+91	
+92	Am2026-09-12 vom Auftraggeber ausdrücklich bestätigt: Wenn Code vollständig
+93	korrigiert und ausreichend lokal getestet ist, gilt das Finding als **lokal
+94	verifiziert und für diesen Behebungsauftrag abgeschlossen**. Die Live-Tests
+95	führt der Auftraggeber am Ende nach dem Open-Sourcing aus; GitHub-Actions-Gates
+96	bleiben dafür erhalten. Lokale Nachweise und ausstehende Live-Nachweise werden
+97	getrennt geführt. Fehlende Implementierung oder unzureichende lokale Abdeckung
+98	bleiben offen. Nicht ausgeführte Tests werden nicht als bestanden bezeichnet.
+99	
+100	Diese Entscheidung ersetzt frühere Anforderungen, bereits für den lokalen
+101	Findingabschluss sämtliche Live-/Cluster-/Empfängerprüfungen auszuführen. Sie
+102	ändert weder Runtime-Sicherheitsgates noch D02-Produktabnahme und autorisiert
+103	keine Deployments, Nachrichten oder Umgehung einer gesperrten Aktion. Umsetzung
+104	und [Einzelbewertung](implementation/pr6-local-acceptance.md) bleiben in PR #6;
+105	keine zusätzlichen Branches.
+106	
+107	## D13 — Explizite Tasklimits und großzügige Reserve
+108	
+109	Am 2026-09-12 vom Auftraggeber nach Abwägung ausdrücklich bestätigt:
+110	
+111	- Der neue native Worker-Ressourcenpfad begrenzt Linux-Tasks, also alle Threads
+112	  einschließlich des Hauptthreads jedes Prozesses. Prozesse werden nicht noch
+113	  einmal zusätzlich zu ihren Threads gezählt.
+114	- Die Einheit wird im Ressourcenvertrag und in Profilen ausdrücklich gebunden.
+115	  Bestehende Prozessbudgets und historische Receipts werden nicht stillschweigend
+116	  als Taskbudgets umgedeutet; die Migration muss versioniert beziehungsweise
+117	  eindeutig diskriminiert sein und alte Nachweise lesbar erhalten.
+118	- Limits mit großzügiger Reserve anhand tatsächlicher Worker-Arbeit wählen,
+119	  nicht knapp am Normalverbrauch und nicht durch eine feste Umrechnung alter
+120	  Prozesszahlen. Fehlende Messungen erlauben keine Behauptung einer bereits
+121	  erfolgten Kalibrierung. CPU, Speicher und Parallelität bleiben separat begrenzt.
+122	- Die Prüfung und vollständige Zentralisierung aller Betreiber-Einstellungen
+123	  über die vorhandene `swarm.config.json` ist ein eigener Roadmap-Schritt nach
+124	  den vier verbleibenden Findings in PR #6. Keine zweite Betreiberdatei einführen.
+125	
+126	Dies ist die freigegebene Zielentscheidung, noch kein implementierter oder
+127	verifizierter Ressourcenpfad. D09 und D12 bleiben unverändert; keine Deployment-
+128	oder Privilegienänderung ist damit autorisiert.
+129	
+130	## D14 — Eigene dauerhafte Fixture-Lebensdauer in Buster
+131	
+132	Der Auftraggeber hat den Vorschlag ausdrücklich bestätigt: Retained Fixtures
+133	erhalten eine eigene dauerhafte Lebensdauer in Buster mit großzügigem separatem
+134	Ressourcenbudget und einem Abschlussbeleg nach dem Cleanup. Bereitschaft nach
+135	dem Setup ist kein Nachweis abgeschlossener Bereinigung. Buster führt
+136	Abhängigkeiten, Bereitschaft und Fixture-Abschluss; Worker Core stellt neutrale
+137	Prozessbesitz-, Messungs- und Recoverymechanismen bereit. Prism behält seine
+138	normale Attempt-Lebensdauer. Die bereits freigegebene Core/Buster-Aufteilung und
+139	Task-Einheit müssen nicht erneut bestätigt werden.
+140	
+141	Die physische Ressourcenbindung bleibt während der Fixture-Lebensdauer erhalten;
+142	ein Prozesswechsel zwischen Cgroups darf nicht als Übertragung bereits
+143	angefallener Speicherbelastung behauptet werden. Historische Setup-Receipts und
+144	Budgets bleiben unverändert lesbar; neue Lebensdauerbelege sind explizit
+145	versioniert und gebunden.
+146	
+147	## D15 — Vollständiger verbleibender 23er-Umfang
+148	
+149	Der Auftrag umfasst jetzt alle 23 noch nicht verifizierten Findings der
+150	ursprünglichen 154: die vier laufenden Implementierungen und die 19 bislang
+151	offenen Infrastrukturfindings. Arbeit weiter direkt in PR #6. Vollständige
+152	Implementierung und echte ausreichende lokale Verifikation sind erforderlich;
+153	Live-Gates bleiben vorbereitet für die abschließende Ausführung durch den
+154	Auftraggeber. Kein Live-Nachweis wird aus Konfiguration oder lokalen Ersatzdaten
+155	abgeleitet. Die gewünschte Mindestarbeitsdauer von acht Stunden ist kein Beleg
+156	für Abschluss und wird nur bei tatsächlich geleisteter Zeit behauptet.
+157	
+158	## D16 — Feste Host-Reservierung für native Worker
+159	
+160	Der Auftraggeber hat Variante A aus `implementation/pr6-node-accounting-decision.md`
+161	ausdrücklich bestätigt: hostverwaltete Rollenbereiche mit festen, tatsächlich
+162	schedulerwirksamen Kapazitätsreservierungen. Die Umsetzung betrifft Buster und
+163	Prism. Gesamtlimits und vollständige Admission-Reservierungen verhindern, dass
+164	Parallelität großzügige Einzelbudgets unkontrolliert vervielfacht. Kubernetes darf
+165	diese Hostkapazität nicht nochmals an Pods vergeben. Andere Hostdienste behalten
+166	eine getrennte Reserve. Konkrete verfügbare Kapazität wird geprüft, nicht erfunden.
+167	
+168	D13/D14 bleiben unverändert. Die Entscheidung autorisiert die Implementierung in
+169	PR #6, keinen Hosteingriff, Deployment oder Kauf zusätzlicher Ressourcen. Die
+170	Node-/Runtime-Anbindung muss fehlende Voraussetzungen vor Aktivierung abweisen.
+171	
+172	## D17 — Config als alleinige Autorität, klare Komponentengrenzen
+173	
+174	Der Auftraggeber präzisiert den laufenden CONFIG-Auftrag: Code und Konfiguration
+175	müssen klar getrennt sein. Für konfigurierbare Werte dürfen keine hardcodierten
+176	Fallbacks, lokalen Ersatzdefaults oder konkurrierenden Autoren im Code verbleiben.
+177	Fehlende erforderliche oder ungültige Konfiguration muss vor Aktivierung abgewiesen
+178	werden. Auch Loader, Schemas, Environment, Entrypoints und Charts dürfen keinen
+179	versteckten zweiten Defaultpfad bereitstellen. Gewünschte Standardwerte stehen
+180	ausdrücklich in der gepflegten Konfiguration.
+181	
+182	Gewünschte Struktur sind klar zugeordnete zentrale Config-Dateien pro Plugin und
+183	entsprechend für Worker Core, Engine, Orchestrator Core und weitere Komponenten.
+184	Jede Einstellung hat genau eine editierbare Autorenquelle. Ein gemeinsamer
+185	Einstiegspunkt darf diese Komponentenreferenzen zusammenführen und validieren;
+186	er darf ihre Werte nicht parallel pflegen oder durch lokale Defaults ersetzen.
+187	Die bisherige zentrale swarm-Autorität ist bei dieser Aufteilung nachvollziehbar
+188	zu migrieren, nicht durch zusätzliche konkurrierende Dateien zu ergänzen.
+189	Externe Secretwerte und die getrennte Softwareversionsautorität bleiben erhalten;
+190	ihre erforderlichen Referenzen und Zuständigkeiten müssen eindeutig sein.
+191	
+192	F1–F6 und F-DOC bleiben verpflichtend. Die Inventur muss jede konfigurierbare
+193	Einstellung, ihren einzigen Autor und alle tatsächlichen Consumer zuordnen.
+194	Positive Profile müssen den echten Consumer verändern; fehlende Werte und
+195	wieder eingeführte Fallbacks müssen durch passende Negativ-/Mutationstests
+196	auffallen. Ersetzte Ladepfade und widersprüchliche Anleitungen sind zu entfernen
+197	oder ausdrücklich als historische Belege zu kennzeichnen. Die Entscheidung
+198	beschreibt das Ziel, keinen bereits abgeschlossenen Implementierungsstand.
+199	
+200	## D18 — Kubernetes-Ausführung statt eigener nativer Hostpools
+201	
+202	Am 2026-10-12 hat der Auftraggeber den Zielwechsel und die fünf vorgeschlagenen
+203	Vertragsanpassungen ausdrücklich akzeptiert, **sofern die Lösung wesentlich
+204	weniger komplex und einfacher skalierbar wird**. Einsatzprofil ist generell
+205	eigener generierter Code. Die [detaillierte Architektur- und Migrationsbeschreibung](worker-execution-simplification-20261012.md)
+206	und der [beschlossene Arbeitsplan](implementation-order-20261012.md) konkretisieren
+207	Umfang, Gründe, Grenzen und Abnahme.
+208	
+209	- Prism führt jeweils einen Auftrag/Attempt in einem Kubernetes-Job aus.
+210	- Buster führt zunächst einen ganzen Testplan mit lokalen Fixtures in einem
+211	  Job aus. Seine harte Ausführungsgrenze ist zunächst der Plan, nicht jeder
+212	  einzelne Testnode. Nodefristen, Outputgrenzen und fachliche Ergebniszuordnung
+213	  bleiben erhalten. Ein fehlerhafter Test kann den ganzen Plan beeinträchtigen.
+214	- Kubernetes/Runtime verwalten die Cgroups und schedulbaren Containerressourcen.
+215	  Eigene hostverwaltete Buster-/Prism-Rollenpools, deren NRI-Anpassung und die
+216	  ausschließlich dafür nötigen Sonderpfade werden nach geprüftem Cutover entfernt.
+217	  Allgemeiner Host-/Kubeletschutz bleibt bestehen. Dies **ersetzt D16 als
+218	  zukünftige Zielarchitektur**; D16 und historische Belege bleiben unverändert lesbar.
+219	- Für die neue Ausführung gelten CPU-Rate plus endliche Laufzeit statt eines
+220	  identischen kumulativen CPU-Zeitbudgets, einheitlicher Podtaskschutz mit
+221	  nachgewiesenem aggregiertem Node-/Hostschutz statt frei unterschiedlicher
+222	  harter Attempttasklimits und Busters Planbudget statt isolierter Nodebudgets.
+223	  Linux-Tasksemantik aus D13 bleibt; historische Einheiten werden nicht umgedeutet.
+224	- Bei Crash/Nodeverlust nicht zuverlässig erfasste finale Kernelwerte werden
+225	  ausdrücklich als unbekannt ausgewiesen. Keine erfundenen Nullwerte, keine
+226	  Behauptung einer vollständigen Endabrechnung aus periodischen Metriken.
+227	- Bei Controllerneustart wird lebende Job-/Fixturearbeit übernommen. Bei Verlust
+228	  des Planpods erlischt lokale Fixturebereitschaft; erst nach sicherer
+229	  Zustandsklärung rekonstruieren oder blockieren. D14/B4 werden insoweit angepasst:
+230	  kein Versprechen physisch weiterlebender lokaler Fixtures über Podverlust hinweg.
+231	  Bereitschaft, eigene ausgewiesene Ressourcen und bestätigtes Cleanup bleiben Pflicht.
+232	
+233	Erhalten bleiben dauerhafte Auftragsidentität, Claims, Deduplizierung, Resultate,
+234	externes Effekt-Reconciliation, D08, Plugin-/Capability-/Credentialgrenzen,
+235	Retention nach D01/D07 und separate Live-Abnahme nach D12. Ein Job garantiert
+236	keine Exactly-once-Ausführung und ein unerreichbarer Node kein Prozessende.
+237	Die innere Buster-Berechtigungsgrenze, Storagezugriff und BuildKit-Isolation
+238	sind vor ihrer jeweiligen Umsetzung konkret zu lösen und echt nachzuweisen.
+239	
+240	Die Anpassungen benötigen versionierte Contracts und explizit aktualisierte
+241	Abnahmematrizen; ursprüngliche Befunde dürfen daraus nicht automatisch geschlossen
+242	werden. Ist eine wesentliche Vereinfachung nur durch neue große Sonderinfrastruktur
+243	erreichbar, wird der Zielkonflikt erneut vorgelegt. Diese Zielentscheidung ist
+244	keine Behauptung bereits migrierter oder abgenommener Ausführung und autorisiert
+245	keinen vorzeitigen Hosteingriff oder Deployment.
+246	
+247	## D19 — Reihenfolge und Test-Refactoring vor Ausführungsmigration
+248	
+249	Am 2026-10-12 hat der Auftraggeber folgende Priorität vorgegeben:
+250	
+251	1. **CONFIG-Zentralisierung** gemäß D17.
+252	2. **Test-Refactoring**, dessen genaue Vorgaben in einer anderen Session geplant werden.
+253	3. **Cgroup-/Worker-Ausführungsrefactoring** gemäß D18.
+254	4. **Die zwölf weiterhin offenen historischen Findings** mit erneuter Bewertung
+255	   nach den vorangehenden Änderungen.
+256	
+257	Das Test-Refactoring ist als eigener Arbeitspunkt aufgenommen. Es soll vermeiden,
+258	dass Tests späterer Implementierungen erst nachträglich neu kategorisiert werden
+259	müssen. Kategorien, Verzeichnisse, Runner-/CI-Verträge und weitere Testvorgaben
+260	werden aus dem tatsächlich freigegebenen Ergebnis dieser anderen Session übernommen,
+261	nicht in diesem Dokument erfunden. Bis dahin bleiben bestehende echte Tests Pflicht,
+262	auch für die vorgelagerte CONFIG-Arbeit. Diese vorhandenen Tests werden in Phase 2
+263	in den neuen Standard überführt; Phase 3/4 erstellen neue Tests nach diesem Standard.
+264	
+265	Die Reihenfolge ersetzt die frühere vorgeschlagene Reihenfolge in der
+266	Bestandsaufnahme. Sie ist keine Statuspromotion und kein Grund, vorhandene
+267	Änderungen zu verwerfen. Überschneidungen, insbesondere ENGINE001/ENGINE004/
+268	IFR10/IFR16 und CONFIG/IFR29, erhalten genau eine Zuordnung und gemeinsame Belege.
+269	Eine Teilbehebung in Phase 1 oder 3 zählt in Phase 4 erst nach vollständiger
+270	Findingabnahme; keine doppelte Umsetzung oder automatische Schließung.
+271	
+272	Der unmittelbare Auftrag ist die dauerhafte Dokumentation dieser Entscheidungen
+273	und des detaillierten Umfangs. Beginn und konkreter Umfang einzelner
+274	Implementierungspakete werden im gemeinsamen Entscheidungsmodus anhand ihrer
+275	Abnahmekriterien festgelegt; diese Nachricht startet noch keine Codeumsetzung.
+276	
+277	## D20 — Zentraler Systemeinstieg und dynamische Modulprofile
+278	
+279	Am 2026-10-12 hat der Auftraggeber die CONFIG-Definition anhand des tatsächlichen
+280	Codes beauftragt und folgende Präzisierungen bestätigt:
+281	
+282	- `pipeline.json` ist der gemeinsame Systemeinstieg mit Referenzen auf
+283	  Komponenten, Pipelineabläufe und Profile. Konkrete Settings liegen in der
+284	  jeweils zuständigen Engine-/Plugin-/Core-/Worker-Core-Konfiguration;
+285	  keine zweite Kopie dieser Settings im Einstieg.
+286	- Möglichst alle sinnvoll anpassbaren Komponentenparameter sollen ohne
+287	  Quellcodeänderung konfigurierbar und für spätere Komponentenevals nutzbar sein.
+288	  Dazu gehören geeignete Agent-/Modell-/Prompt-/Providerprofile, nicht nur Limits.
+289	- Geeignete Tuningänderungen gelten ab dem **nächsten Modulstart**, einschließlich
+290	  noch nicht gestarteter Module einer laufenden Pipeline. Die bereits gestartete
+291	  fachliche Moduleinheit behält ihren dokumentierten Stand. Graph-/Berechtigungs-/
+292	  Recoverygrundlagen bleiben stabil. Evals verwenden eine feste Generation.
+293	- Profile bleiben validiert, vollständig und in ihren Zuständigkeiten eindeutig.
+294	  Neue Generationen resetten keine verbrauchten Reparaturbudgets, beseitigen
+295	  keine ungewissen Seiteneffekte und setzen historische Abnahmen nicht außer Kraft.
+296	
+297	Die [codegestützte CONFIG-Definition](config-definition-20261012.md) beschreibt
+298	den vorgeschlagenen vollständigen Scope, Änderungen, Bedienung und Abnahme;
+299	die [Inventuranlage](config-scope-inventory-20261012.json) erfasst die heutigen
+300	48 deklarierten Plugins und ihre 57 Configschemas. Sie ist keine fertige
+301	semantische F1-Feld-/Consumerabnahme. Die physische Autorenwurzel, exakte
+302	Scopezuordnung und konkreten Migrationspakete werden daraus gemeinsam festgelegt.
+303	
+304	D17 bleibt maßgeblich. Der derzeitige `--pipeline`-Eingang für konkrete Graphen
+305	ist vom neuen Systemeinstieg ausdrücklich zu unterscheiden und zu migrieren.
+306	Kein generisches Hotreload laufender Arbeit, keine stillen Fallbacks und keine
+307	neue große Configserverinfrastruktur aus dieser Entscheidung ableiten.
+308	Dieser Auftrag definiert CONFIG; noch keine neue Codebehebung integriert.
+309	
+310	
+311	## D21 — Zentraler Einstieg pipeline.config.json; Workflow bleibt pipeline.json
+312	
+313	Am 2026-10-12 hat der Auftraggeber die Umbenennung der vorhandenen
+314	`swarm.config.json` in **`pipeline.config.json`** angefragt. Dies wird als konkrete
+315	Zielnamensentscheidung für die weitere Definition und genehmigte Migration
+316	übernommen: vorhandenen Einstieg und geeignete Loader weiterverwenden, keinen
+317	zweiten manuell gepflegten Systemeinstieg erstellen. Die zentrale Config
+318	referenziert Komponenten/Abläufe/Profile; konkrete Settings bleiben bei ihren
+319	jeweiligen Autoren. **`pipeline.json` bezeichnet weiterhin den Projektworkflow.**
+320	
+321	Damit wird ausschließlich die ältere zentrale Dateinamensfestlegung aus D20
+322	präzisiert/abgelöst. D20s Eigentum-, Modul-, Recovery-, Budget- und Evalregeln
+323	bleiben unverändert. Frühere Namensentwürfe (`pipeline.json` als Systemeinstieg,
+324	Beibehaltung des Swarmnamens oder zusätzliche `system.json`) bleiben historisch
+325	lesbar, sind aber keine aktuellen konkurrierenden Ziele.
+326	
+327	Dies ist eine Zielnamensentscheidung, keine bereits ausgeführte Dateiumbenennung,
+328	Schema-/CLI-/Chartmigration oder Freigabe sämtlicher Implementierungspakete.
+329	Nach C0 sind alle tatsächlichen Referenzen/Liefer-/Releasepfade im konkreten
+330	Paket zu migrieren. Ein alten Namen automatisch suchender Fallback ist kein Ziel.
+331	
+332	## D22 — OpenClaw-Übergabe, vollständige Prüfgates und Codequalität
+333	
+334	Am 2026-10-12 will der Auftraggeber die Aufgabe an OpenClaw für `/goal` übergeben.
+335	Alle Arbeitsanweisungen, bestätigten Entscheidungen, tatsächlichen Grenzen,
+336	Tasks und Abnahmekriterien sollen ohne vorigen Chat im Repo stehen. Die
+337	[aktuelle Übergabe](OPENCLAW-CONFIG-GOAL.md) ist der autonome Einstieg.
+338	
+339	C0 (vollständige semantische Bestandsaufnahme und konkrete Definition) bleibt
+340	beauftragt und offen. C1–C6 brauchen weiterhin Zustimmung zum konkreten
+341	Umsetzungspaket; `/goal` ist keine stillschweigende neue Implementierungsfreigabe.
+342	Eine Quellen-/Gruppeninventur oder ein reviewbares kleines C1 schließt C0 nicht.
+343	
+344	Verbindlich gefordert: keine hardcodierten Fallbacks für konfigurierbare
+345	Produktionssettings, keine konkurrierenden Autoren und kein Spaghetticode.
+346	D17/F3a und die neue F-CODE-Prüfung konkretisieren dies: Settingsfehler vor Wirkung
+347	ablehnen; klare fachliche Zuständigkeiten, zusammenhängende Module und schmale
+348	Kompositionsgrenzen; keine duplizierten Decoder/Defaults, zyklische Ownership,
+349	versteckten global veränderlichen Configzustände oder unbegründete Frameworks.
+350	Nicht jede begründete Protokollkonstante ist ein Settingsfallback; die fachliche
+351	Abgrenzung wird im Inventar nachgewiesen, nicht als Umgehung benutzt.
+352	
+353	Abnahme benötigt vollständige Anforderungs-/Setting-/Pflichtfallzuordnung,
+354	exakte Source-/Test-/Lieferidentitäten, echte Produktionswirkung, beabsichtigte
+355	Fehlergrenzen, isolierte semantische Mutanten und erhaltene Rohlogs/Fehlversuche.
+356	Keine gelöschten/abgeschwächten Tests, vergrößerten Budgets, ausgelassenen Fälle
+357	oder historischen grünen Meldungen als Ersatz. A1–A8/F1–F6/F-DOC bleiben Pflicht.
+358	
+359	C0 und jeder behauptete Paket-/Gesamtabschluss erhalten einen **frischen
+360	unabhängigen Subagenten mit frischem Kontext**, ohne Implementierungsrolle oder
+361	übernommene Autoren-Chatgeschichte. Der Reviewer prüft selbst Vollständigkeit,
+362	Consumerverdrahtung, Fallback-/Recoverygrenzen, Codequalität, Teständerungen und
+363	Rohbelege; bei Implementierung wiederholt er entscheidende echte Prüfungen.
+364	Korrekturen werden nachgeprüft. Fehlt dieser Reviewer oder eine notwendige
+365	Prüfvoraussetzung, bleibt das Gate blockiert statt Selbstabnahme/PASS.
+366	
+367	Diese Kriterien machen Abschlussbehauptungen überprüfbar; sie behaupten keinen
+368	unfehlbaren Schutz gegen Fälschung. Die Übergabe umfasst keine Deployments,
+369	produktiven Hostaktionen, bezahlten Evalkampagnen, vorgezogenen Test-/Worker-
+370	Refactorings oder automatische Findingpromotionen.
+371	
+372	**OpenClaw-Klarstellung:** Der Auftraggeber hat AGENTS-Laden in OpenClaw deaktiviert.
+373	Die zunächst zusätzlich angelegte Root-AGENTS.md wurde deshalb wieder entfernt.
+374	OPENCLAW-CONFIG-GOAL.md enthält den vollständigen Auftrag einschließlich aller
+375	Prüf-/Codequalitätsregeln eigenständig. AGENTS-Laden wird weder vorausgesetzt
+376	noch aktiviert; die Abnahmekriterien und Autorisierungsgrenzen bleiben identisch.

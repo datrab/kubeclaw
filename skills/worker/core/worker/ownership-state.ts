@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import type { WorkerOwnershipIdentity, WorkerOwnershipPhase, WorkerOwnershipRecord, WorkerScopeBinding } from './ownership-store.ts';
 import { validateTopology } from './ownership-children.ts';
 import { sha256Digest } from './digest.ts';
@@ -12,7 +13,7 @@ export function validateOwnershipHostIdentity(value: unknown): asserts value is 
 }
 
 export interface WorkerOwnershipState {
-  schemaVersion: 'worker-ownership-store.v3';
+  schemaVersion: 'worker-ownership-store.v3' | 'worker-ownership-store.v4';
   hostIdentity: string | null;
   records: WorkerOwnershipRecord[];
 }
@@ -64,7 +65,9 @@ function bindingValid(binding: unknown, scopeName: string): asserts binding is W
 }
 
 export function validateRecord(record: unknown): asserts record is WorkerOwnershipRecord {
-  exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation', 'topology']);
+  const selected = record !== null && typeof record === 'object' && Object.hasOwn(record, 'workerCore');
+  exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation', 'topology', ...(selected ? ['workerCore'] : [])]);
+  if (selected) readWorkerCorePolicyCapture(record.workerCore);
   identityValid(record.identity);
   if (typeof record.scopeName !== 'string' || !/^worker-[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(record.scopeName)
     || !Number.isSafeInteger(record.revision) || Number(record.revision) < 1
@@ -92,7 +95,7 @@ function validateRecordBinding(record: Record<string, unknown>): void {
 
 function validateDiagnosis(record: Record<string, unknown>): void {
   if (record.diagnosis !== null && (typeof record.diagnosis !== 'string' || record.diagnosis.length < 1
-    || record.diagnosis.length > maximumOwnershipDiagnosisUnits)) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
+    || record.diagnosis.length > (record.workerCore === undefined ? maximumOwnershipDiagnosisUnits : readWorkerCorePolicyCapture(record.workerCore).settings.runtime.ownership_diagnostic_units))) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
   if (['unresolved', 'abandoned'].includes(String(record.phase)) && record.diagnosis === null) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_REQUIRED');
 }
 
@@ -111,13 +114,13 @@ export function decodeOwnershipState(value: unknown, maximumRecords: number): Wo
     if (keys.has(identityKey) || scopes.has(record.scopeName)) throw new Error('WORKER_OWNERSHIP_DUPLICATE');
     keys.add(identityKey); scopes.add(record.scopeName);
   }
-  return { schemaVersion: 'worker-ownership-store.v3', hostIdentity, records } as WorkerOwnershipState;
+  return { schemaVersion: records.some(record => Object.hasOwn(record,'workerCore')) ? 'worker-ownership-store.v4' : 'worker-ownership-store.v3', hostIdentity, records } as WorkerOwnershipState;
 }
 
 function statePayload(value: unknown) {
   const legacy = typeof value === 'object' && value !== null && 'schemaVersion' in value && value.schemaVersion === 'worker-ownership-store.v1';
   exact(value, legacy ? ['schemaVersion', 'records'] : ['schemaVersion', 'hostIdentity', 'records']);
-  if (!['worker-ownership-store.v1', 'worker-ownership-store.v2', 'worker-ownership-store.v3'].includes(String(value.schemaVersion)) || !Array.isArray(value.records)) {
+  if (!['worker-ownership-store.v1', 'worker-ownership-store.v2', 'worker-ownership-store.v3', 'worker-ownership-store.v4'].includes(String(value.schemaVersion)) || !Array.isArray(value.records)) {
     throw new Error('WORKER_OWNERSHIP_STORE_INVALID');
   }
   const records = legacy ? value.records.map(record => {
@@ -126,7 +129,8 @@ function statePayload(value: unknown) {
   }) : value.records;
   const hostIdentity = legacy ? null : value.hostIdentity;
   if (hostIdentity !== null) validateOwnershipHostIdentity(hostIdentity);
-  const upgraded = value.schemaVersion === 'worker-ownership-store.v3' ? records : records.map(record => {
+  if (value.schemaVersion !== 'worker-ownership-store.v4' && records.some(record => record && typeof record === 'object' && Object.hasOwn(record,'workerCore'))) throw new Error('WORKER_OWNERSHIP_STORE_VERSION_REQUIRED');
+  const upgraded = ['worker-ownership-store.v3','worker-ownership-store.v4'].includes(String(value.schemaVersion)) ? records : records.map(record => {
     exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation']);
     return { ...record, topology: { kind: 'legacy-leaf', children: [] } };
   });

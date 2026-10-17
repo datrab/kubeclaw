@@ -1,0 +1,87 @@
+{
+  "projectId": "fixture-project",
+  "modules": [
+    {
+      "moduleId": "fixture-module",
+      "sourceStageId": "source",
+      "testStageId": "tests",
+      "expectedCoverage": {
+        "schemaVersion": "gate-coverage.v1",
+        "projectId": "fixture-project",
+        "kind": "module",
+        "baseRevision": "cccccccccccccccccccccccccccccccccccccccc",
+        "modules": [
+          {
+            "moduleId": "fixture-module",
+            "ownedPaths": [
+              "src"
+            ],
+            "requirements": [
+              {
+                "id": "works",
+                "statement": "Fixture α requirement."
+              }
+            ]
+          }
+        ],
+        "integrationRequirements": [],
+        "requiredChecks": [
+          {
+            "checkId": "works",
+            "requirementRefs": [
+              {
+                "moduleId": "fixture-module",
+                "requirementId": "works"
+              }
+            ],
+            "nodeIds": [
+              "unit"
+            ]
+          }
+        ],
+        "policyDigest": "sha256:1e5db748ef0af82ea7b0597a254fe702f8abb77fe825fa240048bba5acbea31a"
+      }
+    }
+  ],
+  "final": {
+    "sourceStageId": "source",
+    "lintStageId": "lint",
+    "testStageId": "tests",
+    "expectedCoverage": {
+      "schemaVersion": "gate-coverage.v1",
+      "projectId": "fixture-project",
+      "kind": "cumulative",
+      "baseRevision": "cccccccccccccccccccccccccccccccccccccccc",
+      "modules": [
+        {
+          "moduleId": "fixture-module",
+          "ownedPaths": [
+            "src"
+          ],
+          "requirements": [
+            {
+              "id": "works",
+              "statement": "Fixture α requirement."
+            }
+          ]
+        }
+      ],
+      "integrationRequirements": [],
+      "requiredChecks": [
+        {
+          "checkId": "works",
+          "requirementRefs": [
+            {
+              "moduleId": "fixture-module",
+              "requirementId": "works"
+            }
+          ],
+          "nodeIds": [
+            "unit"
+          ]
+        }
+      ],
+      "policyDigest": "sha256:ebe2cb0fcc050a8d2f365ff960ed4a5a8c3c22d20b873ae9b5068e51f02be868"
+    }
+  }
+}

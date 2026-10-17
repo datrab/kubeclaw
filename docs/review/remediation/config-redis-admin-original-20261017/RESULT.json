@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-17T05:24:37.871674+00:00",
+  "status": "ORIGINAL_REDIS_ADMIN_RETRY_AND_IDEMPOTENT_REPLAY_VERIFIED_SOURCE_UNCHANGED",
+  "evidence": "docs/review/remediation/config-redis-admin-original-20261017",
+  "productionSourceChanged": false,
+  "changedTest": "tests/verification/reliability/nova-redis-original-recovery.test.mjs",
+  "command": "node --test tests/verification/reliability/nova-redis-original-recovery.test.mjs",
+  "checks": {
+    "passed": 2,
+    "total": 2,
+    "failed": 0,
+    "skipped": 0,
+    "actualBlockedOriginal": true,
+    "actualAuthenticatedRetry": true,
+    "originalAttemptCount": 2,
+    "changedCurrentTargets": true,
+    "currentCoreDeleted": true,
+    "unauthenticatedActorRejectedBeforeRedisAndDecisionAppend": true,
+    "bothOriginalAdaptersSocketEffects": true,
+    "originalSnapshotUnchanged": true,
+    "recordedDecisionIdempotentReplayNoExtraEffectsOrEvents": true,
+    "diffCheck": true
+  },
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "productiveQualityBootImplemented": false,
+  "sealedInputStoreImplemented": false,
+  "independentReview": "OPEN; existing HTTP429 no report. Author executed integration tests, not independent or native acceptance.",
+  "nextAction": "Coordinated sole-root/schema/all-profile/source/file-set/authenticated boot actual Nova Quality receiving; genuine QB-R02 producer/build/source/baseline inputStore reservation/accounting/sealed publication. Exact current missing APIs recorded in config-redis-original-receiving-20261017/RESULT.json. Redis central12 author/profile/schema/delivery and original field-specific/history/native/independent gates remain OPEN. Keep denied v10 and BUDGET_SOURCE_RECEIPT_REQUIRED.",
+  "externalOwner": "Raven",
+  "externalResumeCondition": "Suitable isolated Linux Docker genuine UID/GID1000 writable delegated cgroup, sufficiently large root-trusted writable archive storage, isolated migrated PostgreSQL.",
+  "writerLock": "SAME nonblocking shared lock; released at command exit; no active CONFIG subagent or productive repository process observed; parent terminal failed",
+  "noHistoricalFollowup": true
+}

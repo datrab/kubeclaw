@@ -1,0 +1,81 @@
+diff --git a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+index b047c1d62..e75394651 100644
+--- a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
++++ b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+@@ -13,8 +13,8 @@
+     "binding": "initial frozen + boundaries02(10controls), membership03(11/16actualcompiledstage maps), codec04(6controls), journal-bound05(11genericactualjournal/finiteencodingcontrols). Original error retained; wholefield/standalone/provider/harness joins unfinished. Demo-membership06 observed unchanged existing compiler test1pass0fail, exactsource/testhashesmatchHEAD; no realprovider or targetbinding acceptance. Captured original sourceapproval/retentioncrossdomainobligation."
+   },
+   "next": [
+-    "Push reviewed checkpoint17 source associations, coherent author/profile wire, original lifecycle, concrete complete pairs and preserved independent corrections.",
+-    "Collect finite policy/family/delivery/module contracts, integrate substantive definition, then fresh wholeC0 and concrete C1-C6 approval package. No generic validator expansion."
++    "Collect concrete policy/family contracts and fresh delivery/module review, correct material findings additively and integrate exact proposed cases/phase contracts.",
++    "Selectively push checkpoint18; then fresh wholeC0 review and concrete C1-C6 implementation approval package. Original outcomes/native effects notrun; no generic validator expansion."
+   ],
+   "unrelatedUntrackedExclude": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013 four preexisting files",
+   "nativeTeam": [
+@@ -45,13 +45,13 @@
+     "implementationAuthorized": false
+   },
+   "lastPushedCheckpoint": {
+-    "commit": "a0d5588c4b4a9944d3c9e98140f1223d77bf5af3",
++    "checkpoint": 17,
++    "commit": "2db2156a2ad8c64fad0a812b9c90bee040d41423",
+     "pr": "https://github.com/datrab/kubeclaw/pull/18",
+     "pushed": true,
++    "remoteHeadVerified": true,
+     "productionOrExistingTestsChanged": false,
+-    "autoreview": "unavailable Codex CLI; no clean claim",
+-    "checkpoint": 16,
+-    "remoteHeadVerified": true
++    "autoreview": "Codex CLI unavailable; no clean claim"
+   },
+   "checkpoint9Prepared": {
+     "baseCommit": "263277b0014de5f056c019307c40dc83f0201ef5",
+@@ -84,12 +84,12 @@
+     },
+     {
+       "task": "/root/c1_case_oracle_review",
+-      "scope": "source-specific case-family fixture contracts and two guard-only reachability obligations",
++      "scope": "additive04 real-caller prose correction and instantiated local fixture definitions",
+       "status": "running"
+     },
+     {
+-      "task": "/root/source_concordance_layout_recheck",
+-      "scope": "exact caller selection/delivery/module/recovery/Eval contracts",
++      "task": "/root/delivery_module_contract_review",
++      "scope": "independent material recheck of delivery02; input01/02 frozen",
+       "status": "running"
+     }
+   ],
+@@ -103,6 +103,13 @@
+       "task": "/root/ops_namespace_dedup_recheck",
+       "verdict": "PASS bounded correction only",
+       "report": "independent-ops-dedup-recheck/README.md"
++    },
++    {
++      "task": "/root/delivery_module_contract_review",
++      "report": "independent-delivery-module-contract-review-01/README.md",
++      "verdict": "NOT ACCEPTED closedproposal; DMC01..06 localcontractfindings",
++      "scope": "static31sourcechains/229canonicalcasebodyconservation/14canonicalC5+19additiveC5",
++      "globalC0Accepted": false
+     }
+   ],
+   "checkpoint15Prepared": {
+@@ -127,13 +134,13 @@
+     "G2": "one physical original-aligned component layout independently bounded verified",
+     "G3": "proposed entry/profile wire/domain/lifecycle independently bounded verified; implementation delivery/caller ABI still open",
+     "G4": "All96 boundaries independently dispositioned;79 additions verified;52 classified without guessed link;four same-owner tunable families being specified",
+-    "G5": "229 lifecycle/source-specific assessment reviewed;148 complete typed pairs/296 selections;154 strictschema and296 current-wire loader observations;two additive pair corrections reviewed;future nativeeffects notrun",
+-    "G6": "exact productive caller/delivery selection contract being authored",
+-    "G7": "module/run/standalone/recovery/Eval boundary contract being authored",
++    "G5": "58source-specific family contracts linked229 cases delivered; G5open. Parent found adapter-action prose contradicting source-unreachable guardclassification; original03 preserved, additive04+localfixture work requested.",
++    "G6": "delivery02 authored all6findings; material recheck underway. Emerging findings: old pairfixturetuplemapping incompatible and fd9 explicitlyclosedinchildlaunch. Parent additive pair-entry-selection-translation-03 authored 296 entries/9bindings/5localcallerroster; unreviewed,settings conserved,no bootreceipt fabricated.",
++    "G7": "delivery01 NOTACCEPTED DMC04..06 mutationfence/cleanupgroup/replaystoredfirst; additive02 beingauthored",
+     "G8": "wholeC0review remainsnotrun/notaccepted"
+   },
+   "checkpoint17Prepared": {
+-    "pushed": false,
++    "pushed": true,
+     "sourceOverlay": {
+       "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/integrated-source-concordance-02/overlay.json",
+       "sha256": "939d3b4d71bf896996267c56acef287f62690e35f29f3fe6b811308c25f7609b"

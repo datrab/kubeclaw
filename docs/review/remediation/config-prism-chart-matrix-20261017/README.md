@@ -1,0 +1,5 @@
+# Original Prism81 chart source navigation
+
+All81 original IDs, hashes, classifications and case lists are preserved. Each field has a pinned current direct or ancestor-object Helm reference; ancestor navigation does not prove descendant consumption or runtime effect. Actual normal deploy route retains base values, optional overlays, image and namespace/secret overrides. Secret references never contain secret bytes; resource objects do not prove native scheduling/cgroup acceptance.
+
+All81 sole-root deployment/profile/schema/file-set/original-history receivers remain OPEN. No production source/default changed. 96/96 matrix mutation controls passed, deterministic rebuild confirmed and44 unrelated historical groups unchanged. One historical navigation group remains unresolved (Kubeclaw chart). All2409 fields/6845 cases/50 requirements retained, no original result changed. Independent review, required semantic/original/history/native/archive/full C0–C6 acceptance remain OPEN. QB-R02/Quality productive boot remain unimplemented; no denied-v10 activation.

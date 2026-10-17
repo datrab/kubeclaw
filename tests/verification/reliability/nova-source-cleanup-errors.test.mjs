@@ -91,3 +91,35 @@ test('Nova group observation failure is retained with a later close-notification
   });
   assert.equal(owned.hasClosed(), true, 'notification is held only after actual OS close');
 });
+
+
+test('selected source force-kill delay is captured before author mutation and awaits real close', { timeout: 10000 }, async t => {
+  const { LEGACY_SOURCE_ACQUISITION_POLICY: legacy } = await import('../../../skills/nova/core/test-gates/source-acquisition-policy.ts');
+  const owned = await ownedChild(t, ignoreTerm);
+  const authored = { ...legacy, cleanupTimeoutMs: 2500, forceKillAfterMs: 500, pollIntervalMs: 5 };
+  let killAt;
+  t.mock.method(process, 'kill', (pid, signal) => {
+    if (pid === -owned.child.pid && signal === 'SIGKILL') killAt = performance.now();
+    return realKill(pid, signal);
+  });
+  const lifecycle = new SourceProcessLifecycle(owned.child, owned.notified, authored);
+  authored.forceKillAfterMs = 1;
+  const started = performance.now();
+  const cleanup = lifecycle.cleanup();
+  assert.equal(lifecycle.cleanup(), cleanup, 'concurrent cleanup callers share ownership');
+  await cleanup;
+  assert.equal(owned.hasClosed(), true);
+  assert(killAt - started >= 450, 'selected 500ms delay, not mutated 1ms or legacy 250ms');
+});
+
+test('selected cleanup bound retains missing-close failure after actual child termination', { timeout: 10000 }, async t => {
+  const { LEGACY_SOURCE_ACQUISITION_POLICY: legacy } = await import('../../../skills/nova/core/test-gates/source-acquisition-policy.ts');
+  const owned = await ownedChild(t, ignoreTerm, 2000);
+  const authored = { ...legacy, cleanupTimeoutMs: 150, forceKillAfterMs: 20, pollIntervalMs: 5 };
+  const lifecycle = new SourceProcessLifecycle(owned.child, owned.notified, authored);
+  authored.cleanupTimeoutMs = 5000;
+  const started = performance.now();
+  await assert.rejects(lifecycle.cleanup(), /NOVA_SOURCE_PROCESS_CLEANUP_TIMEOUT/);
+  assert.equal(owned.hasClosed(), true, 'real child was killed, only close notification is withheld');
+  assert(performance.now() - started < 1200, 'selected 150ms bound, not legacy 1500ms or mutated 5000ms');
+});

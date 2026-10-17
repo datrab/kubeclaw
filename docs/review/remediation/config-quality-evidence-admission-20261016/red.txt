@@ -1,0 +1,112 @@
+✔ store: exact-cap multi-chunk producer bytes retained unchanged (7.515655ms)
+✔ store: rejects actual producer grow during descriptor read without publishing (2.559856ms)
+✔ store: rejects actual producer rewrite during descriptor read without publishing (1.699334ms)
+✔ store: rejects actual producer truncate during descriptor read without publishing (1.483828ms)
+✔ staging: exact-cap multi-chunk producer bytes retained unchanged (2.223378ms)
+✔ staging: rejects actual producer grow during descriptor read without publishing (2.088795ms)
+✔ staging: rejects actual producer rewrite during descriptor read without publishing (2.445044ms)
+✔ staging: rejects actual producer truncate during descriptor read without publishing (1.17469ms)
+✔ precap rejects before any source read; zero-byte exact-cap source remains supported (1.559121ms)
+✔ original cancellation at chunk prevents publication (1.192721ms)
+✔ original cancellation at eof prevents publication (0.915414ms)
+✔ original cancellation at close prevents publication (1.094098ms)
+✔ staging total uses the original remaining-byte allowance; no second file on overflow (1.505859ms)
+✖ store: original declaration identity survives caller mutation during source read (3.238384ms)
+✖ staging: original declaration identity survives caller mutation during source read (2.662509ms)
+✖ staging captures the whole original declaration set before asynchronous directory creation (1.285713ms)
+✖ staging cancellation after actual final write cannot return completed retention (2.33517ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 13
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145.868258
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-evidence-snapshot.test.mts:108:3
+✖ store: original declaration identity survives caller mutation during source read (3.238384ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   evidenceId: 'changed',
+  +   file: 'changed.bin',
+  +   mediaType: 'text/plain',
+  +   type: 'log'
+  -   evidenceId: 'report',
+  -   file: 'report.bin',
+  -   mediaType: 'application/octet-stream',
+  -   type: 'artifact'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-evidence-snapshot.test.mts:120:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { evidenceId: 'changed', type: 'log', mediaType: 'text/plain', file: 'changed.bin' },
+    expected: { evidenceId: 'report', type: 'artifact', mediaType: 'application/octet-stream', file: 'report.bin' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-evidence-snapshot.test.mts:108:3
+✖ staging: original declaration identity survives caller mutation during source read (2.662509ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'changed.bin'
+  -   'report.bin'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-evidence-snapshot.test.mts:126:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'changed.bin' ],
+    expected: [ 'report.bin' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-evidence-snapshot.test.mts:132:1
+✖ staging captures the whole original declaration set before asynchronous directory creation (1.285713ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   bytes: 0,
+  +   files: 0
+  -   bytes: 19,
+  -   files: 1
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-evidence-snapshot.test.mts:140:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { files: 0, bytes: 0 },
+    expected: { files: 1, bytes: 19 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-evidence-snapshot.test.mts:144:1
+✖ staging cancellation after actual final write cannot return completed retention (2.33517ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-evidence-snapshot.test.mts:152:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ORIGINAL_CANCELLED_AFTER_WRITE/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

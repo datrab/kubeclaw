@@ -2,6 +2,11 @@ name: Role image acceptance
 on:
   pull_request:
   workflow_dispatch:
+# Superseded PR commits must not occupy the runner queue ahead of the current head.
+# Separate workflow keys also keep reusable workflow callers from sharing a group.
+concurrency:
+  group: pr-role-images-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:

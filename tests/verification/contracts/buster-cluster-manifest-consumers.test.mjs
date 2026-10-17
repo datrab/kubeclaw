@@ -3,7 +3,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { canonicalSwarmEntry, readTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { readTestPipeline, canonicalPipelineEntry, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { validateBusterClusterInvokerSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
 import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
 import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
@@ -13,7 +14,7 @@ import { boundedManifestDocuments } from '../../../skills/buster/engine/test-gat
 import { flattenDocuments } from '../../../skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts';
 import { localApi, request } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
 
-function authored() { return structuredClone(readTestBundle(canonicalSwarmEntry)['buster-engine'].settings); }
+function authored() { return structuredClone(captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline())).components['buster-engine'].settings); }
 function runtime(root, settings, execute) {
   const policy = validateBusterClusterInvokerSettings(settings.clusterInvokers);
   const binding = clusterRuntimeBinding({ controllerNamespace: 'kubeclaw' }, policy);

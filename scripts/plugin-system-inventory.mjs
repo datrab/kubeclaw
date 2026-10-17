@@ -1,9 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { execFileSync } from 'node:child_process';
 
 const root = path.resolve(import.meta.dirname, '..');
 const checkMode = process.argv.includes('--check');
+// Canonical source inventory must not capture concurrent tests' temporary files.
+// Staged additions are included, so authors can regenerate before committing.
+const trackedFiles = new Set(execFileSync('git', ['ls-files', '--cached', '-z'], {
+  cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
+}).split('\0').filter(Boolean));
 const jsonOutputPath = path.join(
   root,
   'docs/generated/inventory/plugin-system.json',
@@ -31,7 +37,7 @@ function filesBelow(directory) {
     .flatMap((entry) => {
       const entryPath = path.join(directory, entry.name);
       if (entry.isDirectory()) return filesBelow(entryPath);
-      return entry.isFile() ? [entryPath] : [];
+      return entry.isFile() && trackedFiles.has(relative(entryPath)) ? [entryPath] : [];
     });
 }
 

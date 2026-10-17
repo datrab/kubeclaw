@@ -1,0 +1,32 @@
+✔ actual default Runner provider cleanup consumes 50 (359.848691ms)
+✔ actual default Runner provider cleanup consumes 1000 (318.592882ms)
+✔ real Core specialist preflight consumes wrapper reserve 1 (300.015824ms)
+✔ real Core specialist preflight consumes wrapper reserve 4096 (130.876281ms)
+✔ default Runner-owned store enforces maximumEvidenceObjects=1 (386.041414ms)
+✔ default Runner-owned store enforces maximumEvidenceObjects=2 (209.774027ms)
+✔ default Runner-owned store enforces maximumEvidenceBytes=1 (172.742296ms)
+✔ default Runner-owned store enforces maximumEvidenceBytes=2 (199.271998ms)
+✔ default Runner-owned store enforces maximumEvidenceObjectBytes=1 (129.611709ms)
+✔ default Runner-owned store enforces maximumEvidenceObjectBytes=2 (165.513961ms)
+✔ default Runner-owned store reclaims selected orphan age 10 (206.877773ms)
+✔ default Runner-owned store reclaims selected orphan age 60000 (238.632649ms)
+✔ default Runner-owned admission retains bounded quarantine 1 (204.139742ms)
+✔ default Runner-owned admission retains bounded quarantine 2 (162.480833ms)
+✔ default Runner-owned admission enforces quarantine bytes 2 (161.756834ms)
+✔ default Runner-owned admission enforces quarantine bytes 10000 (147.59293ms)
+✔ default Runner-owned admission enforces ingress bytes 2048 (150.827154ms)
+✔ default Runner-owned admission enforces ingress bytes 8192 (154.768855ms)
+✔ default Runner completion consumes closure quota 1 (258.900259ms)
+✔ default Runner completion consumes closure quota 2 (246.775837ms)
+✔ default Runner completion consumes admission byte capacity 1025 (143.562527ms)
+✔ default Runner completion consumes admission byte capacity 1048576 (133.799956ms)
+✔ default Runner completion enforces metadata bytes 1024 (76.992978ms)
+✔ default Runner completion enforces metadata bytes 1048576 (125.662927ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8632.258159

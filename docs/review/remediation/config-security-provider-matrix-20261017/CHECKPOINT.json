@@ -1,0 +1,11 @@
+{
+  "sourceCommit": "49ee87b27e61fb78561a7186a4a101887be16f9f",
+  "verifiedRemoteHead": "49ee87b27e61fb78561a7186a4a101887be16f9f",
+  "matches": true,
+  "testedSourceFiles": {
+    "docs/review/remediation/config-final-reconciliation-20261016/reconcile-security-providers.py": "15a269757d89d9f5e1ba6e68a935a13c1d5012201a3011d21a1e53508985433c",
+    "docs/review/remediation/config-final-reconciliation-20261016/security-provider-successors.json": "f27718b155822d868c0df55d60f9b98d19a4edf624b1a6f07da2da94c9eed885",
+    "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py": "2394cd8fbbca91602d56707565604ccf71e51a9593efdd27d3c384776743057e",
+    "docs/review/remediation/config-final-reconciliation-20261016/semantic-successors.json": "22763349de5b1b4d7a845e85b114b605e060376fdbc278709712da4eb5af29cc"
+  }
+}

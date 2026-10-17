@@ -1,0 +1,330 @@
+{
+  "fields": [
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "8b9f6f67ebbf0ef769711fda7ab9234cab5c0f66c1a8cc8fa0c8fd4d31e63854"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "60e3e4f938b24fabebc91fe1f591bfe888be52ab42033f591cf364c0d1afee6d"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "3d33fe4e802bf17f3a3b00ae1f37a83496e6a0efc0e498b843a857e7dee86230"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "f412be01c3e10ec0a82b7061c812e18321e195c889b1519d5af95c1cc03aaee0"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "09f875647e9f005f629d25d07800963670ce5fbaabb5d26576794c4aa28e170d"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "b20397ed3b5e652155145abafed9795d90043f001f11e1ca3013fd301c3724ae"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "584f592a98b54006194357ca85bb92e30bb62e7fff3ea514ef4e6a9ecd821067"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "fc2e75e3a9e36ef53f5fc0d3fae13e91dc6ad338b9b77054ee17b8d8a68d5e4c"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "fe2c625feb012650792669702026fc87396ce53742c48aa084960a94faf23739"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "72023001e2cb84a6d1cb0d33704b218bda7646543adfc4bead144fc0cedb008f"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "09c8d090c33b4c1aa7ae550d06c36ab3f8e1fec9ff53b0af0e3cb0e422bd0204"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "2a78991e1c85d8c5460242089cb10aaaa114af4ced5a306209a9fe4c8e493b34"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "5ac5e358b14a31fee6342c30fd0bb0864c7f18d1db775261072be694276fe614"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "80765c4f6169bd07d177f748c586e8d33fe383b4af51dc9a587bc8883d8c1b73"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "eb1184a55bac6f002f3936410ab83445234b48781d64ce14f57130bb0db4c94b"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "db8c1ff33b99ea8a0b24cae3c5ed4e717c0ff67d25d326c4c6559adcd27c2851"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "a0365a1783a40f663a7fa20de347f3c931a94c355eb58d6f9707162c53e773d5"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "5e936c1f7867ec97b14e33dff42822cde80952b33277a27b0c7642ce6a280a6a"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "3775dcb0d6c336d46f1f20f896e052245729d33ec6c57a96eb508fe16dc9f365"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "6381092529ddb9c8ebc9adbaf0c57b5d5496b72ad330824570980369bf4d6ce0"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "d016e0ccc6b4c4637797d1d7da6e7737359a4c06fed84690495a7dca20edac52"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "7e9a3a1ab6e8ab30069f9adfa026c1d9b4d5992fa456ecca2966afe4efc9018d"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "e1e6a1dcac3b1ebcec04bb6302876c5d205917f0cf351f009d4a90a0d1bb5ee7"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "7527ba131a8f9e1422ed656addc4f2b6c564576afcf04e325d8e95cd16750d70"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "ca079ce327937885fee559c94dbc5975ce624f3aadcac9dc0eef870902d31568"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "68115801f2f454a75bebe48db3e7bf526de104ad7a915bc94c470d6266232200"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "25097e4fa45c18fa1574273327d5f41f8e199120b77eff2e75d95a5242113fda"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "85cd37b553abb91bc5ffff0dfd20663183b2cd51f17386616c8403e0d5973315"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "7db01f496fb220617d208319b42451971de21a070252435acef2ee3b87759463"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "72eaa825d4622b857f323c9267fa1962a296b0934c4f9a17e920243a58757521"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "3b11ed309e2d73214660d13b38a642373dfbbe60307eb3fe4344ca59cd76b125"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "8f8794eeda998e233cd2fb2d14c344f8602d808ba7107d3a8661377da7b3b616"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "e3ec7d2de8de5e8a041fa7d23ed0ed26e90668d9c16476a51eee21afc3611dd8"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "64fd4b9ebdf6edbc905c958833d462f731ecb883bc4c255ef1f4e9661f7194d6"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "57f05a88a7937cd0bc7671c07483baa99589242e218c58f4b04a69660aa5013f"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "04fa31ac10fdfe19790f7a6f5891a7318aa1ad67477977d6d072459cc610514f"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "7fed5d4db2ea6593dba5edaf87d377a5d365a588146e0067906406f7a8811960"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "8c0579b7b1f154b56a8b741111a102c4ab1bbcb1b5cd2fa8545a1794dc6036c4"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "8cdd78be52684cd94d8b16349e5d167c66ae6745a4518e9399bbcb91a8418897"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "bd5099b6f5e4db6b60e37db811b9925efd750104e6381a094062ef2f448bea06"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "24b84bff0749dcf60120cd81a3eb3c0c761b7e37da8778cfb3c9c88ce652a608"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "6b6c0418c6bc6c58da4f6c7bf684cdeb9e6155d89888f53b04e29991e5a0f7c8"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "d1b355650e715a2458521aec2cbbddea314b19fcfe85735ec24435045ff8445b"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "2e095ac03930a935c1f993a72e3724b587219cc5b67476c8054f65fe375487ea"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "85bab61081f0cc8683258c70683928d6dc709ef3228b67fc7a251f4570c7c35c"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "3458423ac494ef9fcde96d0bf86e73364952105076404cd95dbdeb2e79b79377"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "061803c0732910f66082f0ff26a7431bf4c9e8fb0cfa1276cd9836ec4d914315"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "84ed323d63fb775f8304ae4bdc793c79e7b430fb893e4a51884af8dccfff696f"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "originalBodyEqual": true,
+      "priorContractOriginalEqual": true,
+      "bodyHash": "749227676ac70125a2b0e434c7f9594282351172573d43cc31e410dce7d7930e"
+    }
+  ],
+  "cases": [
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "originalBodyEqual": true,
+      "bodyHash": "2f890bd65b6c31ea5e21a595bd6dbe448d670390121d6f1a2aa6e4a2dbbc28e4"
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+      "originalBodyEqual": true,
+      "bodyHash": "499398ed4703d203f508c30e2c86d5076b6d7117a18f34bb2da254d7e42bf6be"
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
+      "originalBodyEqual": true,
+      "bodyHash": "4ccc1e4d24e2747ae007ef003c063ca3ad12f07607ae6bf6d7574b5916fc3fa5"
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT",
+      "originalBodyEqual": true,
+      "bodyHash": "e84902c48693daea774a8ef205cf03be624594007f26f49fc237d39b41da4ba7"
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "originalBodyEqual": true,
+      "bodyHash": "6596e12fdcf33d1539d269a26ec62ef724cf4c1b8141a001ea84c571e8a29174"
+    },
+    {
+      "id": "DLV-CASE-SHARED-LEASE-PROTOCOL",
+      "originalBodyEqual": true,
+      "bodyHash": "5ee6d8ada7c8cc481bcfda7506b99cb75de3aeee2c5addced4e91df37f32f7f0"
+    }
+  ]
+}

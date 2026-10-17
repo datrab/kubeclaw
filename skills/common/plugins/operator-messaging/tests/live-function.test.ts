@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_OPERATOR_STORE_POLICY = {...DELIVERY_TEST_CORE_POLICY.operatorMessagingFailure,...DELIVERY_TEST_CORE_POLICY.operatorMessagingStore, targetPayloadProfiles: {...DELIVERY_TEST_CORE_POLICY.operatorMessagingPayload.targetPayloadProfiles, small:{maxPayloadBytes:512}, discord:{maxPayloadBytes:4096}}};
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -114,39 +116,40 @@ const adapters = new core.AdapterRuntime({
   granted,
   activated,
   configs: new Map([
-    ['kubeclaw.operator-messaging:operator', {
+    ['kubeclaw.operator-messaging:operator', { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'deliveries'),
       targets: {
         operators: {
           endpoint: `${origin}/messages`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
         failing: {
           endpoint: `${origin}/fail`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
         discord: {
           endpoint: `${origin}/discord`,
           tokenSecret: 'operator.webhook',
           format: 'discord_webhook',
-          maxPayloadBytes: 4_096,
+          payloadProfile: 'discord',
         },
         'confidential-discord': {
           endpointOrigin: origin,
           endpointSecret: 'operator.endpoint',
           format: 'discord_webhook',
-          maxPayloadBytes: 4_096,
+          payloadProfile: 'discord',
         },
         slow: {
           endpoint: `${origin}/slow`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
       },
     }],
     ['kubeclaw.network-http:http', {
+      errorExcerptCharacters: DELIVERY_TEST_CORE_POLICY.networkHttp.errorExcerptCharacters,
       allowedOrigins: [origin],
       allowedMethods: ['POST'],
       allowedHeaders: [
@@ -165,7 +168,7 @@ const adapters = new core.AdapterRuntime({
       },
     }],
   ]),
-  effects: new core.EffectCoordinator(effectJournal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(effectJournal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000, DELIVERY_TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1_000,
   async emitDomainEvent() {},
 });
@@ -205,6 +208,7 @@ try {
   const payload = {
     type: 'approval.requested',
     approvalId: 'approval:run:test',
+    architectureDigest: 'sha256:' + 'a'.repeat(64),
     summary: 'Approve the release.',
     signalType: 'approval.resolved',
     authorizedIssuer: { type: 'operator', id: 'operator:release' },
@@ -233,6 +237,14 @@ try {
     deliveries[0].headers['x-kubeclaw-signature'],
     `v1=${expectedSignature}`,
   );
+
+  // Prism identity reaches signed HTTP and durable replay; malformed identities
+  // must fail before another delivery, without broadening the closed payload.
+  const beforeInvalidDigests = deliveries.length;
+  for (const architectureDigest of [null, 12, '', 'sha256:abc', 'sha256:' + 'A'.repeat(64), payload.architectureDigest + 'x']) {
+    await assert.rejects(publish('operators', { ...payload, architectureDigest }), /OPERATOR_PAYLOAD_INVALID:architectureDigest/);
+  }
+  assert.equal(deliveries.length, beforeInvalidDigests);
 
   const discordAccepted = await publish('discord', {
     type: 'stage.succeeded',
@@ -338,13 +350,13 @@ try {
   let directSends = 0;
   const direct = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'direct-deliveries'),
       targets: {
         retry: {
           endpoint: `${origin}/direct-retry`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
       },
     },
@@ -395,14 +407,14 @@ try {
   let capacitySends = 0;
   const capacity = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'capacity-deliveries'),
       maximumDeliveryRecords: 1,
       targets: {
         retry: {
           endpoint: `${origin}/capacity`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
       },
     },
@@ -435,13 +447,13 @@ try {
   let concurrentSends = 0;
   const concurrent = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'concurrent-deliveries'),
       targets: {
         retry: {
           endpoint: `${origin}/concurrent`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
       },
     },

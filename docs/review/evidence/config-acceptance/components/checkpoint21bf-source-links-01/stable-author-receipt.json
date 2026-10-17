@@ -1,0 +1,115 @@
+{
+  "scope": "Stable author batch identities, not review or acceptance",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/README.md",
+      "sha256": "816905a4c9b80bba0c5a74cf029c2a031a018f9b3d90e10281767d212a830bf8",
+      "bytes": 1337
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-attempt1.stdout",
+      "sha256": "e86119a8f3cd4389f0623abd918d5eb56614c86f79f241cee2ae8768317a0097",
+      "bytes": 77
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-attempt2.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-attempt2.stdout",
+      "sha256": "81c6781ff96f3c614d09da4f56364d115fe6cc2957f68a6eba0290d94611b28e",
+      "bytes": 77
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-controls.json",
+      "sha256": "1d48e5d874aeab786ceaa318818025178b26ca63e38837ab56f3c34bc1efd8f4",
+      "bytes": 1750
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt1.py",
+      "sha256": "bf3a3d3c00d021a2064f9a131efbe09c34cb0bb2c856f39b80e5019baf3a2ef4",
+      "bytes": 9953
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt1.stderr",
+      "sha256": "71ee98c4f08c436b5b8728c3502a65ee7caa41a20392d7c3f6d5558812710401",
+      "bytes": 1022
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt2.py",
+      "sha256": "9a7d7e779036b48210752dc8cd1852a485b0edb8c0fe9abc2c487533b89e28ee",
+      "bytes": 10321
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt2.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt2.stdout",
+      "sha256": "254415b88fe979012d78d80f951890b59530e47092a5de8540deda5be471edd9",
+      "bytes": 43
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt3.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt3.stdout",
+      "sha256": "254415b88fe979012d78d80f951890b59530e47092a5de8540deda5be471edd9",
+      "bytes": 43
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build.py",
+      "sha256": "4021aa741be12e438c5b24b1b5925ac60a48d87c1a7c1d7b2c75c3ed940ae0ab",
+      "bytes": 10403
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings-attempt1.py",
+      "sha256": "ccfc2d98a4ab93ca5aac7dc95a59da03b29844a7e9b2a48cf2045129c2c0de71",
+      "bytes": 3973
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "sha256": "68f389dbe0358e90983e98463a7e2a01c5d24ead26348146c87d9ff9768ae263",
+      "bytes": 4348
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/committed-input-references.json",
+      "sha256": "d63388d24741b3facd4343d866c532794adb2077b410b48b18e4b56baa4bf782",
+      "bytes": 2742
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/finalize.py",
+      "sha256": "7575d4d8d121e2eca41f3328170c06b53668ddb71f84555d41a669f1b359e342",
+      "bytes": 5590
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/remaining-source-link-ledger.json",
+      "sha256": "1cf75d346b57e08f9251be92338d4956310ee64e96e5d53dbfde3514919a89d7",
+      "bytes": 22931
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/source-coordinate-definitions.json",
+      "sha256": "0099b776affbaa6b8507fa0ab3a479f98f7ac19a8b6d10cf3ed82fa04dfc89a2",
+      "bytes": 834006
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/stable-author-summary.json",
+      "sha256": "17a673f659b2e1f589329bf1505e6ec94c76575418c5bb4f7fb354310ece07b1",
+      "bytes": 3443
+    }
+  ]
+}

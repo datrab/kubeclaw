@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/build-contracts.py", line 50, in <module>
+    source='skills/buster/plugins/'+name+'/src/provider.js';lines=Path(source).read_text().splitlines();ranges=ct[0];readers=[{'path':source,'sha256':hashlib.sha256(Path(source).read_bytes()).hexdigest(),'line':n,'text':lines[n-1]} for low,high in zip(ranges[::2],ranges[1::2]) for n in range(low,high+1)]
+                                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/build-contracts.py", line 50, in <listcomp>
+    source='skills/buster/plugins/'+name+'/src/provider.js';lines=Path(source).read_text().splitlines();ranges=ct[0];readers=[{'path':source,'sha256':hashlib.sha256(Path(source).read_bytes()).hexdigest(),'line':n,'text':lines[n-1]} for low,high in zip(ranges[::2],ranges[1::2]) for n in range(low,high+1)]
+                                                                                                                                                                                                                            ~~~~~^^^^^
+IndexError: list index out of range

@@ -1,0 +1,52 @@
+{
+  "current": {
+    "inlineState": "no target immutable binding currently present; live current limits supplied by constructor/retirement command",
+    "sourceEvidence": "completionRetirementSource checks genuine storedAt/result/closure/record digest and required evidence bytes+digest; readSource keyed by source.file+source.maximumBytes, not original CONFIG proof",
+    "refsPhysical": "source metadata references a file/maximumBytes and real evidence URLs; these are not cryptographic CONFIG ownership or complete quota-accounting manifests",
+    "actualQuotaScope": "AdmissionStoreLimits.maximumBytes currently caps serialized admission.json snapshot via readAdmissionState/readDurableState/assertAdmissionReplay. It does NOT by itself account separately stored full CONFIG manifests, filesystem temporary copies, source metadata files or whole physical root usage. No inferred external manifest-store quota exists in current code."
+  },
+  "target": {
+    "inline": "strict fixed514ASCII binding object; persisted field growth525 under samewholecap; validated per-candidate beforeeffects",
+    "referencedPayload": "full author/profile/source/schema manifests MUST have original authentic same-owner metadata/storage grant/quota references and explicit physical/dedup/reservation accounting; content digest alone is not quota admission or authority",
+    "legacy": "legacy state lacks genuine original-config closure; no automatic latest capture, synthetic binding, migration shrink or unaccounted metadata path. Authenticated original source/grant/owner/history + accounted migration reservation required beforeeffect; otherwise block",
+    "externalOpen": "actual deployed authentic manifest store/quota/grants and parent universal SDK carrier/task partition remain open; synthetic reference fixtures prove definitions only",
+    "accountingRelations": {
+      "admissionSnapshot": "S=Buffer.byteLength(actual canonical admission state INCLUDING fixed binding and every added persisted accounting field); S<=captured original AdmissionStoreLimits.maximumBytes before every effect/write; reserve floor/upper-bound proofs must be revised for ANY added field, not reuse525 blindly",
+      "referenceStorage": "For each real distinct retained full manifest payload p, measure exact canonical UTF8 bytes and any real store framing/metadata. Sum/charge according to AUTHENTIC existing selected reference-store limits/grant and refcounts/reservations; store identity, quota, shape/version and current captured reservation must be resolved before admission effects. No untracked policy-store, MAX_SAFE default, or assumed same cap from equal number. If proposed SAME admission ceiling also charges off-file payload, specify revised semantic quota as S+chargedReferencePayloadBytes<=originalCap and recompute every original boundary fixture before effect; this is NOT implemented/current snapshot semantics.",
+      "dedupAndRecovery": "A duplicated immutable digest may share physical bytes only when actual store enforces digest equality/authentic mapping and retained refcount/reservation prevents premature release. OriginalA lease/ref ownership remains charged during retry/cleanup/uncertainty; B cannot releaseA or load latest; missing authentic closure blocks.",
+      "physicalPeak": "logical snapshot/reference charges are not proof of physical temporary/atomic-replace/shared-root capacity. Real original storage/temp/physical quota contract required; absence is explicit unresolved input, not invented capacity or accounting waiver."
+    },
+    "notCompleteReferenceStorageContract": true,
+    "supportStatus": "fixed inline525 serializer bound and original same-snapshot quota cases source-defined; referenced full-manifest storage/authentic legacy/physical accounting contract remains genuinely unresolved until real source/owner/quota/grant manifests exist"
+  },
+  "definitions": [
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/serialization-envelope-contract.json",
+      "sha256": "f6a51283e5352b3d25c683d214a4fd8cdad2330e08277e5c5a4b48c25c050572"
+    },
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+      "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+    },
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-owner-reference-specimens.json",
+      "sha256": "099c1c68e44a0931d854a4c4fd2e574450b1c63f5a8ebc310c0541f1488f5dfc"
+    }
+  ],
+  "realSource": [
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "sha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12"
+    },
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327"
+    }
+  ],
+  "acceptance": false
+}

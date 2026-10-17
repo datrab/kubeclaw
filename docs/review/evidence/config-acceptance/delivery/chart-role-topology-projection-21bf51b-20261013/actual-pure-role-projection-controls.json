@@ -1,0 +1,430 @@
+{
+  "scope": "actual PURE current source predicates/exact extracted function+offline emitted YAML/primary definitions; code/resource/role/auth/capacity/native effects not run; counterexample observations explicitly NOT acceptable modified profiles",
+  "sourceDigests": {
+    "scripts/native-worker-node-policy.mjs": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+    "scripts/native-buster-deployment-preflight.mjs": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+    "scripts/native-worker-deployment-preflight.mjs": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+    "scripts/updates/deployment-release.mjs": "b7c0d0f8ea9d1fc216817f5974b91b26b43578a59fc5e02aaeba04eaeb09ebc6"
+  },
+  "prismSourceFragment": {
+    "source": "scripts/native-worker-deployment-preflight.mjs",
+    "sourceSha256": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+    "startByte": 514,
+    "endByte": 2350,
+    "fragmentSha256": "34d7992031120c0e0bbec5db321be548307d7787b22259fdd6b158e4e386729c",
+    "hostValidatorImportedOrExecuted": false
+  },
+  "records": [
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-COMPLETE-RECEIPT-nova-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual complete10-slot source receipt predicate, SYNTHETIC not authenticated/registry/code/platform proof"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-RELEASE-SLOT-VALIDATION-nova-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual pure rendered-release selected-image/bundle validator baseline==candidate; no promotion/CLI/check/image execution"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-WHOLE-PINNED-DEFINITION-nova-A",
+      "result": "passed",
+      "observation": {
+        "summary": "Summary: 9 resources found in 1 file - Valid: 9, Invalid: 0, Errors: 0, Skipped: 0",
+        "meaning": "whole rendered structural definitions only; no API/admission/CEL/default/CSI/provider/grant/capacity"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-COMPLETE-RECEIPT-buster-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual complete10-slot source receipt predicate, SYNTHETIC not authenticated/registry/code/platform proof"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-RELEASE-SLOT-VALIDATION-buster-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual pure rendered-release selected-image/bundle validator baseline==candidate; no promotion/CLI/check/image execution"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-WHOLE-PINNED-DEFINITION-buster-A",
+      "result": "passed",
+      "observation": {
+        "summary": "Summary: 22 resources found in 1 file - Valid: 22, Invalid: 0, Errors: 0, Skipped: 0",
+        "meaning": "whole rendered structural definitions only; no API/admission/CEL/default/CSI/provider/grant/capacity"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-CURRENT-BUSTER-PURE-SELECTION-A",
+      "result": "passed",
+      "observation": {
+        "scope": "exact existing pure selection function only; no node/host/API preflight",
+        "policyDigest": "fb291df6471c43a2487bbab16284ae15c2cc04fb8fa1e7fef54b9c6784ef5789"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-COMPLETE-RECEIPT-prism-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual complete10-slot source receipt predicate, SYNTHETIC not authenticated/registry/code/platform proof"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-RELEASE-SLOT-VALIDATION-prism-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual pure rendered-release selected-image/bundle validator baseline==candidate; no promotion/CLI/check/image execution"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-WHOLE-PINNED-DEFINITION-prism-A",
+      "result": "passed",
+      "observation": {
+        "summary": "Summary: 45 resources found in 1 file - Valid: 45, Invalid: 0, Errors: 0, Skipped: 0",
+        "meaning": "whole rendered structural definitions only; no API/admission/CEL/default/CSI/provider/grant/capacity"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-CURRENT-PRISM-EXACT-SOURCE-SELECTION-A",
+      "result": "passed",
+      "observation": {
+        "scope": "exact source function extracted before CLI guard; no import/call of host preflight module",
+        "policyDigest": "fb291df6471c43a2487bbab16284ae15c2cc04fb8fa1e7fef54b9c6784ef5789"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-COMPLETE-RECEIPT-nova-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual complete10-slot source receipt predicate, SYNTHETIC not authenticated/registry/code/platform proof"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-RELEASE-SLOT-VALIDATION-nova-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual pure rendered-release selected-image/bundle validator baseline==candidate; no promotion/CLI/check/image execution"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-WHOLE-PINNED-DEFINITION-nova-B",
+      "result": "passed",
+      "observation": {
+        "summary": "Summary: 9 resources found in 1 file - Valid: 9, Invalid: 0, Errors: 0, Skipped: 0",
+        "meaning": "whole rendered structural definitions only; no API/admission/CEL/default/CSI/provider/grant/capacity"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-COMPLETE-RECEIPT-buster-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual complete10-slot source receipt predicate, SYNTHETIC not authenticated/registry/code/platform proof"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-RELEASE-SLOT-VALIDATION-buster-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual pure rendered-release selected-image/bundle validator baseline==candidate; no promotion/CLI/check/image execution"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-WHOLE-PINNED-DEFINITION-buster-B",
+      "result": "passed",
+      "observation": {
+        "summary": "Summary: 22 resources found in 1 file - Valid: 22, Invalid: 0, Errors: 0, Skipped: 0",
+        "meaning": "whole rendered structural definitions only; no API/admission/CEL/default/CSI/provider/grant/capacity"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-CURRENT-BUSTER-PURE-SELECTION-B",
+      "result": "passed",
+      "observation": {
+        "scope": "exact existing pure selection function only; no node/host/API preflight",
+        "policyDigest": "7d2112d25a2155f8c7c3d4cdb422689aa2b146eb50e429c24a4d5344ab6e0cb4"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-COMPLETE-RECEIPT-prism-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual complete10-slot source receipt predicate, SYNTHETIC not authenticated/registry/code/platform proof"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-RELEASE-SLOT-VALIDATION-prism-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual pure rendered-release selected-image/bundle validator baseline==candidate; no promotion/CLI/check/image execution"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-WHOLE-PINNED-DEFINITION-prism-B",
+      "result": "passed",
+      "observation": {
+        "summary": "Summary: 45 resources found in 1 file - Valid: 45, Invalid: 0, Errors: 0, Skipped: 0",
+        "meaning": "whole rendered structural definitions only; no API/admission/CEL/default/CSI/provider/grant/capacity"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-CURRENT-PRISM-EXACT-SOURCE-SELECTION-B",
+      "result": "passed",
+      "observation": {
+        "scope": "exact source function extracted before CLI guard; no import/call of host preflight module",
+        "policyDigest": "7d2112d25a2155f8c7c3d4cdb422689aa2b146eb50e429c24a4d5344ab6e0cb4"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-POLICY-DIGEST-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_POLICY_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-NODE-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_NODE_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-MOUNT-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_MOUNT_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-SECURITY-CAPS-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_AUTHORITY_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-SECURITY-UID-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_AUTHORITY_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-ENGINE-ENV-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_IMAGE_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-DUPLICATE-WORKLOAD-A",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-SOURCE-ESCALATION-UNVALIDATED-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "current pure selector does NOT compare full source role security declaration; target readonly full-role projection validator remains required. This PASS is a counterexample observation, not acceptable modified native profile."
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-RESTORED-A",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-REJECT-POLICY-DIGEST-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_DEPLOYMENT_POLICY_MISMATCH",
+        "meaning": "exact pure source predicate, no actual worker launch/auth/provider/host"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-REJECT-COMMAND-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_DEPLOYMENT_PROTOCOL_MISMATCH",
+        "meaning": "exact pure source predicate, no actual worker launch/auth/provider/host"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-REJECT-IMAGE-ENV-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_DEPLOYMENT_IMAGE_MISMATCH",
+        "meaning": "exact pure source predicate, no actual worker launch/auth/provider/host"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-REJECT-NODE-A",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_DEPLOYMENT_NODE_MISMATCH",
+        "meaning": "exact pure source predicate, no actual worker launch/auth/provider/host"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-SOURCE-SECURITY-UNVALIDATED-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "current pure Prism selector does NOT validate security/mounts; additional immutable-role projection/native source verification required, not accepted capless worker"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-SOURCE-DUPLICATE-UNVALIDATED-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "current function .find accepts duplicate same-name Deployment docs; whole definition/producer exact selection validation must reject duplicates before apply, not acceptable profile"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-RESTORED-A",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-DECLARED-RUNTIME-WHOLE-DIGEST-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual current parser ignores runtime version shape but whole JSON digest includes it. DLS001target soleversions authority still C3; no inferred installed/runtime validity or arbitrary hostV author"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-POLICY-DIGEST-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_POLICY_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-NODE-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_NODE_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-MOUNT-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_MOUNT_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-SECURITY-CAPS-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_AUTHORITY_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-SECURITY-UID-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_AUTHORITY_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-REJECT-ENGINE-ENV-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_BUSTER_IMAGE_MISMATCH",
+        "meaning": "pure source predicate diagnostic only, not native/runtime F-MUT"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-DUPLICATE-WORKLOAD-B",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-SOURCE-ESCALATION-UNVALIDATED-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "current pure selector does NOT compare full source role security declaration; target readonly full-role projection validator remains required. This PASS is a counterexample observation, not acceptable modified native profile."
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-BUSTER-RESTORED-B",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-REJECT-POLICY-DIGEST-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_DEPLOYMENT_POLICY_MISMATCH",
+        "meaning": "exact pure source predicate, no actual worker launch/auth/provider/host"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-REJECT-COMMAND-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_DEPLOYMENT_PROTOCOL_MISMATCH",
+        "meaning": "exact pure source predicate, no actual worker launch/auth/provider/host"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-REJECT-IMAGE-ENV-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_DEPLOYMENT_IMAGE_MISMATCH",
+        "meaning": "exact pure source predicate, no actual worker launch/auth/provider/host"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-REJECT-NODE-B",
+      "result": "passed",
+      "observation": {
+        "actualBoundary": "NATIVE_DEPLOYMENT_NODE_MISMATCH",
+        "meaning": "exact pure source predicate, no actual worker launch/auth/provider/host"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-SOURCE-SECURITY-UNVALIDATED-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "current pure Prism selector does NOT validate security/mounts; additional immutable-role projection/native source verification required, not accepted capless worker"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-SOURCE-DUPLICATE-UNVALIDATED-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "current function .find accepts duplicate same-name Deployment docs; whole definition/producer exact selection validation must reject duplicates before apply, not acceptable profile"
+      }
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-PRISM-RESTORED-B",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-CHART-ROLE21BF-DECLARED-RUNTIME-WHOLE-DIGEST-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "actual current parser ignores runtime version shape but whole JSON digest includes it. DLS001target soleversions authority still C3; no inferred installed/runtime validity or arbitrary hostV author"
+      }
+    }
+  ],
+  "result": "passed"
+}

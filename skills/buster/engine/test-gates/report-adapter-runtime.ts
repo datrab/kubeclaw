@@ -1,4 +1,4 @@
-import { validateBusterReportSettings, validateBusterProcessInputSettings, type BusterProcessInputSettings, type BusterReportExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterReportSettings, validateBusterProcessInputSettings, type BusterProcessInputSettings, type BusterReportExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { readPackage, writePackageSnapshot } from './report-adapter-package.ts';
 import type { ReportArtifactReader } from './report-artifact-reader.ts';
 export { FileReportArtifactReader, type ReportArtifactReader } from './report-artifact-reader.ts';

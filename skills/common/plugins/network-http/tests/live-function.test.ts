@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import path from 'node:path';
@@ -29,6 +30,7 @@ const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).
 const adapter = activate({
   registration: {},
   config: {
+    ...TEST_CORE_POLICY.networkHttp,
     allowedOrigins: [origin],
     allowedMethods: ['GET', 'POST'],
     allowedHeaders: ['content-type', 'idempotency-key'],
@@ -61,6 +63,17 @@ const invoke = (pathname, payload = {}, signal = new AbortController().signal) =
 
 try {
   await adapter.ready();
+  const raw = { ...TEST_CORE_POLICY.networkHttp, allowedOrigins: [origin], errorExcerptCharacters: 4 };
+  const excerptAdapter = activate({ config: raw });
+  raw.errorExcerptCharacters = 1; // Activation captures the selected policy.
+  const errorRequest = { ...fenced, request: { capability: 'network.http', operation: 'request', resource: { canonicalId: `${origin}/failure` }, payload: {} }, signal: new AbortController().signal };
+  await assert.rejects(excerptAdapter.invoke(errorRequest), /^Error: HTTP_503:unav$/);
+  await excerptAdapter.shutdown();
+  for (const value of [undefined, null, 0, -1, 1.5, '4', Number.MAX_SAFE_INTEGER + 1]) {
+    assert.throws(() => activate({ config: { ...raw, errorExcerptCharacters: value } }), /NETWORK_CONFIG_INVALID:errorExcerptCharacters/);
+  }
+  await assert.rejects(invoke('/failure'), /^Error: HTTP_503:unavailable$/);
+
   const json = await invoke('/json', { method: 'POST', headers: { 'idempotency-key': 'key' }, body: { ok: true } });
   assert.deepEqual(json.body, { method: 'POST', idempotency: 'key' });
   assert.equal(json.headers['docker-content-digest'], `sha256:${'a'.repeat(64)}`);

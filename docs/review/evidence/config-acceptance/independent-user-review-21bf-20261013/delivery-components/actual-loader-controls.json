@@ -1,0 +1,80 @@
+[
+  {
+    "role": "nova",
+    "letter": "A",
+    "result": "passed-pure-loader",
+    "loadedBusterTimeoutMs": 300000,
+    "loadedWorkerReplay": 65536
+  },
+  {
+    "role": "nova",
+    "letter": "A",
+    "competingEnvironmentRejected": true,
+    "error": "SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_TASKS"
+  },
+  {
+    "role": "nova",
+    "letter": "B",
+    "result": "passed-pure-loader",
+    "loadedBusterTimeoutMs": 300000,
+    "loadedWorkerReplay": 65536
+  },
+  {
+    "role": "nova",
+    "letter": "B",
+    "competingEnvironmentRejected": true,
+    "error": "SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_TASKS"
+  },
+  {
+    "role": "buster",
+    "letter": "A",
+    "result": "passed-pure-loader",
+    "loadedBusterTimeoutMs": 300000,
+    "loadedWorkerReplay": 65536
+  },
+  {
+    "role": "buster",
+    "letter": "A",
+    "competingEnvironmentRejected": true,
+    "error": "SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_TASKS"
+  },
+  {
+    "role": "buster",
+    "letter": "B",
+    "result": "passed-pure-loader",
+    "loadedBusterTimeoutMs": 300000,
+    "loadedWorkerReplay": 65536
+  },
+  {
+    "role": "buster",
+    "letter": "B",
+    "competingEnvironmentRejected": true,
+    "error": "SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_TASKS"
+  },
+  {
+    "role": "prism",
+    "letter": "A",
+    "result": "passed-pure-loader",
+    "loadedBusterTimeoutMs": 300000,
+    "loadedWorkerReplay": 65536
+  },
+  {
+    "role": "prism",
+    "letter": "A",
+    "competingEnvironmentRejected": true,
+    "error": "SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_TASKS"
+  },
+  {
+    "role": "prism",
+    "letter": "B",
+    "result": "passed-pure-loader",
+    "loadedBusterTimeoutMs": 300000,
+    "loadedWorkerReplay": 65536
+  },
+  {
+    "role": "prism",
+    "letter": "B",
+    "competingEnvironmentRejected": true,
+    "error": "SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_TASKS"
+  }
+]

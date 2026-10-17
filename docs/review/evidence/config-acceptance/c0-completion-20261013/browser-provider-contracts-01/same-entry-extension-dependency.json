@@ -1,0 +1,27 @@
+{
+  "baseRoot": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/stand/config/pipeline.config.json",
+    "sha256": "0571c257b9bea46dcd4e43c40c60d34ad695921f193f1b3694a5a240b16604f4"
+  },
+  "baseRootSchema": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/schemas/pipeline-entry.schema.json",
+    "sha256": "85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e"
+  },
+  "boundedBaseIndependentReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-deployment-binding-review-02/README.md",
+    "sha256": "9c88a5d7f3bc0a984ccf02551b213f3275266baffc03df921dbda83ce0a224f8"
+  },
+  "proposedSingleRoot": "stand/config/pipeline.config.json",
+  "proposedSchema": "schemas/pipeline-entry.schema.json",
+  "sixComponentsUnchanged": {
+    "prism-control": "components/prism-control.config.json",
+    "prism-studio": "components/prism-studio.config.json",
+    "prism-worker": "components/prism-worker.config.json",
+    "prism-execution": "components/prism-execution.config.json",
+    "buster-engine": "components/buster-engine.config.json",
+    "worker-core": "components/worker-core.config.json"
+  },
+  "delta": "Only four real browser provider tuples/closed package+registration+owner enums and an explicit complete native Buster browser-source-A profile; root selects that captured profile. Prior4 package/controller/recovery tuples and existing profiles remain exact. No seventh component, private root, simultaneous normative v5/v6, implicit latest Security/Gateway/source author integration. Future coordinated receiving/file-set/codec/receipt author rejoin must explicitly include these files and hashes after bounded independent review.",
+  "currentLoader": "Current source v1 combined configs and native owners do NOT implement this proposed processing capture/v2/root extension",
+  "implementationAuthorization": null
+}

@@ -1,4 +1,4 @@
-{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
+{{- $clusterShared := (include "kubeclaw.busterTopology" . | mustFromJson).clusterShared -}}
 {{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition

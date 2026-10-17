@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "provider-configuration.v2",
+  "contractId": "kubeclaw.openapi@1",
+  "taskSchemaDigest": "sha256:a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8",
+  "values": {
+    "specFile": "spec-a.json",
+    "url": "https://fixture.invalid",
+    "operations": [
+      {
+        "operationId": "checkOk",
+        "pathParameters": {},
+        "query": {},
+        "headers": {},
+        "cleanup": false,
+        "expectedStatuses": [
+          200
+        ]
+      }
+    ]
+  },
+  "selectedPolicy": {
+    "schemaVersion": "selected-registration-policy.v1",
+    "binding": {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.openapi",
+      "registrationId": "kubeclaw.openapi:operations",
+      "instanceId": "fixture.openapi",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "rootDigest": "sha256:355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5",
+      "ownerDigest": "sha256:f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3",
+      "profileDigest": "sha256:3f919ada7088c705f92cd7a9efb6806358a6966ee8513bc6eecb13bcf877ff59",
+      "packageVersion": "1.0.0",
+      "packageContentDigest": "sha256:624f09f03ee1b4d80c0c9b2828e4e9b35661bdf4caab5f117b3b3a33645e49bb",
+      "ownerSchemaDigest": "sha256:5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+      "taskSchemaDigest": "sha256:a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8",
+      "readerVersion": "pipeline-entry.v5/provider-configuration.v2",
+      "c3RuntimeSchemaDigest": "sha256:af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "c3ReferenceContractDigest": "sha256:d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2"
+    },
+    "processing": {
+      "requestTimeoutMs": 1000,
+      "maximumResponseBytes": 2048,
+      "maximumSpecFileBytes": 4194304,
+      "maximumSelections": 128,
+      "maximumPatternCodeUnits": 256,
+      "maximumPatternQuantifier": 1024,
+      "maximumRequestTimeoutMs": 1000,
+      "maximumSchemaGraphDepth": 64,
+      "maximumRefChainDepth": 64,
+      "maximumPayloadDepth": 64
+    },
+    "declarations": {
+      "evidenceDefaults": {
+        "onPass": [
+          "log",
+          "test-report"
+        ],
+        "onFail": [
+          "log",
+          "test-report"
+        ],
+        "onError": [
+          "log"
+        ]
+      },
+      "retrySafe": false,
+      "matrixFields": []
+    }
+  }
+}

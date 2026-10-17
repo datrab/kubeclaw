@@ -1,0 +1,22 @@
+✔ explicit reference resolves against author, pure preparation performs no policy I/O, all fields required and snapshots owned (36.24172ms)
+✔ real stage/observer startup A/B leases and retained A resume survive missing current policy B (2164.289872ms)
+✔ selected real mutation TTL/renewal and required journal deadline replace literals (310.583775ms)
+✔ selected audit UTF8 exact/over boundary and effect journal inline limit remain separate (41.891614ms)
+✔ actual resource provisional-lock lifetime is selected independently of mutation TTL (81.692375ms)
+✔ active recovery receiver uses selected metadata capacity and restores positive behavior (88.952931ms)
+✔ selected compiler preserves original graphs for absent, mixed and all review modules (500.66268ms)
+✔ A/B selection reaches real graph; retained original survives invalid current owner and rejects partial/unknown captures (507.32998ms)
+✔ real runner captures the explicit compiler discriminator and the exact frozen selected policy without live owner I/O (9282.257131ms)
+✔ stored source/report modes are independent and all generated Review nodes agree (536.16204ms)
+✔ archived compiler with current coverage helper preserves portable-source and legacy module/final reports (942.292835ms)
+✔ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (252.118605ms)
+✔ independent semantic authority covers module-only, final-only, both and neither graph roundtrips (606.985306ms)
+✔ new semantic graph rejects mixed, unsupported, partial and stray Summary mode without changing stored bytes (221.773158ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11647.155026

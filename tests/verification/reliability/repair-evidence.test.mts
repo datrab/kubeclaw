@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
@@ -9,7 +11,7 @@ import type { AdapterActivationContext, AdapterInvocation, ArtifactRef, PluginIn
 
 test('repair handoff reads real durable findings and rejects corrupt, cross-run and oversized evidence', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'repair-evidence-'));
-  const adapter = activate({ config: { artifactRoot: root } } as AdapterActivationContext);
+  const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: root } } as AdapterActivationContext);
   const producer = { runId: 'repair:run', stageId: 'lint-module', attemptNumber: 1, attemptId: 'lint:1' };
   const content = { findings: [{ file: 'module/main.sh', line: 2, message: 'Quote the variable expansion.' }] };
   const operation = async (capability: string, request: any) => adapter.invoke({ confidential: true,

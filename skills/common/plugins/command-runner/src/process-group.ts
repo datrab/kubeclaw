@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import type { CommandProcessCleanupPolicy } from './types.ts';
 import type { ChildProcess } from 'node:child_process';
 import { captureLinuxProcessGroup, linuxProcessGroupRunning } from '@kubeclaw/plugin-foundation/processes/linux-process-group';
 
@@ -6,6 +7,7 @@ import { captureLinuxProcessGroup, linuxProcessGroupRunning } from '@kubeclaw/pl
 // still own stdout/stderr, even when child.exitCode is already set.
 export class CommandProcessGroup {
   readonly #child: ChildProcess;
+  readonly #policy: CommandProcessCleanupPolicy;
   readonly #graceMs: number;
   readonly #cgroup: string | undefined;
   #deadline: number | undefined;
@@ -13,7 +15,10 @@ export class CommandProcessGroup {
   readonly #linuxGroup: number | undefined;
   readonly #identityError: unknown;
 
-  constructor(child: ChildProcess, graceMs: number, cgroup?: string) {
+  constructor(child: ChildProcess, graceMs: number, cgroup: string | undefined, policy: CommandProcessCleanupPolicy) {
+    if (!policy || typeof policy !== 'object' || Array.isArray(policy) || Object.keys(policy).sort().join(',') !== 'cleanupPollIntervalMs,exitAcknowledgementMs,sandboxMinimumGraceMs'
+      || !Object.values(policy).every(value => Number.isSafeInteger(value) && value > 0 && value <= 2147483647)) throw new Error('COMMAND_CLEANUP_POLICY_INVALID');
+    this.#policy = Object.freeze({ ...policy });
     this.#child = child;
     this.#graceMs = graceMs;
     this.#cgroup = cgroup;
@@ -36,7 +41,7 @@ export class CommandProcessGroup {
       this.terminate();
       // Reuse the original deadline; close must not restart the grace budget.
       while (this.#alive() && Date.now() < this.#deadline!) {
-        await new Promise((resolve) => setTimeout(resolve, Math.min(10, this.#deadline! - Date.now())));
+        await new Promise((resolve) => setTimeout(resolve, Math.min(this.#policy.cleanupPollIntervalMs, this.#deadline! - Date.now())));
       }
       if (this.#alive()) this.#signal('SIGKILL');
     }
@@ -47,11 +52,11 @@ export class CommandProcessGroup {
   async #acknowledgeExit(): Promise<void> {
     if (process.platform !== 'linux' || !this.#alive()) return;
     if (this.#linuxGroup === undefined) throw new Error('COMMAND_PROCESS_GROUP_IDENTITY_UNAVAILABLE', { cause: this.#identityError });
-    const deadline = (this.#deadline ?? Date.now()) + 1_000;
+    const deadline = (this.#deadline ?? Date.now()) + this.#policy.exitAcknowledgementMs;
     while (await linuxProcessGroupRunning(this.#linuxGroup, deadline)) {
       if (Date.now() >= deadline) throw new Error('COMMAND_PROCESS_GROUP_CLEANUP_TIMEOUT');
       this.#signal('SIGKILL');
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await new Promise((resolve) => setTimeout(resolve, Math.min(this.#policy.cleanupPollIntervalMs, Math.max(1, deadline - Date.now()))));
     }
   }
 

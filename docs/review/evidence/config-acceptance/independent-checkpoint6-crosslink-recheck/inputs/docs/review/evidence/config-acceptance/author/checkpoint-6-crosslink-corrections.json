@@ -1,0 +1,22 @@
+{
+  "scope": "C6-RECHECK-01/02 correction proposals ready independent recheck, not global acceptance",
+  "findings": {
+    "C6-RECHECK-01": "Required Runtime source package plus inventory/matrix IDpresence, exactpath/SHA/location/count and unlinkedcounts checked evenwhenwholepackageomitted",
+    "C6-RECHECK-02": "Eachcanonicalmappedcase requires exactlyone matchingpackage/case/sourcepath/sourceSHAreference; allreferences reversechecked againstpackage+mapping. Standaloneconservation helper checks same bindings."
+  },
+  "inputIdentities": {
+    "docs/review/evidence/config-acceptance/author/check-matrix.py": "3cc83e20934a33d83cecf98bb53b8b193d2a3c6853197047ea94b4643dc53e74",
+    "docs/review/evidence/config-acceptance/author/check-native-case-integration.py": "d80331e4bed71af05302be8f040d95b49344efd6c7b76e44fb652bd7ae0b9f15",
+    "docs/review/evidence/config-acceptance/author/structural-checkpoint-6-attempt4.log": "d5c78f7619fcbb41f645f893d968f5f8f3c132d89906ec3871b6f94ca6667ce8",
+    "docs/review/evidence/config-acceptance/author/strict-checkpoint-6-attempt4.log": "f56666e3f3c2da56dcd2323c79f92f915d1ebb79ad02f7d984f35f844b711db4",
+    "docs/review/evidence/config-acceptance/author/native-case-integration-checkpoint-6-attempt2.log": "b9c0a8d1744eb9a7effd4ff93b25ea4a13bb3e2cc3a1f7bd18ecc1b7f0a56de3"
+  },
+  "checks": {
+    "structural": 0,
+    "strict": 1,
+    "strictOpenObligations": 98805,
+    "nativeConservation": 0
+  },
+  "independentRecheck": "pending",
+  "C0": "not-accepted"
+}

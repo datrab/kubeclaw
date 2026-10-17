@@ -1,0 +1,162 @@
+{
+  "images": {
+    "control": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "studio": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "worker": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "ingestion": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "postgresql": {
+    "existingSecret": "delivery-pg-a",
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    },
+    "storage": "100Gi",
+    "storageClass": "delivery-storage-a"
+  },
+  "worker": {
+    "native": {
+      "nodeName": "native-render-test",
+      "namespace": "default",
+      "policyDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "studio": {
+    "replicas": 1,
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "ingestion": {
+    "enabled": true,
+    "replicas": 2,
+    "quarantineTtlMs": 120000,
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "backup": {
+    "schedule": "0 1 * * *",
+    "verificationSchedule": "0 2 * * 0",
+    "databaseProofSchedule": "0 3 * * 0",
+    "maximumBytes": "42949672960",
+    "maximumRetainedBytes": "53687091200",
+    "maximumDurationSeconds": 1800,
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "artifactStorage": {
+    "storage": "100Gi",
+    "storageClass": "delivery-storage-a"
+  },
+  "tailscale": {
+    "enabled": true
+  },
+  "workerTrust": {
+    "spiffe": {
+      "enabled": true,
+      "envoy": {
+        "resources": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "1Gi"
+          }
+        }
+      },
+      "trustDomain": "delivery.invalid",
+      "novaNamespace": "dlv-nova-a",
+      "novaServiceAccount": "nova",
+      "agentNamespace": "dlv-agent-a",
+      "agentServiceAccount": "agent"
+    }
+  },
+  "control": {
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    },
+    "productDecisions": {
+      "enabled": true,
+      "issuer": "delivery-human-a",
+      "operators": [
+        "delivery-operator"
+      ],
+      "origin": "https://delivery.example.test",
+      "authorityRevision": "dlv-unused-a",
+      "signingSecretName": "delivery-signing-a",
+      "signingSecretKey": "private-key.pem",
+      "controllerUrl": "https://delivery-controller.example.test:8443",
+      "controllerNamespace": "default",
+      "controllerRelease": "delivery-controller",
+      "controllerCaSecretName": "delivery-ca-a",
+      "controllerCaSecretKey": "ca.crt",
+      "tokenAudience": "delivery-ready",
+      "tokenExpirationSeconds": 600
+    }
+  },
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-a"
+    }
+  ],
+  "secrets": {
+    "runtime": "delivery-runtime-a",
+    "database": "delivery-database-a"
+  }
+}

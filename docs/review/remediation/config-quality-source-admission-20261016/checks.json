@@ -1,0 +1,111 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=30000",
+      "tests/verification/reliability/quality-provider-v2.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-source-admission-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "skills/buster/engine/test-gates/provider-loader.ts",
+      "skills/buster/engine/test-gates/provider-process-session.ts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-source-admission-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-source-admission-20261016/check-2.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-child-session.test.mjs",
+      "tests/verification/contracts/provider-loader-ownership.test.mjs"
+    ],
+    "exitCode": 1,
+    "log": "docs/review/remediation/config-quality-source-admission-20261016/legacy-provider-boundaries.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-child-session.test.mjs",
+      "tests/verification/contracts/provider-loader-ownership.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-source-admission-20261016/final-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=30000",
+      "tests/verification/reliability/quality-provider-v2.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-source-admission-20261016/final-1.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "skills/buster/engine/test-gates/provider-loader.ts",
+      "skills/buster/engine/test-gates/provider-process-session.ts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-source-admission-20261016/final-2.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 124,
+    "log": "docs/review/remediation/config-quality-source-admission-20261016/original-plan-runner.txt"
+  }
+]

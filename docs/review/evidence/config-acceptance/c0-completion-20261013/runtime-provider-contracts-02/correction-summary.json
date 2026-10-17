@@ -1,0 +1,16 @@
+{
+  "findings": [
+    "RPR01-01",
+    "RPR01-02",
+    "RPR01-03",
+    "RPR01-04",
+    "RPR01-05"
+  ],
+  "originalFields": 67,
+  "originalCases": 408,
+  "ownerProfiles": 60,
+  "authorStatus": "definition prepared, independent recheck REQUIRED",
+  "futureImplementationResults": "not-run",
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

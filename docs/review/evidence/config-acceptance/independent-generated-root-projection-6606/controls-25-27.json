@@ -1,0 +1,23 @@
+{
+  "scope": "ACTUAL COMPLETE checker with actual observation resolver, reviewer temp mutant files only",
+  "controls": [
+    {
+      "id": "core-row-source-provided-instanceScope-tamper",
+      "exit": 0,
+      "errorCount": 0,
+      "errors": [],
+      "result": "escaped-conservation-guard",
+      "mutantInventorySha256": "d7e55394471e0af9b693b5ec358fbfa7546fab5897668f488f201a5d261a65af",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "core-row-source-field-coordinate-tamper",
+      "exit": 0,
+      "errorCount": 0,
+      "errors": [],
+      "result": "escaped-conservation-guard",
+      "mutantInventorySha256": "67471f555f6cea20c694ad50b1014258e770e33851c0886b8f815b05e177017f",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    }
+  ]
+}

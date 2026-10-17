@@ -1,0 +1,581 @@
+{
+  "records": [
+    {
+      "id": "RT-CANDIDATE-b470d99de8779518",
+      "source": {
+        "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "line": 10,
+        "text": "if (!input.blueprintId || !input.repositoryRoot || !input.branchRef) throw new Error('BLUEPRINT_SYNC_INPUT_INVALID');",
+        "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+      "explicitReviewedReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-520fa2b9d46aaabf",
+      "source": {
+        "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "line": 11,
+        "text": "if (!Array.isArray(input.controlPaths) || input.controlPaths.length === 0) throw new Error('BLUEPRINT_SYNC_PATHS_REQUIRED');",
+        "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+      "explicitReviewedReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9fab2ec83941599f",
+      "source": {
+        "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "line": 15,
+        "text": "if (approval && (input.repositoryRoot !== approval.subject.repositoryRoot || input.branchRef !== approval.subject.architectureRef",
+        "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+      "explicitReviewedReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7ba9b37d9c398ba9",
+      "source": {
+        "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "line": 16,
+        "text": "|| input.controlPaths.some(file => !approval.subject.paths.includes(file)))) throw new Error('SOURCE_APPROVAL_SYNC_INPUT_MISMATCH');",
+        "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+      "explicitReviewedReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-953d9f96d8667821",
+      "source": {
+        "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "line": 25,
+        "text": "payload: { ref: approval?.subject.architectureRevision ?? input.branchRef, paths: input.controlPaths, ...(approval ? { approvedSource: approval } : {}) },",
+        "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+      "explicitReviewedReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskblueprint/root/branch/controlpaths and approvedSource canonicalrepository/architectureRef/pathsubset; approvedrevisionwinsoversuppliedbranch onlywhenactualapprovedsubjectexists. No configurableemptyfield/currentpolicyabsence; gitadapter/grants/sourceauthor proof separate. ActualpurevalidateInput only, no source/sync/commit effects.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e86646443fbf39ea",
+      "source": {
+        "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+        "line": 21,
+        "text": "if (value.includes('\\0') || /[\\r\\n]/.test(value)) throw new Error(`${field} contains forbidden characters`);",
+        "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+      "explicitReviewedReason": "Exacttask repository-relative/noNUL-CRLF/no parent traversal and returnedartifactobject shape. dockerfile null skipread; staticPath literalDockerfile checks; security/data guard not adjustableescapeparameter. Emptyconfig has no independentB and realrepository/artifact owner policies retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttask repository-relative/noNUL-CRLF/no parent traversal and returnedartifactobject shape. dockerfile null skipread; staticPath literalDockerfile checks; security/data guard not adjustableescapeparameter. Emptyconfig has no independentB and realrepository/artifact owner policies retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3cb0757944538501",
+      "source": {
+        "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+        "line": 22,
+        "text": "if (value.startsWith('/') || value.split(/[\\\\/]+/).includes('..')) {",
+        "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+      "explicitReviewedReason": "Exacttask repository-relative/noNUL-CRLF/no parent traversal and returnedartifactobject shape. dockerfile null skipread; staticPath literalDockerfile checks; security/data guard not adjustableescapeparameter. Emptyconfig has no independentB and realrepository/artifact owner policies retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttask repository-relative/noNUL-CRLF/no parent traversal and returnedartifactobject shape. dockerfile null skipread; staticPath literalDockerfile checks; security/data guard not adjustableescapeparameter. Emptyconfig has no independentB and realrepository/artifact owner policies retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b7e5cae94b6a570c",
+      "source": {
+        "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+        "line": 29,
+        "text": "if (value.includes('\\0') || /[\\r\\n]/.test(value)) throw new Error('staticPath contains forbidden characters');",
+        "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+      "explicitReviewedReason": "Exacttask repository-relative/noNUL-CRLF/no parent traversal and returnedartifactobject shape. dockerfile null skipread; staticPath literalDockerfile checks; security/data guard not adjustableescapeparameter. Emptyconfig has no independentB and realrepository/artifact owner policies retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttask repository-relative/noNUL-CRLF/no parent traversal and returnedartifactobject shape. dockerfile null skipread; staticPath literalDockerfile checks; security/data guard not adjustableescapeparameter. Emptyconfig has no independentB and realrepository/artifact owner policies retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-cfde35e055485d60",
+      "source": {
+        "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+        "line": 37,
+        "text": "if (!artifact || typeof artifact !== 'object') throw new Error('artifact adapter returned no artifact reference');",
+        "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+      "explicitReviewedReason": "Exacttask repository-relative/noNUL-CRLF/no parent traversal and returnedartifactobject shape. dockerfile null skipread; staticPath literalDockerfile checks; security/data guard not adjustableescapeparameter. Emptyconfig has no independentB and realrepository/artifact owner policies retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttask repository-relative/noNUL-CRLF/no parent traversal and returnedartifactobject shape. dockerfile null skipread; staticPath literalDockerfile checks; security/data guard not adjustableescapeparameter. Emptyconfig has no independentB and realrepository/artifact owner policies retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f58b9f46ab89e51e",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "line": 8,
+        "text": "if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('DEMO_HANDOFF_OBJECT_INVALID');",
+        "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "explicitReviewedReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ec711a5530be7c1f",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "line": 12,
+        "text": "if(typeof value!=='string'||!value||value.length>maximum||/[\\u0000-\\u001f\\u007f]/u.test(value))throw new Error('DEMO_HANDOFF_TEXT_INVALID');",
+        "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "explicitReviewedReason": "OPEN generictext default2048 UTF16 andtarget128processinglimit, controlchars forbid. Existingadaptertargetstring grammar separate from otherartifact/path IDs; source-specific supporteddomain/owningauthor/genuine boundary fixtures remain, no samevaluealias orphysicalcapacityproof.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN generictext default2048 UTF16 andtarget128processinglimit, controlchars forbid. Existingadaptertargetstring grammar separate from otherartifact/path IDs; source-specific supporteddomain/owningauthor/genuine boundary fixtures remain, no samevaluealias orphysicalcapacityproof.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "precise open task/operator/cap/author/genuinefixture policy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ee89d632a82d07fd",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "line": 16,
+        "text": "if(Object.keys(value).some(key=>!keys.includes(key))||keys.some(key=>value[key]===undefined))throw new Error('DEMO_HANDOFF_FIELDS_INVALID');",
+        "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "explicitReviewedReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-544a099287b34ab8",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "line": 26,
+        "text": "if(reference.producer.runId!==runId||reference.producer.stageId!==stageId||reference.namespace!==namespace||reference.mediaType!=='application/json'",
+        "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "explicitReviewedReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-fa7894dcf8d389e7",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "line": 27,
+        "text": "||reference.sizeBytes<1||reference.sizeBytes>8*1024**2)throw new Error('DEMO_HANDOFF_ARTIFACT_OWNER_INVALID');",
+        "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "explicitReviewedReason": "OPEN reference maximum8388608bytes is productiveartifact processing/admissionbound, not physicalcapacity or same asartifactstorequota. Needexistingowner/field exactpolicy/recovery/wholemetadata+genuinepositive-negative case, cannotinventglobalsharedauthor.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN reference maximum8388608bytes is productiveartifact processing/admissionbound, not physicalcapacity or same asartifactstorequota. Needexistingowner/field exactpolicy/recovery/wholemetadata+genuinepositive-negative case, cannotinventglobalsharedauthor.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "precise open task/operator/cap/author/genuinefixture policy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c4f6ff6ed275629c",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "line": 31,
+        "text": "if(response.digest!==reference.digest||response.sizeBytes!==reference.sizeBytes",
+        "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "explicitReviewedReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a4be7b49c7e4bc71",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "line": 32,
+        "text": "||Buffer.byteLength(bytes)!==reference.sizeBytes||sha256Text(bytes)!==reference.digest)throw new Error('DEMO_HANDOFF_ARTIFACT_CHANGED');",
+        "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "explicitReviewedReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactobject/requiredkey/same-run-stage-namespace-contentdigest+UTF8bytes artifactproof. Sourceauthentication/data representation notdeploymenttuning; config{} doesnotwaivegenuinecandidate/evidence/receipt/provider/controllergrants orlatest reference exclusion.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-735b77170fd53b51",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "line": 44,
+        "text": "if(typeof value!=='number'||!Number.isSafeInteger(value)||value<1||value>9223372036)throw new Error('DEMO_RETENTION_INVALID');return value;",
+        "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "explicitReviewedReason": "Actual existing normalizeDemo omitted604800/project.demo override -> candidateinput retention -> boundrequest/controllerresponse.9223372036 is technicalsigned64nsdurationfloor, not freelytunableoperationalcap; Go deadlineyear1..9999/historicalv1default-v2explicit sourcefacts separate. Currentpureparsercontrols; genuinecompilerplan/controller/sourcegrants/profilecap/quota/modulecarrier stillOPEN but not unidentifiedproducer.",
+      "settings": [
+        "RT-PROJECT-DEMO-RETENTIONSECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "precise open task/operator/cap/author/genuinefixture policy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-219ca5dfc4d664ff",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "line": 15,
+        "text": "if (typeof value !== 'string' || value.trim() !== value || /[\\\\\\x00-\\x1f:]/u.test(value)",
+        "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "explicitReviewedReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e4860d772ed3e20a",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "line": 16,
+        "text": "|| value.split('/').some(part => !part || part === '.' || part === '..')) invalid('path');",
+        "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "explicitReviewedReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6bae0c8f6e4ff01e",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "line": 32,
+        "text": "if (tagged || blocks.length !== 1) invalid('exactly_one_complete_block_required');",
+        "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "explicitReviewedReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a75d81feb5cd60f3",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "line": 39,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)",
+        "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "explicitReviewedReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4947a726244c6aed",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "line": 40,
+        "text": "|| Object.keys(value).sort().join(',') !== 'deliverables,moduleId,schemaVersion,substep'",
+        "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "explicitReviewedReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-110d13f23e8c0817",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "line": 41,
+        "text": "|| value.schemaVersion !== 'forge-deliverables.v1' || value.moduleId !== moduleId",
+        "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "explicitReviewedReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a33bf22a61464138",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "line": 42,
+        "text": "|| value.substep !== substep || !Array.isArray(value.deliverables)) invalid('identity_or_shape');",
+        "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "explicitReviewedReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b55c38dcd8d06069",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "line": 51,
+        "text": "const owns = (file: string) => owned.some(prefix => file === prefix || file.startsWith(`${prefix}/`));",
+        "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "explicitReviewedReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttaskcanonical relativedeclaredpaths, onecompletedtaggedforge-deliverablesJSONblock, module/substep/schema/fullkeys/deliverables and ownedseparatorboundary. CurrentactualparseDeclaration/validateDeliveryPaths controls; no repository/sourceapprovedeffects, no deployment CONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8bda31d7357541c1",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+        "line": 23,
+        "text": "if (input.source.projectId !== input.contract.projectId || canonicalJson([...input.source.paths].sort()) !== canonicalJson(paths)) throw new Error('SOURCE_PREFLIGHT_PATHS_MISMATCH');",
+        "sha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+      "explicitReviewedReason": "Exacttask sourceproject/paths matchcontractproject/requiredfiles+FORGEfiles, authenticatedsubject/baseRevision inspected bycaptureReviewSubject. input.contract.policy capturedtask/source policy payload not impliedsecond CONFIG author or wholepolicyapproved. Parenttask/operator/module partition OPEN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttask sourceproject/paths matchcontractproject/requiredfiles+FORGEfiles, authenticatedsubject/baseRevision inspected bycaptureReviewSubject. input.contract.policy capturedtask/source policy payload not impliedsecond CONFIG author or wholepolicyapproved. Parenttask/operator/module partition OPEN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "precise open task/operator/cap/author/genuinefixture policy obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f118c900944f53b0",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "line": 7,
+        "text": "|| value.includes('\\0')",
+        "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+      "explicitReviewedReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d71a5f821877da0b",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "line": 8,
+        "text": "|| /[\\r\\n]/.test(value)",
+        "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+      "explicitReviewedReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-495bcc96c74dd418",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "line": 9,
+        "text": "|| value.startsWith('/')",
+        "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+      "explicitReviewedReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3fb5565af7ec427b",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "line": 10,
+        "text": "|| /^[A-Za-z]:[\\\\/]/.test(value)",
+        "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+      "explicitReviewedReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-16eeb560602d50ac",
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "line": 11,
+        "text": "|| value.split(/[\\\\/]+/).includes('..')",
+        "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+      "explicitReviewedReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exacttasksecurity noNUL/CRLF/absolute/Windowsdrive/parentpath; separators normalized, requiredsubsteps mustnonempty. No operationalparameter or permission knob; realreadonlyrepositorysource+artifactwriters remainboundexistingowners.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts-retention-producer-corrected.json",
+      "status": "explicit exactsource/task/security/representation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "extraDefaultCallerSeams": [
+    {
+      "source": "skills/nova/project/demo.ts",
+      "line": 14,
+      "setting": "RT-PROJECT-DEMO-RETENTIONSECONDS",
+      "reason": "Actual omittedproducerdefault604800; capturedsourcecontract/approvaldigest/deployedoperator/domain/genuinefixture stillOPEN, no newauthor",
+      "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+    },
+    {
+      "source": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+      "line": 43,
+      "setting": "RT-PROJECT-DEMO-RETENTIONSECONDS",
+      "reason": "Publichelper default604800 onlyundefined; exactrequiredcandidateinput/compiler normalize distinction retained",
+      "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58"
+    }
+  ],
+  "thisBatchCount": 31
+}

@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
@@ -261,4 +262,18 @@ const unresolved = await executeRepositoryAudit({}, unresolvedContext);
 assert.equal(unresolved.outcome, 'blocked');
 assert.match(unresolved.reason.message, /coverage is incomplete/u);
 
+const owned = JSON.parse(fs.readFileSync(new URL('../../../../../config/plugins/kubeclaw.review/profiles/standard.config.json',import.meta.url),'utf8')).profiles.standard.settings;
+delete owned.repositoryGrades;owned.schemaVersion='review-owned-decision-profiles.v1';
+const ownedContext={...context,contract:{...context.contract,config:{...context.contract.config,ownedPolicyProfiles:owned}}};
+assert.equal((await executeRepositoryAudit({},ownedContext)).outcome,'passed');
+const changed=structuredClone(owned);changed.profiles.audit={...structuredClone(changed.profiles.gate),profile:'audit'};
+const changedResult=await executeRepositoryAudit({},{...ownedContext,contract:{...ownedContext.contract,config:{...ownedContext.contract.config,ownedPolicyProfiles:changed}}});
+assert.equal(changedResult.outcome,'blocked');
+assert.match(changedResult.reason.message,/simplification lens requires an enabled simplification policy/);
+const gradeOwned=JSON.parse(fs.readFileSync(new URL('../../../../../config/plugins/kubeclaw.review/profiles/standard.config.json',import.meta.url),'utf8')).profiles.standard.settings;
+const gradeContext={...context,contract:{...context.contract,config:{...context.contract.config,ownedPolicyProfiles:gradeOwned,repositoryRuntimeTarget:{tokenizerEncoding:'o200k_base',maxInputTokens:120000,maxOutputTokens:6000,maxContextTokens:128000,maxPromptBytes:900000}}}};
+assert.equal((await executeRepositoryAudit({grade:'fast',mode:'plan'},gradeContext)).outcome,'passed');
+await assert.rejects(executeRepositoryAudit({grade:'fast',overrides:{}},gradeContext),/COMPETING_AUTHOR/);
+const gradeB=structuredClone(gradeOwned);gradeB.repositoryGrades.deep.maxInputTokensPerJob=128000;
+await assert.rejects(executeRepositoryAudit({grade:'fast'}, {...gradeContext,contract:{...gradeContext.contract,config:{...gradeContext.contract.config,ownedPolicyProfiles:gradeB}}}),/exceeds the review runtime target/);
 console.log(JSON.stringify({ ok: true, suite: 'repository-audit-stage' }));

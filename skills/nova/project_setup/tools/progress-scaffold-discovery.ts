@@ -649,7 +649,7 @@ function mergeObjects(discovered: AnyRecord, existing: unknown) {
 }
 
 export function buildScaffold(context: Context): AnyRecord {
-  const published=readPublishedPair(context.swarmDir,['progress.json','pipeline.json'],false);
+  const published=readPublishedPair(context.swarmDir,['progress.json','pipeline.json'],false,context.workerCore);
   const progress = objectOrEmpty(published[0]);
   const prior = objectOrEmpty(readJsonIfExists(context.scaffoldFile));
   const modules = discoverModules(context, progress);

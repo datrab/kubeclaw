@@ -1,0 +1,92 @@
+{
+  "qualification": "Inspected source-specific pure collector and read-only package/elapsed helpers; direct body/source/hash/node comparisons only",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-generation.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/replay.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/replay.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "47bfac",
+      "toolCompletionChunk": "1a1dfd",
+      "scriptSha256": "17d70f57ce63d73ff3e1573d8dbc8ac4c473f102597a4ab21fc9e63cc04ee620"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-elapsed-source.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/elapsed.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/elapsed.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "7c3f4e",
+      "toolCompletionChunk": "7c3f4e",
+      "scriptSha256": "9f737f8a4dc51edf5df25b729b761216650c35a74920e4049a494bee12eb4ba5"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-package-source.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/package.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/package.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "e6d60a",
+      "toolCompletionChunk": "e6d60a",
+      "scriptSha256": "d00cddff3cbe5c4b1712bc507d7e898e7db32c3e007be1f4e3772647caa301d2"
+    },
+    {
+      "argv": [
+        "python",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/inspect-v8.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/inspection.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/inspection.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "c04b5a",
+      "toolCompletionChunk": "1e181f",
+      "scriptSha256": "1fbf3b0c20ed19358565f32352c759d87a5e5ecd281c37a8a120ce6e3e34596f"
+    },
+    {
+      "argv": [
+        "python",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/inspect-native-and-witness.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/native-witness.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/native-witness.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "8ac5dc",
+      "toolCompletionChunk": "45643e",
+      "scriptSha256": "0477fad963d34cc225240aa135f9d62ad645bb7a343bc66970043e69738c40c4"
+    }
+  ],
+  "initialIdentityCapture": {
+    "toolChunk": "860623",
+    "exitCode": 0
+  },
+  "nativeWitnessInitialFailure": {
+    "toolStartChunk": "e2ac60",
+    "toolCompletionChunk": "0019b7",
+    "exitCode": 1,
+    "stderr": "witness-first-attempt.stderr",
+    "cause": "Reviewer assumed all original registration witnesses were objects; Security witness is an authentic registration scalar. Corrected comparison retains both source-supported forms; no author input altered."
+  },
+  "readOnlyNavigation": [
+    {
+      "toolChunk": "2bc447",
+      "absent": "skills/buster/engine/runner/worker.ts",
+      "resolvedActual": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "qualification": "Author descriptive source string typo; true source already captured and independently read"
+    }
+  ],
+  "BrowserOriginalWriterCollectorExecuted": false,
+  "nativeCasesExecuted": 0,
+  "headMovementSeparateFromInputByteIdentity": true
+}

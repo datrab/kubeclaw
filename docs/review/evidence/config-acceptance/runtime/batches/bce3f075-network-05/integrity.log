@@ -1,0 +1,58 @@
+{
+  "status": "not-accepted; actual current direct network providers/parser plus real loopback native HTTP only; manufactured auth provenance/public test-only credentials and no genuine role/grants/globaleffect acceptance; proposed strict owner definition not implemented, future cases notrun",
+  "rows": 1248,
+  "cases": 4976,
+  "results": {
+    "not-run": 3715,
+    "passed": 1261
+  },
+  "network05SchemaRows": 31,
+  "network05CurrentDefinitions": 32,
+  "network05FutureCases": 124,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 125,
+  "remainingSupplementalSourceTracedRows": 197,
+  "originalCandidates": 4642,
+  "manualCandidateRecordsThisBatch": 118,
+  "manualCandidateRecordsCombined": 413,
+  "remainingUnreviewedCandidates": 4229,
+  "explicitOpenCandidateGuards": 72,
+  "unmatchedGuardBusinessDefaultsNotInOriginalSyntaxRoster": [
+    {
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "lines": [
+        49,
+        61,
+        74,
+        83,
+        118,
+        129,
+        134,
+        148
+      ],
+      "reason": "1MiB flowfile readbeforecheck processingquota; step.timeoutMs duplicateauthor migration; minimumMessages1+max64 protocol/coverage; variables64 count; zero-mainfailure; firsttransporterror/cleanup best-effort notdurablerecovery",
+      "sourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+    },
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "lines": [
+        121,
+        122,
+        153
+      ],
+      "reason": "implicitany2xx taskexpectationtarget explicitnullmeaning, notGLOBALCONFIGwriter; sourceonlyHTTP_REQUEST_FAILED/TIMEOUT convertedfindings, size/securityexceptions propagate",
+      "sourceSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "lines": [
+        30,
+        39
+      ],
+      "reason": "65536productive auth requestbytes needs own processingpolicy field; minactualinvocation/exposuredeadline, no free reset",
+      "sourceSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+    }
+  ],
+  "integrityErrors": [],
+  "remaining": "125 schema consumers,197 original supplemental source-traced rows,4229 unreviewed candidates plus72 explicit open candidate/nested policy guards and absent-syntax obligations. Exact31 network schema fields refined. Quota/task intent classification and physicalplugin-author packaging still independent review pending. Genuine auth leaseUID/SecretUID/resourceVersion/exposure/image/manifest/grant/role profiles remain missing; currentlocalhostauthserver doesnotvalidatecredentials and nativeinvoke doesnotreceiveactualfixtureauthority inputs, so no trust/security/role acceptance. Proposed defaultfreeowned request quotas remove perstep duplicate timeout author; currentAPIstep500 masksroot0 preserved. Existing codec/context/A6 scope and historical case requirements retained."
+}

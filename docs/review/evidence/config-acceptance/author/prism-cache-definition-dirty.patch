@@ -1,0 +1,258 @@
+diff --git a/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition.json b/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition.json
+index 535fa3e37..33ddd0efe 100644
+--- a/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition.json
++++ b/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition.json
+@@ -32,6 +32,8 @@
+         "1.35.6",
+         "-schema-location",
+         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
++        "-schema-location",
++        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-A.yaml"
+       ],
+       "exit": 0,
+@@ -82,6 +84,8 @@
+         "1.35.6",
+         "-schema-location",
+         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
++        "-schema-location",
++        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-B.yaml"
+       ],
+       "exit": 0,
+@@ -132,6 +136,8 @@
+         "1.35.6",
+         "-schema-location",
+         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
++        "-schema-location",
++        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.yaml"
+       ],
+       "exit": 0,
+@@ -182,6 +188,8 @@
+         "1.35.6",
+         "-schema-location",
+         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
++        "-schema-location",
++        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.yaml"
+       ],
+       "exit": 0,
+@@ -232,6 +240,8 @@
+         "1.35.6",
+         "-schema-location",
+         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
++        "-schema-location",
++        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.yaml"
+       ],
+       "exit": 0,
+@@ -282,6 +292,8 @@
+         "1.35.6",
+         "-schema-location",
+         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
++        "-schema-location",
++        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.yaml"
+       ],
+       "exit": 0,
+@@ -332,12 +344,14 @@
+         "1.35.6",
+         "-schema-location",
+         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
++        "-schema-location",
++        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml"
+       ],
+-      "exit": 1,
++      "exit": 0,
+       "expectedExit": 0,
+       "expectedDiagnostic": null,
+-      "result": "failed",
++      "result": "passed",
+       "rawEvidencePaths": [
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stderr"
+@@ -345,12 +359,11 @@
+       "collection": [
+         21,
+         1,
+-        18,
++        21,
++        0,
+         0,
+-        3,
+         0
+-      ],
+-      "reason": "nonempty complete collection, all-valid and zero invalid/errors/skips required; exit0 alone cannot pass"
++      ]
+     },
+     {
+       "id": "DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B",
+@@ -383,12 +396,14 @@
+         "1.35.6",
+         "-schema-location",
+         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
++        "-schema-location",
++        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml"
+       ],
+-      "exit": 1,
++      "exit": 0,
+       "expectedExit": 0,
+       "expectedDiagnostic": null,
+-      "result": "failed",
++      "result": "passed",
+       "rawEvidencePaths": [
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout",
+         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stderr"
+@@ -396,12 +411,11 @@
+       "collection": [
+         21,
+         1,
+-        18,
++        21,
++        0,
+         0,
+-        3,
+         0
+-      ],
+-      "reason": "nonempty complete collection, all-valid and zero invalid/errors/skips required; exit0 alone cannot pass"
++      ]
+     },
+     {
+       "id": "DLV-C0-BOUNDARY-RESOURCE-PROJECTION-COMPARISONS",
+@@ -2142,7 +2156,7 @@
+     "charts/kubeclaw/templates/service.yaml": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2",
+     "charts/kubeclaw/templates/configmap-gateway.yaml": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+     "charts/prism/values.schema.json": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+-    "docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py": "8c8204b721eb39c19c5138b0845a69151cb391fe9e92f04b9462fef50e088b5e",
++    "docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py": "6184a547744c404eb9bde9a0129df2fad252886cebb8d1167490eba9877e7df7",
+     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/go.mod": "0032376ecb8246a023f905f3529f1543ad1da52cc7722e594adc0249ecc0b769",
+     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/core/validation/validation.go": "a9caab845cd895822bcdca6d3564022feb609a87a459c4e9c1a4e5fc7eebc80f",
+     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/batch/validation/validation.go": "84de54a1606bfa5aeeb39bab21b9c3978c41f7f9488a9704f14765f10130ef0d",
+@@ -2188,7 +2202,10 @@
+     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/rolebinding-rbac-v1.json": "87ab620d0adddcd2803b92357fce2854af752326df8c5408a7588aae98b3031d",
+     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/clusterrole-rbac-v1.json": "0777f91c4fa08bd3989b6db8c59dad0429a63dec8f59e883ff55c947a14d0d5f",
+     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/clusterrolebinding-rbac-v1.json": "e2d0471b444cf7ea4fd69d7eba1b16e06215503bfbc650450c2b6ad9b40f863c",
+-    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/poddisruptionbudget-policy-v1.json": "da73f50ad0264d73f668eecaa9959da65afe2846602a7a5c8fd51f7799d6a258"
++    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/poddisruptionbudget-policy-v1.json": "da73f50ad0264d73f668eecaa9959da65afe2846602a7a5c8fd51f7799d6a258",
++    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json": "4b8b5f0e0e383363ee248095abe0ba0fd8b79da64d755c68632cbec9617697d9",
++    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json": "a705eb1d0de6d38132435c8df35b33097456012b2cd7d92d685442386d1d5db5",
++    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json": "9dbc9ea6042d41e36d908b24897c4ee126e199a0a46856cd60c7dcbe73381e45"
+   },
+   "profileDigests": {
+     "profile-kubeclaw-buster-A.json": "910afad793b1712ca19c0195446099d377cfa4fe737750c7aa8172aabeb1247a",
+@@ -5333,8 +5350,7 @@
+     ]
+   },
+   "resultCounts": {
+-    "passed": 23,
+-    "failed": 2
++    "passed": 25
+   },
+   "implementationCases": "remain not-run; live selected apiserver/version/feature gates/Secret revisions/CSI/node admission prerequisites pending; no credential values generated or logged"
+ }
+diff --git a/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout b/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout
+index 440e8c018..6a4a5959b 100644
+--- a/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout
++++ b/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout
+@@ -1,4 +1 @@
+-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml - CustomResourceDefinition busternamespaceleases.kubeclaw.forgestack.ai failed validation: could not find schema for CustomResourceDefinition
+-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml - ValidatingAdmissionPolicy agent-buster-de8812af-namespace-fence failed validation: could not find schema for ValidatingAdmissionPolicy
+-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml - ValidatingAdmissionPolicyBinding agent-buster-de8812af-namespace-fence failed validation: could not find schema for ValidatingAdmissionPolicyBinding
+-Summary: 21 resources found in 1 file - Valid: 18, Invalid: 0, Errors: 3, Skipped: 0
++Summary: 21 resources found in 1 file - Valid: 21, Invalid: 0, Errors: 0, Skipped: 0
+diff --git a/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout b/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout
+index 50af4f493..6a4a5959b 100644
+--- a/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout
++++ b/docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout
+@@ -1,4 +1 @@
+-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml - CustomResourceDefinition busternamespaceleases.kubeclaw.forgestack.ai failed validation: could not find schema for CustomResourceDefinition
+-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml - ValidatingAdmissionPolicy agent-buster-de8812af-namespace-fence failed validation: could not find schema for ValidatingAdmissionPolicy
+-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml - ValidatingAdmissionPolicyBinding agent-buster-de8812af-namespace-fence failed validation: could not find schema for ValidatingAdmissionPolicyBinding
+-Summary: 21 resources found in 1 file - Valid: 18, Invalid: 0, Errors: 3, Skipped: 0
++Summary: 21 resources found in 1 file - Valid: 21, Invalid: 0, Errors: 0, Skipped: 0
+diff --git a/docs/review/evidence/config-acceptance/delivery/kubernetes-source-acquisitions.json b/docs/review/evidence/config-acceptance/delivery/kubernetes-source-acquisitions.json
+index d6fad07ea..ca29b525b 100644
+--- a/docs/review/evidence/config-acceptance/delivery/kubernetes-source-acquisitions.json
++++ b/docs/review/evidence/config-acceptance/delivery/kubernetes-source-acquisitions.json
+@@ -543,6 +543,63 @@
+       "bytes": 27252,
+       "result": "acquired",
+       "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/poddisruptionbudget-policy-v1.json"
++    },
++    {
++      "repository": "yannh/kubernetes-json-schema",
++      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
++      "path": "v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json",
++      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json",
++      "status": 200,
++      "sha256": "4b8b5f0e0e383363ee248095abe0ba0fd8b79da64d755c68632cbec9617697d9",
++      "bytes": 54215,
++      "result": "acquired",
++      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json"
++    },
++    {
++      "repository": "yannh/kubernetes-json-schema",
++      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
++      "path": "v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json",
++      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json",
++      "status": 200,
++      "sha256": "a705eb1d0de6d38132435c8df35b33097456012b2cd7d92d685442386d1d5db5",
++      "bytes": 42744,
++      "result": "acquired",
++      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json"
++    },
++    {
++      "repository": "yannh/kubernetes-json-schema",
++      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
++      "path": "v1.35.6-standalone-strict/_definitions.json",
++      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json",
++      "status": 200,
++      "sha256": "9dbc9ea6042d41e36d908b24897c4ee126e199a0a46856cd60c7dcbe73381e45",
++      "bytes": 1420392,
++      "result": "acquired",
++      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json"
++    },
++    {
++      "repository": "kubernetes/kubernetes",
++      "tag": "v1.35.6",
++      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
++      "path": "pkg/kubelet/eviction/eviction_manager.go",
++      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/kubelet/eviction/eviction_manager.go",
++      "status": 200,
++      "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b",
++      "bytes": 26452,
++      "result": "acquired",
++      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go"
++    },
++    {
++      "repository": "kubernetes/kubernetes",
++      "tag": "v1.34.11",
++      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
++      "path": "pkg/kubelet/eviction/eviction_manager.go",
++      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/kubelet/eviction/eviction_manager.go",
++      "status": 200,
++      "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e",
++      "bytes": 25911,
++      "result": "acquired",
++      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go"
+     }
+   ]
+ }
+diff --git a/docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py b/docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py
+index cf57caa0d..085374db0 100644
+--- a/docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py
++++ b/docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py
+@@ -36,7 +36,9 @@ for (chart,label),profile in profiles.items():
+  p=run(id,['helm','template','delivery-'+chart,'charts/'+chart.replace('-buster',''),'--namespace','default','-f',str(f.relative_to(repo))])
+  if p.returncode:continue
+  manifest=dest/(id+'.yaml');manifest.write_text(p.stdout)
+- schemaResult=run('DLV-C0-BOUNDARY-SCHEMA-'+chart.upper()+'-'+label,['kubeconform','-strict','-summary','-kubernetes-version','1.35.6','-schema-location',str(directory/'{{.ResourceKind}}{{.KindSuffix}}.json'),str(manifest.relative_to(repo))])
++ schemaArgs=['kubeconform','-strict','-summary','-kubernetes-version','1.35.6','-schema-location',str(directory/'{{.ResourceKind}}{{.KindSuffix}}.json')]
++ if (out/'pinned-schema-aliases.json').exists():schemaArgs+=['-schema-location',str(out/'pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json')]
++ schemaResult=run('DLV-C0-BOUNDARY-SCHEMA-'+chart.upper()+'-'+label,schemaArgs+[str(manifest.relative_to(repo))])
+  summary=re.search(r'Summary: (\d+) resources? found in (\d+) files? - Valid: (\d+), Invalid: (\d+), Errors: (\d+), Skipped: (\d+)',schemaResult.stdout)
+  records[-1]['collection']=list(map(int,summary.groups())) if summary else None
+  if not summary or int(summary[1])==0 or int(summary[1])!=int(summary[3]) or any(int(summary[i]) for i in [4,5,6]):records[-1]['result']='failed';records[-1]['reason']='nonempty complete collection, all-valid and zero invalid/errors/skips required; exit0 alone cannot pass'

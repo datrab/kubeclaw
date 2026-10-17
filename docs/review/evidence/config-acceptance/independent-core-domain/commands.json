@@ -1,0 +1,84 @@
+[
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/core-definition-reproduction.log"
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/check-preparation-definition.mjs"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/preparation-definition-reproduction.log"
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/independent-core-domain/enumerate-api.mjs"
+    ],
+    "environmentOverride": null,
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/api-enumeration.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/independent-core-domain/enumerate-schema.py"
+    ],
+    "environmentOverride": null,
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/schema-enumeration.log"
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs"
+    ],
+    "environmentOverride": {
+      "PRISM_ENGINE_CONTENT_DIGEST": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "exit": 1,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/schema-definition-reproduction.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/check-residual.py"
+    ],
+    "environmentOverride": null,
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/author-residual-integrity-reproduction.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/check-schema-closure.py"
+    ],
+    "environmentOverride": null,
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/author-schema-integrity-reproduction.log"
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs"
+    ],
+    "environmentOverride": {
+      "PRISM_ENGINE_CONTENT_DIGEST": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/schema-definition-reproduction-corrected.log"
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/validate-refined-profile-definitions.mjs"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/refined-profiles-reproduction.log"
+  }
+]

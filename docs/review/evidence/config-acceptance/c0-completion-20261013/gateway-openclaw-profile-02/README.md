@@ -1,0 +1,39 @@
+# Gateway/OpenClaw profile02 — additive GWP01/02 correction
+
+**Definition proposal; fresh independent material review required. Not native acceptance or whole-C0 approval.** Package01, its review, all70 original field bodies,75 case bodies/history/native flags, and canonical sources remain immutable. The full frozen review is `../independent-gateway-openclaw-profile-review-01/README.md`; its two findings are the only semantic amendments here. Other bounded package01 author/source/credential/root/lifetime contracts remain in force and are reused, not re-inventoried.
+
+## GWP01: actual duration and elapsed consumer
+
+The authentic local npm archive SHA256 `1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340` contains `package/dist/parse-duration-DBWI377R.mjs` and its exact `string-coerce-CIXf7egm.mjs` import. Small extracted source copies, archive-member equality and hashes are recorded. Its package explicitly declares `ms:2.1.3`; the locally available exact-version ms source and package metadata are separately pinned. That local dependency is a pure definition-check input, **not proof of the installed image's dependency bytes**.
+
+The collector inspects and evaluates only these pure source functions in an isolated VM: no native module import/entrypoint, process, provider, secret or I/O capability is supplied. The parser trims/lowercases, accepts adjacent composite units (e.g.1h30m), uses default minutes, rounds and rejects negative/nonfinite/non-safe-integer results. Its exact source, not a hand-built grammar, defines admission. `100000d` and2147483648ms are supported parse values; the former package's 2^31 cap and simplified regex were wrong.
+
+`tool-result-truncation-CS-9YGQx.mjs` compares **now-lastCacheTouchAt<ttlMs**, not setTimeout. A zero parsed duration disables expired pruning. Negative syntax is rejected by the parser; direct negative settings also satisfy native `ttlMs<=0` no-prune but are not a supported authored duration. `!pruneNewRounds` or absent/zero lastTouch bypasses pruning. Modeoff or genuinely ineligible provider does not install the guard. Clock regression yields not-expired. At exactly the TTL threshold the age guard no longer bypasses, but actual transcript cutoff, occupancy/tool eligibility and projection still govern whether any result changes. Existing codex/embedded unsupported positive-effect boundaries are not waived.
+
+Proposed original-run timestamp admission separately requires integer Date-compatible values (absolute value<=8640000000000000) and safe-integer elapsed subtraction; NaN/Infinity, Date overflow and unsafe subtraction reject. There is no added now+TTL timer/deadline operation, and no duration Date-ceiling invented. Native current resolver silently falls back to300000ms on bad parse; target required admission rejects malformed/overflow before that fallback even for dormant/off/ineligible branches. Agent timeout's distinct timer guard remains unchanged and cannot impose its ceiling on this consumer. See `duration-consumer-contract.json` and the original TTL case bindings in `future-field-case-plans.json`.
+
+## GWP02: explicit same-generation context resolution
+
+`bootstrapContextRef` is now a closed `{path,pointer,sha256}` reference to the one generated `managed-bootstrap-context.json`; unknown fields, missing refs, escaping/foreign paths and missing pointers reject. Hash is the exact captured UTF-8 file bytes (the finite JSON collector uses pretty2+LF fixture bytes, not a permissive transport recanonicalizer). `managed-bootstrap-context.schema.json` closes every context and source-derived recipe. Contexts carry explicit existing Chart owner path/profile, native receiving profile label, Buster role/instance, source recipe identity and three exact original source path/SHA pairs. Pointer key must equal its receiving label. The recipe's model route must match the same owner/native projection. Neither profile name nor selected role chooses an implicit A/B default.
+
+The complete owner and complete captured contexts validate first. **Every declared owner profile** resolves all of its actual context refs/source/profile/role/model/instance joins and managed semantic admission before original-caller authorization or selection; no selected-profile-only shortcut. Missing/unknown/wrong-SHA/foreign/escaping refs and wrong role/source/owner-profile/receiving-profile/recipe/unknown-key associations are exercised in both local-A and unselected local-B. The owner's original arbitrary valid profile-key domain remains: a concrete `new-C` profile resolves its own explicit `/contexts/C` B-source recipe, while borrowing `/contexts/B` rejects. This is a generated source association, not a new editable policy writer, active grant, native epoch ledger or invented host.
+
+`context-reference-contract.json` specifies the physical receiving order, exact source equality and generated transport proposal. The existing same Chart is still the sole author: endpoint aliases `.Values.litellm.endpoint`, model route aliases existing agent.model; memory SOURCE/PROVIDER/ID remains the native managed startup reader contract plus authentic named credential locator/revision/access capability. Runtime snapshot/key/ENV/CLI precedence and hidden more-specific persisted authority remain current counterexamples until the proposed bootstrap addresses them. No plaintext Chart key, invented Secret revision retention or new context author is accepted.
+
+## Root, lifetime and unresolved inputs
+
+The package pins and retains same-entry02's unsupported Gateway selection and proposed future same-Chart arm. The combinedv7 root under review is **not adopted** here. A future independently reviewed closed arm/file-set/receipt/materializer composition in the existing root is still local definition/implementation work; no private fork, seventh component or latest/default fill. Generated context/native JSON/receipt live outside the image-baked C1 nofollow author tree and require exact generation/source equality; source recipe IDs are not installed grants.
+
+Installed image/source/host, actual agent/model/tool/plugin roster, genuine provider eligibility, source backend revision-retention capability/access, token/issuer grants and capacity remain named activation inputs. S/H service/host admission and original R run/session/model/context/source/grant/deadline/recovery/cleanup authority remain stable across B/loss/retry; no hot-module M. Original unsupported native F-Effect/BIND/Recovery/Eval obligations and all case bodies/lifecycle/status remain intact, not satisfied by these pure checks.
+
+## Evidence
+
+- `raw/historical-quiet-miss.json`: exact frozen01 collector plus three narrow contrasts. The two foreign context refs pass incorrectly;100000d rejects with the old TTL_TIMER_DOMAIN. Exit1 is the expected exposed defect, not new acceptance evidence.
+- `raw/check-01.json`: first02 run,557 observations, two missing receiving-label association rejection controls exposed. Retained unchanged.
+- `raw/check-02.json`: correction,557 observations, exit0.
+- `raw/check-03.json`: adds physical closed capture schema plus three duration source-cut identities,560 observations, exit0.
+- Latest raw run / command and tool identities: `commands-and-exits.json`; source/receiver positives, negatives and contrast details are actual stdout, not coverage closure.
+- `read-identities.json` freezes prior artifacts/review, local archive/helper/dependency inputs and source recipe inputs. Inherited233 inputs and prior gzip snapshots are reused by exact immutable reference; no giant archive copy.
+- `end-read-and-conservation.json` checks input drift, original70/75 bodies, full2409/6845/50 arrays and archive member equality. `manifest.json` freezes this additive package.
+
+Fresh independent review must decide these corrections. No self-acceptance, native execution, implementation claim, globalC0 PASS or request to advance C1–C6 is made.

@@ -1,0 +1,402 @@
+{
+  "schemaVersion": "nova-core-policy.v1",
+  "owner": "nova-core",
+  "profiles": {
+    "local-A": {
+      "settings": {
+        "platform": {
+          "schemaVersion": "pipeline-platform.v2",
+          "installationRoots": [
+            "../../skills/common/plugins",
+            "../../skills/nova/plugins",
+            "../../tests/fixtures/plugin-system-v2"
+          ],
+          "trustedBuiltinRoots": [
+            "../../skills/common/plugins",
+            "../../skills/nova/plugins",
+            "../../tests/fixtures/plugin-system-v2"
+          ],
+          "externalTrust": {
+            "allowedSourceDigests": {},
+            "verifiedAttestations": {}
+          },
+          "providers": {
+            "telemetry.emit": "kubeclaw.telemetry-store:telemetry"
+          },
+          "grants": {
+            "kubeclaw.telemetry-observer:telemetry": {
+              "telemetry.emit": {
+                "allowedEventPrefixes": [
+                  "run.",
+                  "stage.",
+                  "attempt.",
+                  "effect.",
+                  "artifact.",
+                  "wait.",
+                  "orchestrator."
+                ]
+              }
+            }
+          },
+          "adapters": {
+            "kubeclaw.telemetry-store:telemetry": {
+              "root": "/fixture/wcr06/telemetry",
+              "maxRecordBytes": 1048576,
+              "maximumRecords": 100000,
+              "maximumStoreBytes": 268435456
+            }
+          },
+          "activeAdapters": [
+            "kubeclaw.telemetry-store:telemetry"
+          ],
+          "observers": {
+            "kubeclaw.telemetry-observer:telemetry": {},
+            "test.graph-plugin:lifecycle-recorder": {
+              "journalPath": "/fixture/wcr06/observer-target/events.jsonl"
+            }
+          },
+          "storageRoot": "/fixture/wcr06/state",
+          "shutdownTimeoutMs": 5000,
+          "effectLockTtlMs": 300000,
+          "orchestratorIssuerId": "nova:wcr06-fixture",
+          "administrativeDecisionIssuers": [
+            {
+              "type": "operator",
+              "id": "operator:wcr06-fixture"
+            }
+          ]
+        },
+        "projectCompiler": {
+          "repairBudget": {
+            "categories": {
+              "lint": 2,
+              "test": 2
+            },
+            "maximumOrchestratorOrders": 1
+          },
+          "reviewRepair": {
+            "mode": "enabled",
+            "maximumOrders": 2
+          },
+          "execution": {
+            "maxTechnicalRetries": 1,
+            "timeoutMs": 1800000
+          },
+          "executionGroups": {
+            "cumulative": {
+              "timeoutMs": 1800000
+            },
+            "source": {
+              "timeoutMs": 120000
+            },
+            "demo": {
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "runtimeLocks": {
+          "journalAppendLockTimeoutMs": 5000,
+          "runMutationLockTtlMs": 60000,
+          "runMutationLockRenewEveryMs": 20000
+        }
+      }
+    },
+    "local-B-lock": {
+      "settings": {
+        "platform": {
+          "schemaVersion": "pipeline-platform.v2",
+          "installationRoots": [
+            "../../skills/common/plugins",
+            "../../skills/nova/plugins",
+            "../../tests/fixtures/plugin-system-v2"
+          ],
+          "trustedBuiltinRoots": [
+            "../../skills/common/plugins",
+            "../../skills/nova/plugins",
+            "../../tests/fixtures/plugin-system-v2"
+          ],
+          "externalTrust": {
+            "allowedSourceDigests": {},
+            "verifiedAttestations": {}
+          },
+          "providers": {
+            "telemetry.emit": "kubeclaw.telemetry-store:telemetry"
+          },
+          "grants": {
+            "kubeclaw.telemetry-observer:telemetry": {
+              "telemetry.emit": {
+                "allowedEventPrefixes": [
+                  "run.",
+                  "stage.",
+                  "attempt.",
+                  "effect.",
+                  "artifact.",
+                  "wait.",
+                  "orchestrator."
+                ]
+              }
+            }
+          },
+          "adapters": {
+            "kubeclaw.telemetry-store:telemetry": {
+              "root": "/fixture/wcr06/telemetry",
+              "maxRecordBytes": 1048576,
+              "maximumRecords": 100000,
+              "maximumStoreBytes": 268435456
+            }
+          },
+          "activeAdapters": [
+            "kubeclaw.telemetry-store:telemetry"
+          ],
+          "observers": {
+            "kubeclaw.telemetry-observer:telemetry": {},
+            "test.graph-plugin:lifecycle-recorder": {
+              "journalPath": "/fixture/wcr06/observer-target/events.jsonl"
+            }
+          },
+          "storageRoot": "/fixture/wcr06/state",
+          "shutdownTimeoutMs": 5000,
+          "effectLockTtlMs": 300000,
+          "orchestratorIssuerId": "nova:wcr06-fixture",
+          "administrativeDecisionIssuers": [
+            {
+              "type": "operator",
+              "id": "operator:wcr06-fixture"
+            }
+          ]
+        },
+        "projectCompiler": {
+          "repairBudget": {
+            "categories": {
+              "lint": 2,
+              "test": 2
+            },
+            "maximumOrchestratorOrders": 1
+          },
+          "reviewRepair": {
+            "mode": "enabled",
+            "maximumOrders": 2
+          },
+          "execution": {
+            "maxTechnicalRetries": 1,
+            "timeoutMs": 1800000
+          },
+          "executionGroups": {
+            "cumulative": {
+              "timeoutMs": 1800000
+            },
+            "source": {
+              "timeoutMs": 120000
+            },
+            "demo": {
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "runtimeLocks": {
+          "journalAppendLockTimeoutMs": 8000,
+          "runMutationLockTtlMs": 90000,
+          "runMutationLockRenewEveryMs": 30000
+        }
+      }
+    },
+    "local-B-lint": {
+      "settings": {
+        "platform": {
+          "schemaVersion": "pipeline-platform.v2",
+          "installationRoots": [
+            "../../skills/common/plugins",
+            "../../skills/nova/plugins",
+            "../../tests/fixtures/plugin-system-v2"
+          ],
+          "trustedBuiltinRoots": [
+            "../../skills/common/plugins",
+            "../../skills/nova/plugins",
+            "../../tests/fixtures/plugin-system-v2"
+          ],
+          "externalTrust": {
+            "allowedSourceDigests": {},
+            "verifiedAttestations": {}
+          },
+          "providers": {
+            "telemetry.emit": "kubeclaw.telemetry-store:telemetry"
+          },
+          "grants": {
+            "kubeclaw.telemetry-observer:telemetry": {
+              "telemetry.emit": {
+                "allowedEventPrefixes": [
+                  "run.",
+                  "stage.",
+                  "attempt.",
+                  "effect.",
+                  "artifact.",
+                  "wait.",
+                  "orchestrator."
+                ]
+              }
+            }
+          },
+          "adapters": {
+            "kubeclaw.telemetry-store:telemetry": {
+              "root": "/fixture/wcr06/telemetry",
+              "maxRecordBytes": 1048576,
+              "maximumRecords": 100000,
+              "maximumStoreBytes": 268435456
+            }
+          },
+          "activeAdapters": [
+            "kubeclaw.telemetry-store:telemetry"
+          ],
+          "observers": {
+            "kubeclaw.telemetry-observer:telemetry": {},
+            "test.graph-plugin:lifecycle-recorder": {
+              "journalPath": "/fixture/wcr06/observer-target/events.jsonl"
+            }
+          },
+          "storageRoot": "/fixture/wcr06/state",
+          "shutdownTimeoutMs": 5000,
+          "effectLockTtlMs": 300000,
+          "orchestratorIssuerId": "nova:wcr06-fixture",
+          "administrativeDecisionIssuers": [
+            {
+              "type": "operator",
+              "id": "operator:wcr06-fixture"
+            }
+          ]
+        },
+        "projectCompiler": {
+          "repairBudget": {
+            "categories": {
+              "lint": 1,
+              "test": 2
+            },
+            "maximumOrchestratorOrders": 1
+          },
+          "reviewRepair": {
+            "mode": "enabled",
+            "maximumOrders": 2
+          },
+          "execution": {
+            "maxTechnicalRetries": 1,
+            "timeoutMs": 1800000
+          },
+          "executionGroups": {
+            "cumulative": {
+              "timeoutMs": 1800000
+            },
+            "source": {
+              "timeoutMs": 120000
+            },
+            "demo": {
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "runtimeLocks": {
+          "journalAppendLockTimeoutMs": 5000,
+          "runMutationLockTtlMs": 60000,
+          "runMutationLockRenewEveryMs": 20000
+        }
+      }
+    },
+    "local-B-order": {
+      "settings": {
+        "platform": {
+          "schemaVersion": "pipeline-platform.v2",
+          "installationRoots": [
+            "../../skills/common/plugins",
+            "../../skills/nova/plugins",
+            "../../tests/fixtures/plugin-system-v2"
+          ],
+          "trustedBuiltinRoots": [
+            "../../skills/common/plugins",
+            "../../skills/nova/plugins",
+            "../../tests/fixtures/plugin-system-v2"
+          ],
+          "externalTrust": {
+            "allowedSourceDigests": {},
+            "verifiedAttestations": {}
+          },
+          "providers": {
+            "telemetry.emit": "kubeclaw.telemetry-store:telemetry"
+          },
+          "grants": {
+            "kubeclaw.telemetry-observer:telemetry": {
+              "telemetry.emit": {
+                "allowedEventPrefixes": [
+                  "run.",
+                  "stage.",
+                  "attempt.",
+                  "effect.",
+                  "artifact.",
+                  "wait.",
+                  "orchestrator."
+                ]
+              }
+            }
+          },
+          "adapters": {
+            "kubeclaw.telemetry-store:telemetry": {
+              "root": "/fixture/wcr06/telemetry",
+              "maxRecordBytes": 1048576,
+              "maximumRecords": 100000,
+              "maximumStoreBytes": 268435456
+            }
+          },
+          "activeAdapters": [
+            "kubeclaw.telemetry-store:telemetry"
+          ],
+          "observers": {
+            "kubeclaw.telemetry-observer:telemetry": {},
+            "test.graph-plugin:lifecycle-recorder": {
+              "journalPath": "/fixture/wcr06/observer-target/events.jsonl"
+            }
+          },
+          "storageRoot": "/fixture/wcr06/state",
+          "shutdownTimeoutMs": 5000,
+          "effectLockTtlMs": 300000,
+          "orchestratorIssuerId": "nova:wcr06-fixture",
+          "administrativeDecisionIssuers": [
+            {
+              "type": "operator",
+              "id": "operator:wcr06-fixture"
+            }
+          ]
+        },
+        "projectCompiler": {
+          "repairBudget": {
+            "categories": {
+              "lint": 2,
+              "test": 2
+            },
+            "maximumOrchestratorOrders": 0
+          },
+          "reviewRepair": {
+            "mode": "enabled",
+            "maximumOrders": 2
+          },
+          "execution": {
+            "maxTechnicalRetries": 1,
+            "timeoutMs": 1800000
+          },
+          "executionGroups": {
+            "cumulative": {
+              "timeoutMs": 1800000
+            },
+            "source": {
+              "timeoutMs": 120000
+            },
+            "demo": {
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "runtimeLocks": {
+          "journalAppendLockTimeoutMs": 5000,
+          "runMutationLockTtlMs": 60000,
+          "runMutationLockRenewEveryMs": 20000
+        }
+      }
+    }
+  }
+}

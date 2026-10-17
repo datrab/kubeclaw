@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -34,7 +35,7 @@ test('review source rejects a Git symlink before architecture dispatch',async()=
   try{f=await sourceApprovalFixture(root);const target=path.join(root,'mutable-plan.json');fs.writeFileSync(target,'{"modules":["unreviewed"]}\n');
     f.git('checkout','-q','architecture');fs.unlinkSync(path.join(f.repository,'plan.json'));fs.symlinkSync(target,path.join(f.repository,'plan.json'));f.git('add','.');f.git('commit','-qm','Symlink review input');f.git('checkout','-q','main');
     const runId='run:symlink-source';const result=await runPipelineV2(f.platform,f.definition,runId);assert.equal(result.status,'blocked');assert.equal(f.dispatches.length,0);
-    const events=new FileJournal(path.join(runRoot(f.platform.storageRoot,runId),'events.jsonl')).records();assert(events.some(({entry})=>String(entry.payload?.reason?.message).includes('REVIEW_SOURCE_NOT_REGULAR')));
+    const events=new FileJournal(path.join(runRoot(f.platform.storageRoot,runId),'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();assert(events.some(({entry})=>String(entry.payload?.reason?.message).includes('REVIEW_SOURCE_NOT_REGULAR')));
   }finally{if(f)await f.close();fs.rmSync(root,{recursive:true,force:true});}
 });
 
@@ -59,7 +60,7 @@ for (const change of ['none','source-commit','dirty-plan','architecture-ref']) t
     const result=await resumePipelineV2(f.platform,f.definition,runId,signal(paused.stages.get('approval').wait));
     assert.equal(result.status,change==='none'?'succeeded':'blocked',JSON.stringify([...result.stages]));
     assert.equal(f.dispatches.length,change==='none'?3:1,'stale approval must never reach Forge dispatch');
-    const records=new FileJournal(path.join(runRoot(f.platform.storageRoot,runId),'events.jsonl')).records();
+    const records=new FileJournal(path.join(runRoot(f.platform.storageRoot,runId),'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
     const replay=recoverStageStates(f.definition,records,runId,'nova');for(const[id,state]of result.stages)assert.deepEqual(replay.get(id),state);
     if(change==='none'){
       assert.equal(fs.readFileSync(path.join(f.repository,'plan.json'),'utf8'),subject.files.find(file=>file.path==='plan.json').content);
@@ -80,7 +81,7 @@ for(const boundary of ['sync','api'])test(`accepted source drift blocks at origi
     const paused=await resumePipelineV2(f.platform,f.definition,runId,signal(first.stages.get('approval').wait));assert.equal(paused.status,'waiting');assert.equal(paused.stages.get('approval').status,'succeeded');
     fs.writeFileSync(path.join(f.repository,'changed-after-approval.txt'),'Unapproved source\n');f.git('add','.');f.git('commit','-qm','Changed after accepted report');
     const result=await resumePipelineV2(f.platform,f.definition,runId,signal(paused.stages.get('pause').wait));assert.equal(result.status,'blocked');assert.equal(f.dispatches.length,1,'no implementation dispatch after stale accepted authority');
-    const events=new FileJournal(path.join(runRoot(f.platform.storageRoot,runId),'events.jsonl')).records();assert(events.some(({entry})=>entry.identity?.stageId===boundary&&String(entry.payload?.reason?.message).includes('REVIEW_SUBJECT_STALE')));
+    const events=new FileJournal(path.join(runRoot(f.platform.storageRoot,runId),'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();assert(events.some(({entry})=>entry.identity?.stageId===boundary&&String(entry.payload?.reason?.message).includes('REVIEW_SUBJECT_STALE')));
   }finally{if(f)await f.close();fs.rmSync(root,{recursive:true,force:true});}
 });
 
@@ -115,6 +116,6 @@ test('external worktree commit during Forge cannot enter approved source lineage
       execFileSync('git',['-C',workspace,'add','external-worktree.txt']);execFileSync('git',['-C',workspace,'commit','-qm','External worktree source movement']);};
     const result=await resumePipelineV2(f.platform,f.definition,runId,signal(first.stages.get('approval').wait));assert.equal(result.status,'blocked');assert.equal(result.stages.get('api').status,'blocked');assert.equal(f.dispatches.length,2);
     assert.equal(fs.existsSync(path.join(f.repository,'external-worktree.txt')),false);assert.equal(fs.existsSync(path.join(f.repository,'api.mjs')),false);
-    const events=new FileJournal(path.join(runRoot(f.platform.storageRoot,runId),'events.jsonl')).records();assert(events.some(({entry})=>String(entry.payload?.reason?.message).includes('GIT_WORKSPACE_SOURCE_MOVED')));
+    const events=new FileJournal(path.join(runRoot(f.platform.storageRoot,runId),'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();assert(events.some(({entry})=>String(entry.payload?.reason?.message).includes('GIT_WORKSPACE_SOURCE_MOVED')));
   }finally{if(f)await f.close();fs.rmSync(root,{recursive:true,force:true});}
 });

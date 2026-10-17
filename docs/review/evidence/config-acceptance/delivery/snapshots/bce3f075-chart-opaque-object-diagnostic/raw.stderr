@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/refine-chart-contracts-bce3f075.py", line 34, in <module>
+    domain=schemaField(field);files+=['charts/prism/values.schema.json']
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/refine-chart-contracts-bce3f075.py", line 21, in schemaField
+    node=node['properties'][part]
+         ~~~~^^^^^^^^^^^^^^
+KeyError: 'properties'

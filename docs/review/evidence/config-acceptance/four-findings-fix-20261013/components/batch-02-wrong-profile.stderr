@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py", line 6, in <module>
+    runpy.run_path(str(helper))["run"]("02")
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 217, in run
+    result = validate(json.loads(args.input.read_text()), batch)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 200, in validate
+    validate_member(actual, required, batch, profiles)
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 151, in validate_member
+    identity(member[profilekey], BASE + "refined-case-profiles.json", "/" + cid)
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 56, in identity
+    require(ref["rfc6901Pointer"] == pointer, "exact reference pointer drift: " + pointer)
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 21, in require
+    raise ValueError("CANONICAL_BINDING:" + message)
+ValueError: CANONICAL_BINDING:exact reference pointer drift: /CMP-C1-EFFECT-prism-control-dispatchTimeoutMs

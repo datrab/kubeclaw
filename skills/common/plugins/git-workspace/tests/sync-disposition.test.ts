@@ -1,3 +1,4 @@
+import {TEST_CORE_POLICY} from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -11,7 +12,7 @@ const git = (...args) => execFileSync('/usr/bin/git', ['-C', repository, ...args
 git('init', '-b', 'main'); fs.writeFileSync(path.join(repository, 'small.txt'), 'original\n'); fs.writeFileSync(path.join(repository, 'large.txt'), 'x'.repeat(1024));
 fs.writeFileSync(path.join(repository, 'literal[1].txt'), 'literal\n');
 git('add', '.'); git('-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-m', 'initial');
-const adapter = activate({ config: { allowedRepositoryRoots: [repository], workspaceRoot, gitExecutable: '/usr/bin/git', authorName: 'Test', authorEmail: 'test@example.invalid', maxExecutionMs: 3000, maxOutputBytes: 128, terminationGraceMs: 25 } });
+const adapter = activate({ config: { allowedRepositoryRoots: [repository], workspaceRoot, gitExecutable: '/usr/bin/git', errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'Test', authorEmail: 'test@example.invalid', maxExecutionMs: 3000, maxOutputBytes: 128, terminationGraceMs: 25 } });
 function sync(ref, paths, signal = new AbortController().signal) {
   return adapter.invoke({ confidential: true, signal, request: { capability: 'git.sync', operation: 'sync_paths', resource: { canonicalId: repository }, payload: { ref, paths } } });
 }

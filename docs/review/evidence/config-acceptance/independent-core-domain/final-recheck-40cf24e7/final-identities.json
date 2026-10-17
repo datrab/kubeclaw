@@ -1,0 +1,89 @@
+{
+  "reportSha256": "7ee9787b76d948892fdd088b5aa1e3099075c7cad9ff375b7bbae4a7bf67de3b",
+  "files": {
+    "docs/review/remediation/independent-config-c0-core-final-recheck-40cf24e7.md": {
+      "sha256": "7ee9787b76d948892fdd088b5aa1e3099075c7cad9ff375b7bbae4a7bf67de3b",
+      "bytes": 6597
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-negative-invocation.log": {
+      "sha256": "8a041606a7cfb22aebb035b914b713914f810e80846008875e674459e1fa22a4",
+      "bytes": 76011
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/commands.json": {
+      "sha256": "d2db248c7cfaca96203ed1f3541fa176bcaaec690e4b154406cfeb64b5de7744",
+      "bytes": 2922
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/negative-oracle-matrix.json": {
+      "sha256": "8134a5dcf63e442666919a00d5be1e3058e43bcfc9db80c50bdaf3707aae10d0",
+      "bytes": 13040241
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/all148-canonical-audit.json": {
+      "sha256": "7114dd9342a6bb453f628cb52c4035ff73fb39fe62a6ce8968033c7336aea2e7",
+      "bytes": 7242323
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-negative-requirements.log": {
+      "sha256": "adbb439d18cc5bf5d8156ac592c7a7c53b5d6c60cc76371c27f0cca93a75af48",
+      "bytes": 76158
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/drift-check.json": {
+      "sha256": "8cf25903f924f8dfe1586f2c57e2eb5bc3773492d35f06b5b2546f64552f5a51",
+      "bytes": 123
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-restored-positive.log": {
+      "sha256": "d5ada3da5e5676b142e75af6399d909b764eb12d592f504e629e5e70fdb84914",
+      "bytes": 75713
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-positive.log": {
+      "sha256": "d5ada3da5e5676b142e75af6399d909b764eb12d592f504e629e5e70fdb84914",
+      "bytes": 75713
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/retained-definition-and-author-log-identities.json": {
+      "sha256": "cccc5f696865096bdfc0832fd9af15bf12eee7144593af3c97d861d4f52f9be7",
+      "bytes": 1534
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/gap-negative-conflicting-duplicate.log": {
+      "sha256": "b92b64569e4beff296a7004fcf31abfd6bd915b676238aec44c4142bad237b47",
+      "bytes": 1307
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/gap-negative-original-duplicate.log": {
+      "sha256": "b92b64569e4beff296a7004fcf31abfd6bd915b676238aec44c4142bad237b47",
+      "bytes": 1307
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/negative-invocation-matrix.json": {
+      "sha256": "4ae7800033dc9764c1832891867ed590f782a4590fc6ab0c616e51c35e76e75d",
+      "bytes": 13039350
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/untracked-identities.json": {
+      "sha256": "9b6227ff9a4eceafe86bd6069d2db557e2478dac3790460c454e9dddb6ea8303",
+      "bytes": 62858
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/productive-diff.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/tracked.patch.gz": {
+      "sha256": "42b5dc6e42cff7ad00b987ec315bd72bd85e587ffd00ddfd63e83834a197595e",
+      "bytes": 11500690
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-negative-oracle.log": {
+      "sha256": "7f72c4d6496c6a86ccdbdd6d734a5fa56e71fe6444863ba3d8d853636b57ca83",
+      "bytes": 76022
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/gap-restored-positive.log": {
+      "sha256": "4d68abb37f35f22757750e1c38aa187172084bb53d57c0d4824bd74b8712f6b1",
+      "bytes": 127176
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/input-identities.json": {
+      "sha256": "0be0425cac625a581aed36fda096eb88f5f3dd6679541dff5c3b747019994f1c",
+      "bytes": 64069
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/negative-requirements-matrix.json": {
+      "sha256": "44185cc9ead6545401a5f31012321b34ad5470473e66b98b03c4d30111fbc096",
+      "bytes": 13040313
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/git-status.log": {
+      "sha256": "6205c9cbe8af6d6bd06e87ba4c810752ab0aafb674933006e7ae7a3d5bd696a4",
+      "bytes": 13526
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-16T13:00:01.801017+00:00",
+  "change": "Migrate original readiness chart fixture to central pipeline component runtime profile, actual emitted Buster A/B bundles, mounted generated policy capture and real kubeclaw/Prism Helm rendering. Prism no longer carries Buster owner files; both normal projection producers validate malformed central readiness before delivery. No production setting added or defaults changed.",
+  "verification": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/deployment/buster-readiness-config.test.mjs"
+      ],
+      "exitCode": 0,
+      "tests": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "log": "docs/review/remediation/config-readiness-fixture-current-20261016/final.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-readiness-fixture-current-20261016/diff.txt"
+    }
+  ],
+  "conservedObligations": {
+    "charts": [
+      "kubeclaw",
+      "prism"
+    ],
+    "validPolicies": 2,
+    "malformedPolicies": 29,
+    "numericBoundaryPolicies": 4,
+    "retiredAuthorRejections": 4,
+    "restoredPositive": true,
+    "sourceMutationIsolation": true
+  },
+  "independentAcceptance": "OPEN; no callable native reviewer; unchanged reviewer EROFS not retried",
+  "qualification": "Focused source delivery/Helm regression, not native execution or whole C0-C6 acceptance",
+  "initialFailure": "Prism values schema rejects retired key before helper; exact schema diagnostic now accepted, rejection requirement unchanged.",
+  "writerLock": "same shared nonblocking; held for fixture edits/tests/checkpoint and released at process exit",
+  "nextAction": "Fresh independent controller review; continue repository-wide literal-to-owner/consumer reconciliation."
+}

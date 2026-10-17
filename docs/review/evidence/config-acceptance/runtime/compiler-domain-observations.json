@@ -1,0 +1,181 @@
+{
+  "caseId": "RT-C0-COMPILER-CURRENT-DOMAIN",
+  "scope": "C0 local source/definition observation, no plugin process/network/cluster dispatched; future migrated behavior remains not-run",
+  "command": "node docs/review/evidence/config-acceptance/runtime/compiler-domain-probes.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/nova/core/execution/graph.ts": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af",
+    "skills/nova/core/execution/graph-build.ts": "75ce0387330d8acc6d7217aa8539a41c7796fcfd1522c079c8585c55e765adc6",
+    "skills/nova/core/execution/graph-repair-budget.ts": "f5cd06815a0d7d631276b256fd80bcbd57e018f68326909d69b424f2e08a284e",
+    "skills/nova/core/lifecycle/reducer.ts": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+    "skills/nova/core/lifecycle/repair-budget.ts": "6bd3d5f44d67edf626ce45301a716d5a6ea06d1f0f870b47d6f071b7930872d4",
+    "skills/nova/project/demo.ts": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/compiler-domain-probes.mjs": "7f0ca68db43cc7f8565e76bf0697d3164d76e20823e00699dc052aca26845055"
+  },
+  "observations": [
+    {
+      "id": "domain-maxAttempts",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "GRAPH_ATTEMPT_BUDGET_INVALID"
+      }
+    },
+    {
+      "id": "domain-maxRemediationCycles",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "GRAPH_REMEDIATION_BUDGET_INVALID"
+      }
+    },
+    {
+      "id": "domain-timeoutMs",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "GRAPH_TIMEOUT_INVALID"
+      }
+    },
+    {
+      "id": "domain-maxTechnicalRetries",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "GRAPH_TECHNICAL_RETRY_BUDGET_INVALID"
+      }
+    },
+    {
+      "id": "category-valid-0",
+      "result": "passed",
+      "actual": {
+        "categories": {
+          "lint": 0,
+          "review": 0,
+          "test": 0
+        },
+        "maximumOrchestratorOrders": 1
+      }
+    },
+    {
+      "id": "category-valid-100",
+      "result": "passed",
+      "actual": {
+        "categories": {
+          "lint": 100,
+          "review": 0,
+          "test": 0
+        },
+        "maximumOrchestratorOrders": 1
+      }
+    },
+    {
+      "id": "category-101",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "GRAPH_REPAIR_BUDGET_INVALID"
+      }
+    },
+    {
+      "id": "extra-orders-2",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "GRAPH_REPAIR_BUDGET_INVALID"
+      }
+    },
+    {
+      "id": "derived-ceiling-too-low",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "GRAPH_REPAIR_ATTEMPT_CEILING_INVALID"
+      }
+    },
+    {
+      "id": "technical-disposition-zero-vs-one",
+      "result": "passed",
+      "actual": {
+        "A": {
+          "state": {
+            "stageId": "implement-case",
+            "status": "blocked",
+            "attemptNumber": 1,
+            "attemptsUsed": 1,
+            "remediationCyclesUsed": 0
+          },
+          "action": {
+            "type": "stop"
+          }
+        },
+        "B": {
+          "state": {
+            "stageId": "implement-case",
+            "status": "retrying",
+            "attemptNumber": 1,
+            "attemptsUsed": 1,
+            "remediationCyclesUsed": 0,
+            "technicalRetriesUsed": 1
+          },
+          "action": {
+            "type": "schedule_attempt"
+          }
+        }
+      }
+    },
+    {
+      "id": "category-and-extra-order-dispositions",
+      "result": "passed",
+      "actual": [
+        "allowed",
+        "allowed",
+        "authorize",
+        "blocked"
+      ]
+    },
+    {
+      "id": "demo-default-and-explicit-retention",
+      "result": "passed",
+      "actual": {
+        "absent": {
+          "authNodeId": "case-auth",
+          "protocol": "json-session.v1",
+          "operatorTarget": "case-operator",
+          "retentionSeconds": 604800
+        },
+        "explicit": {
+          "authNodeId": "case-auth",
+          "protocol": "json-session.v1",
+          "operatorTarget": "case-operator",
+          "retentionSeconds": 60
+        }
+      }
+    },
+    {
+      "id": "demo-invalid-0",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "PROJECT_DEMO_RETENTION_INVALID"
+      }
+    },
+    {
+      "id": "demo-invalid-9223372037",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "PROJECT_DEMO_RETENTION_INVALID"
+      }
+    },
+    {
+      "id": "demo-invalid-1.5",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "PROJECT_DEMO_RETENTION_INVALID"
+      }
+    },
+    {
+      "id": "demo-invalid-\"60\"",
+      "result": "passed",
+      "actual": {
+        "expectedReject": "PROJECT_DEMO_RETENTION_INVALID"
+      }
+    }
+  ],
+  "result": "passed",
+  "reviewerConfirmation": "pending"
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "exact independent bounded review inputs/programs/outputs/raw/report; no author/root/body/acceptance mutations; manifest/self/circular receipt metadata excluded",
+  "files": {
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/check-frozen-mapping.py": "bf4c841e7b4a16097b19601c4e29d4abb71af8521fa373a4cba657f6268f87c0",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/check-successor-source-scope.py": "37e045d62ce4cfb2e53fd74a193bae349f962d4b425acf1ae635ebce20a28141",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/committed-grade-witnesses.json": "c204eb2766bfe3cc625e1a88d6f25c13cd9a0003a38ec1022f41c1b4a2acb19e",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/current-grade-reader-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/current-grade-reader-attempt1.stdout": "49790efa93ae0799997311b283be0b2d3b214905f96fa29ba0dce747b8c5100b",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/current-grade-reader-reproduction.json": "f25d2dd0b3ed1229132bcbbb30e23a0d96bde32ed1c005c8e85a379691685e60",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/current-sdk-envelope-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/current-sdk-envelope-attempt1.stdout": "8e3bf3759398480f1f84fffaa862e1065f7ea431cfc603374936b53bb3c3efdb",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/final-independent-scope-checks.json": "73c394c758a51734a09b5bdc138251c19c09015fb392efae2eb9b9b8d80e7a4c",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/runtime-README.md": "aa53358e40e10be543d39082755a55f0f75f9000ba15d145b09bd87cf716d0a1",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/runtime-baseline-committed-input-identities.json": "569c8ef44bad3e3d6bef8854525b9564e7679ebcf83f4b67b2260f6825e7fc19",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/runtime-build-map.py": "e65d68a320c02ed90085624fce7f4d47146332b33abea8e3f9396e4d58964e20",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/runtime-check-current-profile-readers.mjs": "5d962fdab178f3a8092ff0b396c611f1788e8af81c0d1546e85e567b3dd02e88",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/runtime-current-profile-reader-observations.json": "855394c4b92115b2108fad3e07eea49096d599a0d3036d70fcafcf029d89e4e2",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/runtime-native-historical-successor-map.json": "1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/runtime-stable-milestone-receipt.json": "c28364abb8e336693adbf7c6fdbe27eee04f701281d3d3a61142a0538ca7a0ac",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/sdk-README.md": "f6d1b12f144f97e4de165c3042534981c40cd0c5a78e6e7eed18d9d88b39a456",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/sdk-check-current-sdk-envelope.mjs": "0ff4475ee9bf64b9d74210be3a105c957a54e0d5b3cbe3e8715258c6a1f8abea",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/sdk-source-and-check-identities.json": "abf54d73e0f0b822d236b33d02cda92d4f59dbb0f1b136c73fab0ee251a2316e",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/mapping-preservation-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/mapping-preservation-attempt1.stdout": "d36757b66c51baeeda817cfea59ce132d5c6ef746297bfd09d561f4589d0e0c9",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/mapping-preservation-controls.json": "b117d2a0172f818c36a7e6393a2223f12340bfdd37fcffb27bc6fffacf1cf98e",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/reproduce-current-grade-reader.mjs": "f34cf11ec032a10a12f1d938461d2c357504413d975ae96c5baded8bdad8b578",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/source-successor-scope-controls.json": "2cd8b8c181269c84d7b187fc07f42f181f9c712b02bf1d3eedac25b4b2e796f9",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/successor-source-scope-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/successor-source-scope-attempt1.stdout": "3c15ba6de842ce725ed26bae116b80835cec91dc3f5dd80594699d59a1d448e1",
+    "docs/review/remediation/independent-runtime-historical-links-6606.md": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749"
+  }
+}

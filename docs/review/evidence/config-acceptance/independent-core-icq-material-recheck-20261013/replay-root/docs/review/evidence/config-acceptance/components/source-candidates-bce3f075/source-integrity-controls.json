@@ -1,0 +1,57 @@
+{
+  "scope": "Meaningful docs/sourceinventory structuralcontrols only, NOT F-MUT/businessruntime/C0 acceptance",
+  "results": [
+    {
+      "id": "source-duplicate-marker-negative",
+      "argv": [
+        "python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py",
+        "--candidates",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-duplicate-marker-negative.fixture.json"
+      ],
+      "fixtureSha256": "1ed022582d6d03cc46ca0739d1be093eda803c5ffbee412b3bc6af75f5381911",
+      "raw": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-duplicate-marker-negative.log",
+      "rawSha256": "4b3090dc7610581926f4e742516899850cda7458ee21ccb1d145c3a04c72ecc2",
+      "exitCode": 1,
+      "expectedDiagnostic": "Unique exact discovery marker IDs",
+      "result": "passed sourceintegrity control (not F-MUT)"
+    },
+    {
+      "id": "source-unlinked-obligation-negative",
+      "argv": [
+        "python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py",
+        "--candidates",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-unlinked-obligation-negative.fixture.json"
+      ],
+      "fixtureSha256": "a7b76e49aef4c4f7488066cf3c63a12d6201d9a450baf31d499e00f0e77052ad",
+      "raw": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-unlinked-obligation-negative.log",
+      "rawSha256": "a27ff5946ecb76363390403c61715957a62247b7a1f79a7333d58a86dc939312",
+      "exitCode": 1,
+      "expectedDiagnostic": "Exact named gap ratherthan genericbucket",
+      "result": "passed sourceintegrity control (not F-MUT)"
+    },
+    {
+      "id": "source-restored-positive",
+      "argv": [
+        "python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py",
+        "--candidates",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-restored-positive.fixture.json"
+      ],
+      "fixtureSha256": "b30dcc79c8a5f6c6e67cb56a91f55eba9720ca4158ce9aee85f7ede0e42a8a05",
+      "raw": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-restored-positive.log",
+      "rawSha256": "9b60e8950191af175f19aebf59a41509f2db34ff689410902837721885770457",
+      "exitCode": 0,
+      "expectedDiagnostic": null,
+      "result": "passed sourceintegrity control (not F-MUT)"
+    }
+  ],
+  "passed": 3,
+  "failed": 0,
+  "identities": {
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py": "f86408b2cd667b1cad5dcca2cd71284d7b8ae9ca6bf7ce9ce236949d3b1f78d4",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-integrity-controls.py": "fe5cb965956ac9e22dc59d973d53f81b047542ca4f46c5a12736dfc02daac718",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/candidate-dispositions.json": "b30dcc79c8a5f6c6e67cb56a91f55eba9720ca4158ce9aee85f7ede0e42a8a05"
+  }
+}

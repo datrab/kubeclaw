@@ -1,0 +1,21 @@
+{
+  "meta": { "schema": "prism.design-document.v1", "documentId": "demo-design", "projectId": "demo-project", "revision": 1, "title": "Demo", "createdAt": "2026-08-16T00:00:00Z", "updatedAt": "2026-08-16T00:00:00Z" },
+  "theme": {
+    "colors": { "background": "#0b0d10", "surface": "#15181d", "text": "#f4f6f8", "action": "#f97316" },
+    "typography": { "body": { "family": "Inter", "fallback": ["system-ui"] } },
+    "space": { "small": 8, "medium": 16, "large": 24 },
+    "breakpoints": { "compact": 0, "regular": 768, "wide": 1280 },
+    "rules": [{ "subject": "colors.action", "instruction": "Use only for the primary action." }]
+  },
+  "assets": {}, "components": {},
+  "views": {
+    "home": {
+      "title": "Home", "surface": "web",
+      "root": { "id": "home-root", "type": "stack", "props": { "direction": "vertical", "gap": 16 }, "children": [{ "id": "title", "type": "heading", "props": { "content": "Deployments", "level": 1 } }] },
+      "states": { "default": { "patches": {} } },
+      "responsive": { "compact": { "patches": {} }, "regular": { "patches": {} }, "wide": { "patches": {} } },
+      "mockData": {}
+    }
+  },
+  "flows": {}
+}

@@ -1,0 +1,24 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replay": {
+    "cmd": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/check-host-definition.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/replay.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/replay.stderr",
+    "chunk_id": "e7113a",
+    "wall_time_seconds": 0.348394018,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "profileSourceComparison": {
+    "argv": [
+      "node",
+      "-"
+    ],
+    "description": "Exact source-object comparison using existing js-yaml.load and assert.deepEqual of current AX41 and original A/B YAML against three complete owner profiles; requested fourth object asserted equal after sole count1→2 delta.",
+    "exitCode": 0,
+    "rawOutput": "three complete source objects exact; requested whole object differs only count1->2",
+    "toolChunkId": "0981a0",
+    "receipt": "source-profile-equality.json"
+  },
+  "inspection": "Static cat/rg/Python JSON reads only; no productive source imports. Initial freeze failed KeyError:path because manifest uses relativePath; correction changed only independent receipt procedure, preserved existing snapshot bytes. A rg candidate native-ownership*.ts did not exist; actual native-worker-ownership.ts located/read. These are navigation/receipt failures, not schema failures.",
+  "prohibitedOperationsRun": []
+}

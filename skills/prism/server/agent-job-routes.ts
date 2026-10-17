@@ -4,14 +4,14 @@ import { agentJob,claimAgentJob,finishAgentRun } from '../control/agent-jobs.ts'
 import type { Database } from '../storage/index.ts';
 
 export async function handleAgentJobs(request:IncomingMessage,response:ServerResponse,url:URL,
-  options:{db:Database;spiffeEnabled:boolean;trustedAgentId:string;readBody:(request:IncomingMessage)=>Promise<unknown>}) {
+  options:import('./agent-attempt.ts').AgentLauncherConfig & {db:Database;spiffeEnabled:boolean;trustedAgentId:string;readBody:(request:IncomingMessage)=>Promise<unknown>}) {
   if(!url.pathname.startsWith('/v1/agent/jobs'))return false;
   if(!options.spiffeEnabled)throw new Error('Prism agent jobs require SPIFFE trust');
   authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([options.trustedAgentId]));
   let result:unknown;
   if(url.pathname==='/v1/agent/jobs/claim' && request.method==='POST'){
     const input=await options.readBody(request) as {runnerId:string};
-    result={job:await claimAgentJob(options.db,input.runnerId)};
+    result={job:await claimAgentJob(options.db,input.runnerId,options)};
   }else{
     const match=/^\/v1\/agent\/jobs\/([0-9a-f-]+)(\/finish)?$/u.exec(url.pathname);
     if(!match)throw new Error('unknown agent job route');

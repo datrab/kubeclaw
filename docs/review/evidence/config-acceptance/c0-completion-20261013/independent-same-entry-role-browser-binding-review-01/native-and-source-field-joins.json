@@ -1,0 +1,52 @@
+{
+  "retainedNativeBodiesCompared": 1651,
+  "retainedNativeMismatches": [],
+  "originalRegistrationWitnessToCurrentSameFieldJoins": 261,
+  "witnessForms": {
+    "original complete field context": 172,
+    "original registration scalar": 89
+  },
+  "witnessJoinMismatches": [],
+  "readInputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+      "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/case-proposals.json",
+      "sha256": "9c5b4aaeae097bb2952f668acd4353a3d15735c6bf0f80a5c8191a1d23f25d36"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/case-definitions.json",
+      "sha256": "c2851120b2fd2a6068407a38b7cef810260369e52e2e4732c3339db45bd72265"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/case-definitions.json",
+      "sha256": "dfee4085a94e783a99d1134032f7e1d14665c376516b58328daa5e5929071825"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/current-field-instance-source-closure.json",
+      "sha256": "4d45e7d7242f45c6fa8f1f7c27b97e09ed0cc453fb069420cb92bb777f66bccf"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+      "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/current-field-node-concordance.json",
+      "sha256": "54d8d408fc705a2e3491e576d2a050f1bdc6beb18fa41a39bad121e80561d00c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/pipeline.config.json",
+      "sha256": "05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/field-definitions.json",
+      "sha256": "fa8aa73d2de3d9b0b4cfc37f11785ffe10e363f5b87c4e5d7574798b9f96d3fd"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/field-definitions.json",
+      "sha256": "69bd5aaff9734ba41c3b0bc3c498316d0a3112b4c6aedf8dc42308bac7dbc2a2"
+    }
+  ]
+}

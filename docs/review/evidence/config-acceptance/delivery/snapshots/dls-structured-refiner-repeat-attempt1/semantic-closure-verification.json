@@ -1,0 +1,1317 @@
+{
+  "method": "static JSON/reference/SHA256 consistency checks; no production/test/package/cluster/host execution",
+  "verificationToolSha256": "26ff80cbecec183d11f8920ae49bd2ce7f057037a65321c1f1eb7d7a9ee9a663",
+  "settingRows": 824,
+  "caseSpecifications": 198,
+  "issues": [
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-ALTERNATE-PROFILES",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-ALLOWEDCAPABILITIES",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERAXE",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERLIGHTHOUSE",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERPLAYWRIGHT",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERVISUAL",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-CLUSTERBINDINGS",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-CONTAINERBUILD",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-DIRECTCOMMAND",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-HOST",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-NETWORKHTTP",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-PLATFORM",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-PLATFORMCONFIG",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-RUNTIMEROOT",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SCHEMAVERSION",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SECURITYSCAN",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-STATEROOT",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-TAREXECUTABLE",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-TRUSTEDSOURCEAUTHORITY",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    }
+  ],
+  "consistencyResult": "failed",
+  "c0Acceptance": "incomplete",
+  "remainingSourceRows": [],
+  "unreviewedCases": [
+    "DLV-CASE-CONFIG-ONLY-CI",
+    "DLV-CASE-DOCKER-COMPLETE-GENERATION",
+    "DLV-CASE-RELEASE-DRIFT-ALIASES",
+    "DLV-CASE-ROLE-PACKAGING-CLOSURE",
+    "DLV-CASE-GENERATION-MOUNT",
+    "DLV-CASE-HEALTH-PROFILE",
+    "DLV-CASE-HEALTH-MISSING-BOUNDS",
+    "DLV-CASE-HEALTH-MARKER-GENERATION",
+    "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
+    "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+    "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+    "DLV-CASE-NATIVE-HOST-ACTIVATION",
+    "DLV-CASE-OPS-INPUT-PRECEDENCE",
+    "DLV-CASE-OPS-RENDER-PRE-EFFECT",
+    "DLV-CASE-SHARED-LEASE-PROTOCOL",
+    "DLV-CASE-VERSION-PROJECTION",
+    "DLV-CASE-GATEWAY-PERSISTENT-AUTHORITY",
+    "DLV-CASE-GATEWAY-PINNED-VALIDATION",
+    "DLV-CASE-GATEWAY-POLICY-PROFILES",
+    "DLV-CASE-AGENT-TIMEOUT-PROFILES",
+    "DLV-CASE-AGENT-TIMEOUT-MISSING-OVERRIDE-RECOVERY",
+    "DLV-CASE-CHART-ALTERNATE-PROFILE",
+    "DLV-CASE-CHART-MISSING-UNKNOWN",
+    "DLV-CASE-ALTERNATE-PROFILES",
+    "DLV-CASE-MISSING-OLD-AUTHOR",
+    "DLV-GW-FIELD-MEMORY-SEARCH-ENABLED",
+    "DLV-GW-FIELD-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+    "DLV-GW-FIELD-MEMORY-SEARCH-SOURCES",
+    "DLV-GW-FIELD-MEMORY-SEARCH-PROVIDER",
+    "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-BASEURL",
+    "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+    "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+    "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+    "DLV-GW-FIELD-MEMORY-SEARCH-MODEL",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-THINKINGDEFAULT",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-REASONINGDEFAULT",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-WORKSPACE",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MODE",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTINJECTION",
+    "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+    "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLS",
+    "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+    "DLV-GW-FIELD-ACP-ENABLED",
+    "DLV-GW-FIELD-ACP-BACKEND",
+    "DLV-GW-FIELD-ACP-DEFAULTAGENT",
+    "DLV-GW-FIELD-ACP-ALLOWEDAGENTS",
+    "DLV-GW-FIELD-TOOLS-PROFILE",
+    "DLV-GW-FIELD-TOOLS-SESSIONS-VISIBILITY",
+    "DLV-GW-FIELD-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+    "DLV-GW-FIELD-TOOLS-EXEC-TIMEOUTSECONDS",
+    "DLV-GW-FIELD-TOOLS-EXEC-MODE",
+    "DLV-GW-FIELD-TOOLS-AGENTTOAGENT-ENABLED",
+    "DLV-GW-FIELD-COMMANDS-NATIVE",
+    "DLV-GW-FIELD-COMMANDS-NATIVESKILLS",
+    "DLV-GW-FIELD-COMMANDS-RESTART",
+    "DLV-GW-FIELD-SESSION-DMSCOPE",
+    "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-MODE",
+    "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+    "DLV-GW-FIELD-SESSION-THREADBINDINGS-ENABLED",
+    "DLV-GW-FIELD-SESSION-THREADBINDINGS-IDLEHOURS",
+    "DLV-GW-FIELD-SESSION-THREADBINDINGS-MAXAGEHOURS",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-GROUPPOLICY",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-STREAMING-MODE",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+    "DLV-GW-FIELD-GATEWAY-MODE",
+    "DLV-GW-FIELD-GATEWAY-BIND",
+    "DLV-GW-FIELD-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+    "DLV-GW-FIELD-GATEWAY-AUTH-MODE",
+    "DLV-GW-FIELD-GATEWAY-TOOLS-ALLOW",
+    "DLV-GW-FIELD-GATEWAY-TAILSCALE-MODE",
+    "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-ENABLED",
+    "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+    "DLV-GW-FIELD-PLUGINS-ENTRIES-OPENAI-ENABLED",
+    "DLV-GW-FIELD-PLUGINS-ENTRIES-CODEX-ENABLED",
+    "DLV-GW-FIELD-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+    "DLV-GW-FIELD-DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+    "DLV-CASE-PRISM-CHART-FIELD-DEFINITION",
+    "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES",
+    "DLV-CASE-KUBERNETES-VOLUME-IDENTITY",
+    "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
+    "DLV-CASE-KUBERNETES-CRON-SCHEDULE",
+    "DLV-CASE-BUSTER-GATEWAY-OVERLAY-MEMBERS",
+    "DLV-CASE-BUSTER-BUILD-PLATFORM-VERSION-CLOSURE",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-ARCHVIEWER",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-BUSTER-GATEWAY",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-NAMESPACE-CONTROLLER",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-NOVA",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-OPS-MCP",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-OPS-POD",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-AGENT",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-CONTROL",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-INGESTION",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-STUDIO",
+    "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-WORKER",
+    "DLV-CASE-BUSTER-GENERATED-ALLOWEDCAPABILITIES",
+    "DLV-CASE-BUSTER-GENERATED-BROWSERAXE",
+    "DLV-CASE-BUSTER-GENERATED-BROWSERLIGHTHOUSE",
+    "DLV-CASE-BUSTER-GENERATED-BROWSERPLAYWRIGHT",
+    "DLV-CASE-BUSTER-GENERATED-BROWSERVISUAL",
+    "DLV-CASE-BUSTER-GENERATED-CLUSTERBINDINGS",
+    "DLV-CASE-BUSTER-GENERATED-CONTAINERBUILD",
+    "DLV-CASE-BUSTER-GENERATED-DIRECTCOMMAND",
+    "DLV-CASE-BUSTER-GENERATED-HOST",
+    "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESPONSEBYTES",
+    "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTBYTES",
+    "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTSTOREBYTES",
+    "DLV-CASE-BUSTER-GENERATED-NETWORKHTTP",
+    "DLV-CASE-BUSTER-GENERATED-PLATFORM",
+    "DLV-CASE-BUSTER-GENERATED-PLATFORMCONFIG",
+    "DLV-CASE-BUSTER-GENERATED-PORT",
+    "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS",
+    "DLV-CASE-BUSTER-GENERATED-RUNTIMEROOT",
+    "DLV-CASE-BUSTER-GENERATED-SCHEMAVERSION",
+    "DLV-CASE-BUSTER-GENERATED-SECURITYSCAN",
+    "DLV-CASE-BUSTER-GENERATED-SHUTDOWNTIMEOUTMS",
+    "DLV-CASE-BUSTER-GENERATED-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE",
+    "DLV-CASE-BUSTER-GENERATED-STATEROOT",
+    "DLV-CASE-BUSTER-GENERATED-TAREXECUTABLE",
+    "DLV-CASE-BUSTER-GENERATED-TRUSTEDSOURCEAUTHORITY",
+    "DLV-CASE-OPS-RESIDUAL-API-NETWORK",
+    "DLV-CASE-OPS-RESIDUAL-CLIENTS",
+    "DLV-CASE-OPS-RESIDUAL-TAILSCALE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AGENT",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AGENTROLE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AUTH",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERCOMPONENTFILE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNAMESPACEBROKER",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CAPABILITYPROVIDERS",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CODEBUNDLE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-COMMANDS",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CUSTOMSKILLS",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-DISCORD",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-ESLINTCONFIGMJS",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-IMAGE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-LITELLM",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-PLUGINSEED",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-PROBES",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-REPLICACOUNT",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-RUNASROOT",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SEMGREPCONFIGYAML",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICEACCOUNT",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SWARMCONFIG",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+    "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKSPACE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-BUSTERCOMPONENTFILE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-CONTROL",
+    "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-POSTGRESQL",
+    "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-STUDIO",
+    "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-TAILSCALE",
+    "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+    "DLV-CASE-CHART-LAST-CHART-GITOPS-CLUSTERRESOURCEWHITELIST",
+    "DLV-CASE-CHART-LAST-CHART-GITOPS-DESTINATIONS",
+    "DLV-CASE-CHART-LAST-CHART-GITOPS-GROUPS",
+    "DLV-CASE-CHART-LAST-CHART-GITOPS-NAMESPACERESOURCEWHITELIST",
+    "DLV-CASE-CHART-LAST-CHART-GITOPS-PROJECT",
+    "DLV-CASE-CHART-LAST-CHART-GITOPS-REPOSITORY",
+    "DLV-CASE-CHART-LAST-CHART-GITOPS-REVISION",
+    "DLV-CASE-CHART-LAST-CHART-GITOPS-ROOTNAME",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-AGENT",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-ARCHVIEWER",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-BUSTERNAMESPACEBROKER",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRACONTAINERS",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAENV",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMEMOUNTS",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMES",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-NODESELECTOR",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-PODANNOTATIONS",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-REDIS",
+    "DLV-CASE-CHART-LAST-CHART-KUBECLAW-TOLERATIONS",
+    "DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY",
+    "DLV-CASE-LINT-EXTENSION-PERSISTED-DELIVERY",
+    "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE",
+    "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS",
+    "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE"
+  ],
+  "implementationResults": {
+    "not-run": 198
+  },
+  "requiredCaseHarnessGaps": [
+    {
+      "id": "DLV-CASE-CONFIG-ONLY-CI",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-DOCKER-COMPLETE-GENERATION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-RELEASE-DRIFT-ALIASES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-ROLE-PACKAGING-CLOSURE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-GENERATION-MOUNT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-HEALTH-PROFILE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-HEALTH-MISSING-BOUNDS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-HEALTH-MARKER-GENERATION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-NATIVE-HOST-ACTIVATION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-OPS-INPUT-PRECEDENCE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-OPS-RENDER-PRE-EFFECT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-SHARED-LEASE-PROTOCOL",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-VERSION-PROJECTION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-GATEWAY-PERSISTENT-AUTHORITY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-GATEWAY-PINNED-VALIDATION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-GATEWAY-POLICY-PROFILES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-AGENT-TIMEOUT-PROFILES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-AGENT-TIMEOUT-MISSING-OVERRIDE-RECOVERY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-ALTERNATE-PROFILE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-MISSING-UNKNOWN",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-SOURCES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-PROVIDER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-BASEURL",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-MODEL",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-THINKINGDEFAULT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-REASONINGDEFAULT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-WORKSPACE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTINJECTION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-ACP-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-ACP-BACKEND",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-ACP-DEFAULTAGENT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-ACP-ALLOWEDAGENTS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-PROFILE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-SESSIONS-VISIBILITY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-EXEC-TIMEOUTSECONDS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-EXEC-MODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-AGENTTOAGENT-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-COMMANDS-NATIVE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-COMMANDS-NATIVESKILLS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-COMMANDS-RESTART",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-DMSCOPE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-MODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-IDLEHOURS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-MAXAGEHOURS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-GROUPPOLICY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-STREAMING-MODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-MODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-BIND",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-AUTH-MODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-TOOLS-ALLOW",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-TAILSCALE-MODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-OPENAI-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-CODEX-ENABLED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-GW-FIELD-DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-PRISM-CHART-FIELD-DEFINITION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-KUBERNETES-VOLUME-IDENTITY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-KUBERNETES-CRON-SCHEDULE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GATEWAY-OVERLAY-MEMBERS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-BUILD-PLATFORM-VERSION-CLOSURE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-ARCHVIEWER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-BUSTER-GATEWAY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-NAMESPACE-CONTROLLER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-NOVA",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-OPS-MCP",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-OPS-POD",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-AGENT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-CONTROL",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-INGESTION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-STUDIO",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-IMAGE-CONTRACT-IMAGE-PRISM-WORKER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-ALLOWEDCAPABILITIES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-BROWSERAXE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-BROWSERLIGHTHOUSE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-BROWSERPLAYWRIGHT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-BROWSERVISUAL",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-CLUSTERBINDINGS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-CONTAINERBUILD",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-DIRECTCOMMAND",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-HOST",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESPONSEBYTES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTBYTES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTSTOREBYTES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-NETWORKHTTP",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-PLATFORM",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-PLATFORMCONFIG",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-PORT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-RUNTIMEROOT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-SCHEMAVERSION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-SECURITYSCAN",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-SHUTDOWNTIMEOUTMS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-STATEROOT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-TAREXECUTABLE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-TRUSTEDSOURCEAUTHORITY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-OPS-RESIDUAL-API-NETWORK",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-OPS-RESIDUAL-CLIENTS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-OPS-RESIDUAL-TAILSCALE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AGENT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AGENTROLE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AUTH",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERCOMPONENTFILE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNAMESPACEBROKER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CAPABILITYPROVIDERS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CODEBUNDLE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-COMMANDS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CUSTOMSKILLS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-DISCORD",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-ESLINTCONFIGMJS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-IMAGE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-LITELLM",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-PLUGINSEED",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-PROBES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-REPLICACOUNT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-RUNASROOT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SEMGREPCONFIGYAML",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICEACCOUNT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SWARMCONFIG",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKSPACE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-BUSTERCOMPONENTFILE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-CONTROL",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-POSTGRESQL",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-STUDIO",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-TAILSCALE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-GITOPS-CLUSTERRESOURCEWHITELIST",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-GITOPS-DESTINATIONS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-GITOPS-GROUPS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-GITOPS-NAMESPACERESOURCEWHITELIST",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-GITOPS-PROJECT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-GITOPS-REPOSITORY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-GITOPS-REVISION",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-GITOPS-ROOTNAME",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-AGENT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-ARCHVIEWER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-BUSTERNAMESPACEBROKER",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRACONTAINERS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAENV",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMEMOUNTS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMES",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-NODESELECTOR",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-PODANNOTATIONS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-REDIS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-TOLERATIONS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-LINT-EXTENSION-PERSISTED-DELIVERY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    }
+  ],
+  "limit": "hash/link consistency is not semantic completeness; unresolved rows/unreviewed cases/absent field harnesses explicitly reject C0 acceptance. Historical execution logs remain unchanged."
+}

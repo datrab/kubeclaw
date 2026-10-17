@@ -1,0 +1,7 @@
+autoreview findings: 1
+[P2] Pass the selected log byte limit to the output truncation helper
+tools/ops-mcp/src/server.mjs:17
+The selected presentation.maxLogBytes controls the Kubernetes request and reported limitBytes, but logObservation still truncates at a hard-coded 64 KiB. With maxLogBytes=100, the requested sentinel byte can be returned as log content and truncated remains false; with maxLogBytes above 65536, available logs are still cut at 64 KiB. Pass the captured limit into logObservation so the actual output bound and truncation evidence match the selected policy.
+
+overall: patch is incorrect (0.99)
+The log presentation budget is not applied by the actual output truncation consumer, causing incorrect limits and truncation metadata for nondefault policies. This assessment is based on the supplied source; tests, Helm rendering, deployment, and paid model evaluations were not run.

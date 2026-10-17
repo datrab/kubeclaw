@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/README.md",
+      "sha256": "47083bcb8b9558359957e602af51082b7e520c26e5163cc5bc5bff5cd0748afc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/define.py",
+      "sha256": "2ffe8092003411251d57c7756933f7e1a68faf87f11674f5d59244add9be4b12"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/local-check.json",
+      "sha256": "7c6be65588c093fbf25c1ced13c9b2dcbdf8af9925afbb2b97e01a79cefdf96a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/source-field-definitions.json",
+      "sha256": "485dbbf1fb718f8c8e6691059ea368b1fc1dbd23a298612841690d6acba41622"
+    }
+  ],
+  "acceptance": null
+}

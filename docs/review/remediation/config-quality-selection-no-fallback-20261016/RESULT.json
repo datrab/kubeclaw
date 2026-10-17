@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-16T18:47:07.320714+00:00",
+  "sourceCommit": "5b91addc3bfaf84d4804d23395ae2320c5229270",
+  "evidence": "docs/review/remediation/config-quality-selection-no-fallback-20261016",
+  "status": "SELECTED_QUALITY_NO_LEGACY_FALLBACK_SOURCE_VERIFIED",
+  "implemented": "Explicit selected-generation map missing a referenced Quality contract now rejects at real Nova resolver before legacy task-policy/schema/default admission; complete selected map v2 and original no-map v1 remain compatible.",
+  "checks": {
+    "qualityV2": {
+      "passed": 24,
+      "total": 24,
+      "failed": 0,
+      "skipped": 0
+    },
+    "generation": {
+      "passed": 51,
+      "total": 51,
+      "failed": 0,
+      "skipped": 0
+    },
+    "redBeforeFix": true,
+    "strictSourceTypecheck": true,
+    "novaRoleBuild": true,
+    "deliveredResolverBytesAndReceipt": {
+      "path": "skills/packages/nova-core/test-gates/resolver.ts",
+      "kind": "file",
+      "mode": 420,
+      "byteLength": 44187,
+      "digest": "sha256:dac5efd2eab0b45d6bea8c14b76715e8af84f8abc4b3fb68456db556ece4caa8"
+    },
+    "deliveredResolverImport": true
+  },
+  "independentReview": "OPEN: new complete-source generation review attempted with unchanged Codex engine/read-only sandbox, failed before model admission with EROFS; no report. Not a source finding or independent/native acceptance. Do not repeat unchanged.",
+  "productiveRootSuppliesSelection": false,
+  "activationAllowed": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allSemanticObligationsAccepted": false
+  },
+  "remaining": [
+    "independent complete-source review including this resolver correction",
+    "authenticated productive sole-root boot/delivery without v10 promotion",
+    "QB-R02 genuine original producer/build/source/inputStore sealed snapshot and publication fence",
+    "full C0-C6 original semantic/history/native/archive acceptance"
+  ]
+}

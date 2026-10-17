@@ -1,0 +1,92 @@
+{
+  "qualification": "Independent focused C0 definition correction, not native/F-EFFECT/global acceptance",
+  "pairs": 148,
+  "exactCorrectedPairs": [
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+      "field": "/settings/execution/reports/maximumTimeoutMs",
+      "priorB": 225000,
+      "B": 15000
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs",
+      "field": "/settings/execution/reports/minimumCpuTimeMs",
+      "priorB": 2000,
+      "B": 40000
+    }
+  ],
+  "otherPairsExactUnchanged": 146,
+  "allAUnchanged": true,
+  "fullEntrySelectionsChecked": 296,
+  "allEntryContentHashesUnchanged": true,
+  "onlyTwoBSelectedSettingsHashesChanged": true,
+  "canonical229LifecycleRequirementsConserved": true,
+  "callerFormulaObservations": [
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+      "actualCallerFormula": "specialist-report-finalization.ts:60-71, report-adapter-runtime.ts:225-230",
+      "requestedPolicy": {
+        "A": {
+          "cleanupTimeoutMs": 30000,
+          "adapterTimeoutMs": 30000,
+          "requestedCpuMillis": 30000,
+          "sandboxCpuSecondsArgument": 30
+        },
+        "B": {
+          "cleanupTimeoutMs": 30000,
+          "adapterTimeoutMs": 15000,
+          "requestedCpuMillis": 15000,
+          "sandboxCpuSecondsArgument": 15
+        }
+      },
+      "notClaimed": "native enforcement, measured CPU consumption, walltime extension or successful report result"
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs",
+      "actualCallerFormula": "specialist-report-finalization.ts:60-71, report-adapter-runtime.ts:225-230",
+      "requestedPolicy": {
+        "A": {
+          "cleanupTimeoutMs": 30000,
+          "adapterTimeoutMs": 30000,
+          "requestedCpuMillis": 30000,
+          "sandboxCpuSecondsArgument": 30
+        },
+        "B": {
+          "cleanupTimeoutMs": 30000,
+          "adapterTimeoutMs": 30000,
+          "requestedCpuMillis": 40000,
+          "sandboxCpuSecondsArgument": 40
+        }
+      },
+      "notClaimed": "native enforcement, measured CPU consumption, walltime extension or successful report result"
+    }
+  ],
+  "residualOriginalCasesOpen": [
+    "CMP-C1-EFFECT-buster-engine-execution.reports.minimumOpenFiles",
+    "CMP-C1-EFFECT-buster-engine-execution.reports.runtimeMemoryReserveBytes"
+  ],
+  "inputs": {
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/pairs.json": "b55319790a1a95d1d949a6ee45f9f81b812fc5fd88d8288679bc174bb0039710",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/entry-selections.json": "516e2b5a944319e44a469ec321d0cb27110570e2d7df997b8f524ec3a4ceddf9",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/pairs.json": "55fac37975c7666be266c861be4e4509ab96d65258b196370abaa3bbbea99948",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/entry-selections.json": "38d6f712642a4107449d1100f5259282c819b535aade0f401748eb5b3c720e79",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/validation.json": "98ed504a55607ae880a3297fc7241f2907ca81a2104d10345497d20db58e69b0",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/config/pipeline.config.json": "b22f9551a02c16c77a1d1b1ef896d6421660ad2202906bf6b67cfa5b0a16aece",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/config/components/prism-worker.config.json": "9a4ab3fe97b0ba1a9c89faaa5e32cde9ecd70495072634635093cf38058084dc",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/config/components/worker-core.config.json": "551a665b4b1a750cb706f555bb426604e086cf5cd1c9d31f590977998c349a26",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/config/components/prism-studio.config.json": "7d41762022058b15e3e76a211d42259e847405459f3b3a675443db1e86ee3417",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/config/components/buster-engine.config.json": "86a854be0fed7462b465b61a1d40a1a1d3de0657e9dd6b1f2ce04dfa245fa0f6",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/config/components/prism-control.config.json": "4466bab264eed6a5c6f424e7ab6376aabc94da5901e406a118be2de94cd87cab",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-01/config/components/prism-execution.config.json": "8e1339d636eb960c0e34901c4aa16cfc144ea3602756658d8e54c5b025ac18c2",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/config/pipeline.config.json": "b22f9551a02c16c77a1d1b1ef896d6421660ad2202906bf6b67cfa5b0a16aece",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/config/components/prism-worker.config.json": "9a4ab3fe97b0ba1a9c89faaa5e32cde9ecd70495072634635093cf38058084dc",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/config/components/worker-core.config.json": "551a665b4b1a750cb706f555bb426604e086cf5cd1c9d31f590977998c349a26",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/config/components/prism-studio.config.json": "7d41762022058b15e3e76a211d42259e847405459f3b3a675443db1e86ee3417",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/config/components/buster-engine.config.json": "54e3d93a1b181258cb831068e7dc15edf00ae84639a34aa4d7f66c694346b541",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/config/components/prism-control.config.json": "4466bab264eed6a5c6f424e7ab6376aabc94da5901e406a118be2de94cd87cab",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/config/components/prism-execution.config.json": "8e1339d636eb960c0e34901c4aa16cfc144ea3602756658d8e54c5b025ac18c2",
+    "skills/buster/engine/test-gates/specialist-report-finalization.ts": "2bc8ae28f2f2e9e65616681ba2e2b430b2d3378f6119f6bdc0b0aae5fd7b2d40",
+    "skills/buster/engine/test-gates/report-adapter-runtime.ts": "47e65214958d6df49a39d71cef89c660bdb730a3cdee0a450006d83dafdaaf3d",
+    "skills/common/plugin-runtime/foundation/config/buster-execution.ts": "5d6b78d0ab9da185827f35d25c5f2c6da68a4f7e1de8e815b48641b935c298d5"
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "qualification": "local pure source-definition commands only, no native effects; invocation argv without shell stdout redirection is normalized from retained collector records",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "collectorRuns": [
+    {
+      "stage": "source-specific collector 01",
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/check-host-definition.mjs"
+      ],
+      "stdout": "raw/check-01.json",
+      "stderr": "raw/check-01.stderr",
+      "exitCode": 1,
+      "observations": 176,
+      "failures": 1,
+      "executedScriptSha256": "0a98d3b161bd41bcd24ff061f46b70df1d54f00f323c838c931830b3e507a291",
+      "historicalScriptBytesRetained": false,
+      "historicalQualification": "earlier evolving collector bytes not reconstructed or claimed current; raw executed script SHA/outcome and first schema bytes preserved"
+    },
+    {
+      "stage": "source-specific collector 02",
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/check-host-definition.mjs"
+      ],
+      "stdout": "raw/check-02.json",
+      "stderr": "raw/check-02.stderr",
+      "exitCode": 0,
+      "observations": 197,
+      "failures": 0,
+      "executedScriptSha256": "0a98d3b161bd41bcd24ff061f46b70df1d54f00f323c838c931830b3e507a291",
+      "historicalScriptBytesRetained": false,
+      "historicalQualification": "earlier evolving collector bytes not reconstructed or claimed current; raw executed script SHA/outcome and first schema bytes preserved"
+    },
+    {
+      "stage": "source-specific collector 03",
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/check-host-definition.mjs"
+      ],
+      "stdout": "raw/check-03.json",
+      "stderr": "raw/check-03.stderr",
+      "exitCode": 0,
+      "observations": 211,
+      "failures": 0,
+      "executedScriptSha256": "25931a1ef4e3e033ca0db513265424e59a9ddc293c571550de42439611c9f382",
+      "historicalScriptBytesRetained": true,
+      "historicalQualification": "earlier evolving collector bytes not reconstructed or claimed current; raw executed script SHA/outcome and first schema bytes preserved"
+    },
+    {
+      "stage": "source-specific collector 04",
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/check-host-definition.mjs"
+      ],
+      "stdout": "raw/check-04.json",
+      "stderr": "raw/check-04.stderr",
+      "exitCode": 0,
+      "observations": 215,
+      "failures": 0,
+      "executedScriptSha256": "25931a1ef4e3e033ca0db513265424e59a9ddc293c571550de42439611c9f382",
+      "historicalScriptBytesRetained": true,
+      "historicalQualification": "earlier evolving collector bytes not reconstructed or claimed current; raw executed script SHA/outcome and first schema bytes preserved"
+    }
+  ],
+  "authorCommands": [
+    {
+      "argv": [
+        "python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/author-host-definition.py"
+      ],
+      "exitCode": 0,
+      "stdout": "author.stdout.json",
+      "qualification": "initial three-profile evidence author, not final package reproducer"
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/extension-and-cases.py"
+      ],
+      "exitCode": 0,
+      "qualification": "additive extension/case evidence author"
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/freeze-conservation.py"
+      ],
+      "exitCode": 0,
+      "actualStdout": {
+        "observations": 1294,
+        "failures": 0,
+        "sourceReadPins": 61,
+        "wholeOriginalCounts": {
+          "fields": 2409,
+          "cases": 6845,
+          "requirements": 50
+        }
+      },
+      "output": "conservation-and-end-identities.json"
+    }
+  ],
+  "failedLocalReceiptAttempt": {
+    "exitCode": 1,
+    "exception": "TypeError: object of type int has no len()",
+    "cause": "receipt attempted len(raw failures integer), not collector/domain failure",
+    "correction": "retain actual numeric failures value"
+  },
+  "failedPathLookups": [
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "check-policy|process.argv|Usage|usage:",
+        "scripts/native-worker-node-preflight.mjs",
+        "scripts/render-native-worker-node.mjs",
+        "scripts/prepare-native-worker-pools.mjs",
+        "cmd/kubeclaw-native-nri/main.go"
+      ],
+      "exitCode": 2,
+      "error": "cmd/kubeclaw-native-nri/main.go: No such file or directory (os error 2)",
+      "correction": "actual source tools/native-worker-nri/main.go, --check-policy verified at line151; no binary invoked"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "check-policy|config|Usage|StringFlag",
+        "native/nri/main.go",
+        "tools/native-nri/main.go"
+      ],
+      "exitCode": 2,
+      "error": "both candidate paths absent; rg --files located tools/native-worker-nri/main.go"
+    }
+  ],
+  "activationAllowed": false,
+  "implementationAuthorization": null
+}

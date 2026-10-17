@@ -1,0 +1,2767 @@
+COMMAND: python3 components/additional-schema-dispositions.py
+
+SOURCE contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json SHA256 e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "$id": "https://kubeclaw.dev/contracts/pipeline-worker-core/v1/schema.json",
+4:   "title": "KubeClaw pipeline worker-core contracts v1",
+5:   "$defs": {
+6:     "nonEmptyString": {
+7:       "type": "string",
+8:       "minLength": 1,
+9:       "maxLength": 4096
+10:     },
+11:     "stableId": {
+12:       "type": "string",
+13:       "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+14:       "maxLength": 256
+15:     },
+16:     "contractId": {
+17:       "type": "string",
+18:       "pattern": "^[a-z0-9][a-z0-9._/-]*@[1-9][0-9]*$",
+19:       "maxLength": 256
+20:     },
+21:     "digest": {
+22:       "type": "string",
+23:       "pattern": "^sha256:[a-f0-9]{64}$"
+24:     },
+25:     "timestamp": {
+26:       "type": "string",
+27:       "format": "date-time"
+28:     },
+29:     "protocolVersion": {
+30:       "const": "worker-protocol.v1"
+31:     },
+32:     "supportedProtocolVersion": {
+33:       "type": "string",
+34:       "pattern": "^worker-protocol\\.v[1-9][0-9]*$",
+35:       "maxLength": 64
+36:     },
+37:     "jsonValue": {
+38:       "oneOf": [
+39:         { "type": "null" },
+40:         { "type": "boolean" },
+41:         { "type": "number" },
+42:         { "type": "string" },
+43:         {
+44:           "type": "array",
+45:           "maxItems": 1024,
+46:           "items": { "$ref": "#/$defs/jsonValue" }
+47:         },
+48:         {
+49:           "type": "object",
+50:           "maxProperties": 256,
+51:           "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+52:         }
+53:       ]
+54:     },
+55:     "jsonObject": {
+56:       "type": "object",
+57:       "maxProperties": 256,
+58:       "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+59:     },
+60:     "workerLifecycleState": {
+61:       "enum": ["starting", "ready", "draining", "stopped", "unhealthy"]
+62:     },
+63:     "workerTrustEnvelope": {
+64:       "type": "object",
+65:       "additionalProperties": false,
+66:       "required": ["schemaVersion", "kind", "issuer", "audience", "purpose", "subjectDigest", "contextDigest", "issuedAt", "expiresAt", "nonce", "keyId", "algorithm", "signature"],
+67:       "properties": {
+68:         "schemaVersion": { "const": "worker-trust-envelope.v1" },
+69:         "kind": { "enum": ["request", "artifact"] },
+70:         "issuer": { "type": "string", "pattern": "^spiffe://[a-z0-9.-]+/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$", "maxLength": 512 },
+71:         "audience": { "type": "string", "pattern": "^spiffe://[a-z0-9.-]+/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$", "maxLength": 512 },
+72:         "purpose": { "$ref": "#/$defs/stableId" },
+73:         "subjectDigest": { "$ref": "#/$defs/digest" },
+74:         "contextDigest": { "$ref": "#/$defs/digest" },
+75:         "issuedAt": { "$ref": "#/$defs/timestamp" },
+76:         "expiresAt": { "$ref": "#/$defs/timestamp" },
+77:         "nonce": { "type": "string", "pattern": "^[A-Za-z0-9_-]{22,128}$" },
+78:         "keyId": { "$ref": "#/$defs/stableId" },
+79:         "algorithm": { "const": "ed25519" },
+80:         "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]{86}==$" }
+81:       }
+82:     },
+83:     "workerAttemptState": {
+84:       "enum": ["completed", "errored", "cancelled", "timed_out", "interrupted"]
+85:     },
+86:     "frozenPackageRef": {
+87:       "type": "object",
+88:       "additionalProperties": false,
+89:       "required": ["packageId", "packageVersion", "contentDigest"],
+90:       "properties": {
+91:         "packageId": { "$ref": "#/$defs/stableId" },
+92:         "packageVersion": { "$ref": "#/$defs/nonEmptyString" },
+93:         "contentDigest": { "$ref": "#/$defs/digest" }
+94:       }
+95:     },
+96:     "workerEngineRef": {
+97:       "type": "object",
+98:       "additionalProperties": false,
+99:       "required": ["engineId", "contractId", "engineVersion", "contentDigest"],
+100:       "properties": {
+101:         "engineId": { "$ref": "#/$defs/stableId" },
+102:         "contractId": { "$ref": "#/$defs/contractId" },
+103:         "engineVersion": { "$ref": "#/$defs/nonEmptyString" },
+104:         "contentDigest": { "$ref": "#/$defs/digest" }
+105:       }
+106:     },
+107:     "workerProfile": {
+108:       "type": "object",
+109:       "additionalProperties": false,
+110:       "required": [
+111:         "schemaVersion",
+112:         "profileId",
+113:         "profileDigest",
+114:         "workerType",
+115:         "coreContractId",
+116:         "engine",
+117:         "capabilities"
+118:       ],
+119:       "properties": {
+120:         "schemaVersion": { "const": "worker-profile.v1" },
+121:         "profileId": { "$ref": "#/$defs/stableId" },
+122:         "profileDigest": { "$ref": "#/$defs/digest" },
+123:         "workerType": { "$ref": "#/$defs/stableId" },
+124:         "coreContractId": { "$ref": "#/$defs/contractId" },
+125:         "engine": { "$ref": "#/$defs/workerEngineRef" },
+126:         "capabilities": {
+127:           "type": "array",
+128:           "maxItems": 128,
+129:           "items": { "$ref": "#/$defs/stableId" },
+130:           "uniqueItems": true
+131:         }
+132:       }
+133:     },
+134:     "workerCapacity": {
+135:       "type": "object",
+136:       "additionalProperties": false,
+137:       "required": ["total", "available", "active"],
+138:       "properties": {
+139:         "total": { "type": "integer", "minimum": 1, "maximum": 4096 },
+140:         "available": { "type": "integer", "minimum": 0, "maximum": 4096 },
+141:         "active": { "type": "integer", "minimum": 0, "maximum": 4096 }
+142:       }
+143:     },
+144:     "workerRegistration": {
+145:       "type": "object",
+146:       "additionalProperties": false,
+147:       "required": [
+148:         "schemaVersion",
+149:         "workerId",
+150:         "workerType",
+151:         "coreVersion",
+152:         "protocolVersions",
+153:         "profiles",
+154:         "capacity",
+155:         "lifecycleState",
+156:         "startedAt",
+157:         "sentAt"
+158:       ],
+159:       "properties": {
+160:         "schemaVersion": { "const": "worker-registration.v1" },
+161:         "workerId": { "$ref": "#/$defs/stableId" },
+162:         "workerType": { "$ref": "#/$defs/stableId" },
+163:         "coreVersion": { "$ref": "#/$defs/nonEmptyString" },
+164:         "protocolVersions": {
+165:           "type": "array",
+166:           "minItems": 1,
+167:           "maxItems": 16,
+168:           "items": { "$ref": "#/$defs/supportedProtocolVersion" },
+169:           "uniqueItems": true
+170:         },
+171:         "profiles": {
+172:           "type": "array",
+173:           "minItems": 1,
+174:           "maxItems": 64,
+175:           "items": { "$ref": "#/$defs/workerProfile" }
+176:         },
+177:         "capacity": { "$ref": "#/$defs/workerCapacity" },
+178:         "lifecycleState": { "$ref": "#/$defs/workerLifecycleState" },
+179:         "startedAt": { "$ref": "#/$defs/timestamp" },
+180:         "sentAt": { "$ref": "#/$defs/timestamp" }
+181:       }
+182:     },
+183:     "workerHealth": {
+184:       "type": "object",
+185:       "additionalProperties": false,
+186:       "required": [
+187:         "schemaVersion",
+188:         "workerId",
+189:         "sequence",
+190:         "lifecycleState",
+191:         "capacity",
+192:         "activeAttemptIds",
+193:         "sentAt"
+194:       ],
+195:       "properties": {
+196:         "schemaVersion": { "const": "worker-health.v1" },
+197:         "workerId": { "$ref": "#/$defs/stableId" },
+198:         "sequence": { "type": "integer", "minimum": 0 },
+199:         "lifecycleState": { "$ref": "#/$defs/workerLifecycleState" },
+200:         "capacity": { "$ref": "#/$defs/workerCapacity" },
+201:         "activeAttemptIds": {
+202:           "type": "array",
+203:           "maxItems": 4096,
+204:           "items": { "$ref": "#/$defs/stableId" },
+205:           "uniqueItems": true
+206:         },
+207:         "sentAt": { "$ref": "#/$defs/timestamp" }
+208:       }
+209:     },
+210:     "attemptClaim": {
+211:       "type": "object",
+212:       "additionalProperties": false,
+213:       "required": [
+214:         "schemaVersion",
+215:         "claimId",
+216:         "attemptId",
+217:         "generation",
+218:         "workerId",
+219:         "claimedAt",
+220:         "expiresAt"
+221:       ],
+222:       "properties": {
+223:         "schemaVersion": { "const": "attempt-claim.v1" },
+224:         "claimId": { "$ref": "#/$defs/stableId" },
+225:         "attemptId": { "$ref": "#/$defs/stableId" },
+226:         "generation": { "type": "integer", "minimum": 1 },
+227:         "workerId": { "$ref": "#/$defs/stableId" },
+228:         "claimedAt": { "$ref": "#/$defs/timestamp" },
+229:         "expiresAt": { "$ref": "#/$defs/timestamp" }
+230:       }
+231:     },
+232:     "workerArtifactRef": {
+233:       "type": "object",
+234:       "additionalProperties": false,
+235:       "required": ["artifactId", "type", "mediaType", "contentDigest", "sizeBytes", "storageUrl"],
+236:       "properties": {
+237:         "artifactId": { "$ref": "#/$defs/stableId" },
+238:         "type": { "$ref": "#/$defs/stableId" },
+239:         "mediaType": { "$ref": "#/$defs/nonEmptyString" },
+240:         "contentDigest": { "$ref": "#/$defs/digest" },
+241:         "sizeBytes": { "type": "integer", "minimum": 0 },
+242:         "storageUrl": { "type": "string", "format": "uri", "maxLength": 4096 }
+243:       }
+244:     },
+245:     "workerInput": {
+246:       "oneOf": [
+247:         {
+248:           "type": "object",
+249:           "additionalProperties": false,
+250:           "required": ["name", "kind", "schemaId", "schemaDigest", "value"],
+251:           "properties": {
+252:             "name": { "$ref": "#/$defs/stableId" },
+253:             "kind": { "const": "value" },
+254:             "schemaId": { "$ref": "#/$defs/nonEmptyString" },
+255:             "schemaDigest": { "$ref": "#/$defs/digest" },
+256:             "value": { "$ref": "#/$defs/jsonValue" }
+257:           }
+258:         },
+259:         {
+260:           "type": "object",
+261:           "additionalProperties": false,
+262:           "required": ["name", "kind", "artifact"],
+263:           "properties": {
+264:             "name": { "$ref": "#/$defs/stableId" },
+265:             "kind": { "const": "artifact" },
+266:             "artifact": { "$ref": "#/$defs/workerArtifactRef" }
+267:           }
+268:         }
+269:       ]
+270:     },
+271:     "workerAttemptLimits": {
+272:       "type": "object",
+273:       "additionalProperties": false,
+274:       "required": [
+275:         "timeoutMs",
+276:         "cleanupTimeoutMs",
+277:         "cpuMillis",
+278:         "memoryBytes",
+279:         "processes",
+280:         "logBytes",
+281:         "resultBytes",
+282:         "evidenceBytes",
+283:         "evidenceFiles"
+284:       ],
+285:       "properties": {
+286:         "timeoutMs": { "type": "integer", "minimum": 1, "maximum": 2147483647 },
+287:         "cleanupTimeoutMs": { "type": "integer", "minimum": 1, "maximum": 2147483647 },
+288:         "cpuMillis": { "type": "integer", "minimum": 1 },
+289:         "memoryBytes": { "type": "integer", "minimum": 1 },
+290:         "processes": { "type": "integer", "minimum": 1 },
+291:         "logBytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+292:         "resultBytes": { "type": "integer", "minimum": 1 },
+293:         "evidenceBytes": { "type": "integer", "minimum": 0 },
+294:         "evidenceFiles": { "type": "integer", "minimum": 0 }
+295:       }
+296:     },
+297:     "specialistOperation": {
+298:       "type": "object",
+299:       "additionalProperties": false,
+300:       "required": ["contractId", "inputSchemaId", "inputSchemaDigest", "values"],
+301:       "properties": {
+302:         "contractId": { "$ref": "#/$defs/contractId" },
+303:         "inputSchemaId": { "$ref": "#/$defs/nonEmptyString" },
+304:         "inputSchemaDigest": { "$ref": "#/$defs/digest" },
+305:         "values": { "$ref": "#/$defs/jsonObject" }
+306:       }
+307:     },
+308:     "workerAttemptEnvelope": {
+309:       "type": "object",
+310:       "additionalProperties": false,
+311:       "required": [
+312:         "schemaVersion",
+313:         "protocolVersion",
+314:         "pipelineRunId",
+315:         "moduleId",
+316:         "gateId",
+317:         "planId",
+318:         "nodeId",
+319:         "executionId",
+320:         "attemptId",
+321:         "attemptNumber",
+322:         "attemptSpecDigest",
+323:         "claim",
+324:         "profile",
+325:         "packages",
+326:         "grantedCapabilities",
+327:         "limits",
+328:         "inputs",
+329:         "operation",
+330:         "cancellationId",
+331:         "issuedAt",
+332:         "queueDeadline"
+333:       ],
+334:       "properties": {
+335:         "schemaVersion": { "const": "worker-attempt-envelope.v1" },
+336:         "protocolVersion": { "$ref": "#/$defs/protocolVersion" },
+337:         "pipelineRunId": { "$ref": "#/$defs/stableId" },
+338:         "moduleId": {
+339:           "anyOf": [{ "$ref": "#/$defs/stableId" }, { "type": "null" }]
+340:         },
+341:         "gateId": {
+342:           "anyOf": [{ "$ref": "#/$defs/stableId" }, { "type": "null" }]
+343:         },
+344:         "planId": { "$ref": "#/$defs/stableId" },
+345:         "nodeId": { "$ref": "#/$defs/stableId" },
+346:         "executionId": { "$ref": "#/$defs/stableId" },
+347:         "attemptId": { "$ref": "#/$defs/stableId" },
+348:         "attemptNumber": { "type": "integer", "minimum": 1 },
+349:         "attemptSpecDigest": { "$ref": "#/$defs/digest" },
+350:         "claim": { "$ref": "#/$defs/attemptClaim" },
+351:         "profile": { "$ref": "#/$defs/workerProfile" },
+352:         "packages": {
+353:           "type": "array",
+354:           "maxItems": 128,
+355:           "items": { "$ref": "#/$defs/frozenPackageRef" }
+356:         },
+357:         "grantedCapabilities": {
+358:           "type": "array",
+359:           "maxItems": 128,
+360:           "items": { "$ref": "#/$defs/stableId" },
+361:           "uniqueItems": true
+362:         },
+363:         "limits": { "$ref": "#/$defs/workerAttemptLimits" },
+364:         "inputs": {
+365:           "type": "array",
+366:           "maxItems": 128,
+367:           "items": { "$ref": "#/$defs/workerInput" }
+368:         },
+369:         "operation": { "$ref": "#/$defs/specialistOperation" },
+370:         "cancellationId": { "$ref": "#/$defs/stableId" },
+371:         "issuedAt": { "$ref": "#/$defs/timestamp" },
+372:         "queueDeadline": { "$ref": "#/$defs/timestamp" }
+373:       }
+374:     },
+375:     "attemptProgressEvent": {
+376:       "type": "object",
+377:       "additionalProperties": false,
+378:       "required": [
+379:         "schemaVersion",
+380:         "protocolVersion",
+381:         "attemptId",
+382:         "claimId",
+383:         "claimGeneration",
+384:         "workerId",
+385:         "sequence",
+386:         "state",
+387:         "message",
+388:         "progressPercent",
+389:         "details",
+390:         "sentAt"
+391:       ],
+392:       "properties": {
+393:         "schemaVersion": { "const": "attempt-progress-event.v1" },
+394:         "protocolVersion": { "$ref": "#/$defs/protocolVersion" },
+395:         "attemptId": { "$ref": "#/$defs/stableId" },
+396:         "claimId": { "$ref": "#/$defs/stableId" },
+397:         "claimGeneration": { "type": "integer", "minimum": 1 },
+398:         "workerId": { "$ref": "#/$defs/stableId" },
+399:         "sequence": { "type": "integer", "minimum": 0 },
+400:         "state": { "enum": ["accepted", "started", "running", "cleanup_started", "cleanup_completed"] },
+401:         "message": { "$ref": "#/$defs/nonEmptyString" },
+402:         "progressPercent": {
+403:           "anyOf": [
+404:             { "type": "number", "minimum": 0, "maximum": 100 },
+405:             { "type": "null" }
+406:           ]
+407:         },
+408:         "details": { "$ref": "#/$defs/jsonObject" },
+409:         "sentAt": { "$ref": "#/$defs/timestamp" }
+410:       }
+411:     },
+412:     "workerLogPart": {
+413:       "type": "object",
+414:       "additionalProperties": false,
+415:       "required": [
+416:         "schemaVersion",
+417:         "protocolVersion",
+418:         "attemptId",
+419:         "claimId",
+420:         "claimGeneration",
+421:         "workerId",
+422:         "sequence",
+423:         "stream",
+424:         "text",
+425:         "contentDigest",
+426:         "final",
+427:         "sentAt"
+428:       ],
+429:       "properties": {
+430:         "schemaVersion": { "const": "worker-log-part.v1" },
+431:         "protocolVersion": { "$ref": "#/$defs/protocolVersion" },
+432:         "attemptId": { "$ref": "#/$defs/stableId" },
+433:         "claimId": { "$ref": "#/$defs/stableId" },
+434:         "claimGeneration": { "type": "integer", "minimum": 1 },
+435:         "workerId": { "$ref": "#/$defs/stableId" },
+436:         "sequence": { "type": "integer", "minimum": 0 },
+437:         "stream": { "enum": ["stdout", "stderr", "system"] },
+438:         "text": { "type": "string", "maxLength": 65536 },
+439:         "contentDigest": { "$ref": "#/$defs/digest" },
+440:         "final": { "type": "boolean" },
+441:         "sentAt": { "$ref": "#/$defs/timestamp" }
+442:       }
+443:     },
+444:     "workerCancellationRequest": {
+445:       "type": "object",
+446:       "additionalProperties": false,
+447:       "required": [
+448:         "schemaVersion",
+449:         "protocolVersion",
+450:         "cancellationId",
+451:         "attemptId",
+452:         "requestedAt",
+453:         "reason",
+454:         "forceAfterMs"
+455:       ],
+456:       "properties": {
+457:         "schemaVersion": { "const": "worker-cancellation-request.v1" },
+458:         "protocolVersion": { "$ref": "#/$defs/protocolVersion" },
+459:         "cancellationId": { "$ref": "#/$defs/stableId" },
+460:         "attemptId": { "$ref": "#/$defs/stableId" },
+461:         "requestedAt": { "$ref": "#/$defs/timestamp" },
+462:         "reason": { "$ref": "#/$defs/nonEmptyString" },
+463:         "forceAfterMs": { "type": "integer", "minimum": 0, "maximum": 2147483647 }
+464:       }
+465:     },
+466:     "workerSpecialistResult": {
+467:       "type": "object",
+468:       "additionalProperties": false,
+469:       "required": ["schemaId", "schemaDigest", "values"],
+470:       "properties": {
+471:         "schemaId": { "$ref": "#/$defs/nonEmptyString" },
+472:         "schemaDigest": { "$ref": "#/$defs/digest" },
+473:         "values": { "$ref": "#/$defs/jsonObject" }
+474:       }
+475:     },
+476:     "workerEvidenceRef": {
+477:       "type": "object",
+478:       "additionalProperties": false,
+479:       "required": ["evidenceId", "type", "artifact"],
+480:       "properties": {
+481:         "evidenceId": { "$ref": "#/$defs/stableId" },
+482:         "type": { "$ref": "#/$defs/stableId" },
+483:         "artifact": { "$ref": "#/$defs/workerArtifactRef" }
+484:       }
+485:     },
+486:     "workerResourceUse": {
+487:       "type": "object",
+488:       "additionalProperties": false,
+489:       "required": ["logBytes", "resultBytes", "evidenceBytes"],
+490:       "properties": {
+491:         "cpuTimeMs": { "type": "integer", "minimum": 0 },
+492:         "maximumMemoryBytes": { "type": "integer", "minimum": 0 },
+493:         "maximumProcesses": { "type": "integer", "minimum": 0 },
+494:         "logBytes": { "type": "integer", "minimum": 0 },
+495:         "resultBytes": { "type": "integer", "minimum": 0 },
+496:         "evidenceBytes": { "type": "integer", "minimum": 0 }
+497:       }
+498:     },
+499:     "workerCleanupResult": {
+500:       "type": "object",
+501:       "additionalProperties": false,
+502:       "required": ["state", "summary"],
+503:       "properties": {
+504:         "state": { "enum": ["not_required", "completed", "failed"] },
+505:         "summary": {
+506:           "anyOf": [{ "$ref": "#/$defs/nonEmptyString" }, { "type": "null" }]
+507:         }
+508:       },
+509:       "allOf": [
+510:         {
+511:           "if": { "properties": { "state": { "const": "failed" } } },
+512:           "then": { "properties": { "summary": { "$ref": "#/$defs/nonEmptyString" } } }
+513:         }
+514:       ]
+515:     },
+516:     "workerError": {
+517:       "type": "object",
+518:       "additionalProperties": false,
+519:       "required": ["code", "message"],
+520:       "properties": {
+521:         "code": { "$ref": "#/$defs/stableId" },
+522:         "message": { "$ref": "#/$defs/nonEmptyString" }
+523:       }
+524:     },
+525:     "workerReceiptRef": {
+526:       "type": "object",
+527:       "additionalProperties": false,
+528:       "required": ["receiptId", "receiptDigest"],
+529:       "properties": {
+530:         "receiptId": { "$ref": "#/$defs/stableId" },
+531:         "receiptDigest": { "$ref": "#/$defs/digest" }
+532:       }
+533:     },
+534:     "workerAttemptResult": {
+535:       "type": "object",
+536:       "additionalProperties": false,
+537:       "required": [
+538:         "schemaVersion",
+539:         "protocolVersion",
+540:         "attemptId",
+541:         "claimId",
+542:         "claimGeneration",
+543:         "workerId",
+544:         "state",
+545:         "startedAt",
+546:         "completedAt",
+547:         "durationMs",
+548:         "summary",
+549:         "specialistResult",
+550:         "error",
+551:         "evidence",
+552:         "resources",
+553:         "cleanup",
+554:         "exitCode",
+555:         "signal",
+556:         "resultDigest",
+557:         "receipt"
+558:       ],
+559:       "properties": {
+560:         "schemaVersion": { "const": "worker-attempt-result.v1" },
+561:         "protocolVersion": { "$ref": "#/$defs/protocolVersion" },
+562:         "attemptId": { "$ref": "#/$defs/stableId" },
+563:         "claimId": { "$ref": "#/$defs/stableId" },
+564:         "claimGeneration": { "type": "integer", "minimum": 1 },
+565:         "workerId": { "$ref": "#/$defs/stableId" },
+566:         "state": { "$ref": "#/$defs/workerAttemptState" },
+567:         "startedAt": { "$ref": "#/$defs/timestamp" },
+568:         "completedAt": { "$ref": "#/$defs/timestamp" },
+569:         "durationMs": { "type": "integer", "minimum": 0 },
+570:         "summary": { "$ref": "#/$defs/nonEmptyString" },
+571:         "specialistResult": {
+572:           "anyOf": [{ "$ref": "#/$defs/workerSpecialistResult" }, { "type": "null" }]
+573:         },
+574:         "error": {
+575:           "anyOf": [{ "$ref": "#/$defs/workerError" }, { "type": "null" }]
+576:         },
+577:         "evidence": {
+578:           "type": "array",
+579:           "maxItems": 4096,
+580:           "items": { "$ref": "#/$defs/workerEvidenceRef" }
+581:         },
+582:         "resources": { "$ref": "#/$defs/workerResourceUse" },
+583:         "cleanup": { "$ref": "#/$defs/workerCleanupResult" },
+584:         "exitCode": {
+585:           "anyOf": [{ "type": "integer" }, { "type": "null" }]
+586:         },
+587:         "signal": {
+588:           "anyOf": [{ "$ref": "#/$defs/nonEmptyString" }, { "type": "null" }]
+589:         },
+590:         "resultDigest": { "$ref": "#/$defs/digest" },
+591:         "receipt": { "$ref": "#/$defs/workerReceiptRef" }
+592:       },
+593:       "allOf": [
+594:         {
+595:           "if": { "properties": { "state": { "const": "completed" } } },
+596:           "then": {
+597:             "properties": {
+598:               "specialistResult": { "$ref": "#/$defs/workerSpecialistResult" },
+599:               "error": { "type": "null" }
+600:             }
+601:           },
+602:           "else": {
+603:             "properties": {
+604:               "specialistResult": { "type": "null" }
+605:             }
+606:           }
+607:         },
+608:         {
+609:           "if": { "properties": { "state": { "const": "errored" } } },
+610:           "then": {
+611:             "properties": {
+612:               "error": { "$ref": "#/$defs/workerError" }
+613:             }
+614:           }
+615:         }
+616:       ]
+617:     }
+618:   }
+619: }
+
+SOURCE contracts/pipeline-worker-core/v1/src/index.ts SHA256 013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72
+1: export * from './types.ts';
+2: export * from './digest.ts';
+3: export * from './validation.ts';
+4: export * from './trust.ts';
+5: export * from './resource-types-v2.ts';
+6: export * from './resource-validation-v2.ts';
+7: export * from './resource-types-v3.ts';
+8: export * from './resource-validation-v3.ts';
+
+SOURCE contracts/pipeline-worker-core/v1/src/trust.ts SHA256 c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5
+1: import crypto from 'node:crypto';
+2: import { canonicalJson } from './digest.ts';
+3: import type { WorkerTrustEnvelopeV1 } from './types.ts';
+4: 
+5: export type UnsignedWorkerTrustEnvelopeV1 = Omit<WorkerTrustEnvelopeV1, 'algorithm' | 'signature'>;
+6: 
+7: function signingMessage(value: UnsignedWorkerTrustEnvelopeV1 | WorkerTrustEnvelopeV1): Buffer {
+8:   const { algorithm: _algorithm, signature: _signature, ...unsigned } = value as WorkerTrustEnvelopeV1;
+9:   return Buffer.from(`kubeclaw-worker-trust-v1\0${canonicalJson(unsigned)}`, 'utf8');
+10: }
+11: 
+12: export function signWorkerTrustEnvelope(
+13:   value: UnsignedWorkerTrustEnvelopeV1,
+14:   privateKey: crypto.KeyLike,
+15: ): WorkerTrustEnvelopeV1 {
+16:   const key = privateKey instanceof crypto.KeyObject ? privateKey : crypto.createPrivateKey(privateKey);
+17:   if (key.asymmetricKeyType !== 'ed25519') throw new Error('WORKER_TRUST_PRIVATE_KEY_INVALID');
+18:   return Object.freeze({
+19:     ...value,
+20:     algorithm: 'ed25519',
+21:     signature: crypto.sign(null, signingMessage(value), key).toString('base64'),
+22:   });
+23: }
+24: 
+25: export function verifyWorkerTrustEnvelope(
+26:   value: WorkerTrustEnvelopeV1,
+27:   publicKey: crypto.KeyLike,
+28:   expected: Readonly<{ issuer: string; audience: string; purpose: string }>,
+29:   now = Date.now(),
+30: ): boolean {
+31:   const issuedAt = Date.parse(value.issuedAt);
+32:   const expiresAt = Date.parse(value.expiresAt);
+33:   if (value.schemaVersion !== 'worker-trust-envelope.v1' || value.algorithm !== 'ed25519'
+34:     || value.issuer !== expected.issuer || value.audience !== expected.audience
+35:     || value.purpose !== expected.purpose || !Number.isFinite(issuedAt) || !Number.isFinite(expiresAt)
+36:     || expiresAt <= issuedAt || issuedAt > now || expiresAt <= now) return false;
+37:   try {
+38:     const key = publicKey instanceof crypto.KeyObject ? publicKey : crypto.createPublicKey(publicKey);
+39:     return key.asymmetricKeyType === 'ed25519'
+40:       && crypto.verify(null, signingMessage(value), key, Buffer.from(value.signature, 'base64'));
+41:   } catch {
+42:     return false;
+43:   }
+44: }
+
+SOURCE contracts/pipeline-worker-core/v1/src/types.ts SHA256 399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43
+1: export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
+2: 
+3: export type WorkerLifecycleState = 'starting' | 'ready' | 'draining' | 'stopped' | 'unhealthy';
+4: export type WorkerAttemptState = 'completed' | 'errored' | 'cancelled' | 'timed_out' | 'interrupted';
+5: export type WorkerProgressState = 'accepted' | 'started' | 'running' | 'cleanup_started' | 'cleanup_completed';
+6: export type WorkerCleanupState = 'not_required' | 'completed' | 'failed';
+7: export type WorkerProtocolV1 = 'worker-protocol.v1';
+8: export type WorkerProtocolVersion = `worker-protocol.v${number}`;
+9: 
+10: export type WorkerTrustEnvelopeKind = 'request' | 'artifact';
+11: 
+12: export interface WorkerTrustEnvelopeV1 {
+13:   schemaVersion: 'worker-trust-envelope.v1';
+14:   kind: WorkerTrustEnvelopeKind;
+15:   issuer: string;
+16:   audience: string;
+17:   purpose: string;
+18:   subjectDigest: string;
+19:   contextDigest: string;
+20:   issuedAt: string;
+21:   expiresAt: string;
+22:   nonce: string;
+23:   keyId: string;
+24:   algorithm: 'ed25519';
+25:   signature: string;
+26: }
+27: 
+28: export interface FrozenPackageRefV1 {
+29:   packageId: string;
+30:   packageVersion: string;
+31:   contentDigest: string;
+32: }
+33: 
+34: export interface WorkerEngineRefV1 {
+35:   engineId: string;
+36:   contractId: string;
+37:   engineVersion: string;
+38:   contentDigest: string;
+39: }
+40: 
+41: export interface WorkerProfileV1 {
+42:   schemaVersion: 'worker-profile.v1';
+43:   profileId: string;
+44:   profileDigest: string;
+45:   workerType: string;
+46:   coreContractId: string;
+47:   engine: WorkerEngineRefV1;
+48:   capabilities: string[];
+49: }
+50: 
+51: export interface WorkerCapacityV1 {
+52:   total: number;
+53:   available: number;
+54:   active: number;
+55: }
+56: 
+57: export interface WorkerRegistrationV1 {
+58:   schemaVersion: 'worker-registration.v1';
+59:   workerId: string;
+60:   workerType: string;
+61:   coreVersion: string;
+62:   protocolVersions: WorkerProtocolVersion[];
+63:   profiles: WorkerProfileV1[];
+64:   capacity: WorkerCapacityV1;
+65:   lifecycleState: WorkerLifecycleState;
+66:   startedAt: string;
+67:   sentAt: string;
+68: }
+69: 
+70: export interface WorkerHealthV1 {
+71:   schemaVersion: 'worker-health.v1';
+72:   workerId: string;
+73:   sequence: number;
+74:   lifecycleState: WorkerLifecycleState;
+75:   capacity: WorkerCapacityV1;
+76:   activeAttemptIds: string[];
+77:   sentAt: string;
+78: }
+79: 
+80: export interface AttemptClaimV1 {
+81:   schemaVersion: 'attempt-claim.v1';
+82:   claimId: string;
+83:   attemptId: string;
+84:   generation: number;
+85:   workerId: string;
+86:   claimedAt: string;
+87:   expiresAt: string;
+88: }
+89: 
+90: export interface WorkerArtifactRefV1 {
+91:   artifactId: string;
+92:   type: string;
+93:   mediaType: string;
+94:   contentDigest: string;
+95:   sizeBytes: number;
+96:   storageUrl: string;
+97: }
+98: 
+99: export type WorkerInputV1 =
+100:   | {
+101:       name: string;
+102:       kind: 'value';
+103:       schemaId: string;
+104:       schemaDigest: string;
+105:       value: JsonValue;
+106:     }
+107:   | {
+108:       name: string;
+109:       kind: 'artifact';
+110:       artifact: WorkerArtifactRefV1;
+111:     };
+112: 
+113: export interface WorkerAttemptLimitsV1 {
+114:   timeoutMs: number;
+115:   cleanupTimeoutMs: number;
+116:   cpuMillis: number;
+117:   memoryBytes: number;
+118:   processes: number;
+119:   logBytes: number;
+120:   resultBytes: number;
+121:   evidenceBytes: number;
+122:   evidenceFiles: number;
+123: }
+124: 
+125: export interface SpecialistOperationV1 {
+126:   contractId: string;
+127:   inputSchemaId: string;
+128:   inputSchemaDigest: string;
+129:   values: Record<string, JsonValue>;
+130: }
+131: 
+132: export interface WorkerAttemptEnvelopeV1 {
+133:   schemaVersion: 'worker-attempt-envelope.v1';
+134:   protocolVersion: WorkerProtocolV1;
+135:   pipelineRunId: string;
+136:   moduleId: string | null;
+137:   gateId: string | null;
+138:   planId: string;
+139:   nodeId: string;
+140:   executionId: string;
+141:   attemptId: string;
+142:   attemptNumber: number;
+143:   attemptSpecDigest: string;
+144:   claim: AttemptClaimV1;
+145:   profile: WorkerProfileV1;
+146:   packages: FrozenPackageRefV1[];
+147:   grantedCapabilities: string[];
+148:   limits: WorkerAttemptLimitsV1;
+149:   inputs: WorkerInputV1[];
+150:   operation: SpecialistOperationV1;
+151:   cancellationId: string;
+152:   issuedAt: string;
+153:   queueDeadline: string;
+154: }
+155: 
+156: export interface AttemptProgressEventV1 {
+157:   schemaVersion: 'attempt-progress-event.v1';
+158:   protocolVersion: WorkerProtocolV1;
+159:   attemptId: string;
+160:   claimId: string;
+161:   claimGeneration: number;
+162:   workerId: string;
+163:   sequence: number;
+164:   state: WorkerProgressState;
+165:   message: string;
+166:   progressPercent: number | null;
+167:   details: Record<string, JsonValue>;
+168:   sentAt: string;
+169: }
+170: 
+171: export interface WorkerLogPartV1 {
+172:   schemaVersion: 'worker-log-part.v1';
+173:   protocolVersion: WorkerProtocolV1;
+174:   attemptId: string;
+175:   claimId: string;
+176:   claimGeneration: number;
+177:   workerId: string;
+178:   sequence: number;
+179:   stream: 'stdout' | 'stderr' | 'system';
+180:   text: string;
+181:   contentDigest: string;
+182:   final: boolean;
+183:   sentAt: string;
+184: }
+185: 
+186: export interface WorkerCancellationRequestV1 {
+187:   schemaVersion: 'worker-cancellation-request.v1';
+188:   protocolVersion: WorkerProtocolV1;
+189:   cancellationId: string;
+190:   attemptId: string;
+191:   requestedAt: string;
+192:   reason: string;
+193:   forceAfterMs: number;
+194: }
+195: 
+196: export interface WorkerSpecialistResultV1 {
+197:   schemaId: string;
+198:   schemaDigest: string;
+199:   values: Record<string, JsonValue>;
+200: }
+201: 
+202: export interface WorkerEvidenceRefV1 {
+203:   evidenceId: string;
+204:   type: string;
+205:   artifact: WorkerArtifactRefV1;
+206: }
+207: 
+208: export interface WorkerResourceUseV1 {
+209:   cpuTimeMs?: number;
+210:   maximumMemoryBytes?: number;
+211:   maximumProcesses?: number;
+212:   logBytes: number;
+213:   resultBytes: number;
+214:   evidenceBytes: number;
+215: }
+216: 
+217: export interface WorkerCleanupResultV1 {
+218:   state: WorkerCleanupState;
+219:   summary: string | null;
+220: }
+221: 
+222: export interface WorkerErrorV1 {
+223:   code: string;
+224:   message: string;
+225: }
+226: 
+227: export interface WorkerReceiptRefV1 {
+228:   receiptId: string;
+229:   receiptDigest: string;
+230: }
+231: 
+232: export interface WorkerAttemptResultV1 {
+233:   schemaVersion: 'worker-attempt-result.v1';
+234:   protocolVersion: WorkerProtocolV1;
+235:   attemptId: string;
+236:   claimId: string;
+237:   claimGeneration: number;
+238:   workerId: string;
+239:   state: WorkerAttemptState;
+240:   startedAt: string;
+241:   completedAt: string;
+242:   durationMs: number;
+243:   summary: string;
+244:   specialistResult: WorkerSpecialistResultV1 | null;
+245:   error: WorkerErrorV1 | null;
+246:   evidence: WorkerEvidenceRefV1[];
+247:   resources: WorkerResourceUseV1;
+248:   cleanup: WorkerCleanupResultV1;
+249:   exitCode: number | null;
+250:   signal: string | null;
+251:   resultDigest: string;
+252:   receipt: WorkerReceiptRefV1;
+253: }
+254: 
+255: export type WorkerAttemptMessageV1 = AttemptProgressEventV1 | WorkerLogPartV1 | WorkerAttemptResultV1;
+256: 
+257: export interface ContractValidationResult {
+258:   ok: boolean;
+259:   errors: string[];
+260: }
+261: 
+262: export type PipelineWorkerCoreDefinition =
+263:   | 'workerTrustEnvelope'
+264:   | 'workerLifecycleState'
+265:   | 'workerProfile'
+266:   | 'workerRegistration'
+267:   | 'workerHealth'
+268:   | 'attemptClaim'
+269:   | 'workerAttemptEnvelope'
+270:   | 'attemptProgressEvent'
+271:   | 'workerLogPart'
+272:   | 'workerCancellationRequest'
+273:   | 'workerEvidenceRef'
+274:   | 'workerAttemptResult';
+
+SOURCE contracts/pipeline-worker-core/v1/src/validation.ts SHA256 a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147
+1: import fs from 'node:fs';
+2: import Ajv2020 from 'ajv/dist/2020.js';
+3: import addFormats from 'ajv-formats';
+4: import { sha256Text, workerAttemptResultDigest, workerAttemptSpecDigest, workerProfileDigest } from './digest.ts';
+5: import type {
+6:   ContractValidationResult,
+7:   AttemptClaimV1,
+8:   PipelineWorkerCoreDefinition,
+9:   WorkerAttemptEnvelopeV1,
+10:   WorkerAttemptMessageV1,
+11:   WorkerAttemptResultV1,
+12:   WorkerCancellationRequestV1,
+13:   WorkerHealthV1,
+14:   WorkerRegistrationV1,
+15:   WorkerTrustEnvelopeV1,
+16: } from './types.ts';
+17: 
+18: type Validator = ((value: unknown) => boolean) & { errors?: unknown[] | null };
+19: interface AjvInstance {
+20:   addSchema(schema: object): void;
+21:   compile(schema: object): Validator;
+22: }
+23: 
+24: const schemaUrl = new URL('../schemas/pipeline-worker-core.v1.schema.json', import.meta.url);
+25: const schema = JSON.parse(fs.readFileSync(schemaUrl, 'utf8')) as { $id: string };
+26: const AjvConstructor = Ajv2020 as unknown as new (options: { allErrors: boolean; strict: boolean }) => AjvInstance;
+27: const installFormats = addFormats as unknown as (instance: AjvInstance) => AjvInstance;
+28: const ajv = new AjvConstructor({ allErrors: true, strict: true });
+29: installFormats(ajv);
+30: ajv.addSchema(schema);
+31: const validators = new Map<string, Validator>();
+32: 
+33: export class PipelineWorkerCoreContractError extends Error {
+34:   definition: string;
+35:   errors: string[];
+36: 
+37:   constructor(definition: string, errors: string[]) {
+38:     super(`Invalid pipeline worker-core ${definition}: ${errors.join('; ')}`);
+39:     this.name = 'PipelineWorkerCoreContractError';
+40:     this.definition = definition;
+41:     this.errors = [...errors];
+42:   }
+43: }
+44: 
+45: function validator(definition: PipelineWorkerCoreDefinition): Validator {
+46:   const existing = validators.get(definition);
+47:   if (existing) return existing;
+48:   const compiled = ajv.compile({ $ref: `${schema.$id}#/$defs/${definition}` }) as Validator;
+49:   validators.set(definition, compiled);
+50:   return compiled;
+51: }
+52: 
+53: function errorText(errors: unknown[] | null | undefined): string[] {
+54:   if (!errors?.length) return ['contract validation failed without details'];
+55:   return errors.map((error) => {
+56:     if (!error || typeof error !== 'object') return String(error);
+57:     const item = error as { instancePath?: string; message?: string };
+58:     return `${item.instancePath || '/'} ${item.message || 'is invalid'}`;
+59:   });
+60: }
+61: 
+62: export function workerCoreRelationErrors(definition: PipelineWorkerCoreDefinition, value: unknown): string[] {
+63:   if (definition === 'workerTrustEnvelope') {
+64:     const envelope = value as WorkerTrustEnvelopeV1;
+65:     return Date.parse(envelope.expiresAt) > Date.parse(envelope.issuedAt)
+66:       ? []
+67:       : ['/expiresAt must be after /issuedAt'];
+68:   }
+69: 
+70:   if (definition === 'workerProfile') {
+71:     const profile = value as WorkerRegistrationV1['profiles'][number];
+72:     try {
+73:       return workerProfileDigest(profile as unknown as Record<string, unknown>) === profile.profileDigest
+74:         ? []
+75:         : ['/profileDigest does not match the profile contents'];
+76:     } catch {
+77:       return ['/profile contains a value that cannot be canonically hashed'];
+78:     }
+79:   }
+80: 
+81:   if (definition === 'workerRegistration') {
+82:     const registration = value as WorkerRegistrationV1;
+83:     const errors: string[] = [];
+84:     if (registration.capacity.available + registration.capacity.active !== registration.capacity.total) {
+85:       errors.push('/capacity available plus active must equal total');
+86:     }
+87:     for (const [index, profile] of registration.profiles.entries()) {
+88:       if (profile.workerType !== registration.workerType) {
+89:         errors.push(`/profiles/${index}/workerType must match /workerType`);
+90:       }
+91:       try {
+92:         if (workerProfileDigest(profile as unknown as Record<string, unknown>) !== profile.profileDigest) {
+93:           errors.push(`/profiles/${index}/profileDigest does not match the profile contents`);
+94:         }
+95:       } catch {
+96:         errors.push(`/profiles/${index} contains a value that cannot be canonically hashed`);
+97:       }
+98:     }
+99:     const profileIds = registration.profiles.map((profile) => profile.profileId);
+100:     if (new Set(profileIds).size !== profileIds.length) {
+101:       errors.push('/profiles cannot contain duplicate profileId values');
+102:     }
+103:     if (Date.parse(registration.sentAt) < Date.parse(registration.startedAt)) {
+104:       errors.push('/sentAt must not be before /startedAt');
+105:     }
+106:     return errors;
+107:   }
+108: 
+109:   if (definition === 'workerHealth') {
+110:     const health = value as WorkerHealthV1;
+111:     const errors: string[] = [];
+112:     if (health.capacity.available + health.capacity.active !== health.capacity.total) {
+113:       errors.push('/capacity available plus active must equal total');
+114:     }
+115:     if (health.activeAttemptIds.length !== health.capacity.active) {
+116:       errors.push('/activeAttemptIds length must equal /capacity/active');
+117:     }
+118:     return errors;
+119:   }
+120: 
+121:   if (definition === 'attemptClaim') {
+122:     const claim = value as AttemptClaimV1;
+123:     return Date.parse(claim.expiresAt) > Date.parse(claim.claimedAt)
+124:       ? []
+125:       : ['/expiresAt must be after /claimedAt'];
+126:   }
+127: 
+128:   if (definition === 'workerAttemptEnvelope') {
+129:     const envelope = value as WorkerAttemptEnvelopeV1;
+130:     const errors: string[] = [];
+131:     try {
+132:       if (workerProfileDigest(envelope.profile as unknown as Record<string, unknown>)
+133:         !== envelope.profile.profileDigest) {
+134:         errors.push('/profile/profileDigest does not match the profile contents');
+135:       }
+136:       if (workerAttemptSpecDigest(envelope as unknown as Record<string, unknown>) !== envelope.attemptSpecDigest) {
+137:         errors.push('/attemptSpecDigest does not match the attempt contents');
+138:       }
+139:     } catch {
+140:       errors.push('/attempt contains a value that cannot be canonically hashed');
+141:     }
+142:     if (Date.parse(envelope.claim.expiresAt) <= Date.parse(envelope.claim.claimedAt)) {
+143:       errors.push('/claim/expiresAt must be after /claim/claimedAt');
+144:     }
+145:     if (Date.parse(envelope.claim.claimedAt) < Date.parse(envelope.issuedAt)) {
+146:       errors.push('/claim/claimedAt must not be before /issuedAt');
+147:     }
+148:     if (envelope.claim.attemptId !== envelope.attemptId) {
+149:       errors.push('/claim/attemptId must match /attemptId');
+150:     }
+151:     if (Date.parse(envelope.queueDeadline) <= Date.parse(envelope.issuedAt)) {
+152:       errors.push('/queueDeadline must be after /issuedAt');
+153:     }
+154:     const unsupported = envelope.grantedCapabilities.filter(
+155:       (capability) => !envelope.profile.capabilities.includes(capability),
+156:     );
+157:     if (unsupported.length > 0) {
+158:       errors.push('/grantedCapabilities must be supported by /profile/capabilities');
+159:     }
+160:     const packageIds = envelope.packages.map((item) => item.packageId);
+161:     if (new Set(packageIds).size !== packageIds.length) {
+162:       errors.push('/packages cannot contain duplicate packageId values');
+163:     }
+164:     const inputNames = envelope.inputs.map((item) => item.name);
+165:     if (new Set(inputNames).size !== inputNames.length) {
+166:       errors.push('/inputs cannot contain duplicate name values');
+167:     }
+168:     return errors;
+169:   }
+170: 
+171:   if (definition === 'workerLogPart') {
+172:     const part = value as { text: string; contentDigest: string };
+173:     return sha256Text(part.text) === part.contentDigest
+174:       ? []
+175:       : ['/contentDigest does not match /text'];
+176:   }
+177: 
+178:   if (definition === 'workerAttemptResult') {
+179:     const result = value as WorkerAttemptResultV1;
+180:     const errors: string[] = [];
+181:     if (Date.parse(result.completedAt) < Date.parse(result.startedAt)) {
+182:       errors.push('/completedAt must not be before /startedAt');
+183:     }
+184:     if (result.cleanup.state === 'failed' && result.state !== 'errored') {
+185:       errors.push('/state must be errored when /cleanup/state is failed');
+186:     }
+187:     try {
+188:       if (workerAttemptResultDigest(result as unknown as Record<string, unknown>) !== result.resultDigest) {
+189:         errors.push('/resultDigest does not match the result contents');
+190:       }
+191:     } catch {
+192:       errors.push('/result contains a value that cannot be canonically hashed');
+193:     }
+194:     return errors;
+195:   }
+196: 
+197:   return [];
+198: }
+199: 
+200: export function checkPipelineWorkerCoreContract(
+201:   definition: PipelineWorkerCoreDefinition,
+202:   value: unknown,
+203: ): ContractValidationResult {
+204:   const validate = validator(definition);
+205:   const ok = validate(value);
+206:   if (!ok) return { ok: false, errors: errorText(validate.errors) };
+207:   const errors = workerCoreRelationErrors(definition, value);
+208:   return { ok: errors.length === 0, errors };
+209: }
+210: 
+211: export function validatePipelineWorkerCoreContract(
+212:   definition: PipelineWorkerCoreDefinition,
+213:   value: unknown,
+214: ): void {
+215:   const result = checkPipelineWorkerCoreContract(definition, value);
+216:   if (!result.ok) throw new PipelineWorkerCoreContractError(definition, result.errors);
+217: }
+218: 
+219: export function checkWorkerAttemptMessageBinding(
+220:   envelope: WorkerAttemptEnvelopeV1,
+221:   message: WorkerAttemptMessageV1,
+222: ): ContractValidationResult {
+223:   const errors: string[] = [];
+224:   if (message.protocolVersion !== envelope.protocolVersion) errors.push('/protocolVersion does not match the attempt');
+225:   if (message.attemptId !== envelope.attemptId) errors.push('/attemptId does not match the attempt');
+226:   if (message.claimId !== envelope.claim.claimId) errors.push('/claimId does not match the attempt claim');
+227:   if (message.claimGeneration !== envelope.claim.generation) {
+228:     errors.push('/claimGeneration does not match the attempt claim');
+229:   }
+230:   if (message.workerId !== envelope.claim.workerId) errors.push('/workerId does not match the attempt claim');
+231:   return { ok: errors.length === 0, errors };
+232: }
+233: 
+234: export function checkWorkerCancellationBinding(
+235:   envelope: WorkerAttemptEnvelopeV1,
+236:   request: WorkerCancellationRequestV1,
+237: ): ContractValidationResult {
+238:   const errors: string[] = [];
+239:   if (request.protocolVersion !== envelope.protocolVersion) errors.push('/protocolVersion does not match the attempt');
+240:   if (request.attemptId !== envelope.attemptId) errors.push('/attemptId does not match the attempt');
+241:   if (request.cancellationId !== envelope.cancellationId) {
+242:     errors.push('/cancellationId does not match the attempt');
+243:   }
+244:   return { ok: errors.length === 0, errors };
+245: }
+246: 
+247: export function checkWorkerAttemptEnvelopeConsistency(
+248:   accepted: WorkerAttemptEnvelopeV1,
+249:   candidate: WorkerAttemptEnvelopeV1,
+250: ): ContractValidationResult {
+251:   const errors = [...checkPipelineWorkerCoreContract('workerAttemptEnvelope', candidate).errors];
+252:   if (candidate.attemptId !== accepted.attemptId) errors.push('/attemptId does not match the accepted attempt');
+253:   if (candidate.attemptSpecDigest !== accepted.attemptSpecDigest) {
+254:     errors.push('/attemptSpecDigest does not match the accepted attempt');
+255:   }
+256:   if (candidate.profile.profileDigest !== accepted.profile.profileDigest) {
+257:     errors.push('/profile/profileDigest does not match the accepted attempt');
+258:   }
+259:   if (candidate.protocolVersion !== accepted.protocolVersion) {
+260:     errors.push('/protocolVersion does not match the accepted attempt');
+261:   }
+262:   if (candidate.claim.claimId !== accepted.claim.claimId) errors.push('/claim/claimId cannot change');
+263:   if (candidate.claim.generation !== accepted.claim.generation) errors.push('/claim/generation cannot change');
+264:   if (candidate.claim.workerId !== accepted.claim.workerId) errors.push('/claim/workerId cannot change');
+265:   if (candidate.claim.claimedAt !== accepted.claim.claimedAt) errors.push('/claim/claimedAt cannot change');
+266:   if (Date.parse(candidate.claim.expiresAt) < Date.parse(accepted.claim.expiresAt)) {
+267:     errors.push('/claim/expiresAt can only be extended');
+268:   }
+269:   return { ok: errors.length === 0, errors };
+270: }
+
+SOURCE skills/buster/engine/test-gates/runner-setup.ts SHA256 ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3
+1: import { validateBusterExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+2: import fs from 'node:fs';
+3: import path from 'node:path';
+4: import { validateLocalWorkerRuntimePolicy, LocalWorkerRuntime, type LocalWorkerRuntimePolicy } from '@kubeclaw/worker-core';
+5: import type { TestPlanRunnerOptions, WorkerAttemptRuntime } from './runner-types.ts';
+6: import { assertPlanIdentity } from './runner-plan-identity.ts';
+7: import { containedRelative, secureDirectory } from './runner-paths.ts';
+8: import { createBusterWorkerProfiles } from './runner-worker-profile.ts';
+9: 
+10: export function validateRunnerOptions(options: TestPlanRunnerOptions) {
+11:     const workerLocalRuntime = validateLocalWorkerRuntimePolicy(options.workerLocalRuntime);
+12:     assertPlanIdentity(options.plan, options.registry);
+13:     if (
+14:       !Number.isSafeInteger(options.maximumConcurrency) ||
+15:       options.maximumConcurrency < 1
+16:     )
+17:       throw new Error("TEST_RUNNER_CONCURRENCY_INVALID");
+18:     for (const legacy of ['cleanupTimeoutMs', 'maximumProviderResultBytes']) {
+19:       if (Object.hasOwn(options, legacy)) throw new Error(`TEST_RUNNER_LEGACY_POLICY:${legacy}`);
+20:     }
+21:     const executionPolicy = validateBusterExecutionSettings(options.executionPolicy);
+22:     if (
+23:       !path.isAbsolute(options.workspaceRoot) ||
+24:       !path.isAbsolute(options.repositoryRoot) ||
+25:       !path.isAbsolute(options.artifactRoot) ||
+26:       !path.isAbsolute(options.observabilityRoot)
+27:     ) {
+28:       throw new Error("TEST_RUNNER_PATH_NOT_ABSOLUTE");
+29:     }
+30:     return { workerLocalRuntime, executionPolicy };
+31: }
+32: 
+33: function prepareWorkspace(options: TestPlanRunnerOptions) {
+34:     fs.mkdirSync(options.workspaceRoot, { recursive: true });
+35:     const workspaceRoot = fs.realpathSync(options.workspaceRoot);
+36:     fs.mkdirSync(options.artifactRoot, { recursive: true });
+37:     const artifactRoot = fs.realpathSync(options.artifactRoot);
+38:     if (
+39:       artifactRoot === workspaceRoot ||
+40:       artifactRoot.startsWith(`${workspaceRoot}${path.sep}`) ||
+41:       workspaceRoot.startsWith(`${artifactRoot}${path.sep}`)
+42:     ) {
+43:       throw new Error("TEST_RUNNER_ARTIFACT_ROOT_OVERLAPS_WORKSPACE");
+44:     }
+45:     return { workspaceRoot, artifactRoot };
+46: }
+47: 
+48: export function prepareRunnerPaths(options: TestPlanRunnerOptions) {
+49:     const { workspaceRoot, artifactRoot } = prepareWorkspace(options);
+50:     const observabilityRoot = secureDirectory(
+51:       options.observabilityRoot,
+52:       "TEST_RUNNER_OBSERVABILITY_ROOT",
+53:     );
+54:     if (
+55:       observabilityRoot === workspaceRoot ||
+56:       observabilityRoot.startsWith(`${workspaceRoot}${path.sep}`) ||
+57:       workspaceRoot.startsWith(`${observabilityRoot}${path.sep}`)
+58:     )
+59:       throw new Error("TEST_RUNNER_OBSERVABILITY_ROOT_OVERLAPS_WORKSPACE");
+60:     if (options.durableAttemptStore)
+61:       secureDirectory(
+62:         options.durableAttemptStore.storageDirectory(),
+63:         "TEST_RUNNER_ATTEMPT_STORE_ROOT",
+64:       );
+65:     if (options.observabilityAdmissionStore)
+66:       secureDirectory(
+67:         options.observabilityAdmissionStore.storageDirectory(),
+68:         "TEST_RUNNER_ADMISSION_STORE_ROOT",
+69:       );
+70:     if (
+71:       options.durableAttemptStore &&
+72:       fs.realpathSync(options.durableAttemptStore.storageDirectory()) !==
+73:         path.join(observabilityRoot, "attempts")
+74:     )
+75:       throw new Error("TEST_RUNNER_ATTEMPT_STORE_ROOT_MISMATCH");
+76:     if (
+77:       options.observabilityAdmissionStore &&
+78:       fs.realpathSync(
+79:         options.observabilityAdmissionStore.storageDirectory(),
+80:       ) !== path.join(observabilityRoot, "admission")
+81:     )
+82:       throw new Error("TEST_RUNNER_ADMISSION_STORE_ROOT_MISMATCH");
+83:     containedRelative(
+84:       workspaceRoot,
+85:       options.repositoryRoot,
+86:       "TEST_RUNNER_REPOSITORY",
+87:     );
+88:     if (options.sourceRepositoryRoot !== undefined && (
+89:       !path.isAbsolute(options.sourceRepositoryRoot)
+90:       || fs.realpathSync(options.sourceRepositoryRoot) !== options.sourceRepositoryRoot
+91:       || !fs.statSync(options.sourceRepositoryRoot).isDirectory()
+92:     )) throw new Error("TEST_RUNNER_SOURCE_REPOSITORY_INVALID");
+93:     return { workspaceRoot, artifactRoot, observabilityRoot };
+94: }
+95: 
+96: export function configuredWorkerRuntime(options: TestPlanRunnerOptions,
+97:   workerLocalRuntime: LocalWorkerRuntimePolicy, now: () => Date): WorkerAttemptRuntime {
+98:     if (options.workerRuntime) {
+99:       return options.workerRuntime;
+100:     } else {
+101:       const runtime = new LocalWorkerRuntime({
+102:         workerId: "worker:buster:local",
+103:         workerType: "buster",
+104:         coreVersion: "1.0.0",
+105:         protocolVersions: ["worker-protocol.v1"],
+106:         profiles: createBusterWorkerProfiles(
+107:           options.plan,
+108:           options.registry,
+109:           options.grants,
+110:         ),
+111:         capacity: options.maximumConcurrency,
+112:         drainTimeoutMs: workerLocalRuntime.drainTimeoutMs,
+113:         cancellationTimeoutMs: workerLocalRuntime.cancellationTimeoutMs,
+114:         replayLimit: workerLocalRuntime.replayLimit,
+115:         now,
+116:       });
+117:       runtime.markReady();
+118:       return runtime;
+119:     }
+120: }
+
+SOURCE skills/worker/core/worker/attempt-executor.ts SHA256 2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42
+1: import { assessWorkerResources, unsupportedWorkerBudget } from './resource-accounting.ts';
+2: import { resourceResultFields } from './resource-result-fields.ts';
+3: import crypto from 'node:crypto';
+4: import { WorkerPhaseDeadline, settlesWithin, armWorkerClaimDeadline } from './phase-deadline.ts';
+5: import { WorkerLogDecoder } from './log-decoder.ts';
+6: import {
+7:   validatePipelineWorkerCoreContract,
+8:   validateWorkerResourceContractV2, initialWorkerResourceAccounting,
+9:   validateWorkerResourceContractV3, initialWorkerNativeResourceAccounting,
+10:   type WorkerAttemptEnvelopeV3, type WorkerNativeResourceAccounting, type WorkerNativeResourceObservations,
+11:   type WorkerAttemptEnvelope, type WorkerAttemptEnvelopeV2, type WorkerAttemptResult, type WorkerResultFor,
+12:   type WorkerResourceObservations, type WorkerResourceAccounting,
+13:   type AttemptProgressEventV1,
+14:   type JsonValue,
+15:   type WorkerAttemptEnvelopeV1,
+16:   type WorkerAttemptResultV1,
+17:   type WorkerEvidenceRefV1,
+18:   type WorkerLogPartV1,
+19:   type WorkerResourceUseV1,
+20:   type WorkerSpecialistResultV1,
+21: } from '@kubeclaw/pipeline-worker-core-contract';
+22: import { sha256Digest, sha256Text } from './digest.ts';
+23: 
+24: const MAX_ATTEMPT_ENVELOPE_BYTES = 16 * 1024 * 1024;
+25: const MAX_ATTEMPT_LOG_BYTES = 16 * 1024 * 1024;
+26: const MAX_ATTEMPT_LOG_PARTS = 10_000;
+27: const MAX_ATTEMPT_VALUE_DEPTH = 64;
+28: const MAX_ATTEMPT_VALUE_NODES = 100_000;
+29: 
+30: export interface WorkerAttemptOperationResult {
+31:   readonly summary: string;
+32:   readonly specialistResult: WorkerSpecialistResultV1;
+33:   readonly evidence: readonly WorkerEvidenceRefV1[];
+34:   readonly exitCode: number | null;
+35:   readonly signal: string | null;
+36: }
+37: 
+38: export interface WorkerAttemptEvidenceResult {
+39:   readonly evidence: readonly WorkerEvidenceRefV1[];
+40:   readonly error?: string;
+41: }
+42: 
+43: export interface WorkerAttemptEvidenceContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+44:   readonly attempt: E;
+45:   readonly state: WorkerAttemptResultV1['state'];
+46:   readonly signal: AbortSignal;
+47: }
+48: 
+49: export interface WorkerAttemptResultFinalizationContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+50:   readonly attempt: E;
+51:   readonly evidence: readonly WorkerEvidenceRefV1[];
+52:   readonly specialistResult: WorkerSpecialistResultV1;
+53:   readonly signal: AbortSignal;
+54: }
+55: 
+56: export interface WorkerAttemptOperationResources {
+57:   readonly cpuTimeMs: number;
+58:   readonly maximumMemoryBytes: number;
+59:   readonly maximumProcesses: number;
+60: }
+61: 
+62: export interface WorkerAttemptContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+63:   readonly attempt: E;
+64:   readonly signal: AbortSignal;
+65:   readonly log: (stream: 'stdout' | 'stderr' | 'system', text: string | Uint8Array) => void;
+66: }
+67: 
+68: export interface WorkerAttemptOperation<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+69:   /** Apply limits synchronously. Do not start specialist work here. */
+70:   prepare(limits: E['limits']): undefined;
+71:   execute(context: WorkerAttemptContext<E>): Promise<WorkerAttemptOperationResult>;
+72:   terminate(): Promise<void>;
+73:   /** Cumulative owned usage. Called after execution and again after completion hooks. */
+74:   measure(context: { readonly signal: AbortSignal }): Promise<E extends WorkerAttemptEnvelopeV3 ? WorkerNativeResourceObservations : E extends WorkerAttemptEnvelopeV2 ? WorkerResourceObservations : WorkerAttemptOperationResources>;
+75:   cleanup?(context: WorkerAttemptContext<E>): Promise<void>;
+76:   collectEvidence?(context: WorkerAttemptEvidenceContext<E>): Promise<WorkerAttemptEvidenceResult>;
+77:   /** Add evidence-derived facts before the terminal result becomes durable. */
+78:   finalizeResult?(context: WorkerAttemptResultFinalizationContext<E>): Promise<WorkerSpecialistResultV1>;
+79: }
+80: 
+81: export interface WorkerAttemptExecutorOptions<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+82:   readonly envelope: E;
+83:   readonly operation: WorkerAttemptOperation<E>;
+84:   readonly signal?: AbortSignal;
+85:   readonly onProgress?: (event: AttemptProgressEventV1) => void | Promise<void>;
+86:   readonly onLogPart?: (part: WorkerLogPartV1) => void | Promise<void>;
+87:   readonly retainLogs?: boolean;
+88:   readonly storeFullLog?: (attemptId: string, content: string, context: { readonly signal: AbortSignal }) => Promise<WorkerEvidenceRefV1 | null>;
+89:   readonly now?: () => Date;
+90:   readonly id?: () => string;
+91:   /** Local receipt namespace. This is not worker authentication. */
+92:   readonly receiptNamespace?: string;
+93: }
+94: 
+95: class AttemptFault extends Error {
+96:   readonly state: Exclude<WorkerAttemptResultV1['state'], 'completed'>;
+97:   readonly code: string;
+98: 
+99:   constructor(state: Exclude<WorkerAttemptResultV1['state'], 'completed'>, code: string, message = code) {
+100:     super(message);
+101:     this.name = 'AttemptFault';
+102:     this.state = state;
+103:     this.code = code;
+104:   }
+105: }
+106: 
+107: function detail(error: unknown): string {
+108:   return error instanceof Error ? error.message : String(error);
+109: }
+110: 
+111: function boundedText(value: unknown, fallback: string): string {
+112:   const text = typeof value === 'string' && value.length > 0 ? value : fallback;
+113:   return text.slice(0, 4096).toWellFormed();
+114: }
+115: 
+116: function freeze<T>(value: T): T {
+117:   if (!value || typeof value !== 'object') return value;
+118:   for (const child of Object.values(value as Record<string, unknown>)) freeze(child);
+119:   return Object.isFrozen(value) ? value : Object.freeze(value);
+120: }
+121: 
+122: function jsonStringBytes(value: string): number {
+123:   let bytes = 2;
+124:   for (let index = 0; index < value.length; index += 1) {
+125:     const unit = value.charCodeAt(index);
+126:     if (unit === 0x22 || unit === 0x5c || unit === 0x08 || unit === 0x09 || unit === 0x0a
+127:       || unit === 0x0c || unit === 0x0d) {
+128:       bytes += 2;
+129:     } else if (unit <= 0x1f) {
+130:       bytes += 6;
+131:     } else if (unit >= 0xd800 && unit <= 0xdbff && index + 1 < value.length
+132:       && value.charCodeAt(index + 1) >= 0xdc00 && value.charCodeAt(index + 1) <= 0xdfff) {
+133:       bytes += 4;
+134:       index += 1;
+135:     } else if (unit >= 0xd800 && unit <= 0xdfff) {
+136:       bytes += 6;
+137:     } else {
+138:       bytes += Buffer.byteLength(value[index]!);
+139:     }
+140:   }
+141:   return bytes;
+142: }
+143: 
+144: function preflightJson(value: unknown, byteLimit: number, prefix: string): void {
+145:   const pending: Array<{ value: unknown; depth: number }> = [{ value, depth: 0 }];
+146:   const seen = new WeakSet<object>();
+147:   let bytes = 0;
+148:   let nodes = 0;
+149:   while (pending.length > 0) {
+150:     const current = pending.pop()!;
+151:     nodes += 1;
+152:     if (nodes > MAX_ATTEMPT_VALUE_NODES) throw new Error(`${prefix}_NODE_LIMIT`);
+153:     if (current.depth > MAX_ATTEMPT_VALUE_DEPTH) throw new Error(`${prefix}_DEPTH_LIMIT`);
+154:     if (typeof current.value === 'string') bytes += jsonStringBytes(current.value);
+155:     else if (current.value === null) bytes += 4;
+156:     else if (typeof current.value === 'number' || typeof current.value === 'boolean') {
+157:       const encoded = JSON.stringify(current.value);
+158:       if (encoded === undefined) throw new Error(`${prefix}_TYPE_INVALID`);
+159:       bytes += Buffer.byteLength(encoded);
+160:     }
+161:     else if (typeof current.value === 'object') {
+162:       if (seen.has(current.value)) throw new Error(`${prefix}_CYCLE`);
+163:       seen.add(current.value);
+164:       if (Array.isArray(current.value)) {
+165:         bytes += 2 + Math.max(0, current.value.length - 1);
+166:         for (const child of current.value) pending.push({ value: child, depth: current.depth + 1 });
+167:       } else {
+168:         const prototype = Object.getPrototypeOf(current.value);
+169:         if (prototype !== Object.prototype && prototype !== null) throw new Error(`${prefix}_TYPE_INVALID`);
+170:         const keys = Reflect.ownKeys(current.value);
+171:         bytes += 2 + Math.max(0, keys.length - 1);
+172:         for (const key of keys) {
+173:           if (typeof key !== 'string') throw new Error(`${prefix}_TYPE_INVALID`);
+174:           const descriptor = Object.getOwnPropertyDescriptor(current.value, key);
+175:           if (!descriptor?.enumerable || !('value' in descriptor)) throw new Error(`${prefix}_TYPE_INVALID`);
+176:           bytes += jsonStringBytes(key) + 1;
+177:           pending.push({ value: descriptor.value, depth: current.depth + 1 });
+178:         }
+179:       }
+180:     } else {
+181:       throw new Error(`${prefix}_TYPE_INVALID`);
+182:     }
+183:     if (bytes > byteLimit) throw new Error(`${prefix}_BYTE_LIMIT`);
+184:   }
+185: }
+186: 
+187: function validateEnvelopeDigests(envelope: WorkerAttemptEnvelope): void {
+188:   if(envelope.schemaVersion==='worker-attempt-envelope.v3')validateWorkerResourceContractV3('workerAttemptEnvelope',envelope);
+189:   else if(envelope.schemaVersion==='worker-attempt-envelope.v2')validateWorkerResourceContractV2('workerAttemptEnvelope',envelope);
+190:   else validatePipelineWorkerCoreContract('workerAttemptEnvelope', envelope);
+191: }
+192: 
+193: function receipt(namespace: string, nonce: string, resultDigest: string) {
+194:   const receiptId = `receipt:${crypto.createHash('sha256').update(`${namespace}:${nonce}:${resultDigest}`).digest('hex')}`;
+195:   return { receiptId, receiptDigest: sha256Digest({ namespace, receiptId, resultDigest }) };
+196: }
+197: 
+198: function checkEvidence(evidence: readonly WorkerEvidenceRefV1[], envelope: WorkerAttemptEnvelope): void {
+199:   if (evidence.length > envelope.limits.evidenceFiles) throw new AttemptFault('errored', 'WORKER_EVIDENCE_FILE_LIMIT');
+200:   const ids = new Set<string>();
+201:   let total = 0;
+202:   for (const item of evidence) {
+203:     validatePipelineWorkerCoreContract('workerEvidenceRef', item);
+204:     if (ids.has(item.evidenceId)) throw new AttemptFault('errored', 'WORKER_EVIDENCE_ID_DUPLICATE');
+205:     ids.add(item.evidenceId);
+206:     total += item.artifact.sizeBytes;
+207:     if (total > envelope.limits.evidenceBytes) throw new AttemptFault('errored', 'WORKER_EVIDENCE_BYTE_LIMIT');
+208:   }
+209: }
+210: 
+211: export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+212:   readonly #options: WorkerAttemptExecutorOptions<E>;
+213:   readonly #accounting: WorkerResourceAccounting | WorkerNativeResourceAccounting | undefined;
+214:   readonly #now: () => Date;
+215:   readonly #id: () => string;
+216:   #progressSequence = 0;
+217:   #logSequence = 0;
+218:   #execution: Promise<WorkerAttemptResult> | null = null;
+219: 
+220:   constructor(options: WorkerAttemptExecutorOptions<E>) {
+221:     preflightJson(options.envelope, MAX_ATTEMPT_ENVELOPE_BYTES, 'WORKER_ATTEMPT_INPUT');
+222:     const envelope = freeze(structuredClone(options.envelope));
+223:     validateEnvelopeDigests(envelope);
+224:     if (envelope.limits.logBytes > MAX_ATTEMPT_LOG_BYTES) throw new Error('WORKER_LOG_LIMIT_INVALID');
+225:     if (options.receiptNamespace !== undefined
+226:       && (options.receiptNamespace.length === 0 || options.receiptNamespace.length > 4096
+227:         || options.receiptNamespace !== options.receiptNamespace.toWellFormed())) {
+228:       throw new Error('WORKER_RECEIPT_NAMESPACE_INVALID');
+229:     }
+230:     this.#options = { ...options, envelope };
+231:     this.#accounting=envelope.schemaVersion==='worker-attempt-envelope.v3'?initialWorkerNativeResourceAccounting(envelope)
+232:       :envelope.schemaVersion==='worker-attempt-envelope.v2'?initialWorkerResourceAccounting(envelope):undefined;
+233:     this.#now = options.now ?? (() => new Date());
+234:     this.#id = options.id ?? (() => crypto.randomUUID());
+235:   }
+236: 
+237:   async execute(): Promise<WorkerResultFor<E>> {
+238:     this.#execution ??= this.#executeOnce();
+239:     return this.#execution as Promise<WorkerResultFor<E>>;
+240:   }
+241: 
+242:   async #executeOnce(): Promise<WorkerAttemptResult> {
+243:     const { envelope, operation } = this.#options;
+244:     const started = this.#now();
+245:     if (started.getTime() >= Date.parse(envelope.queueDeadline)) {
+246:       // No operation is prepared or started after queue expiry. Zero resource
+247:       // use is authoritative here; calling the adapter would violate that rule.
+248:       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_QUEUE_DEADLINE_EXPIRED'), null, [], {
+249:         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
+250:       }, { state: 'not_required', summary: null });
+251:     }
+252:     if (started.getTime() >= Date.parse(envelope.claim.expiresAt)) {
+253:       // An expired claim owns no work. Do not touch the operation adapter.
+254:       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED'), null, [], {
+255:         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
+256:       }, { state: 'not_required', summary: null });
+257:     }
+258:     if (started.getTime() < Date.parse(envelope.claim.claimedAt)) {
+259:       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_CLAIM_NOT_ACTIVE'), null, [], {
+260:         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
+261:       }, { state: 'not_required', summary: null });
+262:     }
+263:     const completionPhases = 3 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence))
+264:       + Number(this.#options.retainLogs !== false && Boolean(this.#options.storeFullLog)) + Number(Boolean(operation.finalizeResult));
+265:     const requiredClaimWindow = envelope.limits.timeoutMs + (completionPhases * envelope.limits.cleanupTimeoutMs);
+266:     if (Date.parse(envelope.claim.expiresAt) - started.getTime() < requiredClaimWindow) {
+267:       // The local executor cannot renew a claim. It starts only when the claim
+268:       // covers execution, termination, both measurements and every configured completion hook.
+269:       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_CLAIM_WINDOW_INSUFFICIENT'), null, [], {
+270:         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
+271:       }, { state: 'not_required', summary: null });
+272:     }
+273: 
+274:     const unsupportedBudget = unsupportedWorkerBudget(envelope);
+275:     if (unsupportedBudget) return this.#result(started, started,
+276:       new AttemptFault('errored', 'WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE', `Requested ${unsupportedBudget} has no declared measurement capability`),
+277:       null, [], {logBytes: 0, resultBytes: 0, evidenceBytes: 0}, {state: 'not_required', summary: null});
+278:     const controller = new AbortController();
+279:     const logParts: WorkerLogPartV1[] = [];
+280:     const decoder = new WorkerLogDecoder(envelope.limits.logBytes);
+281:     let logPartCount = 0;
+282:     let logBytes = 0;
+283:     let logClosed = false;
+284:     let logFault: AttemptFault | null = null;
+285:     let timedOut = false;
+286:     let claimExpired = false;
+287:     let timer: NodeJS.Timeout | undefined;
+288:     let termination: Promise<string | null> | null = null;
+289:     const terminate = (): Promise<string | null> => {
+290:       termination ??= this.#terminate(operation, envelope.limits.cleanupTimeoutMs);
+291:       return termination;
+292:     };
+293:     const abort = (): void => {
+294:       controller.abort(this.#options.signal?.reason ?? new Error('WORKER_ATTEMPT_CANCELLED'));
+295:       void terminate();
+296:     };
+297:     this.#options.signal?.addEventListener('abort', abort, { once: true });
+298:     if (this.#options.signal?.aborted) abort();
+299:     const log: WorkerAttemptContext['log'] = (stream, value) => {
+300:       if (logClosed || logFault) return;
+301:       let text: string;
+302:       try { text = decoder.decode(stream, value); }
+303:       catch (error) { logFault = new AttemptFault('errored', detail(error)); controller.abort(logFault); void terminate(); return; }
+304:       if (!text && typeof value !== 'string') return;
+305:       let offset = 0;
+306:       do {
+307:         if (logPartCount >= MAX_ATTEMPT_LOG_PARTS) {
+308:           logFault = new AttemptFault('errored', 'WORKER_LOG_LIMIT');
+309:           controller.abort(logFault);
+310:           void terminate();
+311:           return;
+312:         }
+313:         logPartCount += 1;
+314:         let end = Math.min(offset + 65_536, text.length);
+315:         if (end < text.length && end > offset && /[\uD800-\uDBFF]/u.test(text[end - 1]!)) end -= 1;
+316:         const chunk = text.slice(offset, end);
+317:         const rendered = `[${stream}] ${chunk}`;
+318:         logBytes += Buffer.byteLength(rendered);
+319:         if (logBytes > envelope.limits.logBytes) {
+320:           logFault = new AttemptFault('errored', 'WORKER_LOG_LIMIT');
+321:           controller.abort(logFault);
+322:           void terminate();
+323:           return;
+324:         }
+325:         if (this.#options.retainLogs === false) {
+326:           offset = end;
+327:           continue;
+328:         }
+329:         const part = freeze({
+330:           schemaVersion: 'worker-log-part.v1' as const,
+331:           protocolVersion: envelope.protocolVersion,
+332:           attemptId: envelope.attemptId,
+333:           claimId: envelope.claim.claimId,
+334:           claimGeneration: envelope.claim.generation,
+335:           workerId: envelope.claim.workerId,
+336:           sequence: this.#logSequence++,
+337:           stream,
+338:           text: chunk,
+339:           contentDigest: sha256Text(chunk),
+340:           final: false,
+341:           sentAt: this.#now().toISOString(),
+342:         });
+343:         validatePipelineWorkerCoreContract('workerLogPart', part);
+344:         logParts.push(part);
+345:         try {
+346:           void Promise.resolve(this.#options.onLogPart?.(part)).catch(() => undefined);
+347:         } catch {
+348:           // Live delivery is best effort. The full log is stored before completion.
+349:         }
+350:         offset = end;
+351:       } while (offset < text.length);
+352:     };
+353: 
+354:     let operationResult: WorkerAttemptOperationResult | null = null;
+355:     let operationWork: Promise<WorkerAttemptOperationResult> | undefined;
+356:     let executionUnresolved = false;
+357:     let fault: AttemptFault | null = null;
+358:     let cleanup: WorkerAttemptResultV1['cleanup'] = { state: 'not_required', summary: null };
+359:     const timeoutAt = started.getTime() + envelope.limits.timeoutMs;
+360:     const claimExpiresAt = Date.parse(envelope.claim.expiresAt);
+361:     const phases = new WorkerPhaseDeadline(claimExpiresAt, envelope.limits.cleanupTimeoutMs, () => this.#now().getTime(), this.#options.signal);
+362:     const clearClaimTimer = armWorkerClaimDeadline(claimExpiresAt, () => this.#now().getTime(), () => {
+363:       claimExpired = true; controller.abort(new Error('WORKER_CLAIM_EXPIRED')); void terminate();
+364:     });
+365:     const deadlineAt = Math.min(timeoutAt, claimExpiresAt);
+366:     timer = setTimeout(() => {
+367:       claimExpired = claimExpiresAt <= timeoutAt;
+368:       timedOut = !claimExpired;
+369:       controller.abort(new Error(claimExpired ? 'WORKER_CLAIM_EXPIRED' : 'WORKER_ATTEMPT_TIMEOUT'));
+370:       void terminate();
+371:     }, Math.max(1, deadlineAt - started.getTime()));
+372:     const cancellation = new Promise<never>((_resolve, reject) => {
+373:       const rejectCancellation = (): void => {
+374:         if (logFault) reject(logFault);
+375:         else if (claimExpired) reject(new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED'));
+376:         else if (timedOut) reject(new AttemptFault('timed_out', 'WORKER_ATTEMPT_TIMEOUT'));
+377:         else reject(new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED'));
+378:       };
+379:       controller.signal.addEventListener('abort', rejectCancellation, { once: true });
+380:     });
+381:     try {
+382:       if (controller.signal.aborted) throw new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
+383:       this.#progress('accepted', 'Attempt accepted.');
+384:       this.#progress('started', 'Attempt started.');
+385:       const preparationResult = operation.prepare(envelope.limits) as unknown;
+386:       if (preparationResult !== undefined) {
+387:         if ((typeof preparationResult === 'object' && preparationResult !== null)
+388:           || typeof preparationResult === 'function') {
+389:           try {
+390:             const then = Reflect.get(preparationResult, 'then');
+391:             if (typeof then === 'function') void Promise.resolve(preparationResult).catch(() => undefined);
+392:           } catch {
+393:             // The invalid return is rejected below. A hostile then getter cannot escape.
+394:           }
+395:         }
+396:         throw new AttemptFault('errored', 'WORKER_PREPARATION_INVALID');
+397:       }
+398:       const preparedAt = this.#now().getTime();
+399:       const queueDeadlineAt = Date.parse(envelope.queueDeadline);
+400:       const firstDeadlineAt = Math.min(queueDeadlineAt, timeoutAt, claimExpiresAt);
+401:       if (preparedAt >= firstDeadlineAt) {
+402:         if (queueDeadlineAt === firstDeadlineAt) {
+403:           throw new AttemptFault('interrupted', 'WORKER_QUEUE_DEADLINE_EXPIRED');
+404:         }
+405:         claimExpired = claimExpiresAt === firstDeadlineAt;
+406:         timedOut = timeoutAt === firstDeadlineAt && !claimExpired;
+407:         controller.abort(new Error(claimExpired ? 'WORKER_CLAIM_EXPIRED' : 'WORKER_ATTEMPT_TIMEOUT'));
+408:         await cancellation;
+409:       }
+410:       const remainingExecutionMs = timeoutAt - preparedAt;
+411:       if (claimExpiresAt - preparedAt < remainingExecutionMs + (completionPhases * envelope.limits.cleanupTimeoutMs)) {
+412:         throw new AttemptFault('interrupted', 'WORKER_CLAIM_WINDOW_INSUFFICIENT');
+413:       }
+414:       if (controller.signal.aborted) await cancellation;
+415:       operationWork = operation.execute({ attempt: envelope, signal: controller.signal, log });
+416:       operationResult = await Promise.race([operationWork, cancellation]);
+417:       const operationCompletedAt = this.#now().getTime();
+418:       if (operationCompletedAt >= claimExpiresAt && claimExpiresAt <= timeoutAt) {
+419:         throw new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED');
+420:       }
+421:       if (operationCompletedAt >= timeoutAt) throw new AttemptFault('timed_out', 'WORKER_ATTEMPT_TIMEOUT');
+422:       if (logFault) throw logFault;
+423:       preflightJson(operationResult.specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT');
+424:       const resultBytes = Buffer.byteLength(JSON.stringify(operationResult.specialistResult));
+425:       if (resultBytes > envelope.limits.resultBytes) throw new AttemptFault('errored', 'WORKER_RESULT_LIMIT');
+426:       checkEvidence(operationResult.evidence, envelope);
+427:       operationResult = freeze(structuredClone(operationResult));
+428:       this.#progress('running', 'Attempt operation completed.');
+429:     } catch (error) {
+430:       operationResult = null;
+431:       fault = error instanceof AttemptFault
+432:         ? error
+433:         : error instanceof Error && /^WORKER_[A-Z0-9_]+$/.test(error.message)
+434:           ? new AttemptFault('errored', error.message)
+435:         : new AttemptFault(controller.signal.aborted ? (timedOut ? 'timed_out' : 'cancelled') : 'errored',
+436:           controller.signal.aborted ? (timedOut ? 'WORKER_ATTEMPT_TIMEOUT' : 'WORKER_ATTEMPT_CANCELLED') : 'WORKER_ATTEMPT_ERROR', detail(error));
+437:       const terminationError = await terminate();
+438:       if (terminationError) fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
+439:       if (operationWork) executionUnresolved = !(await settlesWithin(operationWork, envelope.limits.cleanupTimeoutMs));
+440:     } finally {
+441:       if (timer) clearTimeout(timer);
+442:     }
+443: 
+444:     if (executionUnresolved) phases.quarantine();
+445:     const executionFault = fault;
+446:     let measured:unknown;
+447:     try {measured=await phases.run('WORKER_RESOURCE_MEASUREMENT',signal=>operation.measure({signal}),Boolean(executionFault));}
+448:     catch {measured=undefined;}
+449:     let assessment=assessWorkerResources(envelope,measured,this.#accounting);
+450:     if(assessment.error && (!fault || assessment.error.code==='WORKER_RESOURCE_MEASUREMENT_INVALID'))fault=new AttemptFault('errored',assessment.error.code,assessment.error.message);
+451: 
+452:     if (operation.cleanup) {
+453:       if (claimExpired || this.#now().getTime() >= claimExpiresAt) await terminate();
+454:       this.#progress('cleanup_started', 'Attempt cleanup started.');
+455:       try {
+456:         await phases.run('WORKER_CLEANUP', signal => operation.cleanup!({ attempt: envelope, signal, log }), true);
+457:         cleanup = { state: 'completed', summary: null };
+458:         this.#progress('cleanup_completed', 'Attempt cleanup completed.');
+459:       } catch (error) {
+460:         const terminationError = await terminate();
+461:         const message = detail(error);
+462:         cleanup = { state: 'failed', summary: message };
+463:         fault = new AttemptFault('errored', terminationError ? 'WORKER_TERMINATION_FAILED' : 'WORKER_CLEANUP_FAILED', terminationError ?? message);
+464:       }
+465:     }
+466:     try { decoder.finish(); } catch (error) { logFault = new AttemptFault('errored', detail(error)); }
+467: 
+468:     if (logFault) fault = logFault;
+469: 
+470:     // The terminal log snapshot is authoritative. Ignore delayed stream
+471:     // callbacks after this point so live delivery and durable evidence agree.
+472:     logClosed = true;
+473:     if (this.#options.retainLogs !== false && this.#options.onLogPart) {
+474:       const finalPart = freeze({
+475:         schemaVersion: 'worker-log-part.v1' as const,
+476:         protocolVersion: envelope.protocolVersion,
+477:         attemptId: envelope.attemptId,
+478:         claimId: envelope.claim.claimId,
+479:         claimGeneration: envelope.claim.generation,
+480:         workerId: envelope.claim.workerId,
+481:         sequence: this.#logSequence++,
+482:         stream: 'system' as const,
+483:         text: '',
+484:         contentDigest: sha256Text(''),
+485:         final: true,
+486:         sentAt: this.#now().toISOString(),
+487:       });
+488:       validatePipelineWorkerCoreContract('workerLogPart', finalPart);
+489:       try {
+490:         void Promise.resolve(this.#options.onLogPart(finalPart)).catch(() => undefined);
+491:       } catch {
+492:         // The terminal result remains authoritative when live delivery fails.
+493:       }
+494:     }
+495:     const fullLog = logParts.map((part) => `[${part.stream}] ${part.text}`).join('');
+496:     let evidence = [...(operationResult?.evidence ?? [])];
+497:     if (operation.collectEvidence) {
+498:       try {
+499:         const collected = await phases.run('WORKER_EVIDENCE_COLLECTION', signal => operation.collectEvidence!({
+500:           attempt: envelope, state: fault?.state ?? 'completed', signal,
+501:         }));
+502:         const candidateEvidence = [...evidence, ...collected.evidence];
+503:         checkEvidence(candidateEvidence, envelope);
+504:         evidence = candidateEvidence;
+505:         if (collected.error) {
+506:           fault = new AttemptFault('errored', 'WORKER_EVIDENCE_COLLECTION_FAILED', collected.error);
+507:         }
+508:       } catch (error) {
+509:         fault = error instanceof AttemptFault
+510:           ? error
+511:           : new AttemptFault('errored', 'WORKER_EVIDENCE_COLLECTION_FAILED', detail(error));
+512:       }
+513:     }
+514:     if (fullLog) {
+515:       try {
+516:         if (!this.#options.storeFullLog) throw new Error('WORKER_FULL_LOG_STORE_REQUIRED');
+517:         const fullLogBytes = Buffer.byteLength(fullLog);
+518:         const existingEvidenceBytes = evidence.reduce((sum, item) => sum + item.artifact.sizeBytes, 0);
+519:         if (evidence.length + 1 > envelope.limits.evidenceFiles) throw new Error('WORKER_EVIDENCE_FILE_LIMIT');
+520:         if (existingEvidenceBytes + fullLogBytes > envelope.limits.evidenceBytes) {
+521:           throw new Error('WORKER_EVIDENCE_BYTE_LIMIT');
+522:         }
+523:         const stored = await phases.run('WORKER_LOG_STORE', signal => this.#options.storeFullLog!(envelope.attemptId, fullLog, { signal }));
+524:         if (!stored) throw new Error('WORKER_FULL_LOG_STORE_REQUIRED');
+525:         if (stored.artifact.contentDigest !== sha256Text(fullLog)
+526:           || stored.artifact.sizeBytes !== fullLogBytes) {
+527:           throw new Error('WORKER_FULL_LOG_INTEGRITY_MISMATCH');
+528:         }
+529:         const candidateEvidence = [...evidence, stored];
+530:         checkEvidence(candidateEvidence, envelope);
+531:         evidence = candidateEvidence;
+532:       } catch (error) {
+533:         fault ??= new AttemptFault('errored', 'WORKER_LOG_STORE_FAILED', detail(error));
+534:       }
+535:     }
+536:     if (!fault && operationResult && operation.finalizeResult) {
+537:       try {
+538:         const specialistResult = await phases.run('WORKER_RESULT_FINALIZATION', signal => operation.finalizeResult!({
+539:           attempt: envelope, evidence: freeze(structuredClone(evidence)), specialistResult: operationResult!.specialistResult, signal,
+540:         }));
+541:         preflightJson(specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT');
+542:         const finalizedBytes = Buffer.byteLength(JSON.stringify(specialistResult));
+543:         if (finalizedBytes > envelope.limits.resultBytes) throw new Error('WORKER_RESULT_LIMIT');
+544:         operationResult = freeze({ ...operationResult, specialistResult: structuredClone(specialistResult) });
+545:       } catch (error) {
+546:         fault = new AttemptFault('errored', 'WORKER_RESULT_FINALIZATION_FAILED', detail(error));
+547:       }
+548:     }
+549:     // Completion hooks also consume the attempt's resources. Keep the early
+550:     // check above to avoid starting optional finalization after an overrun, but
+551:     // bind the terminal receipt to usage after cleanup, evidence and reports.
+552:     // A failed or quarantined final observation must not reuse an earlier value
+553:     // as if it covered those phases. Maintenance measurement preserves bounded
+554:     // diagnostics after cancellation without authorizing additional execution.
+555:     measured = undefined;
+556:     try { measured = await phases.run('WORKER_FINAL_RESOURCE_MEASUREMENT', signal => operation.measure({ signal }), Boolean(fault)); }
+557:     catch { measured = undefined; }
+558:     assessment = assessWorkerResources(envelope, measured, this.#accounting, assessment.resources);
+559:     if (assessment.error && !fault) {
+560:       fault = new AttemptFault('errored', assessment.error.code, assessment.error.message);
+561:     }
+562:     this.#options.signal?.removeEventListener('abort', abort);
+563:     if (this.#options.signal?.aborted) {
+564:       const terminationError = await terminate();
+565:       if (terminationError) {
+566:         fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
+567:       } else {
+568:         if (cleanup.state !== 'failed') fault = executionFault ?? new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
+569:       }
+570:     } else if (!fault && controller.signal.aborted) {
+571:       fault = new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
+572:     }
+573:     if (claimExpired || this.#now().getTime() >= claimExpiresAt || phases.unresolved || executionUnresolved) {
+574:       const terminationError = await terminate();
+575:       if (terminationError) fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
+576:     }
+577:     clearClaimTimer();
+578:     if ((phases.unresolved || executionUnresolved) && fault?.code !== 'WORKER_TERMINATION_FAILED') fault = new AttemptFault('errored', 'WORKER_PHASE_UNRESOLVED', `${fault?.code ?? 'WORKER_ATTEMPT_ERROR'}: ${fault?.message ?? ''}; aborted work did not settle; external outcome requires reconciliation.`);
+579:     else if ((claimExpired || this.#now().getTime() >= claimExpiresAt) && fault?.code !== 'WORKER_TERMINATION_FAILED' && cleanup.state !== 'failed') fault = executionFault ?? new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED');
+580:     const completed = this.#now();
+581:     const resultBytes = operationResult ? Buffer.byteLength(JSON.stringify(operationResult.specialistResult)) : 0;
+582:     return this.#result(started, completed, fault, operationResult, evidence, {
+583:       ...assessment.resources,
+584:       logBytes,
+585:       resultBytes,
+586:       evidenceBytes: evidence.reduce((sum, item) => sum + item.artifact.sizeBytes, 0),
+587:     }, cleanup);
+588:   }
+589: 
+590:   #progress(state: AttemptProgressEventV1['state'], message: string): void {
+591:     if (!this.#options.onProgress) return;
+592:     const { envelope } = this.#options;
+593:     const event = freeze({
+594:       schemaVersion: 'attempt-progress-event.v1' as const,
+595:       protocolVersion: envelope.protocolVersion,
+596:       attemptId: envelope.attemptId,
+597:       claimId: envelope.claim.claimId,
+598:       claimGeneration: envelope.claim.generation,
+599:       workerId: envelope.claim.workerId,
+600:       sequence: this.#progressSequence++,
+601:       state,
+602:       message,
+603:       progressPercent: null,
+604:       details: {} as Record<string, JsonValue>,
+605:       sentAt: this.#now().toISOString(),
+606:     });
+607:     validatePipelineWorkerCoreContract('attemptProgressEvent', event);
+608:     try {
+609:       void Promise.resolve(this.#options.onProgress(event)).catch(() => undefined);
+610:     } catch {
+611:       // Progress is best effort. The terminal result is authoritative.
+612:     }
+613:   }
+614: 
+615:   async #terminate(operation: WorkerAttemptOperation<E>, timeoutMs: number): Promise<string | null> {
+616:     let timer: NodeJS.Timeout | undefined;
+617:     try {
+618:       return await Promise.race([
+619:         Promise.resolve().then(() => operation.terminate()).then(() => null, (error: unknown) => detail(error)),
+620:         new Promise<string>((resolve) => {
+621:           timer = setTimeout(() => resolve('WORKER_TERMINATION_TIMEOUT'), timeoutMs);
+622:         }),
+623:       ]);
+624:     } finally {
+625:       if (timer) clearTimeout(timer);
+626:     }
+627:   }
+628: 
+629:   #result(started: Date, completed: Date, fault: AttemptFault | null, operationResult: WorkerAttemptOperationResult | null,
+630:     evidence: readonly WorkerEvidenceRefV1[], resources: WorkerResourceUseV1,
+631:     cleanup: WorkerAttemptResultV1['cleanup']): WorkerAttemptResult {
+632:     const { envelope } = this.#options;
+633:     const finalCompleted = completed.getTime() < started.getTime() ? started : completed;
+634:     const unsigned = {
+635:       ...resourceResultFields(envelope, this.#accounting),
+636:       protocolVersion: envelope.protocolVersion,
+637:       attemptId: envelope.attemptId,
+638:       claimId: envelope.claim.claimId,
+639:       claimGeneration: envelope.claim.generation,
+640:       workerId: envelope.claim.workerId,
+641:       state: fault?.state ?? 'completed' as const,
+642:       startedAt: started.toISOString(),
+643:       completedAt: finalCompleted.toISOString(),
+644:       durationMs: Math.max(0, finalCompleted.getTime() - started.getTime()),
+645:       summary: boundedText(fault?.message ?? operationResult?.summary, 'Attempt completed.'),
+646:       specialistResult: fault ? null : operationResult?.specialistResult ?? null,
+647:       error: fault ? { code: fault.code, message: boundedText(fault.message, fault.code) } : null,
+648:       evidence: [...evidence],
+649:       resources,
+650:       cleanup: {
+651:         state: cleanup.state,
+652:         summary: cleanup.summary === null ? null : boundedText(cleanup.summary, 'Cleanup failed.'),
+653:       },
+654:       exitCode: fault ? null : operationResult?.exitCode ?? null,
+655:       signal: fault ? null : (typeof operationResult?.signal === 'string' && operationResult.signal.length > 0
+656:         ? operationResult.signal.slice(0, 4096).toWellFormed() : null),
+657:     };
+658:     let resultDigest: string;
+659:     try {
+660:       resultDigest = sha256Digest(unsigned);
+661:     } catch {
+662:       if (fault?.code === 'WORKER_OPERATION_RESULT_INVALID') throw new Error('WORKER_TERMINAL_RESULT_INVALID');
+663:       return this.#result(started, completed,
+664:         new AttemptFault('errored', 'WORKER_OPERATION_RESULT_INVALID',
+665:           'Specialist operation returned a result that cannot be canonically hashed.'),
+666:         null, [], {
+667:           ...resources,
+668:           logBytes: resources.logBytes,
+669:           resultBytes: 0,
+670:           evidenceBytes: 0,
+671:         }, cleanup);
+672:     }
+673:     // This local receipt detects accidental duplication or mutation. The
+674:     // authenticated Nova-worker transport required by D-103 binds identity.
+675:     const namespace = this.#options.receiptNamespace ?? `worker:${envelope.claim.workerId}`;
+676:     const result: WorkerAttemptResult = {
+677:       ...unsigned,
+678:       resultDigest,
+679:       receipt: receipt(namespace, this.#id(), resultDigest),
+680:     };
+681:     try {
+682:       if(result.schemaVersion==='worker-attempt-result.v3')validateWorkerResourceContractV3('workerAttemptResult',result);
+683:       else if(result.schemaVersion==='worker-attempt-result.v2')validateWorkerResourceContractV2('workerAttemptResult',result);
+684:       else validatePipelineWorkerCoreContract('workerAttemptResult', result);
+685:       const frozenResult = freeze(result);
+686:       if (!fault && this.#now().getTime() >= Date.parse(envelope.claim.expiresAt)) {
+687:         return this.#result(started, this.#now(), new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED'), null, evidence, resources, cleanup);
+688:       }
+689:       return frozenResult;
+690:     } catch (error) {
+691:       if (fault?.code === 'WORKER_OPERATION_RESULT_INVALID') throw error;
+692:       return this.#result(started, completed,
+693:         new AttemptFault('errored', 'WORKER_OPERATION_RESULT_INVALID', 'Specialist operation returned an invalid result.'),
+694:         null, [], {
+695:           ...resources,
+696:           logBytes: resources.logBytes,
+697:           resultBytes: 0,
+698:           evidenceBytes: 0,
+699:         }, cleanup.state === 'failed'
+700:           ? { state: 'failed', summary: boundedText(cleanup.summary, 'Cleanup failed.') }
+701:           : cleanup);
+702:     }
+703:   }
+704: }
+
+SOURCE skills/worker/core/worker/local-runtime.ts SHA256 17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4
+1: import {
+2:   validatePipelineWorkerCoreContract,
+3:   type WorkerAttemptEnvelopeV1,
+4:   type WorkerHealthV1,
+5:   type WorkerLifecycleState,
+6:   type WorkerProfileV1,
+7:   type WorkerProtocolVersion,
+8:   type WorkerRegistrationV1,
+9: } from '@kubeclaw/pipeline-worker-core-contract';
+10: 
+11: const MAX_TIMER_MS = 2_147_483_647;
+12: 
+13: export interface LocalWorkerRuntimePolicy {
+14:   readonly drainTimeoutMs: number;
+15:   readonly cancellationTimeoutMs: number;
+16:   readonly replayLimit: number;
+17: }
+18: 
+19: export function validateLocalWorkerRuntimePolicy(options: LocalWorkerRuntimePolicy): Readonly<LocalWorkerRuntimePolicy> {
+20:   if (options === null || typeof options !== 'object') throw new Error('WORKER_LOCAL_POLICY_REQUIRED');
+21:   const drainTimeoutMs = positiveTimer(options.drainTimeoutMs, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID');
+22:   const cancellationTimeoutMs = positiveTimer(options.cancellationTimeoutMs,
+23:     'WORKER_LOCAL_CANCELLATION_TIMEOUT_INVALID');
+24:   const replayLimit = options.replayLimit;
+25:   if (!Number.isSafeInteger(replayLimit) || replayLimit < 1 || replayLimit > 1_000_000) {
+26:     throw new Error('WORKER_LOCAL_REPLAY_LIMIT_INVALID');
+27:   }
+28:   return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });
+29: }
+30: 
+31: export interface LocalWorkerRuntimeOptions extends LocalWorkerRuntimePolicy {
+32:   readonly workerId: string;
+33:   readonly workerType: string;
+34:   readonly coreVersion: string;
+35:   readonly protocolVersions: readonly WorkerProtocolVersion[];
+36:   readonly profiles: readonly WorkerProfileV1[];
+37:   readonly capacity: number;
+38:   readonly now?: () => Date;
+39: }
+40: 
+41: interface ActiveAttempt {
+42:   readonly controller: AbortController;
+43:   readonly completion: Promise<unknown>;
+44: }
+45: 
+46: interface ResolvedLocalWorkerRuntimeOptions {
+47:   readonly workerId: string;
+48:   readonly workerType: string;
+49:   readonly coreVersion: string;
+50:   readonly capacity: number;
+51:   readonly drainTimeoutMs: number;
+52:   readonly cancellationTimeoutMs: number;
+53:   readonly replayLimit: number;
+54: }
+55: 
+56: function freeze<T>(value: T): T {
+57:   if (!value || typeof value !== 'object') return value;
+58:   for (const child of Object.values(value as Record<string, unknown>)) freeze(child);
+59:   return Object.isFrozen(value) ? value : Object.freeze(value);
+60: }
+61: 
+62: function positiveTimer(value: number, code: string): number {
+63:   if (!Number.isSafeInteger(value) || value < 1 || value > MAX_TIMER_MS) throw new Error(code);
+64:   return value;
+65: }
+66: 
+67: async function settleWithin(attempts: readonly Promise<unknown>[], timeoutMs: number): Promise<boolean> {
+68:   if (attempts.length === 0) return true;
+69:   let timer: NodeJS.Timeout | undefined;
+70:   try {
+71:     return await Promise.race([
+72:       Promise.allSettled(attempts).then(() => true),
+73:       new Promise<boolean>((resolve) => { timer = setTimeout(() => resolve(false), timeoutMs); }),
+74:     ]);
+75:   } finally {
+76:     if (timer) clearTimeout(timer);
+77:   }
+78: }
+79: 
+80: function armClaimExpiry(deadline: number, controller: AbortController, now: () => Date): () => void {
+81:   let timer: NodeJS.Timeout | undefined;
+82:   const schedule = (): void => {
+83:     const remaining = deadline - now().getTime();
+84:     if (remaining <= 0) { controller.abort(new Error('WORKER_LOCAL_CLAIM_EXPIRED')); return; }
+85:     timer = setTimeout(schedule, Math.min(remaining, MAX_TIMER_MS));
+86:   };
+87:   schedule();
+88:   return () => { if (timer) clearTimeout(timer); };
+89: }
+90: 
+91: export class LocalWorkerRuntime {
+92:   readonly #options: Readonly<ResolvedLocalWorkerRuntimeOptions>;
+93:   readonly #profiles: readonly WorkerProfileV1[];
+94:   readonly #protocolVersions: readonly WorkerProtocolVersion[];
+95:   readonly #profileDigests: ReadonlySet<string>;
+96:   readonly #now: () => Date;
+97:   readonly #startedAt: string;
+98:   readonly #active = new Map<string, ActiveAttempt>();
+99:   readonly #acceptedAttemptIds = new Map<string, number>();
+100:   #state: WorkerLifecycleState = 'starting';
+101:   #healthSequence = 0;
+102:   #draining: Promise<void> | null = null;
+103: 
+104:   constructor(options: LocalWorkerRuntimeOptions) {
+105:     if (!Number.isSafeInteger(options.capacity) || options.capacity < 1 || options.capacity > 4096) {
+106:       throw new Error('WORKER_LOCAL_CAPACITY_INVALID');
+107:     }
+108:     const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);
+109:     this.#profiles = freeze(structuredClone([...options.profiles]));
+110:     this.#protocolVersions = freeze([...new Set(options.protocolVersions)].sort());
+111:     this.#profileDigests = new Set(this.#profiles.map((profile) => profile.profileDigest));
+112:     this.#now = options.now ?? (() => new Date());
+113:     this.#startedAt = this.#now().toISOString();
+114:     this.#options = freeze({ workerId: options.workerId, workerType: options.workerType,
+115:       coreVersion: options.coreVersion, capacity: options.capacity, drainTimeoutMs, cancellationTimeoutMs, replayLimit });
+116:     validatePipelineWorkerCoreContract('workerRegistration', this.registration());
+117:   }
+118: 
+119:   get state(): WorkerLifecycleState { return this.#state; }
+120: 
+121:   markReady(): WorkerRegistrationV1 {
+122:     if (this.#state !== 'starting') throw new Error(`WORKER_LOCAL_TRANSITION_INVALID:${this.#state}:ready`);
+123:     this.#state = 'ready';
+124:     return this.registration();
+125:   }
+126: 
+127:   markUnhealthy(): WorkerHealthV1 {
+128:     if (this.#state === 'stopped') throw new Error('WORKER_LOCAL_TRANSITION_INVALID:stopped:unhealthy');
+129:     this.#state = 'unhealthy';
+130:     return this.health();
+131:   }
+132: 
+133:   registration(): WorkerRegistrationV1 {
+134:     const registration = freeze({
+135:       schemaVersion: 'worker-registration.v1' as const,
+136:       workerId: this.#options.workerId,
+137:       workerType: this.#options.workerType,
+138:       coreVersion: this.#options.coreVersion,
+139:       protocolVersions: [...this.#protocolVersions],
+140:       profiles: structuredClone(this.#profiles) as WorkerProfileV1[],
+141:       capacity: this.#capacity(),
+142:       lifecycleState: this.#state,
+143:       startedAt: this.#startedAt,
+144:       sentAt: this.#now().toISOString(),
+145:     });
+146:     validatePipelineWorkerCoreContract('workerRegistration', registration);
+147:     return registration;
+148:   }
+149: 
+150:   health(): WorkerHealthV1 {
+151:     const health = freeze({
+152:       schemaVersion: 'worker-health.v1' as const,
+153:       workerId: this.#options.workerId,
+154:       sequence: this.#healthSequence++,
+155:       lifecycleState: this.#state,
+156:       capacity: this.#capacity(),
+157:       activeAttemptIds: [...this.#active.keys()].sort(),
+158:       sentAt: this.#now().toISOString(),
+159:     });
+160:     validatePipelineWorkerCoreContract('workerHealth', health);
+161:     return health;
+162:   }
+163: 
+164:   runAttempt<T>(envelope: WorkerAttemptEnvelopeV1, execute: (signal: AbortSignal) => Promise<T>): Promise<T> {
+165:     if (this.#state !== 'ready') throw new Error(`WORKER_LOCAL_NOT_READY:${this.#state}`);
+166:     if (this.#active.size >= this.#options.capacity) throw new Error('WORKER_LOCAL_CAPACITY_EXHAUSTED');
+167:     validatePipelineWorkerCoreContract('workerAttemptEnvelope', envelope);
+168:     if (envelope.claim.workerId !== this.#options.workerId) throw new Error('WORKER_LOCAL_CLAIM_WORKER_MISMATCH');
+169:     const now = this.#now().getTime();
+170:     if (now >= Date.parse(envelope.queueDeadline)) throw new Error('WORKER_LOCAL_QUEUE_DEADLINE_EXPIRED');
+171:     if (now < Date.parse(envelope.claim.claimedAt)) throw new Error('WORKER_LOCAL_CLAIM_NOT_ACTIVE');
+172:     if (now >= Date.parse(envelope.claim.expiresAt)) throw new Error('WORKER_LOCAL_CLAIM_EXPIRED');
+173:     if (!this.#protocolVersions.includes(envelope.protocolVersion)) throw new Error('WORKER_LOCAL_PROTOCOL_UNSUPPORTED');
+174:     if (!this.#profileDigests.has(envelope.profile.profileDigest)) throw new Error('WORKER_LOCAL_PROFILE_UNSUPPORTED');
+175:     this.#reclaimExpiredAttempts(now);
+176:     if (this.#acceptedAttemptIds.has(envelope.attemptId)) throw new Error('WORKER_LOCAL_ATTEMPT_DUPLICATE');
+177:     if (this.#acceptedAttemptIds.size >= this.#options.replayLimit) {
+178:       throw new Error('WORKER_LOCAL_REPLAY_CAPACITY_EXHAUSTED');
+179:     }
+180:     this.#acceptedAttemptIds.set(envelope.attemptId, Date.parse(envelope.claim.expiresAt));
+181:     const controller = new AbortController();
+182:     const claimExpiresAt = Date.parse(envelope.claim.expiresAt);
+183:     const queueDeadline = Date.parse(envelope.queueDeadline);
+184:     const clearClaimExpiry = armClaimExpiry(claimExpiresAt, controller, this.#now);
+185:     let resolveOperation!: (value: T | PromiseLike<T>) => void;
+186:     let rejectOperation!: (reason?: unknown) => void;
+187:     const operation = new Promise<T>((resolve, reject) => {
+188:       resolveOperation = resolve;
+189:       rejectOperation = reject;
+190:     });
+191:     const completion = operation.then((value) => {
+192:       if (this.#now().getTime() >= claimExpiresAt) throw new Error('WORKER_LOCAL_CLAIM_EXPIRED');
+193:       return value;
+194:     }).finally(clearClaimExpiry);
+195:     this.#active.set(envelope.attemptId, { controller, completion });
+196:     try {
+197:       // Use one authoritative start timestamp immediately before the callback.
+198:       // The synchronous start also pins verified provider bytes before the
+199:       // caller can replace installed package content.
+200:       const startNow = this.#now().getTime();
+201:       if (startNow >= queueDeadline) throw new Error('WORKER_LOCAL_QUEUE_DEADLINE_EXPIRED');
+202:       if (startNow >= claimExpiresAt) throw new Error('WORKER_LOCAL_CLAIM_EXPIRED');
+203:       resolveOperation(execute(controller.signal));
+204:     } catch (error) {
+205:       rejectOperation(error);
+206:     }
+207:     void completion.then(
+208:       () => { this.#active.delete(envelope.attemptId); },
+209:       () => { this.#active.delete(envelope.attemptId); },
+210:     );
+211:     return completion;
+212:   }
+213: 
+214:   drain(): Promise<void> {
+215:     this.#draining ??= this.#drainOnce();
+216:     return this.#draining;
+217:   }
+218: 
+219:   stop(): WorkerHealthV1 {
+220:     if (this.#active.size > 0) throw new Error('WORKER_LOCAL_ACTIVE_ATTEMPTS');
+221:     this.#state = 'stopped';
+222:     return this.health();
+223:   }
+224: 
+225:   #reclaimExpiredAttempts(now: number): void {
+226:     for (const [attemptId, expiresAt] of this.#acceptedAttemptIds) {
+227:       if (expiresAt <= now && !this.#active.has(attemptId)) this.#acceptedAttemptIds.delete(attemptId);
+228:     }
+229:   }
+230: 
+231:   #capacity() {
+232:     return { total: this.#options.capacity, available: this.#options.capacity - this.#active.size,
+233:       active: this.#active.size };
+234:   }
+235: 
+236:   async #drainOnce(): Promise<void> {
+237:     if (this.#state === 'stopped') return;
+238:     this.#state = 'draining';
+239:     const initial = [...this.#active.values()].map((attempt) => attempt.completion);
+240:     if (!(await settleWithin(initial, this.#options.drainTimeoutMs))) {
+241:       for (const attempt of this.#active.values()) attempt.controller.abort(new Error('WORKER_LOCAL_DRAIN_CANCELLED'));
+242:       const cancelled = [...this.#active.values()].map((attempt) => attempt.completion);
+243:       if (!(await settleWithin(cancelled, this.#options.cancellationTimeoutMs))) {
+244:         this.#state = 'unhealthy';
+245:         throw new Error('WORKER_LOCAL_DRAIN_TIMEOUT');
+246:       }
+247:     }
+248:     this.#state = 'stopped';
+249:   }
+250: }
+
+SOURCE tests/verification/contracts/check-pipeline-worker-core-contracts.mts SHA256 a2eabfd0752ff2fcd6133277be19e8e68a7200b51cd6d1998ab72f21ee12a110
+1: import assert from 'node:assert/strict';
+2: import fs from 'node:fs';
+3: import Ajv2020 from 'ajv/dist/2020.js';
+4: import addFormats from 'ajv-formats';
+5: import {
+6:   checkPipelineWorkerCoreContract,
+7:   checkWorkerAttemptEnvelopeConsistency,
+8:   checkWorkerAttemptMessageBinding,
+9:   checkWorkerCancellationBinding,
+10:   canonicalJson,
+11:   workerAttemptSpecDigest,
+12:   workerAttemptResultDigest,
+13:   workerProfileDigest,
+14:   sha256Text,
+15:   signWorkerTrustEnvelope,
+16:   verifyWorkerTrustEnvelope,
+17:   validatePipelineWorkerCoreContract,
+18: } from '../../../contracts/pipeline-worker-core/v1/src/index.ts';
+19: import crypto from 'node:crypto';
+20: import type {
+21:   AttemptClaimV1,
+22:   AttemptProgressEventV1,
+23:   PipelineWorkerCoreDefinition,
+24:   WorkerAttemptEnvelopeV1,
+25:   WorkerAttemptResultV1,
+26:   WorkerCancellationRequestV1,
+27:   WorkerHealthV1,
+28:   WorkerLogPartV1,
+29:   WorkerProfileV1,
+30:   WorkerRegistrationV1,
+31:   WorkerTrustEnvelopeV1,
+32: } from '../../../contracts/pipeline-worker-core/v1/src/types.ts';
+33: 
+34: const schemaPath = 'contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json';
+35: const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8')) as { $id: string };
+36: const ajv = new Ajv2020({ allErrors: true, strict: true });
+37: addFormats(ajv);
+38: ajv.addSchema(schema);
+39: 
+40: const definitions = [
+41:   'workerTrustEnvelope',
+42:   'workerLifecycleState',
+43:   'workerProfile',
+44:   'workerRegistration',
+45:   'workerHealth',
+46:   'attemptClaim',
+47:   'workerAttemptEnvelope',
+48:   'attemptProgressEvent',
+49:   'workerLogPart',
+50:   'workerCancellationRequest',
+51:   'workerEvidenceRef',
+52:   'workerAttemptResult',
+53: ] as const satisfies readonly PipelineWorkerCoreDefinition[];
+54: 
+55: const trustKeys = crypto.generateKeyPairSync('ed25519');
+56: const trustEnvelope = signWorkerTrustEnvelope({
+57:   schemaVersion: 'worker-trust-envelope.v1',
+58:   kind: 'artifact',
+59:   issuer: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/nova',
+60:   audience: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/buster',
+61:   purpose: 'source.test',
+62:   subjectDigest: `sha256:${'c'.repeat(64)}`,
+63:   contextDigest: `sha256:${'d'.repeat(64)}`,
+64:   issuedAt: '2026-08-29T20:00:00.000Z',
+65:   expiresAt: '2026-08-29T20:10:00.000Z',
+66:   nonce: '0123456789abcdef0123456789abcdef',
+67:   keyId: 'nova-2026-08',
+68: }, trustKeys.privateKey) satisfies WorkerTrustEnvelopeV1;
+69: validatePipelineWorkerCoreContract('workerTrustEnvelope', trustEnvelope);
+70: assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+71:   issuer: trustEnvelope.issuer,
+72:   audience: trustEnvelope.audience,
+73:   purpose: trustEnvelope.purpose,
+74: }, Date.parse('2026-08-29T20:05:00.000Z')), true);
+75: assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, subjectDigest: `sha256:${'e'.repeat(64)}` },
+76:   trustKeys.publicKey, { issuer: trustEnvelope.issuer, audience: trustEnvelope.audience,
+77:     purpose: trustEnvelope.purpose }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+78: assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+79:   issuer: trustEnvelope.issuer,
+80:   audience: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control',
+81:   purpose: trustEnvelope.purpose,
+82: }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+83: assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+84:   issuer: trustEnvelope.issuer,
+85:   audience: trustEnvelope.audience,
+86:   purpose: trustEnvelope.purpose,
+87: }, Date.parse('2026-08-29T20:11:00.000Z')), false);
+88: assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+89:   issuer: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control',
+90:   audience: trustEnvelope.audience,
+91:   purpose: trustEnvelope.purpose,
+92: }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+93: assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+94:   issuer: trustEnvelope.issuer,
+95:   audience: trustEnvelope.audience,
+96:   purpose: 'baseline.publish',
+97: }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+98: assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, issuedAt: 'not-a-time' }, trustKeys.publicKey, {
+99:   issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+100: }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+101: assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope,
+102:   issuedAt: '2026-08-29T20:12:00.000Z', expiresAt: '2026-08-29T20:11:00.000Z' }, trustKeys.publicKey, {
+103:   issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+104: }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+105: const wrongTrustKeys = crypto.generateKeyPairSync('ed25519');
+106: assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, wrongTrustKeys.publicKey, {
+107:   issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+108: }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+109: const rsaTrustKeys = crypto.generateKeyPairSync('rsa', { modulusLength: 2048 });
+110: assert.throws(() => signWorkerTrustEnvelope({
+111:   schemaVersion: 'worker-trust-envelope.v1', kind: 'artifact', issuer: trustEnvelope.issuer,
+112:   audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+113:   subjectDigest: trustEnvelope.subjectDigest, contextDigest: trustEnvelope.contextDigest,
+114:   issuedAt: trustEnvelope.issuedAt, expiresAt: trustEnvelope.expiresAt,
+115:   nonce: trustEnvelope.nonce, keyId: trustEnvelope.keyId,
+116: }, rsaTrustKeys.privateKey), /PRIVATE_KEY_INVALID/u);
+117: assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, rsaTrustKeys.publicKey, {
+118:   issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+119: }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+120: assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, signature: 'invalid' }, trustKeys.publicKey, {
+121:   issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+122: }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+123: 
+124: for (const definition of definitions) {
+125:   ajv.compile({ $ref: `${schema.$id}#/$defs/${definition}` });
+126: }
+127: 
+128: const digest = `sha256:${'a'.repeat(64)}`;
+129: const schemaDigest = `sha256:${'b'.repeat(64)}`;
+130: const profile = {
+131:   schemaVersion: 'worker-profile.v1',
+132:   profileId: 'buster.standard',
+133:   profileDigest: digest,
+134:   workerType: 'buster',
+135:   coreContractId: 'kubeclaw.worker-core@1',
+136:   engine: {
+137:     engineId: 'buster-test-engine',
+138:     contractId: 'kubeclaw.buster-engine@1',
+139:     engineVersion: '1.0.0',
+140:     contentDigest: digest,
+141:   },
+142:   capabilities: ['provider.execute', 'repository.read'],
+143: } satisfies WorkerProfileV1;
+144: const claim = {
+145:   schemaVersion: 'attempt-claim.v1',
+146:   claimId: 'claim:unit:1',
+147:   attemptId: 'attempt:unit:1',
+148:   generation: 1,
+149:   workerId: 'worker:buster:one',
+150:   claimedAt: '2026-08-05T12:00:00Z',
+151:   expiresAt: '2026-08-05T12:05:00Z',
+152: } satisfies AttemptClaimV1;
+153: const capacity = { total: 4, available: 3, active: 1 };
+154: const registration = {
+155:   schemaVersion: 'worker-registration.v1',
+156:   workerId: 'worker:buster:one',
+157:   workerType: 'buster',
+158:   coreVersion: '1.0.0',
+159:   protocolVersions: ['worker-protocol.v1'],
+160:   profiles: [profile],
+161:   capacity,
+162:   lifecycleState: 'ready',
+163:   startedAt: '2026-08-05T11:59:00Z',
+164:   sentAt: '2026-08-05T12:00:00Z',
+165: } satisfies WorkerRegistrationV1;
+166: const health = {
+167:   schemaVersion: 'worker-health.v1',
+168:   workerId: 'worker:buster:one',
+169:   sequence: 1,
+170:   lifecycleState: 'ready',
+171:   capacity,
+172:   activeAttemptIds: ['attempt:other:1'],
+173:   sentAt: '2026-08-05T12:00:05Z',
+174: } satisfies WorkerHealthV1;
+175: const envelope = {
+176:   schemaVersion: 'worker-attempt-envelope.v1',
+177:   protocolVersion: 'worker-protocol.v1',
+178:   pipelineRunId: 'run:unit',
+179:   moduleId: 'api',
+180:   gateId: null,
+181:   planId: 'plan:unit',
+182:   nodeId: 'unit',
+183:   executionId: 'execution:unit',
+184:   attemptId: 'attempt:unit:1',
+185:   attemptNumber: 1,
+186:   attemptSpecDigest: digest,
+187:   claim,
+188:   profile,
+189:   packages: [{ packageId: 'kubeclaw.unit-provider', packageVersion: '1.0.0', contentDigest: digest }],
+190:   grantedCapabilities: ['provider.execute', 'repository.read'],
+191:   limits: {
+192:     timeoutMs: 60000,
+193:     cleanupTimeoutMs: 10000,
+194:     cpuMillis: 1000,
+195:     memoryBytes: 536870912,
+196:     processes: 128,
+197:     logBytes: 10485760,
+198:     resultBytes: 1048576,
+199:     evidenceBytes: 104857600,
+200:     evidenceFiles: 100,
+201:   },
+202:   inputs: [{
+203:     name: 'repository',
+204:     kind: 'value',
+205:     schemaId: 'kubeclaw.repository-snapshot.v1',
+206:     schemaDigest,
+207:     value: { snapshotDigest: digest },
+208:   }],
+209:   operation: {
+210:     contractId: 'kubeclaw.test-attempt@1',
+211:     inputSchemaId: 'kubeclaw.test-attempt-input.v1',
+212:     inputSchemaDigest: schemaDigest,
+213:     values: { providerContractId: 'kubeclaw.command-test@1' },
+214:   },
+215:   cancellationId: 'cancel:unit:1',
+216:   issuedAt: '2026-08-05T11:59:59Z',
+217:   queueDeadline: '2026-08-05T12:10:00Z',
+218: } satisfies WorkerAttemptEnvelopeV1;
+219: const progress = {
+220:   schemaVersion: 'attempt-progress-event.v1',
+221:   protocolVersion: 'worker-protocol.v1',
+222:   attemptId: 'attempt:unit:1',
+223:   claimId: 'claim:unit:1',
+224:   claimGeneration: 1,
+225:   workerId: 'worker:buster:one',
+226:   sequence: 0,
+227:   state: 'started',
+228:   message: 'Unit test attempt started.',
+229:   progressPercent: null,
+230:   details: {},
+231:   sentAt: '2026-08-05T12:00:01Z',
+232: } satisfies AttemptProgressEventV1;
+233: const logPart = {
+234:   schemaVersion: 'worker-log-part.v1',
+235:   protocolVersion: 'worker-protocol.v1',
+236:   attemptId: 'attempt:unit:1',
+237:   claimId: 'claim:unit:1',
+238:   claimGeneration: 1,
+239:   workerId: 'worker:buster:one',
+240:   sequence: 0,
+241:   stream: 'stdout',
+242:   text: 'TAP version 13\n',
+243:   contentDigest: digest,
+244:   final: false,
+245:   sentAt: '2026-08-05T12:00:02Z',
+246: } satisfies WorkerLogPartV1;
+247: const cancellation = {
+248:   schemaVersion: 'worker-cancellation-request.v1',
+249:   protocolVersion: 'worker-protocol.v1',
+250:   cancellationId: 'cancel:unit:1',
+251:   attemptId: 'attempt:unit:1',
+252:   requestedAt: '2026-08-05T12:00:30Z',
+253:   reason: 'Pipeline was cancelled.',
+254:   forceAfterMs: 10000,
+255: } satisfies WorkerCancellationRequestV1;
+256: const result = {
+257:   schemaVersion: 'worker-attempt-result.v1',
+258:   protocolVersion: 'worker-protocol.v1',
+259:   attemptId: 'attempt:unit:1',
+260:   claimId: 'claim:unit:1',
+261:   claimGeneration: 1,
+262:   workerId: 'worker:buster:one',
+263:   state: 'completed',
+264:   startedAt: '2026-08-05T12:00:01Z',
+265:   completedAt: '2026-08-05T12:00:03Z',
+266:   durationMs: 2000,
+267:   summary: 'Unit test attempt completed.',
+268:   specialistResult: {
+269:     schemaId: 'kubeclaw.test-attempt-result.v1',
+270:     schemaDigest,
+271:     values: { outcome: 'passed' },
+272:   },
+273:   error: null,
+274:   evidence: [{
+275:     evidenceId: 'unit-log',
+276:     type: 'log',
+277:     artifact: {
+278:       artifactId: 'artifact:unit-log',
+279:       type: 'log',
+280:       mediaType: 'text/plain',
+281:       contentDigest: digest,
+282:       sizeBytes: 128,
+283:       storageUrl: 'artifact://unit-log',
+284:     },
+285:   }],
+286:   resources: {
+287:     cpuTimeMs: 500,
+288:     maximumMemoryBytes: 1048576,
+289:     maximumProcesses: 2,
+290:     logBytes: 128,
+291:     resultBytes: 256,
+292:     evidenceBytes: 128,
+293:   },
+294:   cleanup: { state: 'not_required', summary: null },
+295:   exitCode: 0,
+296:   signal: null,
+297:   resultDigest: digest,
+298:   receipt: { receiptId: 'receipt:unit:1', receiptDigest: digest },
+299: } satisfies WorkerAttemptResultV1;
+300: profile.profileDigest = workerProfileDigest(profile);
+301: envelope.attemptSpecDigest = workerAttemptSpecDigest(envelope);
+302: logPart.contentDigest = sha256Text(logPart.text);
+303: result.resultDigest = workerAttemptResultDigest(result);
+304: 
+305: const validValues: Record<PipelineWorkerCoreDefinition, unknown> = {
+306:   workerTrustEnvelope: trustEnvelope,
+307:   workerLifecycleState: 'ready',
+308:   workerProfile: profile,
+309:   workerRegistration: registration,
+310:   workerHealth: health,
+311:   attemptClaim: claim,
+312:   workerAttemptEnvelope: envelope,
+313:   attemptProgressEvent: progress,
+314:   workerLogPart: logPart,
+315:   workerCancellationRequest: cancellation,
+316:   workerEvidenceRef: result.evidence[0],
+317:   workerAttemptResult: result,
+318: };
+319: 
+320: function schemaValid(definition: PipelineWorkerCoreDefinition, value: unknown): boolean {
+321:   const validator = ajv.compile({ $ref: `${schema.$id}#/$defs/${definition}` });
+322:   return validator(value);
+323: }
+324: 
+325: for (const definition of definitions) {
+326:   const value = validValues[definition];
+327:   assert.equal(schemaValid(definition, value), true, `${definition} valid fixture must pass its schema`);
+328:   assert.deepEqual(checkPipelineWorkerCoreContract(definition, value), { ok: true, errors: [] });
+329:   if (typeof value === 'object' && value !== null) {
+330:     assert.equal(schemaValid(definition, { ...value, unexpected: true }), false,
+331:       `${definition} must reject unknown fields`);
+332:   }
+333: }
+334: 
+335: assert.equal(schemaValid('workerLifecycleState', 'paused'), false, 'unknown lifecycle states are rejected');
+336: assert.equal(schemaValid('workerRegistration', {
+337:   ...registration,
+338:   protocolVersions: ['worker-protocol.v1', 'worker-protocol.v2'],
+339: }), true, 'registration can advertise future protocol versions during a rolling update');
+340: assert.equal(schemaValid('workerAttemptEnvelope', {
+341:   ...envelope,
+342:   protocolVersion: 'worker-protocol.v2',
+343: }), false, 'a v1 attempt envelope cannot select a future protocol version');
+344: assert.equal(checkPipelineWorkerCoreContract('workerRegistration', {
+345:   ...registration,
+346:   capacity: { total: 4, available: 4, active: 1 },
+347: }).ok, false, 'registration capacity must reconcile');
+348: assert.equal(checkPipelineWorkerCoreContract('workerRegistration', {
+349:   ...registration,
+350:   profiles: [{ ...profile, workerType: 'prism' }],
+351: }).ok, false, 'registration profiles must match the worker type');
+352: assert.equal(checkPipelineWorkerCoreContract('workerHealth', {
+353:   ...health,
+354:   activeAttemptIds: [],
+355: }).ok, false, 'health active IDs must reconcile with active capacity');
+356: assert.equal(schemaValid('attemptClaim', { ...claim, generation: 0 }), false,
+357:   'claim generations start at one');
+358: assert.equal(checkPipelineWorkerCoreContract('attemptClaim', {
+359:   ...claim,
+360:   expiresAt: claim.claimedAt,
+361: }).ok, false, 'a claim must expire after it is created');
+362: assert.equal(checkPipelineWorkerCoreContract('workerAttemptEnvelope', {
+363:   ...envelope,
+364:   claim: { ...claim, expiresAt: claim.claimedAt },
+365: }).ok, false, 'an embedded claim keeps the same temporal rule');
+366: assert.equal(checkPipelineWorkerCoreContract('workerAttemptEnvelope', {
+367:   ...envelope,
+368:   claim: { ...claim, attemptId: 'attempt:other:1' },
+369: }).ok, false, 'an embedded claim must identify the same attempt');
+370: assert.equal(checkPipelineWorkerCoreContract('workerAttemptEnvelope', {
+371:   ...envelope,
+372:   grantedCapabilities: [...envelope.grantedCapabilities, 'network.cluster'],
+373: }).ok, false, 'an attempt cannot grant a capability outside its worker profile');
+374: assert.equal(checkPipelineWorkerCoreContract('workerAttemptEnvelope', {
+375:   ...envelope,
+376:   inputs: [...envelope.inputs, envelope.inputs[0]],
+377: }).ok, false, 'input names are unique');
+378: assert.equal(schemaValid('workerAttemptEnvelope', {
+379:   ...envelope,
+380:   limits: { ...envelope.limits, timeoutMs: 2147483648 },
+381: }), false, 'attempt timeout fits the Node timer range');
+382: assert.equal(schemaValid('workerAttemptEnvelope', {
+383:   ...envelope,
+384:   limits: { ...envelope.limits, logBytes: 16777217 },
+385: }), false, 'retained logs have an absolute memory bound');
+386: assert.equal(schemaValid('workerLogPart', { ...logPart, sequence: -1 }), false,
+387:   'log sequence numbers cannot be negative');
+388: assert.equal(schemaValid('workerCancellationRequest', { ...cancellation, reason: '' }), false,
+389:   'cancellation requires a reason');
+390: assert.equal(schemaValid('workerCancellationRequest', { ...cancellation, forceAfterMs: 2147483648 }), false,
+391:   'forced cancellation fits the Node timer range');
+392: assert.equal(schemaValid('workerAttemptResult', { ...result, specialistResult: null }), false,
+393:   'a completed attempt requires a specialist result');
+394: assert.equal(schemaValid('workerAttemptResult', {
+395:   ...result,
+396:   state: 'errored',
+397:   specialistResult: null,
+398:   error: null,
+399: }), false, 'an errored attempt requires an error');
+400: const cleanupFailureResult = {
+401:   ...result,
+402:   state: 'errored',
+403:   specialistResult: null,
+404:   error: { code: 'cleanup_failed', message: 'Cleanup failed.' },
+405:   cleanup: { state: 'failed', summary: 'Cleanup failed.' },
+406: } as WorkerAttemptResultV1;
+407: cleanupFailureResult.resultDigest = workerAttemptResultDigest(cleanupFailureResult);
+408: assert.equal(checkPipelineWorkerCoreContract('workerAttemptResult', cleanupFailureResult).ok, true,
+409:   'cleanup failure is a valid errored attempt');
+410: assert.equal(checkPipelineWorkerCoreContract('workerAttemptResult', {
+411:   ...result,
+412:   cleanup: { state: 'failed', summary: 'Cleanup failed.' },
+413: }).ok, false, 'cleanup failure cannot return a completed state');
+414: assert.equal(checkPipelineWorkerCoreContract('workerAttemptResult', {
+415:   ...result,
+416:   summary: 'Tampered summary.',
+417: }).ok, false, 'terminal result contents must match the result digest');
+418: assert.deepEqual(checkWorkerAttemptMessageBinding(envelope, progress), { ok: true, errors: [] });
+419: assert.equal(checkWorkerAttemptMessageBinding(envelope, { ...result, claimGeneration: 2 }).ok, false,
+420:   'message binding rejects a different claim generation');
+421: assert.equal(checkWorkerAttemptMessageBinding(envelope, { ...logPart, workerId: 'worker:buster:other' }).ok, false,
+422:   'message binding rejects a different worker identity');
+423: assert.deepEqual(checkWorkerCancellationBinding(envelope, cancellation), { ok: true, errors: [] });
+424: assert.equal(checkWorkerCancellationBinding(envelope, { ...cancellation, cancellationId: 'cancel:other:1' }).ok, false,
+425:   'cancellation binding rejects a different cancellation identity');
+426: const consistentProfile = { ...profile, profileDigest: workerProfileDigest(profile) };
+427: const consistentEnvelopeBase = { ...envelope, profile: consistentProfile, attemptSpecDigest: '' };
+428: const consistentEnvelope = {
+429:   ...consistentEnvelopeBase,
+430:   attemptSpecDigest: workerAttemptSpecDigest(consistentEnvelopeBase),
+431: };
+432: assert.deepEqual(checkWorkerAttemptEnvelopeConsistency(consistentEnvelope, consistentEnvelope),
+433:   { ok: true, errors: [] });
+434: assert.equal(checkWorkerAttemptEnvelopeConsistency(consistentEnvelope, {
+435:   ...consistentEnvelope,
+436:   limits: { ...consistentEnvelope.limits, timeoutMs: consistentEnvelope.limits.timeoutMs + 1 },
+437: }).ok, false, 'an accepted attempt cannot change immutable contents while retaining its digest');
+438: assert.equal(checkWorkerAttemptEnvelopeConsistency(consistentEnvelope, {
+439:   ...consistentEnvelope,
+440:   profile: { ...consistentProfile, profileDigest: schemaDigest },
+441: }).ok, false, 'an accepted attempt cannot change its worker profile');
+442: assert.equal(checkWorkerAttemptEnvelopeConsistency(consistentEnvelope, {
+443:   ...consistentEnvelope,
+444:   claim: { ...consistentEnvelope.claim, workerId: 'worker:buster:other' },
+445: }).ok, false, 'claim ownership cannot change inside an accepted attempt');
+446: assert.equal(checkWorkerAttemptEnvelopeConsistency(consistentEnvelope, {
+447:   ...consistentEnvelope,
+448:   claim: { ...consistentEnvelope.claim, expiresAt: '2026-08-05T12:06:00Z' },
+449: }).ok, true, 'the same claim can extend its expiry');
+450: assert.equal(canonicalJson({ '\uE000': 1, '\u{10000}': 2 }), '{"𐀀":2,"":1}',
+451:   'portable canonical JSON follows RFC 8785 UTF-16 key ordering');
+452: assert.throws(() => canonicalJson('\uD800'), /RFC8785_INVALID_UNICODE/,
+453:   'portable canonical JSON rejects lone surrogates');
+454: assert.throws(() => canonicalJson(undefined), /RFC8785_INVALID_TYPE/,
+455:   'portable canonical JSON rejects non-JSON values');
+456: assert.throws(() => canonicalJson(new Map()), /RFC8785_INVALID_OBJECT/,
+457:   'portable canonical JSON rejects non-JSON object instances');
+458: 
+459: console.log(JSON.stringify({ ok: true, contracts: definitions.length, schema: schemaPath }));

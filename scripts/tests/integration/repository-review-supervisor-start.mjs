@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -33,7 +34,7 @@ test('original supervisor visibly rejects missing platform, then starts a genuin
   fs.mkdirSync(file('repository/modules/supervisor'), { recursive: true });
   fs.writeFileSync(file('repository/modules/supervisor/FORGE.md'), 'Original finite preflight declaration.\n```kubeclaw-deliverables\n'
     + JSON.stringify({ schemaVersion: 'forge-deliverables.v1', moduleId: 'supervisor', substep: null, deliverables: ['proof.txt'] }) + '\n```\n');
-  write('platform.json', { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
+  write('platform.json', {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, storageRoot, shutdownTimeoutMs: 1000,
     orchestratorIssuerId: 'supervisor-native-test', administrativeDecisionIssuers: [],
     providers: { 'git.repository.read': 'kubeclaw.repository-adapter:repository', 'artifacts.write': 'kubeclaw.artifact-store:artifact-store' },

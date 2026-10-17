@@ -1,0 +1,31 @@
+{
+  "status": "Core canonical question registration preparation; full root material review pending",
+  "preservedEarlierProjectionScripts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-projection-before-core-question-registration-6606/consolidate.py",
+      "sha256": "e112f40613da1a532526a2a4c8425545d473f39c8ce62365c4eba4bf80bcf66a",
+      "recoveredExactFromReviewedSnapshot": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/consolidate.py"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-projection-before-core-question-registration-6606/check-matrix.py",
+      "sha256": "0436240e98f8468f686c4aa55a081baf824f71498ff1d0ae4d6194456124f81b",
+      "recoveredExactFromReviewedSnapshot": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/check-matrix.py"
+    }
+  ],
+  "currentInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate.py",
+      "sha256": "6f173cd4159a731ee2400f8c951397f397cc1b52ce77b52c4dddbf2bcb05cdad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "sha256": "4bcbb50e034911864f8b46657e642dc9d6dab0068eda0fdef7d6b2ea94ec6f49"
+    }
+  ],
+  "registeredFragment": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json",
+  "questionLinkSourceSha256": "3cc4f63844170386a77647c8d43e3ff50f457351408931aa9b9320967fcf7ce2",
+  "retainedUnresolvedAliases": 60,
+  "rootFilesRegenerated": false,
+  "globalC0Accepted": false,
+  "limits": "Earlier projection-preparation review covers its exact frozen code only; final-root review must cover new Core registration/alias conservation and new scripts."
+}

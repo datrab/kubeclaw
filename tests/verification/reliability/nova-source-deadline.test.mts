@@ -11,6 +11,7 @@ import { plan } from '../../fixtures/test-gate/remote-plan.mts';
 import { createProductionNovaTestGate } from '../../../skills/nova/core/test-gates/production.ts';
 import { buildCommittedSourceSnapshot } from '../../../skills/nova/core/test-gates/source-snapshot.ts';
 import { FileNovaRemotePlanStore, createRemotePlanJob } from '../../../skills/nova/core/test-gates/remote-dispatch.ts';
+import { LEGACY_SOURCE_ACQUISITION_POLICY } from '../../../skills/nova/core/test-gates/source-acquisition-policy.ts';
 import { GateDeadline, NovaGateTimeoutError } from '../../../skills/nova/core/test-gates/deadline.ts';
 const limits = { maximumRecords: 100, maximumBytes: 10_000_000, maximumRecordBytes: 1_000_000 };
 const key = crypto.generateKeyPairSync('ed25519').privateKey.export({ format: 'pem', type: 'pkcs8' });
@@ -24,7 +25,14 @@ function repository() {
 const sourceOptions = (root: string) => ({ repositoryRoot: root, repositoryId: 'repository:deadline',
   pipelineStageId: 'test', creatorAuthority: 'nova:deadline', attestationPrivateKey: key, maximumArchiveBytes: 100_000 });
 
-test('production deadline cancels actual Git archive compressor before any HTTP submission', async () => {
+for (const variant of [
+  { name: 'original task', selected: false, direct: false, sourceMs: 500, taskMs: 500 },
+  { name: 'selected source', selected: true, direct: false, sourceMs: 500, taskMs: 10000 },
+  { name: 'selected source capped by task', selected: true, direct: false, sourceMs: 10000, taskMs: 500 },
+  { name: 'direct selected source', selected: true, direct: true, sourceMs: 500, taskMs: 10000 },
+  { name: 'direct selected source capped by task', selected: true, direct: true, sourceMs: 10000, taskMs: 500 },
+]) {
+test(`${variant.name} deadline cancels actual Git archive compressor before any HTTP submission`, async () => {
   const { root, git } = repository(); let requests = 0;
   const server = http.createServer((_request, response) => { requests++; response.end(); });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
@@ -34,14 +42,21 @@ test('production deadline cancels actual Git archive compressor before any HTTP 
     const code = `import os,time;open(${JSON.stringify(pidFile)},"w").write(str(os.getpid()));time.sleep(30)`;
     git('config', 'tar.tar.gz.command', `/usr/bin/python3 -c '${code}'`);
     const address = server.address(); assert.ok(address && typeof address !== 'string');
-    const gate = createProductionNovaTestGate({ stateRoot: path.join(root, 'state'), endpoint: `http://127.0.0.1:${address.port}`,
+    const authored = { ...LEGACY_SOURCE_ACQUISITION_POLICY, timeoutMs: variant.sourceMs };
+    const gate = createProductionNovaTestGate({ ...(variant.selected ? { sourceAcquisitionPolicy: authored } : {}), stateRoot: path.join(root, 'state'), endpoint: `http://127.0.0.1:${address.port}`,
       token: 'x'.repeat(32), sourceAuthority: 'nova:deadline', sourceAttestationPrivateKey: key,
       pollMilliseconds: 10, maximumResponseBytes: 100_000, maximumResultBytes: 100_000, maximumArchiveBytes: 100_000,
       maximumArchiveStoreBytes: 1_000_000, maximumEvidenceBytes: 100_000, maximumEvidenceStoreBytes: 1_000_000, recordLimits: limits });
+    // Selection is captured at admission: mutation must not expand the live source budget.
+    authored.timeoutMs = 30000;
     const start = Date.now();
-    await assert.rejects(gate.execute({ idempotencyKey: 'deadline:source', pipelineStageId: 'test', plan: plan('blocking', null),
+    const pending = variant.direct
+      ? buildCommittedSourceSnapshot({ ...sourceOptions(root), timeoutMs: variant.taskMs,
+          sourceAcquisitionPolicy: { ...LEGACY_SOURCE_ACQUISITION_POLICY, timeoutMs: variant.sourceMs } })
+      : gate.execute({ idempotencyKey: 'deadline:source', pipelineStageId: 'test', plan: plan('blocking', null),
       repositoryRoot: root, repositoryId: 'repository:deadline', grants: new Map([['test', []]]), maximumConcurrency: 1,
-      submittedAt: '2026-08-10T03:00:00.000Z', timeoutMs: 500 }), /NOVA_REMOTE_PLAN_TIMEOUT/u);
+      submittedAt: '2026-08-10T03:00:00.000Z', timeoutMs: variant.taskMs });
+    await assert.rejects(pending, /NOVA_REMOTE_PLAN_TIMEOUT/u);
     assert.ok(Date.now() - start < 2000); assert.equal(requests, 0); assert.ok(fs.existsSync(pidFile));
     const pid = Number(fs.readFileSync(pidFile, 'utf8'));
     const statFile = `/proc/${pid}/stat`;
@@ -50,6 +65,7 @@ test('production deadline cancels actual Git archive compressor before any HTTP 
     assert.ok((await buildCommittedSourceSnapshot(sourceOptions(root))).repositoryArchive.length > 0);
   } finally { server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve())); fs.rmSync(root, { recursive: true, force: true }); }
 });
+}
 
 test('durable write already waiting for a real kernel lock is drained before timeout returns', async () => {
   const { root } = repository();

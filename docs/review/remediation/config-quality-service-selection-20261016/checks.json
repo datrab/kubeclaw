@@ -1,0 +1,8 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "tests/verification/reliability/pipeline-v10-input-set.test.mts"
+  ],
+  "exitCode": 0
+}

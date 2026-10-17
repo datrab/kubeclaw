@@ -1,0 +1,50 @@
+{
+  "qualification": "Local fixture-only tuple translation for proposed consumed-owner ABI; no installed roster, package receipt, image receipt, publication or native effect. All prior02 six-owner profiles/settings and case bodies unchanged.",
+  "roster": [
+    {
+      "callerId": "prism-control",
+      "role": "prism",
+      "serviceInstanceId": "fixture.service.prism-control",
+      "owners": [
+        "prism-control",
+        "prism-execution"
+      ]
+    },
+    {
+      "callerId": "prism-worker",
+      "role": "prism",
+      "serviceInstanceId": "fixture.service.prism-worker",
+      "owners": [
+        "prism-worker",
+        "prism-control",
+        "prism-execution"
+      ]
+    },
+    {
+      "callerId": "prism-studio",
+      "role": "prism",
+      "serviceInstanceId": "fixture.service.prism-studio",
+      "owners": [
+        "prism-studio"
+      ]
+    },
+    {
+      "callerId": "buster-preparation",
+      "role": "buster",
+      "serviceInstanceId": "fixture.service.buster-preparation",
+      "owners": [
+        "buster-engine"
+      ]
+    },
+    {
+      "callerId": "buster-runtime",
+      "role": "buster",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "owners": [
+        "buster-engine",
+        "worker-core"
+      ]
+    }
+  ],
+  "expectedReceiptMissing": "Authentic package/image/release receipts are not supplied; callerSelections are fixture binding projections, NOT full pipeline-service-selection.v1 boot receipts."
+}

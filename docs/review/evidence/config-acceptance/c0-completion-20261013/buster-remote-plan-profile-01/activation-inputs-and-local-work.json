@@ -1,0 +1,91 @@
+{
+  "externalRequired": [
+    {
+      "kind": "image/role",
+      "existingSource": "existing same-entry root/bindings + installed runtime image/host",
+      "missingAuthenticFacts": "actual image content/source equality/role/service/mount/native ABI/grants",
+      "activationAllowed": false
+    },
+    {
+      "kind": "nativepool",
+      "existingSource": "BUSTER_NATIVE_POOL_POLICY_FILE/readNativeWorkerPoolPolicy rolebuster",
+      "missingAuthenticFacts": "original rootowned nofollow policy/boot/node/cgroup/device/inode/aggregate memory/PIDs/CPU/scopes/kill/peaks and writer ownership",
+      "activationAllowed": false
+    },
+    {
+      "kind": "originalstate",
+      "existingSource": "/var/lib/buster-v2/plan-jobs,runs,native-sources",
+      "missingAuthenticFacts": "original PVC state/read/write/retention/lease/claim/fence/accounting authority and prior records/blobs/orphanquiescence",
+      "activationAllowed": false
+    },
+    {
+      "kind": "source/publickey",
+      "existingSource": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY + nova:production originalsource",
+      "missingAuthenticFacts": "authentic original Ed25519 verifier/issuer/key revision retention/access and source attestation grants; publickey metadata notseal",
+      "activationAllowed": false
+    },
+    {
+      "kind": "authentication/TLS",
+      "existingSource": "existing tokenENV or proxied trustedPeerSpiffeIds, optional tls refs",
+      "missingAuthenticFacts": "authentic token/role/proxyremoteaddress/SPIFFE/XOR; keycert/trust original revision/confidential carrier/rootaccess",
+      "activationAllowed": false
+    },
+    {
+      "kind": "registry/customCA",
+      "existingSource": "registry-clients.v1 originalsoleowner",
+      "missingAuthenticFacts": "credential ENVnames/value confidentialgrant/originalrevision retention; workerCA/Nodecontainertrust/processfetchtrust distinct applicability",
+      "activationAllowed": false
+    },
+    {
+      "kind": "binaries/browser",
+      "existingSource": "existing imagebaked tar/buildctl/native launcher+admitted provider tool refs",
+      "missingAuthenticFacts": "exact original installed executable source/bytes/version/root/Node/browser/cgroup grants; no guessed path proof",
+      "activationAllowed": false
+    }
+  ],
+  "localDefinitionAndImplementation": [
+    {
+      "receiver": "same-root one-tuple receiveBusterService and generatedRuntimeV2 required policy projection",
+      "specifiedContract": "RECEIVING-CONTRACT.md",
+      "status": "proposed not implemented; not external excuse"
+    },
+    {
+      "receiver": "wholeowner allprofile scalar/source/crossfield admission before one tuple authorization",
+      "specifiedContract": "RECEIVING-CONTRACT.md",
+      "status": "proposed not implemented; not external excuse"
+    },
+    {
+      "receiver": "capturedRegistryPeer callbacks independent of containerBuildSource with inactive I/O forbid",
+      "specifiedContract": "RECEIVING-CONTRACT.md",
+      "status": "proposed not implemented; not external excuse"
+    },
+    {
+      "receiver": "original source issuer/Ed25519 preflight before store/discovery/provider effects",
+      "specifiedContract": "RECEIVING-CONTRACT.md",
+      "status": "proposed not implemented; not external excuse"
+    },
+    {
+      "receiver": "same original tar locator binary authority forwarded through existing nativeprep chain",
+      "specifiedContract": "RECEIVING-CONTRACT.md",
+      "status": "proposed not implemented; not external excuse"
+    },
+    {
+      "receiver": "original absolute stop/shutdown/deadline afterawait receiver no fresh timer reset",
+      "specifiedContract": "RECEIVING-CONTRACT.md",
+      "status": "proposed not implemented; not external excuse"
+    },
+    {
+      "receiver": "actual complete payload/index/wrappedresult/retained pending+physicalblob capacity guards",
+      "specifiedContract": "RECEIVING-CONTRACT.md",
+      "status": "proposed not implemented; not external excuse"
+    },
+    {
+      "receiver": "archived original root/key/source/grant/task/storage precedence at all historical boundaries",
+      "specifiedContract": "RECEIVING-CONTRACT.md",
+      "status": "proposed not implemented; not external excuse"
+    }
+  ],
+  "noNewWriterOrLedger": true,
+  "originalCaseBodiesNativeFlagsPreserved": true,
+  "globalC0Accepted": false
+}

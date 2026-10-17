@@ -17,7 +17,7 @@ function unavailable(response: ServerResponse, code = 'PRISM_WORKER_STOPPING'): 
 }
 
 export function createManagedWorkerServer(handler: Handler, closeDependencies: () => Promise<void>,
-  limits = workerIngressLimits()): ManagedWorkerServer {
+  limits: ReturnType<typeof workerIngressLimits>): ManagedWorkerServer {
   return new WorkerLifecycle(handler, closeDependencies, limits).server;
 }
 

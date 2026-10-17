@@ -1,0 +1,92 @@
+{
+  "scope": "Concrete four-family static proposal package only; no C0 or implementation approval",
+  "counts": {
+    "families": 4,
+    "wholeProjectionFixturePairs": 5,
+    "wholeProjectionFixtures": 10,
+    "finiteProposedControls": 26,
+    "currentSourceWitnesses": 81,
+    "unchangedInputIdentities": 34
+  },
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/README.md",
+      "sha256": "37ec773fc3b536ff93f96f98ee5e2d97d26535c8012f978584bcc8e423e201ea",
+      "bytes": 10948
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/author-consistency.json",
+      "sha256": "4066090685e377815a640141781a3922ed57509f42bae2641838b6d6520a330e",
+      "bytes": 789
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/case-specifications.json",
+      "sha256": "26b2257330bb58c20a7291f40482c576381dbaf23ac3b8f471cf22f8125948d3",
+      "bytes": 62054
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/contracts.json",
+      "sha256": "324c833354d44604f5d37c8f170f96cfbac012b1e1a6bd5023262bda1ad87c78",
+      "bytes": 87915
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-buster-A-values.json",
+      "sha256": "9b0540df5e4c88df4a6942322e445fa2ab97ced874760440222649f7dd80f655",
+      "bytes": 14222
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-buster-B-values.json",
+      "sha256": "bfa230985c9aa84f3ee7b82ebcfcaeebca09118d609831aea3a353df72985c2f",
+      "bytes": 14221
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-nova-A-values.json",
+      "sha256": "67b4edc9b263c96bb6079370d9eb5dd9980b9e47fef207fa042b2223ed2e08a2",
+      "bytes": 8713
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-nova-B-values.json",
+      "sha256": "3eebc221a5e6e0b7f586ffca45bdbd36a49dda3d5a7dcd59520c01c6a2ca3b23",
+      "bytes": 8712
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-prism-agent-A-values.json",
+      "sha256": "1c42465b5a4a70df00fc083dc1b9a5e059e89f2741070b34cc1e6dc9742ede3e",
+      "bytes": 11573
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-prism-agent-B-values.json",
+      "sha256": "a09b23385ea082cf686c8f3955759331e8b9a1a31bd5c120566622a3ab71cd5d",
+      "bytes": 11572
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/ops-A-values.json",
+      "sha256": "e3679d55a72a4ba28667514bd986da3cabbbdf2eb371638cac60cc04500e4e56",
+      "bytes": 2295
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/ops-B-values.json",
+      "sha256": "cbecf3f0224ddb6195bacf2e298592c1764dae834a243f1fa2b0ea5400aecb1a",
+      "bytes": 2381
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/prism-A-values.json",
+      "sha256": "5f80f5821dc3ccc0208b5721d1cf2e971ffeeb145b0b8bd30f4b16187616fb99",
+      "bytes": 4923
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/prism-B-values.json",
+      "sha256": "7a34ff75257a4ac5d0a646b0ff89eaa16b4744f597f5d95580ca5c6a4f0432f6",
+      "bytes": 4922
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/policy-block-domains.json",
+      "sha256": "eaeed2bc89b9c783f1989ad9afbc7edf578f758c8106bc2a92e05c3291dbe4c0",
+      "bytes": 5256
+    }
+  ],
+  "productiveRuns": 0,
+  "nativeRuns": 0,
+  "globalC0Accepted": false,
+  "implementationAuthorization": false
+}

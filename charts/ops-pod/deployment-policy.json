@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "ops-deployment-policy.v1",
+  "namespace": "kubeclaw-ops",
+  "release": "codex-ops",
+  "valuesFile": null,
+  "kubectlRequestTimeoutSeconds": 20,
+  "readNamespaces": ["kubeclaw", "argocd", "kube-system", "cilium", "tailscale", "spire-server", "spire-system"],
+  "copyPullSecret": true,
+  "pullSecretSourceNamespace": "kubeclaw",
+  "bearerTokenEntropyBytes": 48,
+  "helmHistoryMax": 5
+}

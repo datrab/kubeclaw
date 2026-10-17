@@ -1,0 +1,115 @@
+{
+  "UTC": "2026-10-13T05:25:53.670601+00:00",
+  "head": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "tree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "summary": {
+    "verdict": "DCTRL01/02/03 resolved at bounded proposed-definition scope; minor documentation count follow-up; NOT wholeC0/native/implementation/root projection acceptance",
+    "materialFindingDispositions": [
+      {
+        "id": "DCTRL-01",
+        "disposition": "resolved at bounded proposed definition/preparation scope; NOT implemented/native accepted",
+        "evidence": [
+          "lifecycle-definition-schema.json",
+          "correction-contracts.json",
+          "native-case-contracts.json",
+          "independent-pure-controls.json"
+        ],
+        "reason": "Separate physical mutable status.deliveryLifecycle typed; epoch immutable original bytes/authority retained, exact UID/RV CAS+readback and coupled native status, deletion intent-before-DELETE+original timeout/uncertainty/restart/confirmation-before-finalizer specified. Complete source member templates/ordered native recipe, including Product action extend, qualify earlier summaries as templates; genuine authentication/grants/native values remain explicit prerequisites."
+      },
+      {
+        "id": "DCTRL-02",
+        "disposition": "resolved at bounded proposed identity/time scope; NO retained original rebasing",
+        "evidence": [
+          "correction-contracts.json",
+          "native-case-contracts.json",
+          "independent-pure-controls.json"
+        ],
+        "reason": "New synthetic T0 and complete byte identity DAG BEFORE its baseline are separated from immutable retained A. Independently generated public synthetic Ready raw hash -> Product linked raw payload/domain signature/envelope -> exact receipt/prior lifecycle digest -> baseline, old original untouched. Changed timestamp/payload does not verify old signature and changes Ready digest. No key serialization/hash/export or native/trust claim."
+      },
+      {
+        "id": "DCTRL-03",
+        "disposition": "resolved at bounded proposed principal domain/schema scope; NO TokenReview/RBAC proof",
+        "evidence": [
+          "policy-definition-schema.json",
+          "correction-contracts.json",
+          "independent-pure-controls.json"
+        ],
+        "reason": "Exact four-component principal grammar enforced: namespace DNS1123label1..63; SA DNS1123subdomain total1..253, no invented per-label63; actual distinct Ready/Product relations. Independent split/regex predicates agree malformed/max boundaries and restores. Broader current Go readyName is honestly distinct; pinned primary API functions source-linked, not installed validation."
+      }
+    ],
+    "minorDocumentationFollowup": {
+      "id": "DCTRL-RECHECK-DOC01",
+      "severity": "low/nonmaterial documentation count",
+      "artifact": "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/native-case-contracts.json#/cases/3/oracle",
+      "observed": "Ready-v2 oracle says exact27 native state fields, but exact commitDemoReady map constructor, actual author extraction and independent extraction have24 fields. Template contains all24 source-required fields; no field loss or native-positive claim follows.",
+      "requestedClarification": "Replace27 with24 or omit the numeric count in a separate authored correction/addendum preserving frozen inputs. Keep every actual mandatory field and original case requirement.",
+      "effectOnMaterialVerdict": "DCTRL01 actual typed/source member gap resolved; this count prose mismatch does not require native/C1 execution or reopen absent source fields."
+    },
+    "frozenPrimaryArtifacts": 17,
+    "selectedRows": 49,
+    "selectedCanonicalContainers": 6,
+    "currentSourceFiles": 14,
+    "oldReviewedDecodedPayloadsPreserved": 73,
+    "pureAuthorReplayedControls": 105,
+    "independentPureControls": 62,
+    "futureCorrectionSubcasesNotRun": 12,
+    "canonicalContainersNotRun": 6,
+    "allInputDrift": {
+      "primary17": [],
+      "sources": [],
+      "extraInputs": [],
+      "priorIndependentReviewFiles": [],
+      "currentBoundaryFileIdentities": [],
+      "RuntimePaused4": []
+    },
+    "RuntimeStillPaused": true,
+    "remainingMaterialCorrectionGaps": [],
+    "globalC0Accepted": false,
+    "nativeAccepted": false,
+    "rootProjectionReviewed": false
+  },
+  "frozenInputsSHA256": "0150ea4bfa8b1b69a07252d02e645f0d6de3596a69286897539521a632406288",
+  "afterInputsSHA256": "651abe37b761cc8a7ccdff084a75cff54eaa481c028c7fee4411d24c1b68d703",
+  "artifacts": {
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/frozen-input-identities.json": "0150ea4bfa8b1b69a07252d02e645f0d6de3596a69286897539521a632406288",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/independent-review.json": "6f413ed5ffe77a00bd1a5f0f8846e141609c1c1704d2aa42f4595e90e2dd853a",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/finish.py": "4329a39e52b7bb01fdd9df163fcce14ca09f845c59f713e28745e69ec888546c",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/REPORT.md": "f86aa8a72b5cb0b964d65392474f289cdb34ad4459c29d3634dd71ec503f599f",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/after-input-identities.json": "651abe37b761cc8a7ccdff084a75cff54eaa481c028c7fee4411d24c1b68d703",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/replayed-author-pure-controls.json": "0077ed5f1ca6c137b5319a96c8337503c3fda03bb44e357ac53b417dd541bd23",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/replay-author-pure.cjs": "0e3c42146dbd6540815fdb9bcc18aeaa69dec95aa50313c729f0b2215a664e04",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/check-independent.cjs": "aad12a2944c733c3e4c2b51555908863ae57a7e70a59965d174f4a4f3ca507c2",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/check-independent-attempt1.stdout": "ad20a3f611346f42d41ba38d271c42239ad0c192c3b9b2e96bd8f70901541adf",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/check-independent-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/selected49rows-6containers-before.json": "20cacc40bf3d682360f6d3daeda572a96afd46a89453d5c41adf2e8a762fdd82",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/frozen-selected-inputs.tar.gz": "603b27c52a8f84d0c369d7858b27a245fe6ac7e52f4b80e791afc4f33b43f4f1",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/replay-author-pure.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/freeze.stdout": "844c96611f6d56812488b587346e1320c3bb320b864607c82d7ed76f8bf8e3cf",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/independent-pure-controls.json": "fd14823924c52721b3884711ba63916db6fbabefffc4ad3f2871228135753a2b",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/replay-author-pure.stdout": "e60dd8d9a9edc04f9716da41178aff8b938ce6c7e4b56455e042a126b5a4a66d",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/freeze.py": "005e9f6eb4d06f9c8a3cf21040c9c80472adeec7c8866d324e3e7a11aeeffcbd",
+    "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/freeze.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/replay-author-pure.cjs"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/replay-author-pure.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/replay-author-pure.stderr"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/check-independent.cjs"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/check-independent-attempt1.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/check-independent-attempt1.stderr"
+    }
+  ],
+  "noNativeOrAcceptance": true
+}

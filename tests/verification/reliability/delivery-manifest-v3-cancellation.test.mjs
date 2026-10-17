@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -58,7 +59,7 @@ test('real cancelled v2/v3 Summary writes and nested evidence reads never publis
       const granted = core.resolveCapabilityGrants(registry, { enabledRegistrations: new Set(grants.keys()), providers, grants });
       const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
       const effectsFile = path.join(root, `durability-${target}-${mode}-requested-effects.jsonl`);
-      const effects = new core.FileEffectJournal(effectsFile);
+      const effects = new core.FileEffectJournal(effectsFile, TEST_CORE_POLICY);
       const capability = target === 'write' ? 'artifacts.write' : 'test.plan.evidence';
       const prior = (await effects.recoveryEntries()).map(entry => entry.request)
         .find(request => request.capability === capability && (target !== 'write' || request.attempt.stageId === 'project-summary'));
@@ -83,9 +84,9 @@ test('real cancelled v2/v3 Summary writes and nested evidence reads never publis
       };
       const artifactRoot = path.join(root, 'artifacts');
       const adapters = new core.AdapterRuntime({ granted, activated,
-        configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
-          [evidenceId, { stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }]]),
-        effects: new core.EffectCoordinator(effects, undefined, audit, new core.FileResourceLockManager(path.join(root, 'cancel-locks')), 300_000),
+        configs: new Map([['kubeclaw.artifact-store:artifact-store', { ...TEST_CORE_POLICY.artifactStore, artifactRoot }],
+          [evidenceId, { gateLimits: TEST_CORE_POLICY.remoteTestGate, stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }]]),
+        effects: new core.EffectCoordinator(effects, undefined, audit, new core.FileResourceLockManager(path.join(root, 'cancel-locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition),
         shutdownTimeoutMs: 1000, async emitDomainEvent() {},
       });
       await adapters.start();

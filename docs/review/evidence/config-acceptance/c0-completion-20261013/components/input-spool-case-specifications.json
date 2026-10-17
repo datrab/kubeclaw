@@ -1,0 +1,617 @@
+{
+  "status": "proposed exact semantic cases; executable harness/real fixtures absent",
+  "cases": [
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-MISSING-GRANT",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Remove original authenticated store grant",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Reject before mkdir/open/write/reservation activation; grant-required error; existing bytes unchanged",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-WRONG-PROVIDER",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Use valid signature on other physical volume ID",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Binding conflict before write; no latest-provider substitution",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-LOGICAL-BOUNDARY",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Original L logical cap; owned input length n; charged+reserved+n=L then L+1 on separate original stand",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "First admitted; adjacent negative capacity:logicalBytes before any IO; shared object still charges logical references",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-PENDING-BOUNDARY",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Grant exactly covers reserved temp blocks/inode/metadata then one allocation unit less under separately captured original grant",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Admit exact feasible reservation; smaller grant rejects physical dimension before mkdir/pending; byte length not used as allocation proxy",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-LEDGER-BOUNDARY",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Serialize exact proposed record/reference/transition reserve into selected ledger provider; cap exact bytes then one less",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Positive durable record survives restart; negative ledgerBytes before artifact IO",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-FIVE-WRITERS",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Interleave architecture/corpus/baseline/worker/native writes on same authenticated store",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "One store ledger; combined charge/reservations never exceeds any dimension; no unaccounted writer",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-SAME-DIGEST-PARALLEL",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Two different accepted operations reserve identical bytes concurrently",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "One unique final physical inode; two logical references; pending charges accounted; releasing first cannot remove second input",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-KEY-CONFLICT",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Same operation key with changed input hash/original provenance",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Original idempotency conflict before reservations/IO; no counter reset",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-TERMINAL-REPLAY",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Original completed result then select B",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Original hydration only; zero new input reservation/pending/directory writes; no launch",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-CRASH-RESERVED",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Crash after original DB reservation before mkdir",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Resume original A or confirmed original release; no B grant/deadline replacement",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-CRASH-PENDING",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Crash after partial pending write before link",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Account exact original pending ownership and conservative uncertain allocation; reconcile safely; no false cleanup PASS",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-CRASH-LINKED",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Crash after hard link/fsync before ready record",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Original checksum/durability/ownership readback; no duplicate engine dispatch; charges remain until reconciliation",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-VERIFICATION-FAIL",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Original runtime verification fails before first materialization",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "No new filesystem writes or engine initializer effects; original reservation explicit retained/released disposition",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-CORRUPT-SHARED",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Existing final same digest has wrong bytes",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Quarantine and integrity rejection; no dispatch or overwrite; charge retained pending cleanup",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-CLEANUP-FAIL",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Interrupt unlink/sync/release or simulate provider unavailable",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Retain pending/physical uncertainty charge and report blocked cleanup; no release on attempted removal",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-RETENTION",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Original live retained refs then shorter B retention/quota",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "No A ref deletion/expiry or capacity reset; B new admission sees aggregate A allocation",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-LEGACY-HISTORY",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Preexisting pending/final objects with no authentic reference/grant history",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "Read-only hydration if original result sufficient, otherwise explicit history-required/quarantine; no latest grant synthesis",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-FIXED-EVAL",
+      "settingIds": [
+        "CMP-prism-control-artifactRoot"
+      ],
+      "gapIds": [
+        "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION"
+      ],
+      "requirementIds": [
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND",
+        "F6",
+        "D17",
+        "D20"
+      ],
+      "scope": "local disposable actual Postgres/store provider; live deployed identity separately required",
+      "productiveCaller": "runNativePrismOperation -> reserveNativePrismOperation -> ContentAddressedArtifactStore.put; all five shared put callers where specified",
+      "input": "Freeze Eval A then publish B",
+      "priorState": "Authenticated original A physical store closure, allocation/ref/ledger readback and selected complete policy; separately captured negative original stand where quotas differ. No policy rebinding of accepted work.",
+      "expected": "All admitted operations use A; original accounting/claims/recovery unchanged",
+      "observer": "Owned syscall/allocation trace (mkdir/open/write/link/fsync/unlink), immutable DB envelope/spool/ref ledger readback, provider block/inode/quota observations, actual engine/import markers, original claim/deadline/result identity",
+      "command": null,
+      "commandReason": "Approved target composition/harness absent; do not fabricate an executable target command. Future implementation must attach exact argv/harness digest before runtime acceptance.",
+      "sourceIdentityRef": "source-identities.json",
+      "testIdentity": null,
+      "dependencies": "Pinned PostgreSQL, authenticated enforcing volume provider, immutable runtime manifest and disposable real storage fixtures",
+      "rawEvidence": null,
+      "result": "not-run",
+      "reviewerConfirmation": null
+    }
+  ]
+}

@@ -57,13 +57,13 @@ func serveVersionedLease(t *testing.T, c *controller, item *lease, w http.Respon
 }
 
 func TestKubernetesHTTPClientRequiresServiceAccountCA(t *testing.T) {
-	if _, err := kubernetesHTTPClientFromCA(filepath.Join(t.TempDir(), "missing-ca.crt")); err == nil {
+	if _, err := kubernetesHTTPClientFromCA(filepath.Join(t.TempDir(), "missing-ca.crt"), testControllerPolicy(t)); err == nil {
 		t.Fatal("expected a missing ServiceAccount CA to fail closed")
 	}
 }
 
 func TestControllerPollIntervalRejectsNonPositiveValues(t *testing.T) {
-	for _, value := range []string{"0", "-1", "9223372036855", "not-a-number"} {
+	for _, value := range []string{"", "0", "-1", "9223372036855", "not-a-number"} {
 		t.Run(value, func(t *testing.T) {
 			t.Setenv("BUSTER_CONTROLLER_POLL_MS", value)
 			if _, err := controllerPollInterval(); err == nil {
@@ -91,7 +91,7 @@ func testController(t *testing.T) *controller {
 	if err := os.WriteFile(tokenPath, []byte("test-token"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	return &controller{
+	return &controller{policy: testControllerPolicy(t),
 		tokenPath: tokenPath,
 		namespace: "kubeclaw", allowedPrefixes: []string{"test"}, allowedAccess: allowed,
 		serviceAccountName: "agent-buster-namespace-controller",
@@ -808,7 +808,7 @@ func TestRuntimeSecurityFindingsFitTheCRD(t *testing.T) {
 	for index := range findings {
 		findings[index] = securityFinding(fmt.Sprintf("runtime:role:%05d", index), "high", "unsafe", "Role/test")
 	}
-	bounded, total, omitted := boundedRuntimeSecurityFindings(findings)
+	bounded, total, omitted := boundedRuntimeSecurityFindings(findings, testControllerPolicy(t))
 	if len(bounded) > 4096 || total != 4100 || omitted != total-(len(bounded)-1) {
 		t.Fatalf("unexpected finding bounds: len=%d total=%d omitted=%d", len(bounded), total, omitted)
 	}
@@ -820,7 +820,7 @@ func TestRuntimeSecurityFindingsFitTheCRD(t *testing.T) {
 	for index := range large {
 		large[index] = securityFinding(fmt.Sprintf("runtime:large:%05d", index), "high", strings.Repeat("x", 4096), "Pod/test")
 	}
-	byteBounded, _, byteOmitted := boundedRuntimeSecurityFindings(large)
+	byteBounded, _, byteOmitted := boundedRuntimeSecurityFindings(large, testControllerPolicy(t))
 	if serializedFindingBytes(byteBounded) > 512*1024 || byteOmitted == 0 || stringValue(securityObject(byteBounded[len(byteBounded)-1])["id"]) != "runtime:findings:overflow" {
 		t.Fatalf("serialized finding budget did not fail closed: bytes=%d omitted=%d", serializedFindingBytes(byteBounded), byteOmitted)
 	}
@@ -835,13 +835,31 @@ func TestRuntimeSecurityResultDigestUsesCanonicalPayload(t *testing.T) {
 
 func TestRuntimeSecurityRefreshAvoidsStatusPatchLoop(t *testing.T) {
 	now := time.Date(2026, 9, 4, 6, 0, 0, 0, time.UTC)
-	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-4 * time.Second).Format(time.RFC3339)}, now) {
+	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-4 * time.Second).Format(time.RFC3339)}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second, 5*time.Second) {
 		t.Fatal("fresh runtime-security status must not refresh on each controller poll")
 	}
-	if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}, now) {
+	if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second, 5*time.Second) {
 		t.Fatal("runtime-security status must refresh at the bounded interval")
 	}
-	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Unavailable"}, now) {
+	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Unavailable"}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second, 5*time.Second) {
 		t.Fatal("immutable leases without security inputs must not patch unchanged unavailable status")
+	}
+}
+
+func TestControllerLeaseTimingRequiresCentralTransport(t *testing.T) {
+	for _, key := range []string{"BUSTER_DEFAULT_TTL_SECONDS", "BUSTER_MAX_TTL_SECONDS"} {
+		for _, invalid := range []string{"", "0", "-1", "invalid", "9223372037"} {
+			t.Setenv(key, invalid)
+			if _, err := requiredDurationSeconds(key); err == nil {
+				t.Fatalf("invalid central timing %s=%q accepted", key, invalid)
+			}
+		}
+		for _, seconds := range []int64{7200, 86400, 1} {
+			t.Setenv(key, strconv.FormatInt(seconds, 10))
+			actual, err := requiredDurationSeconds(key)
+			if err != nil || actual != seconds {
+				t.Fatalf("selected timing lost %s=%d: %v", key, actual, err)
+			}
+		}
 	}
 }

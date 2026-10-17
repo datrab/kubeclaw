@@ -1,0 +1,232 @@
+{
+  "scope": "public fixedT0 structural template, NOT native-positive/generated-credential/authentic receipt fixture",
+  "mode": "ready-v2",
+  "T0": "2030-01-01T00:00:00Z",
+  "frozenOriginalEpochUTF8": "{\"schemaVersion\":\"dlv-controller-policy-epoch.v1\",\"leaseIdentity\":{\"apiGroup\":\"kubeclaw.forgestack.ai\",\"apiVersion\":\"v1alpha1\",\"plural\":\"busternamespaceleases\",\"controllerNamespace\":\"dlv-controller-a\",\"controllerNamespaceUID\":\"synthetic-controller-ns-A\",\"name\":\"dlv-lease-a\",\"uid\":\"synthetic-lease-UID-A\",\"generation\":1,\"originalCreationTimestamp\":\"2030-01-01T00:00:00Z\",\"initialImmutableSpecDigest\":\"sha256:aba2b131a2f0acc935737ebc263eb2a58e08fc8e37adc9fe339076cde2c792d8\",\"initialFullSpecDigest\":\"sha256:53a8f854a0ea34207a81868e64078f57980f142198b3a859240fb0022ec9207e\"},\"policyConfig\":{\"sourceRevision\":\"6606af9e590032f328f330ecb3d953b1eef027e3\",\"authorPointer\":\"charts/kubeclaw/values.yaml#/profiles/A/settings/busterNamespaceBroker/controller/policy\",\"materializedPolicyRef\":\"docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-A.json\",\"materializedPolicySha256\":\"dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d\",\"originalAuthorReceiptRef\":\"future-authenticated-original-A-delivery-receipt\",\"originalBinaryReceiptRef\":\"future-exact-controller-binary-and-Go-stdlib-receipt\",\"originalOCIReceiptRef\":\"future-exact-controller-OCI-platform-receipt\"},\"initialTTL\":{\"source\":\"original-author-default\",\"requestedSeconds\":7200,\"originalDefaultSeconds\":7200,\"originalMaximumSeconds\":86400,\"effectiveSeconds\":7200,\"initialExpiresAt\":\"2030-01-01T02:00:00Z\"},\"authoritySnapshot\":{\"namespaceName\":\"dlv-a-work\",\"namespaceUID\":\"synthetic-owned-namespace-UID-A\",\"allowedPrefix\":\"dlv-a\",\"access\":[{\"subject\":\"dlv-controller-a/agent-buster\",\"modes\":[\"tester\",\"deployer\"]}],\"sourceSecretSelectors\":[\"dlv-source-a\"],\"finalizer\":\"kubeclaw.forgestack.ai/buster-namespace-cleanup\",\"secretRoleName\":\"agent-buster-controller-secrets\",\"deployerRoleName\":\"agent-buster-namespace-deployer\",\"testerRoleName\":\"agent-buster-namespace-tester\"},\"runtimeAuthority\":{\"APIOrigin\":\"https://127.0.0.1:18443\",\"clusterIdentityRef\":\"future-authentic-API-cluster-A\",\"controllerSAUID\":\"future-controller-SA-UID-A\",\"apiGrantReceiptRef\":\"future-original-A-api-rbac-secret-tokenreview-grant\",\"CAProviderRef\":\"future-original-A-CA-trust-lineage\",\"tokenProviderRef\":\"future-original-A-rotating-token-provider-lineage\",\"readyProducer\":\"system:serviceaccount:dlv-controller-a:agent-nova\",\"readyAudience\":\"dlv-ready-a\",\"readyTLSProviderRef\":\"dlv-ready-tls-a\",\"productProducer\":\"system:serviceaccount:dlv-controller-a:prism-control\",\"productAudience\":\"dlv-product-a\",\"productIssuer\":\"dlv-human-authority-a\",\"productPublicTrustRef\":\"dlv-ed25519-issuer-a\",\"productActors\":[\"dlv-operator-a\"]}}",
+  "lease": {
+    "apiVersion": "kubeclaw.forgestack.ai/v1alpha1",
+    "kind": "BusterNamespaceLease",
+    "metadata": {
+      "name": "dlv-lease-a",
+      "namespace": "dlv-controller-a",
+      "uid": "synthetic-lease-UID-A",
+      "resourceVersion": "2",
+      "generation": 1,
+      "creationTimestamp": "2030-01-01T00:00:00Z",
+      "annotations": {
+        "kubeclaw.forgestack.ai/exposure-owner": "pending-owner",
+        "kubeclaw.forgestack.ai/readiness-handoff": "{\"phase\":\"awaiting-readiness\",\"owner\":\"pending-owner\",\"leaseUID\":\"synthetic-lease-UID-A\",\"immutableImage\":\"registry.example/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"manifestDigest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}"
+      }
+    },
+    "spec": {
+      "purpose": "final-preview",
+      "namespaceName": "dlv-a-work",
+      "cleanupPolicy": "retain",
+      "ttlSeconds": 7200,
+      "verifiedImage": "registry.example/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "manifestDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "exposure": {
+        "provider": "tailscale-ingress",
+        "serviceName": "app",
+        "servicePort": 80,
+        "hostname": "demo",
+        "path": "/"
+      }
+    },
+    "status": {
+      "phase": "Ready",
+      "namespaceName": "dlv-a-work",
+      "previewUrl": "https://demo.example/",
+      "exposurePhase": "Ready",
+      "exposureOwner": "ready:sha256:1e3a1e29ae47b78ab368b099e8535ac1d42244932248c07591e82b62fda247f7",
+      "exposureGeneration": 1,
+      "generatedCredentials": {
+        "leaseUID": "synthetic-lease-UID-A",
+        "namespace": "dlv-a-work",
+        "secretName": "dlv-generated-a",
+        "secretUID": "synthetic-secret-UID-A",
+        "credentialDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "generatedCredentialIntent": {
+        "leaseUID": "synthetic-lease-UID-A",
+        "namespace": "dlv-a-work",
+        "secretName": "dlv-generated-a",
+        "credentialDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "deliveryPolicyEpoch": {
+        "schemaVersion": "dlv-controller-policy-epoch.v1",
+        "leaseIdentity": {
+          "apiGroup": "kubeclaw.forgestack.ai",
+          "apiVersion": "v1alpha1",
+          "plural": "busternamespaceleases",
+          "controllerNamespace": "dlv-controller-a",
+          "controllerNamespaceUID": "synthetic-controller-ns-A",
+          "name": "dlv-lease-a",
+          "uid": "synthetic-lease-UID-A",
+          "generation": 1,
+          "originalCreationTimestamp": "2030-01-01T00:00:00Z",
+          "initialImmutableSpecDigest": "sha256:aba2b131a2f0acc935737ebc263eb2a58e08fc8e37adc9fe339076cde2c792d8",
+          "initialFullSpecDigest": "sha256:53a8f854a0ea34207a81868e64078f57980f142198b3a859240fb0022ec9207e"
+        },
+        "policyConfig": {
+          "sourceRevision": "6606af9e590032f328f330ecb3d953b1eef027e3",
+          "authorPointer": "charts/kubeclaw/values.yaml#/profiles/A/settings/busterNamespaceBroker/controller/policy",
+          "materializedPolicyRef": "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-A.json",
+          "materializedPolicySha256": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d",
+          "originalAuthorReceiptRef": "future-authenticated-original-A-delivery-receipt",
+          "originalBinaryReceiptRef": "future-exact-controller-binary-and-Go-stdlib-receipt",
+          "originalOCIReceiptRef": "future-exact-controller-OCI-platform-receipt"
+        },
+        "initialTTL": {
+          "source": "original-author-default",
+          "requestedSeconds": 7200,
+          "originalDefaultSeconds": 7200,
+          "originalMaximumSeconds": 86400,
+          "effectiveSeconds": 7200,
+          "initialExpiresAt": "2030-01-01T02:00:00Z"
+        },
+        "authoritySnapshot": {
+          "namespaceName": "dlv-a-work",
+          "namespaceUID": "synthetic-owned-namespace-UID-A",
+          "allowedPrefix": "dlv-a",
+          "access": [
+            {
+              "subject": "dlv-controller-a/agent-buster",
+              "modes": [
+                "tester",
+                "deployer"
+              ]
+            }
+          ],
+          "sourceSecretSelectors": [
+            "dlv-source-a"
+          ],
+          "finalizer": "kubeclaw.forgestack.ai/buster-namespace-cleanup",
+          "secretRoleName": "agent-buster-controller-secrets",
+          "deployerRoleName": "agent-buster-namespace-deployer",
+          "testerRoleName": "agent-buster-namespace-tester"
+        },
+        "runtimeAuthority": {
+          "APIOrigin": "https://127.0.0.1:18443",
+          "clusterIdentityRef": "future-authentic-API-cluster-A",
+          "controllerSAUID": "future-controller-SA-UID-A",
+          "apiGrantReceiptRef": "future-original-A-api-rbac-secret-tokenreview-grant",
+          "CAProviderRef": "future-original-A-CA-trust-lineage",
+          "tokenProviderRef": "future-original-A-rotating-token-provider-lineage",
+          "readyProducer": "system:serviceaccount:dlv-controller-a:agent-nova",
+          "readyAudience": "dlv-ready-a",
+          "readyTLSProviderRef": "dlv-ready-tls-a",
+          "productProducer": "system:serviceaccount:dlv-controller-a:prism-control",
+          "productAudience": "dlv-product-a",
+          "productIssuer": "dlv-human-authority-a",
+          "productPublicTrustRef": "dlv-ed25519-issuer-a",
+          "productActors": [
+            "dlv-operator-a"
+          ]
+        }
+      },
+      "deliveryLifecycle": {
+        "schemaVersion": "dlv-controller-lifecycle.v1-proposal",
+        "leaseUID": "synthetic-lease-UID-A",
+        "policyEpochDigest": "sha256:e397f39e480f5442ea631a6b891fb843acb7c66c77de0a32cc2823f8d3820c8f",
+        "revision": 2,
+        "authorityReceiptRef": "future-authenticated-original-A-delivery-and-grant-receipt",
+        "phase": "ready",
+        "operation": {
+          "id": "synthetic-ready-admission-a",
+          "kind": "ready-admission",
+          "requestDigest": "sha256:1e3a1e29ae47b78ab368b099e8535ac1d42244932248c07591e82b62fda247f7",
+          "baseLeaseResourceVersion": "1",
+          "priorLifecycleDigest": "sha256:532fc8c946ecd3e1ac46f748e2cd3c0bf5d747640937d66a5d4d812429b594e5",
+          "startedAt": "2030-01-01T00:10:00Z",
+          "deadline": "2030-01-01T00:10:15Z",
+          "outcome": "confirmed"
+        },
+        "cleanup": null,
+        "readyRequestDigest": "sha256:1e3a1e29ae47b78ab368b099e8535ac1d42244932248c07591e82b62fda247f7",
+        "productPayloadDigest": null
+      },
+      "demoReadiness": {
+        "retentionSeconds": 604800,
+        "namespace": "dlv-a-work",
+        "schemaVersion": "demo-readiness.v2",
+        "state": "ready-for-acceptance",
+        "requestId": "candidate-a",
+        "requestDigest": "sha256:1e3a1e29ae47b78ab368b099e8535ac1d42244932248c07591e82b62fda247f7",
+        "readyAt": "2030-01-01T00:10:00Z",
+        "expiresAt": "2030-01-08T00:10:00Z",
+        "runId": "synthetic-run-a",
+        "sourceRevision": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "candidateDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decisionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "resultDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "leaseUID": "synthetic-lease-UID-A",
+        "immutableImage": "registry.example/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "manifestDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "credentialDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "secretUID": "synthetic-secret-UID-A",
+        "url": "https://demo.example/",
+        "previousOwner": "pending-owner",
+        "owner": "ready:sha256:1e3a1e29ae47b78ab368b099e8535ac1d42244932248c07591e82b62fda247f7",
+        "exposureGeneration": 1,
+        "exposureSpec": {
+          "provider": "tailscale-ingress",
+          "serviceName": "app",
+          "servicePort": 80,
+          "hostname": "demo",
+          "path": "/"
+        },
+        "receipt": {
+          "schemaVersion": "discord-delivery-receipt.v1",
+          "accepted": true,
+          "target": "operator-contract-vector",
+          "status": 200,
+          "messageId": "123456789",
+          "deliveryId": "delivery-a",
+          "payloadDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expiresAt": "2030-01-08T00:10:00Z"
+    }
+  },
+  "readyRequest": {
+    "schemaVersion": "demo-ready-request.v1",
+    "requestId": "candidate-a",
+    "runId": "synthetic-run-a",
+    "sourceRevision": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "candidateDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "decisionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "resultDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "leaseName": "dlv-lease-a",
+    "leaseUID": "synthetic-lease-UID-A",
+    "namespace": "dlv-a-work",
+    "immutableImage": "registry.example/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "manifestDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "credentialDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "secretUID": "synthetic-secret-UID-A",
+    "exposureOwner": "pending-owner",
+    "exposureGeneration": 1,
+    "url": "https://demo.example/",
+    "observedAt": "2030-01-01T00:10:00Z",
+    "receipt": {
+      "schemaVersion": "discord-delivery-receipt.v1",
+      "accepted": true,
+      "target": "operator-contract-vector",
+      "status": 200,
+      "messageId": "123456789",
+      "deliveryId": "delivery-a",
+      "payloadDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "retentionSeconds": 604800
+  },
+  "exactReadyRawUTF8": "{\"schemaVersion\":\"demo-ready-request.v1\",\"requestId\":\"candidate-a\",\"runId\":\"synthetic-run-a\",\"sourceRevision\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"candidateDigest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"decisionDigest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"resultDigest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"leaseName\":\"dlv-lease-a\",\"leaseUID\":\"synthetic-lease-UID-A\",\"namespace\":\"dlv-a-work\",\"immutableImage\":\"registry.example/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"manifestDigest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"credentialDigest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"secretUID\":\"synthetic-secret-UID-A\",\"exposureOwner\":\"pending-owner\",\"exposureGeneration\":1,\"url\":\"https://demo.example/\",\"observedAt\":\"2030-01-01T00:10:00Z\",\"receipt\":{\"schemaVersion\":\"discord-delivery-receipt.v1\",\"accepted\":true,\"target\":\"operator-contract-vector\",\"status\":200,\"messageId\":\"123456789\",\"deliveryId\":\"delivery-a\",\"payloadDigest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"retentionSeconds\":604800}",
+  "productPayload": null,
+  "exactProductPayloadRawUTF8": null,
+  "unresolvedBeforeNativeBaseline": [
+    "native generatedCredentials full proof + Secret bytes remain memory-only",
+    "actual namespace/SA/lease/ingress/secret UID/RV and authority receipts",
+    "source previewExposureSpec/previewIngress exact generated object + labels/digest",
+    "Product public key + raw signed envelope if applicable; no private key export",
+    "CAS current UID/resourceVersion and typed state proposal installed definition if applicable"
+  ]
+}

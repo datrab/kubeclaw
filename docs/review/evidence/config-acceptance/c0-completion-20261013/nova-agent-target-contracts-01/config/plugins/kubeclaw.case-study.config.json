@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.case-study",
+  "instanceId": "fixture.case-study",
+  "profiles": {
+    "A": {
+      "processing": {
+        "kubeclaw.case-study:case-study": {
+          "agent": "case-target-a"
+        }
+      }
+    },
+    "RT-8152550972f10185-A": {
+      "processing": {
+        "kubeclaw.case-study:case-study": {
+          "agent": "case-target-a"
+        }
+      }
+    },
+    "RT-8152550972f10185-B": {
+      "processing": {
+        "kubeclaw.case-study:case-study": {
+          "agent": "case-target-b"
+        }
+      }
+    }
+  }
+}

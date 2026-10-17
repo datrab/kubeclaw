@@ -1,0 +1,37 @@
+{
+  "controls": [
+    {
+      "control": "original-hash-drift",
+      "rejected": true,
+      "error": "Original hash drift: RT-150ea543e6774e0f"
+    },
+    {
+      "control": "case-join-drift",
+      "rejected": true,
+      "error": "Original case join drift: RT-150ea543e6774e0f"
+    },
+    {
+      "control": "owner-drift",
+      "rejected": true,
+      "error": "Original classification/owner drift: RT-150ea543e6774e0f"
+    },
+    {
+      "control": "missing-current-pointer",
+      "rejected": true,
+      "error": "'maxArtifactBytes'"
+    },
+    {
+      "control": "foreign-original-id",
+      "rejected": true,
+      "error": "Duplicate/foreign field: FOREIGN-ID"
+    },
+    {
+      "control": "duplicate-original-id",
+      "rejected": true,
+      "error": "Duplicate/foreign field: RT-150ea543e6774e0f"
+    }
+  ],
+  "restoredPositive": "PASS",
+  "deterministicReplay": true,
+  "qualification": "Matrix source/identity controls only; no runtime or independent acceptance"
+}

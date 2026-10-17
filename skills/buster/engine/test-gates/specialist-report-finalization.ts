@@ -1,4 +1,4 @@
-import type { BusterReportExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import type { BusterReportExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { canonical } from './canonical-value.ts';
 import type { EvidenceRefV1, ProviderResultV1, ReportAdapterRefV1, ReportAdapterResultV1,
   ResolvedPlanNodeV1 } from '@kubeclaw/pipeline-test-gate-contract';

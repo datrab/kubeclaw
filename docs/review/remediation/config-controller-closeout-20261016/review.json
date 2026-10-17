@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects found in the corrected combined worktree supplied in the bundle. Source review supports strict policy parsing, startup capture, preserved historical retention, bounded evidence, and the corrected deletion deadline covering requests and polling. Tests were inspected but not executed; this review does not establish native deployment, Helm execution, or paid model evaluation results.",
+  "overall_confidence": 0.88
+}

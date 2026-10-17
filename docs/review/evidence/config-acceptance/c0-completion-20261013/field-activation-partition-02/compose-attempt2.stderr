@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/compose-corrections.py", line 89, in <module>
+    deliveryrefs=[ref(dp,('/cases/' if isinstance(delivery,dict) and 'cases' in delivery else '/rows/')+str(i),c,c.get('id',c.get('caseId'))) for i,c in enumerate(dj) if id in c.get('settingIds',[]) or str(c.get('id','')).startswith(id+'-')]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/compose-corrections.py", line 89, in <listcomp>
+    deliveryrefs=[ref(dp,('/cases/' if isinstance(delivery,dict) and 'cases' in delivery else '/rows/')+str(i),c,c.get('id',c.get('caseId'))) for i,c in enumerate(dj) if id in c.get('settingIds',[]) or str(c.get('id','')).startswith(id+'-')]
+                                                                                                                                                                                ^^^^^
+AttributeError: 'str' object has no attribute 'get'

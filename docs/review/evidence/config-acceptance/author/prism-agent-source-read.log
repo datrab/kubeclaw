@@ -1,0 +1,258 @@
+skills/prism/server/agent-attempt.ts sha256=3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8
+1: import { readFile } from 'node:fs/promises';
+2: import { sha256Digest,sha256Text,workerAttemptSpecDigest,workerProfileDigest } from '@kubeclaw/worker-core';
+3: import type { WorkerAttemptEnvelopeV2,WorkerProfileV2,JsonValue } from '@kubeclaw/pipeline-worker-core-contract';
+4: 
+5: function unavailable(unit:'milliseconds'|'bytes'|'processes') {
+6:   return {scope:'local-cli-process-tree',unit,measurement:'unavailable' as const,
+7:     reason:'Node child_process does not expose trustworthy complete child-tree resource accounting in this deployment'};
+8: }
+9: 
+10: /** This is the local launcher profile, not the remote gateway/model engine or deterministic Prism engine. */
+11: export async function agentAttempt(job:{id:string;fence:string;expires_at:string|Date;request_digest:string;request:Record<string,unknown>},runnerId:string):Promise<WorkerAttemptEnvelopeV2> {
+12:   const files=['agent-process.ts','agent-attempt.ts','agent-job-runner.mjs','agent-prompt.mjs','preference-prompt.mjs'];
+13:   const content=await Promise.all(files.map(async file=>({file,digest:sha256Text(await readFile(new URL(file,import.meta.url),'utf8'))})));
+14:   const unsignedProfile={schemaVersion:'worker-profile.v2' as const,profileId:'prism-openclaw-launcher-v2',workerType:'prism-agent',coreContractId:'kubeclaw.pipeline-worker-core@2',
+15:     engine:{engineId:'prism-openclaw-launcher',contractId:'kubeclaw.prism-agent-launcher@1',engineVersion:'2.0.0',contentDigest:sha256Digest(content)},capabilities:['openclaw.agent','artifacts.write'],resourceCapabilities:{
+16:       schemaVersion:'worker-resource-capabilities.v1' as const,
+17:       cpuTimeMs:unavailable('milliseconds'),maximumMemoryBytes:unavailable('bytes'),maximumProcesses:unavailable('processes'),
+18:     }};
+19:   const profile:WorkerProfileV2={...unsignedProfile,profileDigest:workerProfileDigest(unsignedProfile)};
+20:   const expiresAt=new Date(job.expires_at).toISOString();const now=new Date().toISOString();
+21:   const unsigned={schemaVersion:'worker-attempt-envelope.v2' as const,protocolVersion:'worker-protocol.v1' as const,
+22:     pipelineRunId:`prism-${job.id}`,moduleId:null,gateId:null,planId:`prism-${job.id}`,nodeId:'openclaw-agent',executionId:job.id,
+23:     attemptId:job.fence,attemptNumber:1,claim:{schemaVersion:'attempt-claim.v1' as const,claimId:job.fence,attemptId:job.fence,generation:1,workerId:runnerId,claimedAt:now,expiresAt},profile,packages:[],grantedCapabilities:[...profile.capabilities],
+24:     limits:{timeoutMs:900_000,cleanupTimeoutMs:10_000,logBytes:1_048_576,resultBytes:1_048_576,evidenceBytes:2_097_152,evidenceFiles:2},
+25:     resourceBudgets:{schemaVersion:'worker-resource-budgets.v1' as const,cpuTimeMs:{state:'unrequested' as const},maximumMemoryBytes:{state:'unrequested' as const},maximumProcesses:{state:'unrequested' as const}},
+26:     inputs:[],operation:{contractId:'kubeclaw.prism-agent-launcher@1',inputSchemaId:'prism-agent-job.v1',inputSchemaDigest:sha256Digest({type:'object',required:['jobId','requestDigest','request']}),values:{jobId:job.id,requestDigest:job.request_digest,request:job.request as JsonValue}},
+27:     cancellationId:job.fence,issuedAt:now,queueDeadline:expiresAt};
+28:   return {...unsigned,attemptSpecDigest:workerAttemptSpecDigest(unsigned)};
+29: }
+skills/prism/control/agent-jobs.ts sha256=ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334
+1: import { checkWorkerResourceResultBinding,type WorkerAttemptEnvelopeV2,type WorkerAttemptResultV2 } from '@kubeclaw/pipeline-worker-core-contract';
+2: import { agentAttempt } from '../server/agent-attempt.ts';
+3: import { randomUUID } from 'node:crypto';
+4: import { sha256Digest } from '@kubeclaw/worker-core';
+5: import { inTransaction, type Database, type Queryable } from '../storage/index.ts';
+6: import { agentSessionKey } from '../server/agent-session.ts';
+7: 
+8: export type AgentJob = Record<string,unknown> & {
+9:   id:string; project_id:string; operation:'design-set'|'revise'; session_key:string;
+10:   request_digest:string; request:Record<string,unknown>; state:'accepted'|'running'|'completed'|'needs_nova'|'superseded';
+11:   attempt_envelope:WorkerAttemptEnvelopeV2|null; fence:string|null; result:unknown; result_digest:string|null;
+12: };
+13: export type AgentCompletion = {jobId:string; fence:string; payload:unknown};
+14: 
+15: /** Called only by authenticated Control admission paths, never from project-authored bridge input. */
+16: export async function enqueueAgentJob(db: Database, namespace:string, projectId:string, operation:AgentJob['operation'], input:Record<string,unknown> & {preferences:{generationId:string}}) {
+17:   return inTransaction(db,connection=>insertAgentJob(connection,namespace,projectId,operation,input));
+18: }
+19: 
+20: export async function insertAgentJob(connection:Queryable,namespace:string,projectId:string,operation:AgentJob['operation'],input:Record<string,unknown> & {preferences:{generationId:string}}) {
+21:     const generation=await connection.query<{project_id:string}>("SELECT g.project_id FROM prism.preference_generation g JOIN prism.project p ON p.id=g.project_id WHERE g.id=$1 AND p.external_id=$2 FOR SHARE OF g",[input.preferences.generationId,projectId]);
+22:     if(!generation.rows[0])throw new Error('agent job generation does not belong to project');
+23:     input={...input,preferences:Object.fromEntries(Object.entries(input.preferences).filter(([key])=>key!=='result')) as {generationId:string}};
+24:     const requestDigest=sha256Digest({operation,input});
+25:     await connection.query("INSERT INTO prism.agent_job(id,project_id,operation,session_namespace,session_key,request_digest,request) VALUES($1,$2,$3,$4,$5,$6,$7::jsonb) ON CONFLICT(id) DO NOTHING",[input.preferences.generationId,generation.rows[0].project_id,operation,namespace,agentSessionKey(namespace,projectId),requestDigest,JSON.stringify(input)]);
+26:     const job=await agentJob(connection,input.preferences.generationId);
+27:     if(job.request_digest!==requestDigest)throw new Error('agent job generation conflicts with recorded request');
+28:     return job;
+29: }
+30: 
+31: export async function agentJob(db:Queryable,id:string):Promise<AgentJob> {
+32:   await db.query("UPDATE prism.agent_job SET state='needs_nova',outcome=jsonb_build_object('reason','external agent outcome unresolved after claim expiry'),updated_at=clock_timestamp() WHERE state='running' AND expires_at<=clock_timestamp() AND session_key=(SELECT session_key FROM prism.agent_job WHERE id=$1)",[id]);
+33:   const row=await db.query<AgentJob>("SELECT j.*,(SELECT blocked.id FROM prism.agent_job blocked WHERE blocked.session_key=j.session_key AND blocked.state='needs_nova' ORDER BY blocked.created_at,blocked.id LIMIT 1) AS blocked_by FROM prism.agent_job j WHERE j.id=$1",[id]);
+34:   if(!row.rows[0])throw new Error('persisted Prism agent job not found');
+35:   return row.rows[0];
+36: }
+37: 
+38: /** Only accepted work can cross the external-action boundary. Running work is never requeued. */
+39: export async function claimAgentJob(db:Database,runnerId:string) {
+40:   if(!runnerId || runnerId.length>160)throw new Error('agent runner identity is required');
+41:   return inTransaction(db,async connection=>{
+42:     await connection.query("SELECT pg_advisory_xact_lock(hashtextextended('prism-agent-admission',0))");
+43:     await connection.query("UPDATE prism.agent_job SET state='needs_nova',outcome=jsonb_build_object('reason','external agent outcome unresolved after claim expiry'),updated_at=clock_timestamp() WHERE state='running' AND expires_at<=clock_timestamp()");
+44:     await connection.query("UPDATE prism.agent_job j SET state='superseded',outcome=jsonb_build_object('reason','source changed before external action started'),updated_at=clock_timestamp() WHERE j.state='accepted' AND ((j.operation='design-set' AND NOT EXISTS (SELECT 1 FROM prism.design_round round JOIN prism.design_request request ON request.id=round.design_request_id WHERE round.id=j.id AND request.status='active' AND request.current_round_id=round.id)) OR (j.operation='revise' AND NOT EXISTS (SELECT 1 FROM prism.design_document document JOIN prism.design_revision revision ON revision.id=document.current_revision_id WHERE document.id::text=j.request->>'documentId' AND revision.revision::text=j.request->>'expectedRevision'))) ");
+45:     const rows=await connection.query<AgentJob>("SELECT j.* FROM prism.agent_job j WHERE j.state='accepted' AND NOT EXISTS (SELECT 1 FROM prism.agent_job active WHERE active.session_key=j.session_key AND active.state IN ('running','needs_nova')) ORDER BY j.created_at,j.id LIMIT 1 FOR UPDATE OF j");
+46:     if(!rows.rows[0])return null;
+47:     const source=rows.rows[0];const fence=randomUUID();
+48:     const deadline=await connection.query<{expires_at:Date|string}>("SELECT clock_timestamp()+interval '16 minutes' AS expires_at");
+49:     const expiresAt=deadline.rows[0]!.expires_at;
+50:     const envelope=await agentAttempt({...source,fence,expires_at:expiresAt},runnerId);
+51:     const claimed=await connection.query<AgentJob>("UPDATE prism.agent_job SET state='running',fence=$2,runner_id=$3,expires_at=$4,attempt_envelope=$5::jsonb,updated_at=clock_timestamp() WHERE id=$1 AND state='accepted' RETURNING *",[source.id,fence,runnerId,expiresAt,JSON.stringify(envelope)]);
+52:     return claimed.rows[0]!;
+53:   });
+54: }
+55: 
+56: export async function finishAgentRun(db:Database,id:string,fence:string,outcome:Record<string,unknown>) {
+57:   return inTransaction(db,async connection=>{
+58:     const rows=await connection.query<AgentJob>('SELECT * FROM prism.agent_job WHERE id=$1 FOR UPDATE',[id]);
+59:     const job=rows.rows[0];
+60:     if(!job || job.fence!==fence)throw new Error('agent job fence conflict');
+61:     validateAgentOutcome(job,outcome);
+62:     if(job.state==='completed' || job.state==='needs_nova')return job;
+63:     const completed=outcome.schemaVersion==='worker-attempt-result.v2' && outcome.state==='completed' && job.result!==null;
+64:     await connection.query("UPDATE prism.agent_job SET state=$2,outcome=$3::jsonb,updated_at=clock_timestamp() WHERE id=$1",[id,completed?'completed':'needs_nova',JSON.stringify(outcome)]);
+65:     return agentJob(connection,id);
+66:   });
+67: }
+68: 
+69: /** Peer authentication never replaces binding the received receipt to Control's accepted policy. */
+70: function validateAgentOutcome(job:AgentJob,outcome:Record<string,unknown>) {
+71:   if(!job.attempt_envelope)throw new Error('agent accepted attempt envelope is missing');
+72:   const accepted=job.attempt_envelope;
+73:   if(accepted.attemptId!==job.fence || accepted.claim.claimId!==job.fence || accepted.executionId!==job.id)throw new Error('agent persisted attempt identity conflict');
+74:   if(outcome.schemaVersion==='worker-attempt-result.v2'){
+75:     const checked=checkWorkerResourceResultBinding(accepted,outcome as unknown as WorkerAttemptResultV2);
+76:     if(!checked.ok)throw new Error(`agent outcome binding failed: ${checked.errors.join('; ')}`);
+77:     return;
+78:   }
+79:   if(outcome.state==='errored' && typeof outcome.error==='string' && outcome.error.length>0
+80:     && Object.keys(outcome).every(key=>key==='state' || key==='error'))return;
+81:   throw new Error('agent outcome requires a bound V2 receipt; startup diagnostics may only report errored');
+82: }
+83: 
+84: /** Hold this row lock through the actual document transaction, including its durable result receipt. */
+85: export async function lockAgentResult(db:Queryable,identity:AgentCompletion,generationId:string) {
+86:   if(identity.jobId!==generationId || !identity.fence)throw new Error('agent result job identity is required');
+87:   const rows=await db.query<AgentJob & {live:boolean}>('SELECT *,expires_at>clock_timestamp() AS live FROM prism.agent_job WHERE id=$1 FOR UPDATE',[identity.jobId]);
+88:   const job=rows.rows[0];
+89:   if(!job || job.fence!==identity.fence)throw new Error('agent result fence conflict');
+90:   if(job.result_digest){
+91:     if(job.result_digest!==sha256Digest(identity.payload))throw new Error('agent result conflicts with committed payload');
+92:     return job.result;
+93:   }
+94:   if(job.state!=='running'||!job.live)throw new Error('agent action is unresolved; NeedsNova reconciliation is required');
+95:   return null;
+96: }
+97: 
+98: export async function recordAgentResult(db:Queryable,identity:AgentCompletion,result:unknown) {
+99:   await db.query('UPDATE prism.agent_job SET result_digest=$2,result=$3::jsonb,updated_at=clock_timestamp() WHERE id=$1',[identity.jobId,sha256Digest(identity.payload),JSON.stringify(result)]);
+100: }
+skills/prism/server/agent-process.ts sha256=1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b
+1: import { spawn,type ChildProcess } from 'node:child_process';
+2: import { sha256Digest,type WorkerAttemptContext,type WorkerAttemptOperation } from '@kubeclaw/worker-core';
+3: import type { WorkerAttemptLimitsV2,WorkerAttemptEnvelopeV2,WorkerResourceObservations } from '@kubeclaw/pipeline-worker-core-contract';
+4: 
+5: /** Core records explicitly unavailable local child-tree measurements. Gateway/model CPU, memory and cancellation remain external. */
+6: export class AgentProcess implements WorkerAttemptOperation<WorkerAttemptEnvelopeV2> {
+7:   private child:ChildProcess|undefined;
+8:   private closed:Promise<void>|undefined;
+9:   private streamsClosed=false;
+10:   private readonly executable:string;
+11:   private readonly args:string[];
+12:   constructor(executable:string,args:string[]) {this.executable=executable;this.args=args;}
+13:   prepare(_limits:WorkerAttemptLimitsV2){return undefined;}
+14:   execute(context:WorkerAttemptContext<WorkerAttemptEnvelopeV2>) {
+15:     if(this.child)throw new Error('Prism external action has already been started');
+16:     context.signal.throwIfAborted();
+17:     const child=spawn(this.executable,this.args,{stdio:['ignore','pipe','pipe'],detached:true});
+18:     this.child=child;
+19:     this.closed=new Promise(resolve=>child.once('close',()=>{this.streamsClosed=true;resolve();}));
+20:     child.stdout!.on('data',(chunk:Buffer)=>context.log('stdout',chunk));
+21:     child.stderr!.on('data',(chunk:Buffer)=>context.log('stderr',chunk));
+22:     return new Promise<{summary:string;specialistResult:{schemaId:string;schemaDigest:string;values:{localProcessClosed:boolean}};evidence:[];exitCode:number|null;signal:string|null}>((resolve,reject)=>{
+23:       child.once('error',reject);
+24:       child.once('close',(code,signal)=>{
+25:         if(code!==0)return reject(new Error(`OpenClaw CLI closed with code ${code}, signal ${signal}; gateway action requires reconciliation`));
+26:         resolve({summary:'OpenClaw CLI closed; authoritative success requires the fenced Control receipt',specialistResult:{schemaId:'prism-agent-launcher-result.v1',schemaDigest:sha256Digest({type:'object',required:['localProcessClosed']}),values:{localProcessClosed:true}},evidence:[],exitCode:code,signal});
+27:       });
+28:     });
+29:   }
+30:   async terminate() {
+31:     if(!this.child || this.streamsClosed)return;
+32:     const kill=(signal:NodeJS.Signals)=>{try{if(this.child?.pid)process.kill(-this.child.pid,signal);}catch(error){if((error as NodeJS.ErrnoException).code!=='ESRCH')throw error;}};
+33:     kill('SIGTERM');const timer=setTimeout(()=>kill('SIGKILL'),1000);
+34:     try{await this.closed;}finally{clearTimeout(timer);}
+35:   }
+36:   async measure():Promise<WorkerResourceObservations> {
+37:     const unavailable={status:'unavailable' as const,reason:'Complete local CLI child-tree resource accounting is unavailable; bridge parent counters are not child observations'};
+38:     return {cpuTimeMs:{...unavailable},maximumMemoryBytes:{...unavailable},maximumProcesses:{...unavailable}};
+39:   }
+40: }
+skills/prism/server/agent-job-runner.mjs sha256=f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb
+1: import { randomUUID } from 'node:crypto';
+2: import { checkWorkerResourceResultBinding } from '@kubeclaw/pipeline-worker-core-contract';
+3: import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
+4: import { agentAttempt } from './agent-attempt.ts';
+5: import { AgentProcess } from './agent-process.ts';
+6: import { WorkerArtifactClient } from './worker-artifacts.ts';
+7: import { agentPrompt } from './agent-prompt.mjs';
+8: 
+9: export async function controlRequest(controlUrl,path,body,signal) {
+10:   const response=await fetch(new URL(path,controlUrl),{method:body===undefined?'GET':'POST',headers:{'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body),signal,redirect:'error'});
+11:   const text=await response.text();
+12:   if(!response.ok)throw new Error(`Prism Control ${path}: HTTP ${response.status}: ${text}`);
+13:   return JSON.parse(text);
+14: }
+15: 
+16: /** A boot receives a new owner ID. Only the durable store may select provably unstarted work. */
+17: export class AgentJobRunner {
+18:   runnerId=`prism-bridge-${randomUUID()}`;
+19:   stopping=new AbortController();
+20:   active;
+21:   constructor(controlUrl){this.controlUrl=controlUrl;}
+22:   async tick(){
+23:     if(this.active || this.stopping.signal.aborted)return;
+24:     this.active=this.runOne();
+25:     try{await this.active;}finally{this.active=undefined;}
+26:   }
+27:   async runOne(){
+28:     const {job}=await controlRequest(this.controlUrl,'/v1/agent/jobs/claim',{runnerId:this.runnerId},AbortSignal.timeout(10_000));
+29:     if(!job)return;
+30:     // Once this claim is durable, any uncertainty is NeedsNova. Never replay a failed launch.
+31:     let outcome;
+32:     try{
+33:       const envelope=job.attempt_envelope;
+34:       if(!envelope || envelope.claim.workerId!==this.runnerId || envelope.attemptId!==job.fence || envelope.executionId!==job.id)throw new Error('Prism accepted attempt identity is missing or conflicts with claim');
+35:       const localProfile=(await agentAttempt(job,this.runnerId)).profile;
+36:       if(localProfile.profileDigest!==envelope.profile.profileDigest)throw new Error('Prism local launcher implementation does not match Control accepted profile');
+37:       const artifacts=new WorkerArtifactClient(new URL(this.controlUrl),'',true);
+38:       const executor=new WorkerAttemptExecutor({envelope,operation:new AgentProcess('openclaw',['agent','--agent','main','--session-key',job.session_key,'--message',agentPrompt(job),'--json','--timeout','900']),signal:this.stopping.signal,receiptNamespace:'prism-agent-launcher',
+39:         storeFullLog:(id,content,{signal})=>artifacts.upload(`${id}-logs`,'worker-log','text/plain',Buffer.from(content),signal)});
+40:       outcome=await executor.execute();
+41:       const binding=checkWorkerResourceResultBinding(envelope,outcome);
+42:       if(!binding.ok)throw new Error(`Prism agent resource receipt binding failed: ${binding.errors.join('; ')}`);
+43:     }catch(error){outcome={state:'errored',error:error instanceof Error?error.message:String(error)};}
+44:     await controlRequest(this.controlUrl,`/v1/agent/jobs/${job.id}/finish`,{fence:job.fence,outcome},AbortSignal.timeout(10_000));
+45:   }
+46:   async stop(){this.stopping.abort(new Error('Prism bridge is shutting down; external gateway outcome may be unresolved'));await this.active;}
+47: }
+skills/prism/server/agent-bridge.mjs sha256=f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c
+1: import { createServer } from 'node:http';
+2: import { AgentJobRunner,controlRequest } from './agent-job-runner.mjs';
+3: 
+4: const port=Number(process.env.PORT || 18080);
+5: const controlUrl=process.env.PRISM_CONTROL_URL || 'http://127.0.0.1:28080';
+6: const runner=new AgentJobRunner(controlUrl);
+7: async function readJson(request){
+8:   const chunks=[];let size=0;
+9:   for await(const chunk of request){size+=chunk.length;if(size>2_000_000)throw new Error('request too large');chunks.push(chunk);}
+10:   return JSON.parse(Buffer.concat(chunks).toString('utf8'));
+11: }
+12: function send(response,status,value){response.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});response.end(JSON.stringify(value));}
+13: async function dispatch(request,payload,response){
+14:   const persisted=await fetch(new URL('/v1/dispatch',controlUrl),{method:'POST',headers:{'content-type':'application/json','idempotency-key':String(request.headers['idempotency-key']||'')},body:JSON.stringify(payload),signal:AbortSignal.timeout(30_000),redirect:'error'});
+15:   const text=await persisted.text();
+16:   response.writeHead(persisted.status,{'content-type':persisted.headers.get('content-type')||'application/json','cache-control':'no-store'});response.end(text);
+17: }
+18: const server=createServer(async(request,response)=>{
+19:   try{
+20:     if(request.url==='/health'||request.url==='/ready')return send(response,200,{status:'ready'});
+21:     if(request.method!=='POST')return send(response,404,{error:'not found'});
+22:     const payload=await readJson(request);
+23:     if(request.url==='/v1/dispatch')return await dispatch(request,payload,response);
+24:     if(request.url==='/v1/design-set'||request.url==='/v1/revise'){
+25:       if(typeof payload.jobId!=='string')throw new Error('a durable Control jobId is required; bridge payloads cannot admit agent work');
+26:       const {job}=await controlRequest(controlUrl,`/v1/agent/jobs/${encodeURIComponent(payload.jobId)}`,undefined,AbortSignal.timeout(10_000));
+27:       return send(response,202,{jobId:job.id,generationId:job.id,status:job.state==='needs_nova'?'NeedsNova':job.state,result:job.result,outcome:job.outcome});
+28:     }
+29:     return send(response,404,{error:'not found'});
+30:   }catch(error){return send(response,422,{error:error instanceof Error?error.message:String(error)});}
+31: });
+32: const tick=()=>{void runner.tick().catch(error=>console.error('Prism durable agent runner:',error));};
+33: const poll=setInterval(tick,1000);
+34: server.listen(port,'127.0.0.1',tick);
+35: for(const signal of ['SIGTERM','SIGINT'])process.once(signal,()=>{
+36:   clearInterval(poll);server.close();void runner.stop().catch(error=>console.error('Prism agent shutdown:',error));
+37: });

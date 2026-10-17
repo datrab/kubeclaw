@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "owner",
+    "generationDigest",
+    "profileDigest",
+    "policyDigest",
+    "schemaDigest",
+    "sourceDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "admission-binding.v1"
+    },
+    "owner": {
+      "enum": [
+        "buster-engine",
+        "nova-platform"
+      ]
+    },
+    "generationDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "profileDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "policyDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "schemaDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "sourceDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

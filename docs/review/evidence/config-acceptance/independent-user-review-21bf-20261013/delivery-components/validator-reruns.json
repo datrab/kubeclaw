@@ -1,0 +1,30 @@
+[
+  {
+    "batch": "01",
+    "mode": "baseline",
+    "exitCode": 0,
+    "stdout": "8 intended documentation negatives /2 positives; no emitter/behavior actions\n",
+    "stderr": ""
+  },
+  {
+    "batch": "01",
+    "mode": "member-loss",
+    "exitCode": 0,
+    "stdout": "8 intended documentation negatives /2 positives; no emitter/behavior actions\n",
+    "stderr": ""
+  },
+  {
+    "batch": "02",
+    "mode": "baseline",
+    "exitCode": 0,
+    "stdout": "8 intended document negatives /2 positives; future consumer/emitter cases NOTRUN\n",
+    "stderr": ""
+  },
+  {
+    "batch": "02",
+    "mode": "member-loss",
+    "exitCode": 0,
+    "stdout": "8 intended document negatives /2 positives; future consumer/emitter cases NOTRUN\n",
+    "stderr": ""
+  }
+]

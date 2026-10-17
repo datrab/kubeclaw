@@ -1,0 +1,40 @@
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (95.644391ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (784.667918ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (817.593219ms)
+✔ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (252.851312ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_TIMEOUT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":308}
+✔ real factory/service/process honors execution policy {"maximumExecutionMs":300,"maximumOutputBytes":4096} (548.692417ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":1232}
+✔ real factory/service/process honors execution policy {"maximumExecutionMs":2500,"maximumOutputBytes":4096} (1401.358181ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_OUTPUT_LIMIT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":256,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":31}
+✔ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":64} (184.392432ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":256,"outputDigest":"sha256:85e62acd750c4eb56b7b6a1d66dca5bfaac5f062608a1a893410d0288936c09a","durationMs":33}
+✔ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":1024} (162.483268ms)
+✔ factory disabled capability does not execute configured dependency and rejects retired runtime authors (123.488919ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_TIMEOUT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":309}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_OUTPUT_LIMIT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":256,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":29}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_EXIT_FAILED","exitCode":7,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":31}
+✔ real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay (958.352557ms)
+{"fixture":"terminal-persistence-cut","timing":"during","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"cancelled","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: during (597.839281ms)
+{"fixture":"terminal-persistence-cut","timing":"after","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"failed","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: after (472.640197ms)
+{"fixture":"terminal-persistence-cut","timing":"queued","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"failed","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: queued (472.860433ms)
+{"fixture":"terminal-persistence-cut","timing":"admission","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: admission (464.777302ms)
+{"fixture":"terminal-persistence-cut","timing":"read-failure","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: read-failure (369.894581ms)
+{"fixture":"terminal-persistence-cut","timing":"healthy-terminal","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: healthy-terminal (438.469433ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13837.9566

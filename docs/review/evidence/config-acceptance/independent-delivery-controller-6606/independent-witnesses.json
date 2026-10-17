@@ -1,0 +1,133 @@
+{
+  "scope": "pure reviewer source/own-schema/logical/cryptographic definition witnesses only; no nativeGo/API/host actions, not F-MUT or physical/authentic receipts",
+  "observations": [
+    {
+      "id": "declared-principal-domain-not-enforced-BUSTER_READY_PRODUCER",
+      "ownSchemaPassed": true,
+      "actualAuthorCorrelationsPassed": true,
+      "field": "BUSTER_READY_PRODUCER",
+      "value": "",
+      "meaning": "target explicitly requires exact system:serviceaccount namespace/name; neither pure guard validates that known shape. Native/provider authentication NOT run."
+    },
+    {
+      "id": "declared-principal-domain-not-enforced-BUSTER_PRODUCT_PRODUCER",
+      "ownSchemaPassed": true,
+      "actualAuthorCorrelationsPassed": true,
+      "field": "BUSTER_PRODUCT_PRODUCER",
+      "value": "not-a-serviceaccount",
+      "meaning": "target explicitly requires exact system:serviceaccount namespace/name; neither pure guard validates that known shape. Native/provider authentication NOT run."
+    },
+    {
+      "id": "mandatory-persisted-cleanup-not-in-declared-epoch-schema",
+      "originalEpochSchemaPassed": true,
+      "cleanupOnlyInExternalWrapper": true,
+      "addedCleanupRejected": true,
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "cleanup"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ],
+      "meaning": "No actual source/store action; target requires original cleanup attempt/start/deadline/resume but sole named persistence seam strict shape lacks it or any declared alternative typed persistence path."
+    },
+    {
+      "id": "lifecycle-summary-not-complete-source-state-ready-v1",
+      "epochSchemaPassed": true,
+      "missingKnownStoredReadyFields": [
+        "state",
+        "requestId",
+        "namespace",
+        "runId",
+        "sourceRevision",
+        "candidateDigest",
+        "decisionDigest",
+        "resultDigest",
+        "immutableImage",
+        "manifestDigest",
+        "credentialDigest",
+        "secretUID",
+        "url",
+        "previousOwner",
+        "owner",
+        "exposureGeneration",
+        "exposureSpec",
+        "receipt"
+      ],
+      "meaning": "Fixture is a projected summary, not current complete status.demoReadiness; no nativeGo replay run."
+    },
+    {
+      "id": "lifecycle-summary-not-complete-source-state-ready-v2",
+      "epochSchemaPassed": true,
+      "missingKnownStoredReadyFields": [
+        "state",
+        "requestId",
+        "namespace",
+        "runId",
+        "sourceRevision",
+        "candidateDigest",
+        "decisionDigest",
+        "resultDigest",
+        "immutableImage",
+        "manifestDigest",
+        "credentialDigest",
+        "secretUID",
+        "url",
+        "previousOwner",
+        "owner",
+        "exposureGeneration",
+        "exposureSpec",
+        "receipt"
+      ],
+      "meaning": "Fixture is a projected summary, not current complete status.demoReadiness; no nativeGo replay run."
+    },
+    {
+      "id": "lifecycle-summary-not-complete-source-state-product-extended",
+      "epochSchemaPassed": true,
+      "missingKnownStoredReadyFields": [
+        "state",
+        "requestId",
+        "namespace",
+        "runId",
+        "sourceRevision",
+        "candidateDigest",
+        "decisionDigest",
+        "resultDigest",
+        "immutableImage",
+        "manifestDigest",
+        "credentialDigest",
+        "secretUID",
+        "url",
+        "previousOwner",
+        "owner",
+        "exposureGeneration",
+        "exposureSpec",
+        "receipt"
+      ],
+      "meaning": "Fixture is a projected summary, not current complete status.demoReadiness; no nativeGo replay run."
+    },
+    {
+      "id": "product-summary-omits-current-extend-discriminator",
+      "currentSourceWouldSkipAllProvidedReceiptSummaries": true,
+      "currentReadyBase": "2030-01-08T00:10:00Z",
+      "assertedExtension": "2030-01-08T01:10:00Z",
+      "meaning": "Direct source branch plus pure fixture interpretation; not Go/controller execution. Complete native fixture preparation is absent."
+    },
+    {
+      "id": "shifted-timestamps-cannot-preserve-raw-digests-or-original-signature",
+      "readyRequestDigestChanged": true,
+      "originalSignedProductEnvelopeAcceptsOriginal": true,
+      "originalSignedProductEnvelopeRejectsShifted": true,
+      "sourceProductDomain": "kubeclaw.demo-product-decision.v1\u0000",
+      "meaning": "Pure source-domain cryptographic definition control; local keys never persisted/logged; no native/token/provider/image/authenticated archive action."
+    },
+    {
+      "id": "restored-pure-baselines",
+      "passed": true
+    }
+  ]
+}

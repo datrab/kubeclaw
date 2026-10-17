@@ -1,0 +1,15 @@
+COMMAND: git branch --show-current
+codex/config-c0-semantic-inventory-20261012
+COMMAND: git rev-parse HEAD
+9452d35524192f8665bc87254b3c63a361e7bd4a
+COMMAND: git rev-parse HEAD^{tree}
+89fa8e4d683cf442deb189d60ce8b7cc1ff05327
+COMMAND: git diff --name-only
+COMMAND: git ls-files --others --exclude-standard docs/review/evidence/config-acceptance/components
+docs/review/evidence/config-acceptance/components/README.md
+docs/review/evidence/config-acceptance/components/case-profiles.json
+docs/review/evidence/config-acceptance/components/cases.py
+docs/review/evidence/config-acceptance/components/collect.py
+docs/review/evidence/config-acceptance/components/field-access.json
+docs/review/evidence/config-acceptance/components/refine.py
+docs/review/evidence/config-acceptance/components/semantic-fragment.json

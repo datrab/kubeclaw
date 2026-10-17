@@ -46,6 +46,8 @@ export class OpenClawAgentObserver {
   private readonly registrationConfig: unknown;
   private serviceConfig: unknown;
   private config: AgentObserverConfig;
+  private readonly selectedRegistration: Record<string,unknown> | undefined;
+  private selectedConfig: AgentObserverConfig | undefined;
   private diagnosticsUnsubscribe: (() => void) | null = null;
   private readonly loggedFailures = new Set<string>();
   private readonly recentAgentEvents = new Map<string, number>();
@@ -55,6 +57,7 @@ export class OpenClawAgentObserver {
     this.env = options.env ?? agentObserverRuntimeEnvironment();
     this.logger = options.logger ?? console;
     this.registrationConfig = options.initialConfig;
+    this.selectedRegistration = isConfigRecord(options.initialConfig) && Object.hasOwn(options.initialConfig,'policyVersion') ? Object.freeze({...options.initialConfig}) : undefined;
     this.diagnosticSubscriberFactory = options.diagnosticSubscriberFactory ?? subscribeModelUsageDiagnostics;
     this.config = this.resolveConfig();
     this.writer = new AgentObserverRedisWriter({
@@ -193,6 +196,18 @@ export class OpenClawAgentObserver {
   }
 
   private resolveConfig(hookConfig?: unknown): AgentObserverConfig {
+    if(this.selectedRegistration!==undefined){
+      // One startup owner. Service/hook echoes may transport the same values,
+      // but cannot replace the captured policy or fill it from a current env.
+      this.selectedConfig ??= resolveAgentObserverConfig(this.selectedRegistration,this.env);
+      for(const candidate of [this.serviceConfig,hookConfig])if(isConfigRecord(candidate)){
+        for(const key of new Set([...Object.keys(this.selectedRegistration),...Object.keys(this.selectedConfig)])){
+          const expected=Object.hasOwn(this.selectedRegistration,key)?this.selectedRegistration[key]:(this.selectedConfig as unknown as Record<string,unknown>)[key];
+          if(Object.hasOwn(candidate,key)&&candidate[key]!==expected)throw new Error(`AGENT_OBSERVER_POLICY_COMPETING_AUTHOR:${key}`);
+        }
+      }
+      return this.selectedConfig;
+    }
     return resolveAgentObserverConfig(
       mergeConfigInputs(this.registrationConfig, this.serviceConfig, hookConfig),
       this.env,

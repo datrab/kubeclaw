@@ -1,0 +1,145 @@
+{
+  "status": "PENDING ONLY, not admitted by v6 schema; mutable security-provider-contracts-01 never read as accepted",
+  "manifest": {
+    "path": "skills/buster/plugins/security-providers/plugin.json",
+    "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+    "bytes": 3239,
+    "snapshot": "frozen-inputs/14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510.gz"
+  },
+  "expectedManifestSha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+  "registrations": [
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.security-providers",
+      "registrationId": "kubeclaw.security-providers:headers",
+      "contractId": "kubeclaw.security-headers@1",
+      "requiredCapabilities": [
+        "network.http"
+      ],
+      "module": {
+        "path": "skills/buster/plugins/security-providers/src/headers.js",
+        "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+        "bytes": 7515,
+        "snapshot": "frozen-inputs/7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7.gz"
+      },
+      "currentSchema": {
+        "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+        "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191",
+        "bytes": 2210,
+        "snapshot": "frozen-inputs/d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191.gz"
+      },
+      "producedArtifacts": "none asserted: common.result has evidenceFiles/reports empty; runner log baseline is required but not produced artifact proof",
+      "matrix": "headers manifest path differs from actual paths task-reader; pending reconciliation"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.security-providers",
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "contractId": "kubeclaw.dependency-scan-trivy@1",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "module": {
+        "path": "skills/buster/plugins/security-providers/src/dependency.js",
+        "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55",
+        "bytes": 2639,
+        "snapshot": "frozen-inputs/e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55.gz"
+      },
+      "currentSchema": {
+        "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+        "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4",
+        "bytes": 1074,
+        "snapshot": "frozen-inputs/e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4.gz"
+      },
+      "producedArtifacts": "none asserted: common.result has evidenceFiles/reports empty; runner log baseline is required but not produced artifact proof",
+      "matrix": "manifest[] retained"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.security-providers",
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "contractId": "kubeclaw.image-scan-trivy@1",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "module": {
+        "path": "skills/buster/plugins/security-providers/src/image.js",
+        "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588",
+        "bytes": 2674,
+        "snapshot": "frozen-inputs/7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588.gz"
+      },
+      "currentSchema": {
+        "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+        "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca",
+        "bytes": 967,
+        "snapshot": "frozen-inputs/1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca.gz"
+      },
+      "producedArtifacts": "none asserted: common.result has evidenceFiles/reports empty; runner log baseline is required but not produced artifact proof",
+      "matrix": "manifest[] retained"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.security-providers",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "contractId": "kubeclaw.kubernetes-policy-security@1",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "module": {
+        "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+        "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd",
+        "bytes": 2689,
+        "snapshot": "frozen-inputs/aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd.gz"
+      },
+      "currentSchema": {
+        "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+        "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+        "bytes": 935,
+        "snapshot": "frozen-inputs/8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea.gz"
+      },
+      "producedArtifacts": "none asserted: common.result has evidenceFiles/reports empty; runner log baseline is required but not produced artifact proof",
+      "matrix": "manifest[] retained"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.security-providers",
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "contractId": "kubeclaw.kubernetes-runtime-security@1",
+      "requiredCapabilities": [
+        "kubernetes.runtime-security"
+      ],
+      "module": {
+        "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+        "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5",
+        "bytes": 3726,
+        "snapshot": "frozen-inputs/0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5.gz"
+      },
+      "currentSchema": {
+        "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+        "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+        "bytes": 935,
+        "snapshot": "frozen-inputs/8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea.gz"
+      },
+      "producedArtifacts": "none asserted: common.result has evidenceFiles/reports empty; runner log baseline is required but not produced artifact proof",
+      "matrix": "manifest[] retained"
+    }
+  ],
+  "emptyManifestRoles": [
+    "stages",
+    "observers",
+    "adapters"
+  ],
+  "installedGrant": "missing; source package/version/schema is not C4 native capability receipt",
+  "requiredAdditiveWork": [
+    "freeze finalized complete security owner all profiles/schema/case projections +source-author-c1 final158-profile/163-entry source roster",
+    "fresh independent full security definition/source review",
+    "explicit next shared root/schema package/registration/owner-path/role/capability/instance join extension and whole original conservation",
+    "explicit frozen readidentity/material root recheck; no latest/default merge"
+  ],
+  "reviewedRecovery02ReceivingOnly": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/README.md",
+    "sha256": "f221152d859e40d751be7c84bff2ea24884038e482782bd158ab0b80e70fef65",
+    "bytes": 12840,
+    "snapshot": "frozen-inputs/f221152d859e40d751be7c84bff2ea24884038e482782bd158ab0b80e70fef65.gz"
+  }
+}

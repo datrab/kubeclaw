@@ -1,0 +1,55 @@
+{
+  "scope": "Independent whole-C0 readiness challenge only, NOT ACCEPTED; no implementation authorization",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "f6c3bcdbd825919572182e5c58f760887910e12531953709ebeecf4459a89bf7",
+      "bytes": 26434
+    },
+    {
+      "path": "COMMANDS.md",
+      "sha256": "728f15a4ea007cd1d1d115ee983af7a5487ae73ba364dfafb3a15ff4c646f608",
+      "bytes": 2420
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "5962924896fa9814faa2f078dbcbd23866cdef1417e883817a01ec808b2971e8",
+      "bytes": 48738
+    },
+    {
+      "path": "whole-universe-structural-navigation.json",
+      "sha256": "a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1",
+      "bytes": 16902205
+    },
+    {
+      "path": "runtime-residual-contract-groups.json",
+      "sha256": "ba3abf3086a7e835fbc15f69930d67a21cc1eed108553eef83681a62b1000c73",
+      "bytes": 395966
+    },
+    {
+      "path": "original-source-contract-navigation.json",
+      "sha256": "1be562e6bf3291392b4770b427974147fd300934914e079aaf612f3d04458147",
+      "bytes": 422757
+    },
+    {
+      "path": "end-read-stability.json",
+      "sha256": "bc8b2a86d456908ba640dc058800c63c29d9c3b94865ecc5003266a92f1c41cd",
+      "bytes": 930
+    },
+    {
+      "path": "start-worktree-status.txt",
+      "sha256": "7f126e09cbecadc5d79057ab66cd05897ebd6af1eefdad41d32cbb31b8f3a062",
+      "bytes": 34439
+    },
+    {
+      "path": "start-worktree.patch",
+      "sha256": "2af0cd3538a9d80f38cdbcc64e715681f8ff239f35582a39733432b70a54e896",
+      "bytes": 7268
+    },
+    {
+      "path": "WCR02-physical-full-profile-author-task.json",
+      "sha256": "fdc977492a906337203a39bb29d26d20f601bdc4ec8b76b4eac3a4006338cb12",
+      "bytes": 16524
+    }
+  ]
+}

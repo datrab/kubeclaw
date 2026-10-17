@@ -1,0 +1,239 @@
+{
+  "time": "2026-10-14T01:29:03.603203+00:00",
+  "inputCount": 288,
+  "changedInputs": [],
+  "originalCanonicalArrays": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "priorFrozenSha256": "c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63",
+      "currentSha256": "c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63",
+      "originalArrays": {
+        "rows": {
+          "bodyEqual": true,
+          "members": 2409
+        }
+      },
+      "metadataNotAcceptance": "whole-file metadata/hashes distinct from original semantic-array identities"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "priorFrozenSha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227",
+      "currentSha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227",
+      "originalArrays": {
+        "cases": {
+          "bodyEqual": true,
+          "members": 6845
+        },
+        "requirements": {
+          "bodyEqual": true,
+          "members": 50
+        }
+      },
+      "metadataNotAcceptance": "whole-file metadata/hashes distinct from original semantic-array identities"
+    }
+  ],
+  "inheritedRootOwnerSchemaAndReferenceConservation": [
+    {
+      "path": "stand/charts/kubeclaw/values.yaml",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/my-values/infra/postgresql-recovery.yaml",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/pipeline.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/plugins/kubeclaw.openapi.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/plugins/kubeclaw.network-http.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/plugins/kubeclaw.http.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/plugins/kubeclaw.api-flow.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/components/prism-worker.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/components/worker-core.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/components/prism-studio.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/components/buster-engine.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/components/prism-control.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "stand/config/components/prism-execution.config.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/generation-receipt.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/pipeline-entry.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/controller-profile.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/controller-owner.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/recovery02/recovery-task-authority.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/recovery02/postgresql-recovery-policy.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/recovery02/pipeline-entry.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/recovery02/recovery-task.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/api-flow.target-task-file.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.http.evidence-override.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.api-flow.evidence-override.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/buster-network-resource.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/c3-generated-runtime.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/provider-configuration.v2.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.openapi.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/pipeline-entry.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.http.task.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.api-flow.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.http.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.network-http.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.api-flow.task.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/nova-adapter-processing.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.openapi.evidence-override.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/kubeclaw.openapi.task.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/components/prism-worker.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/components/prism-control.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/components/buster-engine.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/components/prism-studio.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/components/prism-execution.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "schemas/provider03/components/worker-core.schema.json",
+      "byteEqual": true
+    },
+    {
+      "path": "file-set-stand.json",
+      "byteEqual": true
+    },
+    {
+      "path": "generation-receipt-stand.json",
+      "byteEqual": true
+    },
+    {
+      "path": "controller-receiver-rejoin.json",
+      "byteEqual": true
+    },
+    {
+      "path": "recovery-receiver-rejoin.json",
+      "byteEqual": true
+    },
+    {
+      "path": "root-dependency-rejoin.json",
+      "byteEqual": true
+    },
+    {
+      "path": "original-alias-and-case-joins.json",
+      "byteEqual": true
+    },
+    {
+      "path": "pending-security-extension.json",
+      "byteEqual": true
+    }
+  ],
+  "globalC0Accepted": false,
+  "freshIndependentMaterialRecheckRequired": true
+}

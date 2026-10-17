@@ -1,0 +1,46 @@
+[
+  {
+    "path": "docs/review/remediation/GOAL-START.md",
+    "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+  },
+  {
+    "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+    "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+  },
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+    "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/README.md",
+    "sha256": "9b461a3ce585d9f8dee51cd156e20017fa4dd0dc7b0a9f87fd27e5023683ce5c"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/define.py",
+    "sha256": "c3a116a521c3608f2b3506aebcb91a2689177ff67211e11c5cfdb9ace25acde5"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/local-check.json",
+    "sha256": "638eef9ccd3744785441b676352cefe1672d8ad58e27fc84a425a2d96935dfe3"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/package-manifest.json",
+    "sha256": "9037bf6515b7ca3d05d119ad53dd6ecdd388a4d972f08407dc6aea5474f500d9"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/source-field-definitions.json",
+    "sha256": "ceca12608b87de55c13cc428c8b5471cfb795b6d572bd740cf50586145e48603"
+  }
+]

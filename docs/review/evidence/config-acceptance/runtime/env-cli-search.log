@@ -1,0 +1,63 @@
+skills/nova/project/legacy-import-cli.ts:13:    if (!['--import-legacy', '--authoring', '--platform', '--output'].includes(flag)
+skills/nova/project/legacy-import-cli.ts:23:  await validatePipelineRuntimeV2(loadPlatformConfig(path.resolve(args['--platform']!)), imported.definition);
+skills/nova/project/cli.ts:14:if (process.argv.includes('--import-legacy')) {
+skills/nova/project/cli.ts:15:  await runLegacyImportCLI(process.argv.slice(2));
+skills/nova/project/cli.ts:16:} else if (!process.argv.includes('--project')) {
+skills/nova/project/cli.ts:21:    const values = process.argv.slice(2);
+skills/nova/project/cli.ts:25:      if (!['--project', '--platform', '--compile', '--recover', '--signal'].includes(flag)
+skills/nova/project/cli.ts:29:    if (!args['--project'] || !args['--platform']) throw new Error('PROJECT_AND_PLATFORM_REQUIRED');
+skills/nova/project/cli.ts:30:    if ([args['--compile'], args['--recover'], args['--signal']].filter(Boolean).length > 1) throw new Error('PROJECT_COMMAND_CONFLICT');
+skills/nova/project/cli.ts:31:    const project = JSON.parse(fs.readFileSync(path.resolve(args['--project']), 'utf8'));
+skills/nova/project/cli.ts:32:    const platform = loadPlatformConfig(path.resolve(args['--platform']));
+skills/nova/project/cli.ts:33:    const { runId, definition } = args['--recover'] || args['--signal']
+skills/nova/project/cli.ts:44:      if (args['--recover'] && args['--recover'] !== runId) throw new Error('PROJECT_RECOVERY_RUN_MISMATCH');
+skills/nova/project/cli.ts:45:      if (!args['--recover'] && !args['--signal']) {
+skills/nova/project/cli.ts:51:      const result = args['--recover'] ? await recoverPipelineV2(platform, definition, runId)
+skills/nova/project/README.md:8:node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --compile /path/new-pipeline.json
+skills/nova/project/README.md:9:node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json
+skills/nova/project/README.md:10:node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --recover run:example
+skills/nova/project/README.md:11:node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --signal /path/resume-signal.json
+skills/nova/project/README.md:14:Compile validates the graph against the installed registrations, input/config schemas and capability grants without starting adapters or creating a run. It refuses to overwrite an existing output. Normal execution requires a clean repository at the declared baseline. Recovery retains the original project, resolved plans, run identity and platform configuration; immutable snapshot validation rejects drift. Explicit `--pipeline` graphs retain the existing core CLI and concurrency behavior.
+skills/nova/project/README.md:146:node /app/skills/pipeline.ts --import-legacy /repo/Projects/example/src/.swarm/progress.json --authoring /inputs/import-authoring.json --platform /inputs/platform.json --output /inputs/new-project.json
+skills/nova/project/README.md:147:node /app/skills/pipeline.ts --project /inputs/new-project.json --platform /inputs/platform.json --compile /inputs/new-pipeline.json
+skills/common/plugins/notification-observer/README.md:9:Audit is derived from Nova's authoritative event journal with `readPipelineAudit` or the core CLI's `--platform <file> --audit <run-id>` command. The redundant required audit observer and artifact writes were removed. Journal integrity is checked before producing redacted output; rebuilding requires no observer delivery or writable artifact store. Existing runs that enabled the retired registration must drain with their pinned runtime.
+skills/nova/pipeline.ts:10:  process.argv[1]
+skills/nova/pipeline.ts:11:  && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
+skills/common/plugins/openclaw-agent-observer/src/config.ts:92:export function resolveAgentObserverConfig(pluginConfig: unknown = {}, env: UnknownRecord = process.env): AgentObserverConfig {
+skills/common/plugins/openclaw-agent-observer/src/config.ts:116:  return process.env;
+skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs:30:if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+skills/common/plugins/openclaw-agent-observer/scripts/build.mjs:10:const sourceIndex = process.argv.indexOf('--contract-source');
+skills/common/plugins/openclaw-agent-observer/scripts/build.mjs:11:if (sourceIndex >= 0 && (!process.argv[sourceIndex + 1] || process.argv[sourceIndex + 1].startsWith('--'))) {
+skills/common/plugins/openclaw-agent-observer/scripts/build.mjs:14:syncContract(sourceIndex >= 0 ? process.argv[sourceIndex + 1] : undefined);
+skills/common/plugins/openclaw-agent-observer/scripts/build.mjs:17:const tscIndex = process.argv.indexOf('--tsc');
+skills/common/plugins/openclaw-agent-observer/scripts/build.mjs:18:const tsc = tscIndex >= 0 ? process.argv[tscIndex + 1] : 'tsc';
+skills/nova/project_setup/SKILL.md:62:npm run progress:scaffold -- --project <project>
+skills/nova/project_setup/SKILL.md:84:npm run progress:scaffold -- --project <project> --apply
+skills/nova/project_setup/SKILL.md:90:npm run progress:scaffold -- --project <project> --check
+skills/nova/project_setup/SKILL.md:234:node /app/skills/pipeline.ts --import-legacy /repo/Projects/<project>/src/.swarm/progress.json --authoring /path/import-authoring.json --platform /path/platform.json --output /path/project.json
+skills/nova/project_setup/SKILL.md:242:node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --compile /path/new-pipeline.json
+skills/nova/project_setup/SKILL.md:252:node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json
+skills/nova/project_setup/tools/progress-scaffold.ts:21:  node skills/nova/project_setup/tools/progress-scaffold.ts --project <name> [--repo <repo>]
+skills/nova/project_setup/tools/progress-scaffold.ts:22:  node skills/nova/project_setup/tools/progress-scaffold.ts --project <name> --apply [--repo <repo>]
+skills/nova/project_setup/tools/progress-scaffold.ts:23:  node skills/nova/project_setup/tools/progress-scaffold.ts --project <name> --check [--repo <repo>]
+skills/nova/project_setup/tools/progress-scaffold.ts:26:  --project <name>       Project under Projects/<name>/src/.swarm
+skills/nova/project_setup/tools/progress-scaffold.ts:27:  --swarm <path>         Use an explicit .swarm directory instead of --project
+skills/nova/project_setup/tools/progress-scaffold.ts:55:    '--project': 'project',
+skills/nova/project_setup/tools/progress-scaffold.ts:70:  if (!args.help && !args.project && !args.swarm) throw new Error('Provide --project <name> or --swarm <path>.');
+skills/nova/project_setup/tools/progress-scaffold.ts:103:  if (!project) throw new Error('Cannot infer project name from --swarm; pass --project too.');
+skills/nova/project_setup/tools/progress-scaffold.ts:148:export async function run(argv: string[] = process.argv.slice(2)): Promise<number> {
+skills/nova/project_setup/tools/progress-scaffold.ts:165:const isCli = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts:35:      const result = requireToolExecution(await safeExec('tsc', ['--noEmit', '--pretty', 'false', '--project', config], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'tsc');
+skills/nova/plugins/lint/src/engine/execution.ts:40:    const value = process.env[key];
+skills/nova/plugins/review/scripts/evaluate-scalable-review.mts:10:const grade = process.argv[2] ?? 'standard';
+skills/nova/plugins/review/scripts/generate-verification-schema.mjs:15:if (process.argv.includes('--check')) {
+skills/nova/plugins/review/scripts/generate-bundle-schema.mjs:16:if (process.argv.includes('--check')) {
+skills/nova/plugins/review/scripts/generate-bundle-schema.mjs:38:  if (process.argv.includes('--check')) {
+skills/nova/plugins/review/scripts/generate-policy-schema.mjs:54:if (process.argv.includes('--check')) {
+skills/nova/plugins/review/scripts/evaluate-review-quality.mts:40:const arguments_ = process.argv.slice(2);
+skills/nova/plugins/review/README.md:116:edges. `npm run review:status -- --platform <platform.json> --run-id <run-id>`
+skills/nova/core/test-gates/runtime-config.ts:25:  environment: Readonly<Record<string, string | undefined>> = process.env,
+skills/nova/core/test-gates/remote-gate-cli.ts:23:  const args = argumentsOf(process.argv.slice(2));
+skills/nova/core/cli.ts:17:  process.stderr.write('Usage: node skills/nova/core/cli.ts --platform <platform.json> --pipeline <pipeline.json> [--run-id <id> | --recover <id>] [--signal <resume-signal.json>] | --platform <platform.json> --audit <run-id>\\n');
+skills/nova/core/cli.ts:49:  const args = argumentsOf(process.argv.slice(2));
+skills/common/plugins/secret-resolver/src/adapter.ts:17:      const value = process.env[environmentName];

@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "instanceId",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-package-policy.v1"
+    },
+    "packageId": {
+      "const": "kubeclaw.pipeline-review"
+    },
+    "instanceId": {
+      "const": "fixture.pipeline-review"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "processing"
+        ],
+        "properties": {
+          "processing": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kubeclaw.pipeline-review:review",
+              "kubeclaw.pipeline-review:evidence"
+            ],
+            "properties": {
+              "kubeclaw.pipeline-review:review": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "agent"
+                ],
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+                  },
+                  "agentRole": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "kubeclaw.pipeline-review:evidence": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "storageRoot",
+                  "orchestratorIssuerId",
+                  "maximumJournalBytes",
+                  "maximumArtifactBytes",
+                  "maximumBundleBytes"
+                ],
+                "properties": {
+                  "storageRoot": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^/",
+                    "readOnly": true
+                  },
+                  "orchestratorIssuerId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "readOnly": true
+                  },
+                  "maximumJournalBytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "maximumArtifactBytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "maximumBundleBytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

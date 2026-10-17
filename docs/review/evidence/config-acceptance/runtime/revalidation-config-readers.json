@@ -1,0 +1,73 @@
+{
+  "caseId": "RT-C0-REVALIDATION-CONFIG-READERS",
+  "command": "node docs/review/evidence/config-acceptance/runtime/revalidation-config-readers.mjs",
+  "node": "v24.21.0",
+  "typescript": "5.9.3",
+  "sourceDigests": {
+    "skills/nova/plugins/review/src/repository-revalidation-stage.ts": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+    "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+    "skills/nova/plugins/review/plugin.json": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/revalidation-config-readers.mjs": "4224a8effebaf4232d336b4c18d0f77254ec839c6fdb4df4c215cdbb3db4875f"
+  },
+  "registration": {
+    "id": "repository-revalidation",
+    "type": "kubeclaw.audit.repository-review-revalidation",
+    "module": "src/repository-revalidation-stage.ts",
+    "export": "executeRepositoryRevalidation",
+    "requiredCapabilities": [
+      "runtime.dispatch",
+      "git.repository.read",
+      "artifacts.read",
+      "artifacts.write"
+    ],
+    "configSchema": "schemas/repository-audit-config.schema.json",
+    "inputSchema": "schemas/repository-revalidation-input.schema.json",
+    "resultSchema": "schemas/result.schema.json"
+  },
+  "configAssignments": [
+    "context.contract.config"
+  ],
+  "actualConfigPropertyReads": [
+    {
+      "field": "agent",
+      "line": 132,
+      "text": "config.agent"
+    },
+    {
+      "field": "reviewerRuntime",
+      "line": 134,
+      "text": "config.reviewerRuntime"
+    },
+    {
+      "field": "reviewerAgentId",
+      "line": 135,
+      "text": "config.reviewerAgentId"
+    },
+    {
+      "field": "reviewerModel",
+      "line": 136,
+      "text": "config.reviewerModel"
+    },
+    {
+      "field": "reviewerThinking",
+      "line": 137,
+      "text": "config.reviewerThinking"
+    }
+  ],
+  "dynamicConfigAccesses": [],
+  "unusedAcceptedFields": [
+    "profile",
+    "policy and every nested policy field/shape"
+  ],
+  "helperDefinition": {
+    "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+    "line": 195,
+    "source": "{\n  const rawInventory = await context.invoke('git.repository.read', {\n      operation: 'inventory_revision', resource: { type: 'git.repository.path', canonicalId: '.' },\n      payload: { head: revision.head, proof: revision.proof,\n        allowedPrefixes: parsed.reviewProfile.allowedPrefixes, maxPaths: 1_000_000 },\n  });\n  let snapshot: ReturnType<typeof parseReviewSnapshotInventory>;\n  try { snapshot = parseReviewSnapshotInventory(rawInventory as never); } catch (error) {\n    throw new RepositoryAuditIntegrityError(error instanceof Error ? error.message : String(error));\n  }\n  if (snapshot.head !== revision.head) throw new RepositoryAuditIntegrityError('repository audit inventory revision is invalid');\n  if (parsed.reviewProfile.scope.kind === 'plugin') {\n    const paths = snapshot.files.map(({ path }) => path);\n    const missing = parsed.reviewProfile.scope.names.filter((name) => (\n      !paths.some((path) => path.startsWith(`skills/nova/plugins/${name}/`))\n    ));\n    if (missing.length > 0) throw new RepositoryAuditIntegrityError(\n      `repository audit plugin scope is missing: ${missing.join(',')}`,\n    );\n  }\n  assertRepositoryReadBudget(snapshot);\n  const { documents, sourceDigests } = await repositoryDocuments(\n    snapshot, revision, parsed.reviewProfile.allowedPrefixes, context,\n  );\n  let compilation: ReturnType<typeof compileScalableReview>;\n  try { compilation = compileScalableReview({ snapshot, documents, sourceDigests,\n    budget: parsed.reviewProfile.componentBudget, profile: executionProfile(parsed.reviewProfile) }); } catch (error) {\n    throw new RepositoryAuditIntegrityError(error instanceof Error ? error.message : String(error));\n  }\n  return { revision, snapshot, compilation };\n}",
+    "meaning": "helper receives task grade/overrides resolved profile, reads no stage config/policy/default decision-policy resolver"
+  },
+  "result": "passed",
+  "reviewerConfirmation": "pending",
+  "limitation": "exact AST property/assignment and exported compile helper source checks; fresh review must confirm all productive delegate paths. No dispatch, full revalidation or target rejection behavior PASS claimed."
+}

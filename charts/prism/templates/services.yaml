@@ -34,7 +34,7 @@ spec: { selector: { app: prism-worker }, ports: [{ name: mtls, port: 8443, targe
 apiVersion: v1
 kind: Service
 metadata: { name: prism-ingestion }
-spec: { selector: { app: prism-ingestion }, ports: [{ port: 8080, targetPort: 8080 }] }
+spec: { selector: { app: prism-ingestion }, ports: [{ port: 8080, targetPort: {{ (include "prism.swarmConfig" . | fromJson).operator.prism.ingestion.port | int }} }] }
 {{- end }}
 {{- if .Values.tailscale.enabled }}
 ---

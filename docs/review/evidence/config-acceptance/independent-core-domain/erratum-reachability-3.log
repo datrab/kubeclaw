@@ -1,0 +1,12 @@
+skills/worker/core/worker/local-runtime.ts:15:  readonly cancellationTimeoutMs: number;
+skills/worker/core/worker/local-runtime.ts:22:  const cancellationTimeoutMs = positiveTimer(options.cancellationTimeoutMs,
+skills/worker/core/worker/local-runtime.ts:28:  return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });
+skills/worker/core/worker/local-runtime.ts:42:  readonly controller: AbortController;
+skills/worker/core/worker/local-runtime.ts:52:  readonly cancellationTimeoutMs: number;
+skills/worker/core/worker/local-runtime.ts:80:function armClaimExpiry(deadline: number, controller: AbortController, now: () => Date): () => void {
+skills/worker/core/worker/local-runtime.ts:108:    const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);
+skills/worker/core/worker/local-runtime.ts:115:      coreVersion: options.coreVersion, capacity: options.capacity, drainTimeoutMs, cancellationTimeoutMs, replayLimit });
+skills/worker/core/worker/local-runtime.ts:181:    const controller = new AbortController();
+skills/worker/core/worker/local-runtime.ts:184:    const clearClaimExpiry = armClaimExpiry(claimExpiresAt, controller, this.#now);
+skills/worker/core/worker/local-runtime.ts:241:      for (const attempt of this.#active.values()) attempt.controller.abort(new Error('WORKER_LOCAL_DRAIN_CANCELLED'));
+skills/worker/core/worker/local-runtime.ts:243:      if (!(await settleWithin(cancelled, this.#options.cancellationTimeoutMs))) {

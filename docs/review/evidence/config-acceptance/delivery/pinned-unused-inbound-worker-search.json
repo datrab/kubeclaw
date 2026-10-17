@@ -1,0 +1,103 @@
+{
+  "search": "recursive dist regular .mjs/.js/.ts including hidden directories, exact substring inboundWorker",
+  "excluded": "binary/assets/node_modules not dist; only complete distribution program/schema/type surface searched",
+  "hits": [
+    {
+      "distribution": "package",
+      "path": "dist/types-B16fzBZc.d.ts",
+      "sha256": "773c93279c7b74f56853cb7fc823f27fa8171b39acbf53fc3f0cc929e2fd71b5",
+      "line": 4261,
+      "byteOffset": 189378,
+      "excerpt": "ger enforces channel-owned\n   * timeouts for queued inbound agent runs.\n   */\n  inboundWorker?: {\n    /**\n     * Ignored. Queued Discord agent runs are governed by the session/tool/runtime\n     * lifecycle, not by Discord channel config.\n     */\n    runTimeout"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/bundled-channel-config-metadata.generated-8Vz90MRp.mjs",
+      "sha256": "65fe96a106df7804e5dc1e46ab252b62299dbed8f669f55dce297a173791f9b4",
+      "line": 5,
+      "byteOffset": 41078,
+      "excerpt": "ber\\\",\\\"const\\\":5}]},\\\"activityUrl\\\":{\\\"type\\\":\\\"string\\\",\\\"format\\\":\\\"uri\\\"},\\\"inboundWorker\\\":{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"runTimeoutMs\\\":{\\\"type\\\":\\\"integer\\\",\\\"minimum\\\":0,\\\"maximum\\\":9007199254740991}},\\\"additionalProperties\\\":false},\\\"accounts\\"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/bundled-channel-config-metadata.generated-8Vz90MRp.mjs",
+      "sha256": "65fe96a106df7804e5dc1e46ab252b62299dbed8f669f55dce297a173791f9b4",
+      "line": 6,
+      "byteOffset": 63657,
+      "excerpt": "ber\\\",\\\"const\\\":5}]},\\\"activityUrl\\\":{\\\"type\\\":\\\"string\\\",\\\"format\\\":\\\"uri\\\"},\\\"inboundWorker\\\":{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"runTimeoutMs\\\":{\\\"type\\\":\\\"integer\\\",\\\"minimum\\\":0,\\\"maximum\\\":9007199254740991}},\\\"additionalProperties\\\":false}},\\\"addition"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/types.channels-BVWycIjM.d.ts",
+      "sha256": "b45d39b8fd0a39291b4361c62bbff5f1c4205d3f1bfed940bec6c5ca1af55f23",
+      "line": 2951,
+      "byteOffset": 129083,
+      "excerpt": "ger enforces channel-owned\n   * timeouts for queued inbound agent runs.\n   */\n  inboundWorker?: {\n    /**\n     * Ignored. Queued Discord agent runs are governed by the session/tool/runtime\n     * lifecycle, not by Discord channel config.\n     */\n    runTimeout"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/types.openclaw-Cl1ExldP.d.ts",
+      "sha256": "0c92056b04d19e05e4f2ecf625fcf25ee9e63cdeaad2c98eb2efa6350b6228f0",
+      "line": 5335,
+      "byteOffset": 232799,
+      "excerpt": "ger enforces channel-owned\n   * timeouts for queued inbound agent runs.\n   */\n  inboundWorker?: {\n    /**\n     * Ignored. Queued Discord agent runs are governed by the session/tool/runtime\n     * lifecycle, not by Discord channel config.\n     */\n    runTimeout"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/cli-backend.types-DEEWiHUs.d.ts",
+      "sha256": "5ac0bb47e71e33d51aec8d29b52cc23ebc24783486440f21a78e13661d77c42e",
+      "line": 4436,
+      "byteOffset": 195447,
+      "excerpt": "ger enforces channel-owned\n   * timeouts for queued inbound agent runs.\n   */\n  inboundWorker?: {\n    /**\n     * Ignored. Queued Discord agent runs are governed by the session/tool/runtime\n     * lifecycle, not by Discord channel config.\n     */\n    runTimeout"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/index.d.ts",
+      "sha256": "dd840fad84bfff3cd82ffedf66e2fb93db1954e7e75282afc34c14df868215f1",
+      "line": 4405,
+      "byteOffset": 194502,
+      "excerpt": "ger enforces channel-owned\n   * timeouts for queued inbound agent runs.\n   */\n  inboundWorker?: {\n    /**\n     * Ignored. Queued Discord agent runs are governed by the session/tool/runtime\n     * lifecycle, not by Discord channel config.\n     */\n    runTimeout"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/runtime-api-BzC0x4-Q.d.ts",
+      "sha256": "ff9c968721df89ecccf4855643c9544e669da40918acc2358a50604fdd9d4027",
+      "line": 4555,
+      "byteOffset": 199075,
+      "excerpt": "ger enforces channel-owned\n   * timeouts for queued inbound agent runs.\n   */\n  inboundWorker?: {\n    /**\n     * Ignored. Queued Discord agent runs are governed by the session/tool/runtime\n     * lifecycle, not by Discord channel config.\n     */\n    runTimeout"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/types.openclaw-DNYpBV89.d.ts",
+      "sha256": "d9a8c2ef1215fce05b28e5284c771cd4c722fb746cdf0bede5a0992bd79b93ed",
+      "line": 4261,
+      "byteOffset": 189364,
+      "excerpt": "ger enforces channel-owned\n   * timeouts for queued inbound agent runs.\n   */\n  inboundWorker?: {\n    /**\n     * Ignored. Queued Discord agent runs are governed by the session/tool/runtime\n     * lifecycle, not by Discord channel config.\n     */\n    runTimeout"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/worker/worker.mjs",
+      "sha256": "959463787af111b4a550061cec077f8c2e4b611ce81d6babf7b7998f0e83ced1",
+      "line": 5820,
+      "byteOffset": 7917987,
+      "excerpt": "},{\"type\":\"number\",\"const\":5}]},\"activityUrl\":{\"type\":\"string\",\"format\":\"uri\"},\"inboundWorker\":{\"type\":\"object\",\"properties\":{\"runTimeoutMs\":{\"type\":\"integer\",\"minimum\":0,\"maximum\":9007199254740991}},\"additionalProperties\":false},\"accounts\":{\"type\":\"object\",\"p"
+    },
+    {
+      "distribution": "package",
+      "path": "dist/worker/worker.mjs",
+      "sha256": "959463787af111b4a550061cec077f8c2e4b611ce81d6babf7b7998f0e83ced1",
+      "line": 5820,
+      "byteOffset": 7937230,
+      "excerpt": "},{\"type\":\"number\",\"const\":5}]},\"activityUrl\":{\"type\":\"string\",\"format\":\"uri\"},\"inboundWorker\":{\"type\":\"object\",\"properties\":{\"runTimeoutMs\":{\"type\":\"integer\",\"minimum\":0,\"maximum\":9007199254740991}},\"additionalProperties\":false}},\"additionalProperties\":false}"
+    },
+    {
+      "distribution": "@openclaw/discord",
+      "path": "dist/.setup/config-schema-CiZz-mtA.mjs",
+      "sha256": "ce9749aaf201bc38b3c9a721c67d6777261552817c6b96bbb566955bd943f6e2",
+      "line": 605,
+      "byteOffset": 28840,
+      "excerpt": "(4),\n\t\tz.literal(5)\n\t]).optional(),\n\tactivityUrl: z.string().url().optional(),\n\tinboundWorker: z.object({ runTimeoutMs: z.number().int().nonnegative().optional() }).strict().optional()\n}).strict().superRefine((value, ctx) => {\n\tconst activityText = normalizeOp"
+    }
+  ],
+  "conclusion": "all occurrences schema/type declaration; no productive field reader found; not confused with unrelated runTimeoutMs field"
+}

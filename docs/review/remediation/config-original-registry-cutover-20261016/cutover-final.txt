@@ -1,0 +1,14 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6
+    throw new Error('REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG');
+          ^
+
+Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+    at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+    at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+    at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1547:3)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:110:25
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

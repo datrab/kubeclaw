@@ -1,0 +1,48 @@
+{
+  "scope": "complete synthetic source-traced proposed original serialized A epoch and ordinary/Ready/Product/deleting state; no native/authentic/grant/provider acceptance",
+  "files": [
+    {
+      "mode": "ordinary-default",
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/ordinary-default.json",
+      "sha256": "47cfcb764abc4ab0dd84761e6c03e00f509ed973817ff8c2a36ad9e587fc3914",
+      "result": "not-run; synthetic fixture definition only"
+    },
+    {
+      "mode": "ordinary-explicit",
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/ordinary-explicit.json",
+      "sha256": "b85f6451aed326f9e41936d9e608afb2c9c79daa677b28dfeb16a2c4598d0d8d",
+      "result": "not-run; synthetic fixture definition only"
+    },
+    {
+      "mode": "ready-v1",
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/ready-v1.json",
+      "sha256": "76c282e2c6be811c48ee7acb8f35118457ccb62edcd70289a064ae3a5ce21127",
+      "result": "not-run; synthetic fixture definition only"
+    },
+    {
+      "mode": "ready-v2",
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/ready-v2.json",
+      "sha256": "7047aa144f2ab4d2a12c76c98ab567879b18e064d6c9a5a55df8d8d664ce0f10",
+      "result": "not-run; synthetic fixture definition only"
+    },
+    {
+      "mode": "product-extended",
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/product-extended.json",
+      "sha256": "785ff31d95acd77c9de3b0205667ce451c153d9f2a5575ae7e1048df72f2a31e",
+      "result": "not-run; synthetic fixture definition only"
+    },
+    {
+      "mode": "deleting",
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/deleting.json",
+      "sha256": "4a9e5d7d09fb9951775dc6ae0579ca0ab31e8e702fc749d9363b7ee02a7385cf",
+      "result": "not-run; synthetic fixture definition only"
+    }
+  ],
+  "schema": {
+    "path": "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-serialization-schema-6606af9-20261013.json",
+    "sha256": "4b9add8813f1071622dd085e854891ae626a9bce0d6945c12440f2c624095744"
+  },
+  "epochCRDChangesRequired": "status.deliveryPolicyEpoch currently absent; C1/C3 future explicit structural schema/CEL immutable CAS+readback+typed authority resolution before mutations. No productive edit authorized",
+  "retentionMigration": "historical ready-v1 absentretention -> exact explicit604800 without any readyAt/expiresAt/requestDigest/receipt change, Product chain remains exact. Current source technical max/calendar distinct from operationaldefaultB",
+  "parentHandoff": "universal originalModule/carrier/grant/cleanup unapproved OPEN; these sample locator strings deliberately unresolved, not accepted parent IDs"
+}

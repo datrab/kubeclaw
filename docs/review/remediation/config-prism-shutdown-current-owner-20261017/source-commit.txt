@@ -1,0 +1,3 @@
+[codex/config-c0-semantic-inventory-20261012 5520023c7] test(config): migrate original Prism shutdown producer to selected central owners
+ 2 files changed, 24 insertions(+), 7 deletions(-)
+ create mode 100644 skills/prism/tests/fixtures/worker-shutdown-policy.mts

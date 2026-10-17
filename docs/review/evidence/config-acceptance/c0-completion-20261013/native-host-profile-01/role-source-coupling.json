@@ -1,0 +1,62 @@
+{
+  "existingPeerPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/components/buster-engine.config.json",
+  "existingPeerSHA256": "db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252",
+  "existingPeerPointer": "/profiles/local-A/settings/preparation",
+  "exactPreparationSettings": {
+    "resourcePolicy": {
+      "cpuTimeMs": 120000,
+      "memoryBytes": 8589934592,
+      "tasks": 64
+    },
+    "timeoutMs": 300000,
+    "cleanupTimeoutMs": 10000,
+    "maximumActivePreparations": 2,
+    "maximumPendingAdmissions": 16,
+    "maximumRequestBytes": 100663296,
+    "maximumArchiveBytes": 67108864,
+    "maximumExtractedBytes": 536870912,
+    "maximumHeaderBytes": 3145728,
+    "maximumSourceBytes": 1073741824,
+    "maximumMetadataBytes": 67108864,
+    "maximumRecords": 10000,
+    "maximumOwnershipBytes": 16777216,
+    "maximumJournalBytes": 268435456,
+    "maximumInputBytes": 65536,
+    "maximumOutputBytes": 8388608,
+    "maximumResultBytes": 4194304,
+    "pollIntervalMs": 25,
+    "drainTimeoutMs": 5000,
+    "closeTimeoutMs": 10000,
+    "tarTimeoutMs": 120000,
+    "maximumArchiveEntries": 200000,
+    "maximumListingLineBytes": 1048576,
+    "maximumTarStderrBytes": 65536,
+    "maximumSourceEntries": 400014,
+    "sourceEntryReservationBytes": 256,
+    "maximumOpenFiles": 64,
+    "attemptEvidenceBytes": 1,
+    "attemptEvidenceFiles": 1,
+    "attemptLogBytes": 1,
+    "completionPhaseAllowance": 8,
+    "storeLockWaitSeconds": 5,
+    "tarDiagnosticCodeUnits": 4096,
+    "resultInputReserveMultiplier": 4
+  },
+  "actualCurrentAx41Conflict": {
+    "maximumActiveScopes": 1,
+    "maximumActivePreparations": 2,
+    "disposition": "knownLOCALco-selection mismatch, not genericexternal excuse, rejects proposedcurrentservice install"
+  },
+  "explicitWholeSourceRequestedCorrection": {
+    "owner": "my-values/infra/native-worker-pools-ax41.yaml",
+    "profile": "ax41-coupled-request",
+    "changedOnly": "pools.buster.maximumActiveScopes1->2",
+    "meaning": "Hmaintenance requestedcountceil compatiblewith currentSstartup; same8GiB aggregate still limitsreservation, no doubled capacity/resource grant invented",
+    "actualHostProof": "external-required"
+  },
+  "prismPeerSources": [
+    "skills/prism/config/native-worker.ts::nativePrismSupervisorConfig",
+    "skills/prism/config/resource-policy.ts::requirePrismResourcePoolCapacity"
+  ],
+  "allProfileMetadataVsSelectedServiceEligibility": "all declaredHost19 profiles metadata validate beforeselection; only actualselected originalrole/service fullpolicy receives compatibility gate. Source-model-A/B doNOTautomatically pass current8GiB/fullservice requirements; future genuinely smallsource native fixtures mustuse complete originalcompatible servicepolicy/source/grants."
+}

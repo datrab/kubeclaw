@@ -1,0 +1,8 @@
+{
+  "historicalBodyCount": 269,
+  "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "changedOriginalNativeBodies": [],
+  "existingSuccessorCanonicalIds": 356,
+  "missingNativeRequirementsInExistingCanonicalSuccessors": [],
+  "limit": "Metadata identity/requirement subset only. Root body transformation and historical projection deliberately not accepted or implemented by this preparation guard."
+}

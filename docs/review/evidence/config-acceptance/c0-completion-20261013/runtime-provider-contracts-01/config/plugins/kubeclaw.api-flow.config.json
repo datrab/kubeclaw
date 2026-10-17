@@ -1,0 +1,208 @@
+{
+  "schemaVersion": "pipeline-registration-policy.v1",
+  "packageId": "kubeclaw.api-flow",
+  "registrationId": "kubeclaw.api-flow:flow",
+  "instanceId": "fixture.api-flow",
+  "profiles": {
+    "A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3,
+        "maximumFlowFileBytes": 1048576
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "B": {
+      "processing": {
+        "requestTimeoutMs": 500,
+        "maximumResponseBytes": 1024,
+        "maximumSteps": 3,
+        "maximumFlowFileBytes": 1048576
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-b8eb5e344f496d7c-A": {
+      "processing": {
+        "requestTimeoutMs": 50,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3,
+        "maximumFlowFileBytes": 1048576
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-b8eb5e344f496d7c-B": {
+      "processing": {
+        "requestTimeoutMs": 500,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3,
+        "maximumFlowFileBytes": 1048576
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-98a5849759145124-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 32,
+        "maximumSteps": 3,
+        "maximumFlowFileBytes": 1048576
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-98a5849759145124-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3,
+        "maximumFlowFileBytes": 1048576
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-6e292c3c6f492f07-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 1,
+        "maximumFlowFileBytes": 1048576
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-6e292c3c6f492f07-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3,
+        "maximumFlowFileBytes": 1048576
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    }
+  }
+}

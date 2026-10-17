@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-timeout=25000",
+    "tests/verification/reliability/effect-identity-version.test.mts",
+    "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs"
+  ],
+  "exitCode": 0
+}

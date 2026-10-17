@@ -1,0 +1,13 @@
+{
+  "name": "@kubeclaw/plugin-runtime-dispatch",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*",
+    "tiktoken": "^1.0.22"
+  }
+}

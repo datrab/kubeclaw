@@ -1,0 +1,46 @@
+{
+  "identity": {
+    "node": "v24.21.0",
+    "commit": "bce3f075156a86be345821499c04628cb35c2762",
+    "sources": [
+      {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-role-metadata.mjs",
+        "sha256": "205634e6ca519281f9df16b82435036dab64d4ced865e38d9e97db9e16084bfe"
+      },
+      {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+      },
+      {
+        "path": "skills/prism/server/control-context.ts",
+        "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02"
+      },
+      {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      }
+    ]
+  },
+  "records": [
+    {
+      "roles": [
+        "editor"
+      ],
+      "result": "passed",
+      "observation": "Current signed metadata round-trips; membership is not runtime-validated here"
+    },
+    {
+      "roles": [],
+      "result": "passed",
+      "observation": "Current signed metadata round-trips; membership is not runtime-validated here"
+    },
+    {
+      "roles": [
+        17
+      ],
+      "result": "passed",
+      "observation": "Current signed metadata round-trips; membership is not runtime-validated here"
+    }
+  ],
+  "limits": "Current exported signed-role metadata controls only; no role grant, service authorization, migrated schema, selected full profile or runtime binding acceptance; disposable local key not persisted."
+}

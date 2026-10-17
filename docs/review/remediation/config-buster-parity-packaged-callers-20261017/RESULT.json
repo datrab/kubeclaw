@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-17T04:12:32.379584+00:00",
+  "status": "ORIGINAL_BUSTER_PARITY_BOTH_PACKAGED_CALLERS_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "9b0a7ba883b16fb4d82e3ffd1b27bd83efc82fb2",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-buster-parity-packaged-callers-20261017",
+  "change": "Both original process-input and cluster-invoker parity suites now render normal complete chart archives, check archived selected topology, build genuine roles with actual checkout revision and one genuine invocation timestamp, and authenticate both preparation/runtime projected receivers. Wrong-caller, actual delivered-byte tamper and restored-positive controls added; all original malformed/A-B/restore/topology checks retained. No production policy/schema/default/authority changed.",
+  "checks": {
+    "tests": 2,
+    "passed": 2,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "processInput": {
+      "malformedPoliciesRejected": 28,
+      "realRolePublications": 3,
+      "callersPerPublication": 2
+    },
+    "clusterInvokers": {
+      "malformedPoliciesRejected": 269,
+      "realRolePublications": 4,
+      "callersPerPublication": 2
+    },
+    "chartGeneratorsPerNegative": 2,
+    "chartsPerDelivery": 2,
+    "nodeSyntaxAndDiffCheck": true
+  },
+  "initialFailureAndRecovery": "Preserved initial-tests-failure.txt: changing builtAt per A/B/restored-A changed delivery checksum, then combined command hit actual 90s execution-surface timeout and interrupted process suite. Actual process/lock check confirmed no surviving worker/free lock. Fixed one actual build timestamp per original suite; ran both complete commands separately to terminal exit0. No skipped assertions or synthetic timestamp. Scheduler tool timeout recovered, not new native infrastructure failure.",
+  "qualification": "Local genuine role receipt/capture/projected policy and full chart archive render only. NOT OCI/native/UID1000/independent acceptance; native/image identifiers remain explicit shape-only render inputs. Checkout revision on retained WIP is not clean-closure proof. No prior productive bug claimed.",
+  "originalRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+    "unchangedFromHEAD": true,
+    "originalResultsChanged": false
+  },
+  "independentReview": "OPEN: native spawn/reviewer discovery empty; CONFIG subagents0, parent terminal, no fresh independent reviewer output. Known unchanged helper EROFS not retried. Author tests only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged suitable isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL. No identity/kernel/trust spoof or skipped acceptance.",
+  "writerLock": "SAME nonblocking lock; terminal parent/no productive worker; released on each bounded command exit",
+  "noHistoricalFollowup": true,
+  "sourceHashes": {
+    "tests/verification/deployment/buster-process-input-parity.test.mjs": "5d242c32be649693b2a6848c5894cee97fc4fdb8d9dbe88f0d0ef074bfcbf525",
+    "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs": "f86797a2e11e6c605043ec8f78a576ebb881b8495f5828561d607cdc9b6889a6"
+  }
+}

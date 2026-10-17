@@ -1,0 +1,389 @@
+{
+  "schemaVersion": "review-owned-policy-document.v1",
+  "profiles": {
+    "standard": {
+      "settings": {
+        "schemaVersion": "review-owned-decision-profiles.v2",
+        "profiles": {
+          "gate": {
+            "schemaVersion": "review-policy.v2",
+            "profile": "gate",
+            "blocking": {
+              "priorities": [
+                "P0"
+              ],
+              "categories": [
+                "correctness",
+                "security",
+                "contract"
+              ],
+              "requireIntroducedByDiff": true,
+              "requireDirectEvidence": true
+            },
+            "limits": {
+              "maxProposals": 64,
+              "maxRootCauses": 5,
+              "maxInstancesPerCluster": 100,
+              "maxBundleBytes": 4194304,
+              "maxContextFiles": 48,
+              "maxInitialContextFiles": 40,
+              "maxContextFileBytes": 524288,
+              "maxContextBytes": 3145728,
+              "maxInitialContextBytes": 2097152,
+              "maxDependencyDepth": 2,
+              "maxExpansionFiles": 8,
+              "maxAdvisories": 0
+            },
+            "scope": {
+              "outsideScope": "orchestrator_required",
+              "unknownScope": "blocked",
+              "retainPreExisting": false
+            },
+            "verification": {
+              "semanticVerifier": "p0-only",
+              "insufficientFindingEvidence": "orchestrator_required",
+              "unverifiedRequirement": "blocked"
+            },
+            "simplification": {
+              "enabled": false,
+              "registryVersion": "simplification-rules.v1",
+              "enabledRules": [],
+              "maxRecommendations": 0,
+              "minimumConfidence": "high"
+            },
+            "ranking": {
+              "priorityWeights": {
+                "P0": 1000,
+                "P1": 500,
+                "P2": 100,
+                "P3": 10
+              },
+              "categoryWeights": {
+                "correctness": 1000,
+                "security": 1000,
+                "contract": 900,
+                "architecture": 100,
+                "simplification": 10
+              },
+              "introducedByDiffBonus": 100,
+              "directEvidenceBonus": 100
+            },
+            "followUp": {
+              "retainedPriorities": [
+                "P1",
+                "P2",
+                "P3"
+              ],
+              "maxItems": 100
+            },
+            "governor": {
+              "maxRepairCycles": 2,
+              "fileGrowthMultiplier": 2,
+              "nonTestLocGrowthMultiplier": 2,
+              "absoluteFileAllowance": 2,
+              "absoluteNonTestLocAllowance": 100
+            }
+          },
+          "lean": {
+            "schemaVersion": "review-policy.v2",
+            "profile": "lean",
+            "blocking": {
+              "priorities": [
+                "P0"
+              ],
+              "categories": [
+                "correctness",
+                "security",
+                "contract"
+              ],
+              "requireIntroducedByDiff": true,
+              "requireDirectEvidence": true
+            },
+            "limits": {
+              "maxProposals": 64,
+              "maxRootCauses": 5,
+              "maxInstancesPerCluster": 100,
+              "maxBundleBytes": 6291456,
+              "maxContextFiles": 64,
+              "maxInitialContextFiles": 52,
+              "maxContextFileBytes": 786432,
+              "maxContextBytes": 5242880,
+              "maxInitialContextBytes": 4194304,
+              "maxDependencyDepth": 2,
+              "maxExpansionFiles": 12,
+              "maxAdvisories": 3
+            },
+            "scope": {
+              "outsideScope": "follow_up",
+              "unknownScope": "blocked",
+              "retainPreExisting": false
+            },
+            "verification": {
+              "semanticVerifier": "p0-only",
+              "insufficientFindingEvidence": "follow_up",
+              "unverifiedRequirement": "blocked"
+            },
+            "simplification": {
+              "enabled": true,
+              "registryVersion": "simplification-rules.v1",
+              "enabledRules": [
+                "SIM001",
+                "SIM002",
+                "SIM003",
+                "SIM004",
+                "SIM005",
+                "SIM006",
+                "SIM007",
+                "SIM008"
+              ],
+              "maxRecommendations": 3,
+              "minimumConfidence": "high"
+            },
+            "ranking": {
+              "priorityWeights": {
+                "P0": 1000,
+                "P1": 500,
+                "P2": 100,
+                "P3": 10
+              },
+              "categoryWeights": {
+                "correctness": 1000,
+                "security": 1000,
+                "contract": 900,
+                "architecture": 100,
+                "simplification": 10
+              },
+              "introducedByDiffBonus": 100,
+              "directEvidenceBonus": 100
+            },
+            "followUp": {
+              "retainedPriorities": [
+                "P1",
+                "P2",
+                "P3"
+              ],
+              "maxItems": 100
+            },
+            "governor": {
+              "maxRepairCycles": 2,
+              "fileGrowthMultiplier": 2,
+              "nonTestLocGrowthMultiplier": 2,
+              "absoluteFileAllowance": 2,
+              "absoluteNonTestLocAllowance": 100
+            }
+          },
+          "audit": {
+            "schemaVersion": "review-policy.v2",
+            "profile": "audit",
+            "blocking": {
+              "priorities": [
+                "P0"
+              ],
+              "categories": [
+                "correctness",
+                "security",
+                "contract"
+              ],
+              "requireIntroducedByDiff": true,
+              "requireDirectEvidence": true
+            },
+            "limits": {
+              "maxProposals": 128,
+              "maxRootCauses": 20,
+              "maxInstancesPerCluster": 1000,
+              "maxBundleBytes": 16777216,
+              "maxContextFiles": 256,
+              "maxInitialContextFiles": 240,
+              "maxContextFileBytes": 2097152,
+              "maxContextBytes": 14680064,
+              "maxInitialContextBytes": 12582912,
+              "maxDependencyDepth": 8,
+              "maxExpansionFiles": 16,
+              "maxAdvisories": 100
+            },
+            "scope": {
+              "outsideScope": "follow_up",
+              "unknownScope": "follow_up",
+              "retainPreExisting": true
+            },
+            "verification": {
+              "semanticVerifier": "all-blockers",
+              "insufficientFindingEvidence": "follow_up",
+              "unverifiedRequirement": "orchestrator_required"
+            },
+            "simplification": {
+              "enabled": true,
+              "registryVersion": "simplification-rules.v1",
+              "enabledRules": [
+                "SIM001",
+                "SIM002",
+                "SIM003",
+                "SIM004",
+                "SIM005",
+                "SIM006",
+                "SIM007",
+                "SIM008"
+              ],
+              "maxRecommendations": 10,
+              "minimumConfidence": "medium"
+            },
+            "ranking": {
+              "priorityWeights": {
+                "P0": 1000,
+                "P1": 500,
+                "P2": 100,
+                "P3": 10
+              },
+              "categoryWeights": {
+                "correctness": 1000,
+                "security": 1000,
+                "contract": 900,
+                "architecture": 100,
+                "simplification": 10
+              },
+              "introducedByDiffBonus": 100,
+              "directEvidenceBonus": 100
+            },
+            "followUp": {
+              "retainedPriorities": [
+                "P0",
+                "P1",
+                "P2",
+                "P3"
+              ],
+              "maxItems": 1000
+            },
+            "governor": {
+              "maxRepairCycles": 2,
+              "fileGrowthMultiplier": 2,
+              "nonTestLocGrowthMultiplier": 2,
+              "absoluteFileAllowance": 2,
+              "absoluteNonTestLocAllowance": 100
+            }
+          }
+        },
+        "repositoryGrades": {
+          "fast": {
+            "componentBudget": {
+              "maxFiles": 60,
+              "maxBytes": 400000,
+              "maxTokens": 86000
+            },
+            "boundaryBudget": {
+              "maxFiles": 400,
+              "maxBytes": 900000,
+              "maxTokens": 80000,
+              "maxRelations": 600,
+              "maxSlices": 200
+            },
+            "maxPrimaryJobs": 75,
+            "maxContextExpansionJobs": 12,
+            "maxVerificationJobs": 8,
+            "maxInputTokensPerJob": 120000,
+            "maxContextTokensPerJob": 128000,
+            "maxPromptBytesPerJob": 900000,
+            "maxInitialInputTokens": 6500000,
+            "maxContextExpansionInputTokens": 750000,
+            "maxVerificationInputTokens": 750000,
+            "maxTotalInputTokens": 8000000,
+            "maxEstimatedCostUsd": 100,
+            "maxWallTimeSeconds": 3600,
+            "estimatedSecondsPerJob": 120,
+            "inputUsdPerMillionTokens": 10,
+            "outputUsdPerMillionTokens": 30,
+            "concurrency": 8,
+            "maxRetries": 1,
+            "maxRetryAttemptsPerPhase": 4,
+            "enabledLenses": [
+              "contracts",
+              "security",
+              "lifecycle"
+            ]
+          },
+          "standard": {
+            "componentBudget": {
+              "maxFiles": 60,
+              "maxBytes": 400000,
+              "maxTokens": 86000
+            },
+            "boundaryBudget": {
+              "maxFiles": 400,
+              "maxBytes": 900000,
+              "maxTokens": 80000,
+              "maxRelations": 600,
+              "maxSlices": 200
+            },
+            "maxPrimaryJobs": 500,
+            "maxContextExpansionJobs": 100,
+            "maxVerificationJobs": 100,
+            "maxInputTokensPerJob": 120000,
+            "maxContextTokensPerJob": 128000,
+            "maxPromptBytesPerJob": 900000,
+            "maxInitialInputTokens": 25000000,
+            "maxContextExpansionInputTokens": 50000000,
+            "maxVerificationInputTokens": 50000000,
+            "maxTotalInputTokens": 50000000,
+            "maxEstimatedCostUsd": 650,
+            "maxWallTimeSeconds": 28800,
+            "estimatedSecondsPerJob": 120,
+            "inputUsdPerMillionTokens": 10,
+            "outputUsdPerMillionTokens": 30,
+            "concurrency": 10,
+            "maxRetries": 2,
+            "maxRetryAttemptsPerPhase": 20,
+            "enabledLenses": [
+              "architecture",
+              "contracts",
+              "security",
+              "lifecycle",
+              "resilience",
+              "deployment",
+              "simplification"
+            ]
+          },
+          "deep": {
+            "componentBudget": {
+              "maxFiles": 30,
+              "maxBytes": 220000,
+              "maxTokens": 90000
+            },
+            "boundaryBudget": {
+              "maxFiles": 100,
+              "maxBytes": 480000,
+              "maxTokens": 110000,
+              "maxRelations": 100,
+              "maxSlices": 32
+            },
+            "maxPrimaryJobs": 2000,
+            "maxContextExpansionJobs": 250,
+            "maxVerificationJobs": 250,
+            "maxInputTokensPerJob": 120000,
+            "maxContextTokensPerJob": 128000,
+            "maxPromptBytesPerJob": 900000,
+            "maxInitialInputTokens": 50000000,
+            "maxContextExpansionInputTokens": 100000000,
+            "maxVerificationInputTokens": 100000000,
+            "maxTotalInputTokens": 100000000,
+            "maxEstimatedCostUsd": 1300,
+            "maxWallTimeSeconds": 86400,
+            "estimatedSecondsPerJob": 150,
+            "inputUsdPerMillionTokens": 10,
+            "outputUsdPerMillionTokens": 30,
+            "concurrency": 4,
+            "maxRetries": 2,
+            "maxRetryAttemptsPerPhase": 40,
+            "enabledLenses": [
+              "architecture",
+              "contracts",
+              "security",
+              "lifecycle",
+              "resilience",
+              "deployment",
+              "simplification"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

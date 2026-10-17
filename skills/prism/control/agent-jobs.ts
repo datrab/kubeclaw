@@ -1,5 +1,5 @@
 import { checkWorkerResourceResultBinding,type WorkerAttemptEnvelopeV2,type WorkerAttemptResultV2 } from '@kubeclaw/pipeline-worker-core-contract';
-import { agentAttempt } from '../server/agent-attempt.ts';
+import { agentAttempt, type AgentLauncherConfig } from '../server/agent-attempt.ts';
 import { randomUUID } from 'node:crypto';
 import { sha256Digest } from '@kubeclaw/worker-core';
 import { inTransaction, type Database, type Queryable } from '../storage/index.ts';
@@ -36,8 +36,9 @@ export async function agentJob(db:Queryable,id:string):Promise<AgentJob> {
 }
 
 /** Only accepted work can cross the external-action boundary. Running work is never requeued. */
-export async function claimAgentJob(db:Database,runnerId:string) {
+export async function claimAgentJob(db:Database,runnerId:string,config:AgentLauncherConfig) {
   if(!runnerId || runnerId.length>160)throw new Error('agent runner identity is required');
+  if (!Number.isSafeInteger(config.agentLauncher.attemptLifetimeMs) || config.agentLauncher.attemptLifetimeMs < 1) throw new Error('PRISM_AGENT_ATTEMPT_LIFETIME_REQUIRED');
   return inTransaction(db,async connection=>{
     await connection.query("SELECT pg_advisory_xact_lock(hashtextextended('prism-agent-admission',0))");
     await connection.query("UPDATE prism.agent_job SET state='needs_nova',outcome=jsonb_build_object('reason','external agent outcome unresolved after claim expiry'),updated_at=clock_timestamp() WHERE state='running' AND expires_at<=clock_timestamp()");
@@ -45,9 +46,9 @@ export async function claimAgentJob(db:Database,runnerId:string) {
     const rows=await connection.query<AgentJob>("SELECT j.* FROM prism.agent_job j WHERE j.state='accepted' AND NOT EXISTS (SELECT 1 FROM prism.agent_job active WHERE active.session_key=j.session_key AND active.state IN ('running','needs_nova')) ORDER BY j.created_at,j.id LIMIT 1 FOR UPDATE OF j");
     if(!rows.rows[0])return null;
     const source=rows.rows[0];const fence=randomUUID();
-    const deadline=await connection.query<{expires_at:Date|string}>("SELECT clock_timestamp()+interval '16 minutes' AS expires_at");
+    const deadline=await connection.query<{expires_at:Date|string}>("SELECT clock_timestamp()+($1::double precision * interval '1 millisecond') AS expires_at",[config.agentLauncher.attemptLifetimeMs]);
     const expiresAt=deadline.rows[0]!.expires_at;
-    const envelope=await agentAttempt({...source,fence,expires_at:expiresAt},runnerId);
+    const envelope=await agentAttempt({...source,fence,expires_at:expiresAt},runnerId,config);
     const claimed=await connection.query<AgentJob>("UPDATE prism.agent_job SET state='running',fence=$2,runner_id=$3,expires_at=$4,attempt_envelope=$5::jsonb,updated_at=clock_timestamp() WHERE id=$1 AND state='accepted' RETURNING *",[source.id,fence,runnerId,expiresAt,JSON.stringify(envelope)]);
     return claimed.rows[0]!;
   });

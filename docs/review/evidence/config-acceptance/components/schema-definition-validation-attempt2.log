@@ -1,0 +1,12 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:45
+      cpuTimeMs: { state: 'requested'         , limit: policy.cpuTimeMs },
+                                                              ^
+
+TypeError: Cannot read properties of undefined (reading 'cpuTimeMs')
+    at prismNativeAttempt (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:45:63)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs:19:13
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

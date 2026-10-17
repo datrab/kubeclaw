@@ -1,0 +1,25 @@
+{
+  "qualification": "Source-definition fixture ONLY; none of these names, paths, endpoint, model or secret references establish installed availability, provenance, credentials or grants. No simultaneous HTTP/OpenClaw provider routing.",
+  "execution": {
+    "runId": "run:fixture-nova",
+    "stageId": "fixture-stage",
+    "attemptId": "attempt:fixture-nova",
+    "attemptNumber": 1
+  },
+  "runtimeDispatchProfile": {
+    "schemaVersion": "runtime-dispatch-profile.v1",
+    "encoding": "json-utf16-v1"
+  },
+  "originalR": {
+    "nativePolicyRef": "frozen original activated runtime-dispatch:openclaw target map and grant/source/secret revisions, to be captured before authorized future run",
+    "grantRef": "real original capability grants, not a fixture-produced authority",
+    "leaseLimitsSource": "skills/nova/core/execution/stage-executor.ts:wallTimeMs/cpuMillis=stage execution.timeoutMs, memoryBytes=512*1024*1024; these are lease declarations, not kernel enforcement proofs",
+    "requiredChecks": [
+      "runtime target resource IDs each present in captured map AND original lease grants",
+      "same service/package/registration/source/model/agent/thinking/SDK/tool/host identity",
+      "exact native R/S/H cumulative remaining quotas/deadline; never reset on module/retry/recovery",
+      "matching actual tokenizer and provider context for supported model",
+      "native original source/workspace/immutable task intent/fence/secret revision"
+    ]
+  }
+}

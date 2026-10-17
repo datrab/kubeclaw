@@ -1,0 +1,12 @@
+{
+  "sourceMembers": 8,
+  "contextOriginalsUnchanged": 3,
+  "historicallyUnindexedCoordinates": 6,
+  "actualSchemaNodeMatches": 8,
+  "sourceSHAAndExactLinesMatched": 8,
+  "originals": "canonical files not modified",
+  "qualification": "Task-local pointer/body/source identity checks, not semantic/runtime acceptance",
+  "firstAttempt": "Actual FileNotFoundError: presumed package-manifest.json/manifest.json absent. Replaced only navigation ref with actual artifact-identities.json; no predicate/domain change.",
+  "activeProviderFieldAdoptions": 67,
+  "originalRowBodyHashMatches": 67
+}

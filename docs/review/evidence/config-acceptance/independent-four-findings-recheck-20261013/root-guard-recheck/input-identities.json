@@ -1,0 +1,18 @@
+{
+  "head": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+  "checkerSHA256": "77c37af0c7b940c95d6033ad72eb11be66c47296b8dbf59a222d9ec09c30f317",
+  "originalFrozenManifestSHA256": "e18e4d0cb07ee731d72ab12d9e4b6f66479223a38936d734b161c0137a3f53f7",
+  "initialReportManifestSHA256": "31a4c7e14a9853447dbfeebd51d299542708ed193c539d3a6d181c27b4cb46a0",
+  "exactDirtyPatchSHA256": "332474a340e66abd146cf0f5bd4948019fc88de5702234b730e97bc564b8a216",
+  "modifiedTrackedPaths": [
+    "docs/review/evidence/config-acceptance/author/check-matrix.py",
+    "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+    "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/integrate.py",
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json",
+    "docs/review/remediation/config-acceptance-matrix.json",
+    "docs/review/remediation/config-semantic-inventory.json"
+  ],
+  "allPreviouslyReviewedInputsUnchanged": true,
+  "allInitialReviewOutputsUnchanged": true
+}

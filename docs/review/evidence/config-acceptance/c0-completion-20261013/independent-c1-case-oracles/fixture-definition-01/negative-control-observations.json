@@ -1,0 +1,197 @@
+{
+  "qualification": "Actual pure manifest positive/equality/earlier-invalid controls only; not kubectl/native/API or future-case PASS",
+  "observations": [
+    {
+      "label": "baseline-valid",
+      "sourceCase": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/baseline-valid.yaml",
+      "sha256": "4d28c5476efc3ae7cece07dd5cca8c59368b60f8631edfa5e8c13576c2b30828",
+      "bytes": 611,
+      "parserOpenEvents": 60,
+      "parserMaxDepth": 10,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        }
+      }
+    },
+    {
+      "label": "malformed-yaml",
+      "sourceCase": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/malformed-yaml.yaml",
+      "sha256": "7c9007b5053b21f0622b10beceaa8178315485a13758daa31961d8d238d5a3d1",
+      "bytes": 8,
+      "parserOpenEvents": 4,
+      "parserMaxDepth": 3,
+      "sides": {
+        "A": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: unexpected end of the stream within a flow collection (2:1)\n\n 1 | kind: [\n 2 | \n-----^"
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: unexpected end of the stream within a flow collection (2:1)\n\n 1 | kind: [\n 2 | \n-----^"
+        }
+      }
+    },
+    {
+      "label": "alias-cycle",
+      "sourceCase": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/alias-cycle.yaml",
+      "sha256": "ef9e7c6f4a7afb59521de8cc8fc3366678e39ef64d8847c16118dfad4aefe4c9",
+      "bytes": 47,
+      "parserOpenEvents": 8,
+      "parserMaxDepth": 3,
+      "sides": {
+        "A": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_ALIAS_CYCLE"
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_ALIAS_CYCLE"
+        }
+      }
+    },
+    {
+      "label": "host-network-negative",
+      "sourceCase": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/host-network-negative.yaml",
+      "sha256": "e88350b370c3538f86272642e8d34a52d93463afbe66eb960888dae5eb057f53",
+      "bytes": 606,
+      "parserOpenEvents": 69,
+      "parserMaxDepth": 13,
+      "sides": {
+        "A": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED"
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED"
+        }
+      }
+    },
+    {
+      "label": "resource-exact-B48-positive",
+      "sourceCase": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/resource-exact-B48-positive.yaml",
+      "sha256": "537a292da430b63b9bf581283a9ecf0de0e18e23ac7246b268dcccc630766fb3",
+      "bytes": 4579,
+      "parserOpenEvents": 665,
+      "parserMaxDepth": 13,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 48,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 48,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        }
+      }
+    },
+    {
+      "label": "parser-exact-B75000-positive",
+      "sourceCase": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/parser-exact-B75000-positive.yaml",
+      "sha256": "4ba24a0b45e556d6e3fd842032980dc392e75d2b1226c565367a3bb86b33dce1",
+      "bytes": 439133,
+      "parserOpenEvents": 75000,
+      "parserMaxDepth": 10,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 3,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 3,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        }
+      }
+    },
+    {
+      "label": "alias-exact-B750-positive",
+      "sourceCase": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/alias-exact-B750-positive.yaml",
+      "sha256": "902dc7e7fd2428999665cac4e692867f02f533cd0cdc6e8ac90dc1a6be299450",
+      "bytes": 17923,
+      "parserOpenEvents": 1567,
+      "parserMaxDepth": 10,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        }
+      }
+    },
+    {
+      "label": "scalar-alias-not-object-alias-cap",
+      "sourceCase": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/scalar-alias-not-object-alias-cap.yaml",
+      "sha256": "3900ee614242ab2464ada3291119ce222da03c4326c047e7341a657e2c17a70a",
+      "bytes": 25096,
+      "parserOpenEvents": 3075,
+      "parserMaxDepth": 10,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 3,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "accepted-pure-source-definition",
+          "value": {
+            "resources": 3,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        }
+      }
+    }
+  ]
+}

@@ -14,9 +14,9 @@ export async function runNativePrismOperation(database: Database, artifacts: Con
   const stored = await artifacts.put(Buffer.from(JSON.stringify(input)));
   const proposed = prismNativeAttempt(operation, { artifactId: stored.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
     contentDigest: stored.digest, sizeBytes: stored.sizeBytes,
-    storageUrl: new URL(`/v1/internal/artifacts/${stored.digest}`, config.controlInternalUrl).toString() }, key, config.nativeResourcePolicy);
+    storageUrl: new URL(`/v1/internal/artifacts/${stored.digest}`, config.controlInternalUrl).toString() }, key, config.nativeResourcePolicy, config.nativeAttemptLifetimeMs, config.nativeAttemptTimeoutMs, config.nativeAttemptCleanupTimeoutMs, config.nativeAttemptLogBytes, config.nativeAttemptResultBytes, config.nativeAttemptEvidenceBytes, config.nativeAttemptEvidenceFiles);
   const reserved = await reserveNativePrismOperation(database, key, proposed);
-  const client = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled);
+  const client = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled, config.maximumArtifactAcknowledgmentBytes);
   if (reserved.result) {
     const hydrated = await hydrateWorkerResult(reserved.result.attempt, reserved.result.workerResult, client);
     await completeNativePrismOperation(database, key, reserved.result.attempt.executionId);

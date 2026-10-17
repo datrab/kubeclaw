@@ -1,0 +1,199 @@
+{
+  "qualification": "frozen package01 exact source-derived recipes; readonly not policy author or installed grant",
+  "recipes": {
+    "A": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-5.6-sol",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-agent-observer"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        },
+        "kubeclaw-agent-observer": {
+          "enabled": true,
+          "config": {
+            "enabled": true,
+            "redisNetworkIsolation": "isolated",
+            "maxEventBytes": 3145728,
+            "maxQueuePerStream": 100,
+            "redisCommandTimeoutMs": 5000,
+            "streamMaxLen": 10000,
+            "deadLetterMaxLen": 1000,
+            "controlWriteMaxAttempts": 3,
+            "controlWriteRetryBaseMs": 100,
+            "controlWriteRetryMaxMs": 1000,
+            "hookPriority": -100,
+            "hookTimeoutMs": 1000
+          },
+          "hooks": {
+            "allowConversationAccess": true
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env",
+            "allowlist": [
+              "LITELLM_API_KEY",
+              "DLV_TEST_EMBEDDING_TOKEN",
+              "DLV_TEST_GATEWAY_PASSWORD",
+              "OPENCLAW_GATEWAY_TOKEN"
+            ]
+          },
+          "delivery-test": {
+            "source": "env",
+            "allowlist": [
+              "DLV_TEST_EMBEDDING_TOKEN"
+            ]
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+      "agentRole": "buster",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+      "discordApprovers": [
+        "user:849379821536804864"
+      ],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+    },
+    "B": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-6-astra",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-agent-observer"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        },
+        "kubeclaw-agent-observer": {
+          "enabled": true,
+          "config": {
+            "enabled": true,
+            "redisNetworkIsolation": "isolated",
+            "maxEventBytes": 3145728,
+            "maxQueuePerStream": 100,
+            "redisCommandTimeoutMs": 5000,
+            "streamMaxLen": 10000,
+            "deadLetterMaxLen": 1000,
+            "controlWriteMaxAttempts": 3,
+            "controlWriteRetryBaseMs": 100,
+            "controlWriteRetryMaxMs": 1000,
+            "hookPriority": -100,
+            "hookTimeoutMs": 1000
+          },
+          "hooks": {
+            "allowConversationAccess": true
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env",
+            "allowlist": [
+              "LITELLM_API_KEY",
+              "DLV_TEST_EMBEDDING_TOKEN",
+              "DLV_TEST_GATEWAY_PASSWORD",
+              "OPENCLAW_GATEWAY_TOKEN"
+            ]
+          },
+          "delivery-test": {
+            "source": "env",
+            "allowlist": [
+              "DLV_TEST_EMBEDDING_TOKEN"
+            ]
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+      "agentRole": "buster",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+      "discordApprovers": [
+        "user:849379821536804864"
+      ],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+    }
+  }
+}

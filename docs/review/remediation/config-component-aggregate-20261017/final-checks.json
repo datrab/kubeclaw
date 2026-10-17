@@ -1,0 +1,35 @@
+{
+  "production-negative": {
+    "command": [
+      "node",
+      "--input-type=module",
+      "-e",
+      "import assert from 'node:assert/strict'; import {prismEngineContentDigest} from './skills/prism/config/native-worker.ts'; assert.throws(()=>prismEngineContentDigest({NODE_ENV:'production'}),/PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED/); assert.throws(()=>prismEngineContentDigest({NODE_ENV:'production',PRISM_ENGINE_CONTENT_DIGEST:'invalid'}),/PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED/); assert.equal(prismEngineContentDigest({NODE_ENV:'test'}),undefined); console.log('Production missing/malformed identity rejected; explicit source-test mode unchanged.');"
+    ],
+    "exitCode": 0
+  },
+  "typecheck": {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.config-components.json"
+    ],
+    "exitCode": 0
+  },
+  "roster": {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0
+  },
+  "diff-check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+}

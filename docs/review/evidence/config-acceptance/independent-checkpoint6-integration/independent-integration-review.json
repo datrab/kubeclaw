@@ -1,0 +1,61 @@
+{
+  "status": "actionable documentation integration defects; current outputs remain explicitly unaccepted",
+  "scope": "Parent checkpoint6 consolidation/checker integration only; no globalC0 verdict or substantiveCore/Runtime/Delivery review",
+  "currentOutputFacts": {
+    "rows": 2389,
+    "rootCases": 6289,
+    "gaps": 30,
+    "structuralErrors": 0,
+    "strictOpenErrors": 92743,
+    "rowReviewerConfirmations": "all None",
+    "c0ClosedRows": 0,
+    "C0AthroughE": "all not-run",
+    "implementationAuthorization": null,
+    "Core22CurrentIDsRequirementsConserved": true,
+    "activeCaseContractsMatch": true
+  },
+  "findings": [
+    {
+      "id": "C6-INTEGRATION-01",
+      "priority": "high-documentation-scope-guard",
+      "source": "author/consolidate.py:225-247",
+      "finding": "R06 report existence plus noGlobalC0Acceptance=True causes hardcoded named-contradictions independentlyresolved wording. Code doesnot require exact expected finding IDs/resolved dispositions/verdict. Sameconsistent virtual review with both named dispositions unresolved is still describedasresolved. No realreportchanged.",
+      "requiredCorrection": "Validate machine-readable namedfinding disposition contract before emitting resolved wording; preserve/reportunresolvedreview withoutresolutionclaim or reject ambiguous/missing expectedstatuses. Keep whole/row/runtime false flags and exact bounded scope. Add unresolved/partial/wrongfinding negative + restoredpositive actualblockcontrols.",
+      "evidence": "integration-guard-controls.json observations R06-unresolved-review-incorrectly-described-resolved; unresolved-r06-review.fixture.json"
+    },
+    {
+      "id": "C6-INTEGRATION-02",
+      "priority": "high-documentation-conservation-review-identity",
+      "source": "author/consolidate.py:203-249; author/check-core-supersession-integration.py:23-40; author/check-matrix.py:53-79",
+      "finding": "No integrationguard compares all22 active requirementsets to preserved originalsets or ties boundedR06review to exact reviewed activepackage identity. Selfconsistent virtualnew case+contract+updatedfreeze removesfirstcase F-VAL while22IDs/lifecycles remain; actualparenthelper stillpassesallfivecontrols, andoldboundedR06resolutioncarried. Currentrealpackage retainsrequirements correctly; this is a decisivepostchangeguardgap, not authoredCoredefinition defect.",
+      "requiredCorrection": "Require activeID+percase originalrequirement conservation (or explicit independentlyreviewed supersession, never silentdeletion). Bind boundedreview to exact independentlyreviewed receipt/frozeninput identities; changedpackageinvalidates boundedresolution until freshreview, evenif newreceipt selfhashesarevalid. Add selfconsistent requirementloss/stale-reviewed-package negative controls; restoreactualpackagepositive.",
+      "evidence": "actual-helper-requirement-gap.json and requirement-drift-{cases,contracts,receipt}.fixture.json; originalmetadatafields only changed in virtualfileview"
+    },
+    {
+      "id": "C6-INTEGRATION-03",
+      "priority": "high-documentation-nativecase-conservation",
+      "source": "author/consolidate.py:80-160,186-249,279-282; root config-acceptance-matrix.json",
+      "finding": "Consolidator reads Runtime inventoryfragment rows/sources/gaps, not runtime/case-proposals.json. Mechanicalcomparison of5793nativecases to6289rootcases finds269nativeIDsabsent and4181matchingIDs missingnative requirementIDs. Matching rootcases are genericrowderived placeholders withoutnativeinputs/commands. Authornativefiles remainunchanged, but rootprojection loses thosecase/requirementcontracts. RootimmutableObservationReferences validates0 while separateRuntime nativefile validates2229. Zero cannot represent validation/conservation ofnativecase references in rootoutput.",
+      "requiredCorrection": "Preserve exactnativeRuntime cases/requirements+casefileidentity as explicit supplementalnative package (not falselycanonical/accepted) or explicit author-vocabulary mapping retaining originalnative specs/history. Preserve269unlinkedcaseIDs as unresolvednative obligations ratherthan droppingthem. Validate applicable immutable refs in actualpublished nativecases and distinguish thosecounts fromcanonicalmatrixrefs. Strictcanonicalfield/reviewer closure must remainOPEN; source/dochelpers and actualruntimecase NOTRUN boundaries unchanged.",
+      "evidence": "root-integration-controls.json fullID/requirements diffs, standalone source hash/reference summary; no Runtime semantics reviewed"
+    }
+  ],
+  "verifiedSafeIntegration": [
+    "ActualcurrentCore14questions/22cases, requirements, old/newreceipt/historicalindependentreport identities andactivecasecontracts retained; no substantiveauthorCore re-review",
+    "Nova fourexactinputhash drift negatives andboth global/row-runtime acceptance flag negatives reject; restoredboundedpositive passes",
+    "Observation helper actualartifact/valuehash/pathescape/pointerabsence negatives reject/restoredpositive; scopes remain documentonly",
+    "Originalattempt4 NameError setupfailure retained, not an intendedsemanticmutant kill or promotedpass; actualattempt5 source/script hashes match current code andfivecontrols replay",
+    "Currentstructural0 is integrity only; strict92743 staysopen; no casecount/boundedreview promoted towholeapproval"
+  ],
+  "controlEvidence": {
+    "parentSupersessionReplay": 5,
+    "NovaAndReferenceGuardControls": 14,
+    "scopeGuardCounterexamples": 2,
+    "actualParentHelperRequirementLossCounterexampleControlsStillPass": 5,
+    "structuralReplayErrors": 0,
+    "strictReplayOpenErrors": 92743,
+    "frozenInputs": 37,
+    "inputDrift": []
+  },
+  "exclusions": "No parent/child/root artifact mutation, production/test edits, runtime/API/host/image actions, delegation or commit. Reviewerfiles/virtualdocfixtures only. No globalC0verdict."
+}

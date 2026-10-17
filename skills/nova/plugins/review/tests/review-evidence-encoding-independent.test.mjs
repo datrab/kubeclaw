@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -29,7 +31,7 @@ function bundle(parsed) {
     policyDigest: sha256Text('policy') };
 }
 function store(root) {
-  const adapter = activate({ config: { artifactRoot: path.join(root, 'artifacts') } });
+  const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') } });
   const attempt = { runId: 'run:encoding', stageId: 'review', attemptId: 'attempt:encoding', attemptNumber: 1 };
   let sequence = 0;
   const context = { contract: { lease: { attempt } }, async invoke(capability, request) {

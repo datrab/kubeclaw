@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build.py", line 44, in <module>
+    ref(remainingPath);ref('charts/kubeclaw/files/config/swarm-components.schema.json');assert (root/schemaPath).read_bytes()==(root/'charts/kubeclaw/files/config/swarm-components.schema.json').read_bytes()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build.py", line 5, in ref
+    raw=subprocess.check_output(['git','show',commit+':'+path]);assert raw==(root/path).read_bytes();x={'commit':commit,'path':path,'sha256':sha(raw),'gitBlob':subprocess.check_output(['git','rev-parse',commit+':'+path],text=True).strip()}
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

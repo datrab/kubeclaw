@@ -1,0 +1,330 @@
+{
+  "finding": "DCTRL-RECHECK-DOC01",
+  "scope": "additive exact doc count correction only; original frozen contracts/raw/source/schema/ledgers/root inputs untouched",
+  "supersedes": {
+    "path": "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/native-case-contracts.json",
+    "sha256": "a41ea5adcbe3d3857b9b05c657836c1eca55eb8a1b2232773566353e611e8f2c",
+    "jsonPointer": "#/cases/3/oracle",
+    "caseId": "DLV-DCTRL-FUTURE-READY-V2-RESTART",
+    "originalFrozenOracle": "full native demoReadiness exact27 state fields, original request SHA and owner, retention604800 preserved; original readback/authenticated source proof",
+    "replacementFutureOracle": "full native demoReadiness exact24 state fields, original request SHA and owner, retention604800 preserved; original readback/authenticated source proof",
+    "precedence": "only literal count27 is superseded by24; all other original source/retention/requestSHA/owner/readback/authenticated-source-proof obligations remain unchanged, future NOTRUN"
+  },
+  "authoritativeCount": 24,
+  "sourceExtraction": "exact top-level string keys of current commitDemoReady state constructor, same membership as preserved extractor and Ready-v2 public template; no inferred count from receipt nested fields or lease wrapper",
+  "members": [
+    {
+      "memberId": "status.demoReadiness.retentionSeconds",
+      "nativeJSONPointer": "#/status/demoReadiness/retentionSeconds",
+      "templateJSONPointer": "#/lease/status/demoReadiness/retentionSeconds",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-retentionSeconds",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.namespace",
+      "nativeJSONPointer": "#/status/demoReadiness/namespace",
+      "templateJSONPointer": "#/lease/status/demoReadiness/namespace",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-namespace",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.schemaVersion",
+      "nativeJSONPointer": "#/status/demoReadiness/schemaVersion",
+      "templateJSONPointer": "#/lease/status/demoReadiness/schemaVersion",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-schemaVersion",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.state",
+      "nativeJSONPointer": "#/status/demoReadiness/state",
+      "templateJSONPointer": "#/lease/status/demoReadiness/state",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-state",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.requestId",
+      "nativeJSONPointer": "#/status/demoReadiness/requestId",
+      "templateJSONPointer": "#/lease/status/demoReadiness/requestId",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-requestId",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.requestDigest",
+      "nativeJSONPointer": "#/status/demoReadiness/requestDigest",
+      "templateJSONPointer": "#/lease/status/demoReadiness/requestDigest",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-requestDigest",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.readyAt",
+      "nativeJSONPointer": "#/status/demoReadiness/readyAt",
+      "templateJSONPointer": "#/lease/status/demoReadiness/readyAt",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-readyAt",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.expiresAt",
+      "nativeJSONPointer": "#/status/demoReadiness/expiresAt",
+      "templateJSONPointer": "#/lease/status/demoReadiness/expiresAt",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-expiresAt",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.runId",
+      "nativeJSONPointer": "#/status/demoReadiness/runId",
+      "templateJSONPointer": "#/lease/status/demoReadiness/runId",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-runId",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.sourceRevision",
+      "nativeJSONPointer": "#/status/demoReadiness/sourceRevision",
+      "templateJSONPointer": "#/lease/status/demoReadiness/sourceRevision",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-sourceRevision",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.candidateDigest",
+      "nativeJSONPointer": "#/status/demoReadiness/candidateDigest",
+      "templateJSONPointer": "#/lease/status/demoReadiness/candidateDigest",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-candidateDigest",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.decisionDigest",
+      "nativeJSONPointer": "#/status/demoReadiness/decisionDigest",
+      "templateJSONPointer": "#/lease/status/demoReadiness/decisionDigest",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-decisionDigest",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.resultDigest",
+      "nativeJSONPointer": "#/status/demoReadiness/resultDigest",
+      "templateJSONPointer": "#/lease/status/demoReadiness/resultDigest",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-resultDigest",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.leaseUID",
+      "nativeJSONPointer": "#/status/demoReadiness/leaseUID",
+      "templateJSONPointer": "#/lease/status/demoReadiness/leaseUID",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-leaseUID",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.immutableImage",
+      "nativeJSONPointer": "#/status/demoReadiness/immutableImage",
+      "templateJSONPointer": "#/lease/status/demoReadiness/immutableImage",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-immutableImage",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.manifestDigest",
+      "nativeJSONPointer": "#/status/demoReadiness/manifestDigest",
+      "templateJSONPointer": "#/lease/status/demoReadiness/manifestDigest",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-manifestDigest",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.credentialDigest",
+      "nativeJSONPointer": "#/status/demoReadiness/credentialDigest",
+      "templateJSONPointer": "#/lease/status/demoReadiness/credentialDigest",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-credentialDigest",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.secretUID",
+      "nativeJSONPointer": "#/status/demoReadiness/secretUID",
+      "templateJSONPointer": "#/lease/status/demoReadiness/secretUID",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-secretUID",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.url",
+      "nativeJSONPointer": "#/status/demoReadiness/url",
+      "templateJSONPointer": "#/lease/status/demoReadiness/url",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-url",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.previousOwner",
+      "nativeJSONPointer": "#/status/demoReadiness/previousOwner",
+      "templateJSONPointer": "#/lease/status/demoReadiness/previousOwner",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-previousOwner",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.owner",
+      "nativeJSONPointer": "#/status/demoReadiness/owner",
+      "templateJSONPointer": "#/lease/status/demoReadiness/owner",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-owner",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.exposureGeneration",
+      "nativeJSONPointer": "#/status/demoReadiness/exposureGeneration",
+      "templateJSONPointer": "#/lease/status/demoReadiness/exposureGeneration",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-exposureGeneration",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.exposureSpec",
+      "nativeJSONPointer": "#/status/demoReadiness/exposureSpec",
+      "templateJSONPointer": "#/lease/status/demoReadiness/exposureSpec",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-exposureSpec",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    },
+    {
+      "memberId": "status.demoReadiness.receipt",
+      "nativeJSONPointer": "#/status/demoReadiness/receipt",
+      "templateJSONPointer": "#/lease/status/demoReadiness/receipt",
+      "sourceConstructor": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "line": 256
+      },
+      "existingRemovalControlId": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-receipt",
+      "obligation": "RETAINED; no waiver, omission, namespace/state/receipt renaming or native effect claim"
+    }
+  ],
+  "memberScope": "24 top-level demoReadiness state fields. Nested receipt and exposureSpec have additional unchanged native contracts; not counted as independent top-level fields. Whole lease/spec/status/lifecycle/native producer/API fields not replaced by this count.",
+  "inputIdentities": {
+    "cmd/buster-namespace-controller/demo-readiness.go": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/native-case-contracts.json": "a41ea5adcbe3d3857b9b05c657836c1eca55eb8a1b2232773566353e611e8f2c",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/actual-pure-controls.json": "0077ed5f1ca6c137b5319a96c8337503c3fda03bb44e357ac53b417dd541bd23",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/template-ready-v2.json": "4515ea9a988cb18564b6a77422253121432cee9a7acefcd723ee550ee3c035dd",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/check-corrections.cjs": "fcdd394bd74f3be93f5bfefd59ebe9ba7e9545412ae5dea3a687deae793699dc",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/lifecycle-definition-schema.json": "f81230dfcadccad98065d2a2fdbb1d1a83c073b1520b2167ea1f6b0369c25519",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-definition-schema.json": "2041d1ddbab97a1922babf3c54e39cf77fdd854abaac5fb1f80288437f31a8c3",
+    "docs/review/evidence/config-acceptance/delivery/delivery-stable-controller-material-corrections-6606-20261013.json": "8759725799049f8fc3aa176003d9f0b1e338256c0292013f85528fa7a6d868f7",
+    "docs/review/evidence/config-acceptance/delivery/inventory-fragment.json": "9d339998171fc352cda8199123ca3a0c2e0c41c2e0692084d2b1cc9c42e588a8",
+    "docs/review/evidence/config-acceptance/delivery/proposed-cases.json": "746fe7ed15c113da3d6e07613f4b9eace83275a493efb1f6df8c4bd7580c9d57",
+    "docs/review/evidence/config-acceptance/delivery/open-row-backlog.json": "6fb5733195f7abaec5169b28ac3c81de2ae7f40e436241975d10349ffadeec35",
+    "docs/review/evidence/config-acceptance/delivery/delivery-specification-obligations-20261013.json": "ca538f4bd691a10f7020d7e0ca09d69944c576fded61d2d45c98a7046adfad0e",
+    "docs/review/evidence/config-acceptance/delivery/future-case-invocation-specifications-20261013.json": "adde1ed53196df4fefdff4f79c38f7935d5b6bb0174e3f0ff43995a50e010f1a",
+    "docs/review/evidence/config-acceptance/delivery/fragment-status.json": "a49539aec415978f8eb9c6ce9dc6d034a268e71a657f4009b6c192b4910d5102",
+    "docs/review/evidence/config-acceptance/delivery/delivery-surface-dispositions.json": "933d81485c2ec1a2fdaa7e3a76fb1cbcc15e0db91969a8dedad41da4b5460dd4"
+  },
+  "boundedRecheckReference": {
+    "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-material-recheck-6606/REPORT.md",
+    "receiptSha256ReportedByParent": "002857935fe6b522be8301afa74028da32e71bae77ae2ff95f2df9b3bf80cfbe",
+    "scope": "DCTRL01-03 independently resolved at bounded proposed definition/preparation scope; no global/native/field acceptance transferred to this addendum"
+  },
+  "nativeResults": "12correction subcases NOTRUN;204canonical future cases NOTRUN unchanged",
+  "acceptance": "NOT ACCEPTED; root integration not performed or claimed"
+}

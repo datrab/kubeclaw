@@ -1,0 +1,7 @@
+# Finite Quality input guards
+
+The reviewed Quality source contract explicitly requires these local guards independently of missing native activation: Coverage must cap authenticated byte acquisition before reading/allocating and cooperate with cancellation; Size must bind its actual measurement and baseline parse to the bytes named by the accepted digest. These actual consumers are now corrected without adding a second owner, new producer/output writer or authority grant.
+
+Nine real-FS regressions pass, including sparse over-cap before any payload read, read/parse cancellation, same-inode post-verification mutation for tar and file, baseline post-hash mutation, LF/CRLF/duplicate-max/genuine-zero semantics, and cancellation at final EOF/descriptor-close before publication. The two original provider scripts retain all assertions. The exact pre-fix snapshot fails the two EOF/close regressions. Independent complete-source review is clean after correcting its P2 final-read cancellation finding; reviewer shell/test execution was unavailable.
+
+**Not full C4/C6:** the separate approved provider-configuration.v2/selectedPolicy/task bridge, sole owner selection, coordinated root/delivery/original closure, genuine inputStore/producer/baseline provenance and native/history acceptance remain open. Do not relabel these guards as24 settings externalized or168 accepted cases. No deployment, main merge, paid Evals, D18 or graph/authentication redesign.

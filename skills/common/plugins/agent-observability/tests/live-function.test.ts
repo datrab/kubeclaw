@@ -1,3 +1,8 @@
+import { TEST_CORE_POLICY as TELEMETRY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_TELEMETRY_STORE_POLICY = TELEMETRY_TEST_CORE_POLICY.telemetryStore;
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -43,14 +48,14 @@ const activated = await core.activateRegistry(granted.snapshot, new Set(granted.
 const adapters = new core.AdapterRuntime({
   granted, activated,
   configs: new Map([
-    ['kubeclaw.telemetry-store:telemetry', { root: path.join(temporary, 'telemetry') }],
-    ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
+    ['kubeclaw.telemetry-store:telemetry', { ...TEST_TELEMETRY_STORE_POLICY, root: path.join(temporary, 'telemetry') }],
+    ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(temporary, 'artifacts') }],
   ]),
-  effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });
-const events = new core.FileJournal(path.join(temporary, 'events.jsonl'));
+const events = new core.FileJournal(path.join(temporary, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 events.append({
   schemaVersion: 'plugin-domain-event.v2',
   eventId: 'event:session-end',
@@ -63,12 +68,12 @@ events.append({
   causationId: null,
   payload: { event: { token: 'must-not-survive', usage: { input: 10, output: 5 } } },
 });
-const checkpoints = new core.FileJournal(path.join(temporary, 'checkpoints.jsonl'));
+const checkpoints = new core.FileJournal(path.join(temporary, 'checkpoints.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 try {
   await adapters.start();
-  const observers = new core.ObserverRuntime({
+  const observers = new core.ObserverRuntime({memoryBytes: TEST_CORE_POLICY.observerMemoryBytes,
     registry: granted, activated, adapters, events, checkpoints, configs: new Map(),
-    deliveries: new core.FileJournal(path.join(temporary, 'deliveries.jsonl')),
+    deliveries: new core.FileJournal(path.join(temporary, 'deliveries.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     now: () => new Date('2026-07-26T00:00:01Z'),
     wait: async () => {},
   });

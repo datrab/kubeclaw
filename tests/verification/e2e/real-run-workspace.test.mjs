@@ -1110,6 +1110,23 @@ test('run-scoped origin makes architecture branch fetchable before module releas
       encoding: 'utf8',
     })).stdout.trim();
     assert.equal(workspaceOrigin, workspace.runOriginPath);
+    // Both stores are independent complete histories, not shared-object clones.
+    const gitDir = (await execFileAsync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], {
+      cwd: REPO_ROOT, encoding: 'utf8',
+    })).stdout.trim();
+    const sourceObjects = path.join(gitDir, 'objects');
+    for (const targetObjects of [path.join(workspace.worktreePath, '.git', 'objects'),
+      path.join(workspace.runOriginPath, 'objects')]) {
+      assert.equal(fs.existsSync(path.join(targetObjects, 'info', 'alternates')), false);
+      for (const pack of fs.readdirSync(path.join(sourceObjects, 'pack')).filter(name => name.endsWith('.pack'))) {
+        const sourceStat = fs.statSync(path.join(sourceObjects, 'pack', pack));
+        const copyStat = fs.statSync(path.join(targetObjects, 'pack', pack));
+        assert.equal(copyStat.size, sourceStat.size);
+        assert.ok(sourceStat.dev !== copyStat.dev || sourceStat.ino !== copyStat.ino, 'Git objects must not be hardlinked');
+      }
+    }
+    const originalHead = (await execFileAsync('git', ['rev-parse', 'HEAD'], {cwd: REPO_ROOT, encoding: 'utf8'})).stdout.trim();
+    await execFileAsync('git', ['merge-base', '--is-ancestor', originalHead, 'HEAD'], {cwd: workspace.worktreePath});
     assert.equal((await execFileAsync('git', ['remote', 'get-url', 'origin'], {
       encoding: 'utf8',
     })).stdout.trim(), originalOrigin);

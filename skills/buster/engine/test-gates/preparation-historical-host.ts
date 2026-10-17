@@ -1,9 +1,10 @@
+import { assignedWorkerCorePolicy, workerCoreExecutionOptions } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { Socket } from 'node:net';
 import { NativeWorkerControlChannel, WorkerAttemptExecutor, observeNativeWorkerResources, sha256Digest,
   type WorkerAttemptOperation } from '@kubeclaw/worker-core';
 import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { assertPreparationSlot } from './preparation-slots.ts';
 import { assertHistoricalImportDescriptor, historicalInputDirectory } from './preparation-historical-reference.ts';
 import type { HistoricalImportDescriptor } from './preparation-historical-reference.ts';
@@ -94,8 +95,8 @@ async function main(): Promise<void> {
     async measure() { return resourceMeasurement(scope); },
   };
   try {
-    const result = await new WorkerAttemptExecutor({ envelope, operation, signal: cancellation.signal,
-      retainLogs: false, receiptNamespace: 'buster-historical-import' }).execute();
+    const result = await new WorkerAttemptExecutor({ ...workerCoreExecutionOptions(assignedWorkerCorePolicy(process.env), 'buster-historical-import', false), envelope, operation, signal: cancellation.signal,
+      receiptNamespace: 'buster-historical-import' }).execute();
     process.stdout.write(JSON.stringify(result));
   } finally {
     channel.destroy();

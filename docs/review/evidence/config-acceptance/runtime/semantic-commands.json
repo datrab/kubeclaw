@@ -1,0 +1,97 @@
+[
+  {
+    "command": [
+      "rg",
+      "-n",
+      "config\\.|config\\[|context\\.config|contract\\.config|invocation\\.configuration|targetsFrom|resolveTestProviderConfiguration|resolveReferencedValue",
+      "skills/nova",
+      "skills/common/plugin-runtime",
+      "skills/common/plugins",
+      "skills/buster/plugins",
+      "skills/buster/engine/test-gates",
+      "--glob",
+      "!**/tests/**",
+      "--glob",
+      "!**/dist/**",
+      "--glob",
+      "!**/node_modules/**"
+    ],
+    "exitCode": 0,
+    "rawEvidence": "docs/review/evidence/config-acceptance/runtime/config-reader-search.log",
+    "sha256": "85540ce5848af9fa136ac252310276c3b38237831790987004708d66fe5d692d",
+    "observedAt": "2026-10-12T19:44:33.251224+00:00",
+    "scope": "source discovery only; not productive implementation acceptance"
+  },
+  {
+    "command": [
+      "rg",
+      "-n",
+      "writeRunSnapshots|verifyPinnedGraph|verifyPinnedPackages|moduleStages|cumulativeStages|attempt.created|attempt.dispatched|stage.started|repairBudget|maxTechnicalRetries|CURRENT_RUNTIME_DISPATCH_PROFILE|CURRENT_REVIEW_CACHE_PROFILE",
+      "skills/nova",
+      "skills/common/plugin-runtime/sdk",
+      "--glob",
+      "!**/tests/**",
+      "--glob",
+      "!**/dist/**"
+    ],
+    "exitCode": 0,
+    "rawEvidence": "docs/review/evidence/config-acceptance/runtime/module-reader-search.log",
+    "sha256": "340da53262647c28a9782fbe810ea556a9b915c77bd468fe877f3fe8b63737ad",
+    "observedAt": "2026-10-12T19:44:33.261648+00:00",
+    "scope": "source discovery only; not productive implementation acceptance"
+  },
+  {
+    "command": [
+      "rg",
+      "-n",
+      "process\\.env|process\\.argv|--platform|--pipeline|--project|--recover",
+      "skills/nova",
+      "skills/common/plugins",
+      "skills/buster/plugins",
+      "--glob",
+      "!**/tests/**",
+      "--glob",
+      "!**/dist/**"
+    ],
+    "exitCode": 0,
+    "rawEvidence": "docs/review/evidence/config-acceptance/runtime/env-cli-search.log",
+    "sha256": "d74f5d5d3e0a9f05b73169817e94a898186e51d0f12a44b25fde69e0e872da14",
+    "observedAt": "2026-10-12T19:44:33.274636+00:00",
+    "scope": "source discovery only; not productive implementation acceptance"
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD",
+      "HEAD^{tree}"
+    ],
+    "exitCode": 0,
+    "rawEvidence": "docs/review/evidence/config-acceptance/runtime/identity.log",
+    "sha256": "93489f109b5123037806a75e9660f8cd751e6b8af5da7811499542e901604118",
+    "observedAt": "2026-10-12T19:44:33.278443+00:00",
+    "scope": "source discovery only; not productive implementation acceptance"
+  },
+  {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "exitCode": 0,
+    "rawEvidence": "docs/review/evidence/config-acceptance/runtime/node-version.log",
+    "sha256": "f2ec568164f99546161909b0189b57bb5be3e80f8e2ccd8a51a4aed8c4055a04",
+    "observedAt": "2026-10-12T19:44:33.283248+00:00",
+    "scope": "source discovery only; not productive implementation acceptance"
+  },
+  {
+    "command": [
+      "python3",
+      "--version"
+    ],
+    "exitCode": 0,
+    "rawEvidence": "docs/review/evidence/config-acceptance/runtime/python-version.log",
+    "sha256": "cb64a3a0ddcaff0ce013ea3612beda0be4a4d3537087505bd8850d8f8476f4f8",
+    "observedAt": "2026-10-12T19:44:33.284939+00:00",
+    "scope": "source discovery only; not productive implementation acceptance"
+  }
+]

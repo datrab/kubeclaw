@@ -15,8 +15,6 @@ import (
 	"time"
 )
 
-const demoRetention = time.Duration(defaultDemoRetentionSeconds) * time.Second
-
 type readinessConfig struct{ Audience, Producer, Certificate, Key, Address string }
 type demoReceipt struct {
 	SchemaVersion string `json:"schemaVersion"`
@@ -64,8 +62,10 @@ func readyText(s string) bool {
 	return len(s) > 0 && len(s) <= 1024 && !strings.ContainsAny(s, "\x00\r\n")
 }
 func (r demoReadyRequest) validate() error {
-	if _, err := parseDemoRetention(r.RetentionSeconds); err != nil {
-		return err
+	if len(r.RetentionSeconds) > 0 {
+		if _, err := parseDemoRetention(r.RetentionSeconds); err != nil {
+			return err
+		}
 	}
 	if r.SchemaVersion != "demo-ready-request.v1" || !readyName.MatchString(r.LeaseName) || !readyName.MatchString(r.Namespace) || r.ExposureGeneration < 1 {
 		return errors.New("DEMO_READY_REQUEST_INVALID")
@@ -99,7 +99,7 @@ func (c *controller) authenticateReady(ctx context.Context, authorization string
 }
 
 func (c *controller) authenticateTransport(ctx context.Context, authorization string, cfg *readinessConfig) error {
-	if cfg == nil || !strings.HasPrefix(authorization, "Bearer ") || len(authorization) > 16384 {
+	if cfg == nil || !strings.HasPrefix(authorization, "Bearer ") || int64(len(authorization)) > c.policy.AuthorizationMaximumBytes {
 		return errors.New("DEMO_READY_UNAUTHORIZED")
 	}
 	token := strings.TrimPrefix(authorization, "Bearer ")
@@ -134,13 +134,13 @@ func (c *controller) readinessHandler() http.Handler {
 			http.Error(w, "DEMO_READY_ROUTE_INVALID", 404)
 			return
 		}
-		ctx, cancel := context.WithTimeout(r.Context(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(r.Context(), time.Duration(c.policy.ReadyHandlerTimeoutSeconds)*time.Second)
 		defer cancel()
 		if err := c.authenticateReady(ctx, r.Header.Get("Authorization")); err != nil {
 			http.Error(w, "DEMO_READY_UNAUTHORIZED", 401)
 			return
 		}
-		raw, readErr := io.ReadAll(http.MaxBytesReader(w, r.Body, 16*1024))
+		raw, readErr := io.ReadAll(http.MaxBytesReader(w, r.Body, c.policy.ReadyMaximumBodyBytes))
 		if readErr != nil {
 			http.Error(w, "DEMO_READY_REQUEST_INVALID", 400)
 			return
@@ -235,17 +235,17 @@ func (c *controller) commitDemoReady(ctx context.Context, r demoReadyRequest) (m
 	}
 	observed, err := time.Parse(time.RFC3339Nano, r.ObservedAt)
 	now := time.Now().UTC()
-	if err != nil || observed.After(now) || now.Sub(observed) > 5*time.Minute {
+	if err != nil || observed.After(now) || now.Sub(observed) > time.Duration(c.policy.ReadyObservationMaximumAgeSeconds)*time.Second {
 		return nil, errors.New("DEMO_READY_OBSERVATION_STALE")
 	}
 	if err = c.verifyReadySource(ctx, &item, r); err != nil {
 		return nil, err
 	}
 	now = time.Now().UTC()
-	if !now.Before(c.expiresAt(&item)) || now.Sub(observed) > 5*time.Minute {
+	if !now.Before(c.expiresAt(&item)) || now.Sub(observed) > time.Duration(c.policy.ReadyObservationMaximumAgeSeconds)*time.Second {
 		return nil, errors.New("DEMO_READY_EXPIRED")
 	}
-	seconds, err := parseDemoRetention(r.RetentionSeconds)
+	seconds, err := c.admittedDemoRetention(r.RetentionSeconds)
 	if err != nil {
 		return nil, err
 	}

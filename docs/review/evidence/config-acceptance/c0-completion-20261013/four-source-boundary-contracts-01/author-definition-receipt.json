@@ -1,0 +1,23 @@
+{
+  "status": "Static source/read-only JSON definition consistency, not schema/runtime/semantic/native acceptance",
+  "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+  "platform": "Linux-6.8.0-139-generic-x86_64-with-glibc2.36",
+  "script": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/author-definition.py",
+    "sha256": "88bb33f3e3581f730fd4c0d111358b327dc9e62ebfce1f82a33546fa0adb3131"
+  },
+  "safeInspection": "Source of this finite author script inspected: stdlib reads/hashes, writes restricted to its fixed absolute O, rg source searches only. No imported source helpers/provider/native code or credentials. No du/filesystem/provider observation.",
+  "counts": {
+    "originalRows": 4,
+    "originalCases": 8,
+    "sourceWitnesses": 473,
+    "inputFiles": 135,
+    "callerSymbols": 10,
+    "allFutureNotRun": 8
+  },
+  "originalRequirementsRetained": true,
+  "canonicalMetadataUnmodified": true,
+  "globalC0Accepted": false,
+  "implementationAuthorization": false,
+  "freshIndependentReview": "required"
+}

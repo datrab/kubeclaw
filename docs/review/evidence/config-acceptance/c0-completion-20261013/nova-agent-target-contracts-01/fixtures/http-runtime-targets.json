@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "case-target-a": {
+      "endpoint": "http://127.0.0.1:18080/runtime",
+      "authentication": "hmac",
+      "tokenSecret": "case.runtime.hmac",
+      "maxRequestBytes": 1048576,
+      "maxResponseBytes": 1048576
+    }
+  }
+}

@@ -1,0 +1,468 @@
+{
+  "sources": [
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/_swarm-config.tpl",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "capturedRelativePath": "source-current/charts/kubeclaw/templates/_swarm-config.tpl",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/charts/kubeclaw/templates/_swarm-config.tpl",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/templates/_swarm-bundle.tpl",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "capturedRelativePath": "source-current/charts/prism/templates/_swarm-bundle.tpl",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/charts/prism/templates/_swarm-bundle.tpl",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+      },
+      "capturedRelativePath": "source-current/charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/templates/configmap-swarm-config.yaml",
+        "sha256": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6"
+      },
+      "capturedRelativePath": "source-current/charts/prism/templates/configmap-swarm-config.yaml",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/charts/prism/templates/configmap-swarm-config.yaml",
+        "sha256": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/deployment.yaml",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+      },
+      "capturedRelativePath": "source-current/charts/kubeclaw/templates/deployment.yaml",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/charts/kubeclaw/templates/deployment.yaml",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/templates/workloads.yaml",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "capturedRelativePath": "source-current/charts/prism/templates/workloads.yaml",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/charts/prism/templates/workloads.yaml",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docker/Dockerfile.prism-agent",
+        "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47"
+      },
+      "capturedRelativePath": "source-current/docker/Dockerfile.prism-agent",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/docker/Dockerfile.prism-agent",
+        "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docker/Dockerfile.prism-control",
+        "sha256": "ec29c4c71cbc374b4f15a100aeb7bb3181013b34a0ad9da6e07fcbee8227e853"
+      },
+      "capturedRelativePath": "source-current/docker/Dockerfile.prism-control",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/docker/Dockerfile.prism-control",
+        "sha256": "ec29c4c71cbc374b4f15a100aeb7bb3181013b34a0ad9da6e07fcbee8227e853"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docker/Dockerfile.buster-runtime",
+        "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+      },
+      "capturedRelativePath": "source-current/docker/Dockerfile.buster-runtime",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/docker/Dockerfile.buster-runtime",
+        "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docker/buster-runtime-entrypoint.sh",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "capturedRelativePath": "source-current/docker/buster-runtime-entrypoint.sh",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/docker/buster-runtime-entrypoint.sh",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/updates/runtime-inputs.mjs",
+        "sha256": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a"
+      },
+      "capturedRelativePath": "source-current/scripts/updates/runtime-inputs.mjs",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/scripts/updates/runtime-inputs.mjs",
+        "sha256": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/.github/workflows/build-images.yaml",
+        "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+      },
+      "capturedRelativePath": "source-current/.github/workflows/build-images.yaml",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/.github/workflows/build-images.yaml",
+        "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/.github/workflows/promote-runtime.yaml",
+        "sha256": "22867f17cf940d7b1137068e308d3b8216714d8da37dff1fd257eb8664f69981"
+      },
+      "capturedRelativePath": "source-current/.github/workflows/promote-runtime.yaml",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/.github/workflows/promote-runtime.yaml",
+        "sha256": "22867f17cf940d7b1137068e308d3b8216714d8da37dff1fd257eb8664f69981"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/deploy.sh",
+        "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+      },
+      "capturedRelativePath": "source-current/scripts/deploy.sh",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/scripts/deploy.sh",
+        "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/check-role-image.sh",
+        "sha256": "bba4349b814730af42e05603ec6ef329afc33ce9423d4b7c929a15e1328f7a71"
+      },
+      "capturedRelativePath": "source-current/scripts/check-role-image.sh",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/scripts/check-role-image.sh",
+        "sha256": "bba4349b814730af42e05603ec6ef329afc33ce9423d4b7c929a15e1328f7a71"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/releases/values/prism-agent.yaml",
+        "sha256": "b02bfe6b0d132edbfd8487b466da487680186cf139b721936bcc0adb4f1485a0"
+      },
+      "capturedRelativePath": "source-current/releases/values/prism-agent.yaml",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/releases/values/prism-agent.yaml",
+        "sha256": "b02bfe6b0d132edbfd8487b466da487680186cf139b721936bcc0adb4f1485a0"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/prism-agent-values.yaml",
+        "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a"
+      },
+      "capturedRelativePath": "source-current/my-values/prism-agent-values.yaml",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/my-values/prism-agent-values.yaml",
+        "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+        "sha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3"
+      },
+      "capturedRelativePath": "source-current/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+        "sha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+      },
+      "capturedRelativePath": "source-current/skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      },
+      "capturedRelativePath": "source-current/skills/prism/server/agent-bridge.mjs",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-job-runner.mjs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+      },
+      "capturedRelativePath": "source-current/skills/prism/server/agent-job-runner.mjs",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/prism/server/agent-job-runner.mjs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-attempt.ts",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+      },
+      "capturedRelativePath": "source-current/skills/prism/server/agent-attempt.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/prism/server/agent-attempt.ts",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-process.ts",
+        "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+      },
+      "capturedRelativePath": "source-current/skills/prism/server/agent-process.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/prism/server/agent-process.ts",
+        "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "capturedRelativePath": "source-current/skills/prism/server/control-config.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-job-routes.ts",
+        "sha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0"
+      },
+      "capturedRelativePath": "source-current/skills/prism/server/agent-job-routes.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/prism/server/agent-job-routes.ts",
+        "sha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/control/agent-jobs.ts",
+        "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+      },
+      "capturedRelativePath": "source-current/skills/prism/control/agent-jobs.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/prism/control/agent-jobs.ts",
+        "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/production.ts",
+        "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+      },
+      "capturedRelativePath": "source-current/skills/buster/engine/test-gates/production.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/engine/test-gates/production.ts",
+        "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/runner-worker-profile.ts",
+        "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648"
+      },
+      "capturedRelativePath": "source-current/skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/engine/test-gates/runner-worker-profile.ts",
+        "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/provider-loader.ts",
+        "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+      },
+      "capturedRelativePath": "source-current/skills/buster/engine/test-gates/provider-loader.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/engine/test-gates/provider-loader.ts",
+        "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      },
+      "capturedRelativePath": "source-current/skills/common/plugin-runtime/foundation/registry/types.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f"
+      },
+      "capturedRelativePath": "source-current/skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/capability-runtime.ts",
+        "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+      },
+      "capturedRelativePath": "source-current/skills/buster/engine/test-gates/capability-runtime.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/engine/test-gates/capability-runtime.ts",
+        "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "sha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff"
+      },
+      "capturedRelativePath": "source-current/skills/buster/engine/test-gates/production-cluster-options.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "sha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/production-command-options.ts",
+        "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+      },
+      "capturedRelativePath": "source-current/skills/buster/engine/test-gates/production-command-options.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/engine/test-gates/production-command-options.ts",
+        "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers/plugin.json",
+        "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510"
+      },
+      "capturedRelativePath": "source-current/skills/buster/plugins/security-providers/plugin.json",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/plugins/security-providers/plugin.json",
+        "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers/src/headers.js",
+        "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+      },
+      "capturedRelativePath": "source-current/skills/buster/plugins/security-providers/src/headers.js",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/plugins/security-providers/src/headers.js",
+        "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers/src/dependency.js",
+        "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+      },
+      "capturedRelativePath": "source-current/skills/buster/plugins/security-providers/src/dependency.js",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/plugins/security-providers/src/dependency.js",
+        "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers/src/image.js",
+        "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+      },
+      "capturedRelativePath": "source-current/skills/buster/plugins/security-providers/src/image.js",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/plugins/security-providers/src/image.js",
+        "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+        "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+      },
+      "capturedRelativePath": "source-current/skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+        "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+        "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+      },
+      "capturedRelativePath": "source-current/skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+        "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers/src/common.js",
+        "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+      },
+      "capturedRelativePath": "source-current/skills/buster/plugins/security-providers/src/common.js",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/plugins/security-providers/src/common.js",
+        "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+      }
+    },
+    {
+      "original": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/network-http-runtime.ts",
+        "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+      },
+      "capturedRelativePath": "source-current/skills/buster/engine/test-gates/network-http-runtime.ts",
+      "captured": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/engine/test-gates/network-http-runtime.ts",
+        "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+      }
+    }
+  ],
+  "currentCodeReadsV7": false,
+  "meaning": "Observed production source capture, not invented proposed patched code/image. Loader/registry/control/job/CLI changes are locally specified, unimplemented; captured current oldABI source cannot activate v7. Genuine later modifiedsource/schema/image/projector receipts required under samecodec before effects."
+}

@@ -1,0 +1,32 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ADAPTER_CANCELLED/. Input:
+
+'Error: EFFECT_RESOURCE_WAIT_CANCELLED'
+
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/transport-publisher/tests/live-function.test.ts:239:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: Error: EFFECT_RESOURCE_WAIT_CANCELLED
+      at acquireResource (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/effects/resource-acquisition.ts:12:31)
+      at DurableInvocation.execute (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/effects/durable-invocation.ts:45:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async AdapterRuntime.invoke (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapters.ts:63:21)
+      at async waitForActual (node:assert:646:5)
+      at async strict.rejects (node:assert:769:25)
+      at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/transport-publisher/tests/live-function.test.ts:239:3 {
+    [cause]: DOMException [AbortError]: This operation was aborted
+        at new DOMException (node:internal/per_context/domexception:76:18)
+        at AbortController.abort (node:internal/abort_controller:572:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/transport-publisher/tests/live-function.test.ts:238:13
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  },
+  expected: /ADAPTER_CANCELLED/,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

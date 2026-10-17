@@ -1,0 +1,1 @@
+Pushed checkpoint40cf24e7 source-definition observations:23passed2failed,120resource projection comparisons. Both full Buster schema cases fail missing3schemas. Prior exact acquisition404 retained. New follow-up uses exact primary canonical strict definition through generated $ref-only alias, never broad/permissive substitution; no production/test source changes.

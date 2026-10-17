@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Source review found no actionable defects introduced by this scoped change. The shared mode invariant, mandatory evidence checks, original package binding validation, and v2 policy capture are consistently applied across the relevant transport and execution boundaries. Review was source-only; no tests were independently executed.",
+  "overall_confidence": 0.86
+}

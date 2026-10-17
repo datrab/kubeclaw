@@ -1,0 +1,1938 @@
+[
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 2,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 2,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 489,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 494,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 67,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 67,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 529,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 84,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 84,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 510,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 85,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 85,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 513,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 87,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 87,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 513,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 88,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 88,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 513,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 102,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 102,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 516,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 519,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 522,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 525,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 157,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 157,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 543,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 552,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 565,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 190,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 190,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 489,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 192,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 192,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 489,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 211,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 211,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 494,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 497,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 217,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 217,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 494,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 240,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 240,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 494,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 246,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 246,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1368,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1411,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 278,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 278,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 475,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 477,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 281,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 281,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 475,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 477,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 287,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 287,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 480,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 483,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 301,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 301,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 480,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 483,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "sourceRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 323,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "actualRendererReaderRef",
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "line": 323,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 480,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "currentStartupReaderRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 483,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 444,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 446,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 450,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 461,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 473,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 585,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1221,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1420,
+    "hashMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "kind": "startupDeliveryRefs",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "line": 1617,
+    "hashMatches": true,
+    "expressionMatches": true
+  }
+]

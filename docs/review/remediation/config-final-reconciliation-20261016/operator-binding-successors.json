@@ -1,0 +1,809 @@
+{
+  "scope": "Exact11 original deployment operator references; source matrix only, not implementation/acceptance",
+  "constraint": "All11 original operator deployment fields still use Helm values/environment or projected secret-file transport. Four product identity/endpoint/allowlist fields are ordinary operator settings, not secret bytes. Four database fields are external secret references; private key and CA are Kubernetes Secret file projections, controller token is a projected service-account token, not a static Secret. Central selected deployment author/profile/schema/delivery and original binding/history acceptance remain OPEN; no authority change, credential rotation, private policy root or denied-v10 promotion.",
+  "rows": [
+    {
+      "id": "AUTH-PRISM-DB-SECRET-ADMIN_DATABASE_URL",
+      "original": "D228#/rows/2331",
+      "originalObjectSha256": "167307fb38be18c0cb9b8c29963e3f7fc930e72958f44ddc46df3772312fcaef",
+      "caseIds": [
+        "AUTH-PRISM-DB-SECRET-ADMIN_DATABASE_URL-EFFECT"
+      ],
+      "class": "secret-reference",
+      "owner": "deployment-secret-bindings",
+      "originalSource": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "ADMIN_DATABASE_URL",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          8
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXTERNAL_DATABASE_SECRET_ENV_REFERENCE_CENTRAL_BINDING_OPEN",
+      "environmentName": "ADMIN_DATABASE_URL",
+      "secretKey": "admin-url",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/jobs.yaml",
+          "sha256": "7cb878ac96946a3562d836c33b8d987104e0518b25563e625544d0375ee0a2b5",
+          "anchor": "- name: ADMIN_DATABASE_URL",
+          "lines": [
+            31
+          ]
+        },
+        {
+          "path": "charts/prism/templates/jobs.yaml",
+          "sha256": "7cb878ac96946a3562d836c33b8d987104e0518b25563e625544d0375ee0a2b5",
+          "anchor": "key: admin-url }",
+          "lines": [
+            32
+          ]
+        },
+        {
+          "path": "skills/prism/config/database-bootstrap.ts",
+          "sha256": "6ada3c58fa81f46b7b7a474b679cf7ac934a2103564c7113594175d95eb578b0",
+          "anchor": "required('ADMIN_DATABASE_URL')",
+          "lines": [
+            12
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/database-bootstrap-runtime.ts",
+          "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+          "anchor": "connectionString: config.adminUrl",
+          "lines": [
+            9
+          ]
+        },
+        {
+          "path": "skills/prism/server/database-bootstrap-runtime.ts",
+          "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+          "anchor": "bootstrapPrismDatabaseRoles(admin, config.adminUrl, config.passwords",
+          "lines": [
+            14
+          ]
+        },
+        {
+          "path": "skills/prism/server/database-roles.ts",
+          "sha256": "bd64101017c98b64801f89e295f4a2e2f07948f9f073c7f53239b931bb9106de",
+          "anchor": "await verifyCredential(adminUrl,",
+          "lines": [
+            45
+          ]
+        }
+      ],
+      "transport": "Kubernetes Secret valueFrom; never credential bytes in central config",
+      "bootReceiving": {
+        "path": "skills/prism/server/bootstrap-database.ts",
+        "sha256": "ce39fe24e1f5e43ba86c2ebb2f85c8a1e771a38f505f5411f1c51896df4d6a00",
+        "anchor": "verifyPipelineBootReceipt('/run/pipeline-delivery', 'prism-control')",
+        "lines": [
+          5
+        ]
+      },
+      "deliveryQualification": "OPEN: bootstrap entrypoint requires authentic boot receipt; source mapping alone does not prove Job receipt materialization/mount"
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_MIGRATOR_PASSWORD",
+      "original": "D228#/rows/2332",
+      "originalObjectSha256": "34d7f8346755e5d607fe4add42c47e3dae05d8bee8b2a1153113ae1ec4927056",
+      "caseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_MIGRATOR_PASSWORD-EFFECT"
+      ],
+      "class": "secret-reference",
+      "owner": "deployment-secret-bindings",
+      "originalSource": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_MIGRATOR_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXTERNAL_DATABASE_SECRET_ENV_REFERENCE_CENTRAL_BINDING_OPEN",
+      "environmentName": "PRISM_MIGRATOR_PASSWORD",
+      "secretKey": "migrator-password",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/jobs.yaml",
+          "sha256": "7cb878ac96946a3562d836c33b8d987104e0518b25563e625544d0375ee0a2b5",
+          "anchor": "- name: PRISM_MIGRATOR_PASSWORD",
+          "lines": [
+            35
+          ]
+        },
+        {
+          "path": "charts/prism/templates/jobs.yaml",
+          "sha256": "7cb878ac96946a3562d836c33b8d987104e0518b25563e625544d0375ee0a2b5",
+          "anchor": "key: migrator-password }",
+          "lines": [
+            36
+          ]
+        },
+        {
+          "path": "skills/prism/config/database-bootstrap.ts",
+          "sha256": "6ada3c58fa81f46b7b7a474b679cf7ac934a2103564c7113594175d95eb578b0",
+          "anchor": "required('PRISM_MIGRATOR_PASSWORD')",
+          "lines": [
+            13
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/database-bootstrap-runtime.ts",
+          "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+          "anchor": "connectionString: config.adminUrl",
+          "lines": [
+            9
+          ]
+        },
+        {
+          "path": "skills/prism/server/database-bootstrap-runtime.ts",
+          "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+          "anchor": "bootstrapPrismDatabaseRoles(admin, config.adminUrl, config.passwords",
+          "lines": [
+            14
+          ]
+        },
+        {
+          "path": "skills/prism/server/database-roles.ts",
+          "sha256": "bd64101017c98b64801f89e295f4a2e2f07948f9f073c7f53239b931bb9106de",
+          "anchor": "await verifyCredential(adminUrl,",
+          "lines": [
+            45
+          ]
+        }
+      ],
+      "transport": "Kubernetes Secret valueFrom; never credential bytes in central config",
+      "bootReceiving": {
+        "path": "skills/prism/server/bootstrap-database.ts",
+        "sha256": "ce39fe24e1f5e43ba86c2ebb2f85c8a1e771a38f505f5411f1c51896df4d6a00",
+        "anchor": "verifyPipelineBootReceipt('/run/pipeline-delivery', 'prism-control')",
+        "lines": [
+          5
+        ]
+      },
+      "deliveryQualification": "OPEN: bootstrap entrypoint requires authentic boot receipt; source mapping alone does not prove Job receipt materialization/mount"
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_RUNTIME_PASSWORD",
+      "original": "D228#/rows/2333",
+      "originalObjectSha256": "bad6480d1a6ff4d154158b66e64889c1e19d39385ea2c388e033cb66b7dbf143",
+      "caseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_RUNTIME_PASSWORD-EFFECT"
+      ],
+      "class": "secret-reference",
+      "owner": "deployment-secret-bindings",
+      "originalSource": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_RUNTIME_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXTERNAL_DATABASE_SECRET_ENV_REFERENCE_CENTRAL_BINDING_OPEN",
+      "environmentName": "PRISM_RUNTIME_PASSWORD",
+      "secretKey": "runtime-password",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/jobs.yaml",
+          "sha256": "7cb878ac96946a3562d836c33b8d987104e0518b25563e625544d0375ee0a2b5",
+          "anchor": "- name: PRISM_RUNTIME_PASSWORD",
+          "lines": [
+            33
+          ]
+        },
+        {
+          "path": "charts/prism/templates/jobs.yaml",
+          "sha256": "7cb878ac96946a3562d836c33b8d987104e0518b25563e625544d0375ee0a2b5",
+          "anchor": "key: runtime-password }",
+          "lines": [
+            34
+          ]
+        },
+        {
+          "path": "skills/prism/config/database-bootstrap.ts",
+          "sha256": "6ada3c58fa81f46b7b7a474b679cf7ac934a2103564c7113594175d95eb578b0",
+          "anchor": "required('PRISM_RUNTIME_PASSWORD')",
+          "lines": [
+            13
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/database-bootstrap-runtime.ts",
+          "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+          "anchor": "connectionString: config.adminUrl",
+          "lines": [
+            9
+          ]
+        },
+        {
+          "path": "skills/prism/server/database-bootstrap-runtime.ts",
+          "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+          "anchor": "bootstrapPrismDatabaseRoles(admin, config.adminUrl, config.passwords",
+          "lines": [
+            14
+          ]
+        },
+        {
+          "path": "skills/prism/server/database-roles.ts",
+          "sha256": "bd64101017c98b64801f89e295f4a2e2f07948f9f073c7f53239b931bb9106de",
+          "anchor": "await verifyCredential(adminUrl,",
+          "lines": [
+            45
+          ]
+        }
+      ],
+      "transport": "Kubernetes Secret valueFrom; never credential bytes in central config",
+      "bootReceiving": {
+        "path": "skills/prism/server/bootstrap-database.ts",
+        "sha256": "ce39fe24e1f5e43ba86c2ebb2f85c8a1e771a38f505f5411f1c51896df4d6a00",
+        "anchor": "verifyPipelineBootReceipt('/run/pipeline-delivery', 'prism-control')",
+        "lines": [
+          5
+        ]
+      },
+      "deliveryQualification": "OPEN: bootstrap entrypoint requires authentic boot receipt; source mapping alone does not prove Job receipt materialization/mount"
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_READONLY_PASSWORD",
+      "original": "D228#/rows/2334",
+      "originalObjectSha256": "99a24ef8e3d2bd34dfd6f303984046a6ad094d13b50524135d89b760bc3777ee",
+      "caseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_READONLY_PASSWORD-EFFECT"
+      ],
+      "class": "secret-reference",
+      "owner": "deployment-secret-bindings",
+      "originalSource": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_READONLY_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXTERNAL_DATABASE_SECRET_ENV_REFERENCE_CENTRAL_BINDING_OPEN",
+      "environmentName": "PRISM_READONLY_PASSWORD",
+      "secretKey": "readonly-password",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/jobs.yaml",
+          "sha256": "7cb878ac96946a3562d836c33b8d987104e0518b25563e625544d0375ee0a2b5",
+          "anchor": "- name: PRISM_READONLY_PASSWORD",
+          "lines": [
+            37
+          ]
+        },
+        {
+          "path": "charts/prism/templates/jobs.yaml",
+          "sha256": "7cb878ac96946a3562d836c33b8d987104e0518b25563e625544d0375ee0a2b5",
+          "anchor": "key: readonly-password }",
+          "lines": [
+            38
+          ]
+        },
+        {
+          "path": "skills/prism/config/database-bootstrap.ts",
+          "sha256": "6ada3c58fa81f46b7b7a474b679cf7ac934a2103564c7113594175d95eb578b0",
+          "anchor": "required('PRISM_READONLY_PASSWORD')",
+          "lines": [
+            13
+          ]
+        }
+      ],
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/database-bootstrap-runtime.ts",
+          "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+          "anchor": "connectionString: config.adminUrl",
+          "lines": [
+            9
+          ]
+        },
+        {
+          "path": "skills/prism/server/database-bootstrap-runtime.ts",
+          "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+          "anchor": "bootstrapPrismDatabaseRoles(admin, config.adminUrl, config.passwords",
+          "lines": [
+            14
+          ]
+        },
+        {
+          "path": "skills/prism/server/database-roles.ts",
+          "sha256": "bd64101017c98b64801f89e295f4a2e2f07948f9f073c7f53239b931bb9106de",
+          "anchor": "await verifyCredential(adminUrl,",
+          "lines": [
+            45
+          ]
+        }
+      ],
+      "transport": "Kubernetes Secret valueFrom; never credential bytes in central config",
+      "bootReceiving": {
+        "path": "skills/prism/server/bootstrap-database.ts",
+        "sha256": "ce39fe24e1f5e43ba86c2ebb2f85c8a1e771a38f505f5411f1c51896df4d6a00",
+        "anchor": "verifyPipelineBootReceipt('/run/pipeline-delivery', 'prism-control')",
+        "lines": [
+          5
+        ]
+      },
+      "deliveryQualification": "OPEN: bootstrap entrypoint requires authentic boot receipt; source mapping alone does not prove Job receipt materialization/mount"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ORIGIN",
+      "original": "D228#/rows/2336",
+      "originalObjectSha256": "e3a168ed6296983c61e519865e6348112d512f9ba64c73824d59a01c11c21792",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ORIGIN-EFFECT"
+      ],
+      "class": "operator-setting",
+      "owner": "deployment-product-authority",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_ORIGIN",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          26
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "ORDINARY_PRODUCT_OPERATOR_ENV_CENTRAL_AUTHOR_OPEN",
+      "currentValuesPointer": "/control/productDecisions/origin",
+      "transport": "Helm operator value -> ENV; not a secret",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "name: PRISM_PRODUCT_ORIGIN, value:",
+          "lines": [
+            22
+          ]
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "required('PRISM_PRODUCT_ORIGIN')",
+          "lines": [
+            26
+          ]
+        }
+      ],
+      "environmentName": "PRISM_PRODUCT_ORIGIN",
+      "actualEffects": [
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "headers.origin !== config.origin",
+          "lines": [
+            42
+          ]
+        }
+      ],
+      "enableFence": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+        "anchor": "env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true'",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_CONTROLLER_URL",
+      "original": "D228#/rows/2337",
+      "originalObjectSha256": "d695118c72cb265af6dbbf8d6298675acbc7db689a778fd2b5cf4f839cd7659b",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_CONTROLLER_URL-EFFECT"
+      ],
+      "class": "operator-setting",
+      "owner": "deployment-product-authority",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_URL",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          27
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "ORDINARY_PRODUCT_OPERATOR_ENV_CENTRAL_AUTHOR_OPEN",
+      "currentValuesPointer": "/control/productDecisions/controllerUrl",
+      "transport": "Helm operator value -> ENV; not a secret",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "name: PRISM_PRODUCT_CONTROLLER_URL, value:",
+          "lines": [
+            24
+          ]
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "required('PRISM_PRODUCT_CONTROLLER_URL')",
+          "lines": [
+            27
+          ]
+        }
+      ],
+      "environmentName": "PRISM_PRODUCT_CONTROLLER_URL",
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/product-controller.ts",
+          "sha256": "485f60e071d06cb20e0a0811ecefbf60b23e84f27929d22df465ad5204ae26e3",
+          "anchor": "new URL(path, config.controller)",
+          "lines": [
+            20
+          ]
+        }
+      ],
+      "enableFence": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+        "anchor": "env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true'",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_OPERATORS",
+      "original": "D228#/rows/2338",
+      "originalObjectSha256": "fb0cb479d0f696638028d31765a8a58db890c65aed7c94e4d0367a430df215ba",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_OPERATORS-EFFECT"
+      ],
+      "class": "operator-setting",
+      "owner": "deployment-product-authority",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_OPERATORS",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          29
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "ORDINARY_PRODUCT_OPERATOR_ENV_CENTRAL_AUTHOR_OPEN",
+      "currentValuesPointer": "/control/productDecisions/operators",
+      "transport": "Helm operator value -> ENV; not a secret",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "name: PRISM_PRODUCT_OPERATORS, value:",
+          "lines": [
+            21
+          ]
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "required('PRISM_PRODUCT_OPERATORS')",
+          "lines": [
+            29
+          ]
+        }
+      ],
+      "environmentName": "PRISM_PRODUCT_OPERATORS",
+      "actualEffects": [
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "!config.operators.has(session.user)",
+          "lines": [
+            41
+          ]
+        }
+      ],
+      "enableFence": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+        "anchor": "env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true'",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ISSUER",
+      "original": "D228#/rows/2339",
+      "originalObjectSha256": "49c0b45554704e4ab170a747affa5292b569f290e85f7062a3ae11079a95358b",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ISSUER-EFFECT"
+      ],
+      "class": "operator-setting",
+      "owner": "deployment-product-authority",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_ISSUER",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          33
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "ORDINARY_PRODUCT_OPERATOR_ENV_CENTRAL_AUTHOR_OPEN",
+      "currentValuesPointer": "/control/productDecisions/issuer",
+      "transport": "Helm operator value -> ENV; not a secret",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "name: PRISM_PRODUCT_ISSUER, value:",
+          "lines": [
+            20
+          ]
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "required('PRISM_PRODUCT_ISSUER')",
+          "lines": [
+            33
+          ]
+        }
+      ],
+      "environmentName": "PRISM_PRODUCT_ISSUER",
+      "actualEffects": [
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "issuer: config.issuer",
+          "lines": [
+            65
+          ]
+        }
+      ],
+      "enableFence": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+        "anchor": "env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true'",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_PRIVATE_KEY_FILE",
+      "original": "D228#/rows/2340",
+      "originalObjectSha256": "de4cb23ce37e2e20d71af759e5806fe0eee1232420257d355f30eda2bc0341a1",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_PRIVATE_KEY_FILE-EFFECT"
+      ],
+      "class": "secret-reference",
+      "owner": "deployment-secret-bindings",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_PRIVATE_KEY_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          31
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "KUBERNETES_SECRET_FILE_REFERENCE_CENTRAL_BINDING_OPEN",
+      "currentValuesPointer": "/control/productDecisions/signingSecretName",
+      "transport": "KUBERNETES_SECRET_FILE",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "name: PRISM_PRODUCT_PRIVATE_KEY_FILE, value:",
+          "lines": [
+            23
+          ]
+        },
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "secretName: {{ $config.signingSecretName",
+          "lines": [
+            35
+          ]
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "required('PRISM_PRODUCT_PRIVATE_KEY_FILE')",
+          "lines": [
+            31
+          ]
+        }
+      ],
+      "environmentName": "PRISM_PRODUCT_PRIVATE_KEY_FILE",
+      "actualEffects": [
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "config.privateKey).toString",
+          "lines": [
+            72
+          ]
+        }
+      ],
+      "enableFence": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+        "anchor": "env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true'",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_CA_FILE",
+      "original": "D228#/rows/2341",
+      "originalObjectSha256": "b4c7815c6d1124f21f4f66770c031d0ff44e416465843a7df3c4206761d70be3",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_CA_FILE-EFFECT"
+      ],
+      "class": "secret-reference",
+      "owner": "deployment-secret-bindings",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_CA_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          34
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "KUBERNETES_SECRET_FILE_REFERENCE_CENTRAL_BINDING_OPEN",
+      "currentValuesPointer": "/control/productDecisions/controllerCaSecretName",
+      "transport": "KUBERNETES_SECRET_FILE",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "name: PRISM_PRODUCT_CONTROLLER_CA_FILE, value:",
+          "lines": [
+            25
+          ]
+        },
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "name: {{ $config.controllerCaSecretName",
+          "lines": [
+            43
+          ]
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "required('PRISM_PRODUCT_CONTROLLER_CA_FILE')",
+          "lines": [
+            34
+          ]
+        }
+      ],
+      "environmentName": "PRISM_PRODUCT_CONTROLLER_CA_FILE",
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/product-controller.ts",
+          "sha256": "485f60e071d06cb20e0a0811ecefbf60b23e84f27929d22df465ad5204ae26e3",
+          "anchor": "readFile(config.caFile)",
+          "lines": [
+            16
+          ]
+        }
+      ],
+      "enableFence": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+        "anchor": "env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true'",
+        "lines": [
+          24
+        ]
+      }
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_TOKEN_FILE",
+      "original": "D228#/rows/2342",
+      "originalObjectSha256": "00030ae270a8bb2fbd973af1850c5bba8f07eb7636961d3bf113e58c661c29e5",
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_TOKEN_FILE-EFFECT"
+      ],
+      "class": "secret-reference",
+      "owner": "deployment-secret-bindings",
+      "originalSource": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_TOKEN_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          34
+        ]
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "SERVICE_ACCOUNT_TOKEN_FILE_REFERENCE_CENTRAL_BINDING_OPEN",
+      "currentValuesPointer": "/control/productDecisions/tokenAudience",
+      "transport": "SERVICE_ACCOUNT_TOKEN_FILE",
+      "sourceInputs": [
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "name: PRISM_PRODUCT_CONTROLLER_TOKEN_FILE, value:",
+          "lines": [
+            26
+          ]
+        },
+        {
+          "path": "charts/prism/templates/_product-decisions.tpl",
+          "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+          "anchor": "audience: {{ $config.tokenAudience",
+          "lines": [
+            46
+          ]
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+          "anchor": "required('PRISM_PRODUCT_CONTROLLER_TOKEN_FILE')",
+          "lines": [
+            34
+          ]
+        }
+      ],
+      "environmentName": "PRISM_PRODUCT_CONTROLLER_TOKEN_FILE",
+      "actualEffects": [
+        {
+          "path": "skills/prism/server/product-controller.ts",
+          "sha256": "485f60e071d06cb20e0a0811ecefbf60b23e84f27929d22df465ad5204ae26e3",
+          "anchor": "readFile(config.tokenFile, 'utf8')",
+          "lines": [
+            16
+          ]
+        }
+      ],
+      "enableFence": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "b7398c2c4724f1f81639c41dd28df09f0988e584f2e2ba554f67c00b736ce318",
+        "anchor": "env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true'",
+        "lines": [
+          24
+        ]
+      }
+    }
+  ],
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN"
+}

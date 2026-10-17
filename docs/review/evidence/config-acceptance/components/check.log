@@ -1,0 +1,26 @@
+COMMAND: Python exact fragment ID/required-key/source-hash subset check; no runtime acceptance
+HEAD: 9452d35524192f8665bc87254b3c63a361e7bd4a
+rows 160 sources 98
+activation: {'R': 30, 'S': 39, 'M': 91}
+subset checks passed; C0 not-passed; all rows review-pending
+{
+  "schemaLeafSettings": 148,
+  "envelopeFields": 12,
+  "authors": 6,
+  "extraFullOwnerVariants": 1,
+  "schemaRefsResolved": true,
+  "unresolvedFieldConsumers": 0,
+  "c0Verdict": "not-passed; subset inventory only"
+}
+artifact-sha256 collect.py 17c63cf35e50414bc8acdc2b3d0c316583148f6cc2d19e7d6ec4b8e191e51e7e
+artifact-sha256 refine.py 1e300b7ce1a3b66b9396f1a683010c66fc482fdc89293ef315c0fe9aa1de1f27
+artifact-sha256 semantic-fragment.json 825225c316ea19da18a4985272aecfb9b1084e99b8bed869b845184826354545
+artifact-sha256 source-read.log 48c922a84b1c594491a14a455e9570d35d27370ec3ae154fcbec0349245dbb1f
+artifact-sha256 field-access.json fd71eed279d85eb128e6134d500f978c038dcaa2b10b7d85081fd79bbed2862f
+artifact-sha256 collection.log 1a2111a237da013d9fe26670573a2369ddfe3c7afc733019de09a2d357c86120
+artifact-sha256 README.md a9203b5585794e7c8cff504f17590197bc723ef2941a8e847747e03629a29bbb
+COMMAND: Python exact per-field case/profile/ID/link/source digest check
+148 distinct cases link 148 complete six-owner A/B profile pairs; passed subset shape checks, runtime not-run
+final-artifact-sha256 cases.py 00b5c5780b7ebcc610622f90acb8483227258c1750cf2bf12d95be2be2b52b32
+final-artifact-sha256 case-profiles.json 34514e17d4f6330cacc2a6541749aaa12e46591aa989a406b340f4a2e5e859bb
+final-artifact-sha256 semantic-fragment.json 8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1

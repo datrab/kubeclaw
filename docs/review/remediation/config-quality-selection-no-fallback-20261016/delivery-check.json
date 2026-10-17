@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "scripts/build-runtime-role-bundle.mjs",
+    "nova",
+    "/home/node/.openclaw/workspace/tmp/config-quality-nova-no-fallback-20261016-1842",
+    "5b91addc3bfaf84d4804d23395ae2320c5229270",
+    "pipeline-image-projection.v1",
+    "2026-10-16T18:46:23.316043+00:00"
+  ],
+  "exitCode": 0,
+  "sourceCommit": "5b91addc3bfaf84d4804d23395ae2320c5229270"
+}

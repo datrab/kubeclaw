@@ -1,0 +1,66 @@
+{
+  "verdict": "DCTRL01/02/03 resolved at bounded proposed-definition scope; minor documentation count follow-up; NOT wholeC0/native/implementation/root projection acceptance",
+  "materialFindingDispositions": [
+    {
+      "id": "DCTRL-01",
+      "disposition": "resolved at bounded proposed definition/preparation scope; NOT implemented/native accepted",
+      "evidence": [
+        "lifecycle-definition-schema.json",
+        "correction-contracts.json",
+        "native-case-contracts.json",
+        "independent-pure-controls.json"
+      ],
+      "reason": "Separate physical mutable status.deliveryLifecycle typed; epoch immutable original bytes/authority retained, exact UID/RV CAS+readback and coupled native status, deletion intent-before-DELETE+original timeout/uncertainty/restart/confirmation-before-finalizer specified. Complete source member templates/ordered native recipe, including Product action extend, qualify earlier summaries as templates; genuine authentication/grants/native values remain explicit prerequisites."
+    },
+    {
+      "id": "DCTRL-02",
+      "disposition": "resolved at bounded proposed identity/time scope; NO retained original rebasing",
+      "evidence": [
+        "correction-contracts.json",
+        "native-case-contracts.json",
+        "independent-pure-controls.json"
+      ],
+      "reason": "New synthetic T0 and complete byte identity DAG BEFORE its baseline are separated from immutable retained A. Independently generated public synthetic Ready raw hash -> Product linked raw payload/domain signature/envelope -> exact receipt/prior lifecycle digest -> baseline, old original untouched. Changed timestamp/payload does not verify old signature and changes Ready digest. No key serialization/hash/export or native/trust claim."
+    },
+    {
+      "id": "DCTRL-03",
+      "disposition": "resolved at bounded proposed principal domain/schema scope; NO TokenReview/RBAC proof",
+      "evidence": [
+        "policy-definition-schema.json",
+        "correction-contracts.json",
+        "independent-pure-controls.json"
+      ],
+      "reason": "Exact four-component principal grammar enforced: namespace DNS1123label1..63; SA DNS1123subdomain total1..253, no invented per-label63; actual distinct Ready/Product relations. Independent split/regex predicates agree malformed/max boundaries and restores. Broader current Go readyName is honestly distinct; pinned primary API functions source-linked, not installed validation."
+    }
+  ],
+  "minorDocumentationFollowup": {
+    "id": "DCTRL-RECHECK-DOC01",
+    "severity": "low/nonmaterial documentation count",
+    "artifact": "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/native-case-contracts.json#/cases/3/oracle",
+    "observed": "Ready-v2 oracle says exact27 native state fields, but exact commitDemoReady map constructor, actual author extraction and independent extraction have24 fields. Template contains all24 source-required fields; no field loss or native-positive claim follows.",
+    "requestedClarification": "Replace27 with24 or omit the numeric count in a separate authored correction/addendum preserving frozen inputs. Keep every actual mandatory field and original case requirement.",
+    "effectOnMaterialVerdict": "DCTRL01 actual typed/source member gap resolved; this count prose mismatch does not require native/C1 execution or reopen absent source fields."
+  },
+  "frozenPrimaryArtifacts": 17,
+  "selectedRows": 49,
+  "selectedCanonicalContainers": 6,
+  "currentSourceFiles": 14,
+  "oldReviewedDecodedPayloadsPreserved": 73,
+  "pureAuthorReplayedControls": 105,
+  "independentPureControls": 62,
+  "futureCorrectionSubcasesNotRun": 12,
+  "canonicalContainersNotRun": 6,
+  "allInputDrift": {
+    "primary17": [],
+    "sources": [],
+    "extraInputs": [],
+    "priorIndependentReviewFiles": [],
+    "currentBoundaryFileIdentities": [],
+    "RuntimePaused4": []
+  },
+  "RuntimeStillPaused": true,
+  "remainingMaterialCorrectionGaps": [],
+  "globalC0Accepted": false,
+  "nativeAccepted": false,
+  "rootProjectionReviewed": false
+}

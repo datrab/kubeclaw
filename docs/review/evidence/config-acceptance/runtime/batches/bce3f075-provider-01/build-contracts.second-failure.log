@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/build-contracts.py", line 18, in <module>
+    f=r['field'];root=f.split('[]')[0].split('.{')[0];leaf=f.split('.')[1] if f.startswith('operations[].') else root;leaf=leaf.split('{')[0];rootkey=leaf if name=='openapi' and f.startswith('operations[].') else root;ct=(D if name=='direct-command' else O)[rootkey];A=copy.deepcopy(Dbase if name=='direct-command' else Obase);BB=copy.deepcopy(A);neg=copy.deepcopy(A)
+                                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'expectedStatuses[]'

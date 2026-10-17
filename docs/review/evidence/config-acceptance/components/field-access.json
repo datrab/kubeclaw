@@ -1,0 +1,3635 @@
+{
+  "CMP-prism-control-pipelinePreferenceSubject": [
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 6,
+      "text": "readonly pipelinePreferenceSubject: string | undefined;"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 15,
+      "text": "const pipelinePreferenceSubject = settings.pipelinePreferenceSubject ?? undefined;"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 16,
+      "text": "authorizePipelinePreferenceSubject(undefined, pipelinePreferenceSubject);"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 17,
+      "text": "return Object.freeze({pipelinePreferenceSubject});"
+    },
+    {
+      "path": "skills/prism/server/dispatch-route.ts",
+      "line": 43,
+      "text": "controlConfig.pipelinePreferenceSubject,"
+    }
+  ],
+  "CMP-prism-control-artifactRoot": [
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 58,
+      "text": "artifactRoot: control.artifactRoot,"
+    },
+    {
+      "path": "skills/prism/server/control-context.ts",
+      "line": 16,
+      "text": "artifacts = new ContentAddressedArtifactStore(config.artifactRoot);"
+    }
+  ],
+  "CMP-prism-control-studioPublicUrl": [
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 62,
+      "text": "studioPublicUrl: control.studioPublicUrl,"
+    },
+    {
+      "path": "skills/prism/server/agent-routes.ts",
+      "line": 49,
+      "text": "const { spiffeEnabled, trustedPrismAgentSpiffeId, studioPublicUrl } ="
+    },
+    {
+      "path": "skills/prism/server/agent-routes.ts",
+      "line": 93,
+      "text": "studioUrl: `${studioPublicUrl}?project=${result.projectId}&document=${result.documentId}`,"
+    }
+  ],
+  "CMP-prism-control-port": [
+    {
+      "path": "skills/prism/server/control.ts",
+      "line": 9,
+      "text": "server.listen(config.port, \"0.0.0.0\");"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 46,
+      "text": "if (environment.PORT !== undefined) throw new Error(\"SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use prism-control.config.json settings.port\");"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 50,
+      "text": "port: control.port,"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 75,
+      "text": "return Object.freeze({service, product, listener: Object.freeze({port: service.port, databaseUrl: snapshot.DATABASE_URL})});"
+    }
+  ],
+  "CMP-prism-control-dispatchTimeoutMs": [
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "line": 53,
+      "text": "nativeWorkerDispatchTimeoutMs: settings.dispatchTimeoutMs,"
+    },
+    {
+      "path": "skills/prism/control/worker-operation-transport.ts",
+      "line": 11,
+      "text": "method: 'POST', body, signal: AbortSignal.timeout(config.nativeWorkerDispatchTimeoutMs),"
+    }
+  ],
+  "CMP-prism-control-schemaVersion": [],
+  "CMP-prism-control-owner": [],
+  "CMP-prism-studio-port": [
+    {
+      "path": "skills/prism/server/studio.ts",
+      "line": 8,
+      "text": "}).listen(options.port, '0.0.0.0');"
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "line": 6,
+      "text": "export function loadStudioConfig(environment: NodeJS.ProcessEnv = process.env): StudioOptions & { port: number } {"
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "line": 11,
+      "text": "return Object.freeze({ port: settings.port, controlTimeoutMs: settings.controlTimeoutMs,"
+    }
+  ],
+  "CMP-prism-studio-controlTimeoutMs": [
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "line": 11,
+      "text": "return Object.freeze({ port: settings.port, controlTimeoutMs: settings.controlTimeoutMs,"
+    },
+    {
+      "path": "skills/prism/server/studio-request.ts",
+      "line": 12,
+      "text": "readonly controlTimeoutMs: number;"
+    },
+    {
+      "path": "skills/prism/server/studio-request.ts",
+      "line": 85,
+      "text": "const timer = setTimeout(() => controller.abort(timeoutError), options.controlTimeoutMs);"
+    }
+  ],
+  "CMP-prism-studio-controlUrl": [
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "line": 13,
+      "text": "control: new URL(settings.controlUrl), ingressSecret: environment.PRISM_INGRESS_SECRET ?? '' });"
+    }
+  ],
+  "CMP-prism-studio-schemaVersion": [],
+  "CMP-prism-studio-owner": [],
+  "CMP-prism-worker-ingress.port": [
+    {
+      "path": "skills/prism/server/worker.ts",
+      "line": 43,
+      "text": "server.listen(config.port, '0.0.0.0');"
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "line": 6,
+      "text": "if (environment.PORT !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PORT moved to prism-worker.config.json settings.ingress.port');"
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "line": 18,
+      "text": "native: snapshot.native, port: settings.port, ingress: ingressLimits(settings),"
+    }
+  ],
+  "CMP-prism-worker-ingress.maximumActiveRequests": [
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "line": 28,
+      "text": "maximumActiveRequests: settings.maximumActiveRequests,"
+    }
+  ],
+  "CMP-prism-worker-ingress.maximumProbeRequests": [
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "line": 29,
+      "text": "maximumProbeRequests: settings.maximumProbeRequests,"
+    }
+  ],
+  "CMP-prism-worker-ingress.maximumConnections": [
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "line": 30,
+      "text": "maximumConnections: settings.maximumConnections,"
+    }
+  ],
+  "CMP-prism-worker-ingress.requestTimeoutMs": [
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "line": 32,
+      "text": "requestTimeoutMs: settings.requestTimeoutMs,"
+    }
+  ],
+  "CMP-prism-worker-ingress.shutdownTimeoutMs": [
+    {
+      "path": "skills/prism/server/worker.ts",
+      "line": 39,
+      "text": "void server.shutdown(config.shutdownTimeoutMs).then(resolve, reject);"
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "line": 48,
+      "text": "await server.shutdown(config.shutdownTimeoutMs);"
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "line": 16,
+      "text": "return Object.freeze({ spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: settings.shutdownTimeoutMs,"
+    }
+  ],
+  "CMP-prism-worker-ingress.maximumInputBytes": [
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "line": 31,
+      "text": "maximumInputBytes: settings.maximumInputBytes,"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 19,
+      "text": "const maximumInputBytes = Number(environment.PRISM_NATIVE_ASSIGNED_INPUT_BYTES);"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 20,
+      "text": "if (!Number.isSafeInteger(maximumInputBytes) || maximumInputBytes < 1 || maximumInputBytes > 2_147_483_647) throw new Error('PRISM_NATIVE_INPUT_LIMIT_REQUIRED');"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 25,
+      "text": "return Object.freeze({ scope, maximumInputBytes, controlInternalUrl, workerSecret, spiffeEnabled });"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 58,
+      "text": "maximumInputBytes: config.ingress.maximumInputBytes,"
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "line": 22,
+      "text": "(request, response, signal) => handleWorkerRequest(auth, request, response, signal, { maximumInputBytes: limits.maximumInputBytes, native: execution }),"
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "line": 30,
+      "text": "{ maximumInputBytes, native }: { maximumInputBytes: number; native: NativePrismWorkerExecution }): Promise<WorkerAttemptResultV3 | void> {"
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "line": 51,
+      "text": "if (size > maximumInputBytes)"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 15,
+      "text": "maximumTotalBytes: native.maximumJournalBytes, maximumInputBytes: native.maximumInputBytes,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 30,
+      "text": "maximumInputBytes: native.maximumInputBytes, maximumOutputBytes: native.maximumOutputBytes,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 45,
+      "text": "PRISM_NATIVE_ASSIGNED_INPUT_BYTES: String(native.maximumInputBytes) },"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 17,
+      "text": "readonly maximumInputBytes: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 68,
+      "text": "if (options.input.byteLength > limits.maximumInputBytes) throw new Error('WORKER_NATIVE_INPUT_LIMIT');"
+    }
+  ],
+  "CMP-prism-worker-supervisor.uid": [
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 55,
+      "text": "uid: supervisor.uid, gid: supervisor.gid,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 39,
+      "text": "return { launcher: native.launcher, uid: native.uid, gid: native.gid, executable: process.execPath,"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 22,
+      "text": "readonly uid: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 104,
+      "text": "return this.#launchers.spawn(this.#launcher, [...this.#scope.childLaunchArguments(child), String(command.uid), String(command.gid),"
+    }
+  ],
+  "CMP-prism-worker-supervisor.gid": [
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 55,
+      "text": "uid: supervisor.uid, gid: supervisor.gid,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 39,
+      "text": "return { launcher: native.launcher, uid: native.uid, gid: native.gid, executable: process.execPath,"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 23,
+      "text": "readonly gid: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 104,
+      "text": "return this.#launchers.spawn(this.#launcher, [...this.#scope.childLaunchArguments(child), String(command.uid), String(command.gid),"
+    }
+  ],
+  "CMP-prism-worker-supervisor.maximumOwnershipRecords": [
+    {
+      "path": "skills/prism/server/worker.ts",
+      "line": 18,
+      "text": "maximumRecords: native.maximumRecords, maximumBytes: native.maximumBytes,"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 56,
+      "text": "maximumRecords: supervisor.maximumOwnershipRecords,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 14,
+      "text": "maximumRecords: native.maximumRecords, maximumStateBytes: native.maximumBytes,"
+    }
+  ],
+  "CMP-prism-worker-supervisor.maximumOwnershipBytes": [
+    {
+      "path": "skills/prism/server/worker.ts",
+      "line": 18,
+      "text": "maximumRecords: native.maximumRecords, maximumBytes: native.maximumBytes,"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 57,
+      "text": "maximumBytes: supervisor.maximumOwnershipBytes,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 14,
+      "text": "maximumRecords: native.maximumRecords, maximumStateBytes: native.maximumBytes,"
+    }
+  ],
+  "CMP-prism-worker-supervisor.maximumOutputBytes": [
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 59,
+      "text": "maximumOutputBytes: supervisor.maximumOutputBytes,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 16,
+      "text": "maximumOutputBytes: native.maximumOutputBytes, maximumResultBytes: native.maximumResultBytes,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 30,
+      "text": "maximumInputBytes: native.maximumInputBytes, maximumOutputBytes: native.maximumOutputBytes,"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 18,
+      "text": "readonly maximumOutputBytes: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 107,
+      "text": "const output = captureNativeWorkerOutput(child, limits.maximumOutputBytes, stop, outputCapture);"
+    }
+  ],
+  "CMP-prism-worker-supervisor.maximumJournalBytes": [
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 61,
+      "text": "maximumJournalBytes: supervisor.maximumJournalBytes,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 15,
+      "text": "maximumTotalBytes: native.maximumJournalBytes, maximumInputBytes: native.maximumInputBytes,"
+    }
+  ],
+  "CMP-prism-worker-supervisor.pollIntervalMs": [
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 62,
+      "text": "pollIntervalMs: supervisor.pollIntervalMs,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 31,
+      "text": "pollIntervalMs: native.pollIntervalMs, closeTimeoutMs: native.closeTimeoutMs },"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 16,
+      "text": "readonly pollIntervalMs: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 47,
+      "text": "for (const value of [limits.timeoutMs, limits.pollIntervalMs, limits.closeTimeoutMs]) {"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 125,
+      "text": "}, limits.pollIntervalMs);"
+    }
+  ],
+  "CMP-prism-worker-supervisor.drainTimeoutMs": [
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 63,
+      "text": "drainTimeoutMs: supervisor.drainTimeoutMs,"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 15,
+      "text": "readonly drainTimeoutMs: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 126,
+      "text": "try { await this.#launchers.drain(this.#options.drainTimeoutMs); }"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 140,
+      "text": "try { observation = await this.#scope.terminateAndDrain(this.#options.drainTimeoutMs); }"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 211,
+      "text": "if (!Number.isSafeInteger(options.drainTimeoutMs) || options.drainTimeoutMs < 1) {"
+    }
+  ],
+  "CMP-prism-worker-supervisor.closeTimeoutMs": [
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 64,
+      "text": "closeTimeoutMs: supervisor.closeTimeoutMs,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 31,
+      "text": "pollIntervalMs: native.pollIntervalMs, closeTimeoutMs: native.closeTimeoutMs },"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 19,
+      "text": "readonly closeTimeoutMs: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 47,
+      "text": "for (const value of [limits.timeoutMs, limits.pollIntervalMs, limits.closeTimeoutMs]) {"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 100,
+      "text": "}, limits.closeTimeoutMs);"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 108,
+      "text": "const control = startNativeProcessControl(child, controlOptions, stop, limits.closeTimeoutMs, lease.launchAuthority());"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 113,
+      "text": "disposeCancellation = cancelNativeProcess(child, limits.closeTimeoutMs, close);"
+    }
+  ],
+  "CMP-prism-worker-schemaVersion": [],
+  "CMP-prism-worker-owner": [],
+  "CMP-prism-execution-resourcePolicy.cpuTimeMs": [
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 12,
+      "text": "readonly cpuTimeMs: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 55,
+      "text": "if (observation.cpuTimeMicroseconds / 1000 > limits.cpuTimeMs) return 'WORKER_CPU_LIMIT';"
+    }
+  ],
+  "CMP-prism-execution-resourcePolicy.memoryBytes": [
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 13,
+      "text": "readonly memoryBytes: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 53,
+      "text": "if (observation.oomKills || observation.maximumMemoryBytes > limits.memoryBytes) return 'WORKER_MEMORY_LIMIT';"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 72,
+      "text": "const lease = await options.owner.allocate(options.identity, { memoryBytes: limits.memoryBytes, tasks: limits.tasks });"
+    }
+  ],
+  "CMP-prism-execution-resourcePolicy.tasks": [
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 14,
+      "text": "readonly tasks: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 54,
+      "text": "if (observation.taskLimitHits || observation.maximumTasks > limits.tasks) return 'WORKER_TASK_LIMIT';"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 72,
+      "text": "const lease = await options.owner.allocate(options.identity, { memoryBytes: limits.memoryBytes, tasks: limits.tasks });"
+    }
+  ],
+  "CMP-prism-execution-maximumResultBytes": [
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "line": 60,
+      "text": "maximumResultBytes: config.native.maximumResultBytes,"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 16,
+      "text": "maximumOutputBytes: native.maximumOutputBytes, maximumResultBytes: native.maximumResultBytes,"
+    }
+  ],
+  "CMP-prism-execution-schemaVersion": [],
+  "CMP-prism-execution-owner": [],
+  "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-command.ts",
+      "line": 38,
+      "text": "arguments: [String(settings.resourcePolicy.memoryBytes), String(Math.max(1, Math.ceil(settings.resourcePolicy.cpuTimeMs / 1000))),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 29,
+      "text": "limits: { cpuTimeMs: settings.resourcePolicy.cpuTimeMs, memoryBytes: settings.resourcePolicy.memoryBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 33,
+      "text": "limits: { cpuTimeMs: settings.resourcePolicy.cpuTimeMs, memoryBytes: settings.resourcePolicy.memoryBytes,"
+    }
+  ],
+  "CMP-buster-engine-preparation.resourcePolicy.memoryBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 19,
+      "text": "if (pool.limits.memoryBytes < settings.resourcePolicy.memoryBytes || pool.limits.tasks < settings.resourcePolicy.tasks"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-command.ts",
+      "line": 38,
+      "text": "arguments: [String(settings.resourcePolicy.memoryBytes), String(Math.max(1, Math.ceil(settings.resourcePolicy.cpuTimeMs / 1000))),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 29,
+      "text": "limits: { cpuTimeMs: settings.resourcePolicy.cpuTimeMs, memoryBytes: settings.resourcePolicy.memoryBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 33,
+      "text": "limits: { cpuTimeMs: settings.resourcePolicy.cpuTimeMs, memoryBytes: settings.resourcePolicy.memoryBytes,"
+    }
+  ],
+  "CMP-buster-engine-preparation.resourcePolicy.tasks": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 19,
+      "text": "if (pool.limits.memoryBytes < settings.resourcePolicy.memoryBytes || pool.limits.tasks < settings.resourcePolicy.tasks"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 30,
+      "text": "tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + 8 * settings.cleanupTimeoutMs,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 34,
+      "text": "tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + 8 * settings.cleanupTimeoutMs,"
+    }
+  ],
+  "CMP-buster-engine-preparation.timeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 30,
+      "text": "tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + 8 * settings.cleanupTimeoutMs,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 34,
+      "text": "tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + 8 * settings.cleanupTimeoutMs,"
+    }
+  ],
+  "CMP-buster-engine-preparation.cleanupTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 30,
+      "text": "tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + 8 * settings.cleanupTimeoutMs,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 34,
+      "text": "tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + 8 * settings.cleanupTimeoutMs,"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumActivePreparations": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 76,
+      "text": "maximumActivePreparations: execution.settings.maximumActivePreparations,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 20,
+      "text": "|| pool.maximumActiveScopes < settings.maximumActivePreparations) throw new Error('BUSTER_NATIVE_POOL_CAPACITY_INVALID');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-parent-channel.ts",
+      "line": 18,
+      "text": "readonly maximumActivePreparations: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-parent-channel.ts",
+      "line": 32,
+      "text": "if (admissions.size >= options.maximumActivePreparations) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 37,
+      "text": "const slot = preparationSlots.slice(0, this.#settings.maximumActivePreparations).find(candidate => !occupied.has(candidate));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 62,
+      "text": "const slot = preparationSlots.slice(0, this.#settings.maximumActivePreparations).find(value => !occupied.has(value));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 149,
+      "text": "const slot = preparationSlots.slice(0, this.#settings.maximumActivePreparations).find(value => !occupied.has(value));"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumPendingAdmissions": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 39,
+      "text": "maximumPendingAdmissions: number; maximumRequestBytes: number; maximumResultBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 42,
+      "text": "this.#maximumPending = limits.maximumPendingAdmissions;"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumRequestBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 77,
+      "text": "maximumRequestBytes: execution.settings.maximumRequestBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-parent-channel.ts",
+      "line": 19,
+      "text": "readonly maximumRequestBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-parent-channel.ts",
+      "line": 36,
+      "text": "const ingress = new PreparationIngress(options.maximumRequestBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host-channel.ts",
+      "line": 57,
+      "text": "const frames = Math.ceil(settings.maximumRequestBytes / preparationChunkBytes) + 3;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host-channel.ts",
+      "line": 60,
+      "text": "maximumSessionBytes: settings.maximumRequestBytes + settings.maximumResultBytes + frames * 21,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 30,
+      "text": "readonly #maximumRequestBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 39,
+      "text": "maximumPendingAdmissions: number; maximumRequestBytes: number; maximumResultBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 43,
+      "text": "this.#maximumRequestBytes = limits.maximumRequestBytes;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 62,
+      "text": "for await (const chunk of preparationChunks(chunks, this.#maximumRequestBytes)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 26,
+      "text": "if (staged.input.wireBytes > settings.maximumRequestBytes) throw new Error('BUSTER_REMOTE_REQUEST_SIZE_EXCEEDED');"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumArchiveBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 35,
+      "text": "if (staged.job.repositoryArchive.sizeBytes > settings.maximumArchiveBytes) {"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumExtractedBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 4,
+      "text": "export type ArchivePreparationLimits = Pick<BusterPreparationSettings, 'maximumExtractedBytes' | 'tarTimeoutMs'"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 81,
+      "text": "if (!Number.isSafeInteger(total) || total > limits.maximumExtractedBytes) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 39,
+      "text": "return reservation(staged.job.repositoryArchive.sizeBytes + settings.maximumExtractedBytes"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumHeaderBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 318,
+      "text": "* (this.#settings.maximumHeaderBytes + this.#settings.maximumInputBytes)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 40,
+      "text": "+ settings.maximumHeaderBytes + settings.maximumInputBytes,"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumSourceBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 324,
+      "text": "|| !Number.isSafeInteger(bytes) || bytes > this.#settings.maximumSourceBytes"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumMetadataBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 37,
+      "text": "maximumRecords: settings.maximumRecords, maximumStateBytes: settings.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 32,
+      "text": "readonly #maximumMetadataBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 45,
+      "text": "this.#maximumMetadataBytes = limits.maximumResultBytes;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 119,
+      "text": "return publishedPreparationRepository(this.#sourceRoot, source, this.#maximumMetadataBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 173,
+      "text": "staged as HistoricalStagedAdmission, this.#settings.maximumMetadataBytes, group.groupReceiptDigest);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 304,
+      "text": "const state = await readDurableState<SourceLedger>(this.#file, empty, this.#settings.maximumMetadataBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 323,
+      "text": "+ (item.slotReleased ? 0 : 1), 0) > this.#settings.maximumRecords || metadata > this.#settings.maximumMetadataBytes"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumRecords": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 31,
+      "text": "maximumRecords: settings.maximumRecords, maximumBytes: settings.maximumOwnershipBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 37,
+      "text": "maximumRecords: settings.maximumRecords, maximumStateBytes: settings.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 323,
+      "text": "+ (item.slotReleased ? 0 : 1), 0) > this.#settings.maximumRecords || metadata > this.#settings.maximumMetadataBytes"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumOwnershipBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 31,
+      "text": "maximumRecords: settings.maximumRecords, maximumBytes: settings.maximumOwnershipBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 41,
+      "text": "function readRootConfiguration(maximumBytes: number): Record<string, unknown> {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 51,
+      "text": "if (!stat.isFile() || stat.uid !== 0 || stat.nlink !== 1 || (stat.mode & 0o022) !== 0 || stat.size > maximumBytes) {"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumJournalBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 38,
+      "text": "maximumTotalBytes: settings.maximumJournalBytes, maximumInputBytes: settings.maximumInputBytes,"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumInputBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 38,
+      "text": "maximumTotalBytes: settings.maximumJournalBytes, maximumInputBytes: settings.maximumInputBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 27,
+      "text": "const runtime = readRootConfiguration(settings.maximumInputBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 318,
+      "text": "* (this.#settings.maximumHeaderBytes + this.#settings.maximumInputBytes)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 321,
+      "text": "* preparationCleanupMetadataCapacity(this.#settings.maximumInputBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-command.ts",
+      "line": 44,
+      "text": "BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES: String(settings.maximumInputBytes),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 20,
+      "text": "return reservation(settings.maximumInputBytes, 2, settings);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 29,
+      "text": "+ settings.maximumInputBytes, 5, settings);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 40,
+      "text": "+ settings.maximumHeaderBytes + settings.maximumInputBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 31,
+      "text": "maximumInputBytes: settings.maximumInputBytes, maximumOutputBytes: settings.maximumOutputBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 29,
+      "text": "if (Buffer.byteLength(encoded) > settings.maximumInputBytes) throw new Error('BUSTER_PREPARATION_CLEANUP_INPUT_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 35,
+      "text": "maximumInputBytes: settings.maximumInputBytes, maximumOutputBytes: settings.maximumOutputBytes,"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumOutputBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 39,
+      "text": "maximumOutputBytes: settings.maximumOutputBytes, maximumResultBytes: settings.maximumResultBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 31,
+      "text": "maximumInputBytes: settings.maximumInputBytes, maximumOutputBytes: settings.maximumOutputBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 35,
+      "text": "maximumInputBytes: settings.maximumInputBytes, maximumOutputBytes: settings.maximumOutputBytes,"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumResultBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 39,
+      "text": "maximumOutputBytes: settings.maximumOutputBytes, maximumResultBytes: settings.maximumResultBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host-channel.ts",
+      "line": 59,
+      "text": "maximumMessageBytes: Math.max(preparationChunkBytes, settings.maximumResultBytes) + 17,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host-channel.ts",
+      "line": 60,
+      "text": "maximumSessionBytes: settings.maximumRequestBytes + settings.maximumResultBytes + frames * 21,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 39,
+      "text": "maximumPendingAdmissions: number; maximumRequestBytes: number; maximumResultBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "line": 45,
+      "text": "this.#maximumMetadataBytes = limits.maximumResultBytes;"
+    }
+  ],
+  "CMP-buster-engine-preparation.pollIntervalMs": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 32,
+      "text": "pollIntervalMs: settings.pollIntervalMs, closeTimeoutMs: settings.closeTimeoutMs },"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 36,
+      "text": "pollIntervalMs: settings.pollIntervalMs, closeTimeoutMs: settings.closeTimeoutMs },"
+    }
+  ],
+  "CMP-buster-engine-preparation.drainTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 34,
+      "text": "nodeIdentity: native.nodeIdentity, drainTimeoutMs: settings.drainTimeoutMs,"
+    }
+  ],
+  "CMP-buster-engine-preparation.closeTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "line": 32,
+      "text": "pollIntervalMs: settings.pollIntervalMs, closeTimeoutMs: settings.closeTimeoutMs },"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "line": 36,
+      "text": "pollIntervalMs: settings.pollIntervalMs, closeTimeoutMs: settings.closeTimeoutMs },"
+    }
+  ],
+  "CMP-buster-engine-preparation.tarTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 4,
+      "text": "export type ArchivePreparationLimits = Pick<BusterPreparationSettings, 'maximumExtractedBytes' | 'tarTimeoutMs'"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 24,
+      "text": "const timer = setTimeout(() => stop(new Error('BUSTER_REMOTE_ARCHIVE_TIMEOUT')), limits.tarTimeoutMs);"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumArchiveEntries": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 5,
+      "text": "| 'maximumArchiveEntries' | 'maximumListingLineBytes' | 'maximumTarStderrBytes'>;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 74,
+      "text": "if (entries > limits.maximumArchiveEntries) throw new Error('BUSTER_REMOTE_ARCHIVE_ENTRY_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 41,
+      "text": "settings.maximumArchiveEntries + 7, settings);"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumListingLineBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 5,
+      "text": "| 'maximumArchiveEntries' | 'maximumListingLineBytes' | 'maximumTarStderrBytes'>;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 30,
+      "text": "if (Buffer.byteLength(pending) > limits.maximumListingLineBytes) {"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumTarStderrBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 5,
+      "text": "| 'maximumArchiveEntries' | 'maximumListingLineBytes' | 'maximumTarStderrBytes'>;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "line": 40,
+      "text": "const available = Math.max(0, limits.maximumTarStderrBytes - stderr.byteLength);"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumSourceEntries": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 325,
+      "text": "|| !Number.isSafeInteger(entries) || entries > this.#settings.maximumSourceEntries) {"
+    }
+  ],
+  "CMP-buster-engine-preparation.sourceEntryReservationBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 247,
+      "text": "const bytes = archiveBytes + metadataBytes + 6 * this.#settings.sourceEntryReservationBytes;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "line": 11,
+      "text": "const bytes = payloadBytes + entries * settings.sourceEntryReservationBytes;"
+    }
+  ],
+  "CMP-buster-engine-preparation.maximumOpenFiles": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-command.ts",
+      "line": 39,
+      "text": "String(settings.maximumOpenFiles), ...readRoots.flatMap(root => ['--read-root', root]),"
+    }
+  ],
+  "CMP-buster-engine-admission.maximumActiveJobs": [
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 63,
+      "text": "readonly #maximumActiveJobs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 76,
+      "text": "this.#maximumActiveJobs = admission.maximumActiveJobs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 253,
+      "text": "if (this.#active.size >= this.#maximumActiveJobs || used + job.maximumConcurrency > this.#maximumConcurrentAttempts) return;"
+    }
+  ],
+  "CMP-buster-engine-admission.maximumQueuedJobs": [
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 64,
+      "text": "readonly #maximumQueuedJobs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 77,
+      "text": "this.#maximumQueuedJobs = admission.maximumQueuedJobs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 141,
+      "text": "if (this.#queue.size >= this.#maximumQueuedJobs) throw new Error('BUSTER_REMOTE_ADMISSION_FULL');"
+    }
+  ],
+  "CMP-buster-engine-admission.maximumConcurrentAttempts": [
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 65,
+      "text": "readonly #maximumConcurrentAttempts: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 78,
+      "text": "this.#maximumConcurrentAttempts = admission.maximumConcurrentAttempts;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 140,
+      "text": "if (job.maximumConcurrency > this.#maximumConcurrentAttempts) throw new Error('BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 253,
+      "text": "if (this.#active.size >= this.#maximumActiveJobs || used + job.maximumConcurrency > this.#maximumConcurrentAttempts) return;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 276,
+      "text": "if (job.maximumConcurrency > this.#maximumConcurrentAttempts) throw new Error('BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT');"
+    }
+  ],
+  "CMP-buster-engine-dependencyReadiness.maximumExecutionMs": [
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 47,
+      "text": "buildkitHost: options.containerBuild.buildkitHost, maximumExecutionMs: options.dependencyReadiness.maximumExecutionMs,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "line": 6,
+      "text": "readonly maximumExecutionMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "line": 34,
+      "text": "maximumExecutionMs: this.#options.maximumExecutionMs, maximumOutputBytes: this.#options.maximumOutputBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "line": 7,
+      "text": "readonly maximumExecutionMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "line": 22,
+      "text": "export function validateDependencyProcessLimits(options: Pick<DependencyProcessOptions, 'maximumExecutionMs' | 'maximumOutputBytes'>): void {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "line": 23,
+      "text": "for (const [value, maximum] of [[options.maximumExecutionMs, 30_000], [options.maximumOutputBytes, 1024 * 1024]] as const) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "line": 54,
+      "text": "const timer = setTimeout(() => stop('DEPENDENCY_TIMEOUT'), options.maximumExecutionMs);"
+    }
+  ],
+  "CMP-buster-engine-dependencyReadiness.maximumOutputBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 48,
+      "text": "maximumOutputBytes: options.dependencyReadiness.maximumOutputBytes });"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "line": 7,
+      "text": "readonly maximumOutputBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "line": 34,
+      "text": "maximumExecutionMs: this.#options.maximumExecutionMs, maximumOutputBytes: this.#options.maximumOutputBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "line": 8,
+      "text": "readonly maximumOutputBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "line": 22,
+      "text": "export function validateDependencyProcessLimits(options: Pick<DependencyProcessOptions, 'maximumExecutionMs' | 'maximumOutputBytes'>): void {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "line": 23,
+      "text": "for (const [value, maximum] of [[options.maximumExecutionMs, 30_000], [options.maximumOutputBytes, 1024 * 1024]] as const) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "line": 58,
+      "text": "if (outputBytes > options.maximumOutputBytes) { stop('DEPENDENCY_OUTPUT_LIMIT'); return; }"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.cleanupTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 125,
+      "text": "const cleanupTimeoutMs = this.#options.executionPolicy.provider.cleanupTimeoutMs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 129,
+      "text": "runnerEvidenceDirectory, granted, providerResultLimit, cleanupTimeoutMs, retainAnyLog, busterLog,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 137,
+      "text": "granted, cleanupTimeoutMs, providerResultLimit, invocation, operation, issuedAt });"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 234,
+      "text": "cleanupTimeoutMs: () => this.#options.executionPolicy.provider.cleanupTimeoutMs,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "line": 112,
+      "text": "{ node: input.node, providerResult: state.providerResult, evidence, specialistResult, cleanupTimeoutMs: input.cleanupTimeoutMs, reportPolicy: input.options.executionPolicy.reports },"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 12,
+      "text": "readonly cleanupTimeoutMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 18,
+      "text": "function envelopeLimits(node: ResolvedPlanNodeV1, cleanupTimeoutMs: number, providerResultLimit: number, reportResultLimit: number, workerResultWrapperBytes: number) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 21,
+      "text": "cleanupTimeoutMs,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 42,
+      "text": "const { options, node, attemptId, attemptNumber, granted, cleanupTimeoutMs, providerResultLimit,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 46,
+      "text": "const claimWindowMs = node.timeoutMs + completionPhases * cleanupTimeoutMs + options.executionPolicy.provider.claimGraceMs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 76,
+      "text": "limits: envelopeLimits(node, cleanupTimeoutMs, providerResultLimit, options.executionPolicy.reports.maximumAggregateResultBytes, options.executionPolicy.provider.workerResultWrapperBytes),"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.maximumResultBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 58,
+      "text": "maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 124,
+      "text": "maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 121,
+      "text": "const providerResultLimit = this.#options.executionPolicy.provider.maximumResultBytes;"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.claimGraceMs": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 46,
+      "text": "const claimWindowMs = node.timeoutMs + completionPhases * cleanupTimeoutMs + options.executionPolicy.provider.claimGraceMs;"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.queueTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 81,
+      "text": "queueDeadline: new Date(issuedAt.getTime() + options.executionPolicy.provider.queueTimeoutMs).toISOString(),"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.workerResultWrapperBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 18,
+      "text": "function envelopeLimits(node: ResolvedPlanNodeV1, cleanupTimeoutMs: number, providerResultLimit: number, reportResultLimit: number, workerResultWrapperBytes: number) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 26,
+      "text": "resultBytes: providerResultLimit + reportResultLimit + workerResultWrapperBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "line": 76,
+      "text": "limits: envelopeLimits(node, cleanupTimeoutMs, providerResultLimit, options.executionPolicy.reports.maximumAggregateResultBytes, options.executionPolicy.provider.workerResultWrapperBytes),"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.maximumProtocolBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 107,
+      "text": "if (this.#protocolBytes > this.#policy.provider.maximumProtocolBytes) { this.#protocolFailure ??= new Error('TEST_PROVIDER_PROTOCOL_LIMIT'); this.#fail(this.#protocolFailure); void this.terminate().catch((error) => this.#fail(error instanceof Error ? error : new Error(String(error)))); }"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 231,
+      "text": "if (this.#protocolBytes > this.#policy.provider.maximumProtocolBytes) return;"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.terminationGraceMs": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 184,
+      "text": "const force = setTimeout(() => signal('SIGKILL'), this.#policy.provider.terminationGraceMs);"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.terminationTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 185,
+      "text": "const bound = setTimeout(() => { signal('SIGKILL'); reject(new Error('TEST_PROVIDER_TERMINATION_TIMEOUT')); }, this.#policy.provider.terminationTimeoutMs);"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 200,
+      "text": "await this.#capabilities.drain(this.#policy.provider.capabilityDrainTimeoutMs);"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.minimumHeapMiB": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 97,
+      "text": "`--max-old-space-size=${Math.max(this.#policy.provider.minimumHeapMiB, Math.floor(invocation.limits.memoryBytes / (1024 * 1024) * this.#policy.provider.heapFraction))}`,"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.heapFraction": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 97,
+      "text": "`--max-old-space-size=${Math.max(this.#policy.provider.minimumHeapMiB, Math.floor(invocation.limits.memoryBytes / (1024 * 1024) * this.#policy.provider.heapFraction))}`,"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.maximumPendingCapabilities": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 75,
+      "text": "this.#capabilities = new ProviderCapabilities(this.#policy.provider.maximumPendingCapabilities);"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.minimumOpenFiles": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 96,
+      "text": "String(Math.max(this.#policy.provider.minimumOpenFiles, invocation.limits.artifactFiles + this.#policy.provider.artifactFileDescriptorReserve)), process.execPath,"
+    }
+  ],
+  "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 78,
+      "text": "if (!Number.isSafeInteger(invocation.limits.artifactFiles + this.#policy.provider.artifactFileDescriptorReserve)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 96,
+      "text": "String(Math.max(this.#policy.provider.minimumOpenFiles, invocation.limits.artifactFiles + this.#policy.provider.artifactFileDescriptorReserve)), process.execPath,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.maximumAggregateResultBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 53,
+      "text": "const remainingReportBytes = reportPolicy.maximumAggregateResultBytes - usedReportBytes;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 73,
+      "text": "if (Buffer.byteLength(JSON.stringify(reports)) > reportPolicy.maximumAggregateResultBytes) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 69,
+      "text": "maximumSourceBytes: policy.maximumSourceBytes, maximumResultBytes: policy.maximumAggregateResultBytes,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.maximumSourceBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 60,
+      "text": "const maximumSourceBytes = Math.max(1, Math.min(reportPolicy.maximumSourceBytes, source.artifact.sizeBytes));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 66,
+      "text": "maximumSourceBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 17,
+      "text": "readonly maximumSourceBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 27,
+      "text": "'maximumSourceBytes', 'maximumResultBytes', 'timeoutMs',"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 69,
+      "text": "maximumSourceBytes: policy.maximumSourceBytes, maximumResultBytes: policy.maximumAggregateResultBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 80,
+      "text": "+ (limits.maximumSourceBytes * 3)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 178,
+      "text": "const bytes = await abortable(this.#reader.read(artifact, limits.maximumSourceBytes, signal), signal);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 180,
+      "text": "if (bytes.byteLength !== artifact.sizeBytes || bytes.byteLength > limits.maximumSourceBytes) {"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.maximumCases": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 63,
+      "text": "maximumCases: reportPolicy.maximumCases,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 26,
+      "text": "'maximumCases', 'maximumFindings', 'maximumCaseFindings',"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 63,
+      "text": "if (limits.maximumCases > 5_000 || limits.maximumFindings > 5_000 || limits.maximumCaseFindings > 100) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 67,
+      "text": "maximumCases: policy.maximumCases, maximumFindings: policy.maximumFindings,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 99,
+      "text": "if (result.cases.length > limits.maximumCases) throw new Error('REPORT_ADAPTER_CASE_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 243,
+      "text": "maximumCases: limits.maximumCases,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.maximumFindings": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 64,
+      "text": "maximumFindings: reportPolicy.maximumFindings,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 26,
+      "text": "'maximumCases', 'maximumFindings', 'maximumCaseFindings',"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 63,
+      "text": "if (limits.maximumCases > 5_000 || limits.maximumFindings > 5_000 || limits.maximumCaseFindings > 100) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 67,
+      "text": "maximumCases: policy.maximumCases, maximumFindings: policy.maximumFindings,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 100,
+      "text": "if (result.findings.length > limits.maximumFindings) throw new Error('REPORT_ADAPTER_FINDING_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 244,
+      "text": "maximumFindings: limits.maximumFindings,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.maximumCaseFindings": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 65,
+      "text": "maximumCaseFindings: reportPolicy.maximumCaseFindings,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 26,
+      "text": "'maximumCases', 'maximumFindings', 'maximumCaseFindings',"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 63,
+      "text": "if (limits.maximumCases > 5_000 || limits.maximumFindings > 5_000 || limits.maximumCaseFindings > 100) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 68,
+      "text": "maximumCaseFindings: policy.maximumCaseFindings,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 101,
+      "text": "if (result.cases.some((reportCase) => reportCase.findings.length > limits.maximumCaseFindings)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 245,
+      "text": "maximumCaseFindings: limits.maximumCaseFindings,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.maximumTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 61,
+      "text": "const adapterTimeoutMs = Math.min(reportPolicy.maximumTimeoutMs, cleanupTimeoutMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 70,
+      "text": "timeoutMs: policy.maximumTimeoutMs, memoryBytes: policy.memoryBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 71,
+      "text": "cpuMillis: Math.max(policy.minimumCpuTimeMs, Math.floor(policy.maximumTimeoutMs / 1000) * 1000),"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.memoryBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 69,
+      "text": "memoryBytes: reportPolicy.memoryBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 20,
+      "text": "readonly memoryBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 28,
+      "text": "'memoryBytes', 'cpuMillis', 'openFiles',"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 70,
+      "text": "timeoutMs: policy.maximumTimeoutMs, memoryBytes: policy.memoryBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 82,
+      "text": "if (limits.memoryBytes < requiredMemory) throw new Error('REPORT_ADAPTER_MEMORY_LIMIT_INCOMPATIBLE');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 228,
+      "text": "String(limits.memoryBytes), String(limits.cpuMillis / 1000),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 230,
+      "text": "`--max-old-space-size=${Math.max(this.#policy.minimumHeapMiB, Math.floor(limits.memoryBytes / (1024 * 1024) * this.#policy.heapFraction))}`,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.minimumCpuTimeMs": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 70,
+      "text": "cpuMillis: Math.max(reportPolicy.minimumCpuTimeMs, Math.floor(adapterTimeoutMs / 1_000) * 1_000),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 71,
+      "text": "cpuMillis: Math.max(policy.minimumCpuTimeMs, Math.floor(policy.maximumTimeoutMs / 1000) * 1000),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 77,
+      "text": "if (limits.cpuMillis < policy.minimumCpuTimeMs) throw new Error('REPORT_ADAPTER_CPU_LIMIT_BELOW_POLICY');"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.maximumOpenFiles": [
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "line": 71,
+      "text": "openFiles: reportPolicy.maximumOpenFiles,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 72,
+      "text": "openFiles: policy.maximumOpenFiles,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.minimumOpenFiles": [
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 78,
+      "text": "if (limits.openFiles < policy.minimumOpenFiles) throw new Error('REPORT_ADAPTER_OPEN_FILE_LIMIT_TOO_LOW');"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.minimumHeapMiB": [
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 230,
+      "text": "`--max-old-space-size=${Math.max(this.#policy.minimumHeapMiB, Math.floor(limits.memoryBytes / (1024 * 1024) * this.#policy.heapFraction))}`,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.heapFraction": [
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 230,
+      "text": "`--max-old-space-size=${Math.max(this.#policy.minimumHeapMiB, Math.floor(limits.memoryBytes / (1024 * 1024) * this.#policy.heapFraction))}`,"
+    }
+  ],
+  "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "line": 79,
+      "text": "const requiredMemory = policy.runtimeMemoryReserveBytes"
+    }
+  ],
+  "CMP-buster-engine-execution.observation.resourceSampleIntervalMs": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 143,
+      "text": "observation: { resourceSampleIntervalMs: this.#policy.observation.resourceSampleIntervalMs } })) this.#fail(new Error('TEST_PROVIDER_PROCESS_CLOSED'));"
+    }
+  ],
+  "CMP-buster-engine-execution.observation.processSampleIntervalMs": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 130,
+      "text": "this.#sampleTimer = setInterval(() => this.#sample(), this.#policy.observation.processSampleIntervalMs);"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 29,
+      "text": "maximumEvidenceObjects: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 238,
+      "text": "state.evidence.length >= limits.maximumEvidenceObjects ||"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 67,
+      "text": "maximumEvidenceObjects:Number.MAX_SAFE_INTEGER,maximumEvidenceBytes:Number.MAX_SAFE_INTEGER,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 73,
+      "text": "replayAssert(state.evidence.length <= limits.maximumEvidenceObjects && state.results.length - validatedProjectedResults <= limits.maximumResults && state.closures.length - validatedProjectedClosures <= limits.maximumClosures, 'attempt-count');"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 30,
+      "text": "maximumEvidenceBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 239,
+      "text": "total + content.byteLength > limits.maximumEvidenceBytes"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 67,
+      "text": "maximumEvidenceObjects:Number.MAX_SAFE_INTEGER,maximumEvidenceBytes:Number.MAX_SAFE_INTEGER,"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 31,
+      "text": "maximumEvidenceObjectBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 146,
+      "text": "if (content.byteLength > store.limits.maximumEvidenceObjectBytes)"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 68,
+      "text": "maximumEvidenceObjectBytes:Number.MAX_SAFE_INTEGER,maximumResults:Number.MAX_SAFE_INTEGER,"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.attempts.maximumResults": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 32,
+      "text": "maximumResults: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 218,
+      "text": "store.limits.maximumResults"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 68,
+      "text": "maximumEvidenceObjectBytes:Number.MAX_SAFE_INTEGER,maximumResults:Number.MAX_SAFE_INTEGER,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 73,
+      "text": "replayAssert(state.evidence.length <= limits.maximumEvidenceObjects && state.results.length - validatedProjectedResults <= limits.maximumResults && state.closures.length - validatedProjectedClosures <= limits.maximumClosures, 'attempt-count');"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.attempts.maximumClosures": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "line": 66,
+      "text": "store.limits.maximumClosures"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 33,
+      "text": "maximumClosures: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 69,
+      "text": "maximumClosures:Number.MAX_SAFE_INTEGER,maximumMetadataBytes:s.maximumBytes,maximumPendingEvidenceAgeMs:Number.MAX_SAFE_INTEGER,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 73,
+      "text": "replayAssert(state.evidence.length <= limits.maximumEvidenceObjects && state.results.length - validatedProjectedResults <= limits.maximumResults && state.closures.length - validatedProjectedClosures <= limits.maximumClosures, 'attempt-count');"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 34,
+      "text": "maximumMetadataBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 52,
+      "text": "store.limits.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 88,
+      "text": "store.limits.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 128,
+      "text": "store.limits.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 162,
+      "text": "store.limits.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 180,
+      "text": "store.limits.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 218,
+      "text": "store.limits.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 242,
+      "text": "if (afterBytes > store.limits.maximumMetadataBytes)"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 127,
+      "text": "for(const item of projected)assertReference(item,root,limits.maximumMetadataBytes);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 129,
+      "text": "const journal=attemptImportJournal(root),bytes=readPrefix(journal,limits.maximumMetadataBytes,maximumPrefix);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 68,
+      "text": "this.limits.maximumMetadataBytes,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 101,
+      "text": "this.limits.maximumMetadataBytes"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 69,
+      "text": "maximumClosures:Number.MAX_SAFE_INTEGER,maximumMetadataBytes:s.maximumBytes,maximumPendingEvidenceAgeMs:Number.MAX_SAFE_INTEGER,"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 35,
+      "text": "maximumPendingEvidenceAgeMs: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 123,
+      "text": "now - stagedAt < this.limits.maximumPendingEvidenceAgeMs"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 69,
+      "text": "maximumClosures:Number.MAX_SAFE_INTEGER,maximumMetadataBytes:s.maximumBytes,maximumPendingEvidenceAgeMs:Number.MAX_SAFE_INTEGER,"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.admission.maximumIngressBytes": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 73,
+      "text": "maximumIngressBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 551,
+      "text": "if (inputBytes <= this.#limits.maximumIngressBytes) return;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 43,
+      "text": "function admissionEntry(entry: AdmissionState['entries'][number], cursor: number, keys: Set<string>, maximumIngressBytes: number): void {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 46,
+      "text": "replayAssert(typeof entry.bytes === 'string' && Buffer.byteLength(entry.bytes) <= maximumIngressBytes, 'admission-bytes');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 101,
+      "text": "admissionEntry(entry, state.schemaVersion==='observability-admission-store.v1'?index+1:entry.canonicalCursor, keys, limits.maximumIngressBytes);"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.admission.maximumRecords": [
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 54,
+      "text": "maximumRecords: integer(records.maximumRecords, 'recordLimits.maximumRecords'),"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 69,
+      "text": "maximumRecords: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 74,
+      "text": "maximumRecords: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 338,
+      "text": "if (!validLimit(limits.maximumRecords) || !validLimit(limits.maximumBytes))"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 384,
+      "text": "state.entries.length >= this.#limits.maximumRecords ||"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 612,
+      "text": "if (state.entries.length >= this.#limits.maximumRecords)"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 98,
+      "text": "replayAssert(state.entries.length <= limits.maximumRecords && state.nextCursor === state.entries.length + retired.length + 1, 'admission-next-cursor');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 16,
+      "text": "readonly maximumRecords: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 52,
+      "text": "positiveInteger(limits.maximumRecords, \"DURABLE_RECORD_LIMIT_INVALID\");"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 82,
+      "text": "if (state.records.length >= this.#limits.maximumRecords)"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.admission.maximumBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 55,
+      "text": "maximumBytes: integer(records.maximumBytes, 'recordLimits.maximumBytes'),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 160,
+      "text": "async evidence(jobId: string, contentDigest: string, maximumBytes: number): Promise<Buffer> {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 162,
+      "text": "if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 0) throw new Error('BUSTER_REMOTE_EVIDENCE_LIMIT_INVALID');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 174,
+      "text": "for (const artifact of matches) bytes = await readJobArtifact(runtimeRoot, jobId, artifact, maximumBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 178,
+      "text": "async result(jobId: string, contentDigest: string, maximumBytes: number): Promise<Buffer> {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 179,
+      "text": "return this.#options.store.result(jobId, contentDigest, maximumBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 188,
+      "text": "maximumBytes: number,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 214,
+      "text": "maximumBytes - total,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 219,
+      "text": "if (total > maximumBytes)"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 28,
+      "text": "readonly #maximumBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 31,
+      "text": "constructor(root: string, maximumBytes: number, maximumTotalBytes?: number) {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 32,
+      "text": "positiveInteger(maximumBytes, \"DURABLE_BLOB_LIMIT_INVALID\");"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 36,
+      "text": "this.#maximumBytes = maximumBytes;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 69,
+      "text": "if (bytes.byteLength > this.#maximumBytes) throw new Error(\"DURABLE_BLOB_SIZE_EXCEEDED\");"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 103,
+      "text": "return readDurableBlob(this.#path(digest), digest, this.#maximumBytes);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 73,
+      "text": "export function readAttemptJournalPrefix(file:string,maximumBytes:number,prefixBytes?:number):Buffer {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 74,
+      "text": "replayAssert(Number.isSafeInteger(maximumBytes)&&maximumBytes>0,'attempt-journal-read-limit');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 79,
+      "text": "replayAssert(stat.isFile()&&Number.isSafeInteger(length)&&length>0&&length<=maximumBytes&&stat.size>=length,'attempt-journal-size');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 86,
+      "text": "function assertReference(item:ProjectedResultMetadata,root:string,maximumBytes:number):void {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 93,
+      "text": "replayAssert(Number.isSafeInteger(reference.journalPrefixBytes)&&reference.journalPrefixBytes>0&&reference.journalPrefixBytes<=maximumBytes,'attempt-result-reference-budget');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 120,
+      "text": "readPrefix:(file:string,maximumBytes:number,prefixBytes:number)=>Buffer=readAttemptJournalPrefix,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 160,
+      "text": "export function createAttemptProjection(item:DurableResultMetadata,intent:AttemptRetirementIntent,root:string,maximumBytes:number):ProjectedResultMetadata {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 162,
+      "text": "const journal=attemptImportJournal(root),bytes=readAttemptJournalPrefix(journal,maximumBytes);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 167,
+      "text": "assertReference(projected,root,maximumBytes);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "line": 20,
+      "text": "export async function readStoreRecords<T>(file: string, maximumBytes: number, stream: string): Promise<readonly DurableRecord<T>[]> {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "line": 21,
+      "text": "const state = await readDurableState<DurableRecordState>(file, { schemaVersion: 'pipeline-durable-record-store.v1', records: [] }, maximumBytes);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 70,
+      "text": "maximumBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 75,
+      "text": "maximumBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 106,
+      "text": "const state = await readDurableState(file, EMPTY_ADMISSION, limits.maximumBytes);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 114,
+      "text": "maximumBytes?: number,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 117,
+      "text": "if (maximumBytes === undefined) return JSON.parse(await fs.readFile(file, \"utf8\")) as T;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 118,
+      "text": "return JSON.parse(await readBoundedSnapshot(file, maximumBytes)) as T;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 338,
+      "text": "if (!validLimit(limits.maximumRecords) || !validLimit(limits.maximumBytes))"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 385,
+      "text": "Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 448,
+      "text": "limits.maximumBytes <= ADMISSION_METADATA_RESERVE"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 504,
+      "text": "if (Buffer.byteLength(canonicalJson(state)) > this.#limits.maximumBytes)"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 541,
+      "text": "this.#limits.maximumBytes - ADMISSION_METADATA_RESERVE"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 630,
+      "text": "this.#limits.maximumBytes - ADMISSION_METADATA_RESERVE"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 667,
+      "text": "if(releasedBytes<=0 || after>this.#limits.maximumBytes)throw new Error(\"OBSERVABILITY_RETIREMENT_NO_CAPACITY_GAIN\");"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 793,
+      "text": "Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 15,
+      "text": "maximumBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 41,
+      "text": "replayObject(s,['file','maximumBytes','pipelineRunId','planId','nodeId','attemptId','claimGeneration','resultDigest','closureDigest'],'admission-retirement-source');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 43,
+      "text": "replayAssert(Number.isSafeInteger(s.maximumBytes) && s.maximumBytes > 0 && Number.isSafeInteger(s.claimGeneration) && s.claimGeneration > 0,'admission-retirement-bounds');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 50,
+      "text": "async function readRetirementBytes(file:string,maximumBytes:number):Promise<Buffer> {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 56,
+      "text": "replayAssert(stat.isFile() && stat.size<=maximumBytes,'admission-retirement-source-size');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 65,
+      "text": "const state=JSON.parse((await readRetirementBytes(s.file,s.maximumBytes)).toString()) as PersistedAttempt;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 69,
+      "text": "maximumClosures:Number.MAX_SAFE_INTEGER,maximumMetadataBytes:s.maximumBytes,maximumPendingEvidenceAgeMs:Number.MAX_SAFE_INTEGER,"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 89,
+      "text": "const key=canonicalJson([entry.source.file,entry.source.maximumBytes]);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 109,
+      "text": "export async function completionRetirementSource(state:DurableAttemptStoreSnapshot,scope:{pipelineRunId:string;attemptId:string;claimGeneration:number;recordDigest:string},file:string,maximumBytes:number):Promise<AdmissionCompletionReference> {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 117,
+      "text": "return {file,maximumBytes,pipelineRunId:scope.pipelineRunId,planId:result.planId,nodeId:result.nodeId,attemptId:scope.attemptId,claimGeneration:scope.claimGeneration,resultDigest:result.result.resultDigest,closureDigest:closure.closureDigest};"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 26,
+      "text": "export async function readBoundedSnapshot(file: string, maximumBytes: number): Promise<string> {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 30,
+      "text": "replayAssert(stat.isFile() && stat.size <= maximumBytes, 'snapshot-size');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 17,
+      "text": "readonly maximumBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 53,
+      "text": "positiveInteger(limits.maximumBytes, \"DURABLE_RECORD_LIMIT_INVALID\");"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 78,
+      "text": "const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 96,
+      "text": "if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 111,
+      "text": "return this.#serial(async () => operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream)));"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 117,
+      "text": "const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 127,
+      "text": "const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 156,
+      "text": "if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes) throw new Error('DURABLE_RECORD_STORE_FULL');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 191,
+      "text": "operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream), records));"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 214,
+      "text": "const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 236,
+      "text": "if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 76,
+      "text": "maximumQuarantineRecords: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 491,
+      "text": "this.#limits.maximumQuarantineRecords"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 514,
+      "text": "if (state.quarantine.length >= this.#limits.maximumQuarantineRecords) {"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 80,
+      "text": "replayAssert(state.quarantine.length <= limits.maximumQuarantineRecords && Buffer.byteLength(canonicalJson(state.quarantine)) <= limits.maximumQuarantineBytes, 'admission-quarantine-size');"
+    }
+  ],
+  "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 77,
+      "text": "maximumQuarantineBytes: number;"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 539,
+      "text": "this.#limits.maximumQuarantineBytes ||"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 80,
+      "text": "replayAssert(state.quarantine.length <= limits.maximumQuarantineRecords && Buffer.byteLength(canonicalJson(state.quarantine)) <= limits.maximumQuarantineBytes, 'admission-quarantine-size');"
+    }
+  ],
+  "CMP-buster-engine-execution.processInput.cleanupTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 125,
+      "text": "const cleanupTimeoutMs = this.#options.executionPolicy.provider.cleanupTimeoutMs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 129,
+      "text": "runnerEvidenceDirectory, granted, providerResultLimit, cleanupTimeoutMs, retainAnyLog, busterLog,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 137,
+      "text": "granted, cleanupTimeoutMs, providerResultLimit, invocation, operation, issuedAt });"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 234,
+      "text": "cleanupTimeoutMs: () => this.#options.executionPolicy.provider.cleanupTimeoutMs,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "line": 30,
+      "text": "const deadline = Date.now() + this.#policy.cleanupTimeoutMs;"
+    }
+  ],
+  "CMP-buster-engine-execution.processInput.terminationGraceMs": [
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "line": 37,
+      "text": "force = setTimeout(() => this.#attemptSignal('SIGKILL', failures), this.#policy.terminationGraceMs);"
+    }
+  ],
+  "CMP-buster-engine-execution.processInput.acknowledgementPollMs": [
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "line": 70,
+      "text": "await new Promise((resolve) => setTimeout(resolve, this.#policy.acknowledgementPollMs));"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable": [
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 5,
+      "text": "readonly kubectlExecutable: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 24,
+      "text": "return { kubernetesFixture: { ...selected, kubectlExecutable: binding.kubectlExecutable,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 33,
+      "text": "return { tailscaleExposure: { ...policy.tailscaleExposure, kubectlExecutable: binding.kubectlExecutable,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 39,
+      "text": "return { kubernetesRuntimeSecurity: { ...policy.runtimeSecurity, kubectlExecutable: binding.kubectlExecutable,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 32,
+      "text": "readonly kubectlExecutable: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 106,
+      "text": "this.#kubectl = fs.realpathSync(options.kubectlExecutable);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 31,
+      "text": "readonly kubectlExecutable: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 96,
+      "text": "this.kubectl = fs.realpathSync(options.kubectlExecutable);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 14,
+      "text": "readonly kubectlExecutable: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 20,
+      "text": "const { workspaceRoot, kubectlExecutable, controllerNamespace, leaseApiGroup, ...settings } = options;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 23,
+      "text": "|| typeof kubectlExecutable !== 'string' || kubectlExecutable.length === 0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 140,
+      "text": "this.#root = fs.realpathSync(options.workspaceRoot); this.#kubectl = fs.realpathSync(options.kubectlExecutable);"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup": [
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 7,
+      "text": "readonly leaseApiGroup: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 25,
+      "text": "controllerNamespace: binding.controllerNamespace, leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 34,
+      "text": "controllerNamespace: binding.controllerNamespace, leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion } };"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 40,
+      "text": "controllerNamespace: binding.controllerNamespace, leaseApiGroup: binding.leaseApiGroup } };"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 34,
+      "text": "readonly leaseApiGroup: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 91,
+      "text": "if (!/^[a-z0-9.-]+$/u.test(options.leaseApiGroup) || !/^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$/u.test(options.leaseApiVersion)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 101,
+      "text": "this.#controllerNamespace = options.controllerNamespace; this.#apiGroup = options.leaseApiGroup;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 33,
+      "text": "readonly leaseApiGroup: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 99,
+      "text": "this.apiGroup = options.leaseApiGroup;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 126,
+      "text": "if (!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/u.test(options.leaseApiGroup))"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 16,
+      "text": "readonly leaseApiGroup: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 20,
+      "text": "const { workspaceRoot, kubectlExecutable, controllerNamespace, leaseApiGroup, ...settings } = options;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 25,
+      "text": "|| typeof leaseApiGroup !== 'string' || !/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/u.test(leaseApiGroup)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 135,
+      "text": "readonly #leaseApiGroup: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 142,
+      "text": "this.#leaseApiGroup = options.leaseApiGroup;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 159,
+      "text": "const leaseResource = `busternamespaceleases.${this.#leaseApiGroup}`;"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion": [
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 8,
+      "text": "readonly leaseApiVersion: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 25,
+      "text": "controllerNamespace: binding.controllerNamespace, leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 34,
+      "text": "controllerNamespace: binding.controllerNamespace, leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion } };"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 35,
+      "text": "readonly leaseApiVersion: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 91,
+      "text": "if (!/^[a-z0-9.-]+$/u.test(options.leaseApiGroup) || !/^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$/u.test(options.leaseApiVersion)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 102,
+      "text": "this.#apiVersion = options.leaseApiVersion; this.#prefixes = [...new Set(options.allowedNamespacePrefixes)];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 34,
+      "text": "readonly leaseApiVersion: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 100,
+      "text": "this.apiVersion = options.leaseApiVersion;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 128,
+      "text": "if (!/^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$/u.test(options.leaseApiVersion))"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 35,
+      "text": "readonly allowedNamespacePrefixes: readonly string[];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 101,
+      "text": "this.namespacePrefixes = new Set(options.allowedNamespacePrefixes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 130,
+      "text": "if (options.allowedNamespacePrefixes.length < 1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 131,
+      "text": "|| options.allowedNamespacePrefixes.some((item) => item.length > MAX_NAMESPACE_PREFIX_LENGTH || !DNS_LABEL.test(item))) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes": [
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 23,
+      "text": "const { runnerServiceAccount, credentialReaderServiceAccount, registryRepositoryPrefixes, ...selected } = policy.kubernetesFixture;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 26,
+      "text": "allowedRegistryPrefixes: registryRepositoryPrefixes.map(repository => `${registryReference}/${repository}`),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 22,
+      "text": "readonly allowedRegistryPrefixes: readonly string[];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 132,
+      "text": "if (!policy.allowedRegistryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 113,
+      "text": "allowedRegistryPrefixes: settings.registryPrefixes, serviceName, servicePort, expectedServiceTargetPort,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 36,
+      "text": "readonly allowedRegistryPrefixes: readonly string[];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 102,
+      "text": "this.registryPrefixes = [...options.allowedRegistryPrefixes];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 134,
+      "text": "if (options.allowedRegistryPrefixes.length < 1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 135,
+      "text": "|| options.allowedRegistryPrefixes.some((item) => !/^[A-Za-z0-9.-]+(?::[0-9]{1,5})?\\/[a-z0-9]+(?:[._/-][a-z0-9]+)*$/u.test(item))) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 37,
+      "text": "readonly allowedSecretReferences: readonly string[];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 103,
+      "text": "this.secretReferences = new Set(options.allowedSecretReferences);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 141,
+      "text": "if (options.allowedSecretReferences.some((item) => !SECRET_NAME.test(item))) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 115,
+      "text": "allowedStorageClasses: settings.allowedStorageClasses,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 59,
+      "text": "readonly allowedStorageClasses: ReadonlySet<string>;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 79,
+      "text": "if (!policy.allowedStorageClasses.has(selected)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 38,
+      "text": "readonly allowedStorageClasses: readonly string[];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 66,
+      "text": "readonly allowedStorageClasses: ReadonlySet<string>;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 104,
+      "text": "this.allowedStorageClasses = new Set(options.allowedStorageClasses);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 144,
+      "text": "if (options.allowedStorageClasses.some((item) => item.length > 253 || !STORAGE_CLASS_NAME.test(item))) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 116,
+      "text": "allowDefaultStorageClass: settings.allowDefaultStorageClass,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 60,
+      "text": "readonly allowDefaultStorageClass: boolean;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "line": 74,
+      "text": "if (!policy.allowDefaultStorageClass)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 39,
+      "text": "readonly allowDefaultStorageClass: boolean;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 67,
+      "text": "readonly allowDefaultStorageClass: boolean;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 105,
+      "text": "this.allowDefaultStorageClass = options.allowDefaultStorageClass;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 147,
+      "text": "if (typeof options.allowDefaultStorageClass !== 'boolean') {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount": [
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 23,
+      "text": "const { runnerServiceAccount, credentialReaderServiceAccount, registryRepositoryPrefixes, ...selected } = policy.kubernetesFixture;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 27,
+      "text": "runnerSubject: `${binding.controllerNamespace}/${runnerServiceAccount}`,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 140,
+      "text": "readers: [...new Set([settings.credentialReaderSubject, settings.runnerSubject])] };"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 149,
+      "text": "ttlSeconds: retentionSeconds, access: [{ subject: settings.runnerSubject, mode: 'deployer' }],"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 40,
+      "text": "readonly runnerSubject: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 68,
+      "text": "readonly runnerSubject: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 87,
+      "text": "const runnerSubject = options.runnerSubject;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 89,
+      "text": "if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(runnerSubject)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 106,
+      "text": "this.runnerSubject = runnerSubject;"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount": [
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 23,
+      "text": "const { runnerServiceAccount, credentialReaderServiceAccount, registryRepositoryPrefixes, ...selected } = policy.kubernetesFixture;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "line": 28,
+      "text": "credentialReaderSubject: `${binding.controllerNamespace}/${credentialReaderServiceAccount}` } };"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 140,
+      "text": "readers: [...new Set([settings.credentialReaderSubject, settings.runnerSubject])] };"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 41,
+      "text": "readonly credentialReaderSubject: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 69,
+      "text": "readonly credentialReaderSubject: string;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 88,
+      "text": "const credentialReaderSubject = options.credentialReaderSubject;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 90,
+      "text": "|| !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(credentialReaderSubject)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 107,
+      "text": "this.credentialReaderSubject = credentialReaderSubject;"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 35,
+      "text": "encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 101,
+      "text": "const bytes = manifestBytes(manifestPath, manifestDigest, settings.maximumManifestBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 42,
+      "text": "readonly maximumManifestBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 70,
+      "text": "readonly maximumManifestBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 108,
+      "text": "this.maximumManifestBytes = options.maximumManifestBytes;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 152,
+      "text": "for (const [value, label] of [[options.maximumManifestBytes, 'MANIFEST_SIZE'], [options.maximumResources, 'RESOURCE_COUNT'],"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 170,
+      "text": "|| !Number.isSafeInteger(options.maximumManifestBytes * options.commandOutputManifestMultiplier)) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 21,
+      "text": "readonly maximumResources: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 43,
+      "text": "const documents = flattenDocuments(loaded, policy.maximumResources, policy.manifest);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "line": 44,
+      "text": "if (documents.length < 1 || documents.length > policy.maximumResources)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "line": 45,
+      "text": "export function flattenDocuments(values: unknown[], maximumResources: number, policy: BusterManifestPolicy): JsonObject[] {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "line": 62,
+      "text": "if (out.length >= maximumResources)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 112,
+      "text": "const facts = inspectManifest(bytes, { immutableImage, maximumResources: settings.maximumResources, manifest: settings.manifest,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 43,
+      "text": "readonly maximumResources: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 71,
+      "text": "readonly maximumResources: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 109,
+      "text": "this.maximumResources = options.maximumResources;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 152,
+      "text": "for (const [value, label] of [[options.maximumManifestBytes, 'MANIFEST_SIZE'], [options.maximumResources, 'RESOURCE_COUNT'],"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 117,
+      "text": "maximumClaimBytes: settings.maximumPersistentVolumeClaimBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 44,
+      "text": "readonly maximumPersistentVolumeClaimBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 72,
+      "text": "readonly maximumPersistentVolumeClaimBytes: bigint;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 110,
+      "text": "this.maximumPersistentVolumeClaimBytes = BigInt(options.maximumPersistentVolumeClaimBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 153,
+      "text": "[options.maximumPersistentVolumeClaimBytes, 'PVC_SIZE'], [options.maximumPersistentVolumeTotalBytes, 'PVC_TOTAL_SIZE'],"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 161,
+      "text": "if (options.maximumPersistentVolumeTotalBytes < options.maximumPersistentVolumeClaimBytes)"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 118,
+      "text": "maximumTotalBytes: settings.maximumPersistentVolumeTotalBytes,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 45,
+      "text": "readonly maximumPersistentVolumeTotalBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 73,
+      "text": "readonly maximumPersistentVolumeTotalBytes: bigint;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 111,
+      "text": "this.maximumPersistentVolumeTotalBytes = BigInt(options.maximumPersistentVolumeTotalBytes);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 153,
+      "text": "[options.maximumPersistentVolumeClaimBytes, 'PVC_SIZE'], [options.maximumPersistentVolumeTotalBytes, 'PVC_TOTAL_SIZE'],"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 161,
+      "text": "if (options.maximumPersistentVolumeTotalBytes < options.maximumPersistentVolumeClaimBytes)"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 125,
+      "text": "const retentionSeconds = integer(payload.retentionSeconds, 'retentionSeconds', 60, settings.maximumRetentionSeconds);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 46,
+      "text": "readonly maximumRetentionSeconds: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 74,
+      "text": "readonly maximumRetentionSeconds: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 112,
+      "text": "this.maximumRetentionSeconds = options.maximumRetentionSeconds;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 154,
+      "text": "[options.maximumRetentionSeconds, 'RETENTION'], [options.maximumExecutionMs, 'EXECUTION']] as const) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 32,
+      "text": "async #kubectlRun(args: readonly string[], input: Buffer | string | null, signal: AbortSignal, timeout = this.#settings.maximumExecutionMs): Promise<string> {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 35,
+      "text": "encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 49,
+      "text": "const timer = setTimeout(() => controller.abort(), this.#settings.maximumExecutionMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 75,
+      "text": "'--ignore-not-found=true', '--wait=true', `--timeout=${Math.ceil(this.#settings.maximumExecutionMs / 1_000)}s`], null, signal);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 130,
+      "text": "const readinessTimeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1_000, settings.maximumExecutionMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 47,
+      "text": "readonly maximumExecutionMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 75,
+      "text": "readonly maximumExecutionMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 113,
+      "text": "this.maximumExecutionMs = options.maximumExecutionMs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 154,
+      "text": "[options.maximumRetentionSeconds, 'RETENTION'], [options.maximumExecutionMs, 'EXECUTION']] as const) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 169,
+      "text": "|| options.shortCommandTimeoutMs > MAX_TIMER_MS || options.maximumExecutionMs > MAX_TIMER_MS"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 48,
+      "text": "readonly pollIntervalMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 76,
+      "text": "readonly pollIntervalMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 114,
+      "text": "this.pollIntervalMs = options.pollIntervalMs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 163,
+      "text": "if (!Number.isSafeInteger(options.pollIntervalMs) || options.pollIntervalMs < 50 || options.pollIntervalMs > 10000)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "line": 45,
+      "text": "const pollMs = Math.min(this.#settings.pollIntervalMs, Math.max(0, deadline - Date.now()));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "line": 66,
+      "text": "const pollMs = Math.min(this.#settings.pollIntervalMs, Math.max(0, deadline - Date.now()));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "line": 112,
+      "text": "const pollMs = Math.min(this.#settings.pollIntervalMs, Math.max(0, deadline - Date.now()));"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 59,
+      "text": "const freshLease = JSON.parse(await this.#kubectlRun(['get', resource, expected.leaseName, '-n', this.#settings.controllerNamespace, '-o', 'json'], null, signal, this.#settings.shortCommandTimeoutMs));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 64,
+      "text": "secret = JSON.parse(await this.#kubectlRun(['get', 'secret', expected.secretName, '-n', expected.namespace, '-o', 'json'], null, signal, this.#settings.shortCommandTimeoutMs));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 57,
+      "text": "const allowed = (await this.#operations.run(['auth', 'can-i', verb, resource, '-n', this.#settings.controllerNamespace], null, signal, this.#settings.shortCommandTimeoutMs)).trim();"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 61,
+      "text": "await this.#operations.run(['apply', '--dry-run=server', '-f', '-'], leaseBytes, signal, this.#settings.shortCommandTimeoutMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 62,
+      "text": "await this.#operations.run(['apply', '-f', '-'], leaseBytes, signal, this.#settings.shortCommandTimeoutMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 49,
+      "text": "readonly shortCommandTimeoutMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 77,
+      "text": "readonly shortCommandTimeoutMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 115,
+      "text": "this.shortCommandTimeoutMs = options.shortCommandTimeoutMs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 165,
+      "text": "const values = [options.shortCommandTimeoutMs, options.commandOutputManifestMultiplier,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 169,
+      "text": "|| options.shortCommandTimeoutMs > MAX_TIMER_MS || options.maximumExecutionMs > MAX_TIMER_MS"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "line": 33,
+      "text": "const requestTimeoutMs = Math.max(1, Math.min(this.#settings.shortCommandTimeoutMs, deadline - Date.now()));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "line": 55,
+      "text": "const requestTimeoutMs = Math.max(1, Math.min(this.#settings.shortCommandTimeoutMs, deadline - Date.now()));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "line": 76,
+      "text": "const serviceTimeoutMs = Math.max(1, Math.min(this.#settings.shortCommandTimeoutMs, deadline - Date.now()));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "line": 90,
+      "text": "const endpointsTimeoutMs = Math.max(1, Math.min(this.#settings.shortCommandTimeoutMs, deadline - Date.now()));"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 35,
+      "text": "encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 50,
+      "text": "readonly commandOutputManifestMultiplier: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 78,
+      "text": "readonly commandOutputManifestMultiplier: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 116,
+      "text": "this.commandOutputManifestMultiplier = options.commandOutputManifestMultiplier;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 165,
+      "text": "const values = [options.shortCommandTimeoutMs, options.commandOutputManifestMultiplier,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 170,
+      "text": "|| !Number.isSafeInteger(options.maximumManifestBytes * options.commandOutputManifestMultiplier)) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "line": 44,
+      "text": "throw new Error(`KUBERNETES_FIXTURE_KUBECTL_FAILED:${detail(error, this.#settings.diagnosticCodeUnits)}`, { cause: error });"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 51,
+      "text": "readonly diagnosticCodeUnits: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 79,
+      "text": "readonly diagnosticCodeUnits: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 117,
+      "text": "this.diagnosticCodeUnits = options.diagnosticCodeUnits;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 166,
+      "text": "options.diagnosticCodeUnits, options.manifest?.maximumNodes, options.manifest?.maximumDepth,"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "line": 13,
+      "text": "if (++depth > policy.maximumDepth || ++nodes > policy.maximumNodes) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "line": 32,
+      "text": "if (++nodes > policy.maximumNodes || frame.depth > policy.maximumDepth) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "line": 37,
+      "text": "if (pending.length + children.length > policy.maximumNodes) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 166,
+      "text": "options.diagnosticCodeUnits, options.manifest?.maximumNodes, options.manifest?.maximumDepth,"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "line": 13,
+      "text": "if (++depth > policy.maximumDepth || ++nodes > policy.maximumNodes) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "line": 32,
+      "text": "if (++nodes > policy.maximumNodes || frame.depth > policy.maximumDepth) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 166,
+      "text": "options.diagnosticCodeUnits, options.manifest?.maximumNodes, options.manifest?.maximumDepth,"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "line": 34,
+      "text": "if (seen.has(frame.value) && ++aliases > policy.maximumAliases) throw new Error('KUBERNETES_FIXTURE_MANIFEST_ALIAS_LIMIT');"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 167,
+      "text": "options.manifest?.maximumAliases, options.manifest?.maximumFlattenVisits, options.manifest?.maximumFlattenPending];"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "line": 50,
+      "text": "if (++visits > policy.maximumFlattenVisits)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 167,
+      "text": "options.manifest?.maximumAliases, options.manifest?.maximumFlattenVisits, options.manifest?.maximumFlattenPending];"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "line": 56,
+      "text": "if (pending.length + document.items.length > policy.maximumFlattenPending)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "line": 167,
+      "text": "options.manifest?.maximumAliases, options.manifest?.maximumFlattenVisits, options.manifest?.maximumFlattenPending];"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes": [
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 36,
+      "text": "readonly allowedNamespacePrefixes: readonly string[];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 94,
+      "text": "if (!Array.isArray(options.allowedNamespacePrefixes) || options.allowedNamespacePrefixes.length < 1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 95,
+      "text": "|| options.allowedNamespacePrefixes.some((item) => !DNS_LABEL.test(item) || item.length > 42)) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 102,
+      "text": "this.#apiVersion = options.leaseApiVersion; this.#prefixes = [...new Set(options.allowedNamespacePrefixes)];"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes": [
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 37,
+      "text": "readonly allowedHostSuffixes: readonly string[];"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 98,
+      "text": "if (!Array.isArray(options.allowedHostSuffixes) || options.allowedHostSuffixes.length < 1) {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 103,
+      "text": "this.#suffixes = [...new Set(options.allowedHostSuffixes.map(suffix))];"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs": [
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 38,
+      "text": "readonly maximumExecutionMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 77,
+      "text": "readonly #maximumExecutionMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 104,
+      "text": "this.#maximumExecutionMs = integer(options.maximumExecutionMs, 'maximumExecutionMs', 1, MAX_TIMER_MS);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 105,
+      "text": "this.#pollIntervalMs = integer(options.pollIntervalMs, 'pollIntervalMs', 10, this.#maximumExecutionMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 121,
+      "text": "async #run(args: readonly string[], input: string | null, signal: AbortSignal, timeout = this.#maximumExecutionMs): Promise<string> {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 124,
+      "text": "const result = await this.#execute(this.#kubectl, args, { input, signal, timeout: Math.min(timeout, this.#maximumExecutionMs),"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 132,
+      "text": "async #lease(name: string, signal: AbortSignal, timeout = this.#maximumExecutionMs): Promise<JsonObject> {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 171,
+      "text": "const timeoutMs = Math.min(this.#shortCommandTimeoutMs, this.#maximumExecutionMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 195,
+      "text": "const namespace = this.#namespace(payload.namespace); const timeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1, this.#maximumExecutionMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 278,
+      "text": "const released = await this.#wait(leaseName, 'Off', identity.owner, signal, this.#maximumExecutionMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "line": 9,
+      "text": "|| options.pollIntervalMs < 10 || options.pollIntervalMs > options.maximumExecutionMs) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs": [
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 39,
+      "text": "readonly pollIntervalMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 78,
+      "text": "readonly #pollIntervalMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 105,
+      "text": "this.#pollIntervalMs = integer(options.pollIntervalMs, 'pollIntervalMs', 10, this.#maximumExecutionMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 150,
+      "text": "const timer = setTimeout(finish, Math.min(this.#pollIntervalMs, Math.max(1, deadline - Date.now())));"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "line": 8,
+      "text": "|| options.maximumCommandOutputBytes < 1 || !Number.isSafeInteger(options.pollIntervalMs)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "line": 9,
+      "text": "|| options.pollIntervalMs < 10 || options.pollIntervalMs > options.maximumExecutionMs) {"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 40,
+      "text": "readonly shortCommandTimeoutMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 79,
+      "text": "readonly #shortCommandTimeoutMs: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 88,
+      "text": "this.#shortCommandTimeoutMs = options.shortCommandTimeoutMs;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 171,
+      "text": "const timeoutMs = Math.min(this.#shortCommandTimeoutMs, this.#maximumExecutionMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 206,
+      "text": "const allowed = (await this.#run(['auth', 'can-i', verb, resource, '-n', this.#controllerNamespace], null, signal, this.#shortCommandTimeoutMs)).trim();"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 232,
+      "text": "'--type=merge', '-p', JSON.stringify(patch)], null, signal, this.#shortCommandTimeoutMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 241,
+      "text": "await this.#run(['patch','busternamespacelease',leaseName,'-n',this.#controllerNamespace,'--type=merge','-p',JSON.stringify(transfer.patch)],null,signal,this.#shortCommandTimeoutMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 277,
+      "text": "await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, this.#shortCommandTimeoutMs);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "line": 6,
+      "text": "if (!Number.isSafeInteger(options.shortCommandTimeoutMs) || options.shortCommandTimeoutMs < 1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "line": 7,
+      "text": "|| options.shortCommandTimeoutMs > MAX_TIMER_MS || !Number.isSafeInteger(options.maximumCommandOutputBytes)"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 41,
+      "text": "readonly maximumCommandOutputBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 80,
+      "text": "readonly #maximumCommandOutputBytes: number;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 89,
+      "text": "this.#maximumCommandOutputBytes = options.maximumCommandOutputBytes;"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "line": 125,
+      "text": "maxBuffer: this.#maximumCommandOutputBytes, env: this.#environment });"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "line": 7,
+      "text": "|| options.shortCommandTimeoutMs > MAX_TIMER_MS || !Number.isSafeInteger(options.maximumCommandOutputBytes)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "line": 8,
+      "text": "|| options.maximumCommandOutputBytes < 1 || !Number.isSafeInteger(options.pollIntervalMs)"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 151,
+      "text": "if (!this.#policy.allowedNamespacePrefixes.some((prefix) => namespace.startsWith(`${prefix}-`))) throw new Error('KUBERNETES_RUNTIME_SECURITY_NAMESPACE_DENIED');"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 157,
+      "text": "const timeoutMs = Math.min(this.#policy.maximumExecutionMs,"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 158,
+      "text": "Number.isSafeInteger(payload.timeoutMs) ? Number(payload.timeoutMs) : this.#policy.maximumExecutionMs);"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 96,
+      "text": "if (bytes > policy.maximumOutputBytes) { finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED')); controller.abort(); }"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 178,
+      "text": "Math.min(this.#policy.pollIntervalMs, Math.max(1, deadline - Date.now())));"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 129,
+      "text": "&& runtimeSecurityObservationIsFresh(snapshot.observedAt, Date.now(), policy.maximumObservationAgeMs, policy.maximumFutureSkewMs)"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 129,
+      "text": "&& runtimeSecurityObservationIsFresh(snapshot.observedAt, Date.now(), policy.maximumObservationAgeMs, policy.maximumFutureSkewMs)"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 186,
+      "text": "export function runtimeSecurityObservationIsFresh(value: unknown, nowMs: number, maximumAgeMs: number, maximumFutureSkewMs: number): boolean {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 190,
+      "text": "return observedMs <= nowMs + maximumFutureSkewMs && nowMs - observedMs <= maximumAgeMs;"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 107,
+      "text": "if (code !== 0 || childSignal) return finish(new Error(`KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:${Buffer.concat(stderr).toString('utf8').slice(0, policy.diagnosticCodeUnits)}`));"
+    }
+  ],
+  "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "line": 88,
+      "text": "env: { PATH: policy.executableSearchPath.join(path.delimiter), ...kubernetesCredentialEnvironment(), LANG: 'C.UTF-8', LC_ALL: 'C.UTF-8' } });"
+    }
+  ],
+  "CMP-buster-engine-schemaVersion": [],
+  "CMP-buster-engine-owner": [],
+  "CMP-worker-core-localRuntime.drainTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-setup.ts",
+      "line": 112,
+      "text": "drainTimeoutMs: workerLocalRuntime.drainTimeoutMs,"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 14,
+      "text": "readonly drainTimeoutMs: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 21,
+      "text": "const drainTimeoutMs = positiveTimer(options.drainTimeoutMs, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID');"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 28,
+      "text": "return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 51,
+      "text": "readonly drainTimeoutMs: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 108,
+      "text": "const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 115,
+      "text": "coreVersion: options.coreVersion, capacity: options.capacity, drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 240,
+      "text": "if (!(await settleWithin(initial, this.#options.drainTimeoutMs))) {"
+    }
+  ],
+  "CMP-worker-core-localRuntime.cancellationTimeoutMs": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-setup.ts",
+      "line": 113,
+      "text": "cancellationTimeoutMs: workerLocalRuntime.cancellationTimeoutMs,"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 15,
+      "text": "readonly cancellationTimeoutMs: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 22,
+      "text": "const cancellationTimeoutMs = positiveTimer(options.cancellationTimeoutMs,"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 28,
+      "text": "return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 52,
+      "text": "readonly cancellationTimeoutMs: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 108,
+      "text": "const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 115,
+      "text": "coreVersion: options.coreVersion, capacity: options.capacity, drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 243,
+      "text": "if (!(await settleWithin(cancelled, this.#options.cancellationTimeoutMs))) {"
+    }
+  ],
+  "CMP-worker-core-localRuntime.replayLimit": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-setup.ts",
+      "line": 114,
+      "text": "replayLimit: workerLocalRuntime.replayLimit,"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 16,
+      "text": "readonly replayLimit: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 24,
+      "text": "const replayLimit = options.replayLimit;"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 25,
+      "text": "if (!Number.isSafeInteger(replayLimit) || replayLimit < 1 || replayLimit > 1_000_000) {"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 28,
+      "text": "return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 53,
+      "text": "readonly replayLimit: number;"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 108,
+      "text": "const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 115,
+      "text": "coreVersion: options.coreVersion, capacity: options.capacity, drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "line": 177,
+      "text": "if (this.#acceptedAttemptIds.size >= this.#options.replayLimit) {"
+    }
+  ],
+  "CMP-worker-core-schemaVersion": [],
+  "CMP-worker-core-owner": []
+}

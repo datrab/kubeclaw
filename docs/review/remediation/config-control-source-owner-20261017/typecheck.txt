@@ -1,0 +1,27 @@
+[WARN] The "workspaces" field in package.json is not supported by pnpm. Create a "pnpm-workspace.yaml" file instead.
+Progress: resolved 0, reused 1, downloaded 0, added 0
+Update available! 12.5.1 → 12.14.0.
+Changelog: https://pnpm.io/v/12.14.0
+To update, run: curl -fsSL https://get.pnpm.io/install.sh | sh -
+Progress: resolved 0, reused 98, downloaded 25, added 0
+Progress: resolved 0, reused 105, downloaded 27, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/node/.openclaw/workspace/.pnpm-store/v11
+  Virtual store is at:             node_modules/.pnpm
+Packages: +122
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 122, reused 105, downloaded 27, added 122, done
+
+devDependencies:
++ @playwright/test 1.62.1
++ @types/js-yaml 4.0.9
++ ajv 8.20.0
++ ajv-formats 3.0.1
++ eslint 10.7.0
++ json-schema-to-typescript 15.0.4
++ knip 6.27.0
++ typescript 5.9.3
++ typescript-eslint 8.64.0
++ yaml 2.9.0
+
+Done in 2.7s using pnpm v12.5.1

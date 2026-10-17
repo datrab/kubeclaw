@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -181,8 +182,8 @@ try {
     const journal = new core.FileJournal(path.join(
       temporary,
       `${entry.package.manifest.id}-${entry.registration.id}-stage.jsonl`,
-    ));
-    const runner = new core.PipelineRunner({
+    ), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: `pipeline:crash:${entry.package.manifest.id}:${entry.registration.id}`,
@@ -210,7 +211,7 @@ try {
   }
 
   for (const [observerId, entry] of snapshot.observers) {
-    const events = new core.FileJournal(path.join(temporary, `${observerId}-events.jsonl`));
+    const events = new core.FileJournal(path.join(temporary, `${observerId}-events.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     events.append({
       schemaVersion: 'lifecycle-event.v2',
       eventId: `event:${observerId}`,
@@ -234,13 +235,13 @@ try {
       },
     };
     const observerSnapshot = { ...snapshot, observers: new Map([[observerId, observerEntry]]) };
-    const runtime = new core.ObserverRuntime({
+    const runtime = new core.ObserverRuntime({memoryBytes: TEST_CORE_POLICY.observerMemoryBytes,
       registry: granted(observerSnapshot, observerId),
       activated: activated(observerSnapshot, 'observer', observerId),
       adapters: { async invoke() { throw new Error('UNEXPECTED_CAPABILITY_INVOCATION'); } },
       events,
-      checkpoints: new core.FileJournal(path.join(temporary, `${observerId}-checkpoints.jsonl`)),
-      deliveries: new core.FileJournal(path.join(temporary, `${observerId}-deliveries.jsonl`)),
+      checkpoints: new core.FileJournal(path.join(temporary, `${observerId}-checkpoints.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
+      deliveries: new core.FileJournal(path.join(temporary, `${observerId}-deliveries.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
       configs: new Map([[observerId, referencedValue(entry, 'configSchema')]]),
       wait: async () => {},
     });

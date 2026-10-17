@@ -1,0 +1,1650 @@
+{
+  "scope": "four affected production packages in actual role bundle",
+  "files": [
+    {
+      "source": "skills/nova/core/cli.ts",
+      "delivered": "skills/packages/nova-core/cli.ts",
+      "sha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787"
+    },
+    {
+      "source": "skills/nova/core/BOUNDARIES.md",
+      "delivered": "skills/packages/nova-core/BOUNDARIES.md",
+      "sha256": "44d1c02ef8c8d43615085f042c359377fce52115f76874a7797a34a3c7bd2b61"
+    },
+    {
+      "source": "skills/nova/core/package.json",
+      "delivered": "skills/packages/nova-core/package.json",
+      "sha256": "672638ea7fc44b67a60315b70e8709fa6bd5b78898fed7bfd5c26bfc696d29a5"
+    },
+    {
+      "source": "skills/nova/core/telemetry/README.md",
+      "delivered": "skills/packages/nova-core/telemetry/README.md",
+      "sha256": "188f592b5d1a037ebbf57e166653ee2cabe22cb03317e54cf1bff255dad1ffb2"
+    },
+    {
+      "source": "skills/nova/core/telemetry/audit.ts",
+      "delivered": "skills/packages/nova-core/telemetry/audit.ts",
+      "sha256": "22bb3f2329c6c334e1e4ebc0068f4be49a2c7f8d29623cd8d28dfca17db5d0fd"
+    },
+    {
+      "source": "skills/nova/core/telemetry/observer-delivery.ts",
+      "delivered": "skills/packages/nova-core/telemetry/observer-delivery.ts",
+      "sha256": "9ddcb2ab26128ebace762e1a8d34ac85bf28aa3c640d89b0ae08a0d07d010deb"
+    },
+    {
+      "source": "skills/nova/core/telemetry/observer-recovery.ts",
+      "delivered": "skills/packages/nova-core/telemetry/observer-recovery.ts",
+      "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb"
+    },
+    {
+      "source": "skills/nova/core/telemetry/observers.ts",
+      "delivered": "skills/packages/nova-core/telemetry/observers.ts",
+      "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/reducer.ts",
+      "delivered": "skills/packages/nova-core/lifecycle/reducer.ts",
+      "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/repair-authorization.ts",
+      "delivered": "skills/packages/nova-core/lifecycle/repair-authorization.ts",
+      "sha256": "148d198ec0458ef5bdb95f1932ab7fc59db8f0ebbb7bcf31555cda901a27a283"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/repair-projection.ts",
+      "delivered": "skills/packages/nova-core/lifecycle/repair-projection.ts",
+      "sha256": "9721b421a4fa07f9da5c33915fe1ea3ea1b0daa9e8f299ca49547d89ece22c24"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/README.md",
+      "delivered": "skills/packages/nova-core/lifecycle/README.md",
+      "sha256": "7d499429861e4d5922a2fb8a6addba9ab69b9b447200aa6800bc69e681d90b78"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/recovery-state.ts",
+      "delivered": "skills/packages/nova-core/lifecycle/recovery-state.ts",
+      "sha256": "bc20a1e3f27ba2f4f67ce0f33df0f41bc4ebadcc40dcce8606ba37213660c99f"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/repair-budget.ts",
+      "delivered": "skills/packages/nova-core/lifecycle/repair-budget.ts",
+      "sha256": "6bd3d5f44d67edf626ce45301a716d5a6ea06d1f0f870b47d6f071b7930872d4"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/recovery.ts",
+      "delivered": "skills/packages/nova-core/lifecycle/recovery.ts",
+      "sha256": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/wait-request.ts",
+      "delivered": "skills/packages/nova-core/lifecycle/wait-request.ts",
+      "sha256": "0e9f41bd8e4a5ceb6e43d53e713e3fbbdacca2540ff31134d0409745252419de"
+    },
+    {
+      "source": "skills/nova/core/lifecycle/remediation.ts",
+      "delivered": "skills/packages/nova-core/lifecycle/remediation.ts",
+      "sha256": "49c26f15b12f2281bf86a10c5b21669f7e8ab423c5d0f7ce317ce546e1254535"
+    },
+    {
+      "source": "skills/nova/core/effects/dependency-journal.ts",
+      "delivered": "skills/packages/nova-core/effects/dependency-journal.ts",
+      "sha256": "dc0e567a573b822afb54353b04a4b58cd93fad1b155067d1173957ae6a5035a3"
+    },
+    {
+      "source": "skills/nova/core/effects/README.md",
+      "delivered": "skills/packages/nova-core/effects/README.md",
+      "sha256": "695bd858a2a0336f8098086d74be216c854532f7be1455f7bb8df6bc3b8aedd1"
+    },
+    {
+      "source": "skills/nova/core/effects/journal.ts",
+      "delivered": "skills/packages/nova-core/effects/journal.ts",
+      "sha256": "df48cfe2700e72ddc826f93b1597e5a44471d988ccac2f4e174deb4ac8d4f68c"
+    },
+    {
+      "source": "skills/nova/core/effects/coordinator.ts",
+      "delivered": "skills/packages/nova-core/effects/coordinator.ts",
+      "sha256": "6701dff070e5357f9bf14e8c72e2e5310866efb2e16fd17f323135d5c2763e8b"
+    },
+    {
+      "source": "skills/nova/core/effects/durable-invocation.ts",
+      "delivered": "skills/packages/nova-core/effects/durable-invocation.ts",
+      "sha256": "aace0e4b3568bc57f1aa8f86cc198f09e9056c99271bb68bbfaab72387b86439"
+    },
+    {
+      "source": "skills/nova/core/effects/memory-locks.ts",
+      "delivered": "skills/packages/nova-core/effects/memory-locks.ts",
+      "sha256": "4e7a78b0c8ac9242c9ce5333e7c3fcc620cc4f174b4a9018509da3f3931e5797"
+    },
+    {
+      "source": "skills/nova/core/effects/identity.ts",
+      "delivered": "skills/packages/nova-core/effects/identity.ts",
+      "sha256": "8d3e2f32b4fdb98f6159c989b41fe926fd5b518791b4b02246d633dff847bcb9"
+    },
+    {
+      "source": "skills/nova/core/effects/contracts.ts",
+      "delivered": "skills/packages/nova-core/effects/contracts.ts",
+      "sha256": "2214fa4a761a7e2b427df8b7578c76373377d27a021176e13a14e05e5ef606d3"
+    },
+    {
+      "source": "skills/nova/core/effects/locks.ts",
+      "delivered": "skills/packages/nova-core/effects/locks.ts",
+      "sha256": "b01b4b309d4fa9e2c7b9b20d855d05a69121c3afaba5f2c178eb5073ede6d0c4"
+    },
+    {
+      "source": "skills/nova/core/effects/dependency-identity.ts",
+      "delivered": "skills/packages/nova-core/effects/dependency-identity.ts",
+      "sha256": "13d0c12129bdd1bdc6eb5d8a4d103752bf266e459fcb20a672ee3c42fdfc2f81"
+    },
+    {
+      "source": "skills/nova/core/effects/resource-acquisition.ts",
+      "delivered": "skills/packages/nova-core/effects/resource-acquisition.ts",
+      "sha256": "4408d33850a265e51e2cc8b393c6c18c522eac0162ccec21b6383f2fbe0a0277"
+    },
+    {
+      "source": "skills/nova/core/execution/adapter-invocation-phase.ts",
+      "delivered": "skills/packages/nova-core/execution/adapter-invocation-phase.ts",
+      "sha256": "eaae9f5fd571a476b1b7ddbec709f1389c95e71189143ea23a87faa52847ae5f"
+    },
+    {
+      "source": "skills/nova/core/execution/effect-recovery.ts",
+      "delivered": "skills/packages/nova-core/execution/effect-recovery.ts",
+      "sha256": "1d82d40f36ee91ae5e3c26d7875a16659800ee8f7ed15ecca457c1b8686db8e0"
+    },
+    {
+      "source": "skills/nova/core/execution/README.md",
+      "delivered": "skills/packages/nova-core/execution/README.md",
+      "sha256": "3349678164b3c3a148c7157f68ae86a45c128c6892f83528bcd5a10356ec1a62"
+    },
+    {
+      "source": "skills/nova/core/execution/review-runtime-targets.ts",
+      "delivered": "skills/packages/nova-core/execution/review-runtime-targets.ts",
+      "sha256": "a1872e57f122eea780ba3977b14d2d351da93a7fec109251138f5601d20facc8"
+    },
+    {
+      "source": "skills/nova/core/execution/adapter-startup.ts",
+      "delivered": "skills/packages/nova-core/execution/adapter-startup.ts",
+      "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+    },
+    {
+      "source": "skills/nova/core/execution/runner.ts",
+      "delivered": "skills/packages/nova-core/execution/runner.ts",
+      "sha256": "c32baed6debcef03e32e051278ab13df86a01cf6f49e9796321b89cff9212ba7"
+    },
+    {
+      "source": "skills/nova/core/execution/administrative-repair.ts",
+      "delivered": "skills/packages/nova-core/execution/administrative-repair.ts",
+      "sha256": "9ff829bc31a4602ecd1e52f3cc0ba8fb5db40f3e597306e4e401cf8f451fc137"
+    },
+    {
+      "source": "skills/nova/core/execution/run-root.ts",
+      "delivered": "skills/packages/nova-core/execution/run-root.ts",
+      "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+    },
+    {
+      "source": "skills/nova/core/execution/graph-repair-budget.ts",
+      "delivered": "skills/packages/nova-core/execution/graph-repair-budget.ts",
+      "sha256": "f5cd06815a0d7d631276b256fd80bcbd57e018f68326909d69b424f2e08a284e"
+    },
+    {
+      "source": "skills/nova/core/execution/engine.ts",
+      "delivered": "skills/packages/nova-core/execution/engine.ts",
+      "sha256": "cf4ff20b997626ef8004bde9a947dec9e59a124bbf982440b1d9c13596468028"
+    },
+    {
+      "source": "skills/nova/core/execution/run-mutation.ts",
+      "delivered": "skills/packages/nova-core/execution/run-mutation.ts",
+      "sha256": "d6fe807bcef3a8be9ea46a856a19d32f3bd99c2fc6b710d5e3967f94840b1f94"
+    },
+    {
+      "source": "skills/nova/core/execution/adapters.ts",
+      "delivered": "skills/packages/nova-core/execution/adapters.ts",
+      "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b"
+    },
+    {
+      "source": "skills/nova/core/execution/adapter-support.ts",
+      "delivered": "skills/packages/nova-core/execution/adapter-support.ts",
+      "sha256": "2eb72fdc7d7731b105807495697647b049c00c39e84b695db29a219a2ac1156d"
+    },
+    {
+      "source": "skills/nova/core/execution/authorization.ts",
+      "delivered": "skills/packages/nova-core/execution/authorization.ts",
+      "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d"
+    },
+    {
+      "source": "skills/nova/core/execution/engine-runtime.ts",
+      "delivered": "skills/packages/nova-core/execution/engine-runtime.ts",
+      "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811"
+    },
+    {
+      "source": "skills/nova/core/execution/stage-configuration.ts",
+      "delivered": "skills/packages/nova-core/execution/stage-configuration.ts",
+      "sha256": "3f9b98be185997e64496fcec834490d2cad894e0eb4774dfbc9104e18f0c4e39"
+    },
+    {
+      "source": "skills/nova/core/execution/pipeline-loop.ts",
+      "delivered": "skills/packages/nova-core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+    },
+    {
+      "source": "skills/nova/core/execution/lease.ts",
+      "delivered": "skills/packages/nova-core/execution/lease.ts",
+      "sha256": "1f2164d57fdfb15dd5d67f04398f1cc42366a11c862083a30eba7de1ac03e13b"
+    },
+    {
+      "source": "skills/nova/core/execution/engine-admin.ts",
+      "delivered": "skills/packages/nova-core/execution/engine-admin.ts",
+      "sha256": "bc4606714023afef5b49b49124e3550f6bc1ac02853d0e3b412a3a0617488929"
+    },
+    {
+      "source": "skills/nova/core/execution/engine-snapshots.ts",
+      "delivered": "skills/packages/nova-core/execution/engine-snapshots.ts",
+      "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d"
+    },
+    {
+      "source": "skills/nova/core/execution/CAPABILITIES.md",
+      "delivered": "skills/packages/nova-core/execution/CAPABILITIES.md",
+      "sha256": "20320e2271dce820ee1a1ad91a4e872e33e0fbd5ea0f2b277c596a6c0bf0498c"
+    },
+    {
+      "source": "skills/nova/core/execution/engine-run.ts",
+      "delivered": "skills/packages/nova-core/execution/engine-run.ts",
+      "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1"
+    },
+    {
+      "source": "skills/nova/core/execution/graph-build.ts",
+      "delivered": "skills/packages/nova-core/execution/graph-build.ts",
+      "sha256": "75ce0387330d8acc6d7217aa8539a41c7796fcfd1522c079c8585c55e765adc6"
+    },
+    {
+      "source": "skills/nova/core/execution/graph.ts",
+      "delivered": "skills/packages/nova-core/execution/graph.ts",
+      "sha256": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af"
+    },
+    {
+      "source": "skills/nova/core/execution/artifact-checkpoints.ts",
+      "delivered": "skills/packages/nova-core/execution/artifact-checkpoints.ts",
+      "sha256": "77272b94fa7a2c5c4968753fff902ff3ac88deb5f3ef2da4c87580fae5bc78f7"
+    },
+    {
+      "source": "skills/nova/core/execution/stage-executor.ts",
+      "delivered": "skills/packages/nova-core/execution/stage-executor.ts",
+      "sha256": "2e7974c7b5e5aa99d1020273b7bf403e4eb966a5b310bae41c65b5d87b55a42e"
+    },
+    {
+      "source": "skills/nova/core/execution/context.ts",
+      "delivered": "skills/packages/nova-core/execution/context.ts",
+      "sha256": "3f61fc7b2e18d6c36bf9eaff5173a06d31dd06d14a07b05c6d8be7320098a288"
+    },
+    {
+      "source": "skills/nova/core/execution/run-decisions.ts",
+      "delivered": "skills/packages/nova-core/execution/run-decisions.ts",
+      "sha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171"
+    },
+    {
+      "source": "skills/nova/core/test-gates/dispatch-projection.ts",
+      "delivered": "skills/packages/nova-core/test-gates/dispatch-projection.ts",
+      "sha256": "0dcce75d3c75064638270d1405c287f58e51d27d82930b6ebb661d2edccaa8fd"
+    },
+    {
+      "source": "skills/nova/core/test-gates/deadline.ts",
+      "delivered": "skills/packages/nova-core/test-gates/deadline.ts",
+      "sha256": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b"
+    },
+    {
+      "source": "skills/nova/core/test-gates/source-snapshot.ts",
+      "delivered": "skills/packages/nova-core/test-gates/source-snapshot.ts",
+      "sha256": "95f773c91fcb98a7094d9b663e93ea96765dfd85338d8c658ddaccf4496d31f5"
+    },
+    {
+      "source": "skills/nova/core/test-gates/http-response.ts",
+      "delivered": "skills/packages/nova-core/test-gates/http-response.ts",
+      "sha256": "03da46c89c22facbf8970a363288f29addc6171cea2b65d0286696e8ff9da74b"
+    },
+    {
+      "source": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+      "delivered": "skills/packages/nova-core/test-gates/source-process-lifecycle.ts",
+      "sha256": "863b733bac834c782b2aa5c0b0d81c72c115197e2592b443308d0ce2c06a8e0f"
+    },
+    {
+      "source": "skills/nova/core/test-gates/resolver.ts",
+      "delivered": "skills/packages/nova-core/test-gates/resolver.ts",
+      "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+    },
+    {
+      "source": "skills/nova/core/test-gates/transport-error.ts",
+      "delivered": "skills/packages/nova-core/test-gates/transport-error.ts",
+      "sha256": "ad99cced693a08380f5c317de672eb5cf919c3abae2398eda5cc5e5770a4b195"
+    },
+    {
+      "source": "skills/nova/core/test-gates/production.ts",
+      "delivered": "skills/packages/nova-core/test-gates/production.ts",
+      "sha256": "93b6d6c9f6c59dc7b1a953808d73e27eaadefa4de6b30cc9b86b3d4457a36cbd"
+    },
+    {
+      "source": "skills/nova/core/test-gates/remote-result-import.ts",
+      "delivered": "skills/packages/nova-core/test-gates/remote-result-import.ts",
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81"
+    },
+    {
+      "source": "skills/nova/core/test-gates/types.ts",
+      "delivered": "skills/packages/nova-core/test-gates/types.ts",
+      "sha256": "560f3edc4024f8c65d6857f90df837454f6554be9cc3c29c6d09b320af4f28a2"
+    },
+    {
+      "source": "skills/nova/core/test-gates/dispatch-operation.ts",
+      "delivered": "skills/packages/nova-core/test-gates/dispatch-operation.ts",
+      "sha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a"
+    },
+    {
+      "source": "skills/nova/core/test-gates/source-git.ts",
+      "delivered": "skills/packages/nova-core/test-gates/source-git.ts",
+      "sha256": "b0c21aa19f3563941bc042143950b270bb760f9740970e1b4de814a1b258f6d6"
+    },
+    {
+      "source": "skills/nova/core/test-gates/pipeline.ts",
+      "delivered": "skills/packages/nova-core/test-gates/pipeline.ts",
+      "sha256": "8e17514a8b9699f2f921f07b6f450b3c4357903ec4726f72099644d1703cd2ed"
+    },
+    {
+      "source": "skills/nova/core/test-gates/remote-gate-cli.ts",
+      "delivered": "skills/packages/nova-core/test-gates/remote-gate-cli.ts",
+      "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c"
+    },
+    {
+      "source": "skills/nova/core/test-gates/verified-output.ts",
+      "delivered": "skills/packages/nova-core/test-gates/verified-output.ts",
+      "sha256": "7e7294645409f8e8fe95cb27b300e85b75157763ed80be004f544e238b79712c"
+    },
+    {
+      "source": "skills/nova/core/test-gates/source-acquisition-policy.ts",
+      "delivered": "skills/packages/nova-core/test-gates/source-acquisition-policy.ts",
+      "sha256": "ab6cf53dda36eb732873e6ad7377ba393bcd74678ff56a10e95a6e55c163e261"
+    },
+    {
+      "source": "skills/nova/core/test-gates/secure-endpoint.ts",
+      "delivered": "skills/packages/nova-core/test-gates/secure-endpoint.ts",
+      "sha256": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a"
+    },
+    {
+      "source": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "delivered": "skills/packages/nova-core/test-gates/remote-dispatch-store.ts",
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069"
+    },
+    {
+      "source": "skills/nova/core/test-gates/runtime-config.ts",
+      "delivered": "skills/packages/nova-core/test-gates/runtime-config.ts",
+      "sha256": "c7cf8c276c3cd28bd226258e8894679866dddbc6df7cdc22eed27ddcc1637fad"
+    },
+    {
+      "source": "skills/nova/core/test-gates/remote-dispatch.ts",
+      "delivered": "skills/packages/nova-core/test-gates/remote-dispatch.ts",
+      "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5"
+    },
+    {
+      "source": "skills/nova/core/test-gates/remote-result-authority.ts",
+      "delivered": "skills/packages/nova-core/test-gates/remote-result-authority.ts",
+      "sha256": "f32cda2218fb9fef4d3405bd3aef99b2f4c497750d9f7c5ff23bb2e36b799835"
+    },
+    {
+      "source": "skills/nova/core/src/index.ts",
+      "delivered": "skills/packages/nova-core/src/index.ts",
+      "sha256": "2cd478afa23772e88241245bbab2f9f5bcd86fb75e216250a7a6364c19bac9b8"
+    },
+    {
+      "source": "skills/nova/core/observability/reconciler.ts",
+      "delivered": "skills/packages/nova-core/observability/reconciler.ts",
+      "sha256": "ae64e2dd8d5f27a19d82229e5ac652eaee1236a74ecddb2c77ff9e6bd801a367"
+    },
+    {
+      "source": "skills/nova/core/state/README.md",
+      "delivered": "skills/packages/nova-core/state/README.md",
+      "sha256": "d3f01a324af61f3e4268abd4c37f6e48425195f7b331c997fa07959e6161a8b9"
+    },
+    {
+      "source": "skills/nova/core/state/journal.ts",
+      "delivered": "skills/packages/nova-core/state/journal.ts",
+      "sha256": "4d37b3e0ca16c9ca3b32a861c549f3418036b720b1fce1a56c2270a099048b91"
+    },
+    {
+      "source": "skills/nova/core/state/read-run-evidence.ts",
+      "delivered": "skills/packages/nova-core/state/read-run-evidence.ts",
+      "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065"
+    },
+    {
+      "source": "skills/nova/core/state/file-mutex.ts",
+      "delivered": "skills/packages/nova-core/state/file-mutex.ts",
+      "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c"
+    },
+    {
+      "source": "skills/nova/core/state/wait-projection-reader.ts",
+      "delivered": "skills/packages/nova-core/state/wait-projection-reader.ts",
+      "sha256": "64a10d21fb446490be5259c0332838508d7d93752cbe751fa5c9c577801048d9"
+    },
+    {
+      "source": "skills/nova/core/state/plugins.ts",
+      "delivered": "skills/packages/nova-core/state/plugins.ts",
+      "sha256": "ec455e78eaab6c00c13c88ef48bcd4938d4da3523f73d3d3b78a403bd1d55f68"
+    },
+    {
+      "source": "skills/nova/core/state/json-value.ts",
+      "delivered": "skills/packages/nova-core/state/json-value.ts",
+      "sha256": "c99b7a8c16e3c8c6860e7e469d9feb454448fab311f8d5f7bbf6dd690e59a58b"
+    },
+    {
+      "source": "skills/nova/core/state/wait-projection-source.ts",
+      "delivered": "skills/packages/nova-core/state/wait-projection-source.ts",
+      "sha256": "006a789f21cae188bbd8b45a6c7558595b5f978c096f93990602edb94d87c055"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/BOUNDARIES.md",
+      "delivered": "skills/packages/plugin-foundation/BOUNDARIES.md",
+      "sha256": "da357e033faebf3bdbb77834313ce8efc38b4e49a3b18c26ff6e596c8e8c76d2"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/package.json",
+      "delivered": "skills/packages/plugin-foundation/package.json",
+      "sha256": "495e30c54013fd041ceca02d1d173c6ee82b7eca6c646fd1ebae1f2686240cd1"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "delivered": "skills/packages/plugin-foundation/processes/linux-process-group.ts",
+      "sha256": "4dd81ccecacfc3b71848d2cca20c4e83e31f14223d4320ba30c83c4650592388"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/artifacts/README.md",
+      "delivered": "skills/packages/plugin-foundation/artifacts/README.md",
+      "sha256": "877aac11f144e7c59ff32a1c135ab6ea0b5dc19eb7d5b0a1cf67bc1a16fc4109"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-service-policy.ts",
+      "delivered": "skills/packages/plugin-foundation/config/buster-service-policy.ts",
+      "sha256": "b7a7e6d2b604e4224dfb2675851cc5b77768cac324d57795ab391ef0aa4920a6"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-package-source.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-package-source.ts",
+      "sha256": "3b02c1ad71ee8585c80ef9ce303eacb2acb95412f9c2d45ef2070da8bd718df3"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/review-owned-policy.schema.json",
+      "delivered": "skills/packages/plugin-foundation/config/review-owned-policy.schema.json",
+      "sha256": "57d540cfcbe3c3fbcdd9bd6b11f376686e653521aae04b6bfff6284a2a94e040"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "delivered": "skills/packages/plugin-foundation/config/swarm.schema.json",
+      "sha256": "c30f6173f98ec2bb8813c4dde81cb8b2fcbbda28285f36523a4fe572c71bd3ba"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "delivered": "skills/packages/plugin-foundation/config/buster-execution.ts",
+      "sha256": "5d6b78d0ab9da185827f35d25c5f2c6da68a4f7e1de8e815b48641b935c298d5"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/README.md",
+      "delivered": "skills/packages/plugin-foundation/config/README.md",
+      "sha256": "917e71598ba6d52611faa2c86a2c8de61a0b9c304456f17d6c16f09ef9bee694"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json",
+      "delivered": "skills/packages/plugin-foundation/config/core-runtime-policy.schema.json",
+      "sha256": "a358fdd2cf37070b4cc132520cb0922c949b1ce91b89a1656a3b81161ed400f5"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "delivered": "skills/packages/plugin-foundation/config/published-pair.ts",
+      "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-service-policy.schema.json",
+      "delivered": "skills/packages/plugin-foundation/config/buster-service-policy.schema.json",
+      "sha256": "1a943178c2f024237462b87de419e614ba7b860b4fed7cafed2cac34cdb81a46"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-composition.ts",
+      "sha256": "a13f2096511748b804dfe1986731e7610ddbfeecc5f27b003a1c228ec9d3b49c"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-input-contract.json",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-input-contract.json",
+      "sha256": "21e3a9e1b72408174894da4369b6ee54274d54aa04ac953720d7ca40dc934ac8"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-lifetime.mjs",
+      "delivered": "skills/packages/plugin-foundation/config/buster-lifetime.mjs",
+      "sha256": "49a2601e6298bc84a34ebee7a53a5a3a20b6bc2a2c874a995bec294f0f745e08"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-infra.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-infra.ts",
+      "sha256": "88a04f7460018d890caae8516324453765f1108e0d4c94fdb63cbce38a80d4e8"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-startup-file.mjs",
+      "delivered": "skills/packages/plugin-foundation/config/buster-startup-file.mjs",
+      "sha256": "bbc1019219d5d8e5daf68cd67672fc72b036e681e2961fec1c25cbe46c9617fb"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/provisioning-task-reference.ts",
+      "delivered": "skills/packages/plugin-foundation/config/provisioning-task-reference.ts",
+      "sha256": "795c9a164543682dfa90508d63e17ea9789fb641396493998ceb78ab373ea727"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-infra-schemas.json",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-infra-schemas.json",
+      "sha256": "6096728d5dad3509a6df3506ec3ca8b191bd9c9028ea7cc8bc9a24318e98eaf2"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-plugin-schemas.json",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-plugin-schemas.json",
+      "sha256": "713322387b306cc64f91400918ccb89c023365b15c22a946ae8cf319f00fddf2"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-lifetime.d.mts",
+      "delivered": "skills/packages/plugin-foundation/config/buster-lifetime.d.mts",
+      "sha256": "745e0154489c266abd1dc73b59b1e35bdfafb59cb54a8a53ee674c2019d1c7be"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-receiver.ts",
+      "sha256": "87d8ce3fa633321d478199b13fcf0c14f83241199f3c86bfb426b0cec6584953"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-boot.mjs",
+      "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-startup.ts",
+      "delivered": "skills/packages/plugin-foundation/config/buster-startup.ts",
+      "sha256": "c4c360ad20a86acf89e87f01028d3c1322cee934f24a03faf63e4debd2759be4"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-boot.d.mts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-boot.d.mts",
+      "sha256": "bd45f687025f964948d54a61df6526aed015547984dadfc9f61f94ab6fab3cf3"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-plugin-relations.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-plugin-relations.ts",
+      "sha256": "621f978d0a9bfe86b114f528d7170121514810360cd3304fc1968b191bba677e"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "delivered": "skills/packages/plugin-foundation/config/platform.schema.json",
+      "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/review-owned-policy.ts",
+      "delivered": "skills/packages/plugin-foundation/config/review-owned-policy.ts",
+      "sha256": "76039aa6935c692cf7f0ac6f7748f7659fa70efc9d31442262be581c20786853"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-owner-schemas.json",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-owner-schemas.json",
+      "sha256": "4d2c76092f97925518a98bafc3cb0cf5418baa2f82ee4d297dea0ee8b6d42fa6"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/gateway-native-duration.ts",
+      "delivered": "skills/packages/plugin-foundation/config/gateway-native-duration.ts",
+      "sha256": "a12c09826e352bb718a3d24e5b3da95c7638c232d6a7b3deed2c73e265f07f8d"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/provisioning-task-reference.schema.json",
+      "delivered": "skills/packages/plugin-foundation/config/provisioning-task-reference.schema.json",
+      "sha256": "c638387dcfe53452a88300de0a43e91271ec360a510a5817bf340ff072bed82e"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-source-replay.mjs",
+      "delivered": "skills/packages/plugin-foundation/config/buster-source-replay.mjs",
+      "sha256": "07731b39f42e0e4a99ef194c80580a4879c2b41cf8ad818d25197ce6e3f97703"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "delivered": "skills/packages/plugin-foundation/config/swarm-bundle.ts",
+      "sha256": "e689d413f482864b881fa5f98734efda21b821570b2699c1dd4899f2c23cdc2d"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-gateway.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-gateway.ts",
+      "sha256": "b86e3a328da5fa4494e18a63ee871eef6175b8c6470ef29bb40f86f922ba86b9"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-generation.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-generation.ts",
+      "sha256": "eca6368dc4785ce70f04cbe6c1b382d3d15f417e346a5463a6b78e7a7f90884c"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-input-set.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-input-set.ts",
+      "sha256": "8d3e4e783c952306e67c6a083309e3d9da076386c774210afe74875541b500ab"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-recovery.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-recovery.ts",
+      "sha256": "72d4b5f47822d5ad0b2df0ab2ccdcee420a15a9761b4a7b93cd9ece53e815f43"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-input-set.ts",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-input-set.ts",
+      "sha256": "f93a21177163226575241daffe829ff6222c488321f6736aa0463779b124b695"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/parse-duration-DBWI377R.d.mts",
+      "delivered": "skills/packages/plugin-foundation/config/parse-duration-DBWI377R.d.mts",
+      "sha256": "5499e77beceaeb5a8d7d83352d360b6c3126f5bac06a56dec004b8c776b82232"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "delivered": "skills/packages/plugin-foundation/config/buster-cluster-invokers.ts",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/browser-native-profile-sources.json",
+      "delivered": "skills/packages/plugin-foundation/config/browser-native-profile-sources.json",
+      "sha256": "1ea8c0910195293e6e2b150f6e0c6ce9c71ebdd6ba9e93aca7ec946e9fce22c6"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-gateway-sources.json",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-gateway-sources.json",
+      "sha256": "6a0a578a07dee3112b4052da197f661a102a73499a824c9f0a186328373cd5db"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-source-relations.json",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-source-relations.json",
+      "sha256": "631c12fd08947d0ca175bb1bc0a1891ac7063eb7ee12d20b1adcb75dc47023b5"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+      "delivered": "skills/packages/plugin-foundation/config/openclaw-target-capacity.ts",
+      "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "delivered": "skills/packages/plugin-foundation/config/swarm.ts",
+      "sha256": "859b34732f179558ee40502704007d8b483f39c62ddbf0210036ea76aedc38c4"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/runtime-bundle-receipt.mjs",
+      "delivered": "skills/packages/plugin-foundation/config/runtime-bundle-receipt.mjs",
+      "sha256": "dd1bf096daa80645fef8dc081070c3fa52aad81dd0e1a57d246a2860cb0652f9"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/gateway-native-duration-sources.json",
+      "delivered": "skills/packages/plugin-foundation/config/gateway-native-duration-sources.json",
+      "sha256": "a2fea1de5c69b25f3a3ffee662400cca8a24a209de179d3974d2bfad1983b073"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "delivered": "skills/packages/plugin-foundation/config/swarm-components.schema.json",
+      "sha256": "a38e0dd1043b3d6b3fc9325bb2a31fb19da744da8ab69f6b7c3ea0f923d2f6eb"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "delivered": "skills/packages/plugin-foundation/config/platform.ts",
+      "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/browser-native-profile.ts",
+      "delivered": "skills/packages/plugin-foundation/config/browser-native-profile.ts",
+      "sha256": "b9b498f379780eab2f25313f611486a40b7524d9fcf5c97b0197b69bc82e6021"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/parse-duration-DBWI377R.mjs",
+      "delivered": "skills/packages/plugin-foundation/config/parse-duration-DBWI377R.mjs",
+      "sha256": "1090c987bb219e1cf966eb508856a202c6b7737534186af7b3f6eace6c3709d9"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/string-coerce-CIXf7egm.mjs",
+      "delivered": "skills/packages/plugin-foundation/config/string-coerce-CIXf7egm.mjs",
+      "sha256": "db70aa59f984a63935d147b6ac11b50a90f21b726998853ef3455451f1e622e7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver-schemas.json",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-receiver-schemas.json",
+      "sha256": "c05e528d8ff356c67e91990f7546e000455c196e7b0dc49a22d594a03f58b86e"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/pipeline-v10-package-sources.json",
+      "delivered": "skills/packages/plugin-foundation/config/pipeline-v10-package-sources.json",
+      "sha256": "a4720040c69b884cc5628dc87001ef0ba5dd32ed723c3a1861456a4594118fed"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+      "delivered": "skills/packages/plugin-foundation/config/core-runtime-policy.ts",
+      "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-startup-file.d.mts",
+      "delivered": "skills/packages/plugin-foundation/config/buster-startup-file.d.mts",
+      "sha256": "a10ac8241fd44dc737cccbd8cd990c5eb301e992832a0d2e4e5db4411e3f1ca4"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/packages/README.md",
+      "delivered": "skills/packages/plugin-foundation/packages/README.md",
+      "sha256": "1752de94912e25046c02b02c259db340fd404e62deea9c7f7e2d1aeceb4f3443"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/packages/install.ts",
+      "delivered": "skills/packages/plugin-foundation/packages/install.ts",
+      "sha256": "72e2212a2421f7738104c870fee746a64a8b12527d9662d409ca5c6048d4efc2"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "delivered": "skills/packages/plugin-foundation/isolation/sandbox.c",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+      "delivered": "skills/packages/plugin-foundation/isolation/memory-limit.ts",
+      "sha256": "2ee1b41fa611fcecd63b69e0d21c899644982e37fc4eac897f86e8b9bed09165"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+      "delivered": "skills/packages/plugin-foundation/isolation/cgroup.ts",
+      "sha256": "054104fb7041d0712721b94da5985a0f93540c0457bfe06ce601ce985a450737"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+      "delivered": "skills/packages/plugin-foundation/isolation/runner.ts",
+      "sha256": "0521714a765684e8195b2dbbfe3288783fdc7f04f2f1f7cdc7264fcb33ca295b"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+      "delivered": "skills/packages/plugin-foundation/isolation/protocol.ts",
+      "sha256": "48563d1740ff46022fc85132706e20c9a418bc185891704fca08b417df42e820"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/plugin-sandbox",
+      "delivered": "skills/packages/plugin-foundation/isolation/plugin-sandbox",
+      "sha256": "715c31703ea5704f1a600e9bb46254defd43034270941ea165128cc2a3cff08f"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+      "delivered": "skills/packages/plugin-foundation/isolation/session.ts",
+      "sha256": "9a2ab9d5ec2b63417cd60941ce789241f9638efaa22d16ec83ffc2a6908a4113"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+      "delivered": "skills/packages/plugin-foundation/isolation/child.mjs",
+      "sha256": "2851d7491792b3c4831386346c8eac79abfe79c1e3f1f9f2d415a834aad59d8c"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/wait-projection.ts",
+      "sha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/durable-blob-read.ts",
+      "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/README.md",
+      "delivered": "skills/packages/plugin-foundation/observability/README.md",
+      "sha256": "1cdfd80981f000c9e92ff1d35e2d2e7a2585543fdc31e4f5e986d80e1783a41d"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/hash-journal.ts",
+      "sha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/durable-blobs.ts",
+      "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/attempt-completeness.ts",
+      "sha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/durable-attempts.ts",
+      "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/clawdeck-view.ts",
+      "sha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/attempt-evidence.ts",
+      "sha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/attempt-retirement.ts",
+      "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/attempt-results.ts",
+      "sha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/closure-projection.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/closure-projection.ts",
+      "sha256": "0c76760e141a63472111d2e930e8215b8336a3a9ed9bac1533dd2cd2c0cae69a"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/attempt-projection.ts",
+      "sha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/durable-record-dependency.ts",
+      "sha256": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/record-retirement.ts",
+      "sha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/attempt-state.ts",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/admission-retirement.ts",
+      "sha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/replay-validation.ts",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/durable-records.ts",
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "delivered": "skills/packages/plugin-foundation/observability/attempt-replay.ts",
+      "sha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/README.md",
+      "delivered": "skills/packages/plugin-foundation/registry/README.md",
+      "sha256": "747cf98d6bfc8040238f18482ad9c3e7ef5175f6419e6051ecf1842fc5131894"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/digest.ts",
+      "sha256": "139869726a7dee522896e8fd253c06a655a78dd1c945c13da1df9912cac7d574"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+      "delivered": "skills/packages/plugin-foundation/registry/import-audit-child.mjs",
+      "sha256": "a7a28379c6f8409576a12169c6bc23070dbb66a41e0f041fc8b95310b29eb42e"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/activation.ts",
+      "sha256": "78f1f21b95c7c2e429ae596192ddaa7ff3749366b0ecb7b7dee63208c2769a1b"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/frozen-map.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/frozen-map.ts",
+      "sha256": "b4d3f268b79917e962959420a6b7a9a598086ac5d3d87cfb5bc0f8ee2a7583f7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/types.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/types.ts",
+      "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/discovery.ts",
+      "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/import-audit.ts",
+      "sha256": "764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/build.ts",
+      "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/frozen-set.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/frozen-set.ts",
+      "sha256": "94b7eb7f0ba2bd7ddb23d0e0dceb701395a5c2aa17bc67a14d8f53d0e9dce753"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/errors.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/errors.ts",
+      "sha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/capability-vocabulary.ts",
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "delivered": "skills/packages/plugin-foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+    },
+    {
+      "source": "skills/nova/plugins/review/README.md",
+      "delivered": "skills/plugins/review/README.md",
+      "sha256": "643e1eb16117035d97d8856a89de766d10f39de3cc61f944e6ebd92eb1902f67"
+    },
+    {
+      "source": "skills/nova/plugins/review/package.json",
+      "delivered": "skills/plugins/review/package.json",
+      "sha256": "fda551ec6184d135e5ef64de90ba3117889fb627ff467c9eaf3c86fa97b414d9"
+    },
+    {
+      "source": "skills/nova/plugins/review/plugin.json",
+      "delivered": "skills/plugins/review/plugin.json",
+      "sha256": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1"
+    },
+    {
+      "source": "skills/nova/plugins/review/tsconfig.json",
+      "delivered": "skills/plugins/review/tsconfig.json",
+      "sha256": "f0378a639eedbcb5aba4cd4d27751c03865b983a1c9b7973c5c7bbe05355d81b"
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/evaluate-review-quality.mts",
+      "delivered": "skills/plugins/review/scripts/evaluate-review-quality.mts",
+      "sha256": "b0f3eb3e2631fb07c0deced7bf56335acc8365c946d9ac226bc438e84f018251"
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+      "delivered": "skills/plugins/review/scripts/generate-policy-schema.mjs",
+      "sha256": "f6ff4e0206b23d2fe3fbddcc310c78eccb7230d801a93876c50a659435a9f4d3"
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+      "delivered": "skills/plugins/review/scripts/generate-bundle-schema.mjs",
+      "sha256": "672c9b2e8551e6a6962f975f7efdce8e2e69e329aa4d671aa6a9b5371e227d02"
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/generate-verification-schema.mjs",
+      "delivered": "skills/plugins/review/scripts/generate-verification-schema.mjs",
+      "sha256": "2d84b5dcaf2de81800e715d80b3b6047679ec98845e394a6ea3b6bf1ce2b0ffe"
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/evaluate-scalable-review.mts",
+      "delivered": "skills/plugins/review/scripts/evaluate-scalable-review.mts",
+      "sha256": "351afea71198e6107ad9e88359a59e4e58c74ae0ba2bc197049cc56f33cdb5c9"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+      "delivered": "skills/plugins/review/schemas/repository-audit-config.schema.json",
+      "sha256": "45366f71cf426a38bfe360f21e485476c3f6fda4f31b3a783a8aad3d883b1e65"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/review-report.v2.schema.json",
+      "delivered": "skills/plugins/review/schemas/review-report.v2.schema.json",
+      "sha256": "4ce40c81ab1e80bcf95195898509532ecfb2b40db97d2d16809b79dd5a13980b"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/review-policy.v2.schema.json",
+      "delivered": "skills/plugins/review/schemas/review-policy.v2.schema.json",
+      "sha256": "d143ded923151da7f3174083b819cb8eefec0c5ef787b9b2ab593a259699a491"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json",
+      "delivered": "skills/plugins/review/schemas/echo-review-verification.v1.schema.json",
+      "sha256": "af9b378497f3767feea7c073f6135b7a6ba522f8d900dc94e7c3d187cbab7466"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/review-policy.v1.schema.json",
+      "delivered": "skills/plugins/review/schemas/review-policy.v1.schema.json",
+      "sha256": "4cfb503e7a6b5a41d0cd6abfb5b6915b2898768c4cd99a965a057975c3af040e"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/review-report.v1.schema.json",
+      "delivered": "skills/plugins/review/schemas/review-report.v1.schema.json",
+      "sha256": "434a420494ed0e04b91a6eb9fa642f819aebf74397faa17f7a15fac7500ddfd0"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/review-report.v3.schema.json",
+      "delivered": "skills/plugins/review/schemas/review-report.v3.schema.json",
+      "sha256": "81406f36efb1cb45393b61059c32e800429c9cbc5b19c6709a9e470c54cb87b2"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/result.schema.json",
+      "delivered": "skills/plugins/review/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/input.schema.json",
+      "delivered": "skills/plugins/review/schemas/input.schema.json",
+      "sha256": "178399b3b8e27d28082b415c4101ef9213aad0e0b486238e0ef2348e9a52c71c"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/repository-audit-input.schema.json",
+      "delivered": "skills/plugins/review/schemas/repository-audit-input.schema.json",
+      "sha256": "f95e29e1e8dc9d9116f0be4b4713cdaf70826b455f4e3f9dd69d9055e4e02f8a"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json",
+      "delivered": "skills/plugins/review/schemas/review-bundle.v1.schema.json",
+      "sha256": "54a7aece36f7f2336dae2b395b5fbe329bd3f03e4c5d9d88f75ea794b8d469a7"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json",
+      "delivered": "skills/plugins/review/schemas/repository-revalidation-input.schema.json",
+      "sha256": "a27a9d28800f6b7ec185603422885a1c68d0c24bfae447d5c0a426d97ec185e1"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/config.schema.json",
+      "delivered": "skills/plugins/review/schemas/config.schema.json",
+      "sha256": "562765e5eff70940347ff34a35188d9a43dba92c95af9ed2310179782158d4f2"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/owned-policy.schema.json",
+      "delivered": "skills/plugins/review/schemas/owned-policy.schema.json",
+      "sha256": "57d540cfcbe3c3fbcdd9bd6b11f376686e653521aae04b6bfff6284a2a94e040"
+    },
+    {
+      "source": "skills/nova/plugins/review/schemas/review-bundle.v2.schema.json",
+      "delivered": "skills/plugins/review/schemas/review-bundle.v2.schema.json",
+      "sha256": "21ed8d2186fa9cfcc112edbd4a37306bf3d13cee92e0d74fefef67b47f492c3f"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-finding-governance.ts",
+      "delivered": "skills/plugins/review/src/review-finding-governance.ts",
+      "sha256": "2467daabc95ab9ad8f089857f4fbb09dd0a7945c122be20f6bfa8a57bc2f62e0"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-governor-decision.ts",
+      "delivered": "skills/plugins/review/src/review-governor-decision.ts",
+      "sha256": "e24ce83007525a05ce698cd311cd018d03d3553915673b0bff47eb2173c58508"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-reducer.ts",
+      "delivered": "skills/plugins/review/src/review-reducer.ts",
+      "sha256": "75f9fdb7d97894886e26dd54d6b245c16744116888fcbf2e99aed41dcabb3392"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts",
+      "delivered": "skills/plugins/review/src/legacy-review-policy-profiles.ts",
+      "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-proposal-preflight.ts",
+      "delivered": "skills/plugins/review/src/review-proposal-preflight.ts",
+      "sha256": "3acc5aa16a2ea8b95507916bfb0bf8db5966481d40c0e21a4269bbc401b02a2d"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/legacy-repository-review-profile.ts",
+      "delivered": "skills/plugins/review/src/legacy-repository-review-profile.ts",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-owned-policy-schema.ts",
+      "delivered": "skills/plugins/review/src/review-owned-policy-schema.ts",
+      "sha256": "7122c13ee85d26aa4265f555d6c814c3f74bf6c1bd667bd7f7352db825178e7c"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "delivered": "skills/plugins/review/src/review-policy-profiles.ts",
+      "sha256": "6701589bb69b63c07afd310a2f1de227958db1c132ab02e22ed88f0c0ad16331"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-context-candidates.ts",
+      "delivered": "skills/plugins/review/src/review-context-candidates.ts",
+      "sha256": "483e85560ccfc880700dc30657ae8045c4437cf8c63e4c6b5875e93595c33b93"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-evidence-authority.ts",
+      "delivered": "skills/plugins/review/src/review-evidence-authority.ts",
+      "sha256": "96e4749b53b38ed4f54d46df102182bacd177a54953e85672ec13e5e444cfa63"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-bundle-contract.ts",
+      "delivered": "skills/plugins/review/src/review-bundle-contract.ts",
+      "sha256": "c3c8ecf218f696e0b1f1336ac5741b66d57f4f80cd36df8da9e9bb901c0ed580"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+      "delivered": "skills/plugins/review/src/repository-audit-stage.ts",
+      "sha256": "127d63cda8ea8faf4ac2926eadda1f24bd14d8daddad6d830c4a3475fe5a1b08"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-verdict-policy.ts",
+      "delivered": "skills/plugins/review/src/review-verdict-policy.ts",
+      "sha256": "a999675b9e6bf2d704f07aa8df339250a86d04b166b1a1b5d9cd65a376f2d5b3"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-bundle-snapshot.ts",
+      "delivered": "skills/plugins/review/src/review-bundle-snapshot.ts",
+      "sha256": "2dd6e61e53aa9d49f254b277727f7bed17fcfab286ff614b22a2ed3ea6f4586e"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/repository-audit-cache.ts",
+      "delivered": "skills/plugins/review/src/repository-audit-cache.ts",
+      "sha256": "36b4b8fd50e520cc3e1f7a9b5ace2f230fb77811c386cce1261dc7ee10441ef5"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/echo-review-verification-parser.ts",
+      "delivered": "skills/plugins/review/src/echo-review-verification-parser.ts",
+      "sha256": "bd6d4e3f6e6274e0767a22fe72b7ad32703fb4d5e4edb840712c8be34d7b3341"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-phase-admission.ts",
+      "delivered": "skills/plugins/review/src/review-phase-admission.ts",
+      "sha256": "5f57c09d10ffc77d11b7cf7c853951cbf936423b73490c4f75e0fdef17332ad7"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-scale-slicing.ts",
+      "delivered": "skills/plugins/review/src/review-scale-slicing.ts",
+      "sha256": "2c3926caebaa29cff3044486cd5f56415bcd0c54127b9b65857d888a86c63262"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-slicing.ts",
+      "delivered": "skills/plugins/review/src/review-slicing.ts",
+      "sha256": "4a3bc2bceb55c0a05774f2d07d05813a010e6280eea9a4c9ad0750e58188bfae"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/echo-review-parser.ts",
+      "delivered": "skills/plugins/review/src/echo-review-parser.ts",
+      "sha256": "c950a64aa12b6bcf24503a63a4dbed3dc8d128d105d26eb83f7cc311987d0cda"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-policy-resolver.ts",
+      "delivered": "skills/plugins/review/src/review-policy-resolver.ts",
+      "sha256": "737c5380749c6847b4e529d393d5dc19d479da1e657cfee541e0c95430612e11"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-content-cache.ts",
+      "delivered": "skills/plugins/review/src/review-content-cache.ts",
+      "sha256": "aa4adcf19847251cc4b108ff0d3c3c299ce5f9c03a9843726cde4c0ad733a73a"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/simplification-miner.ts",
+      "delivered": "skills/plugins/review/src/simplification-miner.ts",
+      "sha256": "9859a85740834da159dc21caa1fef2f96460a389d46f599b86f57a439ed9b635"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-bundle-values.ts",
+      "delivered": "skills/plugins/review/src/review-bundle-values.ts",
+      "sha256": "27940d8d993c6d6f4eac2d2cc1e97ec8a6c2c40ba4da62f7e9e8b3f220c93426"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-context-selection.ts",
+      "delivered": "skills/plugins/review/src/review-context-selection.ts",
+      "sha256": "087aef0af489f28cfe3166401e48458405584e47362e0c6c3baeade940c87b38"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-invariants.ts",
+      "delivered": "skills/plugins/review/src/review-invariants.ts",
+      "sha256": "7a63e531e4c8ecb7b531194b743718492bfdc4ebaa363ce8043a6a16a06b2d05"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/scalable-review-execution.ts",
+      "delivered": "skills/plugins/review/src/scalable-review-execution.ts",
+      "sha256": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/echo-context-request-parser.ts",
+      "delivered": "skills/plugins/review/src/echo-context-request-parser.ts",
+      "sha256": "694d0ead231697dbe8a000233148cd4957493fc34963e4f91b0efbf403339a7d"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "delivered": "skills/plugins/review/src/repository-revalidation-stage.ts",
+      "sha256": "0bb9301bf47afe1d72c5bec37ed161ed9686c030111bef768dc1248277d47eac"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-stage-verification.ts",
+      "delivered": "skills/plugins/review/src/review-stage-verification.ts",
+      "sha256": "d88dc67ae2c703d10057467064a7d56bf12c6ffc3b6b7bd629ee2e2c247994cd"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/simplification-registry.ts",
+      "delivered": "skills/plugins/review/src/simplification-registry.ts",
+      "sha256": "04e1049839f794cdddc7836fa1f6b8dde35d008cbd1abffc5612268d41e40026"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/scalable-review-verification-evidence.ts",
+      "delivered": "skills/plugins/review/src/scalable-review-verification-evidence.ts",
+      "sha256": "23e712559f40c75beaa25cdb95cd8fea1bbd8b59e157bcfbf60f9ae038581d23"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-cluster-ranking.ts",
+      "delivered": "skills/plugins/review/src/review-cluster-ranking.ts",
+      "sha256": "22161b2e623c2168deecd632adc91f62028ce349703f1b952159d387dae38a26"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-repository.ts",
+      "delivered": "skills/plugins/review/src/review-repository.ts",
+      "sha256": "02725152678d2b150d4e44dee7182b1b767e52d7cec4272d71c0f66c740e4169"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-reduction-state.ts",
+      "delivered": "skills/plugins/review/src/review-reduction-state.ts",
+      "sha256": "60d43dd3513e2c9770ed262a5e87d91316081983f00487557403cbcc18c3d46c"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-evaluation-metadata.ts",
+      "delivered": "skills/plugins/review/src/review-evaluation-metadata.ts",
+      "sha256": "0dc381b467b0949e6f5c48b8274a5997292c9825ded0b834bea677cb1901086c"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-inventory-lookup.ts",
+      "delivered": "skills/plugins/review/src/review-inventory-lookup.ts",
+      "sha256": "abd77f489bb6e5e4ecad801995ce9d0cf88b852f96626d0d2c731a72c1ee6670"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-test-relations.ts",
+      "delivered": "skills/plugins/review/src/review-test-relations.ts",
+      "sha256": "62c9e6db1171d4a28b6f88119362f57a1154633ae5b2ad014506e429459b5426"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-policy-author-candidate.ts",
+      "delivered": "skills/plugins/review/src/review-policy-author-candidate.ts",
+      "sha256": "a79e0d82db4a5722afe5ad4aaa8104211f0f2f166ea1a1a022c27696445c4f63"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-governor-history.ts",
+      "delivered": "skills/plugins/review/src/review-governor-history.ts",
+      "sha256": "c4d57e25b8c73b97c79adb7a0d5b446d3e226ff0a62af19da0c2b5b93f39a292"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-report-builder.ts",
+      "delivered": "skills/plugins/review/src/review-report-builder.ts",
+      "sha256": "9dfc7a524561c9d02da6d3fa85985d03834a34560807950cabcfab4d27fc10d8"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-report-storage.ts",
+      "delivered": "skills/plugins/review/src/review-report-storage.ts",
+      "sha256": "2ac682bb07057feeec977c9b1446339f65555bf14977a2dbe1644cbaff72c4e5"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-evidence-encoding.ts",
+      "delivered": "skills/plugins/review/src/review-evidence-encoding.ts",
+      "sha256": "cf706b3f25bd4293e3b7b7f7a0f41b427024d31f1689d6d536b7ec149dec2e93"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-verifier.ts",
+      "delivered": "skills/plugins/review/src/review-verifier.ts",
+      "sha256": "673c969e165888d52d90068fb227c0330d70527c7ea574b20385f4db81bf1f20"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/simplification-manifest.ts",
+      "delivered": "skills/plugins/review/src/simplification-manifest.ts",
+      "sha256": "332141613dbcdc22d945d610de83553475a72b2524f7abe87398ff8b7761f7ae"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-repair-batch.ts",
+      "delivered": "skills/plugins/review/src/review-repair-batch.ts",
+      "sha256": "e79f7b2eb9308eb433cb33f60b13540c6c16a1611b523eddc5b3ed63e5a61059"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/repository-revalidation-contract.ts",
+      "delivered": "skills/plugins/review/src/repository-revalidation-contract.ts",
+      "sha256": "a502528b1f5e703d408de0f5233f9eef9ca5da7fe6f9e9b449892192f5c19b32"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-verification-reconciliation.ts",
+      "delivered": "skills/plugins/review/src/review-verification-reconciliation.ts",
+      "sha256": "b2d8f81a7dfb695abfa03253142b3829aa1f8ca1009597343c1abfa6f822bb00"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/protocol.ts",
+      "delivered": "skills/plugins/review/src/protocol.ts",
+      "sha256": "3daf94d3d8f68696311299e6e005186f6adbf21c808e74410dbf9eea333c5bf7"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-policy-parser.ts",
+      "delivered": "skills/plugins/review/src/review-policy-parser.ts",
+      "sha256": "24c402161c2cf73a99969cd61c9f040d7598f9243327cd61325213f2b13bcbfb"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/scalable-review-types.ts",
+      "delivered": "skills/plugins/review/src/scalable-review-types.ts",
+      "sha256": "075703db30e3ae27a53b306a8a7916a10dc6ab0e29d460b0631c2ebce97e8f96"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/scalable-review-compiler.ts",
+      "delivered": "skills/plugins/review/src/scalable-review-compiler.ts",
+      "sha256": "9ab253c3605ac971385e4d4787da26669f9623ff50dcc30b6fe0a250301329a9"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/scalable-review-verification.ts",
+      "delivered": "skills/plugins/review/src/scalable-review-verification.ts",
+      "sha256": "d06f9d7524d75b61ac8cd6493418f4689d0fd5883d10a93390393f7df320034d"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-bundle-parser.ts",
+      "delivered": "skills/plugins/review/src/review-bundle-parser.ts",
+      "sha256": "0a86087762ed1b8596ab8d6b98ce268df2904a57bd8759f275754a7a31229024"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-ordering.ts",
+      "delivered": "skills/plugins/review/src/review-ordering.ts",
+      "sha256": "61bc8cf0f2a44527ad18559827794c72e3d0dc589b82499a78a9f38e728c4e10"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-coverage.ts",
+      "delivered": "skills/plugins/review/src/review-coverage.ts",
+      "sha256": "0c2e95eba29dc2760ad91285feddca5224444ab95337947129403098e1c07e5b"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-json.ts",
+      "delivered": "skills/plugins/review/src/review-json.ts",
+      "sha256": "fd24726bdb4733caccd6092715ebff91c507b4865d2de843eee6d0ec1df9e1d6"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/verification-protocol.ts",
+      "delivered": "skills/plugins/review/src/verification-protocol.ts",
+      "sha256": "e348f736e76125c89d10b0ac6b2d1d86f0ace2109ca94f8d3dce3c98aabe4185"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-stage-input.ts",
+      "delivered": "skills/plugins/review/src/review-stage-input.ts",
+      "sha256": "e68ca5e004df3567de6a84e5486791a435f4c7ccd1756a6ed79365f81aca564c"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-import-scanner.ts",
+      "delivered": "skills/plugins/review/src/review-import-scanner.ts",
+      "sha256": "dca02be0f29d4b8eed478e6910b5431fdaea4b93da11b7232355c13354bb134a"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-context-authority.ts",
+      "delivered": "skills/plugins/review/src/review-context-authority.ts",
+      "sha256": "fb2d7041de70b18beb8e094cb26bc33b9ba5a1cd9fba202fcc5d40e62b57ff8b"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-local-aliases.ts",
+      "delivered": "skills/plugins/review/src/review-local-aliases.ts",
+      "sha256": "bd4958b47307905920bc7182795badc499885e493f459c74f113dd68fa776bc6"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+      "delivered": "skills/plugins/review/src/review-prompt-budget.ts",
+      "sha256": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-clustering.ts",
+      "delivered": "skills/plugins/review/src/review-clustering.ts",
+      "sha256": "e04f41b6f18cef3cd4e6f1b701a36642e473a40177ec50030de5715fce1b2749"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-policy-contract.ts",
+      "delivered": "skills/plugins/review/src/review-policy-contract.ts",
+      "sha256": "3dd3337e85c6e27f0b8ad1cf953448468bc67c22b927c4f09f7cdf008b6e70a2"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-report-contract.ts",
+      "delivered": "skills/plugins/review/src/review-report-contract.ts",
+      "sha256": "28a76f5eb111741263ab88438a2fc7f9ca0e60e77ccc1f3b7f0bff081fd6f522"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-verified-findings.ts",
+      "delivered": "skills/plugins/review/src/review-verified-findings.ts",
+      "sha256": "f02530f3acf50325854eaac7b77790177364e255770e9eee4457859a4226587a"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-governor.ts",
+      "delivered": "skills/plugins/review/src/review-governor.ts",
+      "sha256": "9c34eb3615facd279f4da2661a5f15018b60ef20c8367f25d7390a4204344f7f"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-semantics.ts",
+      "delivered": "skills/plugins/review/src/review-semantics.ts",
+      "sha256": "653f853d511c6955e3c44cc0db3ddf62e6e12321f791d0d427f4137747b75008"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-stage-result.ts",
+      "delivered": "skills/plugins/review/src/review-stage-result.ts",
+      "sha256": "f1e97b73fffcc52ad783fa77b1d5a0e6907bf33869dd659f34bd969fba089ac0"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-fact-extractors.ts",
+      "delivered": "skills/plugins/review/src/review-fact-extractors.ts",
+      "sha256": "dc63fb5f67948db547c255b66dcf20374b306bcbae3c58521d6aaaa27ed470a1"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-preparation.ts",
+      "delivered": "skills/plugins/review/src/review-preparation.ts",
+      "sha256": "1977321e91e90e628ac149ef93704038bf4a728103ce27d6458fa82b60a691f2"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-bundle-bounds.ts",
+      "delivered": "skills/plugins/review/src/review-bundle-bounds.ts",
+      "sha256": "5f295ba96fd54b113a368c587ed72e507f13b04d87cc338313b3db9069e250af"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-cluster-identity.ts",
+      "delivered": "skills/plugins/review/src/review-cluster-identity.ts",
+      "sha256": "493ce9b17bf529debacd38044efe775ce93416746b939ea6cf2fd15966da5497"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/repository-audit-results.ts",
+      "delivered": "skills/plugins/review/src/repository-audit-results.ts",
+      "sha256": "4ffacf9710170425772503821d2d90d69da2e44d2e03212cb40fd2566efe1db9"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/echo-evidence-verification.ts",
+      "delivered": "skills/plugins/review/src/echo-evidence-verification.ts",
+      "sha256": "e3320cb9d930bc08618206458181fb67d12c2dfd0ddf521cf6912eb46a9de435"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-cluster-contract.ts",
+      "delivered": "skills/plugins/review/src/review-cluster-contract.ts",
+      "sha256": "b54db562320062abe8ec681378bfbe596f210c69070d6cd99dfe4668c19cda6d"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-hard-limits.ts",
+      "delivered": "skills/plugins/review/src/review-hard-limits.ts",
+      "sha256": "93009f0054d57f2f02aef50a146aa3d146595640d2ee5f07220d1889ef0ea04d"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/simplification-fact-producer.ts",
+      "delivered": "skills/plugins/review/src/simplification-fact-producer.ts",
+      "sha256": "8b50db4716f53cd4cca472d0c52ff1da2d49d7d1921ebf2751f57801831a207f"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/stage.ts",
+      "delivered": "skills/plugins/review/src/stage.ts",
+      "sha256": "eaee317def6806994643021cf3c71e4b761d482b6eddb84aadb573c411606142"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-runtime-attestation.ts",
+      "delivered": "skills/plugins/review/src/review-runtime-attestation.ts",
+      "sha256": "1154397de55d1e27dcb291d060e36fcc7ce95cc0ae8d79c9b755f1ed4157f43d"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-report-flow.ts",
+      "delivered": "skills/plugins/review/src/review-report-flow.ts",
+      "sha256": "0769c1c76b65f88c6647adabcb5fc965e89980d431db30dfce2bf263063be6b4"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+      "delivered": "skills/plugins/review/src/scalable-review-jobs.ts",
+      "sha256": "727d9042c598be9920c15c11e7c1aab20ca4bdfcb2f0a41f4b30860296fc9c90"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-import-syntax.ts",
+      "delivered": "skills/plugins/review/src/review-import-syntax.ts",
+      "sha256": "514fc3b02d15c902293778ecf077d02eb428e8784d1677e6cf35ea3ed58135bd"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-map-artifacts.ts",
+      "delivered": "skills/plugins/review/src/review-map-artifacts.ts",
+      "sha256": "88e55c81174ea25ab19f789728c8c9d617fb5f2fe71c5e0cb4fa890b9ae3911a"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/simplification-contract.ts",
+      "delivered": "skills/plugins/review/src/simplification-contract.ts",
+      "sha256": "02b979eb33a1af0018dc592975e155ac1ab3fd90c1c91d6e54ba6fd4bfa1ca62"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-execution-settings.ts",
+      "delivered": "skills/plugins/review/src/review-execution-settings.ts",
+      "sha256": "77eea575842e24901db60b4fa38e2239b00110df4e599ac0e76acc9a88ea8678"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "delivered": "skills/plugins/review/src/repository-review-profile.ts",
+      "sha256": "1a08b3c7e45f37c3b40624f9b1f15096bd933b5db17bc19409d927fd3c8c58f9"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-report-encoding.ts",
+      "delivered": "skills/plugins/review/src/review-report-encoding.ts",
+      "sha256": "64b604ae4f25b3825e68527b30ad9093b9f6eda7b72fe1b227a914f0b0acae5f"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-snapshot-inventory.ts",
+      "delivered": "skills/plugins/review/src/review-snapshot-inventory.ts",
+      "sha256": "0198ab891853c1dbe061bd2ef081d2c6625b02447de90296d8d7cccbb82164c4"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-completion.ts",
+      "delivered": "skills/plugins/review/src/review-completion.ts",
+      "sha256": "97e8c27f88068ac95535225afbdaaf95549571f0b5824699e987d6a1d9379781"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-context-production.ts",
+      "delivered": "skills/plugins/review/src/review-context-production.ts",
+      "sha256": "0dce14f6fdfc22978cfc22d55527cdd0babf84baa54757ada507b089ecd98717"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/echo-review-contract.ts",
+      "delivered": "skills/plugins/review/src/echo-review-contract.ts",
+      "sha256": "67193f1308ba53eab12c8f280cc4a03a7897289c54147921fe61561b09a684e6"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-semantic-flow.ts",
+      "delivered": "skills/plugins/review/src/review-semantic-flow.ts",
+      "sha256": "1bfd35614a35c1063eda4c44f6b7256d5bf38ae3141f67348276baf6d7b07452"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/echo-review-verification-contract.ts",
+      "delivered": "skills/plugins/review/src/echo-review-verification-contract.ts",
+      "sha256": "3cb15e75b870e32689e10ee6dee92efa2fb2d0c2cf76f4b4a896d2258afd0802"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/simplification-parser.ts",
+      "delivered": "skills/plugins/review/src/simplification-parser.ts",
+      "sha256": "e6d8edeb8bb90c75c6b99dbfec47025ced51b139555bf8f5ee27724d46e92850"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/review-graph.ts",
+      "delivered": "skills/plugins/review/src/review-graph.ts",
+      "sha256": "ee492bcafb667f304607a39b9e90eb57da69ff92e9512880d7ab8c593b9ff2f9"
+    },
+    {
+      "source": "skills/nova/plugins/review/src/scalable-review-topology.ts",
+      "delivered": "skills/plugins/review/src/scalable-review-topology.ts",
+      "sha256": "e8bdf3721245ef58ae25891dc90c776b580973355f9d9946bd71eaf4956b4c0e"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/README.md",
+      "delivered": "skills/plugins/runtime-dispatch/README.md",
+      "sha256": "496c8eb84e2e188a63c57acb0600ff7462b9320f0b02fb1a2983ba46e848a6c3"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/package.json",
+      "delivered": "skills/plugins/runtime-dispatch/package.json",
+      "sha256": "dea861af81c54c9801a87c272d7467f359056be1cdb2d25ab0fa6cf88f9bbc67"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "delivered": "skills/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/tsconfig.json",
+      "delivered": "skills/plugins/runtime-dispatch/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "delivered": "skills/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "delivered": "skills/plugins/runtime-dispatch/schemas/config.schema.json",
+      "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/result-persistence.ts",
+      "sha256": "8b8390ec76dd1941580379eb4421f76b038befd5eb44869ac5a6aa0b3e106c51"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/openclaw.ts",
+      "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "sha256": "701dd5432a4e7e0380f327ca8b7790222e813d6d4ffaa93238a232325d1cc351"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/adapter.ts",
+      "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "sha256": "9a36db6520fd1fa5718d35708eaeaa2a5668d18263271c86b8851b6982c72cc9"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "sha256": "eea66d1cd3320103a5d6e320671867c6693489c6a60d989da6f41b12f019b356"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/workspace-target.ts",
+      "sha256": "7cdc37cf4a236046324221f77d40bbd514f4bf93d37499d840b67fb75174fc8b"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/openclaw-response.ts",
+      "sha256": "70a2a376fcf885861af37075646b0868a810f9bc3cd109781fc48fb62fe8444d"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "delivered": "skills/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4"
+    }
+  ]
+}

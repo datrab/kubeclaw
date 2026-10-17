@@ -16,6 +16,7 @@ export { recoverNativeWorkerAttempts, recoverNativeAttempt } from '../worker/nat
 export { nativeSourceCleanupOperation, nativeSourceCleanupResultSchema, verifyNativeSourceCleanupResult } from '../worker/native-cleanup-reconciliation.ts';
 export type { NativeCleanupReconciliation } from '../worker/native-cleanup-reconciliation.ts';
 export type { NativeAttemptJournalLimits } from '../worker/native-attempt-journal.ts';
+export type { NativeAttemptBootAssociation } from '../worker/native-attempt-journal.ts';
 export type { NativeWorkerAttemptExecutorOptions } from '../worker/native-attempt-executor.ts';
 export { observeNativeWorkerResources } from '../worker/native-resource-observation.ts';
 export type { NativeWorkerScopeLimits } from '../worker/native-resource-scope.ts';

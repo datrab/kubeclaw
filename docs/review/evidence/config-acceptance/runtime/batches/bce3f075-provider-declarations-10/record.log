@@ -1,0 +1,23 @@
+{
+  "status": "stable provider declaration/source/current registry-helper and strict proposed evidence-profile definition milestone ONLY; NOT ACCEPTED",
+  "rows": 1248,
+  "cases": 5713,
+  "caseResults": {
+    "not-run": 4287,
+    "passed": 1426
+  },
+  "batch10OriginalSupplementalRowsRefined": 95,
+  "newNarrowCurrentDefinitionCases": 95,
+  "newStrictProposedProfileDefinitionCases": 19,
+  "newFutureNotRunCases": 380,
+  "oldCaseBodiesUnchanged": 5219,
+  "immutableObservationReferenceOccurrences": 2213,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 77,
+  "remainingOriginalSupplementalSourceTracedRows": 102,
+  "originalCandidates": 4642,
+  "manualCandidateRecordsThisBatch": 109,
+  "manualCandidateRecordsCombined": 696,
+  "remainingUnreviewedCandidates": 3946,
+  "reviewedOpenCandidates": 129
+}

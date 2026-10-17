@@ -1,0 +1,386 @@
+file:///tmp/deployment-selection-XOc8bO/scripts/updates/buster-image-delivery.mjs:4
+ if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                               ^
+
+Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+    at validateBusterImageDelivery (file:///tmp/deployment-selection-XOc8bO/scripts/updates/buster-image-delivery.mjs:4:208)
+    at file:///tmp/deployment-selection-XOc8bO/scripts/updates/materialize-release.mjs:55:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-JL1U1u/scripts/updates/buster-image-delivery.mjs:4
+ if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                               ^
+
+Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+    at validateBusterImageDelivery (file:///tmp/deployment-selection-JL1U1u/scripts/updates/buster-image-delivery.mjs:4:208)
+    at file:///tmp/deployment-selection-JL1U1u/scripts/updates/materialize-release.mjs:55:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-MQMsYD/scripts/updates/buster-image-delivery.mjs:4
+ if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                               ^
+
+Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+    at validateBusterImageDelivery (file:///tmp/deployment-selection-MQMsYD/scripts/updates/buster-image-delivery.mjs:4:208)
+    at file:///tmp/deployment-selection-MQMsYD/scripts/updates/materialize-release.mjs:55:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-kCGQDR/scripts/updates/buster-image-delivery.mjs:4
+ if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                               ^
+
+Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+    at validateBusterImageDelivery (file:///tmp/deployment-selection-kCGQDR/scripts/updates/buster-image-delivery.mjs:4:208)
+    at file:///tmp/deployment-selection-kCGQDR/scripts/updates/materialize-release.mjs:55:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-QqR6aZ/scripts/updates/buster-image-delivery.mjs:4
+ if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                               ^
+
+Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+    at validateBusterImageDelivery (file:///tmp/deployment-selection-QqR6aZ/scripts/updates/buster-image-delivery.mjs:4:208)
+    at file:///tmp/deployment-selection-QqR6aZ/scripts/updates/materialize-release.mjs:55:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-aQkQ6k/scripts/updates/buster-image-delivery.mjs:4
+ if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                               ^
+
+Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+    at validateBusterImageDelivery (file:///tmp/deployment-selection-aQkQ6k/scripts/updates/buster-image-delivery.mjs:4:208)
+    at file:///tmp/deployment-selection-aQkQ6k/scripts/updates/materialize-release.mjs:55:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-7eCW2q/scripts/updates/buster-image-delivery.mjs:4
+ if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                               ^
+
+Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+    at validateBusterImageDelivery (file:///tmp/deployment-selection-7eCW2q/scripts/updates/buster-image-delivery.mjs:4:208)
+    at file:///tmp/deployment-selection-7eCW2q/scripts/updates/materialize-release.mjs:55:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-MUNImb/scripts/updates/buster-image-delivery.mjs:4
+ if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                               ^
+
+Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+    at validateBusterImageDelivery (file:///tmp/deployment-selection-MUNImb/scripts/updates/buster-image-delivery.mjs:4:208)
+    at file:///tmp/deployment-selection-MUNImb/scripts/updates/materialize-release.mjs:55:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (1148.715371ms)
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (1117.778533ms)
+✖ private operational overlays survive while replaced or removed runtime slots fail (1113.170182ms)
+✖ Prism and Ops reject image overrides even when another value could conceal them (1355.082881ms)
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (1103.596561ms)
+✖ private bundle URL and authentication survive while the selected revision stays fixed (1092.832791ms)
+✖ private extraEnv cannot shadow reserved runtime bundle controls (1080.60801ms)
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (1088.541158ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9174.765658
+
+✖ failing tests:
+
+test at tests/verification/deployment/deployment-release.test.mjs:60:1
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (1148.715371ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-XOc8bO/scripts/updates/buster-image-delivery.mjs:4
+   if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                                 ^
+
+  Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+      at validateBusterImageDelivery (file:///tmp/deployment-selection-XOc8bO/scripts/updates/buster-image-delivery.mjs:4:208)
+      at file:///tmp/deployment-selection-XOc8bO/scripts/updates/materialize-release.mjs:55:20
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:60:114)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-XOc8bO/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-XOc8bO/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-XOc8bO/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2069236,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-XOc8bO/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-XOc8bO/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-XOc8bO/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:83:1
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (1117.778533ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-JL1U1u/scripts/updates/buster-image-delivery.mjs:4
+   if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                                 ^
+
+  Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+      at validateBusterImageDelivery (file:///tmp/deployment-selection-JL1U1u/scripts/updates/buster-image-delivery.mjs:4:208)
+      at file:///tmp/deployment-selection-JL1U1u/scripts/updates/materialize-release.mjs:55:20
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:83:134)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-JL1U1u/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-JL1U1u/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-JL1U1u/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2069360,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-JL1U1u/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-JL1U1u/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-JL1U1u/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:95:1
+✖ private operational overlays survive while replaced or removed runtime slots fail (1113.170182ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-MQMsYD/scripts/updates/buster-image-delivery.mjs:4
+   if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                                 ^
+
+  Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+      at validateBusterImageDelivery (file:///tmp/deployment-selection-MQMsYD/scripts/updates/buster-image-delivery.mjs:4:208)
+      at file:///tmp/deployment-selection-MQMsYD/scripts/updates/materialize-release.mjs:55:20
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:95:97)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-MQMsYD/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-MQMsYD/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-MQMsYD/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2069497,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-MQMsYD/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-MQMsYD/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-MQMsYD/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:108:1
+✖ Prism and Ops reject image overrides even when another value could conceal them (1355.082881ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-kCGQDR/scripts/updates/buster-image-delivery.mjs:4
+   if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                                 ^
+
+  Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+      at validateBusterImageDelivery (file:///tmp/deployment-selection-kCGQDR/scripts/updates/buster-image-delivery.mjs:4:208)
+      at file:///tmp/deployment-selection-kCGQDR/scripts/updates/materialize-release.mjs:55:20
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:108:95)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-kCGQDR/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-kCGQDR/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-kCGQDR/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2069621,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-kCGQDR/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-kCGQDR/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-kCGQDR/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:126:1
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (1103.596561ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-QqR6aZ/scripts/updates/buster-image-delivery.mjs:4
+   if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                                 ^
+
+  Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+      at validateBusterImageDelivery (file:///tmp/deployment-selection-QqR6aZ/scripts/updates/buster-image-delivery.mjs:4:208)
+      at file:///tmp/deployment-selection-QqR6aZ/scripts/updates/materialize-release.mjs:55:20
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:126:107)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-QqR6aZ/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-QqR6aZ/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-QqR6aZ/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2069745,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-QqR6aZ/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-QqR6aZ/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-QqR6aZ/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:137:1
+✖ private bundle URL and authentication survive while the selected revision stays fixed (1092.832791ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-aQkQ6k/scripts/updates/buster-image-delivery.mjs:4
+   if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                                 ^
+
+  Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+      at validateBusterImageDelivery (file:///tmp/deployment-selection-aQkQ6k/scripts/updates/buster-image-delivery.mjs:4:208)
+      at file:///tmp/deployment-selection-aQkQ6k/scripts/updates/materialize-release.mjs:55:20
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:137:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-aQkQ6k/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-aQkQ6k/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-aQkQ6k/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2069869,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-aQkQ6k/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-aQkQ6k/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-aQkQ6k/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:148:1
+✖ private extraEnv cannot shadow reserved runtime bundle controls (1080.60801ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-7eCW2q/scripts/updates/buster-image-delivery.mjs:4
+   if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                                 ^
+
+  Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+      at validateBusterImageDelivery (file:///tmp/deployment-selection-7eCW2q/scripts/updates/buster-image-delivery.mjs:4:208)
+      at file:///tmp/deployment-selection-7eCW2q/scripts/updates/materialize-release.mjs:55:20
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:148:79)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-7eCW2q/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-7eCW2q/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-7eCW2q/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2069993,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-7eCW2q/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-7eCW2q/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-7eCW2q/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:163:1
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (1088.541158ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-MUNImb/scripts/updates/buster-image-delivery.mjs:4
+   if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');
+                                                                                                                                                                                                                 ^
+
+  Error: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID
+      at validateBusterImageDelivery (file:///tmp/deployment-selection-MUNImb/scripts/updates/buster-image-delivery.mjs:4:208)
+      at file:///tmp/deployment-selection-MUNImb/scripts/updates/materialize-release.mjs:55:20
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+  Node.js v24.21.0
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:14:24)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:43:7)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:163:93)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-MUNImb/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-MUNImb/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-MUNImb/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 2070117,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-MUNImb/scripts/updates/buster-image-delivery.mjs:4\n if(!closed(value,['schemaVersion','revision','namespace','releaseName','expected'])||value.schemaVersion!=='buster-image-delivery.v1'||value.revision!==revision||!/^[a-f0-9]{40}$/u.test(revision??''))throw new Error('BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID');\n                                                                                                                                                                                                               ^\n\nError: BUSTER_IMAGE_DELIVERY_IDENTITY_INVALID\n    at validateBusterImageDelivery (file:///tmp/deployment-selection-MUNImb/scripts/updates/buster-image-delivery.mjs:4:208)\n    at file:///tmp/deployment-selection-MUNImb/scripts/updates/materialize-release.mjs:55:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }

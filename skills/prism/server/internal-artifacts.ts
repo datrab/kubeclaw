@@ -4,6 +4,7 @@ import { authorizeProxiedSpiffePeer } from '@kubeclaw/worker-core';
 import type { ContentAddressedArtifactStore } from '../storage/artifacts.ts';
 
 export interface InternalArtifactOptions {
+  readonly maximumInternalEvidenceBytes: number;
   readonly artifacts: ContentAddressedArtifactStore;
   readonly spiffeEnabled: boolean;
   readonly workerSecret: string;
@@ -39,10 +40,11 @@ export async function handleInternalArtifact(request: IncomingMessage, response:
     response.end(bytes); return true;
   }
   if (request.method === 'POST') {
+    if (!Number.isSafeInteger(options.maximumInternalEvidenceBytes) || options.maximumInternalEvidenceBytes < 1) throw new Error('valid evidence byte limit required');
     const chunks: Buffer[] = []; let size = 0;
     for await (const chunk of request) {
       size += chunk.length;
-      if (size > 134_217_728) throw new Error('evidence is too large');
+      if (size > options.maximumInternalEvidenceBytes) throw new Error('evidence is too large');
       chunks.push(chunk);
     }
     const bytes = Buffer.concat(chunks);

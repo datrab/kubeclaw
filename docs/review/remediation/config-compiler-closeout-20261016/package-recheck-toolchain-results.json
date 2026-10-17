@@ -1,0 +1,14 @@
+{
+  "skills/nova/plugins/buster-quality-gate": {
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/buster-quality-gate-package-final.txt"
+  },
+  "skills/nova/plugins/demo-handoff": {
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/demo-handoff-package-final.txt"
+  },
+  "skills/nova/plugins/remote-test-gate": {
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/remote-test-gate-package-final.txt"
+  }
+}

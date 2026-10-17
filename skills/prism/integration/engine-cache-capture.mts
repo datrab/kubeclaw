@@ -1,3 +1,4 @@
+import { nativeEngineSettings } from '../tests/native/resource-policy.mts';
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import os from 'node:os';
@@ -12,7 +13,7 @@ await test('original Chromium captures stay within the RAM cache budget while du
   const root = await mkdtemp(path.join(os.tmpdir(), 'prism-capture-cache-'));
   try {
     const limits = { maximumInFlight: 2, maximumCompletedEntries: 2, maximumCompletedBytes: 128 * 1024 };
-    const engine = new PrismEngine(new DeterministicDesignProvider(), limits);
+    const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
     const artifacts = new ContentAddressedArtifactStore(root);
     const retained = [];
     for (let index = 0; index < 20; index++) {

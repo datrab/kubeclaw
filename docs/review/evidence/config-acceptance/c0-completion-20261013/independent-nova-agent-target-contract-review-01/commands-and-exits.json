@@ -1,0 +1,22 @@
+{
+  "authorCollector": {
+    "source": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/check-definition.mjs",
+    "sha256": "bafe8fa7b9f4a9853e352c45a191fa736cd49024ff81a05a0135f3cd2b36c2cb",
+    "executed": false,
+    "reason": "Writes author identities/wrapper fixtures/slices/observations; optional frozen-input replay skipped",
+    "reportedAuthorChecks": 3080
+  },
+  "independentReadChecks": {
+    "exitCode": 0,
+    "scope": "actual source/schema/profile/original hashes and18 schema nodes/36receivers/36roots/144cases only",
+    "artifacts": [
+      "physical-original-conservation.json",
+      "receiving-generation-case-joins.json"
+    ]
+  },
+  "initialReadNavigation": {
+    "exitCode": 1,
+    "record": "inspection-navigation-error.txt"
+  },
+  "productiveActions": 0
+}

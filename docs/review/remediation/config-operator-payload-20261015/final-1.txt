@@ -1,0 +1,41 @@
+✔ actual Nova startup selects A/B artifact UTF8 cap, snapshots A and resumes A without current B (2815.715992ms)
+✔ central artifact limits required and relationally valid; raw duplicate authors reject even equal or null before activation (2.348321ms)
+✔ actual artifact consumer enforces independently selected record count, metadata bytes and blob-store bytes with restored positives (240.106588ms)
+✔ explicit reference resolves against author, pure preparation performs no policy I/O, all fields required and snapshots owned (7.427652ms)
+✔ real stage/observer startup A/B leases and retained A resume survive missing current policy B (1313.478149ms)
+✔ selected real mutation TTL/renewal and required journal deadline replace literals (246.958506ms)
+✔ selected audit UTF8 exact/over boundary and effect journal inline limit remain separate (32.672914ms)
+✔ actual resource provisional-lock lifetime is selected independently of mutation TTL (35.217199ms)
+✔ active recovery receiver uses selected metadata capacity and restores positive behavior (56.816787ms)
+✔ operator actual Nova delivery A/B store ceilings, real signed HTTP and retained A resume without B (4793.88555ms)
+✔ operator delivery policy leaves mandatory; malformed central/direct values and duplicate raw authors reject (4.362463ms)
+✔ publisher actual Nova delivery A/B store ceilings, real signed HTTP and retained A resume without B (5252.649078ms)
+✔ publisher delivery policy leaves mandatory; malformed central/direct values and duplicate raw authors reject (3.021368ms)
+✔ publisher central payload exact UTF-8/overflow/restored positives and original A selectors without current B (5812.521473ms)
+✔ publisher mandatory central payload profiles and selectors reject all former defaults/duplicates (3.598952ms)
+✔ operator central payload exact UTF-8/overflow/restored positives and original A selectors without current B (5573.318232ms)
+✔ operator mandatory central payload profiles and selectors reject all former defaults/duplicates (4.962668ms)
+✔ real Nova dispatch startup captures A/B, sends configured collector wait over HTTP and resumes retained A without B (6965.98033ms)
+✔ actual local result receiver enforces selected exact/over UTF8 read cap with restored positive (43.430971ms)
+✔ both central/adapter fields required, no target duplicate authors and no malformed values/defaults (6.21904ms)
+✔ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (5751.270431ms)
+✔ actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives (8.679533ms)
+✔ HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed with restored positive (3.043059ms)
+✔ actual Nova state/wait A/B entry policies reach both real adapters and retained A resumes without B (5217.546975ms)
+✔ selected state and wait entry bytes, records and store capacities enforce actual boundaries and restore positives (397.949722ms)
+✔ all six central leaves are mandatory; malformed, missing and raw duplicate authors reject without defaults (4.056284ms)
+✔ actual Nova timing-profile A/B controls poll cutoff and retained A resumes after current B disappears (8007.220956ms)
+✔ separate target profiles reach real poll/backoff/deadline consumers over controlled HTTP with restored positives (131.543085ms)
+✔ selected spawn interval changes actual spawn-to-poll pacing without a hidden 1500ms fallback (129.184224ms)
+✔ profile fields/selectors mandatory; raw old authors, malformed profiles and relations reject with restored positive (6.392545ms)
+✔ actual Nova telemetry A/B record cap, redaction and retained A resume without B use selected snapshot (2439.561122ms)
+✔ selected actual telemetry byte/count/store limits enforce exact UTF8 boundaries and restored positives (138.498945ms)
+✔ all central telemetry leaves required; malformed direct/central values and duplicate authors reject (2.620757ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22149.454095

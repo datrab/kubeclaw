@@ -1,0 +1,120 @@
+{
+  "cases": [
+    {
+      "id": "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "originalBody": {
+        "id": "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "settingIds": [
+          "DLV-NATIVE-HOST-SCHEMAVERSION",
+          "DLV-NATIVE-HOST-NODENAME",
+          "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+          "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+          "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+          "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+          "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+          "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+          "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+          "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+          "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+          "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+          "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+          "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "outsideScopeSettingIds": [],
+      "originalBodySha256": "2e29331754ffc2c278d3c4d8840af2fd0190c85acc367cd8b08430ad7deae0a2"
+    },
+    {
+      "id": "DLV-CASE-NATIVE-HOST-ACTIVATION",
+      "originalBody": {
+        "id": "DLV-CASE-NATIVE-HOST-ACTIVATION",
+        "settingIds": [
+          "DLV-NATIVE-HOST-SCHEMAVERSION",
+          "DLV-NATIVE-HOST-NODENAME",
+          "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+          "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+          "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+          "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+          "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+          "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+          "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+          "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+          "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+          "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+          "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+          "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+          "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "outsideScopeSettingIds": [],
+      "originalBodySha256": "1b2d9e343d2ab269ad9ca556675bb3c85e29e9fc5da63e4736b39312366a6252"
+    }
+  ]
+}

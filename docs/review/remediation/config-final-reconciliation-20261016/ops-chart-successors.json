@@ -1,0 +1,1589 @@
+{
+  "scope": "Exact original Ops30 chart source lanes only; no production implementation or runtime acceptance",
+  "constraint": "All30 original Ops chart fields retain Helm values/release/discovery/explicit overlay inputs; the deployment-policy owner selects deployment invocation, not these30 values. Actual MCP namespace inputs now travel through captured policy.json, not the historical MCP ENV references; Codex still receives its own ENV/kubeconfig. Central sole-root deployment author/profile/schema/file-set/history receiving remains OPEN. Resource ancestor projection is not native scheduling/cgroup proof. Secret references never contain secret bytes. No live deployment, authority change, denied-v10 activation or independent/native acceptance.",
+  "rows": [
+    {
+      "id": "DLV-CHART-OPS-POD-IMAGEPULLSECRETS",
+      "original": "D228#/rows/2194",
+      "originalObjectSha256": "e45f87aa98c442a3c9912ce3f2ee4076bfaaa0803cd3199c50c7b829c3614c1e",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS"
+      ],
+      "class": "secret-reference",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "imagePullSecrets",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 4,
+        "lineKind": "exact YAML field/inline author line",
+        "valuePath": "imagePullSecrets"
+      },
+      "currentValuePath": "imagePullSecrets",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "{{- with .Values.imagePullSecrets }}",
+          "lines": [
+            48
+          ],
+          "selectedValuePath": "imagePullSecrets",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "secretQualification": "Reference only; external Secret bytes and real kubelet/provider receipt are not central config or locally proved."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-BEARERSECRET",
+      "original": "D228#/rows/2195",
+      "originalObjectSha256": "bc17b453007890e6821b642f03117feb2b309f6270fa253a26a6e70e6036d9a5",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS"
+      ],
+      "class": "secret-reference",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "bearerSecret",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 6,
+        "lineKind": "exact YAML field/inline author line",
+        "valuePath": "bearerSecret"
+      },
+      "currentValuePath": "bearerSecret",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "secretName: {{ .Values.bearerSecret }}",
+          "lines": [
+            150
+          ],
+          "selectedValuePath": "bearerSecret",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "secretQualification": "Reference only; external Secret bytes and real kubelet/provider receipt are not central config or locally proved."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-GITHUBSECRET",
+      "original": "D228#/rows/2196",
+      "originalObjectSha256": "e69ec1090f31e1b2142626f27327c590c1f4f18800990d29aeb39c2a6531e727",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS"
+      ],
+      "class": "secret-reference",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "githubSecret",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 7,
+        "lineKind": "exact YAML field/inline author line",
+        "valuePath": "githubSecret"
+      },
+      "currentValuePath": "githubSecret",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "{{- if .Values.githubSecret }}",
+          "lines": [
+            63
+          ],
+          "selectedValuePath": "githubSecret",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "secretKeyRef: {name: {{ .Values.githubSecret }}, key: token}",
+          "lines": [
+            66
+          ],
+          "selectedValuePath": "githubSecret",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "secretQualification": "Reference only; external Secret bytes and real kubelet/provider receipt are not central config or locally proved."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-PERSISTENCE-SIZE",
+      "original": "D228#/rows/2197",
+      "originalObjectSha256": "4b31b469bcc94afeabc105ad864d6aa188cba174bd2b0ec1ff7e2e73cc000e71",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-VOLUME-IDENTITY"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "persistence.size",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 10,
+        "valuePath": "persistence.size",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "persistence.size",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "storage: {{ if eq $volume \"home\" }}2Gi{{ else }}{{ $.Values.persistence.size }}{{ end }}",
+          "lines": [
+            180
+          ],
+          "selectedValuePath": "persistence.size",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-PERSISTENCE-STORAGECLASS",
+      "original": "D228#/rows/2198",
+      "originalObjectSha256": "5bd6e0c79fd149a7d8f0f6d06db7c045256343e6601d73ff655ae47b2425d858",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-VOLUME-IDENTITY"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "persistence.storageClass",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 11,
+        "valuePath": "persistence.storageClass",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "persistence.storageClass",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+          "sha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+          "anchor": "{{- if .Values.persistence.storageClass }}",
+          "lines": [
+            10
+          ],
+          "selectedValuePath": "persistence.storageClass",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+          "sha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+          "anchor": "storageClassName: {{ .Values.persistence.storageClass | quote }}",
+          "lines": [
+            11
+          ],
+          "selectedValuePath": "persistence.storageClass",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "{{- if $.Values.persistence.storageClass }}",
+          "lines": [
+            175
+          ],
+          "selectedValuePath": "persistence.storageClass",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "storageClassName: {{ $.Values.persistence.storageClass | quote }}",
+          "lines": [
+            176
+          ],
+          "selectedValuePath": "persistence.storageClass",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-CPU",
+      "original": "D228#/rows/2199",
+      "originalObjectSha256": "93bc5da7f38ff4211c923f7ea4e0efbc0cc8a97f90857e58e122dbae535df83d",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "resources.codex.requests.cpu",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 15,
+        "valuePath": "resources.codex.requests.cpu",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "resources.codex.requests.cpu",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.resources.codex | nindent 12 }}",
+          "lines": [
+            72
+          ],
+          "selectedValuePath": "resources.codex",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-MEMORY",
+      "original": "D228#/rows/2200",
+      "originalObjectSha256": "35dd0514cb726b020abc899244bcaff4a04ea9d17e36a93466d4ddd66d2bfabc",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "resources.codex.requests.memory",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 15,
+        "valuePath": "resources.codex.requests.memory",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "resources.codex.requests.memory",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.resources.codex | nindent 12 }}",
+          "lines": [
+            72
+          ],
+          "selectedValuePath": "resources.codex",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-CPU",
+      "original": "D228#/rows/2201",
+      "originalObjectSha256": "87388ac45d7d860b0dcf98d77e6019cde1a142c0faec20dbefa26194b8837aa7",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "resources.codex.limits.cpu",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 16,
+        "valuePath": "resources.codex.limits.cpu",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "resources.codex.limits.cpu",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.resources.codex | nindent 12 }}",
+          "lines": [
+            72
+          ],
+          "selectedValuePath": "resources.codex",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-MEMORY",
+      "original": "D228#/rows/2202",
+      "originalObjectSha256": "66175f16428c0f44a8f98d3b21498576b2fdb6ff57a99ffe8845af6da0b288c3",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "resources.codex.limits.memory",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 16,
+        "valuePath": "resources.codex.limits.memory",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "resources.codex.limits.memory",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.resources.codex | nindent 12 }}",
+          "lines": [
+            72
+          ],
+          "selectedValuePath": "resources.codex",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-CPU",
+      "original": "D228#/rows/2203",
+      "originalObjectSha256": "7f87ea5e7769000b5b1b62ebc700faaaae88f44730d42911edb1f0a063a5000f",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "resources.mcp.requests.cpu",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 18,
+        "valuePath": "resources.mcp.requests.cpu",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "resources.mcp.requests.cpu",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.resources.mcp | nindent 12 }}",
+          "lines": [
+            100
+          ],
+          "selectedValuePath": "resources.mcp",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-MEMORY",
+      "original": "D228#/rows/2204",
+      "originalObjectSha256": "d3403d43dd433496bd96547672f40433cc925c4670404c303ad083e0072997eb",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "resources.mcp.requests.memory",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 18,
+        "valuePath": "resources.mcp.requests.memory",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "resources.mcp.requests.memory",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.resources.mcp | nindent 12 }}",
+          "lines": [
+            100
+          ],
+          "selectedValuePath": "resources.mcp",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-CPU",
+      "original": "D228#/rows/2205",
+      "originalObjectSha256": "6db83a115bbb2ea76c77a780235238992c55b44823185bf76100d4f613b1523e",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "resources.mcp.limits.cpu",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 19,
+        "valuePath": "resources.mcp.limits.cpu",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "resources.mcp.limits.cpu",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.resources.mcp | nindent 12 }}",
+          "lines": [
+            100
+          ],
+          "selectedValuePath": "resources.mcp",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-MEMORY",
+      "original": "D228#/rows/2206",
+      "originalObjectSha256": "028a5692b70647c1736ca9e7e9c2a416c8656379510d49e23d1a76637b899ce5",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "resources.mcp.limits.memory",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 19,
+        "valuePath": "resources.mcp.limits.memory",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "resources.mcp.limits.memory",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.resources.mcp | nindent 12 }}",
+          "lines": [
+            100
+          ],
+          "selectedValuePath": "resources.mcp",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RBAC-NAMESPACES",
+      "original": "D228#/rows/2207",
+      "originalObjectSha256": "54366a6a3af0a21936e0c5603f3076ee5ded0775561e1602ace57114501a7ea0",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-OPS-RESIDUAL-API-NETWORK"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "rbac.namespaces",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 24,
+        "valuePath": "rbac.namespaces",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "rbac.namespaces",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/mcp-policy.yaml",
+          "sha256": "669eb95f964e61edd88a7016878e6ccfff1900dfcb7ce7c47750e59de3bc7b15",
+          "anchor": "{{- $server := dict \"port\" .Values.mcpPolicy.server.port \"host\" .Values.mcpPolicy.server.host \"localOnly\" .Values.mcpPolicy.server.localOnly \"allowedOrigins\" .Values.mcpPolicy.server.allowedOrigins \"defaultNamespace\" .Values.defaultNamespace \"argoNamespace\" .Values.argoNamespace \"namespaces\" .Values.rbac.namespaces -}}",
+          "lines": [
+            1
+          ],
+          "selectedValuePath": "rbac.namespaces",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/rbac.yaml",
+          "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+          "anchor": "{{- range .Values.rbac.namespaces }}",
+          "lines": [
+            28
+          ],
+          "selectedValuePath": "rbac.namespaces",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "currentMcpReceiving": [
+        {
+          "path": "charts/ops-pod/templates/mcp-policy.yaml",
+          "sha256": "669eb95f964e61edd88a7016878e6ccfff1900dfcb7ce7c47750e59de3bc7b15",
+          "anchor": "\"server\" $server",
+          "lines": [
+            7
+          ]
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "81dc05570a3e1b412eba0f148805d45885e6f0a70954202ba6c34e1baa51a650",
+          "anchor": "const policy=loadOpsMcpPolicy(environment.OPS_MCP_POLICY_FILE);",
+          "lines": [
+            14
+          ]
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "81dc05570a3e1b412eba0f148805d45885e6f0a70954202ba6c34e1baa51a650",
+          "anchor": "selectedPolicy:policy",
+          "lines": [
+            15
+          ]
+        }
+      ],
+      "historicalMcpEnvQualification": "Original ENV reader is retained historical source, not current chart-selected MCP transport. Existing MCP file policy implementation is not sole-root deployment receiving."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RBAC-EXECNAMESPACES",
+      "original": "D228#/rows/2208",
+      "originalObjectSha256": "53df362e7bf8c10be306a8bf02cb00505a04b8db873f688c3930527c337ca889",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "rbac.execNamespaces",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 27,
+        "valuePath": "rbac.execNamespaces",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "rbac.execNamespaces",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+          "anchor": "{{- if .Values.rbac.execNamespaces }}",
+          "lines": [
+            1
+          ],
+          "selectedValuePath": "rbac.execNamespaces",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/rbac.yaml",
+          "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+          "anchor": "{{- range .Values.rbac.execNamespaces }}",
+          "lines": [
+            63
+          ],
+          "selectedValuePath": "rbac.execNamespaces",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "- {name: OPS_EXEC_NAMESPACES, value: {{ join \",\" .Values.rbac.execNamespaces | quote }}}",
+          "lines": [
+            59
+          ],
+          "selectedValuePath": "rbac.execNamespaces",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "{{- if .Values.rbac.execNamespaces }}",
+          "lines": [
+            60,
+            79,
+            143
+          ],
+          "selectedValuePath": "rbac.execNamespaces",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "{{- if .Values.rbac.execNamespaces }}",
+          "lines": [
+            60,
+            79,
+            143
+          ],
+          "selectedValuePath": "rbac.execNamespaces",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "{{- if .Values.rbac.execNamespaces }}",
+          "lines": [
+            60,
+            79,
+            143
+          ],
+          "selectedValuePath": "rbac.execNamespaces",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-ARGONAMESPACE",
+      "original": "D228#/rows/2209",
+      "originalObjectSha256": "5375b3f32e815723b682f1c81a080d0c3d8b6d10f7f9af97e8a1abd1369e4ca5",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "argoNamespace",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 28,
+        "lineKind": "exact YAML field/inline author line",
+        "valuePath": "argoNamespace"
+      },
+      "currentValuePath": "argoNamespace",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/mcp-policy.yaml",
+          "sha256": "669eb95f964e61edd88a7016878e6ccfff1900dfcb7ce7c47750e59de3bc7b15",
+          "anchor": "{{- $server := dict \"port\" .Values.mcpPolicy.server.port \"host\" .Values.mcpPolicy.server.host \"localOnly\" .Values.mcpPolicy.server.localOnly \"allowedOrigins\" .Values.mcpPolicy.server.allowedOrigins \"defaultNamespace\" .Values.defaultNamespace \"argoNamespace\" .Values.argoNamespace \"namespaces\" .Values.rbac.namespaces -}}",
+          "lines": [
+            1
+          ],
+          "selectedValuePath": "argoNamespace",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "currentMcpReceiving": [
+        {
+          "path": "charts/ops-pod/templates/mcp-policy.yaml",
+          "sha256": "669eb95f964e61edd88a7016878e6ccfff1900dfcb7ce7c47750e59de3bc7b15",
+          "anchor": "\"server\" $server",
+          "lines": [
+            7
+          ]
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "81dc05570a3e1b412eba0f148805d45885e6f0a70954202ba6c34e1baa51a650",
+          "anchor": "const policy=loadOpsMcpPolicy(environment.OPS_MCP_POLICY_FILE);",
+          "lines": [
+            14
+          ]
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "81dc05570a3e1b412eba0f148805d45885e6f0a70954202ba6c34e1baa51a650",
+          "anchor": "selectedPolicy:policy",
+          "lines": [
+            15
+          ]
+        }
+      ],
+      "historicalMcpEnvQualification": "Original ENV reader is retained historical source, not current chart-selected MCP transport. Existing MCP file policy implementation is not sole-root deployment receiving."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-DEFAULTNAMESPACE",
+      "original": "D228#/rows/2210",
+      "originalObjectSha256": "53d7834e9f14a360dffafc7b521f3d9ba8b5ce2336502a18b30d0ca905e16ff9",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "defaultNamespace",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 29,
+        "lineKind": "exact YAML field/inline author line",
+        "valuePath": "defaultNamespace"
+      },
+      "currentValuePath": "defaultNamespace",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+          "anchor": "namespace: {{ .Values.defaultNamespace | quote }}",
+          "lines": [
+            24
+          ],
+          "selectedValuePath": "defaultNamespace",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/mcp-policy.yaml",
+          "sha256": "669eb95f964e61edd88a7016878e6ccfff1900dfcb7ce7c47750e59de3bc7b15",
+          "anchor": "{{- $server := dict \"port\" .Values.mcpPolicy.server.port \"host\" .Values.mcpPolicy.server.host \"localOnly\" .Values.mcpPolicy.server.localOnly \"allowedOrigins\" .Values.mcpPolicy.server.allowedOrigins \"defaultNamespace\" .Values.defaultNamespace \"argoNamespace\" .Values.argoNamespace \"namespaces\" .Values.rbac.namespaces -}}",
+          "lines": [
+            1
+          ],
+          "selectedValuePath": "defaultNamespace",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "- {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}",
+          "lines": [
+            58
+          ],
+          "selectedValuePath": "defaultNamespace",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "currentMcpReceiving": [
+        {
+          "path": "charts/ops-pod/templates/mcp-policy.yaml",
+          "sha256": "669eb95f964e61edd88a7016878e6ccfff1900dfcb7ce7c47750e59de3bc7b15",
+          "anchor": "\"server\" $server",
+          "lines": [
+            7
+          ]
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "81dc05570a3e1b412eba0f148805d45885e6f0a70954202ba6c34e1baa51a650",
+          "anchor": "const policy=loadOpsMcpPolicy(environment.OPS_MCP_POLICY_FILE);",
+          "lines": [
+            14
+          ]
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "81dc05570a3e1b412eba0f148805d45885e6f0a70954202ba6c34e1baa51a650",
+          "anchor": "selectedPolicy:policy",
+          "lines": [
+            15
+          ]
+        }
+      ],
+      "historicalMcpEnvQualification": "Original ENV reader is retained historical source, not current chart-selected MCP transport. Existing MCP file policy implementation is not sole-root deployment receiving."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-NETWORKPOLICY-ENABLED",
+      "original": "D228#/rows/2211",
+      "originalObjectSha256": "0e5b57e580d0c4da7662a1e511bb4cc1071e549372fae7155c9b567660d8fc67",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "networkPolicy.enabled",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 32,
+        "valuePath": "networkPolicy.enabled",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "networkPolicy.enabled",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+          "anchor": "{{- if .Values.networkPolicy.enabled }}",
+          "lines": [
+            1
+          ],
+          "selectedValuePath": "networkPolicy.enabled",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-NETWORKPOLICY-CILIUM",
+      "original": "D228#/rows/2212",
+      "originalObjectSha256": "cff83449862d470410969c78ee7e90444564fe415cbba4700b69c1d720b7cec7",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "networkPolicy.cilium",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 33,
+        "valuePath": "networkPolicy.cilium",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "networkPolicy.cilium",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+          "anchor": "{{- if .Values.networkPolicy.cilium }}",
+          "lines": [
+            37
+          ],
+          "selectedValuePath": "networkPolicy.cilium",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-NETWORKPOLICY-APISERVERCIDRS",
+      "original": "D228#/rows/2213",
+      "originalObjectSha256": "727cd62bbe195ff0b0c48d80b62bf1db6d42f952229250e3803e6273fad7fda7",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-OPS-RESIDUAL-API-NETWORK"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "networkPolicy.apiServerCIDRs",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 34,
+        "valuePath": "networkPolicy.apiServerCIDRs",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "networkPolicy.apiServerCIDRs",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+          "anchor": "{{- if not .Values.networkPolicy.apiServerCIDRs }}",
+          "lines": [
+            2
+          ],
+          "selectedValuePath": "networkPolicy.apiServerCIDRs",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+          "anchor": "{{- range .Values.networkPolicy.apiServerCIDRs }}",
+          "lines": [
+            21
+          ],
+          "selectedValuePath": "networkPolicy.apiServerCIDRs",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-NETWORKPOLICY-APISERVERPORT",
+      "original": "D228#/rows/2214",
+      "originalObjectSha256": "c2da2afe759c49704682db081a317aa0d33eb96b07fbe4b36bd01a288da85f09",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-OPS-RESIDUAL-API-NETWORK"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "networkPolicy.apiServerPort",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 35,
+        "valuePath": "networkPolicy.apiServerPort",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "networkPolicy.apiServerPort",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+          "anchor": "ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: {{ .Values.networkPolicy.apiServerPort }}}]",
+          "lines": [
+            24
+          ],
+          "selectedValuePath": "networkPolicy.apiServerPort",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+          "anchor": "- {port: {{ .Values.networkPolicy.apiServerPort | quote }}, protocol: TCP}",
+          "lines": [
+            50
+          ],
+          "selectedValuePath": "networkPolicy.apiServerPort",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-ENABLED",
+      "original": "D228#/rows/2215",
+      "originalObjectSha256": "b4d9fca4c460829e8519d00a88e2ffad80bed812a0514e1f2a249a31fe654cdc",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.enabled",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 38,
+        "valuePath": "tailscale.enabled",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.enabled",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+          "anchor": "{{- if .Values.tailscale.enabled }}",
+          "lines": [
+            30
+          ],
+          "selectedValuePath": "tailscale.enabled",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+          "sha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+          "anchor": "{{- if .Values.tailscale.enabled }}",
+          "lines": [
+            1
+          ],
+          "selectedValuePath": "tailscale.enabled",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "{{- if .Values.tailscale.enabled }}",
+          "lines": [
+            116,
+            165
+          ],
+          "selectedValuePath": "tailscale.enabled",
+          "projectionKind": "DIRECT"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "{{- if .Values.tailscale.enabled }}",
+          "lines": [
+            116,
+            165
+          ],
+          "selectedValuePath": "tailscale.enabled",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-IMAGE",
+      "original": "D228#/rows/2216",
+      "originalObjectSha256": "a4cc37800c57e47cdc925bfb8ca5c26f553d2563d44c52beea7cd3f085488722",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-OPS-RESIDUAL-TAILSCALE"
+      ],
+      "class": "version",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.image",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 39,
+        "valuePath": "tailscale.image",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.image",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "image: {{ .Values.tailscale.image | quote }}",
+          "lines": [
+            118
+          ],
+          "selectedValuePath": "tailscale.image",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-AUTHSECRET",
+      "original": "D228#/rows/2217",
+      "originalObjectSha256": "c285d97083bdc64b764901ce4f4478eafd24311f9ef98bd334dac1fc57659571",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS"
+      ],
+      "class": "secret-reference",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.authSecret",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 40,
+        "valuePath": "tailscale.authSecret",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.authSecret",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "secretKeyRef: {name: {{ .Values.tailscale.authSecret }}, key: authkey}",
+          "lines": [
+            130
+          ],
+          "selectedValuePath": "tailscale.authSecret",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "secretQualification": "Reference only; external Secret bytes and real kubelet/provider receipt are not central config or locally proved."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-HOSTNAME",
+      "original": "D228#/rows/2218",
+      "originalObjectSha256": "59de605cccfb607c859401a87f4a083acd59e4ef9b9ba5bdd69805d59c5e5889",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-OPS-RESIDUAL-TAILSCALE"
+      ],
+      "class": "generated-binding",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.hostname",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 41,
+        "valuePath": "tailscale.hostname",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.hostname",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "- {name: TS_HOSTNAME, value: {{ .Values.tailscale.hostname | quote }}}",
+          "lines": [
+            126
+          ],
+          "selectedValuePath": "tailscale.hostname",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-EXTRAARGS",
+      "original": "D228#/rows/2219",
+      "originalObjectSha256": "c1abca9b90cef17f636c63f0a3079e8f382abbf5c0cf5b68706ee2bd9ad0a029",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-OPS-RESIDUAL-TAILSCALE"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.extraArgs",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 42,
+        "valuePath": "tailscale.extraArgs",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.extraArgs",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "- {name: TS_EXTRA_ARGS, value: {{ .Values.tailscale.extraArgs | quote }}}",
+          "lines": [
+            127
+          ],
+          "selectedValuePath": "tailscale.extraArgs",
+          "projectionKind": "DIRECT"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN"
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-CPU",
+      "original": "D228#/rows/2220",
+      "originalObjectSha256": "a9bba8330cbecf9805709bdc56f20d7dd9faf5ee551e2585d3fd3e7b4c7d6ac2",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.resources.requests.cpu",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 45,
+        "valuePath": "tailscale.resources.requests.cpu",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.resources.requests.cpu",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.tailscale.resources | nindent 12 }}",
+          "lines": [
+            135
+          ],
+          "selectedValuePath": "tailscale.resources",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-MEMORY",
+      "original": "D228#/rows/2221",
+      "originalObjectSha256": "94cf1582bddd32461dce46bc24d265a6940d3edb7ccae390fb265e94538c0181",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.resources.requests.memory",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 45,
+        "valuePath": "tailscale.resources.requests.memory",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.resources.requests.memory",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.tailscale.resources | nindent 12 }}",
+          "lines": [
+            135
+          ],
+          "selectedValuePath": "tailscale.resources",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-CPU",
+      "original": "D228#/rows/2222",
+      "originalObjectSha256": "55b06f3d556724915a789c2b67b28724396043e0511ebe8b8386814a82fe56fa",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.resources.limits.cpu",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 46,
+        "valuePath": "tailscale.resources.limits.cpu",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.resources.limits.cpu",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.tailscale.resources | nindent 12 }}",
+          "lines": [
+            135
+          ],
+          "selectedValuePath": "tailscale.resources",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-MEMORY",
+      "original": "D228#/rows/2223",
+      "originalObjectSha256": "a68564734598c55021a07ee45a9108be54c9fd80485a7ddf46edf269dcde9ffc",
+      "caseIds": [
+        "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES"
+      ],
+      "class": "operator-setting",
+      "owner": "chart-ops-pod",
+      "originalSource": {
+        "path": "charts/ops-pod/values.yaml",
+        "field": "tailscale.resources.limits.memory",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+        "line": 46,
+        "valuePath": "tailscale.resources.limits.memory",
+        "lineKind": "exact YAML field/inline author line"
+      },
+      "currentValuePath": "tailscale.resources.limits.memory",
+      "currentValues": {
+        "path": "charts/ops-pod/values.yaml",
+        "sha256": "8dd02462f13091f4a3dd3729248a80824a43d6b306f7bf3a8b715a3ed9413eb1"
+      },
+      "centralPhysicalAuthor": null,
+      "actualProjections": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "ac0c1b3074d61a7cc81a69918f4cdb2e60cfa0cfe5aa1ed56000bcfc257bde07",
+          "anchor": "resources: {{ toYaml .Values.tailscale.resources | nindent 12 }}",
+          "lines": [
+            135
+          ],
+          "selectedValuePath": "tailscale.resources",
+          "projectionKind": "ANCESTOR_OBJECT_PROJECTION"
+        }
+      ],
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "status": "EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN",
+      "effectQualification": "Full container resources object projection; actual Kubernetes scheduling/cgroup effect NOT VERIFIED."
+    }
+  ],
+  "deliveryRoute": [
+    {
+      "path": "scripts/deploy-ops-pod.sh",
+      "sha256": "dfe4adcd0039a91e9832bbe209e2f92f707acfdaf2eae32f569ed0db6251dc48",
+      "anchor": "policy_values=$(node",
+      "lines": [
+        12
+      ]
+    },
+    {
+      "path": "scripts/deploy-ops-pod.sh",
+      "sha256": "dfe4adcd0039a91e9832bbe209e2f92f707acfdaf2eae32f569ed0db6251dc48",
+      "anchor": "values=(-f \"$temporary/discovered.json\"",
+      "lines": [
+        29
+      ]
+    },
+    {
+      "path": "scripts/deploy-ops-pod.sh",
+      "sha256": "dfe4adcd0039a91e9832bbe209e2f92f707acfdaf2eae32f569ed0db6251dc48",
+      "anchor": "selected_overlay=${selected_policy[3]:-${OPS_POD_VALUES:-}}",
+      "lines": [
+        31
+      ]
+    },
+    {
+      "path": "scripts/deploy-ops-pod.sh",
+      "sha256": "dfe4adcd0039a91e9832bbe209e2f92f707acfdaf2eae32f569ed0db6251dc48",
+      "anchor": "render \"$repo\" ops ops \"$release\" \"$namespace\"",
+      "lines": [
+        38
+      ]
+    },
+    {
+      "path": "scripts/deploy-ops-pod.sh",
+      "sha256": "dfe4adcd0039a91e9832bbe209e2f92f707acfdaf2eae32f569ed0db6251dc48",
+      "anchor": "helm upgrade --install",
+      "lines": [
+        43
+      ]
+    }
+  ],
+  "deploymentInvocationOwner": {
+    "path": "charts/ops-pod/deployment-policy.json",
+    "sha256": "ac167f75649ea9931424d4c0e0c76007e71dd0ef2672f1eb2479d89b117df1e2"
+  },
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN"
+}

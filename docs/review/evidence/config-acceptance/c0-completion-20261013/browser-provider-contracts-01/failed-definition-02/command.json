@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "python3",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/failed-definition-02/extend-definition.py"
+  ],
+  "exit": 1,
+  "originalTool": "3cb422",
+  "rawFailureReplay": "Exact saved script fails at syntax parsing before execution, no artifacts mutated"
+}

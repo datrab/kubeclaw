@@ -1,0 +1,8 @@
+{
+  "initialExit": 1,
+  "initialFailure": "SWARM_CONFIG_RETIRED_FULL_FACADE",
+  "currentExit": 0,
+  "mutantRejected": true,
+  "nativePreparation": "modeled; original provider, remote/store and graph assertions unchanged",
+  "independentReview": "OPEN"
+}

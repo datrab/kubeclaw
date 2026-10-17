@@ -1,0 +1,29 @@
+✔ actual Nova Helm render exposes architecture only through its private authenticated service (91.576093ms)
+✔ actual Helm rejects credential omission and a carried-over legacy architecture NodePort (100.268357ms)
+✔ authored Argo ingress and operator values identify external OAuth and shared proxy tags (0.78523ms)
+✖ actual Prism render binds private Studio ingress to its Service and removes only ingress when disabled (1.831607ms)
+✔ actual Ops render exposes optional outbound SOCKS only and retains incoming deny policy (88.987366ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 795.838593
+
+✖ failing tests:
+
+test at tests/verification/contracts/infra-private-access.test.mjs:54:1
+✖ actual Prism render binds private Studio ingress to its Service and removes only ingress when disabled (1.831607ms)
+  Error: SWARM_CONFIG_PATH_REQUIRED
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:342:11)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/generate-prism-chart-config.mjs:17:86
+      at Array.map (<anonymous>)
+      at prismChartProjection (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/generate-prism-chart-config.mjs:17:48)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/infra-private-access.test.mjs:57:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)

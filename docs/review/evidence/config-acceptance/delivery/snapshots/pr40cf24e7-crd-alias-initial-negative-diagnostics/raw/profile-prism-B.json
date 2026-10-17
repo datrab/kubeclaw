@@ -1,0 +1,157 @@
+{
+  "images": {
+    "control": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "studio": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "worker": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "ingestion": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "postgresql": {
+    "existingSecret": "delivery-pg-b",
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    },
+    "storage": "200Gi",
+    "storageClass": "delivery-storage-b"
+  },
+  "worker": {
+    "native": {
+      "nodeName": "native-render-test",
+      "namespace": "default",
+      "policyDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    }
+  },
+  "studio": {
+    "replicas": 2,
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    }
+  },
+  "ingestion": {
+    "enabled": true,
+    "replicas": 2,
+    "quarantineTtlMs": 120000,
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    }
+  },
+  "backup": {
+    "schedule": "0 2 * * *",
+    "verificationSchedule": "0 3 * * 0",
+    "databaseProofSchedule": "0 4 * * 0",
+    "maximumBytes": "42949672960",
+    "maximumRetainedBytes": "53687091200",
+    "maximumDurationSeconds": 1800,
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    }
+  },
+  "artifactStorage": {
+    "storage": "200Gi",
+    "storageClass": "delivery-storage-b"
+  },
+  "tailscale": {
+    "enabled": true
+  },
+  "workerTrust": {
+    "spiffe": {
+      "enabled": true,
+      "envoy": {
+        "resources": {
+          "requests": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "2",
+            "memory": "2Gi"
+          }
+        }
+      }
+    }
+  },
+  "control": {
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    },
+    "productDecisions": {
+      "enabled": true,
+      "issuer": "delivery-human-b",
+      "operators": [
+        "delivery-operator"
+      ],
+      "origin": "https://delivery.example.test",
+      "authorityRevision": "delivery-authority-b",
+      "signingSecretName": "delivery-signing-b",
+      "signingSecretKey": "private-key.pem",
+      "controllerUrl": "https://delivery-controller.example.test:8443",
+      "controllerNamespace": "default",
+      "controllerRelease": "delivery-controller",
+      "controllerCaSecretName": "delivery-ca-b",
+      "controllerCaSecretKey": "ca.crt",
+      "tokenAudience": "delivery-ready",
+      "tokenExpirationSeconds": 1200
+    }
+  },
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-b"
+    }
+  ],
+  "secrets": {
+    "runtime": "delivery-runtime-b",
+    "database": "delivery-database-b"
+  }
+}

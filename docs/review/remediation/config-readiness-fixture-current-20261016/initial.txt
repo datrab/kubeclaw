@@ -1,0 +1,31 @@
+✖ central readiness A/B and malformed policies follow actual image/chart generation for both charts (6775.46626ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7283.668343
+
+✖ failing tests:
+
+test at tests/verification/deployment/buster-readiness-config.test.mjs:18:1
+✖ central readiness A/B and malformed policies follow actual image/chart generation for both charts (6775.46626ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /retired/. Input:
+  
+  "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    '- (root): Additional property busterComponentFile is not allowed\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/buster-readiness-config.test.mjs:63:84)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Error: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- (root): Additional property busterComponentFile is not allowed\n\n",
+    expected: /retired/,
+    operator: 'match',
+    diff: 'simple'
+  }

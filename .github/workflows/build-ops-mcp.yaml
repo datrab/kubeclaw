@@ -74,11 +74,14 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
-          version: v3.22.0
+          version: v3.22.1
       - name: Test Ops Pod and actual Codex CLI
         working-directory: ops/pod
         run: |
           npm ci --ignore-scripts
+          # The kubectl source module owns its minimum toolchain, independently
+          # of the pipeline runtime Go version. Do not rely on the runner default.
+          export GOTOOLCHAIN="go$(awk '$1 == "go" {print $2}' kubectl-build/go.mod)"
           npm test
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
@@ -89,6 +92,19 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           tags: |
             type=sha,prefix=candidate-,format=long
+      - name: Select exact candidate image
+        id: candidate
+        env:
+          METADATA_JSON: ${{ steps.meta.outputs.json }}
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const tags = JSON.parse(process.env.METADATA_JSON).tags;
+          if (!Array.isArray(tags) || tags.length !== 1 || typeof tags[0] !== 'string' || !/^[^\s@]+:candidate-[0-9a-f]{40}$/.test(tags[0])) {
+            throw new Error('OPS_CANDIDATE_IMAGE_INVALID');
+          }
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `image=${tags[0]}\n`);
+          NODE
       - name: Build and load for runtime validation
         id: build
         uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
@@ -104,16 +120,16 @@ jobs:
       - name: Smoke-test the actual Codex container without account credentials
         if: matrix.image == 'kubeclaw-codex-ops'
         env:
-          TEST_IMAGE: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          TEST_IMAGE: ${{ steps.candidate.outputs.image }}
         run: bash ops/pod/test-image.sh "$TEST_IMAGE"
       - name: Smoke-test the actual MCP container
         if: matrix.image == 'kubeclaw-ops-mcp'
         env:
-          TEST_IMAGE: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          TEST_IMAGE: ${{ steps.candidate.outputs.image }}
         run: bash tools/ops-mcp/test-image.sh "$TEST_IMAGE"
       - name: Scan the built candidate before accepting the build
         env:
-          TEST_IMAGE: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          TEST_IMAGE: ${{ steps.candidate.outputs.image }}
         run: |
           mkdir -p dist/trivy
           trivy="$(bash scripts/scan-runtime-images.sh --executable)"
@@ -167,11 +183,14 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
-          version: v3.22.0
+          version: v3.22.1
       - name: Test Ops Pod and actual Codex CLI
         working-directory: ops/pod
         run: |
           npm ci --ignore-scripts
+          # The kubectl source module owns its minimum toolchain, independently
+          # of the pipeline runtime Go version. Do not rely on the runner default.
+          export GOTOOLCHAIN="go$(awk '$1 == "go" {print $2}' kubectl-build/go.mod)"
           npm test
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4

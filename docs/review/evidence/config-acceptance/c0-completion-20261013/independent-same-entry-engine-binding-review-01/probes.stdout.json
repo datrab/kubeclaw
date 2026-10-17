@@ -1,0 +1,23 @@
+{
+  "qualification": "Exact existing generation/authorization functions, public pure definition only; no provider/native/CLI/transport effect; current selected owner override used to challenge owner/tuple join",
+  "probes": [
+    {
+      "variant": "baseline",
+      "admitted": true,
+      "authorization": "PUBLIC_STRUCTURE_ONLY_NOT_GRANT",
+      "activationAllowed": false
+    },
+    {
+      "variant": "foreign-security-instance",
+      "admitted": true,
+      "authorization": "PUBLIC_STRUCTURE_ONLY_NOT_GRANT",
+      "activationAllowed": false
+    },
+    {
+      "variant": "missing-selected-security-profile",
+      "admitted": true,
+      "authorization": "PUBLIC_STRUCTURE_ONLY_NOT_GRANT",
+      "activationAllowed": false
+    }
+  ]
+}

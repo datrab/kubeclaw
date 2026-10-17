@@ -1,0 +1,494 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "c0-four-source-readonly-projections.proposed.v1",
+  "$comment": "Readonly receiving views of existing caller limits/task/native evidence only. No new author/capacity. Crossfield authority/equality/domain/coverage predicates in contracts.json mandatory; JSON shape is not attestation. Future source helper adaptation remains notrun.",
+  "$defs": {
+    "outboxLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumRecords",
+        "maximumBytes"
+      ],
+      "properties": {
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "readOnly": true
+    },
+    "blobLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumBytes",
+        "maximumTotalBytes"
+      ],
+      "properties": {
+        "maximumBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumTotalBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "readOnly": true
+    },
+    "quantityProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requestedStorage",
+        "originalMaximumClaimBytes",
+        "originalMaximumTotalBytes"
+      ],
+      "properties": {
+        "requestedStorage": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^(?:\\+)?([0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:(Ki|Mi|Gi|Ti|Pi|Ei)|(n|u|m|k|K|M|G|T|P|E)|([eE][+-]?[0-9]+))?$"
+        },
+        "originalMaximumClaimBytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$",
+          "maxLength": 16
+        },
+        "originalMaximumTotalBytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$",
+          "maxLength": 16
+        }
+      },
+      "readOnly": true
+    },
+    "measurementProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "originalEnvelopeDigest",
+        "originalClaimDigest",
+        "originalSourceDigest",
+        "phase",
+        "scope",
+        "cpuTimeMs",
+        "maximumMemoryBytes",
+        "maximumProcesses",
+        "originalPolicyDigest",
+        "originalAttemptId",
+        "originalClaimDeadline",
+        "sourceIdentity",
+        "processIdentity",
+        "clockTicksPerSecond"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "not-launched",
+            "observed",
+            "partial",
+            "unavailable"
+          ]
+        },
+        "originalEnvelopeDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "originalClaimDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "originalSourceDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "phase": {
+          "enum": [
+            "load",
+            "initialize",
+            "execute",
+            "cleanup",
+            "finalize",
+            "closed",
+            "recovery"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "child-self",
+            "procfs-owned-tree",
+            "native-owned-scope",
+            "not-launched"
+          ]
+        },
+        "cpuTimeMs": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "value",
+                "source",
+                "coverage"
+              ],
+              "properties": {
+                "status": {
+                  "const": "observed"
+                },
+                "value": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "source": {
+                  "enum": [
+                    "child-self",
+                    "procfs-owned-tree",
+                    "native-owned-scope"
+                  ]
+                },
+                "coverage": {
+                  "const": "complete"
+                }
+              },
+              "readOnly": true
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "lowerBound",
+                "source",
+                "coverage",
+                "reason"
+              ],
+              "properties": {
+                "status": {
+                  "const": "partial"
+                },
+                "lowerBound": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "source": {
+                  "enum": [
+                    "child-self",
+                    "procfs-owned-tree",
+                    "native-owned-scope"
+                  ]
+                },
+                "coverage": {
+                  "const": "incomplete"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "readOnly": true
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "reason"
+              ],
+              "properties": {
+                "status": {
+                  "const": "unavailable"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "readOnly": true
+            }
+          ]
+        },
+        "maximumMemoryBytes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "value",
+                "source",
+                "coverage"
+              ],
+              "properties": {
+                "status": {
+                  "const": "observed"
+                },
+                "value": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "source": {
+                  "enum": [
+                    "child-self",
+                    "procfs-owned-tree",
+                    "native-owned-scope"
+                  ]
+                },
+                "coverage": {
+                  "const": "complete"
+                }
+              },
+              "readOnly": true
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "lowerBound",
+                "source",
+                "coverage",
+                "reason"
+              ],
+              "properties": {
+                "status": {
+                  "const": "partial"
+                },
+                "lowerBound": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "source": {
+                  "enum": [
+                    "child-self",
+                    "procfs-owned-tree",
+                    "native-owned-scope"
+                  ]
+                },
+                "coverage": {
+                  "const": "incomplete"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "readOnly": true
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "reason"
+              ],
+              "properties": {
+                "status": {
+                  "const": "unavailable"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "readOnly": true
+            }
+          ]
+        },
+        "maximumProcesses": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "value",
+                "source",
+                "coverage"
+              ],
+              "properties": {
+                "status": {
+                  "const": "observed"
+                },
+                "value": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "source": {
+                  "enum": [
+                    "child-self",
+                    "procfs-owned-tree",
+                    "native-owned-scope"
+                  ]
+                },
+                "coverage": {
+                  "const": "complete"
+                }
+              },
+              "readOnly": true
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "lowerBound",
+                "source",
+                "coverage",
+                "reason"
+              ],
+              "properties": {
+                "status": {
+                  "const": "partial"
+                },
+                "lowerBound": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "source": {
+                  "enum": [
+                    "child-self",
+                    "procfs-owned-tree",
+                    "native-owned-scope"
+                  ]
+                },
+                "coverage": {
+                  "const": "incomplete"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "readOnly": true
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "reason"
+              ],
+              "properties": {
+                "status": {
+                  "const": "unavailable"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "readOnly": true
+            }
+          ]
+        },
+        "originalPolicyDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "originalAttemptId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalClaimDeadline": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIdentity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sourceDigest",
+            "issuerRef",
+            "scopeIdentity"
+          ],
+          "properties": {
+            "sourceDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "issuerRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scopeIdentity": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "readOnly": true
+        },
+        "processIdentity": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "bootId",
+                "pid",
+                "startTicks"
+              ],
+              "properties": {
+                "bootId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pid": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "startTicks": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "readOnly": true
+            }
+          ]
+        },
+        "clockTicksPerSecond": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          ]
+        }
+      },
+      "readOnly": true
+    }
+  }
+}

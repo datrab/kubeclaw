@@ -1,0 +1,51 @@
+{
+  "status": "NOVA-CARRIER-01 corrected at bounded proposed-definition scope; globalC0 remains OPEN",
+  "findingDisposition": {
+    "id": "NOVA-CARRIER-01",
+    "status": "verified-written-order-correction",
+    "basis": "Mandatory original-first step1 applies EVERYinvocation before anycurrentB select/parse/validation orpackageactivation. Original authenticatedrunlocator/storeauthority independentofB; retainedA+dependencyclosure used without B. Missing/conflictinghistoricalclosure rejects/reconciles. Only genuinelyunstartedgroup preparesB; synchronized recheck originalwins before onecompleteappend."
+  },
+  "sourceConstraintDispositions": [
+    {
+      "id": "NOVA-BOUNDARY-INNER-EVENT-SEQUENCE",
+      "status": "coherent proposed wording",
+      "basis": "FinalSDK innersequence derived from synchronized committedposition, finalencoding+wholeaccounting before completeappend; bindingbody preparedoutsidecallback; no currenttypedSDK proof."
+    },
+    {
+      "id": "NOVA-BOUNDARY-CURRENT-JOURNAL-CRASH-MODEL",
+      "status": "coherent proposed wording",
+      "basis": "Step5 requires originalcarrierretention and initialfiledirectory publication fsync or provenalreadydurable existingcarrier before observer/businessdelivery; currentfilefsync alone notdirectoryproof. No currentpowerloss proof inferred."
+    },
+    {
+      "id": "NOVA-BOUNDARY-OBSERVER-VIEW-GATE",
+      "status": "coherent proposed wording",
+      "basis": "OriginalR policy; requiredfailure keepsacceptedbinding and blocksdispatch; optionaldegraded onlyexplicitoriginalpolicy+recordedoutcome, notignoredflushsummary. Firstskipnotification included. Exactreaders/checkpoints/idempotency futurecases remainOPEN."
+    },
+    {
+      "id": "NOVA-BOUNDARY-ASYNC-LOCK-CALLBACK",
+      "status": "coherent proposed wording",
+      "basis": "Runauthority/AbortSignal preserved around asyncpreparation and checkedbeforeappend/view/activation/effects. Noawaitcallback; no claimedruntimePromiseban; no TTL-only stealingliveowner. ActualFileJournal/runmutationsource unchanged."
+    }
+  ],
+  "historicalControls": {
+    "sourceHashControls": 13,
+    "previousActualJournalControls": 7,
+    "replayedAgain": false,
+    "reason": "actual current source/check/rawlog/receipt unchanged; identities verified against originalreview, no needless rerun or broadenedproof",
+    "newLogicalWrittenOrderControls": 7,
+    "logicalControlLimits": "Actual localFileJournal plus nonSDK specimen/order model only; not implementedNova producer/readers, authentic policy/grants/ownedlease effects, F-MUT or runtime acceptance",
+    "futureTargetCasesRun": 0
+  },
+  "frozenInputs": 39,
+  "inputDrift": [],
+  "priorReviewDrift": [],
+  "remainingOpen": [
+    "ExactstrictSDKschema,eventversionedcodec/graphsnapshot evolution and task/operator partition",
+    "Complete M/J/R/S/H fieldmaps/originalauthority/grant/secret/role/code/manifest closure and accounting compatibility",
+    "Exactmetadata/store/referencepayload/physicalcapacity contract and legacy authenticatedevidence",
+    "Concrete executable cross-reader parallel/crash/skip/Eval/cleanup/administrativecases and completeprofiles/commands",
+    "Parallel async validation-failure/interveningoriginal timing must be specified/exercised in those futurecases; bounded logicalvalidcandidate recheck is not that executionproof",
+    "Fresh wholeC0review/acceptance"
+  ],
+  "exclusions": "No authoredCore55/97/145/Core13 selfreview/modifications; no Runtime/Delivery review/modifications; no production/tests/live API/host/imageactions/commit."
+}

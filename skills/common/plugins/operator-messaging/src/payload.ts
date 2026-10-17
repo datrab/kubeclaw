@@ -1,7 +1,8 @@
+import {capturePayloadStructure, type PayloadStructure} from './payload-structure.ts';
 import type { EffectRequest } from '@kubeclaw/plugin-sdk';
 
 const MESSAGE_TYPE = /^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$/;
-const PAYLOAD_KEYS = new Set(['type', 'projectId', 'waitId', 'message', 'eventId', 'runId', 'stageId', 'artifactId', 'artifact', 'approvalId', 'summary', 'fields', 'footer', 'occurredAt', 'severity', 'title', 'reasonCode', 'signalType', 'authorizedIssuer', 'expiresAt']);
+const PAYLOAD_KEYS = new Set(['type', 'projectId', 'waitId', 'message', 'eventId', 'runId', 'stageId', 'artifactId', 'artifact', 'approvalId', 'summary', 'fields', 'footer', 'occurredAt', 'severity', 'title', 'reasonCode', 'signalType', 'authorizedIssuer', 'expiresAt', 'architectureDigest']);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -29,22 +30,22 @@ function validateObjectKey(key: string, label: string): void {
   }
 }
 
-function validateJson(value: unknown, label: string, depth = 0): void {
-  if (depth > 20) throw new Error(`OPERATOR_PAYLOAD_INVALID:${label}:depth`);
+function validateJson(value: unknown, label: string, limits: PayloadStructure, depth = 0): void {
+  if (depth > limits.maximumDepth) throw new Error(`OPERATOR_PAYLOAD_INVALID:${label}:depth`);
   const scalar = value === null || typeof value === 'string' || typeof value === 'boolean'
     || (typeof value === 'number' && Number.isFinite(value));
   if (scalar) return;
   if (Array.isArray(value)) {
-    if (value.length > 1_000) throw new Error(`OPERATOR_PAYLOAD_INVALID:${label}:array`);
-    value.forEach((entry, index) => validateJson(entry, `${label}[${index}]`, depth + 1));
+    if (value.length > limits.maximumArrayEntries) throw new Error(`OPERATOR_PAYLOAD_INVALID:${label}:array`);
+    value.forEach((entry, index) => validateJson(entry, `${label}[${index}]`, limits, depth + 1));
     return;
   }
   if (!isRecord(value)) throw new Error(`OPERATOR_PAYLOAD_INVALID:${label}:json`);
   const entries = Object.entries(value);
-  if (entries.length > 1_000) throw new Error(`OPERATOR_PAYLOAD_INVALID:${label}:object`);
+  if (entries.length > limits.maximumObjectProperties) throw new Error(`OPERATOR_PAYLOAD_INVALID:${label}:object`);
   for (const [key, entry] of entries) {
     validateObjectKey(key, label);
-    validateJson(entry, `${label}.${key}`, depth + 1);
+    validateJson(entry, `${label}.${key}`, limits, depth + 1);
   }
 }
 
@@ -76,26 +77,28 @@ function validateIssuer(value: unknown): void {
   boundedString(value.id, 'authorizedIssuer.id', 512);
 }
 
-function validateKnownFields(raw: Record<string, unknown>): void {
+function validateKnownFields(raw: Record<string, unknown>, limits: PayloadStructure): void {
   const strings: ReadonlyArray<readonly [string, number, boolean?]> = [
     ['projectId', 512], ['waitId', 512], ['message', 16_384], ['eventId', 512], ['runId', 512], ['stageId', 512, true],
     ['artifactId', 512, true], ['approvalId', 512], ['summary', 16_384], ['footer', 2_048],
     ['severity', 32], ['title', 512], ['reasonCode', 256, true], ['signalType', 256],
   ];
   for (const [key, limit, nullable] of strings) boundedString(raw[key], key, limit, nullable, ['message', 'summary', 'footer'].includes(key));
+  if (raw.architectureDigest !== undefined && (typeof raw.architectureDigest !== 'string' || !/^sha256:[a-f0-9]{64}$/u.test(raw.architectureDigest))) throw new Error('OPERATOR_PAYLOAD_INVALID:architectureDigest');
   validateDate(raw.occurredAt, 'occurredAt');
   validateDate(raw.expiresAt, 'expiresAt');
   validateFields(raw.fields);
   validateIssuer(raw.authorizedIssuer);
-  if (raw.artifact !== undefined) validateJson(raw.artifact, 'artifact');
+  if (raw.artifact !== undefined) validateJson(raw.artifact, 'artifact', limits);
 }
 
-export function parsePayload(raw: Readonly<Record<string, unknown>>, maxPayloadBytes: number): Readonly<Record<string, unknown>> {
+export function parsePayload(raw: Readonly<Record<string, unknown>>, maxPayloadBytes: number, structure: PayloadStructure): Readonly<Record<string, unknown>> {
+  const limits = capturePayloadStructure(structure);
   if (!isRecord(raw)) throw new Error('OPERATOR_PAYLOAD_INVALID:root');
   exactKeys(raw, PAYLOAD_KEYS, 'OPERATOR_PAYLOAD_UNKNOWN_FIELD');
   if (typeof raw.type !== 'string' || !MESSAGE_TYPE.test(raw.type) || raw.type.length > 128) throw new Error('OPERATOR_PAYLOAD_INVALID:type');
-  validateKnownFields(raw);
-  validateJson(raw, 'payload');
+  validateKnownFields(raw, limits);
+  validateJson(raw, 'payload', limits);
   if (Buffer.byteLength(JSON.stringify(raw), 'utf8') > maxPayloadBytes) throw new Error('OPERATOR_PAYLOAD_SIZE_EXCEEDED');
   return Object.freeze({ ...raw });
 }

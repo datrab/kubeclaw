@@ -1,8 +1,9 @@
+import type { StudioBrowserPolicy } from './browser-policy.ts';
 import {roundResponse,responseObject} from "./round-response.ts";
 import type {PrismDocument} from '@kubeclaw/prism-contracts-v1';
 export type StudioDirection={id:string;generation_id?:string;source_document_id?:string;title:string;summary:string;state:string;evidence?:{thesis?:string;tradeoffs?:string[];references?:Array<{id?:string;summary?:string}>}};
 export type PendingRound={documentId:string;expectedRevision:number;parentRoundId?:string;idempotencyKey:string;generationId?:string};
-export type RoundClient={projectId:string;userId:string;csrf:string;origin:string;storage:Pick<Storage,'getItem'|'setItem'|'removeItem'>};
+export type RoundClient={projectId:string;userId:string;csrf:string;origin:string;policy:StudioBrowserPolicy;storage:Pick<Storage,'getItem'|'setItem'|'removeItem'>};
 const key=(client:RoundClient)=>`prism-round:${client.userId}:${client.projectId}`;
 const route=(client:RoundClient,path:string)=>new URL(path,client.origin);
 export function savedRound(client:RoundClient):PendingRound|null {
@@ -37,14 +38,23 @@ export function completeRound(client:RoundClient,directions:StudioDirection[]) {
  if(!pending || !directions.length || !directions.every(item=>item.generation_id===pending.generationId))return false;
  client.storage.removeItem(key(client));return true;
 }
-export async function waitForRound(client:RoundClient,pending:PendingRound,attempts=30) {
- for(let attempt=0;attempt<attempts;attempt++){
+export async function waitForRound(client:RoundClient,pending:PendingRound) {
+ for(let attempt=0;attempt<client.policy.roundPolling.maximumAttempts;attempt++){
   const directions=await currentDirections(client);
   if(directions.length && directions[0]?.generation_id!==pending.generationId)throw new Error('Pending round was superseded; the request key is retained');
   if(directions.length===3 && directions.every(item=>item.generation_id===pending.generationId)){
    const loaded=await loadRoundDocument(client,directions);completeRound(client,directions);return loaded;
   }
-  if(attempt+1<attempts)await new Promise(resolve=>setTimeout(resolve,2000));
+  if(attempt+1<client.policy.roundPolling.maximumAttempts)await new Promise(resolve=>setTimeout(resolve,client.policy.roundPolling.intervalMs));
+ }
+ return null;
+}
+
+export async function waitForInitialDirections(client:RoundClient,currentId?:string) {
+ for(let attempt=0;attempt<client.policy.initialDirectionPolling.maximumAttempts;attempt++){
+  const items=await currentDirections(client);
+  if(items.length)return loadRoundDocument(client,items,currentId);
+  await new Promise(resolve=>setTimeout(resolve,client.policy.initialDirectionPolling.intervalMs));
  }
  return null;
 }

@@ -1,0 +1,3041 @@
+{
+  "scope": [
+    "skills",
+    "scripts",
+    "tests"
+  ],
+  "constructorsAndCalls": [
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "line": 35,
+      "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "sourceText": "  const store = new FileDurableRecordStore(configured, {",
+      "context": [
+        "  if (!Number.isSafeInteger(maxEntryBytes) || maxEntryBytes < 1) throw new Error('maxEntryBytes is invalid');",
+        "  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');",
+        "  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');",
+        "  const store = new FileDurableRecordStore(configured, {",
+        "    maximumRecords,",
+        "    maximumBytes: maximumStoreBytes,",
+        "    maximumRecordBytes: maxEntryBytes,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "line": 207,
+      "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+      "sourceText": "  const store = new FileDurableRecordStore(root, {",
+      "context": [
+        "  if (!Number.isSafeInteger(maxEntryBytes) || maxEntryBytes < 1) throw new Error('maxEntryBytes is invalid');",
+        "  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');",
+        "  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');",
+        "  const store = new FileDurableRecordStore(root, {",
+        "    maximumRecords,",
+        "    maximumBytes: maximumStoreBytes,",
+        "    maximumRecordBytes: maxEntryBytes,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "line": 14,
+      "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+      "sourceText": "  const store = new FileDurableRecordStore(root, {",
+      "context": [
+        "  if (!Number.isSafeInteger(maxRecordBytes) || maxRecordBytes < 1) throw new Error('maxRecordBytes is invalid');",
+        "  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');",
+        "  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');",
+        "  const store = new FileDurableRecordStore(root, {",
+        "    maximumRecords,",
+        "    maximumBytes: maximumStoreBytes,",
+        "    maximumRecordBytes: maxRecordBytes,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "line": 69,
+      "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+      "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {",
+      "context": [
+        "export function activate(context: AdapterActivationContext): AdapterInstance {",
+        "  const config = parseConfig(context.config);",
+        "  const targets = config.targets;",
+        "  const records = new FileDurableRecordStore(config.deliveryRoot, {",
+        "    maximumRecords: config.maximumDeliveryRecords,",
+        "    maximumBytes: config.maximumDeliveryBytes,",
+        "    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "line": 197,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {",
+      "context": [
+        "export function activate(context: AdapterActivationContext): AdapterInstance {",
+        "  const config = readConfig(context.config);",
+        "  const targets = config.targets;",
+        "  const records = new FileDurableRecordStore(config.deliveryRoot, {",
+        "    maximumRecords: config.maximumDeliveryRecords,",
+        "    maximumBytes: config.maximumDeliveryBytes,",
+        "    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 168,
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "sourceText": "  const records = new FileDurableRecordStore(configured, {",
+      "context": [
+        "  const maximumRecords = context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS;",
+        "  if (!Number.isSafeInteger(maximumStoreBytes) || Number(maximumStoreBytes) < 1) throw new Error('maximumStoreBytes is invalid');",
+        "  if (!Number.isSafeInteger(maximumRecords) || Number(maximumRecords) < 1) throw new Error('maximumRecords is invalid');",
+        "  const records = new FileDurableRecordStore(configured, {",
+        "    maximumRecords: Number(maximumRecords),",
+        "    maximumBytes: Number(maximumStoreBytes),",
+        "    maximumRecordBytes: 64 * 1024,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 173,
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "sourceText": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));",
+      "context": [
+        "    maximumBytes: Number(maximumStoreBytes),",
+        "    maximumRecordBytes: 64 * 1024,",
+        "  });",
+        "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));",
+        "  return {",
+        "    async ready() { await records.read<ArtifactRef>('artifacts/readiness'); },",
+        "    async invoke(invocation) { return invokeArtifact(records, blobs, Number(maximum), invocation); },"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts",
+      "line": 55,
+      "sha256": "cf2969a7212ca9b19912f909b43c1ae66ca5f8b20ab1198f3f22428978f3c078",
+      "sourceText": "  const pendingMetadata = new FileDurableRecordStore(temporary, {",
+      "context": [
+        "    signal,",
+        "  });",
+        "  assert.deepEqual(read.value, { a: ['stable'], z: 1 });",
+        "  const pendingMetadata = new FileDurableRecordStore(temporary, {",
+        "    maximumRecords: 100_000,",
+        "    maximumBytes: 256 * 1024 * 1024,",
+        "    maximumRecordBytes: 64 * 1024,"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "line": 104,
+      "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+      "sourceText": "  await withDurableStoreLock(pointer,async()=>{",
+      "context": [
+        "  const base=path.join(root,DIRECTORY),pointer=path.join(base,'current.json');",
+        "  names.forEach(name=>targetValid(path.join(root,name)));targetValid(pointer);",
+        "  await ensureDirectoryDurable(base);",
+        "  await withDurableStoreLock(pointer,async()=>{",
+        "    const basePins=pins(base);names.forEach(name=>targetValid(path.join(root,name)));targetValid(pointer);",
+        "    const generation=path.join(base,manifest.generation);await ensureDirectoryDurable(generation);const generationPins=pins(generation);",
+        "    for(let index=0;index<2;index++)await immutableFile(path.join(generation,names[index]!),contents[index]!);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 48,
+      "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));",
+      "context": [
+        "  async put(input: Uint8Array): Promise<{ readonly digest: string; readonly sizeBytes: number }> {",
+        "    if (this.#maximumTotalBytes === undefined) return this.#put(input);",
+        "    await ensureDirectoryDurable(this.#root);",
+        "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));",
+        "  }",
+        "",
+        "  async #usedBytes(directory: string): Promise<number> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 344,
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);",
+      "context": [
+        "    this.#limits = limits;",
+        "  }",
+        "  #serial<T>(operation: () => Promise<T>): Promise<T> {",
+        "    const locked = () => withDurableStoreLock(this.#file, operation);",
+        "    const result = this.#queue.then(locked, locked);",
+        "    this.#queue = result.then(",
+        "      () => undefined,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 458,
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);",
+      "context": [
+        "    return path.dirname(this.#file);",
+        "  }",
+        "  #serial<T>(operation: () => Promise<T>): Promise<T> {",
+        "    const locked = () => withDurableStoreLock(this.#file, operation);",
+        "    const result = this.#queue.then(locked, locked);",
+        "    this.#queue = result.then(",
+        "      () => undefined,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 53,
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+      "sourceText": "      withDurableStoreLock(this.file, async () => {",
+      "context": [
+        "  }",
+        "  serial<T>(operation: () => Promise<T>): Promise<T> {",
+        "    const locked = () =>",
+        "      withDurableStoreLock(this.file, async () => {",
+        "        await cleanupStaging(this.root);",
+        "        return operation();",
+        "      });"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 60,
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);",
+      "context": [
+        "  }",
+        "",
+        "  #serial<T>(operation: () => Promise<T>): Promise<T> {",
+        "    const locked = () => withDurableStoreLock(this.#file, operation);",
+        "    const result = this.#queue.then(locked, locked);",
+        "    this.#queue = result.then(() => undefined, () => undefined);",
+        "    return result;"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 32,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+      "context": [
+        "      throw new Error('WORKER_NATIVE_JOURNAL_CONFIG_INVALID');",
+        "    }",
+        "    this.#root = path.resolve(root); this.#limits = { ...limits };",
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 35,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);",
+        "  }",
+        "",
+        "  async withAttempt<T>(input: WorkerAttemptEnvelopeV3,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 51,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {",
+      "context": [
+        "    // serialize across real processes; unrelated stripes can execute together.",
+        "    let entered = false;",
+        "    try {",
+        "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {",
+        "        entered = true;",
+        "        const reserved = await this.#reserve(envelope, bytes, validateNewAdmission);",
+        "        return operation({ envelope, newlyAccepted: reserved.newlyAccepted, acceptedAt: reserved.record.payload.acceptedAt,"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 124,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {",
+      "context": [
+        "    if (!checkWorkerNativeResultBinding(envelope, result).ok) throw new Error('WORKER_NATIVE_JOURNAL_RESULT_BINDING_INVALID');",
+        "    const bytes = Buffer.from(canonicalJson(result));",
+        "    if (bytes.byteLength > this.#limits.maximumResultBytes) throw new Error('WORKER_NATIVE_JOURNAL_RESULT_LIMIT');",
+        "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {",
+        "      const record = await this.#required(envelope);",
+        "      if (record.payload.result) {",
+        "        if (record.payload.result.digest !== sha256Digest(result)) throw new Error('WORKER_NATIVE_JOURNAL_RESULT_ALREADY_SEALED');"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 165,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {",
+      "context": [
+        "  }",
+        "",
+        "  async #reserve(envelope: WorkerAttemptEnvelopeV3, bytes: Buffer, validateNewAdmission: (envelope: WorkerAttemptEnvelopeV3) => void) {",
+        "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {",
+        "      const existing = await this.#lookup(envelope);",
+        "      if (existing) return { newlyAccepted: false, record: existing };",
+        "      // Reject expired or unsupported new work under the admission lock, before"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 75,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));",
+      "context": [
+        "  }",
+        "",
+        "  async records(): Promise<readonly WorkerOwnershipRecord[]> {",
+        "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));",
+        "  }",
+        "",
+        "  /** A changed boot is only a reboot proof after this store is bound to one host. */"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 82,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    await withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "  async bindHostIdentity(hostIdentity: string, currentBootId: string): Promise<void> {",
+        "    validateOwnershipHostIdentity(hostIdentity);",
+        "    if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(currentBootId)) throw new Error('WORKER_OWNERSHIP_BOOT_IDENTITY_INVALID');",
+        "    await withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      if (state.hostIdentity !== null) {",
+        "        if (state.hostIdentity !== hostIdentity) throw new Error('WORKER_OWNERSHIP_DIFFERENT_HOST_UNRESOLVED');"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 98,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);",
+      "context": [
+        "",
+        "  /** Held for the entire supervisor lifetime, including recovery and admission. */",
+        "  async withSupervisor<T>(operation: () => Promise<T>): Promise<T> {",
+        "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);",
+        "  }",
+        "",
+        "  async reserve(input: WorkerOwnershipIdentity): Promise<WorkerOwnershipRecord> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 104,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "  async reserve(input: WorkerOwnershipIdentity): Promise<WorkerOwnershipRecord> {",
+        "    const identity = structuredClone(input);",
+        "    identityValid(identity);",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const same = state.records.find(record => key(record.identity) === key(identity));",
+        "      if (same) {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 134,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    const change = structuredClone(options);",
+        "    validateRecord(expected);",
+        "    if (!Object.hasOwn(transitions, phase)) throw new Error('WORKER_OWNERSHIP_PHASE_INVALID');",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const index = state.records.findIndex(record => key(record.identity) === key(expected.identity));",
+        "      const current = state.records[index];"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 179,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    update: (current: WorkerOwnershipRecord) => WorkerScopeTopology['children'], admission: boolean): Promise<WorkerOwnershipRecord> {",
+        "    const expected = structuredClone(input);",
+        "    validateRecord(expected);",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const index = state.records.findIndex(record => key(record.identity) === key(expected.identity));",
+        "      const current = state.records[index];"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "line": 45,
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "sourceText": "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});",
+      "context": [
+        "}",
+        "export function activate(context:AdapterActivationContext):AdapterInstance {",
+        "  const config=configuration(context.config),stopping=new AbortController();",
+        "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});",
+        "  const execute=async(request:EffectRequest,signal:AbortSignal,recovery:boolean):Promise<Value|undefined>=>{",
+        "    assertRequest(request,config);signal.throwIfAborted();",
+        "    const reader:Reader={invoke:(capability,invocation)=>context.invoke(capability,invocation,{signal})};"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+      "line": 179,
+      "sha256": "181ede16e4cadd8c8dc7af730dc2408e5337eef6f6f01cc2357086dd824a4a2d",
+      "sourceText": "const artifactRecords = new FileDurableRecordStore(artifactRoot, {",
+      "context": [
+        "const secretName = 'KUBECLAW_REVIEW_TEST_TOKEN';",
+        "process.env[secretName] = 'local-token';",
+        "",
+        "const artifactRecords = new FileDurableRecordStore(artifactRoot, {",
+        "  maximumRecords: 100_000,",
+        "  maximumBytes: 256 * 1024 * 1024,",
+        "  maximumRecordBytes: 64 * 1024,"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+      "line": 184,
+      "sha256": "181ede16e4cadd8c8dc7af730dc2408e5337eef6f6f01cc2357086dd824a4a2d",
+      "sourceText": "const artifactBlobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);",
+      "context": [
+        "  maximumBytes: 256 * 1024 * 1024,",
+        "  maximumRecordBytes: 64 * 1024,",
+        "});",
+        "const artifactBlobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);",
+        "",
+        "async function storedReport(runId: string): Promise<Record<string, unknown>> {",
+        "  const catalog = (await artifactRecords.read<{ digest: string; producer: { runId: string } }>("
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+      "line": 68,
+      "sha256": "9cb2789e42560f95948b0714fd5ee0fe92d21db8946b8b08432c04330850abb8",
+      "sourceText": "  const records = new FileDurableRecordStore(artifacts, { maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024 });",
+      "context": [
+        "});",
+        "try {",
+        "  await adapters.start();",
+        "  const records = new FileDurableRecordStore(artifacts, { maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024 });",
+        "  const blobs = new FileDurableBlobStore(artifacts, 16 * 1024 * 1024, 256 * 1024 * 1024);",
+        "  const scopes = [",
+        "    { kind: 'plugin', names: ['review'], dependencyRadius: 0 },"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+      "line": 69,
+      "sha256": "9cb2789e42560f95948b0714fd5ee0fe92d21db8946b8b08432c04330850abb8",
+      "sourceText": "  const blobs = new FileDurableBlobStore(artifacts, 16 * 1024 * 1024, 256 * 1024 * 1024);",
+      "context": [
+        "try {",
+        "  await adapters.start();",
+        "  const records = new FileDurableRecordStore(artifacts, { maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024 });",
+        "  const blobs = new FileDurableBlobStore(artifacts, 16 * 1024 * 1024, 256 * 1024 * 1024);",
+        "  const scopes = [",
+        "    { kind: 'plugin', names: ['review'], dependencyRadius: 0 },",
+        "    { kind: 'plugin', names: ['review'], dependencyRadius: 1 },"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "line": 100,
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+      "context": [
+        "  readonly #records: FileDurableRecordStore;",
+        "  readonly #blobs: FileDurableBlobStore;",
+        "  constructor(root: string, options: { recordLimits: DurableRecordLimits; maximumEvidenceStoreBytes: number }) {",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    // The importer enforces the per-job evidence limit; no blob can exceed the",
+        "    // store quota, and the third argument enforces that quota across all jobs.",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "line": 103,
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    // The importer enforces the per-job evidence limit; no blob can exceed the",
+        "    // store quota, and the third argument enforces that quota across all jobs.",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);",
+        "  }",
+        "  /** Read only a completed import under an exact caller-independent execution binding. */",
+        "  async readVerifiedResult(binding: { readonly jobId: string; readonly runId: string; readonly pipelineStageId: string;"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "line": 24,
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+      "context": [
+        "    if (!Number.isSafeInteger(options.maximumArchiveBytes) || options.maximumArchiveBytes < 1) {",
+        "      throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_LIMIT_INVALID');",
+        "    }",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "  }"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "line": 25,
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+      "context": [
+        "      throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_LIMIT_INVALID');",
+        "    }",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "  }",
+        ""
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 384,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "    attemptStore: new FileDurableAttemptStore(",
+      "context": [
+        "  )",
+        "    throw new Error(\"NOVA_OBSERVABILITY_PLAN_INVALID\");",
+        "  const reconciler = new NovaObservabilityReconciler({",
+        "    attemptStore: new FileDurableAttemptStore(",
+        "      path.join(root, \"attempts\"),",
+        "      EMBEDDED_ATTEMPT_LIMITS,",
+        "    ),"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 388,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "    admissionStore: new FileObservabilityAdmissionStore(",
+      "context": [
+        "      path.join(root, \"attempts\"),",
+        "      EMBEDDED_ATTEMPT_LIMITS,",
+        "    ),",
+        "    admissionStore: new FileObservabilityAdmissionStore(",
+        "      path.join(root, \"admission\"),",
+        "      EMBEDDED_ADMISSION_LIMITS,",
+        "    ),"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 46,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+      "context": [
+        "    }",
+        "    this.#admissionLock = path.join(path.resolve(root), 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "    this.#maximumResultBytes = options.maximumResultBytes;"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 47,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+      "context": [
+        "    this.#admissionLock = path.join(path.resolve(root), 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "    this.#maximumResultBytes = options.maximumResultBytes;",
+        "    let sourcePublicKey: crypto.KeyObject;"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 89,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));",
+      "context": [
+        "",
+        "  async accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {",
+        "    this.#preflight(job);",
+        "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));",
+        "  }",
+        "",
+        "  async #accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 185,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));",
+      "context": [
+        "",
+        "  async complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {",
+        "    validatePipelineTestGateContract('remotePlanResult', result);",
+        "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));",
+        "  }",
+        "",
+        "  async #complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 234,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {",
+      "context": [
+        "    // Own the complete intent before validation or asynchronous lock acquisition.",
+        "    const intent = structuredClone(inputIntent);",
+        "    assertCompactionIntent(intent);",
+        "    return withDurableStoreLock(this.#admissionLock, async () => {",
+        "      const current = await this.get(intent.jobId);",
+        "      if (current.payload.schemaVersion === 'buster-plan-job-compacted-record.v1') {",
+        "        if (current.payload.compaction.intentDigest !== compactionDigest(intent)) throw new Error('BUSTER_COMPACTION_INTENT_CONFLICT');"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 64,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);",
+      "context": [
+        "    this.#customDurableAttemptStore = options.durableAttemptStore !== undefined;",
+        "    this.#durableAttemptStore =",
+        "      options.durableAttemptStore ??",
+        "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);",
+        "    this.#observabilityAdmissionStore =",
+        "      options.observabilityAdmissionStore ??",
+        "      new FileObservabilityAdmissionStore(path.join(observabilityRoot, \"admission\"), executionPolicy.stores.admission);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 67,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "      new FileObservabilityAdmissionStore(path.join(observabilityRoot, \"admission\"), executionPolicy.stores.admission);",
+      "context": [
+        "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);",
+        "    this.#observabilityAdmissionStore =",
+        "      options.observabilityAdmissionStore ??",
+        "      new FileObservabilityAdmissionStore(path.join(observabilityRoot, \"admission\"), executionPolicy.stores.admission);",
+        "    this.#now = options.now ?? (() => new Date());",
+        "    this.#id = options.id ?? (() => crypto.randomUUID());",
+        "    this.#authorityId = `test-runner:${options.plan.planDigest}`;"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+      "line": 144,
+      "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+      "sourceText": "  return withDurableStoreLock(file, async () => {",
+      "context": [
+        "  await retainPreparationGate(options.command.sourceRoot, receipt.importId, binding);",
+        "  const group = path.join(options.command.sourceRoot, receipt.importId);",
+        "  const file = path.join(group, 'historical-receipt.json');",
+        "  return withDurableStoreLock(file, async () => {",
+        "    if (reservation.phase === 'retained-historical') {",
+        "      if (reservation.groupReceiptDigest !== preparationDigest(receipt)) throw new Error('BUSTER_HISTORICAL_RECEIPT_CHANGED');",
+        "      const actual = await digestHistoricalFile(file, options.settings.maximumResultBytes);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 31,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+      "context": [
+        "      throw new Error('BUSTER_FIXTURE_JOURNAL_CONFIG_INVALID');",
+        "    }",
+        "    this.#root = path.resolve(root); this.#limits = { ...limits };",
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: 4096,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 34,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: 4096,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);",
+        "  }",
+        "",
+        "  async reserve(input: BusterFixtureAdmission): Promise<BusterFixtureState> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 125,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);",
+      "context": [
+        "    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }",
+        "    const stat = await fs.lstat(this.#root);",
+        "    if (!stat.isDirectory() || stat.uid !== process.getuid!() || (stat.mode & 0o077)) throw new Error('BUSTER_FIXTURE_JOURNAL_NOT_PRIVATE');",
+        "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);",
+        "  }",
+        "",
+        "  async #all(): Promise<readonly DurableRecord<BusterFixtureState>[]> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 71,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);",
+      "context": [
+        "    const writableRoot = preparedPlanStateRoot(root);",
+        "    this.#admissionLock = path.join(writableRoot, 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumResultBytes = options.maximumResultBytes;",
+        "    let sourcePublicKey: crypto.KeyObject;"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 72,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+      "context": [
+        "    this.#admissionLock = path.join(writableRoot, 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumResultBytes = options.maximumResultBytes;",
+        "    let sourcePublicKey: crypto.KeyObject;",
+        "    try { sourcePublicKey = crypto.createPublicKey(options.sourceAttestationPublicKey); }"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 93,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));",
+      "context": [
+        "  async accept(input: BusterStagedAdmission, now: string): Promise<RemotePlanStatusV1> {",
+        "    const prepared = structuredClone(input);",
+        "    this.validate(prepared);",
+        "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));",
+        "  }",
+        "",
+        "  async #accept(prepared: BusterStagedAdmission, now: string): Promise<RemotePlanStatusV1> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 155,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));",
+      "context": [
+        "",
+        "  async attachSource(prepared: PreparedAdmission): Promise<void> {",
+        "    const captured = structuredClone(prepared);",
+        "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));",
+        "  }",
+        "",
+        "  async #attachSource(prepared: PreparedAdmission): Promise<void> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 173,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {",
+      "context": [
+        "",
+        "  /** Read the cancellation decision under the same fence as completion and source attachment. */",
+        "  async requestCancellation(jobId: string, now: string): Promise<RemotePlanStatusV1> {",
+        "    return withDurableStoreLock(this.#admissionLock, async () => {",
+        "      const current = await this.get(jobId);",
+        "      if (['completed', 'failed', 'cancelled', 'cancelling'].includes(current.payload.status.state)) {",
+        "        return current.payload.status;"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 191,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock,",
+      "context": [
+        "  ): Promise<RemotePlanStatusV1> {",
+        "    const capturedExpected = [...expected];",
+        "    const capturedTerminal = terminal === undefined ? undefined : structuredClone(terminal);",
+        "    return withDurableStoreLock(this.#admissionLock,",
+        "      () => this.#transitionStatus(jobId, capturedExpected, state, now, capturedTerminal));",
+        "  }",
+        ""
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 238,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));",
+      "context": [
+        "  async complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {",
+        "    result = structuredClone(result);",
+        "    validatePipelineTestGateContract('remotePlanResult', result);",
+        "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));",
+        "  }",
+        "",
+        "  async #complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 32,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    profile = structuredClone(profile);",
+        "    now = new Date(now);",
+        "    if (!/^[a-f0-9]{32}$/u.test(admissionId)) throw new Error('BUSTER_PREPARATION_RESERVATION_INVALID');",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const existing = state.reservations.find(item => item.admissionId === admissionId);",
+        "      if (existing) return structuredClone(existing.envelope);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 52,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    profile = structuredClone(profile);",
+        "    now = new Date(now);",
+        "    assertHistoricalImportDescriptor(descriptor);",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const existing = state.reservations.find(item => item.admissionId === importId);",
+        "      if (existing) {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 138,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    profile = structuredClone(profile);",
+        "    now = new Date(now);",
+        "    assertBusterInput(staged.input, staged.job);",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const key = preparationDigest(staged.input);",
+        "      await this.#validateRetainedInput(state, staged);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 289,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations));",
+      "context": [
+        "  }",
+        "",
+        "  async reservations(): Promise<readonly SourceReservation[]> {",
+        "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations));",
+        "  }",
+        "",
+        "  async #transition(admissionId: string, update: (value: SourceReservation) => SourceReservation): Promise<void> {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 293,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    await withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "  }",
+        "",
+        "  async #transition(admissionId: string, update: (value: SourceReservation) => SourceReservation): Promise<void> {",
+        "    await withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const index = state.reservations.findIndex(item => item.admissionId === admissionId);",
+        "      if (index < 0) throw new Error('BUSTER_PREPARATION_RESERVATION_MISSING');"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "scripts/retire-wait-value.mjs",
+      "line": 94,
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+      "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+      "context": [
+        "      ['signals.jsonl', source.signalsPrefixBytes]]) {",
+        "      if (fs.lstatSync(path.join(root, name)).size !== bytes) throw new Error('WAIT_RETENTION_CURRENT_PREFIX_REQUIRED');",
+        "    }",
+        "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+        "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+        "    const initialWaits = await waits.read('waits/all');",
+        "    const authority = operatorAuthority(initial.inventory, authorityScope, config, initialWaits);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "scripts/retire-wait-value.mjs",
+      "line": 95,
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+      "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+      "context": [
+        "      if (fs.lstatSync(path.join(root, name)).size !== bytes) throw new Error('WAIT_RETENTION_CURRENT_PREFIX_REQUIRED');",
+        "    }",
+        "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+        "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+        "    const initialWaits = await waits.read('waits/all');",
+        "    const authority = operatorAuthority(initial.inventory, authorityScope, config, initialWaits);",
+        "    if (authority.waitEffectKey !== source.effectKey || authority.originalWaitPayloadDigest !== source.originalPayloadDigest"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "scripts/retire-telemetry.mjs",
+      "line": 49,
+      "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+      "sourceText": "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);",
+      "context": [
+        "  return withRunMutationLock(root, async signal => {",
+        "    signal.throwIfAborted();",
+        "    const initial = retainedRun(scope,root);",
+        "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);",
+        "    return store.retire({operationId:scope.operationId,actor:scope.actor,owner:scope.runId,stream:STREAM,",
+        "      records:scope.records,evidence:initial.evidence}, async records => {",
+        "      signal.throwIfAborted();"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 65,
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+      "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+      "context": [
+        "  return withRunMutationLock(canonical, async signal => {",
+        "    signal.throwIfAborted();",
+        "    const initial = retainedRun(scope), config = initial.configuration;",
+        "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+        "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+        "    return waits.withRecords('waits/all', async waitRecords => {",
+        "      const authority = operatorAuthority(initial.inventory, scope, config, waitRecords);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 66,
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+      "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+      "context": [
+        "    signal.throwIfAborted();",
+        "    const initial = retainedRun(scope), config = initial.configuration;",
+        "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+        "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+        "    return waits.withRecords('waits/all', async waitRecords => {",
+        "      const authority = operatorAuthority(initial.inventory, scope, config, waitRecords);",
+        "      return projectDeliveryRequest(deliveries, authority.request, scope.intent, authority.digest, records => {"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "scripts/retire-admission.mjs",
+      "line": 53,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+      "context": [
+        "  }",
+        "  return withRunMutationLock(root,async signal=>{",
+        "    signal.throwIfAborted();const initial=retainedRun(scope,root);",
+        "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+        "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);",
+        "    return attempts.retireAdmissionCompletion(admission,{pipelineRunId:scope.runId,attemptId:scope.attemptId,claimGeneration:scope.claimGeneration,",
+        "      recordDigest:scope.recordDigest,operationId:scope.operationId,actor:scope.actor,authority:{runRoot:root,journalHead:initial.evidence.journalHead,snapshotDigest:initial.evidence.snapshotDigest}},async()=>{"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "scripts/retire-admission.mjs",
+      "line": 54,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);",
+      "context": [
+        "  return withRunMutationLock(root,async signal=>{",
+        "    signal.throwIfAborted();const initial=retainedRun(scope,root);",
+        "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+        "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);",
+        "    return attempts.retireAdmissionCompletion(admission,{pipelineRunId:scope.runId,attemptId:scope.attemptId,claimGeneration:scope.claimGeneration,",
+        "      recordDigest:scope.recordDigest,operationId:scope.operationId,actor:scope.actor,authority:{runRoot:root,journalHead:initial.evidence.journalHead,snapshotDigest:initial.evidence.snapshotDigest}},async()=>{",
+        "      signal.throwIfAborted();const current=retainedRun(scope,root);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "scripts/retire-attempt-result.mjs",
+      "line": 59,
+      "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+      "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+      "context": [
+        "  }",
+        "  return withRunMutationLock(canonical,async signal=>{",
+        "    signal.throwIfAborted();",
+        "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+        "    let initial;",
+        "    return attempts[kind==='closure'?'retireImportedClosure':'retireImportedResult'](scope.intent,operation=>new FileMutex(`${journal}.append-lock`,5000,'ATTEMPT_RETIREMENT_JOURNAL_LOCKED').withLock(operation),()=>{",
+        "      signal.throwIfAborted();const current=retainedAttemptRun(scope);"
+      ],
+      "scope": "productive-source"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 21,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "  const first = new FileDurableRecordStore(root, limits);",
+      "context": [
+        "};",
+        "",
+        "try {",
+        "  const first = new FileDurableRecordStore(root, limits);",
+        "  const second = new FileDurableRecordStore(root, limits);",
+        "  await Promise.all(Array.from({ length: 100 }, (_, index) => {",
+        "    const store = index % 2 === 0 ? first : second;"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 22,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "  const second = new FileDurableRecordStore(root, limits);",
+      "context": [
+        "",
+        "try {",
+        "  const first = new FileDurableRecordStore(root, limits);",
+        "  const second = new FileDurableRecordStore(root, limits);",
+        "  await Promise.all(Array.from({ length: 100 }, (_, index) => {",
+        "    const store = index % 2 === 0 ? first : second;",
+        "    return store.append('proof/concurrent', `record:${index}`, { index });"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 27,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "  const records = await new FileDurableRecordStore(root, limits).read('proof/concurrent');",
+      "context": [
+        "    const store = index % 2 === 0 ? first : second;",
+        "    return store.append('proof/concurrent', `record:${index}`, { index });",
+        "  }));",
+        "  const records = await new FileDurableRecordStore(root, limits).read('proof/concurrent');",
+        "  assert.equal(records.length, 100);",
+        "  assert.deepEqual(records.map((record) => record.sequence), Array.from({ length: 100 }, (_, index) => index + 1));",
+        "  assert.deepEqual(new Set(records.map((record) => record.payload.index)).size, 100);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 32,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "  const duplicate = await new FileDurableRecordStore(root, limits)",
+      "context": [
+        "  assert.deepEqual(records.map((record) => record.sequence), Array.from({ length: 100 }, (_, index) => index + 1));",
+        "  assert.deepEqual(new Set(records.map((record) => record.payload.index)).size, 100);",
+        "",
+        "  const duplicate = await new FileDurableRecordStore(root, limits)",
+        "    .append('proof/concurrent', 'record:10', { index: 10 });",
+        "  assert.equal(duplicate.appended, false);",
+        "  await assert.rejects("
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 36,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "    new FileDurableRecordStore(root, limits).append('proof/concurrent', 'record:10', { index: 999 }),",
+      "context": [
+        "    .append('proof/concurrent', 'record:10', { index: 10 });",
+        "  assert.equal(duplicate.appended, false);",
+        "  await assert.rejects(",
+        "    new FileDurableRecordStore(root, limits).append('proof/concurrent', 'record:10', { index: 999 }),",
+        "    /DURABLE_RECORD_IDEMPOTENCY_CONFLICT/,",
+        "  );",
+        "  const pending = await first.append('proof/transitions', 'transition:one', { state: 'pending' });"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 52,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "  const blobs = new FileDurableBlobStore(root, 1024);",
+      "context": [
+        "    /DURABLE_RECORD_TRANSITION_CONFLICT/,",
+        "  );",
+        "",
+        "  const blobs = new FileDurableBlobStore(root, 1024);",
+        "  const concurrentBlobs = await Promise.all(Array.from({ length: 20 }, () =>",
+        "    new FileDurableBlobStore(root, 1024).put(Buffer.from('durable evidence'))));",
+        "  assert.equal(new Set(concurrentBlobs.map((blob) => blob.digest)).size, 1);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 54,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "    new FileDurableBlobStore(root, 1024).put(Buffer.from('durable evidence'))));",
+      "context": [
+        "",
+        "  const blobs = new FileDurableBlobStore(root, 1024);",
+        "  const concurrentBlobs = await Promise.all(Array.from({ length: 20 }, () =>",
+        "    new FileDurableBlobStore(root, 1024).put(Buffer.from('durable evidence'))));",
+        "  assert.equal(new Set(concurrentBlobs.map((blob) => blob.digest)).size, 1);",
+        "  const [stored] = concurrentBlobs;",
+        "  assert.equal((await new FileDurableBlobStore(root, 1024).get(stored.digest)).toString(), 'durable evidence');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 57,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "  assert.equal((await new FileDurableBlobStore(root, 1024).get(stored.digest)).toString(), 'durable evidence');",
+      "context": [
+        "    new FileDurableBlobStore(root, 1024).put(Buffer.from('durable evidence'))));",
+        "  assert.equal(new Set(concurrentBlobs.map((blob) => blob.digest)).size, 1);",
+        "  const [stored] = concurrentBlobs;",
+        "  assert.equal((await new FileDurableBlobStore(root, 1024).get(stored.digest)).toString(), 'durable evidence');",
+        "  const hash = stored.digest.slice('sha256:'.length);",
+        "  fs.writeFileSync(path.join(root, 'blobs', 'sha256', hash.slice(0, 2), hash.slice(2)), 'changed');",
+        "  await assert.rejects(new FileDurableBlobStore(root, 1024).get(stored.digest), /DURABLE_BLOB_INTEGRITY_FAILED/);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "line": 60,
+      "sha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+      "sourceText": "  await assert.rejects(new FileDurableBlobStore(root, 1024).get(stored.digest), /DURABLE_BLOB_INTEGRITY_FAILED/);",
+      "context": [
+        "  assert.equal((await new FileDurableBlobStore(root, 1024).get(stored.digest)).toString(), 'durable evidence');",
+        "  const hash = stored.digest.slice('sha256:'.length);",
+        "  fs.writeFileSync(path.join(root, 'blobs', 'sha256', hash.slice(0, 2), hash.slice(2)), 'changed');",
+        "  await assert.rejects(new FileDurableBlobStore(root, 1024).get(stored.digest), /DURABLE_BLOB_INTEGRITY_FAILED/);",
+        "",
+        "  const legacyChecks = [",
+        "    ['skills/common/plugins/artifact-store/src/adapter.ts', /catalog\\.jsonl/],"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+      "line": 84,
+      "sha256": "467f3850a5983a84cdfc58a5fa2c750c1b10ffb530ec6888063388741067216f",
+      "sourceText": "  const records = new FileDurableRecordStore(artifactRoot, {maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024});",
+      "context": [
+        "          {kind: 'gate-coverage', content: coverage, digest: sha256Text(canonicalJson(coverage))}], contextCandidates: []},",
+        "      execution: {maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000}}]};",
+        "  const result = await new core.PipelineRunner({definition, registry: granted, activated, adapters, journal}).run(`run:semantic-${profile}`);",
+        "  const records = new FileDurableRecordStore(artifactRoot, {maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024});",
+        "  const blobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);",
+        "  const stored = [];",
+        "  for (const {payload: ref} of await records.read('artifacts/kubeclaw.review')) {"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+      "line": 85,
+      "sha256": "467f3850a5983a84cdfc58a5fa2c750c1b10ffb530ec6888063388741067216f",
+      "sourceText": "  const blobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);",
+      "context": [
+        "      execution: {maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000}}]};",
+        "  const result = await new core.PipelineRunner({definition, registry: granted, activated, adapters, journal}).run(`run:semantic-${profile}`);",
+        "  const records = new FileDurableRecordStore(artifactRoot, {maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024});",
+        "  const blobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);",
+        "  const stored = [];",
+        "  for (const {payload: ref} of await records.read('artifacts/kubeclaw.review')) {",
+        "    const bytes = await blobs.get(ref.digest), value = JSON.parse(bytes.toString('utf8'));"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/e2e/real-run-evidence.mjs",
+      "line": 139,
+      "sha256": "a4bd4840337e6455f4011152c433b583d926fe9a38c4e1fe1c7034b75ef3fe56",
+      "sourceText": "  const records = new FileDurableRecordStore(root, { maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024 });",
+      "context": [
+        "}",
+        "",
+        "export async function readRunArtifacts(root, runId, namespaces) {",
+        "  const records = new FileDurableRecordStore(root, { maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024 });",
+        "  const blobs = new FileDurableBlobStore(root, 16 * 1024 * 1024);",
+        "  const artifacts = [];",
+        "  for (const namespace of namespaces) {"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/e2e/real-run-evidence.mjs",
+      "line": 140,
+      "sha256": "a4bd4840337e6455f4011152c433b583d926fe9a38c4e1fe1c7034b75ef3fe56",
+      "sourceText": "  const blobs = new FileDurableBlobStore(root, 16 * 1024 * 1024);",
+      "context": [
+        "",
+        "export async function readRunArtifacts(root, runId, namespaces) {",
+        "  const records = new FileDurableRecordStore(root, { maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024 });",
+        "  const blobs = new FileDurableBlobStore(root, 16 * 1024 * 1024);",
+        "  const artifacts = [];",
+        "  for (const namespace of namespaces) {",
+        "    for (const record of await records.read(`artifacts/${namespace}`)) {"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 32,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const reopened=new FileObservabilityAdmissionStore(f.scope.admissionRoot,admissionLimits);",
+      "context": [
+        "  await assert.rejects(f.admission.admit(canonicalJson(fresh)),/ADMISSION_FULL/);",
+        "  const receipt=await retireAdmission(f.scope);",
+        "  assert.equal(receipt.newlyRetired,true);assert.equal(receipt.releasedBytes,prior.length-fs.statSync(file).size);assert.ok(receipt.releasedBytes>0);",
+        "  const reopened=new FileObservabilityAdmissionStore(f.scope.admissionRoot,admissionLimits);",
+        "  assert.deepEqual(await reopened.admittedRecords(),before);",
+        "  assert.deepEqual(fs.readFileSync(path.join(f.scope.attemptRoot,'attempt-store.json')),source);",
+        "  assert.equal((await reopened.admit(canonicalJson(f.record))).acknowledgement.state,'duplicate');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 36,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const tight=new FileObservabilityAdmissionStore(f.scope.admissionRoot,{...admissionLimits,maximumRecords:100,maximumBytes:fs.statSync(file).size+1024});",
+      "context": [
+        "  assert.deepEqual(await reopened.admittedRecords(),before);",
+        "  assert.deepEqual(fs.readFileSync(path.join(f.scope.attemptRoot,'attempt-store.json')),source);",
+        "  assert.equal((await reopened.admit(canonicalJson(f.record))).acknowledgement.state,'duplicate');",
+        "  const tight=new FileObservabilityAdmissionStore(f.scope.admissionRoot,{...admissionLimits,maximumRecords:100,maximumBytes:fs.statSync(file).size+1024});",
+        "  await assert.rejects(tight.admit(canonicalJson(fresh)),/ADMISSION_FULL/);",
+        "  assert.equal((await reopened.admit(canonicalJson(fresh))).acknowledgement.canonicalCursor,3);",
+        "  assert.deepEqual(await retireAdmission(f.scope),{newlyRetired:false,releasedBytes:0});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 43,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const outbox=new FileProducerOutbox(path.join(f.root,'replayed-outbox'),{maximumRecords:10,maximumBytes:50000});",
+      "context": [
+        "  const view=await buildClawDeckObservationView({pipelineRunId:f.runId,requiredClosures:[{closureId:f.closure.closureId,producer:f.closure.producer}],admissionStore:reopened,attemptStore:f.attempts});",
+        "  assert.equal(view.completeness.state,'complete');assert.deepEqual(view.rawRecords.map(item=>item.record),[f.record]);assert.deepEqual(view.attempts[0].result,f.result);",
+        "  await f.attempts.resumeCompletion(f.runId,f.result.attemptId,1,reopened);",
+        "  const outbox=new FileProducerOutbox(path.join(f.root,'replayed-outbox'),{maximumRecords:10,maximumBytes:50000});",
+        "  await outbox.append(f.record);assert.equal(await deliverPending(outbox,reopened),1);assert.deepEqual(await outbox.pending(),[]);",
+        "  assert.equal((await reopened.snapshot()).entries.length,2);assert.equal((await reopened.snapshot()).retiredEntries.length,1);",
+        "  const changed={...f.record,payload:{different:true}};changed.recordDigest=producerRecordDigest(changed);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 58,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const outbox=new FileProducerOutbox(path.join(f.root,'unconfirmed-outbox'),{maximumRecords:10,maximumBytes:50000});",
+      "context": [
+        "  fs.unlinkSync(file);await assert.rejects(f.admission.admittedRecords(),/ENOENT/);",
+        "  // A broken source fails closed before ACK; the producer must retain its original outbox.",
+        "  await assert.rejects(f.admission.admit(canonicalJson(f.record)),/ENOENT/);",
+        "  const outbox=new FileProducerOutbox(path.join(f.root,'unconfirmed-outbox'),{maximumRecords:10,maximumBytes:50000});",
+        "  await outbox.append(f.record);await assert.rejects(deliverPending(outbox,f.admission),/ENOENT/);assert.equal((await outbox.pending()).length,1);",
+        "  fs.writeFileSync(file,original);assert.equal((await f.admission.admittedTail(f.runId,1)).length,1);",
+        "});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 78,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  assert.deepEqual((await new FileObservabilityAdmissionStore(f.scope.admissionRoot,admissionLimits).admittedRecords()).map(item=>item.record),[f.record,f.other]);",
+      "context": [
+        "test('actual waiting continuation remains protected and old v1 admission reopens unchanged',async t=>{",
+        "  const f=await fixture(t,{lint:[1,2,3]}),file=path.join(f.scope.admissionRoot,'admission.json'),before=fs.readFileSync(file);",
+        "  await assert.rejects(retireAdmission(f.scope),/RUN_ACTIVE_OR_WAITING/);",
+        "  assert.deepEqual((await new FileObservabilityAdmissionStore(f.scope.admissionRoot,admissionLimits).admittedRecords()).map(item=>item.record),[f.record,f.other]);",
+        "  assert.deepEqual(fs.readFileSync(file),before);",
+        "});",
+        "test('original attempt writer fence prevents cross-store retirement until holder is SIGKILLed',async t=>{"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 83,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const script=`import {withDurableStoreLock} from ${JSON.stringify(new URL('../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts',import.meta.url).href)};await withDurableStoreLock(${JSON.stringify(path.join(f.scope.attemptRoot,'attempt-store.json'))},async()=>{process.stdout.write('LOCKED\\\\n');await new Promise(()=>{});});`;",
+      "context": [
+        "});",
+        "test('original attempt writer fence prevents cross-store retirement until holder is SIGKILLed',async t=>{",
+        "  const f=await fixture(t),file=path.join(f.scope.admissionRoot,'admission.json'),before=fs.readFileSync(file);",
+        "  const script=`import {withDurableStoreLock} from ${JSON.stringify(new URL('../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts',import.meta.url).href)};await withDurableStoreLock(${JSON.stringify(path.join(f.scope.attemptRoot,'attempt-store.json'))},async()=>{process.stdout.write('LOCKED\\\\n');await new Promise(()=>{});});`;",
+        "  const child=spawn(process.execPath,['--input-type=module','-e',script],{stdio:['ignore','pipe','pipe']});t.after(()=>{if(child.exitCode===null)child.kill('SIGKILL');});",
+        "  const exited=once(child,'exit');assert.equal(String((await once(child.stdout,'data'))[0]),'LOCKED\\n');",
+        "  let settled=false;const retirement=retireAdmission(f.scope).finally(()=>{settled=true;});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 99,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const reopen=new FileObservabilityAdmissionStore(f.scope.admissionRoot,admissionLimits),before=fs.readFileSync(path.join(f.scope.admissionRoot,'admission.json'));",
+      "context": [
+        "  await new Promise((resolve,reject)=>{child.stdout.once('data',chunk=>String(chunk).includes('COMMITTED')?resolve():reject(new Error(String(chunk))));child.once('exit',code=>reject(new Error(`child ${code}: ${stderr}`)));});",
+        "  const exited=once(child,'exit');child.kill('SIGKILL');assert.deepEqual(await exited,[null,'SIGKILL']);",
+        "  assert.deepEqual(await retireAdmission(f.scope),{newlyRetired:false,releasedBytes:0});",
+        "  const reopen=new FileObservabilityAdmissionStore(f.scope.admissionRoot,admissionLimits),before=fs.readFileSync(path.join(f.scope.admissionRoot,'admission.json'));",
+        "  assert.equal((await reopen.admit(canonicalJson(f.record))).acknowledgement.canonicalCursor,1);",
+        "  assert.deepEqual(fs.readFileSync(path.join(f.scope.admissionRoot,'admission.json')),before);",
+        "  assert.equal((await reopen.admittedTail(f.runId,1))[0].record.recordDigest,f.record.recordDigest);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 124,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const attempts = new FileDurableAttemptStore(f.scope.attemptRoot, limits);",
+      "context": [
+        "test('real confirmed import and admission retirement do not release the remaining mixed-run result quota', async t => {",
+        "  const f = await fixture(t);",
+        "  const limits = {...attemptLimits, maximumResults: 2};",
+        "  const attempts = new FileDurableAttemptStore(f.scope.attemptRoot, limits);",
+        "  const waitingRoot = path.join(f.root, 'actual-waiting-run');",
+        "  fs.mkdirSync(waitingRoot);",
+        "  const waiting = budgetFixture(waitingRoot, {lint: [1, 2, 3]});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 146,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const reopened = new FileDurableAttemptStore(f.scope.attemptRoot, limits);",
+      "context": [
+        "  assert.deepEqual(fs.readFileSync(sourceFile), sourceBytes);",
+        "  assert.deepEqual((await attempts.snapshot()).results.map(item => item.pipelineRunId), [f.runId, 'run:waiting']);",
+        "  await assert.rejects(attempts.storeResult('run:next', next), /OBSERVABILITY_RESULT_STORE_FULL/);",
+        "  const reopened = new FileDurableAttemptStore(f.scope.attemptRoot, limits);",
+        "  const replayed = await reopened.storeResult(f.runId, f.result, {record: f.record, closure: f.closure}, {planId: 'plan:1', nodeId: 'node:1'});",
+        "  assert.deepEqual(replayed.result, f.result);",
+        "  const reconciler = new NovaObservabilityReconciler({attemptStore: reopened, admissionStore: f.admission, journalFile: imported.journalFile});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 183,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const outbox = new FileProducerOutbox(path.join(f.root, 'result-retirement-negative-outbox'), {maximumRecords: 10, maximumBytes: 50000});",
+      "context": [
+        "  fs.writeFileSync(sourceFile, canonicalJson(state));",
+        "  await assert.rejects(f.admission.admit(canonicalJson(f.record)), /retirement-source-result/);",
+        "  await assert.rejects(f.admission.admittedTail(f.runId, 1), /retirement-source-result/);",
+        "  const outbox = new FileProducerOutbox(path.join(f.root, 'result-retirement-negative-outbox'), {maximumRecords: 10, maximumBytes: 50000});",
+        "  await outbox.append(f.record);",
+        "  await assert.rejects(deliverPending(outbox, f.admission), /retirement-source-result/);",
+        "  assert.equal((await outbox.pending()).length, 1);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 215,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const reopen=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+      "context": [
+        "  const persisted=JSON.parse(fs.readFileSync(file));",
+        "  assert.equal(persisted.schemaVersion,'durable-attempt-store.v2');assert.equal(Object.hasOwn(persisted.results[0],'result'),false);",
+        "  assert.deepEqual(persisted.results[0].completionIntent,prior.results[0].completionIntent);",
+        "  const reopen=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+        "  assert.deepEqual(await reopen.snapshot(),prior);",
+        "  assert.deepEqual(await retireAttemptResult(f.projectionScope),{newlyRetired:false,releasedBytes:0});",
+        "  assert.equal((await f.admission.admit(canonicalJson(f.record))).acknowledgement.state,'duplicate');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 279,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  await assert.rejects(new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot(),/ENOENT/);",
+      "context": [
+        "  assert.equal((await retireAttemptResult(f.projectionScope)).newlyRetired,true);",
+        "  const compacted=fs.readFileSync(file);",
+        "  fs.unlinkSync(journal);",
+        "  await assert.rejects(new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot(),/ENOENT/);",
+        "  fs.writeFileSync(journal,original.subarray(0,original.length-1));",
+        "  await assert.rejects(new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot(),/journal-size/);",
+        "  assert.deepEqual(fs.readFileSync(file),compacted);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 281,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  await assert.rejects(new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot(),/journal-size/);",
+      "context": [
+        "  fs.unlinkSync(journal);",
+        "  await assert.rejects(new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot(),/ENOENT/);",
+        "  fs.writeFileSync(journal,original.subarray(0,original.length-1));",
+        "  await assert.rejects(new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot(),/journal-size/);",
+        "  assert.deepEqual(fs.readFileSync(file),compacted);",
+        "  fs.writeFileSync(journal,original);",
+        "  assert.deepEqual((await new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot()).results[0].result,f.result);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 284,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  assert.deepEqual((await new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot()).results[0].result,f.result);",
+      "context": [
+        "  await assert.rejects(new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot(),/journal-size/);",
+        "  assert.deepEqual(fs.readFileSync(file),compacted);",
+        "  fs.writeFileSync(journal,original);",
+        "  assert.deepEqual((await new FileDurableAttemptStore(f.scope.attemptRoot,f.limits).snapshot()).results[0].result,f.result);",
+        "});",
+        "",
+        "async function childAtMarker(t,script,args,marker) {"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 302,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const holder=await childAtMarker(t,`import {withDurableStoreLock} from ${JSON.stringify(module)};await withDurableStoreLock(process.argv[1],async()=>{process.stdout.write('LOCKED\\\\n');await new Promise(()=>{});});`,[file],'LOCKED');",
+      "context": [
+        "test('Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection',async t=>{",
+        "  const f=await projectionFixture(t),file=path.join(f.scope.attemptRoot,'attempt-store.json'),before=fs.readFileSync(file);",
+        "  const module=new URL('../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts',import.meta.url).href;",
+        "  const holder=await childAtMarker(t,`import {withDurableStoreLock} from ${JSON.stringify(module)};await withDurableStoreLock(process.argv[1],async()=>{process.stdout.write('LOCKED\\\\n');await new Promise(()=>{});});`,[file],'LOCKED');",
+        "  const scopeFile=path.join(f.root,'attempt-scope.json');fs.writeFileSync(scopeFile,JSON.stringify(f.projectionScope));",
+        "  const wrapper=new URL('../../../scripts/retire-attempt-result.mjs',import.meta.url).href;",
+        "  const operator=await childAtMarker(t,`import fs from 'node:fs';import {retireAttemptResult} from ${JSON.stringify(wrapper)};process.stdout.write('STARTED\\\\n');await retireAttemptResult(JSON.parse(fs.readFileSync(process.argv[1])));process.stdout.write('COMMITTED\\\\n');`,[scopeFile],'STARTED');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 322,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const reopened=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+      "context": [
+        "  const exited=once(child,'exit');child.kill('SIGKILL');assert.deepEqual(await exited,[null,'SIGKILL']);",
+        "  const before=fs.readFileSync(file),journal=fs.readFileSync(f.imported.journalFile);",
+        "  assert.deepEqual(await retireAttemptResult(f.projectionScope),{newlyRetired:false,releasedBytes:0});",
+        "  const reopened=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+        "  assert.deepEqual((await reopened.storeResult(f.runId,f.result,{record:f.record,closure:f.closure},{planId:'plan:1',nodeId:'node:1'})).result,f.result);",
+        "  assert.equal((await f.imported.reconciler.reconcile([f.imported.desired]))[0].action,'already-imported');",
+        "  assert.deepEqual(fs.readFileSync(file),before);assert.deepEqual(fs.readFileSync(f.imported.journalFile),journal);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-store-input-ownership.test.mjs",
+      "line": 21,
+      "sha256": "ccfe5049f9119052b70cc6bb6a1648fe1fc727b75d20f23cc5e5861a22c000c4",
+      "sourceText": "      `import {withDurableStoreLock} from ${JSON.stringify(module)};await withDurableStoreLock(process.argv[1],async()=>{process.stdout.write('LOCKED');await new Promise(()=>{});});`,",
+      "context": [
+        "    [",
+        "      \"--input-type=module\",",
+        "      \"-e\",",
+        "      `import {withDurableStoreLock} from ${JSON.stringify(module)};await withDurableStoreLock(process.argv[1],async()=>{process.stdout.write('LOCKED');await new Promise(()=>{});});`,",
+        "      file,",
+        "    ],",
+        "    { stdio: [\"ignore\", \"pipe\", \"pipe\"] },"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/wait-value-projection.test.mjs",
+      "line": 72,
+      "sha256": "b5eee8e086156031ee4ccd0511a1aeb13775bb566501bbd55314467cc109d2d1",
+      "sourceText": "  const owner = new FileDurableRecordStore(f.waitRoot, limits);",
+      "context": [
+        "  assert.deepEqual(await retireWaitValue(scope), { newlyProjected: false, releasedBytes: 0 });",
+        "  const retained = fs.readFileSync(recordFile(f.waitRoot));",
+        "  const limits = { maximumRecords: 100000, maximumBytes: 268435456, maximumRecordBytes: 1048576 };",
+        "  const owner = new FileDurableRecordStore(f.waitRoot, limits);",
+        "  const projection = json(recordFile(f.waitRoot)).records.find(record => record.idempotencyKey === f.waitRequest.idempotencyKey).payload;",
+        "  const resolve = source => resolveRetainedCoreWait(source, { storageRoot: f.platform.storageRoot,",
+        "    waitRoot: f.waitRoot, orchestratorIssuerId: f.platform.orchestratorIssuerId });"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/wait-value-projection.test.mjs",
+      "line": 76,
+      "sha256": "b5eee8e086156031ee4ccd0511a1aeb13775bb566501bbd55314467cc109d2d1",
+      "sourceText": "  for (const alias of [owner, new FileDurableRecordStore(f.waitRoot, limits)]) {",
+      "context": [
+        "  const projection = json(recordFile(f.waitRoot)).records.find(record => record.idempotencyKey === f.waitRequest.idempotencyKey).payload;",
+        "  const resolve = source => resolveRetainedCoreWait(source, { storageRoot: f.platform.storageRoot,",
+        "    waitRoot: f.waitRoot, orchestratorIssuerId: f.platform.orchestratorIssuerId });",
+        "  for (const alias of [owner, new FileDurableRecordStore(f.waitRoot, limits)]) {",
+        "    let authorized = false;",
+        "    await assert.rejects(projectWaitValue(owner, alias, 'notifications/operators', scope.intent,",
+        "      projection.projection.authorityDigest, resolve, () => { authorized = true; }), /DURABLE_RECORD_RETAINED_STORE_ALIAS/);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-retained-transition.test.mjs",
+      "line": 13,
+      "sha256": "d966812e0b1645468db4e72eba503aa124c70121ecb76ffa6e873845662d996f",
+      "sourceText": "  const owner = new FileDurableRecordStore(ownerRoot, limits), retained = new FileDurableRecordStore(retainedRoot, limits);",
+      "context": [
+        "  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'retained-transition-'));",
+        "  t.after(() => fs.rmSync(root, { recursive: true, force: true }));",
+        "  const ownerRoot = path.join(root, 'owner'), retainedRoot = path.join(root, 'retained');",
+        "  const owner = new FileDurableRecordStore(ownerRoot, limits), retained = new FileDurableRecordStore(retainedRoot, limits);",
+        "  const original = (await owner.append('owner', 'key', { value: 'original' })).record;",
+        "  const receipt = (await retained.append('retained', 'receipt', { value: 'receipt' })).record;",
+        "  return { root, ownerRoot, retainedRoot, owner, retained, original, receipt };"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-retained-transition.test.mjs",
+      "line": 39,
+      "sha256": "d966812e0b1645468db4e72eba503aa124c70121ecb76ffa6e873845662d996f",
+      "sourceText": "  for (const dependency of [f.owner, new FileDurableRecordStore(f.ownerRoot, limits), new FileDurableRecordStore(alias, limits)]) {",
+      "context": [
+        "test('retained transition rejects self, separate same-root instance, symlink-parent and hardlink aliases before acquiring dependency', { timeout: 10000 }, async t => {",
+        "  const f = await fixture(t), before = fs.readFileSync(path.join(f.ownerRoot, 'records/store.json'));",
+        "  const alias = path.join(f.root, 'alias'); fs.symlinkSync(f.ownerRoot, alias);",
+        "  for (const dependency of [f.owner, new FileDurableRecordStore(f.ownerRoot, limits), new FileDurableRecordStore(alias, limits)]) {",
+        "    await assert.rejects(f.owner.transitionWithRetainedStore('owner', 'key', f.original.payloadDigest,",
+        "      { value: 'forbidden' }, dependency, 'retained', () => {}), /DURABLE_RECORD_RETAINED_STORE_ALIAS/);",
+        "  }"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-retained-transition.test.mjs",
+      "line": 46,
+      "sha256": "d966812e0b1645468db4e72eba503aa124c70121ecb76ffa6e873845662d996f",
+      "sourceText": "    { value: 'forbidden' }, new FileDurableRecordStore(linked, limits), 'retained', () => {}), /DURABLE_RECORD_RETAINED_STORE_ALIAS/);",
+      "context": [
+        "  const linked = path.join(f.root, 'hardlink'); fs.mkdirSync(path.join(linked, 'records'), { recursive: true });",
+        "  fs.linkSync(path.join(f.ownerRoot, 'records/store.json'), path.join(linked, 'records/store.json'));",
+        "  await assert.rejects(f.owner.transitionWithRetainedStore('owner', 'key', f.original.payloadDigest,",
+        "    { value: 'forbidden' }, new FileDurableRecordStore(linked, limits), 'retained', () => {}), /DURABLE_RECORD_RETAINED_STORE_ALIAS/);",
+        "  assert.deepEqual(fs.readFileSync(path.join(f.ownerRoot, 'records/store.json')), before);",
+        "});",
+        ""
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-retained-transition.test.mjs",
+      "line": 55,
+      "sha256": "d966812e0b1645468db4e72eba503aa124c70121ecb76ffa6e873845662d996f",
+      "sourceText": "  const bounded = new FileDurableRecordStore(f.ownerRoot, { ...limits, maximumBytes: before.length });",
+      "context": [
+        "  await assert.rejects(f.owner.transitionWithRetainedStore('owner', 'key', f.original.payloadDigest,",
+        "    { value: 'forbidden' }, f.retained, 'retained', async () => {}), /DURABLE_RECORD_AUTHORIZATION_NOT_SYNCHRONOUS/);",
+        "  assert.deepEqual(fs.readFileSync(file), before);",
+        "  const bounded = new FileDurableRecordStore(f.ownerRoot, { ...limits, maximumBytes: before.length });",
+        "  let authorized = false;",
+        "  await assert.rejects(bounded.transitionWithRetainedStore('owner', 'key', f.original.payloadDigest,",
+        "    { value: 'x'.repeat(500) }, f.retained, 'retained', () => { authorized = true; }), /DURABLE_RECORD_STORE_FULL/);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 34,
+      "sha256": "987a9a4efe9320b858c448f03f4a296323e3b8e1893fea524bb91fec5b77159e",
+      "sourceText": "  const open = () => new FileObservabilityAdmissionStore(root, admissionLimits);",
+      "context": [
+        "",
+        "test('fresh admission reads and duplicate ACK fail closed for persisted corruption', async (t) => {",
+        "  const root = await temporary(t); const file = path.join(root, 'admission.json'); const original = record({ state: 'failed' });",
+        "  const open = () => new FileObservabilityAdmissionStore(root, admissionLimits);",
+        "  const admitted = await open().admit(canonicalJson(original));",
+        "  const baseline = JSON.parse(await fs.readFile(file, 'utf8'));",
+        "  const mutations = {"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 66,
+      "sha256": "987a9a4efe9320b858c448f03f4a296323e3b8e1893fea524bb91fec5b77159e",
+      "sourceText": "  const open = () => new FileDurableAttemptStore(attemptRoot, attemptLimits);",
+      "context": [
+        "",
+        "test('fresh attempt replay validates result, generation, evidence, intent and closure before recovery', async (t) => {",
+        "  const root = await temporary(t); const attemptRoot = path.join(root, 'attempts'); const file = path.join(attemptRoot, 'attempt-store.json');",
+        "  const open = () => new FileDurableAttemptStore(attemptRoot, attemptLimits);",
+        "  const admission = new FileObservabilityAdmissionStore(path.join(root, 'admission'), admissionLimits);",
+        "  const evidence = await open().storeEvidence({ pipelineRunId: 'run:1', attemptId: 'attempt:1', claimGeneration: 1, producer, evidenceId: 'log:1', type: 'log', mediaType: 'text/plain' }, Buffer.from('pass'));",
+        "  const original = result([evidence]);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 67,
+      "sha256": "987a9a4efe9320b858c448f03f4a296323e3b8e1893fea524bb91fec5b77159e",
+      "sourceText": "  const admission = new FileObservabilityAdmissionStore(path.join(root, 'admission'), admissionLimits);",
+      "context": [
+        "test('fresh attempt replay validates result, generation, evidence, intent and closure before recovery', async (t) => {",
+        "  const root = await temporary(t); const attemptRoot = path.join(root, 'attempts'); const file = path.join(attemptRoot, 'attempt-store.json');",
+        "  const open = () => new FileDurableAttemptStore(attemptRoot, attemptLimits);",
+        "  const admission = new FileObservabilityAdmissionStore(path.join(root, 'admission'), admissionLimits);",
+        "  const evidence = await open().storeEvidence({ pipelineRunId: 'run:1', attemptId: 'attempt:1', claimGeneration: 1, producer, evidenceId: 'log:1', type: 'log', mediaType: 'text/plain' }, Buffer.from('pass'));",
+        "  const original = result([evidence]);",
+        "  const completion = { record: record({ resultDigest: original.resultDigest, workerId: original.workerId }), closure: createProducerClosure({ schemaVersion: 'producer-closure.v1', closureId: 'closure:1', producer, pipelineRunId: 'run:1', firstSequence: 1, finalSequence: 1, recordCount: 1, requiredEvidenceIds: [scopedEvidenceId('attempt:1', 1, 'log:1')], closedAt: '2026-08-09T12:00:02Z' }) };"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 110,
+      "sha256": "987a9a4efe9320b858c448f03f4a296323e3b8e1893fea524bb91fec5b77159e",
+      "sourceText": "  const open = () => new FileDurableAttemptStore(attemptRoot, attemptLimits);",
+      "context": [
+        "",
+        "test('standalone closure producer binding preserves staged-evidence expiry and partial completeness', async (t) => {",
+        "  const root = await temporary(t); const attemptRoot = path.join(root, 'attempts'); const file = path.join(attemptRoot, 'attempt-store.json');",
+        "  const open = () => new FileDurableAttemptStore(attemptRoot, attemptLimits);",
+        "  const admission = new FileObservabilityAdmissionStore(path.join(root, 'admission'), admissionLimits);",
+        "  await admission.admit(canonicalJson(record({ state: 'completed' })));",
+        "  await open().storeEvidence({ pipelineRunId: 'run:1', attemptId: 'attempt:1', claimGeneration: 1, producer, evidenceId: 'log:1', type: 'log', mediaType: 'text/plain' }, Buffer.from('pass'));"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 111,
+      "sha256": "987a9a4efe9320b858c448f03f4a296323e3b8e1893fea524bb91fec5b77159e",
+      "sourceText": "  const admission = new FileObservabilityAdmissionStore(path.join(root, 'admission'), admissionLimits);",
+      "context": [
+        "test('standalone closure producer binding preserves staged-evidence expiry and partial completeness', async (t) => {",
+        "  const root = await temporary(t); const attemptRoot = path.join(root, 'attempts'); const file = path.join(attemptRoot, 'attempt-store.json');",
+        "  const open = () => new FileDurableAttemptStore(attemptRoot, attemptLimits);",
+        "  const admission = new FileObservabilityAdmissionStore(path.join(root, 'admission'), admissionLimits);",
+        "  await admission.admit(canonicalJson(record({ state: 'completed' })));",
+        "  await open().storeEvidence({ pipelineRunId: 'run:1', attemptId: 'attempt:1', claimGeneration: 1, producer, evidenceId: 'log:1', type: 'log', mediaType: 'text/plain' }, Buffer.from('pass'));",
+        "  const closure = createProducerClosure({ schemaVersion: 'producer-closure.v1', closureId: 'closure:standalone', producer, pipelineRunId: 'run:1', firstSequence: 1, finalSequence: 1, recordCount: 1, requiredEvidenceIds: [scopedEvidenceId('attempt:1', 1, 'log:1')], closedAt: '2026-08-09T12:00:02Z' });"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 402,
+      "sha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d",
+      "sourceText": "    const store = new FileDurableRecordStore(process.argv[2], JSON.parse(process.argv[3]));",
+      "context": [
+        "  const moduleURL = new URL('../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts', import.meta.url).href;",
+        "  const child = spawn(process.execPath, ['--input-type=module', '-e', `",
+        "    const { FileDurableRecordStore } = await import(process.argv[1]);",
+        "    const store = new FileDurableRecordStore(process.argv[2], JSON.parse(process.argv[3]));",
+        "    await store.withRecords('remote-gate-imports', async records => {",
+        "      process.send({ held: records.length });",
+        "      await new Promise(resolve => process.once('message', resolve));"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/blob-read-independent.test.mjs",
+      "line": 18,
+      "sha256": "1da460f13a945cb90182237c73b814131586431f442b5ba4156b411fc6d21f9d",
+      "sourceText": "    const store = new FileDurableBlobStore(root, 16);",
+      "context": [
+        "    const bytes = Buffer.alloc(33, 97), hash = digest(bytes);",
+        "    const file = path.join(root, 'blobs/sha256', hash.slice(7, 9), hash.slice(9));",
+        "    fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, bytes);",
+        "    const store = new FileDurableBlobStore(root, 16);",
+        "    for (let index = 0; index < 160; index++) await assert.rejects(store.get(hash), /DURABLE_BLOB_SIZE_EXCEEDED/u);",
+        "    const valid = Buffer.alloc(16, 1), ref = await store.put(valid);",
+        "    for (let index = 0; index < 160; index++) assert.deepEqual(await store.get(ref.digest), valid);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+      "line": 93,
+      "sha256": "c73601fa0f4fea13ac49dd7895425b89e51cd0418457d9665d4a56725bb50094",
+      "sourceText": "  const store = new FileDurableRecordStore(f.deliveryRoot, limits), records = await store.read('notifications/operators');",
+      "context": [
+        "  const selected = effects.filter(entry => entry.request?.idempotencyKey === f.request.idempotencyKey || entry.receipt?.idempotencyKey === f.request.idempotencyKey);",
+        "  assert.deepEqual(selected.map(entry => entry.type), ['requested', 'accepted', 'completed']);",
+        "  assert.deepEqual(selected[0].request, selected[1].request);",
+        "  const store = new FileDurableRecordStore(f.deliveryRoot, limits), records = await store.read('notifications/operators');",
+        "  const original = records.find(record => record.idempotencyKey === `delivery:request:${hash(f.request.idempotencyKey)}`);",
+        "  const terminal = records.find(record => record.payload.schemaVersion === 'notification-delivery-receipt.v1');",
+        "  assert.deepEqual(original.payload, { schemaVersion: 'notification-delivery-request.v1', idempotencyKey: f.request.idempotencyKey, target: 'operators', payload: f.request.payload });"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/nova-dispatch-retained-authority.test.mjs",
+      "line": 28,
+      "sha256": "61e593387a562459e57649b63a85aefaae82284f1e609b7e7474e9ce001e4c64",
+      "sourceText": "  const records = new FileDurableRecordStore(root, limits);",
+      "context": [
+        "    archiveContentDigest: digest(bytes), archiveSizeBytes: bytes.length, creatorAuthority: 'nova:contract' }, key.export({ type: 'pkcs8', format: 'pem' }));",
+        "  const job = createRemotePlanJob({ idempotencyKey: 'contract:retained', pipelineStageId: 'test', plan: plan('blocking', reviewAgent),",
+        "    repositoryArchive: bytes, sourceSnapshot, grants: new Map(), maximumConcurrency: 1, submittedAt: '2026-09-09T00:00:00.000Z' });",
+        "  const records = new FileDurableRecordStore(root, limits);",
+        "  return { root, job, records, store: new FileNovaGateImportStore(root, { recordLimits: limits, maximumEvidenceStoreBytes: 1024 ** 2 }) };",
+        "}",
+        "function artifact(index) {"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/nova-dispatch-retained-authority.test.mjs",
+      "line": 92,
+      "sha256": "61e593387a562459e57649b63a85aefaae82284f1e609b7e7474e9ce001e4c64",
+      "sourceText": "  const bounded = new FileDurableRecordStore(f.root, { ...limits, maximumBytes: size - 1 });",
+      "context": [
+        "test('bounded original record fenced read refuses oversized snapshot before callback and releases fence', async t => {",
+        "  const f = fixture(t); await f.records.append('contract', 'one', { retained: 'x'.repeat(512) });",
+        "  const file = path.join(f.root, 'records/store.json'), size = fs.statSync(file).size;",
+        "  const bounded = new FileDurableRecordStore(f.root, { ...limits, maximumBytes: size - 1 });",
+        "  await assert.rejects(bounded.withRecords('contract', async () => assert.fail('must not allocate/authorize oversized state')));",
+        "  assert.equal((await f.records.read('contract')).length, 1);",
+        "  await f.records.append('contract', 'two', { retained: 'new original write' });"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/prism-reader-fixture.mjs",
+      "line": 69,
+      "sha256": "b19767987615299632b132da7d029fa91d3a5eed827a49489ed3d9bf1c9bdcfe",
+      "sourceText": "    const stored=await new FileDurableBlobStore(path.join(directory,'artifacts'),16*1024*1024,256*1024*1024).get(ref.digest);",
+      "context": [
+        "    const sourceResult=events.find(event=>event.type==='attempt.completed'&&event.identity.stageId==='source').payload.result;",
+        "    const designResult=events.find(event=>event.type==='attempt.completed'&&event.identity.stageId==='design').payload.result;",
+        "    const ref=sourceResult.artifacts[0];assert.equal(ref.encoding,legacy?undefined:PORTABLE_JSON_ENCODING);assert.equal(ref.digest,digest);",
+        "    const stored=await new FileDurableBlobStore(path.join(directory,'artifacts'),16*1024*1024,256*1024*1024).get(ref.digest);",
+        "    assert.equal(stored.toString('utf8'),bytes);assert.equal(ref.sizeBytes,stored.byteLength);",
+        "    const effectsFile=path.join(runDirectory,'effects.jsonl');",
+        "    const journal=new FileEffectJournal(effectsFile);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 25,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "    const dir=path.join(root,String(length)),store=new FileDurableRecordStore(dir,limits);",
+      "context": [
+        "test('exact retirement byte accounting crosses decimal digit boundaries without a fixed point',async t=>{",
+        "  const root=fs.mkdtempSync(path.join(os.tmpdir(),'record-retirement-accounting-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));",
+        "  for(const length of [1300,1339,1340,1341,1400,10000]) {",
+        "    const dir=path.join(root,String(length)),store=new FileDurableRecordStore(dir,limits);",
+        "    const {record}=await store.append('stream','key',{text:'x'.repeat(length)},'run:a');",
+        "    const file=path.join(dir,'records/store.json'),before=fs.statSync(file).size;",
+        "    const intent={operationId:'retire',actor:'operator',owner:'run:a',stream:'stream',records:[{idempotencyKey:'key',payloadDigest:record.payloadDigest}],evidence:{}};"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 33,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "    assert.equal((await new FileDurableRecordStore(dir,limits).retire(intent,async()=>{})).releasedBytes,receipt.releasedBytes);",
+      "context": [
+        "    assert.equal(receipt.releasedBytes,before-fs.statSync(file).size);",
+        "    assert.match(receipt.releasedBytesHex,/^[a-f0-9]{16}$/);",
+        "    assert.equal(Number.parseInt(receipt.releasedBytesHex,16),receipt.releasedBytes);",
+        "    assert.equal((await new FileDurableRecordStore(dir,limits).retire(intent,async()=>{})).releasedBytes,receipt.releasedBytes);",
+        "  }",
+        "});",
+        "test('original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts',async t=>{"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 38,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "  const first=new FileDurableRecordStore(root,limits);const original=await first.append('legacy','one',{value:1});",
+      "context": [
+        "});",
+        "test('original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts',async t=>{",
+        "  const root=fs.mkdtempSync(path.join(os.tmpdir(),'record-v1-retirement-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));",
+        "  const first=new FileDurableRecordStore(root,limits);const original=await first.append('legacy','one',{value:1});",
+        "  const file=path.join(root,'records/store.json'),bytes=fs.readFileSync(file);assert.equal(JSON.parse(bytes).schemaVersion,'pipeline-durable-record-store.v1');",
+        "  const reopened=new FileDurableRecordStore(root,limits);assert.deepEqual(await reopened.read('legacy'),[original.record]);",
+        "  assert.deepEqual(await reopened.append('legacy','one',{value:1},'run:new'),{appended:false,record:original.record});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 40,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "  const reopened=new FileDurableRecordStore(root,limits);assert.deepEqual(await reopened.read('legacy'),[original.record]);",
+      "context": [
+        "  const root=fs.mkdtempSync(path.join(os.tmpdir(),'record-v1-retirement-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));",
+        "  const first=new FileDurableRecordStore(root,limits);const original=await first.append('legacy','one',{value:1});",
+        "  const file=path.join(root,'records/store.json'),bytes=fs.readFileSync(file);assert.equal(JSON.parse(bytes).schemaVersion,'pipeline-durable-record-store.v1');",
+        "  const reopened=new FileDurableRecordStore(root,limits);assert.deepEqual(await reopened.read('legacy'),[original.record]);",
+        "  assert.deepEqual(await reopened.append('legacy','one',{value:1},'run:new'),{appended:false,record:original.record});",
+        "  assert.deepEqual(fs.readFileSync(file),bytes,'legacy duplicate is not silently assigned a run owner');",
+        "  const changed=await reopened.transition('legacy','one',original.record.payloadDigest,{value:2});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 46,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "  assert.deepEqual((await new FileDurableRecordStore(root,limits).read('legacy'))[0].payload,{value:2});",
+      "context": [
+        "  const changed=await reopened.transition('legacy','one',original.record.payloadDigest,{value:2});",
+        "  assert.equal(changed.sequence,1);assert.equal(changed.schemaVersion,'pipeline-durable-record.v1');",
+        "  await reopened.append('new','owned',blob,'run:new');assert.equal(JSON.parse(fs.readFileSync(file)).schemaVersion,'pipeline-durable-record-store.v2');",
+        "  assert.deepEqual((await new FileDurableRecordStore(root,limits).read('legacy'))[0].payload,{value:2});",
+        "  await assert.rejects(reopened.transition('legacy','one',original.record.payloadDigest,{}),/TRANSITION_CONFLICT/);",
+        "});",
+        "async function fixture(t,failures={}) {"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 55,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "  const store=new FileDurableRecordStore(telemetryRoot,limits);",
+      "context": [
+        "  const f=budgetFixture(root,failures),runId='run:retirement';",
+        "  const result=await runPipelineV2(f.platform,f.definition,runId);",
+        "  const run=runRoot(f.platform.storageRoot,runId),telemetryRoot=path.join(root,'telemetry');",
+        "  const store=new FileDurableRecordStore(telemetryRoot,limits);",
+        "  const adapter=activate({config:{root:telemetryRoot,maxRecordBytes:limits.maximumRecordBytes,maximumRecords:limits.maximumRecords,maximumStoreBytes:limits.maximumBytes}});",
+        "  const locks=new FileResourceLockManager(path.join(root,'telemetry-locks'));",
+        "  const invoke=async(key,payload=blob,owner=runId)=>{"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 82,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "  const reopened=new FileDurableRecordStore(f.scope.telemetryRoot,limits);",
+      "context": [
+        "  assert.deepEqual(await f.invoke('new'),{accepted:true,sequence:3});",
+        "  await assert.rejects(f.invoke('one',{message:'different'}),/IDEMPOTENCY_CONFLICT/);",
+        "  await assert.rejects(f.invoke('one',blob,'foreign'),/IDEMPOTENCY_CONFLICT/);",
+        "  const reopened=new FileDurableRecordStore(f.scope.telemetryRoot,limits);",
+        "  assert.equal((await reopened.read(stream)).length,2);",
+        "  assert.equal((await reopened.retirements(stream)).length,1);",
+        "  const plan=planRetirement({schemaVersion:'observability-retirement-scope.v1',runId:f.runId,novaStorageRoot:f.scope.novaStorageRoot,"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 92,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "  const byteLimited=new FileDurableRecordStore(f.scope.telemetryRoot,{...limits,maximumRecords:100,maximumBytes:currentBytes});",
+      "context": [
+        "  await assert.rejects(reopened.transition(stream,'one',f.scope.records[0].payloadDigest,blob),/DURABLE_RECORD_RETIRED/);",
+        "  assert.equal((await retireTelemetry(f.scope)).newlyRetired,false);",
+        "  const currentBytes=fs.statSync(file).size;",
+        "  const byteLimited=new FileDurableRecordStore(f.scope.telemetryRoot,{...limits,maximumRecords:100,maximumBytes:currentBytes});",
+        "  await assert.rejects(byteLimited.append('other','over-budget',{value:1}),/DURABLE_RECORD_STORE_FULL/);",
+        "  assert.equal((await byteLimited.append(stream,'one',blob,f.runId)).appended,false,'tombstone replay consumes no new quota');",
+        "  assert.equal(fs.readFileSync(path.join(f.run,'events.jsonl'),'utf8'),f.events);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 105,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "    await assert.rejects(new FileDurableRecordStore(f.scope.telemetryRoot,limits).read(stream),/DURABLE_/);",
+      "context": [
+        "    {...state,records:[...state.records].reverse()},",
+        "  ]) {",
+        "    fs.writeFileSync(file,JSON.stringify(changed));",
+        "    await assert.rejects(new FileDurableRecordStore(f.scope.telemetryRoot,limits).read(stream),/DURABLE_/);",
+        "    fs.writeFileSync(file,originalBytes);",
+        "  }",
+        "});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 151,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "  const code=`import {withDurableStoreLock} from ${JSON.stringify(module)};await withDurableStoreLock(${JSON.stringify(file)},async()=>{process.stdout.write('locked\\\\n');await new Promise(()=>{});});`;",
+      "context": [
+        "test('native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes',async t=>{",
+        "  const f=await fixture(t),file=path.join(f.scope.telemetryRoot,'records/store.json'),before=fs.readFileSync(file);",
+        "  const module=pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/observability/durable-delivery.ts')).href;",
+        "  const code=`import {withDurableStoreLock} from ${JSON.stringify(module)};await withDurableStoreLock(${JSON.stringify(file)},async()=>{process.stdout.write('locked\\\\n');await new Promise(()=>{});});`;",
+        "  const child=spawn(process.execPath,['--input-type=module','-e',code],{stdio:['ignore','pipe','pipe']});",
+        "  t.after(()=>{if(child.exitCode===null)child.kill('SIGKILL');});",
+        "  const done=once(child,'exit');assert.equal((await once(child.stdout,'data'))[0].toString(),'locked\\n');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/operator-projection-independent.test.mjs",
+      "line": 45,
+      "sha256": "98694f4488603810505bccfa890e7386cb118379097cd6dbe6562a3786d4b9c8",
+      "sourceText": "  const waits = new FileDurableRecordStore(f.waitRoot, { maximumRecords: 100000, maximumBytes: 268435456, maximumRecordBytes: 1048576 });",
+      "context": [
+        "  const f = await fixture(t);",
+        "  assert.equal((await resumePipelineV2(f.platform, f.definition, f.runId, f.signal)).status, 'succeeded');",
+        "  const scope = selection(f), expected = structuredClone(scope.intent);",
+        "  const waits = new FileDurableRecordStore(f.waitRoot, { maximumRecords: 100000, maximumBytes: 268435456, maximumRecordBytes: 1048576 });",
+        "  let release, held;",
+        "  const entered = new Promise(resolve => { held = resolve; });",
+        "  const gate = new Promise(resolve => { release = resolve; });"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "line": 28,
+      "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90",
+      "sourceText": "  const f=await closureFixture(t),store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+      "context": [
+        "}",
+        "",
+        "test('closure projection frees actual resident quota and net bytes while all original consumers retain full identities',async t=>{",
+        "  const f=await closureFixture(t),store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+        "  const prior=await store.snapshot(),before=fs.readFileSync(f.file),journal=fs.readFileSync(f.imported.journalFile);",
+        "  const next=createProducerClosure({...f.closure,closureId:'closure:waiting',pipelineRunId:'run:waiting',producer:f.other.producer,requiredEvidenceIds:[]});",
+        "  await assert.rejects(store.storeClosure(next,f.admission),/CLOSURE_STORE_FULL/);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "line": 63,
+      "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90",
+      "sourceText": "  const store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits),higher=structuredClone(f.result);",
+      "context": [
+        "  assert.deepEqual(planned,plan);",
+        "  const applied=JSON.parse(execFileSync(process.execPath,['scripts/retire-attempt-closure.mjs','--apply',scopeFile],{encoding:'utf8'}));",
+        "  assert.equal(applied.releasedBytes,plan.releasedBytes);assert.equal(applied.releasedClosures,1);",
+        "  const store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits),higher=structuredClone(f.result);",
+        "  higher.claimGeneration=2;higher.claimId='claim:1:2';higher.evidence=[];higher.resultDigest=workerAttemptResultDigest(higher);",
+        "  await assert.rejects(store.storeResult(f.runId,higher,null,{planId:'plan:1',nodeId:'node:1'}),/ATTEMPT_ALREADY_COMPLETED/);",
+        "  await assert.rejects(retireAttemptClosure({...f.closureScope,intent:{...f.closureScope.intent,actor:'other'}}),/RETIREMENT_CONFLICT/);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "line": 69,
+      "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90",
+      "sourceText": "  const tight=new FileDurableAttemptStore(f.scope.attemptRoot,{...f.limits,maximumMetadataBytes});",
+      "context": [
+        "  await assert.rejects(retireAttemptClosure({...f.closureScope,intent:{...f.closureScope.intent,actor:'other'}}),/RETIREMENT_CONFLICT/);",
+        "  assert.equal(planAttemptClosure(f.closureScope).releasedBytes,0);",
+        "  const saved=fs.readFileSync(f.file),maximumMetadataBytes=Math.max(saved.length,fs.statSync(f.imported.journalFile).size)+256;",
+        "  const tight=new FileDurableAttemptStore(f.scope.attemptRoot,{...f.limits,maximumMetadataBytes});",
+        "  const oversized={...higher,attemptId:'attempt:new',evidence:[],specialistResult:{...higher.specialistResult,values:{detail:'x'.repeat(maximumMetadataBytes)}}};",
+        "  oversized.resultDigest=workerAttemptResultDigest(oversized);",
+        "  await assert.rejects(tight.storeResult('run:new',oversized),/ATTEMPT_METADATA_FULL/);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "line": 77,
+      "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90",
+      "sourceText": "  const f=await closureFixture(t),before=fs.readFileSync(f.file),store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+      "context": [
+        "});",
+        "",
+        "test('no byte saving, stale store, source mismatch and run fence fail before mutation',async t=>{",
+        "  const f=await closureFixture(t),before=fs.readFileSync(f.file),store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+        "  for(const key of Object.keys(f.closureScope.attemptLimits)) {",
+        "    for(const value of [0,-1,1.5,Number.MAX_SAFE_INTEGER+1]) {",
+        "      const invalid={...f.closureScope,attemptLimits:{...f.closureScope.attemptLimits,[key]:value}};"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "line": 101,
+      "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90",
+      "sourceText": "  const f=await closureFixture(t),store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+      "context": [
+        "test('waiting run and absent result projection are not eligible; malformed references cannot yield successful reads or ACKs',async t=>{",
+        "  const waiting=await closureFixture(t,{lint:[1,2,3]}),waitingBytes=fs.readFileSync(waiting.file);",
+        "  await assert.rejects(retireAttemptClosure(waiting.closureScope));assert.deepEqual(fs.readFileSync(waiting.file),waitingBytes);",
+        "  const f=await closureFixture(t),store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);",
+        "  await retireAdmission(f.scope);await retireAttemptClosure(f.closureScope);",
+        "  const original=fs.readFileSync(f.file);",
+        "  const mutations=["
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "line": 137,
+      "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90",
+      "sourceText": "  const holder=await childAtMarker(t,`import {withDurableStoreLock} from ${JSON.stringify(mutex)};await withDurableStoreLock(process.argv[1],async()=>{process.stdout.write('LOCKED\\\\n');await new Promise(()=>{});});`,[f.file],'LOCKED');",
+      "context": [
+        "test('actual Attempt writer fence prevents closure retirement; killing waiting operator leaves original state',async t=>{",
+        "  const f=await closureFixture(t),before=fs.readFileSync(f.file);",
+        "  const mutex=new URL('../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts',import.meta.url).href;",
+        "  const holder=await childAtMarker(t,`import {withDurableStoreLock} from ${JSON.stringify(mutex)};await withDurableStoreLock(process.argv[1],async()=>{process.stdout.write('LOCKED\\\\n');await new Promise(()=>{});});`,[f.file],'LOCKED');",
+        "  const module=new URL('../../../scripts/retire-attempt-closure.mjs',import.meta.url).href;",
+        "  const operator=await childAtMarker(t,`import {retireAttemptClosure} from ${JSON.stringify(module)};process.stdout.write('STARTED\\\\n');await retireAttemptClosure(JSON.parse(process.argv[1]));process.stdout.write('COMMITTED\\\\n');`,[JSON.stringify(f.closureScope)],'STARTED');",
+        "  await new Promise(resolve=>setTimeout(resolve,200));assert.equal(operator.exitCode,null);assert.deepEqual(fs.readFileSync(f.file),before);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "line": 158,
+      "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90",
+      "sourceText": "    const store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);assert.deepEqual((await store.snapshot()).closures,[f.closure]);",
+      "context": [
+        "    let stderr='';child.stderr.on('data',chunk=>stderr+=chunk);",
+        "    assert.deepEqual(await once(child,'exit'),[null,'SIGKILL'],stderr);",
+        "    if(boundary==='before-rename')assert.deepEqual(fs.readFileSync(f.file),before);",
+        "    const store=new FileDurableAttemptStore(f.scope.attemptRoot,f.limits);assert.deepEqual((await store.snapshot()).closures,[f.closure]);",
+        "    const result=await retireAttemptClosure(f.closureScope);assert.equal(result.newlyRetired,boundary==='before-rename');",
+        "    assert.deepEqual(await retireAttemptClosure(f.closureScope),{newlyRetired:false,releasedBytes:0});",
+        "    assert.equal((await f.imported.reconciler.reconcile([f.imported.desired]))[0].action,'already-imported');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "line": 16,
+      "sha256": "354baab090d89bf26dbfed637137785ff61087d84ee716e81c379e503d7ca1ea",
+      "sourceText": "  return { root, store: new FileDurableRecordStore(root, limits) };",
+      "context": [
+        "function fixture(t) {",
+        "  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'record-fenced-review-'));",
+        "  t.after(() => fs.rmSync(root, { recursive: true, force: true }));",
+        "  return { root, store: new FileDurableRecordStore(root, limits) };",
+        "}",
+        "function worker(root, mode) {",
+        "  return spawn(process.execPath, ['--input-type=module', '-e', `"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "line": 21,
+      "sha256": "354baab090d89bf26dbfed637137785ff61087d84ee716e81c379e503d7ca1ea",
+      "sourceText": "    const store = new FileDurableRecordStore(process.argv[2], JSON.parse(process.argv[3]));",
+      "context": [
+        "function worker(root, mode) {",
+        "  return spawn(process.execPath, ['--input-type=module', '-e', `",
+        "    const { FileDurableRecordStore } = await import(process.argv[1]);",
+        "    const store = new FileDurableRecordStore(process.argv[2], JSON.parse(process.argv[3]));",
+        "    if (process.argv[4] === 'hold') {",
+        "      await store.withRecords('stream', async records => {",
+        "        process.send({ held: true, records: records.length });"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "line": 59,
+      "sha256": "354baab090d89bf26dbfed637137785ff61087d84ee716e81c379e503d7ca1ea",
+      "sourceText": "  const records = await new FileDurableRecordStore(f.root, limits).read('stream');",
+      "context": [
+        "  await delay(150); assert.equal(appended, false);",
+        "  const exited = once(child, 'exit'); release(); await held;",
+        "  const [code] = await exited; assert.equal(code, 0); assert.equal(appended, true);",
+        "  const records = await new FileDurableRecordStore(f.root, limits).read('stream');",
+        "  assert.deepEqual(records.map(record => record.payload.value), ['original', 'child']);",
+        "});",
+        ""
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "line": 72,
+      "sha256": "354baab090d89bf26dbfed637137785ff61087d84ee716e81c379e503d7ca1ea",
+      "sourceText": "  const records = await new FileDurableRecordStore(f.root, limits).read('stream');",
+      "context": [
+        "  const write = f.store.append('stream', 'after-death', { value: 'after-death' }).then(value => { appended = true; return value; });",
+        "  await delay(150); assert.equal(appended, false);",
+        "  await stop(child); await write;",
+        "  const records = await new FileDurableRecordStore(f.root, limits).read('stream');",
+        "  assert.deepEqual(records.map(record => record.payload.value), ['original', 'after-death']);",
+        "});"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/review-report-crash-independent.test.mjs",
+      "line": 42,
+      "sha256": "629827a5166a35479ad7cb6e0741247c4935d8b27d8fa90627d82046867a7efb",
+      "sourceText": "  const records=new FileDurableRecordStore(path.join(root,'artifacts'),{maximumRecords:100000,maximumBytes:268435456,maximumRecordBytes:65536});",
+      "context": [
+        " try{",
+        "  worker=fork(self,['--child',root,mode],{stdio:['ignore','pipe','pipe','ipc']});",
+        "  const ready=await once(worker,'message');assert.equal(ready[0],'ready');",
+        "  const records=new FileDurableRecordStore(path.join(root,'artifacts'),{maximumRecords:100000,maximumBytes:268435456,maximumRecordBytes:65536});",
+        "  let entered;const held=new Promise(resolve=>{entered=resolve;});",
+        "  fenced=records.withRecords('artifacts/kubeclaw.review',async()=>{entered();await new Promise(resolve=>{release=resolve;});});",
+        "  await held;worker.send('write');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 82,
+      "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971",
+      "sourceText": "  const root = f.scope.artifactRoots[0]; const store = new FileDurableRecordStore(root, { ...recordLimits, maximumBytes: 10000000 });",
+      "context": [
+        "",
+        "test('shared artifact references, missing blobs and uncertain effects block retirement', async t => {",
+        "  const f = await fixture(t);",
+        "  const root = f.scope.artifactRoots[0]; const store = new FileDurableRecordStore(root, { ...recordLimits, maximumBytes: 10000000 });",
+        "  const original = (await store.read('artifacts/test.repair-budget'))[0].payload;",
+        "  await store.append('artifacts/test.repair-budget', 'other:reference', { ...original, producer: { ...original.producer, runId: 'run:other' } });",
+        "  const effects = new FileJournal(path.join(f.target, 'effects.jsonl'));"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 95,
+      "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971",
+      "sourceText": "  const admission = new FileObservabilityAdmissionStore(path.join(observation, 'admission'), admissionLimits);",
+      "context": [
+        "",
+        "test('original admission and attempt stores provide bounded identity and evidence inspection', async t => {",
+        "  const f = await fixture(t); const observation = path.join(f.target, 'observability');",
+        "  const admission = new FileObservabilityAdmissionStore(path.join(observation, 'admission'), admissionLimits);",
+        "  const unsigned = { schemaVersion: 'producer-record.v1', recordId: 'record:one', producer, sequence: 1, recordType: 'attempt.completed', occurredAt: '2026-08-09T12:00:01Z',",
+        "    correlation: { pipelineRunId: f.runId, moduleId: null, gateId: null, attemptId: 'attempt:one', claimId: 'claim:one', claimGeneration: 1, traceId: null, parentEventId: null }, payload: { token: canary } };",
+        "  await admission.admit(canonicalJson({ ...unsigned, recordDigest: producerRecordDigest(unsigned) }));"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 99,
+      "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971",
+      "sourceText": "  const attempts = new FileDurableAttemptStore(path.join(observation, 'attempts'), attemptLimits);",
+      "context": [
+        "  const unsigned = { schemaVersion: 'producer-record.v1', recordId: 'record:one', producer, sequence: 1, recordType: 'attempt.completed', occurredAt: '2026-08-09T12:00:01Z',",
+        "    correlation: { pipelineRunId: f.runId, moduleId: null, gateId: null, attemptId: 'attempt:one', claimId: 'claim:one', claimGeneration: 1, traceId: null, parentEventId: null }, payload: { token: canary } };",
+        "  await admission.admit(canonicalJson({ ...unsigned, recordDigest: producerRecordDigest(unsigned) }));",
+        "  const attempts = new FileDurableAttemptStore(path.join(observation, 'attempts'), attemptLimits);",
+        "  await attempts.storeEvidence({ pipelineRunId: f.runId, attemptId: 'attempt:one', claimGeneration: 1, producer, evidenceId: 'evidence:one', type: 'log', mediaType: 'text/plain' }, Buffer.from(canary));",
+        "  const plan = inspect(f);",
+        "  assert.equal(plan.observations[0].admission.records[0].recordId, 'record:one');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 110,
+      "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971",
+      "sourceText": "  const store = new FileDurableRecordStore(root, recordLimits);",
+      "context": [
+        "test('shared Buster job identities and uncertain terminal outcome remain protected', async t => {",
+        "  const f = await fixture(t); const root = path.join(f.root, 'jobs'); const runtimeRoot = path.join(f.root, 'runtime');",
+        "  fs.mkdirSync(runtimeRoot);",
+        "  const store = new FileDurableRecordStore(root, recordLimits);",
+        "  const jobId = remotePlanJobId('job:key'); const requestDigest = digest('request');",
+        "  const jobRoot = path.join(runtimeRoot, digest(jobId).slice(7)); fs.mkdirSync(jobRoot);",
+        "  await store.append('buster-plan-jobs', 'job:key', { schemaVersion: 'buster-plan-job-record.v1', job: { jobId, requestDigest, idempotencyKey: 'job:key', plan: { runId: f.runId } },"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/delivery-manifest-import-boundary.test.mjs",
+      "line": 28,
+      "sha256": "7ed77871de09f7cd8b78545708539bab7b3722b3f446093dd04a51ab5934ac15",
+      "sourceText": "      const store = new FileDurableRecordStore(path.join(root, 'imports'), limits);",
+      "context": [
+        "    const root = fs.mkdtempSync(path.join(os.tmpdir(), `delivery-import-${mode}-`));",
+        "    try {",
+        "      const producer = run(root, mode === 'v2' ? 'produce-v2' : 'produce');",
+        "      const store = new FileDurableRecordStore(path.join(root, 'imports'), limits);",
+        "      const [original] = await store.read('remote-gate-imports');",
+        "      assert(original);",
+        "      assert.equal(original.payload.state, 'complete');"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/delivery-manifest-import-boundary.test.mjs",
+      "line": 62,
+      "sha256": "7ed77871de09f7cd8b78545708539bab7b3722b3f446093dd04a51ab5934ac15",
+      "sourceText": "        const reopened = new FileDurableRecordStore(path.join(root, 'imports'), limits);",
+      "context": [
+        "        // Corrupt a genuine completed import using the real durable CAS API.",
+        "        // The original file store, importer, consumer, adapters and journals remain in use.",
+        "        const altered = await store.transition('remote-gate-imports', original.idempotencyKey, original.payloadDigest, changed);",
+        "        const reopened = new FileDurableRecordStore(path.join(root, 'imports'), limits);",
+        "        assert.deepEqual((await reopened.read('remote-gate-imports'))[0].payload, changed);",
+        "        const proof = run(root, `consume-import-${scenario}`);",
+        "        assert.equal(proof.boundary.importBindingRejected, true);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+      "line": 12,
+      "sha256": "69d114c208fb595e4d11789fcac61933c287d0d1c89f8670505eaff61d22782b",
+      "sourceText": "  return { root, store: new FileDurableRecordStore(root, limits) };",
+      "context": [
+        "function fixture(t) {",
+        "  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'transition-authority-review-'));",
+        "  t.after(() => fs.rmSync(root, { recursive: true, force: true }));",
+        "  return { root, store: new FileDurableRecordStore(root, limits) };",
+        "}",
+        "",
+        "// These exercise the original generic RecordStore contract, not authorization"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+      "line": 43,
+      "sha256": "69d114c208fb595e4d11789fcac61933c287d0d1c89f8670505eaff61d22782b",
+      "sourceText": "  const other = new FileDurableRecordStore(f.root, limits);",
+      "context": [
+        "  await assert.rejects(f.store.transition('requests', 'one', original.payloadDigest, { value: 'forbidden' },",
+        "    async records => { assert.deepEqual(records[0], original); }), /DURABLE_RECORD_AUTHORIZATION_NOT_SYNCHRONOUS/);",
+        "  assert.deepEqual(fs.readFileSync(file), before);",
+        "  const other = new FileDurableRecordStore(f.root, limits);",
+        "  const replacement = await other.transition('requests', 'one', original.payloadDigest, { value: 'accepted' });",
+        "  let called = false;",
+        "  await assert.rejects(f.store.transition('requests', 'one', original.payloadDigest, { value: 'stale' }, () => { called = true; }),"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/blob-read-boundary.test.mjs",
+      "line": 15,
+      "sha256": "07196b9858bcedbc12dcfb85aaefca04413cc3e82bcc8b0381b97a75983adab1",
+      "sourceText": "  const store = new FileDurableBlobStore(root, maximum, Math.max(maximum * 4, 1024));",
+      "context": [
+        "function fixture(t, maximum = 16) {",
+        "  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'original-blob-read-'));",
+        "  t.after(() => fs.rmSync(root, { recursive: true, force: true }));",
+        "  const store = new FileDurableBlobStore(root, maximum, Math.max(maximum * 4, 1024));",
+        "  const file = hash => path.join(root, 'blobs/sha256', hash.slice(7, 9), hash.slice(9));",
+        "  return { root, store, file };",
+        "}"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-retirement-fixture.mjs",
+      "line": 54,
+      "sha256": "235cfee17ee594997f80ae1012b186d8e79a1aed229029a509325763322adbd3",
+      "sourceText": "  const attempts=new FileDurableAttemptStore(attemptRoot,attemptLimits),admission=new FileObservabilityAdmissionStore(admissionRoot,admissionLimits);",
+      "context": [
+        "  const native=budgetFixture(root,failures),runId='run:admission-retirement';",
+        "  await runPipelineV2(native.platform,native.definition,runId);",
+        "  const run=runRoot(native.platform.storageRoot,runId),attemptRoot=path.join(run,'observability/attempts'),admissionRoot=path.join(run,'observability/admission');",
+        "  const attempts=new FileDurableAttemptStore(attemptRoot,attemptLimits),admission=new FileObservabilityAdmissionStore(admissionRoot,admissionLimits);",
+        "  const result=resultFor(1),producer={producerId:'attempt:1',bootId:'claim:1',producerType:'buster-attempt'};",
+        "  if(resultDetail)result.specialistResult.values.detail=resultDetail;",
+        "  const evidence=await attempts.storeEvidence({pipelineRunId:runId,attemptId:result.attemptId,claimGeneration:1,producer,evidenceId:'evidence:1',type:'log',mediaType:'text/plain'},Buffer.from('original evidence bytes'));"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-retirement-fixture.mjs",
+      "line": 97,
+      "sha256": "235cfee17ee594997f80ae1012b186d8e79a1aed229029a509325763322adbd3",
+      "sourceText": "  const attempts=new FileDurableAttemptStore(f.scope.attemptRoot,limits);",
+      "context": [
+        "export async function projectionFixture(t,failures={}) {",
+        "  const f=await fixture(t,failures,'original imported result detail '.repeat(600));",
+        "  const limits={...attemptLimits,maximumResults:2};",
+        "  const attempts=new FileDurableAttemptStore(f.scope.attemptRoot,limits);",
+        "  const active=resultFor(2);",
+        "  await attempts.storeResult('run:waiting',active,null,{planId:'plan:waiting',nodeId:'node:waiting'});",
+        "  const imported=await importCompletion(f,attempts);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 24,
+      "sha256": "a92f9d257dafbd2fdf7402d5d3035da35dd9b04667f43cadc8cee927c00c7f63",
+      "sourceText": "  const outbox=new FileProducerOutbox(path.join(f.root,'independent-old-delivery'),{maximumRecords:10,maximumBytes:50000});",
+      "context": [
+        "  const journal=fs.readFileSync(f.imported.journalFile);",
+        "  assert.equal(journal.toString().trim().split('\\n').length,2);",
+        "  assert.deepEqual((await f.attempts.snapshot()).results[0].result,f.result);",
+        "  const outbox=new FileProducerOutbox(path.join(f.root,'independent-old-delivery'),{maximumRecords:10,maximumBytes:50000});",
+        "  await outbox.append(f.record);",
+        "  fs.unlinkSync(f.imported.journalFile);",
+        "  await assert.rejects(f.attempts.snapshot(),/ENOENT/);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 68,
+      "sha256": "a92f9d257dafbd2fdf7402d5d3035da35dd9b04667f43cadc8cee927c00c7f63",
+      "sourceText": "  const attempts=new FileDurableAttemptStore(f.scope.attemptRoot,{...f.limits,maximumPendingEvidenceAgeMs:1});",
+      "context": [
+        "  const f=await projectionFixture(t),file=path.join(f.scope.attemptRoot,'attempt-store.json');",
+        "  await retireAttemptResult(f.projectionScope);",
+        "  const original=JSON.parse(fs.readFileSync(file)),reference=original.results[0].resultReference;",
+        "  const attempts=new FileDurableAttemptStore(f.scope.attemptRoot,{...f.limits,maximumPendingEvidenceAgeMs:1});",
+        "  await attempts.storeEvidence({pipelineRunId:'run:waiting',attemptId:'attempt:orphan',claimGeneration:1,",
+        "    producer:{producerId:'orphan',bootId:'boot:orphan',producerType:'buster'},evidenceId:'orphan',type:'log',mediaType:'text/plain'},Buffer.from('temporary unreferenced bytes'));",
+        "  await delay(20);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 77,
+      "sha256": "a92f9d257dafbd2fdf7402d5d3035da35dd9b04667f43cadc8cee927c00c7f63",
+      "sourceText": "  const tight=new FileDurableAttemptStore(f.scope.attemptRoot,{...f.limits,maximumMetadataBytes});",
+      "context": [
+        "  assert.deepEqual(state.results[0].result,f.result);",
+        "  assert.deepEqual(JSON.parse(fs.readFileSync(file)).results[0].resultReference,reference);",
+        "  const before=fs.readFileSync(file),maximumMetadataBytes=Math.max(before.length,fs.statSync(f.imported.journalFile).size)+512;",
+        "  const tight=new FileDurableAttemptStore(f.scope.attemptRoot,{...f.limits,maximumMetadataBytes});",
+        "  const result=structuredClone(f.result);",
+        "  result.attemptId='attempt:new';result.claimId='claim:new';result.evidence=[];",
+        "  result.specialistResult.values.detail='x'.repeat(maximumMetadataBytes);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/operator-request-projection.test.mjs",
+      "line": 52,
+      "sha256": "eb30a59891f2ca9ed5c972495969b7f786a3f3e274bceee6138b9c8aa7642bd6",
+      "sourceText": "  const store = new FileDurableRecordStore(f.deliveryRoot, { maximumRecords: 100, maximumBytes: 1048576, maximumRecordBytes: 2 * 1048576 + 65536 });",
+      "context": [
+        "  assert.equal('payload' in projected[0].payload, false);",
+        "  assert.deepEqual(projected[1], original[1]);",
+        "  authorityFiles.forEach((file, index) => assert.deepEqual(fs.readFileSync(file), authorityBytes[index]));",
+        "  const store = new FileDurableRecordStore(f.deliveryRoot, { maximumRecords: 100, maximumBytes: 1048576, maximumRecordBytes: 2 * 1048576 + 65536 });",
+        "  const receipt = original[1].payload.receipt, bytes = fs.readFileSync(recordsFile(f.deliveryRoot));",
+        "  assert.deepEqual(await reserveDelivery(store, f.request, f.request.payload, false), receipt);",
+        "  assert.deepEqual(await deliveryReceipt(store, f.request), receipt);"
+      ],
+      "scope": "test-only"
+    },
+    {
+      "path": "tests/verification/reliability/fixtures/operator-retention-worker.mjs",
+      "line": 8,
+      "sha256": "457dec59baa1f5fbe43f08ab249baadff667e8b03cc887efea46ddcac846f075",
+      "sourceText": "const store = root => new FileDurableRecordStore(root, { maximumRecords: 100, maximumBytes: 1048576, maximumRecordBytes: 2 * 1048576 + 65536 });",
+      "context": [
+        "",
+        "const [mode, raw] = process.argv.slice(2), data = JSON.parse(raw);",
+        "const hold = async () => { process.send('held'); await once(process, 'message'); };",
+        "const store = root => new FileDurableRecordStore(root, { maximumRecords: 100, maximumBytes: 1048576, maximumRecordBytes: 2 * 1048576 + 65536 });",
+        "if (mode === 'hold-run') await withRunMutationLock(data.scope.intent.runRoot, hold);",
+        "else if (mode === 'hold-wait') await store(data.scope.intent.waitRoot).withRecords('waits/all', hold);",
+        "else if (mode === 'hold-delivery') await store(data.scope.intent.deliveryRoot).withRecords('notifications/operators', hold);"
+      ],
+      "scope": "test-only"
+    }
+  ],
+  "importExportAccesses": [
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "line": 2,
+      "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "sourceText": "import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "line": 2,
+      "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+      "sourceText": "import type { DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "line": 11,
+      "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+      "sourceText": "import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
+      "line": 11,
+      "sha256": "f8c7f535103cd16f37ce8ab8c9dbc192262ff786f54fdfab7bad0a504c9e09f1",
+      "sourceText": "assert.match(records, /export \\{ FileDurableBlobStore, type DurableBlobStore \\} from '\\.\\/durable-blobs\\.ts'/);"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "line": 2,
+      "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+      "sourceText": "import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "line": 4,
+      "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+      "sourceText": "import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+      "line": 6,
+      "sha256": "db6ef5e755808975ba934fa20276b6ac04e40161c3b81607b2c254bb07e36541",
+      "sourceText": "import type { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+      "line": 3,
+      "sha256": "25ce708f55dfd154d04f044edfac8f232989b2fbd59a7b644bb41aa65dfcbddc",
+      "sourceText": "import type { FileDurableRecordStore, DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "line": 3,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "sourceText": "import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts",
+      "line": 10,
+      "sha256": "cf2969a7212ca9b19912f909b43c1ae66ca5f8b20ab1198f3f22428978f3c078",
+      "sourceText": "const { FileDurableRecordStore } = await import('@kubeclaw/plugin-foundation/observability/durable-records');"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "line": 5,
+      "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+      "sourceText": "import { ensureDirectoryDurable, withDurableStoreLock, writeDurableState } from '../observability/durable-delivery.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 6,
+      "sha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "sourceText": "import type { FileDurableRecordStore } from './durable-records.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 5,
+      "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "sourceText": "import { ensureDirectoryDurable, withDurableStoreLock } from './durable-delivery.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "line": 16,
+      "sha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "sourceText": "import type { AttemptState } from \"./attempt-state.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 17,
+      "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "sourceText": "import type { FileObservabilityAdmissionStore } from \"./durable-delivery.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 18,
+      "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "sourceText": "import { AttemptState } from \"./attempt-state.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+      "line": 13,
+      "sha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+      "sourceText": "import { FileObservabilityAdmissionStore } from \"./durable-delivery.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 7,
+      "sha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "sourceText": "import { ensureDirectoryDurable } from \"./durable-delivery.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 19,
+      "sha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "sourceText": "import type { AttemptState } from \"./attempt-state.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 25,
+      "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "sourceText": "import type { DurableAttemptStoreSnapshot } from \"./durable-attempts.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 27,
+      "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "sourceText": "import type { AttemptState } from \"./attempt-state.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 28,
+      "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "sourceText": "import type { FileObservabilityAdmissionStore } from \"./durable-delivery.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 23,
+      "sha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "sourceText": "import type { AttemptState } from \"./attempt-state.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 24,
+      "sha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "sourceText": "import type { FileObservabilityAdmissionStore } from \"./durable-delivery.ts\";"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 7,
+      "sha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+      "sourceText": "import type {DurableAttemptStoreLimits, DurableAttemptStoreSnapshot, DurableResultMetadata} from './durable-attempts.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "line": 2,
+      "sha256": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a",
+      "sourceText": "import { readDurableState } from './durable-delivery.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 7,
+      "sha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+      "sourceText": "import { scopedEvidenceId, type DurableAttemptStoreSnapshot, type DurableResultMetadata } from './durable-attempts.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 10,
+      "sha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+      "sourceText": "import type { AdmittedRecordView } from './durable-delivery.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 8,
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "sourceText": "import type { AdmissionState, AdmissionStoreLimits } from './durable-delivery.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 1,
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "sourceText": "export { FileDurableBlobStore, type DurableBlobStore } from './durable-blobs.ts';"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 5,
+      "sha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "sourceText": "import { scopedEvidenceId, type DurableAttemptStoreLimits, type DurableAttemptStoreSnapshot, type DurableCompletionIntent, type DurableEvidenceMetadata, type DurableResultMetadata } from './durable-attempts.ts';"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 2,
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "sourceText": "import { assertDurableRecordReplay, type DurableRecord, type DurableRecordState } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 3,
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "sourceText": "import { readDurableState } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/worker/core/worker/native-output-spool.ts",
+      "line": 5,
+      "sha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+      "sourceText": "import { ensureDirectoryDurable } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 3,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "import { FileDurableRecordStore, FileDurableBlobStore, type DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 4,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "import { ensureDirectoryDurable, withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 5,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "import { withDurableStoreLock, writeDurableState } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "line": 3,
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "sourceText": "import {FileDurableRecordStore} from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+      "line": 5,
+      "sha256": "9cb2789e42560f95948b0714fd5ee0fe92d21db8946b8b08432c04330850abb8",
+      "sourceText": "import { FileDurableBlobStore, FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 5,
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+      "sourceText": "import type { DurableRecordLimits } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "line": 4,
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "sourceText": "import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecordLimits } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 9,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "import { FileObservabilityAdmissionStore } from \"@kubeclaw/plugin-foundation/observability/durable-delivery\";"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 10,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "import { writeDurableState } from \"@kubeclaw/plugin-foundation/observability/durable-delivery\";"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 11,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "import { withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 26,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "import { FileObservabilityAdmissionStore } from \"@kubeclaw/plugin-foundation/observability/durable-delivery\";"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 27,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "import { FileDurableAttemptStore } from \"@kubeclaw/plugin-foundation/observability/durable-attempts\";"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-source.ts",
+      "line": 9,
+      "sha256": "dd165bec2ad71b1664b7bec6c5d48a7a1b1602bd3824f8735e09292eb9b6ef22",
+      "sourceText": "import { ensureDirectoryDurable } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "line": 3,
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde",
+      "sourceText": "import { ensureDirectoryDurable } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-completion.ts",
+      "line": 5,
+      "sha256": "2281dc0ddf02338e1619f8710d10b42819a1641d5e850fd2c062f3f161e28c82",
+      "sourceText": "import { createProducerClosure, scopedEvidenceId, type FileDurableAttemptStore } from '@kubeclaw/plugin-foundation/observability/durable-attempts';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-completion.ts",
+      "line": 6,
+      "sha256": "2281dc0ddf02338e1619f8710d10b42819a1641d5e850fd2c062f3f161e28c82",
+      "sourceText": "import type { FileObservabilityAdmissionStore } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+      "line": 6,
+      "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+      "sourceText": "import { writeDurableState, withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-types.ts",
+      "line": 7,
+      "sha256": "b28e648f56ccf27cf8914891abb6afc470d00c56f01f5b7fdbfc71fc02c1eb1b",
+      "sourceText": "import type { FileDurableAttemptStore } from '@kubeclaw/plugin-foundation/observability/durable-attempts';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-types.ts",
+      "line": 8,
+      "sha256": "b28e648f56ccf27cf8914891abb6afc470d00c56f01f5b7fdbfc71fc02c1eb1b",
+      "sourceText": "import type { FileObservabilityAdmissionStore } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 3,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 4,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "import { ensureDirectoryDurable, withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 11,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "import { withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 13,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "import { readDurableState, withDurableStoreLock, writeDurableState } from '@kubeclaw/plugin-foundation/observability/durable-delivery';"
+    },
+    {
+      "path": "scripts/retire-wait-value.mjs",
+      "line": 4,
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+      "sourceText": "import { FileDurableRecordStore } from '../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "scripts/retire-telemetry.mjs",
+      "line": 4,
+      "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+      "sourceText": "import {FileDurableRecordStore} from '../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 4,
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+      "sourceText": "import { FileDurableRecordStore } from '../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "scripts/retire-admission.mjs",
+      "line": 4,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "import {FileDurableAttemptStore} from '../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';"
+    },
+    {
+      "path": "scripts/retire-admission.mjs",
+      "line": 5,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "import {FileObservabilityAdmissionStore} from '../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';"
+    },
+    {
+      "path": "scripts/retire-attempt-result.mjs",
+      "line": 4,
+      "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+      "sourceText": "import {FileDurableAttemptStore} from '../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';"
+    },
+    {
+      "path": "scripts/observability-retirement/stores.mjs",
+      "line": 4,
+      "sha256": "982888f6ce9d33fa827b7285ffbe8f57c6f43a402ab9a9c87072b1d93ae7451e",
+      "sourceText": "import { assertDurableRecordReplay } from '../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/contracts/buster-default-store-policy.test.mjs",
+      "line": 7,
+      "sha256": "d857630229c976b41e462ee9a1a5150305ddfd8ddd91e21c0467257ec33eca7c",
+      "sourceText": "import { FileDurableAttemptStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';"
+    },
+    {
+      "path": "tests/verification/contracts/buster-default-store-policy.test.mjs",
+      "line": 8,
+      "sha256": "d857630229c976b41e462ee9a1a5150305ddfd8ddd91e21c0467257ec33eca7c",
+      "sourceText": "import { FileObservabilityAdmissionStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';"
+    },
+    {
+      "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+      "line": 8,
+      "sha256": "467f3850a5983a84cdfc58a5fa2c750c1b10ffb530ec6888063388741067216f",
+      "sourceText": "import {FileDurableBlobStore, FileDurableRecordStore} from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "tests/verification/e2e/real-run-evidence.mjs",
+      "line": 1,
+      "sha256": "a4bd4840337e6455f4011152c433b583d926fe9a38c4e1fe1c7034b75ef3fe56",
+      "sourceText": "import { FileDurableRecordStore, FileDurableBlobStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 14,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "import {FileDurableAttemptStore} from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 15,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "import {FileObservabilityAdmissionStore,FileProducerOutbox,deliverPending} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 83,
+      "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+      "sourceText": "  const script=`import {withDurableStoreLock} from ${JSON.stringify(new URL('../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts',import.meta.url).href)};await withDurableStoreLock(${JSON.stringify(path.join(f.scope.attemptRoot,'attempt-store.json'))},async()=>{process.stdout.write('LOCKED\\\\n');await new Promise(()=>{});});`;"
+    },
+    {
+      "path": "tests/verification/reliability/wait-value-projection.test.mjs",
+      "line": 15,
+      "sha256": "b5eee8e086156031ee4ccd0511a1aeb13775bb566501bbd55314467cc109d2d1",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/record-retained-transition.test.mjs",
+      "line": 6,
+      "sha256": "d966812e0b1645468db4e72eba503aa124c70121ecb76ffa6e873845662d996f",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 11,
+      "sha256": "987a9a4efe9320b858c448f03f4a296323e3b8e1893fea524bb91fec5b77159e",
+      "sourceText": "const { FileObservabilityAdmissionStore } = await import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugin-runtime/foundation/observability/durable-delivery.ts')).href);"
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 12,
+      "sha256": "987a9a4efe9320b858c448f03f4a296323e3b8e1893fea524bb91fec5b77159e",
+      "sourceText": "const { FileDurableAttemptStore, createProducerClosure, scopedEvidenceId } = await import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugin-runtime/foundation/observability/durable-attempts.ts')).href);"
+    },
+    {
+      "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 19,
+      "sha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/blob-read-independent.test.mjs",
+      "line": 9,
+      "sha256": "1da460f13a945cb90182237c73b814131586431f442b5ba4156b411fc6d21f9d",
+      "sourceText": "import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+      "line": 13,
+      "sha256": "c73601fa0f4fea13ac49dd7895425b89e51cd0418457d9665d4a56725bb50094",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/nova-dispatch-retained-authority.test.mjs",
+      "line": 11,
+      "sha256": "61e593387a562459e57649b63a85aefaae82284f1e609b7e7474e9ce001e4c64",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/prism-reader-fixture.mjs",
+      "line": 15,
+      "sha256": "b19767987615299632b132da7d029fa91d3a5eed827a49489ed3d9bf1c9bdcfe",
+      "sourceText": "import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 10,
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d",
+      "sourceText": "import {FileDurableRecordStore} from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/operator-projection-independent.test.mjs",
+      "line": 9,
+      "sha256": "98694f4488603810505bccfa890e7386cb118379097cd6dbe6562a3786d4b9c8",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "line": 13,
+      "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90",
+      "sourceText": "import {FileDurableAttemptStore,createProducerClosure} from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "line": 9,
+      "sha256": "354baab090d89bf26dbfed637137785ff61087d84ee716e81c379e503d7ca1ea",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/review-report-crash-independent.test.mjs",
+      "line": 10,
+      "sha256": "629827a5166a35479ad7cb6e0741247c4935d8b27d8fa90627d82046867a7efb",
+      "sourceText": "import {FileDurableRecordStore} from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 12,
+      "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 13,
+      "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971",
+      "sourceText": "import { FileObservabilityAdmissionStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 14,
+      "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971",
+      "sourceText": "import { FileDurableAttemptStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/delivery-manifest-import-boundary.test.mjs",
+      "line": 8,
+      "sha256": "7ed77871de09f7cd8b78545708539bab7b3722b3f446093dd04a51ab5934ac15",
+      "sourceText": "import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';"
+    },
+    {
+      "path": "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+      "line": 6,
+      "sha256": "69d114c208fb595e4d11789fcac61933c287d0d1c89f8670505eaff61d22782b",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/blob-read-boundary.test.mjs",
+      "line": 9,
+      "sha256": "07196b9858bcedbc12dcfb85aaefca04413cc3e82bcc8b0381b97a75983adab1",
+      "sourceText": "import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-retirement-fixture.mjs",
+      "line": 7,
+      "sha256": "235cfee17ee594997f80ae1012b186d8e79a1aed229029a509325763322adbd3",
+      "sourceText": "import {FileDurableAttemptStore,createProducerClosure,scopedEvidenceId} from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-retirement-fixture.mjs",
+      "line": 8,
+      "sha256": "235cfee17ee594997f80ae1012b186d8e79a1aed229029a509325763322adbd3",
+      "sourceText": "import {FileObservabilityAdmissionStore} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 9,
+      "sha256": "a92f9d257dafbd2fdf7402d5d3035da35dd9b04667f43cadc8cee927c00c7f63",
+      "sourceText": "import {FileDurableAttemptStore} from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 14,
+      "sha256": "a92f9d257dafbd2fdf7402d5d3035da35dd9b04667f43cadc8cee927c00c7f63",
+      "sourceText": "import {FileProducerOutbox,deliverPending} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/operator-request-projection.test.mjs",
+      "line": 11,
+      "sha256": "eb30a59891f2ca9ed5c972495969b7f786a3f3e274bceee6138b9c8aa7642bd6",
+      "sourceText": "import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    },
+    {
+      "path": "tests/verification/reliability/fixtures/operator-retention-worker.mjs",
+      "line": 2,
+      "sha256": "457dec59baa1f5fbe43f08ab249baadff667e8b03cc887efea46ddcac846f075",
+      "sourceText": "import { FileDurableRecordStore } from '../../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';"
+    }
+  ],
+  "limitations": "Literal source roster plus manual package/export and namespace review; installed external consumers remain unknown. No source count is semantic acceptance."
+}

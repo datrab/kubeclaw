@@ -15,6 +15,10 @@ case "$role" in
       "$image" /check-role-image.sh "$role" "$version" runtime
     ;;
   buster-runtime)
+    # Actual installed role readback and parent/child selection, before native tools.
+    docker run --rm --network none --entrypoint sh \
+      -v "$PWD/tests/verification/deployment/buster-swarm-image.mjs:/buster-image-proof.mjs:ro" \
+      "$image" -c 'mkdir -p /run/pipeline-delivery; cp -a /opt/buster-image-tools/baked-delivery/. /run/pipeline-delivery/; exec node /buster-image-proof.mjs'
     # Exercise ownership handoff with exactly the restricted supervisor caps.
     docker run --rm --network none --cap-drop ALL \
       --cap-add CHOWN --cap-add SETUID --cap-add SETGID --cap-add SETPCAP \
@@ -38,26 +42,22 @@ PROFILE
       -v "$PWD/tests/verification/deployment/check-buster-build.sh:/proof.sh:ro" \
       "$image" /proof.sh
     ;;
-  prism-worker|prism-control|prism-studio)
-    # Prove the shipped loader, schema and runtime Ajv dependency against the
-    # same authored snapshot that Helm packages, without starting native work.
+  prism-worker|prism-control|prism-studio|prism-ingestion)
+    # Verify the installed root-owned package, image generation and this exact
+    # caller's receipt as the real non-root runtime user. No source-tree fallback.
     docker run --rm --network none --entrypoint node \
-      -e SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
-      -v "$PWD/tests/fixtures/config/swarm-bundle.mjs:/app/prism/tests/fixtures/config/swarm-bundle.mjs:ro" \
-      -v "$PWD/charts/kubeclaw/files/config:/etc/kubeclaw/swarm:ro" \
       -v "$PWD/tests/verification/deployment/prism-swarm-image.mjs:/swarm-proof.mjs:ro" \
       "$image" /swarm-proof.mjs "$role"
     if [[ "$role" == prism-studio ]]; then
       docker run --rm --network none --entrypoint node \
-        -e SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
-      -v "$PWD/tests/fixtures/config/swarm-bundle.mjs:/app/prism/tests/fixtures/config/swarm-bundle.mjs:ro" \
-        -v "$PWD/charts/kubeclaw/files/config:/etc/kubeclaw/swarm:ro" \
-        -v "$PWD/skills/prism/tests/studio-canonical-image.mts:/app/prism/skills/prism/tests/studio-canonical-image.mts:ro" \
-        -v "$PWD/skills/prism/tests/fixtures/studio-service.mts:/app/prism/skills/prism/tests/fixtures/studio-service.mts:ro" \
-        "$image" --test /app/prism/skills/prism/tests/studio-canonical-image.mts
+        -e PRISM_STUDIO_IMAGE_PROOF=/opt/prism-studio-proof \
+        -v "$PWD/skills/prism/tests/studio-service.test.mts:/opt/prism-studio-tests/studio-service.test.mts:ro" \
+        -v "$PWD/skills/prism/tests/studio-canonical-image.mts:/opt/prism-studio-tests/studio-canonical-image.mts:ro" \
+        -v "$PWD/skills/prism/tests/fixtures/studio-service.mts:/opt/prism-studio-tests/fixtures/studio-service.mts:ro" \
+        "$image" --test --test-concurrency=1 /opt/prism-studio-tests/studio-service.test.mts /opt/prism-studio-tests/studio-canonical-image.mts
     fi
     ;;
-  namespace-controller|archviewer|prism-ingestion)
+  namespace-controller|archviewer)
     # These Dockerfiles execute their acceptance gates during the build.
     docker image inspect "$image" >/dev/null
     ;;

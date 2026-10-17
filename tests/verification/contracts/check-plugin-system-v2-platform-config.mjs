@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -9,7 +10,7 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-platform-v2-'));
 const plugins = path.join(temporary, 'plugins');
 fs.mkdirSync(plugins);
 
-const platform = {
+const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION,
   schemaVersion: 'pipeline-platform.v2',
   installationRoots: ['./plugins'],
   trustedBuiltinRoots: ['./plugins'],

@@ -10,7 +10,7 @@ import { admissionFixture } from '../../fixtures/test-gate/buster-admission.mts'
 import { readinessRuntime, readinessExecutable, observeReadinessDiagnostics, assertProbeFinished } from '../../fixtures/test-gate/buster-readiness-profile.mts';
 import { loadProductionBusterRemotePlanRuntime } from '../../../skills/buster/engine/test-gates/production.ts';
 import type { BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
-import { writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { writeTestPipeline } from '../../fixtures/config/pipeline-components.mjs';
 
 const profile = { maximumActiveJobs: 1, maximumQueuedJobs: 2, maximumConcurrentAttempts: 3 };
 for (const scenario of [
@@ -28,8 +28,8 @@ for (const scenario of [
     try {
       // This changes the file author after loading, not the direct service options.
       input.maximumExecutionMs = 30000; input.maximumOutputBytes = 1048576;
-      f.documents['buster-engine'].settings.dependencyReadiness = input;
-      writeTestBundle(f.file, f.documents);
+      f.documents['buster-engine'].profiles.runtime.settings.dependencyReadiness = input;
+      writeTestPipeline(f.file, f.documents);
       f.set(scenario.delayMs, scenario.bytes, 0);
       const address = await runtime.start();
       const origin = `http://127.0.0.1:${address.port}`;
@@ -58,9 +58,9 @@ test('factory disabled capability does not execute configured dependency and rej
     assert.equal((await fetch(`http://127.0.0.1:${address.port}/readyz`)).status, 200);
     assert.equal(fs.existsSync(f.invocations), false);
     for (const dependencyReadiness of [undefined, null, {}, { maximumExecutionMs: 30001, maximumOutputBytes: 1024 }]) {
-      const invalid = { ...f.settings.buster, dependencyReadiness } as unknown as BusterSettings;
+      const invalid = { ...f.buster, dependencyReadiness } as unknown as BusterSettings;
       assert.throws(() => loadProductionBusterRemotePlanRuntime(f.profile.runtime, f.preparation, invalid,
-        f.settings.workerCore.localRuntime, f.profile.environment), /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
+        f.workerLocalRuntime, f.profile.environment), /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
       assert.equal(fs.existsSync(f.invocations), false);
     }
     for (const dependencyReadiness of [null, {}, { maximumExecutionMs: 1000, maximumOutputBytes: 65536 }]) {

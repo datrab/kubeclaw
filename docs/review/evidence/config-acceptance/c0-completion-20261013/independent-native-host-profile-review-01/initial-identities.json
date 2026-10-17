@@ -1,0 +1,1538 @@
+{
+  "recordedAt": "2026-10-14T05:08:55.479720+00:00",
+  "reviewerTask": "/root/delivery_module_contract_review",
+  "head": "c1707af3b37ca3ed93d3885d358e20013611ce63",
+  "tree": "f09fff0a8812deed018e050a4a14b8320d70699f",
+  "authorManifestSha256": "9565ef6770e985b4f522024823a2e60b4bec1937448c59d28a93e84ccc7f6cd0",
+  "frozenInputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/_buster-native.tpl",
+      "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "bytes": 2737,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "bytes": 85514,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "bytes": 14944,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/RECEIVING-CONTRACT.md",
+      "sha256": "60120777ccc06ce7d1f1edd95a6fdc9198f06ddba1760576359a80d155f1ed65",
+      "bytes": 17821,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/60120777ccc06ce7d1f1edd95a6fdc9198f06ddba1760576359a80d155f1ed65.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/manifest.json",
+      "sha256": "0fcb939f4b2df3e4de37962259bf98114af4711b85c3186d435a5561871f40c1",
+      "bytes": 40620,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/0fcb939f4b2df3e4de37962259bf98114af4711b85c3186d435a5561871f40c1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/README.md",
+      "sha256": "d841d2c90ada3ca962f8ef17ce315bba469812ad213452666c464b352f4bb525",
+      "bytes": 10684,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/d841d2c90ada3ca962f8ef17ce315bba469812ad213452666c464b352f4bb525.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/package-manifest.json",
+      "sha256": "ea11b5dad12b6432da0150c3f4f4ae9179a4b3107c4e79ba2519708bdeddc4b1",
+      "bytes": 12889,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/ea11b5dad12b6432da0150c3f4f4ae9179a4b3107c4e79ba2519708bdeddc4b1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/README.md",
+      "sha256": "c5752106300921c931b13ebd74edbfc71ee0b20f825a59633851a4326c9fff90",
+      "bytes": 7836,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c5752106300921c931b13ebd74edbfc71ee0b20f825a59633851a4326c9fff90.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-buster-remote-plan-profile-review-01/README.md",
+      "sha256": "c6ab5a04c887e359edf1ba6f8e406b960fee18a194e1f6e7b70b4eba075abb47",
+      "bytes": 13443,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c6ab5a04c887e359edf1ba6f8e406b960fee18a194e1f6e7b70b4eba075abb47.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/whole-universe-structural-navigation.json",
+      "sha256": "a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1",
+      "bytes": 16902205,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/README.md",
+      "sha256": "5618e853bb6eade5fbe0943f0a87c92ea825817601906e07e0edbd6107245eb6",
+      "bytes": 9218,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/5618e853bb6eade5fbe0943f0a87c92ea825817601906e07e0edbd6107245eb6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/SOURCE-RECEIVING-CONTRACT.md",
+      "sha256": "6a73b0a2ad6b0417cd0f5d48cc906ca4c2cd124cc75d56ccb182c92f1b7f0573",
+      "bytes": 16308,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/6a73b0a2ad6b0417cd0f5d48cc906ca4c2cd124cc75d56ccb182c92f1b7f0573.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/author-host-definition.py",
+      "sha256": "12337cd556499ea0f30f1d47c3ecb1d9281cc999b22dc19c26e9d5635267e812",
+      "bytes": 9067,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/12337cd556499ea0f30f1d47c3ecb1d9281cc999b22dc19c26e9d5635267e812.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/author.stdout.json",
+      "sha256": "ccef65c5054a56ab8f4deed434b679787255db784466c2d93bb5337ad70a2c81",
+      "bytes": 207,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/ccef65c5054a56ab8f4deed434b679787255db784466c2d93bb5337ad70a2c81.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/check-host-definition.mjs",
+      "sha256": "25931a1ef4e3e033ca0db513265424e59a9ddc293c571550de42439611c9f382",
+      "bytes": 16281,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/25931a1ef4e3e033ca0db513265424e59a9ddc293c571550de42439611c9f382.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/commands-and-exits.json",
+      "sha256": "ad9576b69a816b19c9a3e630bcf6f1b047bb2b584e1aad64bf90d9616a9862c3",
+      "bytes": 5659,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/ad9576b69a816b19c9a3e630bcf6f1b047bb2b584e1aad64bf90d9616a9862c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/conservation-and-end-identities.json",
+      "sha256": "9db6a76fc6a329f9b94353c75339fb1ed250259d46bf50e6b0fc1f09235e2fd2",
+      "bytes": 705343,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/9db6a76fc6a329f9b94353c75339fb1ed250259d46bf50e6b0fc1f09235e2fd2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/current-source-and-inactive-template.json",
+      "sha256": "f686ddbe9516f0b780f2748f902ba95d14640b8729f9eced4af413a3ebf19281",
+      "bytes": 1805,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f686ddbe9516f0b780f2748f902ba95d14640b8729f9eced4af413a3ebf19281.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/extension-and-cases.py",
+      "sha256": "c54ec39ae7b08e5221cd493b8db6a9e44fcbad85ae52da7793f9f9ede030a001",
+      "bytes": 12822,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c54ec39ae7b08e5221cd493b8db6a9e44fcbad85ae52da7793f9f9ede030a001.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/field19-physical-contracts.json",
+      "sha256": "a1b56ff521eeb91447b064961f196d83ef4a9905c326481ebf1dd122685c9af8",
+      "bytes": 74299,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/a1b56ff521eeb91447b064961f196d83ef4a9905c326481ebf1dd122685c9af8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/freeze-conservation.py",
+      "sha256": "04808ace042439656bf9edd9b89dc74bf470556e445965b12bda7a12ce232e0b",
+      "bytes": 3664,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/04808ace042439656bf9edd9b89dc74bf470556e445965b12bda7a12ce232e0b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/future19-source-case-plans.json",
+      "sha256": "81c43758cd37444cc99e39e883f7a7370f98b38721b38b943801dc45090e3a79",
+      "bytes": 79240,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/81c43758cd37444cc99e39e883f7a7370f98b38721b38b943801dc45090e3a79.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/manifest.json",
+      "sha256": "9565ef6770e985b4f522024823a2e60b4bec1937448c59d28a93e84ccc7f6cd0",
+      "bytes": 14763,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/9565ef6770e985b4f522024823a2e60b4bec1937448c59d28a93e84ccc7f6cd0.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/native-host-owner.schema.json",
+      "sha256": "d123d2508cb5d50ea507e3390e17b013ee11f262e696e482d7907d5a63d6bfd5",
+      "bytes": 6053,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/d123d2508cb5d50ea507e3390e17b013ee11f262e696e482d7907d5a63d6bfd5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/native-host-policy.schema.json",
+      "sha256": "0cbf8b3313dafbed050ada4a994edb62ec2e78a0312fd1d1181e8b7ce9a691be",
+      "bytes": 4472,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/0cbf8b3313dafbed050ada4a994edb62ec2e78a0312fd1d1181e8b7ce9a691be.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/native-host-selection.proposed.schema.json",
+      "sha256": "c7b5ab18e281404f026d20f1a147f863cfa340a5836a4bd3f124f92b112f8923",
+      "bytes": 656,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c7b5ab18e281404f026d20f1a147f863cfa340a5836a4bd3f124f92b112f8923.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/original-shared-case-bodies.json",
+      "sha256": "f24df1443c3b27fca324e00f569b9afbf272af4cf3069ea325b259c89e44ab65",
+      "bytes": 4660,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f24df1443c3b27fca324e00f569b9afbf272af4cf3069ea325b259c89e44ab65.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/original19-field-bodies.json",
+      "sha256": "26a9f9e0a2bdb744af6560aed3d9cdce17b5825bd624d5cb9e3dc30fbb3e8f66",
+      "bytes": 139236,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/26a9f9e0a2bdb744af6560aed3d9cdce17b5825bd624d5cb9e3dc30fbb3e8f66.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/pure-source-projection-views.json",
+      "sha256": "837a7085d19bf5cf267e2e4ade7a9b8ec008fda76d1612c57dd79dd1ab8153a0",
+      "bytes": 17140,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/837a7085d19bf5cf267e2e4ade7a9b8ec008fda76d1612c57dd79dd1ab8153a0.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/attempt1-owner.schema.json",
+      "sha256": "a1b4ce4dff8930f7f5ad12a489d332dd10bfd50c6bc42b2c6cf091e8ed170f35",
+      "bytes": 6501,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/a1b4ce4dff8930f7f5ad12a489d332dd10bfd50c6bc42b2c6cf091e8ed170f35.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/attempt1-policy.schema.json",
+      "sha256": "8bd78494dbc766f105391beed2888cf20c65a3cff82529997b2b8c2d879a8588",
+      "bytes": 4848,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/8bd78494dbc766f105391beed2888cf20c65a3cff82529997b2b8c2d879a8588.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/check-01.json",
+      "sha256": "f5c111f5dc6be435ba5a441c771c3614f6330886d11b9720563b0be708d6451c",
+      "bytes": 103915,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f5c111f5dc6be435ba5a441c771c3614f6330886d11b9720563b0be708d6451c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/check-01.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/check-02.json",
+      "sha256": "d38b4a5f0fc604a9bf0737abea47a8a4c27a54090bda0b408efb617d6adc660a",
+      "bytes": 56750,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/d38b4a5f0fc604a9bf0737abea47a8a4c27a54090bda0b408efb617d6adc660a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/check-02.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/check-03.json",
+      "sha256": "32b36373ad5ec1381e36180acbb279983a7c3b2add1c6241beeb596ee1c71cc3",
+      "bytes": 65329,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/32b36373ad5ec1381e36180acbb279983a7c3b2add1c6241beeb596ee1c71cc3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/check-03.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/check-04.json",
+      "sha256": "3aada432b8164cdbfbae1b707db28f7b6f4d087e13f834fab707b3b657bc18e7",
+      "bytes": 65786,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/3aada432b8164cdbfbae1b707db28f7b6f4d087e13f834fab707b3b657bc18e7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/raw/check-04.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/read-identities.json",
+      "sha256": "26945d03c052711cbc9fe12ae5aa7f07ff28b2a88a275862311b686df061d673",
+      "bytes": 12252,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/26945d03c052711cbc9fe12ae5aa7f07ff28b2a88a275862311b686df061d673.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/role-source-coupling.json",
+      "sha256": "d8d58277fec725b7198168c67e4daafaeceb2127201a1ab463fab4e77f3b72c4",
+      "bytes": 2866,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/d8d58277fec725b7198168c67e4daafaeceb2127201a1ab463fab4e77f3b72c4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/same-existing-owner.proposed.json",
+      "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+      "bytes": 3375,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/shared-case-supplements.json",
+      "sha256": "081193d9610b6daa395f5a4c7cea5922a6dd9b5ce6e260e080b8b2214a3b3533",
+      "bytes": 177311,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/081193d9610b6daa395f5a4c7cea5922a6dd9b5ce6e260e080b8b2214a3b3533.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/shared-v8-native-host-extension.proposed.json",
+      "sha256": "e5ecf0f9da934eddc670f280e64ae04e2eee16dce49777c6afbe819d081074fc",
+      "bytes": 239805,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e5ecf0f9da934eddc670f280e64ae04e2eee16dce49777c6afbe819d081074fc.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/software-native-source-binding.json",
+      "sha256": "145936ff70c41429bc164125e605d638f7e1cb4ab10160c9e503fb37dda01e21",
+      "bytes": 849,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/145936ff70c41429bc164125e605d638f7e1cb4ab10160c9e503fb37dda01e21.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/charts/kubeclaw/templates/_buster-native.tpl",
+      "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "bytes": 2737,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "bytes": 85514,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "bytes": 14944,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/gitops/production/overlays/prism-ax41.yaml",
+      "sha256": "df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401",
+      "bytes": 311,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/my-values/infra/native-worker-pools-ax41.yaml",
+      "sha256": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+      "bytes": 851,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/my-values/infra/native-worker-pools.yaml",
+      "sha256": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888",
+      "bytes": 831,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/node_modules/ajv/dist/2020.js",
+      "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "bytes": 2894,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "bytes": 4405,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/node_modules/yaml/package.json",
+      "sha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "bytes": 3254,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/activate-native-worker-ax41.sh",
+      "sha256": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "bytes": 6676,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/build-native-worker-nri.mjs",
+      "sha256": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "bytes": 1185,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/gitops.mjs",
+      "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+      "bytes": 15348,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/install/README.md",
+      "sha256": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7",
+      "bytes": 7282,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/install-native-worker-pools-stage.sh",
+      "sha256": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a",
+      "bytes": 3637,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/native-buster-deployment-preflight.mjs",
+      "sha256": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+      "bytes": 3250,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/native-worker-deployment-preflight.mjs",
+      "sha256": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+      "bytes": 3236,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/native-worker-node-capacity.mjs",
+      "sha256": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+      "bytes": 4800,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/native-worker-node-policy.mjs",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "bytes": 3383,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/native-worker-node-preflight.mjs",
+      "sha256": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "bytes": 3497,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/prepare-ax41-buster-browser.sh",
+      "sha256": "13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8",
+      "bytes": 1484,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/prepare-native-worker-pools.mjs",
+      "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "bytes": 9521,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/render-native-worker-node.mjs",
+      "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+      "bytes": 3979,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/repair-native-worker-pools-lifetime.sh",
+      "sha256": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
+      "bytes": 2949,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "bytes": 4936,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "bytes": 5244,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "bytes": 3841,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/prism/config/resource-policy.ts",
+      "sha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "bytes": 1300,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/prism/server/worker.ts",
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "bytes": 2915,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-hierarchy-events.ts",
+      "sha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "bytes": 1517,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-node-identity.ts",
+      "sha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "bytes": 923,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-owned-children.ts",
+      "sha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "bytes": 4305,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-pool-policy.ts",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "bytes": 2508,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-resource-observation.ts",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "bytes": 3048,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-resource-pool.ts",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "bytes": 3100,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-resource-scope.ts",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "bytes": 9294,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-runtime-identity.ts",
+      "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "bytes": 1345,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/native-worker-launcher.c",
+      "sha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "bytes": 5297,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/ownership-store.ts",
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "bytes": 11075,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/skills/worker/core/worker/resource-reservations.ts",
+      "sha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "bytes": 1474,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/tools/native-worker-nri/go.mod",
+      "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "bytes": 1039,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/tools/native-worker-nri/main.go",
+      "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+      "bytes": 5682,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "bytes": 12594,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/RECEIVING-ABI.md",
+      "sha256": "6ae06d66e7a67931ad7240e53a7c3a4419923a4efa12f6643a75e3d1345edf4a",
+      "bytes": 11837,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/6ae06d66e7a67931ad7240e53a7c3a4419923a4efa12f6643a75e3d1345edf4a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/file-set-stand.json",
+      "sha256": "ec250f06fca25db3f9e2423b0be60cfff6bc3a2fdf0a53bd475d73e4ed5104ce",
+      "bytes": 73490,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/ec250f06fca25db3f9e2423b0be60cfff6bc3a2fdf0a53bd475d73e4ed5104ce.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/manifest.json",
+      "sha256": "519426534936fe7409a8386220b7a497ae5a781b0f855b14cb1de7ed93b54834",
+      "bytes": 172840,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/519426534936fe7409a8386220b7a497ae5a781b0f855b14cb1de7ed93b54834.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017",
+      "bytes": 10346,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/components/buster-engine.config.json",
+      "sha256": "db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252",
+      "bytes": 1177495,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/pipeline.config.json",
+      "sha256": "05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa",
+      "bytes": 8634,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+      "sha256": "82d666d4d3794a43d1b9375e16317244fc09cc3634985cdb4b4e576fdd55be20",
+      "bytes": 483,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/82d666d4d3794a43d1b9375e16317244fc09cc3634985cdb4b4e576fdd55be20.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+      "sha256": "97bf3708d7f47ce8a867b20db053dd40077d56aea1787df947a51f290f758394",
+      "bytes": 487,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/97bf3708d7f47ce8a867b20db053dd40077d56aea1787df947a51f290f758394.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+      "sha256": "1ddbd67b3c3e62228c0354a3082454a61f9cbdb46848c13997c7a6a8d95799b6",
+      "bytes": 4455,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/1ddbd67b3c3e62228c0354a3082454a61f9cbdb46848c13997c7a6a8d95799b6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+      "bytes": 6788,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127",
+      "bytes": 21857,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d",
+      "bytes": 101842319,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387",
+      "bytes": 38136508,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/gitops/production/overlays/prism-ax41.yaml",
+      "sha256": "df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401",
+      "bytes": 311,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/native-worker-pools-ax41.yaml",
+      "sha256": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+      "bytes": 851,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/native-worker-pools.yaml",
+      "sha256": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888",
+      "bytes": 831,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/2020.js",
+      "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "bytes": 2894,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "bytes": 4405,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/yaml/package.json",
+      "sha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "bytes": 3254,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/activate-native-worker-ax41.sh",
+      "sha256": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "bytes": 6676,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/build-native-worker-nri.mjs",
+      "sha256": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "bytes": 1185,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/gitops.mjs",
+      "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+      "bytes": 15348,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/install/README.md",
+      "sha256": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7",
+      "bytes": 7282,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/install-native-worker-pools-stage.sh",
+      "sha256": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a",
+      "bytes": 3637,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/native-buster-deployment-preflight.mjs",
+      "sha256": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+      "bytes": 3250,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/native-worker-deployment-preflight.mjs",
+      "sha256": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+      "bytes": 3236,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/native-worker-node-capacity.mjs",
+      "sha256": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+      "bytes": 4800,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/native-worker-node-policy.mjs",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "bytes": 3383,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/native-worker-node-preflight.mjs",
+      "sha256": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "bytes": 3497,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/prepare-ax41-buster-browser.sh",
+      "sha256": "13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8",
+      "bytes": 1484,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/prepare-native-worker-pools.mjs",
+      "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "bytes": 9521,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-native-worker-node.mjs",
+      "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+      "bytes": 3979,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/repair-native-worker-pools-lifetime.sh",
+      "sha256": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
+      "bytes": 2949,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "bytes": 4936,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "bytes": 5244,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "bytes": 3841,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/resource-policy.ts",
+      "sha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "bytes": 1300,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/worker.ts",
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "bytes": 2915,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-hierarchy-events.ts",
+      "sha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "bytes": 1517,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-node-identity.ts",
+      "sha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "bytes": 923,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-owned-children.ts",
+      "sha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "bytes": 4305,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-pool-policy.ts",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "bytes": 2508,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-resource-observation.ts",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "bytes": 3048,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-resource-pool.ts",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "bytes": 3100,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-resource-scope.ts",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "bytes": 9294,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-runtime-identity.ts",
+      "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "bytes": 1345,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/native-worker-launcher.c",
+      "sha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "bytes": 5297,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/ownership-store.ts",
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "bytes": 11075,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/resource-reservations.ts",
+      "sha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "bytes": 1474,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/native-worker-nri/go.mod",
+      "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "bytes": 1039,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/tools/native-worker-nri/main.go",
+      "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+      "bytes": 5682,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "bytes": 12594,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-native-host-profile-review-01/frozen-inputs/40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d.gz"
+    }
+  ],
+  "authorManifestChecks": [
+    {
+      "path": "README.md",
+      "expected": "5618e853bb6eade5fbe0943f0a87c92ea825817601906e07e0edbd6107245eb6",
+      "actual": "5618e853bb6eade5fbe0943f0a87c92ea825817601906e07e0edbd6107245eb6"
+    },
+    {
+      "path": "SOURCE-RECEIVING-CONTRACT.md",
+      "expected": "6a73b0a2ad6b0417cd0f5d48cc906ca4c2cd124cc75d56ccb182c92f1b7f0573",
+      "actual": "6a73b0a2ad6b0417cd0f5d48cc906ca4c2cd124cc75d56ccb182c92f1b7f0573"
+    },
+    {
+      "path": "author-host-definition.py",
+      "expected": "12337cd556499ea0f30f1d47c3ecb1d9281cc999b22dc19c26e9d5635267e812",
+      "actual": "12337cd556499ea0f30f1d47c3ecb1d9281cc999b22dc19c26e9d5635267e812"
+    },
+    {
+      "path": "author.stdout.json",
+      "expected": "ccef65c5054a56ab8f4deed434b679787255db784466c2d93bb5337ad70a2c81",
+      "actual": "ccef65c5054a56ab8f4deed434b679787255db784466c2d93bb5337ad70a2c81"
+    },
+    {
+      "path": "check-host-definition.mjs",
+      "expected": "25931a1ef4e3e033ca0db513265424e59a9ddc293c571550de42439611c9f382",
+      "actual": "25931a1ef4e3e033ca0db513265424e59a9ddc293c571550de42439611c9f382"
+    },
+    {
+      "path": "commands-and-exits.json",
+      "expected": "ad9576b69a816b19c9a3e630bcf6f1b047bb2b584e1aad64bf90d9616a9862c3",
+      "actual": "ad9576b69a816b19c9a3e630bcf6f1b047bb2b584e1aad64bf90d9616a9862c3"
+    },
+    {
+      "path": "conservation-and-end-identities.json",
+      "expected": "9db6a76fc6a329f9b94353c75339fb1ed250259d46bf50e6b0fc1f09235e2fd2",
+      "actual": "9db6a76fc6a329f9b94353c75339fb1ed250259d46bf50e6b0fc1f09235e2fd2"
+    },
+    {
+      "path": "current-source-and-inactive-template.json",
+      "expected": "f686ddbe9516f0b780f2748f902ba95d14640b8729f9eced4af413a3ebf19281",
+      "actual": "f686ddbe9516f0b780f2748f902ba95d14640b8729f9eced4af413a3ebf19281"
+    },
+    {
+      "path": "extension-and-cases.py",
+      "expected": "c54ec39ae7b08e5221cd493b8db6a9e44fcbad85ae52da7793f9f9ede030a001",
+      "actual": "c54ec39ae7b08e5221cd493b8db6a9e44fcbad85ae52da7793f9f9ede030a001"
+    },
+    {
+      "path": "field19-physical-contracts.json",
+      "expected": "a1b56ff521eeb91447b064961f196d83ef4a9905c326481ebf1dd122685c9af8",
+      "actual": "a1b56ff521eeb91447b064961f196d83ef4a9905c326481ebf1dd122685c9af8"
+    },
+    {
+      "path": "freeze-conservation.py",
+      "expected": "04808ace042439656bf9edd9b89dc74bf470556e445965b12bda7a12ce232e0b",
+      "actual": "04808ace042439656bf9edd9b89dc74bf470556e445965b12bda7a12ce232e0b"
+    },
+    {
+      "path": "future19-source-case-plans.json",
+      "expected": "81c43758cd37444cc99e39e883f7a7370f98b38721b38b943801dc45090e3a79",
+      "actual": "81c43758cd37444cc99e39e883f7a7370f98b38721b38b943801dc45090e3a79"
+    },
+    {
+      "path": "native-host-owner.schema.json",
+      "expected": "d123d2508cb5d50ea507e3390e17b013ee11f262e696e482d7907d5a63d6bfd5",
+      "actual": "d123d2508cb5d50ea507e3390e17b013ee11f262e696e482d7907d5a63d6bfd5"
+    },
+    {
+      "path": "native-host-policy.schema.json",
+      "expected": "0cbf8b3313dafbed050ada4a994edb62ec2e78a0312fd1d1181e8b7ce9a691be",
+      "actual": "0cbf8b3313dafbed050ada4a994edb62ec2e78a0312fd1d1181e8b7ce9a691be"
+    },
+    {
+      "path": "native-host-selection.proposed.schema.json",
+      "expected": "c7b5ab18e281404f026d20f1a147f863cfa340a5836a4bd3f124f92b112f8923",
+      "actual": "c7b5ab18e281404f026d20f1a147f863cfa340a5836a4bd3f124f92b112f8923"
+    },
+    {
+      "path": "original-shared-case-bodies.json",
+      "expected": "f24df1443c3b27fca324e00f569b9afbf272af4cf3069ea325b259c89e44ab65",
+      "actual": "f24df1443c3b27fca324e00f569b9afbf272af4cf3069ea325b259c89e44ab65"
+    },
+    {
+      "path": "original19-field-bodies.json",
+      "expected": "26a9f9e0a2bdb744af6560aed3d9cdce17b5825bd624d5cb9e3dc30fbb3e8f66",
+      "actual": "26a9f9e0a2bdb744af6560aed3d9cdce17b5825bd624d5cb9e3dc30fbb3e8f66"
+    },
+    {
+      "path": "pure-source-projection-views.json",
+      "expected": "837a7085d19bf5cf267e2e4ade7a9b8ec008fda76d1612c57dd79dd1ab8153a0",
+      "actual": "837a7085d19bf5cf267e2e4ade7a9b8ec008fda76d1612c57dd79dd1ab8153a0"
+    },
+    {
+      "path": "raw/attempt1-owner.schema.json",
+      "expected": "a1b4ce4dff8930f7f5ad12a489d332dd10bfd50c6bc42b2c6cf091e8ed170f35",
+      "actual": "a1b4ce4dff8930f7f5ad12a489d332dd10bfd50c6bc42b2c6cf091e8ed170f35"
+    },
+    {
+      "path": "raw/attempt1-policy.schema.json",
+      "expected": "8bd78494dbc766f105391beed2888cf20c65a3cff82529997b2b8c2d879a8588",
+      "actual": "8bd78494dbc766f105391beed2888cf20c65a3cff82529997b2b8c2d879a8588"
+    },
+    {
+      "path": "raw/check-01.json",
+      "expected": "f5c111f5dc6be435ba5a441c771c3614f6330886d11b9720563b0be708d6451c",
+      "actual": "f5c111f5dc6be435ba5a441c771c3614f6330886d11b9720563b0be708d6451c"
+    },
+    {
+      "path": "raw/check-01.stderr",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/check-02.json",
+      "expected": "d38b4a5f0fc604a9bf0737abea47a8a4c27a54090bda0b408efb617d6adc660a",
+      "actual": "d38b4a5f0fc604a9bf0737abea47a8a4c27a54090bda0b408efb617d6adc660a"
+    },
+    {
+      "path": "raw/check-02.stderr",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/check-03.json",
+      "expected": "32b36373ad5ec1381e36180acbb279983a7c3b2add1c6241beeb596ee1c71cc3",
+      "actual": "32b36373ad5ec1381e36180acbb279983a7c3b2add1c6241beeb596ee1c71cc3"
+    },
+    {
+      "path": "raw/check-03.stderr",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/check-04.json",
+      "expected": "3aada432b8164cdbfbae1b707db28f7b6f4d087e13f834fab707b3b657bc18e7",
+      "actual": "3aada432b8164cdbfbae1b707db28f7b6f4d087e13f834fab707b3b657bc18e7"
+    },
+    {
+      "path": "raw/check-04.stderr",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "read-identities.json",
+      "expected": "26945d03c052711cbc9fe12ae5aa7f07ff28b2a88a275862311b686df061d673",
+      "actual": "26945d03c052711cbc9fe12ae5aa7f07ff28b2a88a275862311b686df061d673"
+    },
+    {
+      "path": "role-source-coupling.json",
+      "expected": "d8d58277fec725b7198168c67e4daafaeceb2127201a1ab463fab4e77f3b72c4",
+      "actual": "d8d58277fec725b7198168c67e4daafaeceb2127201a1ab463fab4e77f3b72c4"
+    },
+    {
+      "path": "same-existing-owner.proposed.json",
+      "expected": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+      "actual": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886"
+    },
+    {
+      "path": "shared-case-supplements.json",
+      "expected": "081193d9610b6daa395f5a4c7cea5922a6dd9b5ce6e260e080b8b2214a3b3533",
+      "actual": "081193d9610b6daa395f5a4c7cea5922a6dd9b5ce6e260e080b8b2214a3b3533"
+    },
+    {
+      "path": "shared-v8-native-host-extension.proposed.json",
+      "expected": "e5ecf0f9da934eddc670f280e64ae04e2eee16dce49777c6afbe819d081074fc",
+      "actual": "e5ecf0f9da934eddc670f280e64ae04e2eee16dce49777c6afbe819d081074fc"
+    },
+    {
+      "path": "software-native-source-binding.json",
+      "expected": "145936ff70c41429bc164125e605d638f7e1cb4ab10160c9e503fb37dda01e21",
+      "actual": "145936ff70c41429bc164125e605d638f7e1cb4ab10160c9e503fb37dda01e21"
+    },
+    {
+      "path": "source-current/charts/kubeclaw/templates/_buster-native.tpl",
+      "expected": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "actual": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+    },
+    {
+      "path": "source-current/charts/kubeclaw/templates/deployment.yaml",
+      "expected": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "actual": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    {
+      "path": "source-current/charts/prism/templates/workloads.yaml",
+      "expected": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "actual": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    {
+      "path": "source-current/gitops/production/overlays/prism-ax41.yaml",
+      "expected": "df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401",
+      "actual": "df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401"
+    },
+    {
+      "path": "source-current/my-values/infra/native-worker-pools-ax41.yaml",
+      "expected": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+      "actual": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c"
+    },
+    {
+      "path": "source-current/my-values/infra/native-worker-pools.yaml",
+      "expected": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888",
+      "actual": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888"
+    },
+    {
+      "path": "source-current/node_modules/ajv/dist/2020.js",
+      "expected": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "actual": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a"
+    },
+    {
+      "path": "source-current/node_modules/ajv/package.json",
+      "expected": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "actual": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    {
+      "path": "source-current/node_modules/yaml/package.json",
+      "expected": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "actual": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683"
+    },
+    {
+      "path": "source-current/scripts/activate-native-worker-ax41.sh",
+      "expected": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "actual": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd"
+    },
+    {
+      "path": "source-current/scripts/build-native-worker-nri.mjs",
+      "expected": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "actual": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db"
+    },
+    {
+      "path": "source-current/scripts/gitops.mjs",
+      "expected": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+      "actual": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c"
+    },
+    {
+      "path": "source-current/scripts/install/README.md",
+      "expected": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7",
+      "actual": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7"
+    },
+    {
+      "path": "source-current/scripts/install-native-worker-pools-stage.sh",
+      "expected": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a",
+      "actual": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a"
+    },
+    {
+      "path": "source-current/scripts/native-buster-deployment-preflight.mjs",
+      "expected": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+      "actual": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9"
+    },
+    {
+      "path": "source-current/scripts/native-worker-deployment-preflight.mjs",
+      "expected": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+      "actual": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261"
+    },
+    {
+      "path": "source-current/scripts/native-worker-node-capacity.mjs",
+      "expected": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+      "actual": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149"
+    },
+    {
+      "path": "source-current/scripts/native-worker-node-policy.mjs",
+      "expected": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "actual": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+    },
+    {
+      "path": "source-current/scripts/native-worker-node-preflight.mjs",
+      "expected": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "actual": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56"
+    },
+    {
+      "path": "source-current/scripts/prepare-ax41-buster-browser.sh",
+      "expected": "13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8",
+      "actual": "13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8"
+    },
+    {
+      "path": "source-current/scripts/prepare-native-worker-pools.mjs",
+      "expected": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "actual": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+    },
+    {
+      "path": "source-current/scripts/render-native-worker-node.mjs",
+      "expected": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+      "actual": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+    },
+    {
+      "path": "source-current/scripts/repair-native-worker-pools-lifetime.sh",
+      "expected": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
+      "actual": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423"
+    },
+    {
+      "path": "source-current/skills/buster/engine/test-gates/preparation-config.ts",
+      "expected": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "actual": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+    },
+    {
+      "path": "source-current/skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "expected": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "actual": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "source-current/skills/prism/config/native-worker.ts",
+      "expected": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "actual": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    },
+    {
+      "path": "source-current/skills/prism/config/resource-policy.ts",
+      "expected": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "actual": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f"
+    },
+    {
+      "path": "source-current/skills/prism/server/worker.ts",
+      "expected": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "actual": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-hierarchy-events.ts",
+      "expected": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "actual": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-node-identity.ts",
+      "expected": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "actual": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-owned-children.ts",
+      "expected": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "actual": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-pool-policy.ts",
+      "expected": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "actual": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-resource-observation.ts",
+      "expected": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "actual": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-resource-pool.ts",
+      "expected": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "actual": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-resource-scope.ts",
+      "expected": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "actual": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-runtime-identity.ts",
+      "expected": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "actual": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/native-worker-launcher.c",
+      "expected": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "actual": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/ownership-store.ts",
+      "expected": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "actual": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5"
+    },
+    {
+      "path": "source-current/skills/worker/core/worker/resource-reservations.ts",
+      "expected": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "actual": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9"
+    },
+    {
+      "path": "source-current/tools/native-worker-nri/go.mod",
+      "expected": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "actual": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73"
+    },
+    {
+      "path": "source-current/tools/native-worker-nri/main.go",
+      "expected": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+      "actual": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531"
+    },
+    {
+      "path": "source-current/versions.json",
+      "expected": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "actual": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+    }
+  ],
+  "authorReadChecks": [
+    {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "expected": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "actual": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+    },
+    {
+      "path": "scripts/native-worker-node-capacity.mjs",
+      "expected": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+      "actual": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149"
+    },
+    {
+      "path": "scripts/render-native-worker-node.mjs",
+      "expected": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+      "actual": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+    },
+    {
+      "path": "scripts/prepare-native-worker-pools.mjs",
+      "expected": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "actual": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+    },
+    {
+      "path": "scripts/native-worker-node-preflight.mjs",
+      "expected": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "actual": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56"
+    },
+    {
+      "path": "scripts/native-worker-deployment-preflight.mjs",
+      "expected": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+      "actual": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261"
+    },
+    {
+      "path": "scripts/native-buster-deployment-preflight.mjs",
+      "expected": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+      "actual": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9"
+    },
+    {
+      "path": "scripts/install-native-worker-pools-stage.sh",
+      "expected": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a",
+      "actual": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a"
+    },
+    {
+      "path": "scripts/activate-native-worker-ax41.sh",
+      "expected": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "actual": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd"
+    },
+    {
+      "path": "scripts/build-native-worker-nri.mjs",
+      "expected": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "actual": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db"
+    },
+    {
+      "path": "scripts/repair-native-worker-pools-lifetime.sh",
+      "expected": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
+      "actual": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423"
+    },
+    {
+      "path": "scripts/prepare-ax41-buster-browser.sh",
+      "expected": "13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8",
+      "actual": "13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8"
+    },
+    {
+      "path": "scripts/install/README.md",
+      "expected": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7",
+      "actual": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7"
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "expected": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+      "actual": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c"
+    },
+    {
+      "path": "my-values/infra/native-worker-pools.yaml",
+      "expected": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888",
+      "actual": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888"
+    },
+    {
+      "path": "my-values/infra/native-worker-pools-ax41.yaml",
+      "expected": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+      "actual": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "expected": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "actual": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "expected": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "actual": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "expected": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "actual": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    {
+      "path": "gitops/production/overlays/prism-ax41.yaml",
+      "expected": "df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401",
+      "actual": "df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401"
+    },
+    {
+      "path": "tools/native-worker-nri/main.go",
+      "expected": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+      "actual": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531"
+    },
+    {
+      "path": "tools/native-worker-nri/go.mod",
+      "expected": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "actual": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73"
+    },
+    {
+      "path": "versions.json",
+      "expected": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "actual": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "expected": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "actual": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "skills/worker/core/worker/native-runtime-identity.ts",
+      "expected": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "actual": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "expected": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "actual": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "expected": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "actual": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "expected": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "actual": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-reservations.ts",
+      "expected": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "actual": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "expected": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "actual": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "expected": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "actual": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5"
+    },
+    {
+      "path": "skills/worker/core/worker/native-owned-children.ts",
+      "expected": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "actual": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d"
+    },
+    {
+      "path": "skills/worker/core/worker/native-hierarchy-events.ts",
+      "expected": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "actual": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "expected": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "actual": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "expected": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "actual": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "expected": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "actual": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    },
+    {
+      "path": "skills/prism/config/resource-policy.ts",
+      "expected": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "actual": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f"
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "expected": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "actual": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/whole-universe-structural-navigation.json",
+      "expected": "a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1",
+      "actual": "a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/package-manifest.json",
+      "expected": "ea11b5dad12b6432da0150c3f4f4ae9179a4b3107c4e79ba2519708bdeddc4b1",
+      "actual": "ea11b5dad12b6432da0150c3f4f4ae9179a4b3107c4e79ba2519708bdeddc4b1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/README.md",
+      "expected": "d841d2c90ada3ca962f8ef17ce315bba469812ad213452666c464b352f4bb525",
+      "actual": "d841d2c90ada3ca962f8ef17ce315bba469812ad213452666c464b352f4bb525"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/manifest.json",
+      "expected": "0fcb939f4b2df3e4de37962259bf98114af4711b85c3186d435a5561871f40c1",
+      "actual": "0fcb939f4b2df3e4de37962259bf98114af4711b85c3186d435a5561871f40c1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/RECEIVING-CONTRACT.md",
+      "expected": "60120777ccc06ce7d1f1edd95a6fdc9198f06ddba1760576359a80d155f1ed65",
+      "actual": "60120777ccc06ce7d1f1edd95a6fdc9198f06ddba1760576359a80d155f1ed65"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-buster-remote-plan-profile-review-01/README.md",
+      "expected": "c6ab5a04c887e359edf1ba6f8e406b960fee18a194e1f6e7b70b4eba075abb47",
+      "actual": "c6ab5a04c887e359edf1ba6f8e406b960fee18a194e1f6e7b70b4eba075abb47"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/README.md",
+      "expected": "c5752106300921c931b13ebd74edbfc71ee0b20f825a59633851a4326c9fff90",
+      "actual": "c5752106300921c931b13ebd74edbfc71ee0b20f825a59633851a4326c9fff90"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/manifest.json",
+      "expected": "519426534936fe7409a8386220b7a497ae5a781b0f855b14cb1de7ed93b54834",
+      "actual": "519426534936fe7409a8386220b7a497ae5a781b0f855b14cb1de7ed93b54834"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/pipeline.config.json",
+      "expected": "05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa",
+      "actual": "05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/components/buster-engine.config.json",
+      "expected": "db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252",
+      "actual": "db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/components/prism-worker.config.json",
+      "expected": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "actual": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "expected": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017",
+      "actual": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/file-set-stand.json",
+      "expected": "ec250f06fca25db3f9e2423b0be60cfff6bc3a2fdf0a53bd475d73e4ed5104ce",
+      "actual": "ec250f06fca25db3f9e2423b0be60cfff6bc3a2fdf0a53bd475d73e4ed5104ce"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/RECEIVING-ABI.md",
+      "expected": "6ae06d66e7a67931ad7240e53a7c3a4419923a4efa12f6643a75e3d1345edf4a",
+      "actual": "6ae06d66e7a67931ad7240e53a7c3a4419923a4efa12f6643a75e3d1345edf4a"
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "expected": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387",
+      "actual": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "expected": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d",
+      "actual": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+      "expected": "1ddbd67b3c3e62228c0354a3082454a61f9cbdb46848c13997c7a6a8d95799b6",
+      "actual": "1ddbd67b3c3e62228c0354a3082454a61f9cbdb46848c13997c7a6a8d95799b6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+      "expected": "82d666d4d3794a43d1b9375e16317244fc09cc3634985cdb4b4e576fdd55be20",
+      "actual": "82d666d4d3794a43d1b9375e16317244fc09cc3634985cdb4b4e576fdd55be20"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+      "expected": "97bf3708d7f47ce8a867b20db053dd40077d56aea1787df947a51f290f758394",
+      "actual": "97bf3708d7f47ce8a867b20db053dd40077d56aea1787df947a51f290f758394"
+    },
+    {
+      "path": "skills/worker/core/worker/native-node-identity.ts",
+      "expected": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "actual": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3"
+    },
+    {
+      "path": "node_modules/ajv/dist/2020.js",
+      "expected": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "actual": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a"
+    },
+    {
+      "path": "node_modules/ajv/package.json",
+      "expected": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "actual": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    {
+      "path": "node_modules/yaml/package.json",
+      "expected": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "actual": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683"
+    }
+  ]
+}

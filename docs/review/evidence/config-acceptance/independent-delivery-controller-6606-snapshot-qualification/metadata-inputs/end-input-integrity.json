@@ -1,0 +1,17 @@
+{
+  "frozenInputCount": 73,
+  "driftCount": 2,
+  "drift": [
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/inventory-fragment.json",
+      "frozenSha256": "89bd8b5206f1e2dc14e8e273b8b3ecb5791980c5e1d01836498680322289802e",
+      "currentSha256": "e0573aee2bafd75f852f671461f51c6eaca59a0e8ff3657cca3373908d21e33e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/proposed-cases.json",
+      "frozenSha256": "e03309984d6c262caa6fb1c98756c2b46dfdd87a029880ced390278dd889a22d",
+      "currentSha256": "c9dd60a44bab076122fc7bf064f078b704d74e89fc03c65e7b9523a7dcd6c1ab"
+    }
+  ],
+  "limit": "Other Delivery 279 fields mutable. Findings refer exact frozen primary proposal/source bytes, not current global inventory. Core authored batch excluded."
+}

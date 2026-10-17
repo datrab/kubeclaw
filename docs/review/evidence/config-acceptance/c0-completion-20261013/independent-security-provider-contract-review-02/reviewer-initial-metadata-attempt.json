@@ -1,0 +1,9 @@
+{
+  "toolReference": "ea878f",
+  "exit": 1,
+  "error": "KeyError: activeCases",
+  "input": "security-provider-contracts-02/normative-correction-generation.json",
+  "correction": "Use actual originalCases member; source/schema/domain/constraints unchanged",
+  "finalCommand": "python docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/audit.py",
+  "finalExit": 0
+}

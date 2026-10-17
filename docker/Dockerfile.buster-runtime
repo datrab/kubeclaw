@@ -3,7 +3,27 @@ ARG BUILDKIT_BASE=moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3e
 ARG BUSTER_NODE_BASE=node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
 
 # Buster's v2 suite worker and colocated rootless image builder.
+# hadolint ignore=DL3006
 FROM ${BUILDKIT_BASE} AS buildkit
+# hadolint ignore=DL3006
+FROM ${BUSTER_NODE_BASE} AS buster-package
+ARG DEBIAN_SNAPSHOT=20260713T000000Z
+ARG KUBECLAW_BUILD_REVISION
+# hadolint ignore=DL3002
+USER root
+WORKDIR /build
+COPY . /build
+RUN sh docker/install-prism-build-tools.sh \
+ && npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+ && node scripts/build-plugin-sandbox.mjs \
+ && mkdir -p /out \
+ && cc -std=c11 -O2 -Wall -Wextra -Werror -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fPIE -pie -Wl,-z,relro,-z,now skills/worker/core/worker/native-worker-launcher.c -o /out/kubeclaw-native-worker-launcher \
+ && node scripts/build-plugin-sandbox.mjs --buster-browser-helper /out/plugin-sandbox \
+ && node scripts/build-buster-image-bundle.mjs /image "$KUBECLAW_BUILD_REVISION" \
+ && node scripts/build-buster-proof-harness.mjs /proof /image/role \
+ && find /proof -type l -lname "/image/role/*" -exec sh -c 'for file do target=$(readlink "$file"); ln -sfn "/app${target#/image/role}" "$file"; done' sh {} +
+
+# hadolint ignore=DL3006
 FROM ${BUSTER_NODE_BASE}
 
 USER root
@@ -22,6 +42,7 @@ COPY --from=buildkit /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certif
 COPY scripts/buster-subordinate-ids.mjs /usr/local/libexec/buster-subordinate-ids.mjs
 COPY scripts/buster-state-root.mjs /usr/local/libexec/buster-state-root.mjs
 COPY scripts/buster-runtime-config-root.mjs /usr/local/libexec/buster-runtime-config-root.mjs
+COPY scripts/buster-lifetime-guardian.c /tmp/buster-lifetime-guardian.c
 # The dated Debian snapshot pins the complete dependency graph coherently.
 # hadolint ignore=DL3008
 RUN printf '%s\n' \
@@ -95,61 +116,56 @@ RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && pip install --break-system-packages --no-cache-dir --require-hashes --only-binary=:all: \
       -r /opt/kubeclaw-python-locks/buster.txt
 
-ENV PATH="/app/node_modules/.bin:${PATH}" \
+ENV PATH="/app/skills/node_modules/.bin:${PATH}" \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
     KUBECLAW_BUILD_REVISION=${KUBECLAW_BUILD_REVISION}
 
-COPY package.json package-lock.json /app/
-COPY contracts /app/contracts
-# This copy is the production provider payload. The runtime discovers every
-# role-approved provider below /app/skills/buster/plugins, including Axe.
-COPY skills /app/skills
-COPY charts/kubeclaw/files/config/swarm.config.json charts/kubeclaw/files/config/prism-control.config.json charts/kubeclaw/files/config/prism-studio.config.json charts/kubeclaw/files/config/prism-worker.config.json charts/kubeclaw/files/config/prism-execution.config.json charts/kubeclaw/files/config/buster-engine.config.json charts/kubeclaw/files/config/worker-core.config.json /etc/kubeclaw/swarm/
-COPY scripts/build-plugin-sandbox.mjs /app/scripts/build-plugin-sandbox.mjs
-COPY tests/verification/contracts/check-pipeline-container-build-production.mts /app/tests/verification/contracts/check-pipeline-container-build-production.mts
-COPY tests/verification/contracts/check-pipeline-container-build-recovery.mts /app/tests/verification/contracts/check-pipeline-container-build-recovery.mts
-RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \
-    && cd /app \
-    && cc -std=c11 -O2 -Wall -Wextra -Werror -fstack-protector-strong -D_FORTIFY_SOURCE=2 \
-         -fPIE -pie -Wl,-z,relro,-z,now skills/worker/core/worker/native-worker-launcher.c \
-         -o /usr/local/libexec/kubeclaw-native-worker-launcher \
-    && chmod 0755 /usr/local/libexec/kubeclaw-native-worker-launcher \
-    && node scripts/build-plugin-sandbox.mjs \
-    && test -x /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox \
-    && install -d -o root -g root -m 0755 /opt/kubeclaw-trusted /run/kubeclaw-buster \
-    && node scripts/build-plugin-sandbox.mjs --buster-browser-helper /opt/kubeclaw-trusted/plugin-sandbox \
+# /app is exactly the emitted, indexed role. No helper/tests/npm root overlay.
+COPY --from=buster-package /image/role /app
+RUN chown root:root /app && chmod 0755 /app
+COPY --from=buster-package /image/generation/system /etc/kubeclaw/config
+COPY --from=buster-package /image/delivery /opt/buster-image-tools/baked-delivery
+COPY --from=buster-package /image/buster-delivery.json /opt/buster-image-tools/buster-delivery.json
+COPY --from=buster-package /proof /opt/buster-image-proofs
+COPY --from=buster-package /out/kubeclaw-native-worker-launcher /usr/local/libexec/kubeclaw-native-worker-launcher
+COPY --from=buster-package /out/plugin-sandbox /opt/kubeclaw-trusted/plugin-sandbox
+COPY config/nova/core.config.json /etc/kubeclaw/nova/core.config.json
+COPY config/plugins/kubeclaw.review /etc/kubeclaw/plugins/kubeclaw.review
+RUN cc -std=c11 -O2 -Wall -Wextra -Werror -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fPIE -pie -Wl,-z,relro,-z,now /tmp/buster-lifetime-guardian.c -o /usr/local/libexec/kubeclaw-buster-lifetime-guardian \
+    && chmod 0755 /usr/local/libexec/kubeclaw-buster-lifetime-guardian /usr/local/libexec/kubeclaw-native-worker-launcher \
+    && rm /tmp/buster-lifetime-guardian.c \
+    && install -d -o root -g root -m 0755 /run/kubeclaw-buster \
     && chown root:builder /opt/kubeclaw-trusted/plugin-sandbox \
     && chmod 0750 /opt/kubeclaw-trusted/plugin-sandbox \
     && setcap cap_setuid,cap_setgid=ep /opt/kubeclaw-trusted/plugin-sandbox \
-    && chown -R root:root /app \
-    && chmod -R go-w /app
+    && ln -s /app/skills/node_modules /opt/buster-image-tools/node_modules
 
-COPY versions.json /app/versions.json
-COPY docker/browser-archives.lock.json /app/docker/browser-archives.lock.json
-COPY scripts/browser-archive-lock.mjs /app/scripts/browser-archive-lock.mjs
-RUN node /app/node_modules/playwright/cli.js install-deps chromium firefox webkit \
-    && node /app/scripts/browser-archive-lock.mjs --install "$TARGETARCH" buster /ms-playwright \
+COPY package-lock.json /opt/buster-image-tools/package-lock.json
+COPY versions.json /opt/buster-image-tools/versions.json
+COPY docker/browser-archives.lock.json /opt/buster-image-tools/docker/browser-archives.lock.json
+COPY scripts/browser-archive-lock.mjs /opt/buster-image-tools/scripts/browser-archive-lock.mjs
+RUN node /app/skills/node_modules/playwright/cli.js install-deps chromium firefox webkit \
+    && node /opt/buster-image-tools/scripts/browser-archive-lock.mjs --install "$TARGETARCH" buster /ms-playwright \
     && chown -R builder:builder /ms-playwright
 
 # Database bytes are resolved only by the explicit update procedure. Build
 # retries consume identical OCI manifests/layers and never resolve mutable tags.
-COPY versions.json /app/versions.json
-COPY docker/trivy-databases.lock.json /app/docker/trivy-databases.lock.json
-COPY scripts/trivy-database-lock.mjs /app/scripts/trivy-database-lock.mjs
-RUN node /app/scripts/trivy-database-lock.mjs --install /home/builder/.cache/trivy "$(trivy --version | sed -n 's/^Version: //p')" \
+COPY versions.json /opt/buster-image-tools/versions.json
+COPY docker/trivy-databases.lock.json /opt/buster-image-tools/docker/trivy-databases.lock.json
+COPY scripts/trivy-database-lock.mjs /opt/buster-image-tools/scripts/trivy-database-lock.mjs
+RUN node /opt/buster-image-tools/scripts/trivy-database-lock.mjs --install /home/builder/.cache/trivy "$(trivy --version | sed -n 's/^Version: //p')" \
     && chown -R builder:builder /home/builder/.cache/trivy \
     && test -s /home/builder/.cache/trivy/db/trivy.db \
     && test -s /home/builder/.cache/trivy/java-db/trivy-java.db
 
-COPY scripts/registry-client-config.mjs /app/scripts/registry-client-config.mjs
-COPY scripts/buster-cluster-preflight.mjs /app/scripts/buster-cluster-preflight.mjs
+COPY scripts/registry-client-config.mjs /opt/buster-image-tools/scripts/registry-client-config.mjs
+COPY scripts/buster-cluster-preflight.mjs /opt/buster-image-tools/scripts/buster-cluster-preflight.mjs
 COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint
 RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint
 
-ENV SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
-    HOME=/home/builder \
+ENV HOME=/home/builder \
     XDG_RUNTIME_DIR=/run/user/1000 \
-    NODE_PATH=/app/node_modules \
+    NODE_PATH=/app/skills/node_modules \
     BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \
     BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \
     BUSTER_V2_RESULT_ROOT=/workspace/git-repo/.swarm/runtime-results \

@@ -1,0 +1,30 @@
+✖ both actual charts, packaged role boot and loader enforce shared cluster invoker policy (39875.542153ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40484.030272
+
+✖ failing tests:
+
+test at tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:20:1
+✖ both actual charts, packaged role boot and loader enforce shared cluster invoker policy (39875.542153ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'sha256:00371410b95488a560554f753ed362d4a3ca6e7f890dbc14f44fb780d3a7622f'
+  - 'sha256:c7ab93a451158770fc10a547bc60545e5349933f56dcfe546634bd8b7149097b'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:192:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'sha256:00371410b95488a560554f753ed362d4a3ca6e7f890dbc14f44fb780d3a7622f',
+    expected: 'sha256:c7ab93a451158770fc10a547bc60545e5349933f56dcfe546634bd8b7149097b',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

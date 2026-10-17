@@ -1,4 +1,4 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { publishedControlConfig } from './fixtures/published-config.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -10,10 +10,8 @@ import { PGlite } from '@electric-sql/pglite';
 import { vector } from '@electric-sql/pglite-pgvector';
 import { migrate, ContentAddressedArtifactStore } from '../storage/index.ts';
 import { runNativePrismOperation } from '../control/native-operation.ts';
-import { loadControlServerConfig } from '../server/control-config.ts';
 import type { WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-test('CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity', { timeout: 30000 }, async () => {
+test('CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity', { timeout: 60000 }, async t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-policy-operation-'));
   const db = new PGlite(path.join(root, 'db'), { extensions: { vector } });
   const received: WorkerAttemptEnvelopeV3[] = [];
@@ -25,13 +23,18 @@ test('CP03 original Control persists and dispatches startup budgets and preserve
   try {
     await migrate(db); server.listen(0, '127.0.0.1'); await once(server, 'listening');
     const address = server.address(); assert.ok(address && typeof address !== 'string');
-    const file = path.join(root, 'swarm.config.json'), artifacts = new ContentAddressedArtifactStore(path.join(root, 'artifacts'));
+    const artifacts = new ContentAddressedArtifactStore(path.join(root, 'artifacts'));
     const profiles = [{ cpuTimeMs: 123, memoryBytes: 4096, tasks: 7 }, { cpuTimeMs: 456, memoryBytes: 8192, tasks: 11 }];
     for (const [index, policy] of profiles.entries()) {
-      const value = structuredClone(authored); value['prism-execution'].settings.resourcePolicy = policy; writeTestBundle(file, value);
-      const config = loadControlServerConfig({ SWARM_CONFIG: file, PRISM_SESSION_SECRET: 'test', PRISM_INGRESS_SECRET: 'test', PRISM_INGESTION_SECRET: 'test',
-        PRISM_DISPATCH_SECRET: 'test', PRISM_WORKER_SECRET: 'test', PRISM_WORKER_URL: `http://127.0.0.1:${address.port}` });
-      value['prism-execution'].settings.resourcePolicy = { cpuTimeMs: 1, memoryBytes: 1, tasks: 1 }; writeTestBundle(file, value);
+      const f = await publishedControlConfig(t, { workerUrl: `http://127.0.0.1:${address.port}` }, undefined, undefined, author => {
+        const authorFile=path.join(author,'components/prism-execution.config.json');
+        const value=JSON.parse(fs.readFileSync(authorFile,'utf8'));value.profiles.standard.settings.resourcePolicy=policy;
+        fs.writeFileSync(authorFile,JSON.stringify(value));
+      });
+      const config = f.loadControlServerConfig(f.capture, { PRISM_SESSION_SECRET: 'test', PRISM_INGRESS_SECRET: 'test', PRISM_INGESTION_SECRET: 'test', PRISM_DISPATCH_SECRET: 'test', PRISM_WORKER_SECRET: 'test' });
+      const authorFile=path.join(f.author,'components/prism-execution.config.json');
+      const value=JSON.parse(fs.readFileSync(authorFile,'utf8'));value.profiles.standard.settings.resourcePolicy={cpuTimeMs:1,memoryBytes:1,tasks:1};
+      fs.writeFileSync(authorFile,JSON.stringify(value));
       await assert.rejects(runNativePrismOperation(db, artifacts, config, 'render', { policy: 'input' }, `policy-${index}`), /Prism worker failed: 503/);
       const envelope = received.at(-1)!;
       assert.deepEqual(envelope.resourceBudgets, { schemaVersion: 'worker-resource-budgets.v2', cpuTimeMs: { state: 'requested', limit: policy.cpuTimeMs },

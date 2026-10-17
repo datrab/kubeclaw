@@ -1,0 +1,53 @@
+{
+  "verdict": "VERIFIED at four original source-boundary definition scope",
+  "materialFindings": [],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "8f40d15c5e34f076c324ca05199f0797d5273555b74fdfdf3e58c1eade3608d9",
+      "bytes": 298
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "0c483e1a168b648620f9489ca6793695a1c1829efd08eddf3f121eea707c2643",
+      "bytes": 9129
+    },
+    {
+      "path": "commands-and-exits.json",
+      "sha256": "6308e6496ee67758b3f661a5d729ec6a3d74b4cdfc76decb7f33284820d7faca",
+      "bytes": 867
+    },
+    {
+      "path": "end-identities.json",
+      "sha256": "189e5a3646ce8275136fcfd02fd0423eb8cc5312409c4d40215631490d82c96f",
+      "bytes": 53553
+    },
+    {
+      "path": "independent-conservation.json",
+      "sha256": "f0b809e2df428841dca6372f5e6fa7ec5677ef0bd696e3034139d7be5b999275",
+      "bytes": 3970
+    },
+    {
+      "path": "quantity-literal-challenge.json",
+      "sha256": "78e009106024b1e76bae06493363b5bc11e41d336236d058e2bd926000ba30c0",
+      "bytes": 395
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "2c85cd19de34fe3041a1456e5b840676c265454df9c9b8c0a7147a22c6fa9ba6",
+      "bytes": 54801
+    },
+    {
+      "path": "replay-shape.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "replay-shape.stdout",
+      "sha256": "b796ce9ec2bf60c4f87b102dffc1a16fc52af27e793f42d5374660a5f1fd455c",
+      "bytes": 336
+    }
+  ],
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

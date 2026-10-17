@@ -1,0 +1,38 @@
+Error: execution error at (kubeclaw-ops/templates/network.yaml:3:4): networkPolicy.apiServerCIDRs is required; use scripts/deploy-ops-pod.sh deploy to discover it
+
+Use --debug flag to render out invalid YAML
+✖ actual Ops Helm A/B delivers the sole captured MCP owner, ports, probes and restart identity (67.885757ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 136.399901
+
+✖ failing tests:
+
+test at tests/verification/deployment/ops-mcp-policy.test.mjs:6:1
+✖ actual Ops Helm A/B delivers the sole captured MCP owner, ports, probes and restart identity (67.885757ms)
+  Error: Command failed: /usr/local/bin/helm template ops charts/ops-pod --namespace test -f /tmp/ops-delivery-GJfMrS/values-8080.yaml
+  Error: execution error at (kubeclaw-ops/templates/network.yaml:3:4): networkPolicy.apiServerCIDRs is required; use scripts/deploy-ops-pod.sh deploy to discover it
+
+  Use --debug flag to render out invalid YAML
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/ops-mcp-policy.test.mjs:10:110)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'Error: execution error at (kubeclaw-ops/templates/network.yaml:3:4): networkPolicy.apiServerCIDRs is required; use scripts/deploy-ops-pod.sh deploy to discover it\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 2043868,
+    stdout: '',
+    stderr: 'Error: execution error at (kubeclaw-ops/templates/network.yaml:3:4): networkPolicy.apiServerCIDRs is required; use scripts/deploy-ops-pod.sh deploy to discover it\n\nUse --debug flag to render out invalid YAML\n'
+  }

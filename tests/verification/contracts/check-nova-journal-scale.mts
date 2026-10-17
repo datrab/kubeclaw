@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -13,21 +14,21 @@ if (!Number.isSafeInteger(targetMiB) || targetMiB < 1 || targetMiB > 512) {
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-journal-scale-'));
 try {
   const file = path.join(root, 'journal.jsonl');
-  const journal = new core.FileJournal(file);
+  const journal = new core.FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   const payload = 'x'.repeat(1024 * 1024);
   for (let index = 0; index < targetMiB; index += 1) journal.append({ index, payload });
   const bytes = fs.statSync(file).size;
   assert.ok(bytes >= targetMiB * 1024 * 1024);
 
   const reopenedAt = performance.now();
-  const reopened = new core.FileJournal(file);
+  const reopened = new core.FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   const replayMs = performance.now() - reopenedAt;
   const appendAt = performance.now();
   reopened.append({ index: targetMiB, payload: 'steady-state' });
   const appendMs = performance.now() - appendAt;
   assert.ok(appendMs < 5_000, `steady-state append took ${appendMs.toFixed(1)}ms`);
 
-  const peer = new core.FileJournal(file);
+  const peer = new core.FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   reopened.append({ index: targetMiB + 1, payload: 'tail-sync' });
   assert.equal(peer.refresh().at(-1)?.entry.payload, 'tail-sync');
   console.log(JSON.stringify({ ok: true, targetMiB, bytes, replayMs, appendMs,

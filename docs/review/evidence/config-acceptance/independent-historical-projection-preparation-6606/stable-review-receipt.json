@@ -1,0 +1,195 @@
+{
+  "scope": "bounded preliminary independent review identities, not final root acceptance",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/README.md",
+      "sha256": "994279585c697b05f24c16defa584e8eac6e93b5dd78698e3725b21df373232e",
+      "bytes": 1230
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/author-replay-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/author-replay-attempt1.stdout",
+      "sha256": "52a3bd4a08fad04237a688dd11c5f4b409022a6dea1a58fb61aaa63b2e2f72e2",
+      "bytes": 1946
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/baseline/docs/review/evidence/config-acceptance/runtime/case-proposals.json.gz",
+      "sha256": "5042097504f8ad2e27259dbb8a4694c7bf406d5caec44544c2d867eb82001b66",
+      "bytes": 2991245
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/baseline/docs/review/remediation/config-acceptance-matrix.json.gz",
+      "sha256": "204fc0f63746884057d55dc40122aaaa2edf5f6d73d8c30e1c1d4b488ced84d7",
+      "bytes": 3803421
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/baseline/docs/review/remediation/config-semantic-inventory.json.gz",
+      "sha256": "2a3c9d5e0b11d6d7a40bd69d1afb37c70beec135f8c21ae84e49bf56ed3ac780",
+      "bytes": 2171565
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/case-proposals-selected.json",
+      "sha256": "a53449048658fd316a779c2912bbb34073148c50bd988ee598fd264b4ed5f015",
+      "bytes": 3773758
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/check-independent-preparation.py",
+      "sha256": "8f7eb290038c3b844577f73038d0c628f8cc13201bcaf04b100b24d69395fc4d",
+      "bytes": 8414
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/closeout.py",
+      "sha256": "1d905f5a47745dbd39cd72202676355720659b2ecb2c746a8b4b646c6e951c5a",
+      "bytes": 8161
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/config-acceptance-matrix-selected.json",
+      "sha256": "b9dc4ff7c436234dd9a8c5f4d69e2370d2ca0644c2a3b4b5d7546e1680290278",
+      "bytes": 600015
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/end-input-integrity.json",
+      "sha256": "79f3c6269b2941f79aa34f5cf0ad73c84123b3a920851352820a11714c9fe9c6",
+      "bytes": 345
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/freeze.py",
+      "sha256": "96adc16b2a9eabcb4311e5ff7d7669f994449c6f5c72221a6fcab0eb96c083a0",
+      "bytes": 2490
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/independent-controls-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/independent-controls-attempt1.stdout",
+      "sha256": "5f1e97230cf82e01285a513b0436dd80fbf15eeec1f8204639691e09e0004fd8",
+      "bytes": 45
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/independent-controls.json",
+      "sha256": "eceb7ab825dfded5439fd1b4ad235c1f88c23c330cffc776159c5f06d19dd653",
+      "bytes": 6834
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/independent-review.json",
+      "sha256": "41f2f97638ad695376958e44c1446f50113ddf286db9011807ffbae8c51c2f18",
+      "bytes": 5417
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/input-freeze.json",
+      "sha256": "e80818ff53d48bac89ab91b7a1495d83fb904371a81e0fe5bc20ace302ca74c5",
+      "bytes": 480596
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/check-historical-projection-guards.py",
+      "sha256": "93543c23dbd2420ea9b658b5086c02c1f764f7a193c3fbb730d067285715501c",
+      "bytes": 4074
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "sha256": "0436240e98f8468f686c4aa55a081baf824f71498ff1d0ae4d6194456124f81b",
+      "bytes": 15805
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/check-native-case-integration.py",
+      "sha256": "b7435c69cee3e10e9393b3db05d0a0d7a671ce34cb3e8e5883b2b9ef84ab41ca",
+      "bytes": 4013
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/checkpoint6-before-historical-projection-6606/check-matrix.py",
+      "sha256": "3cc83e20934a33d83cecf98bb53b8b193d2a3c6853197047ea94b4643dc53e74",
+      "bytes": 14946
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/checkpoint6-before-historical-projection-6606/check-native-case-integration.py",
+      "sha256": "d80331e4bed71af05302be8f040d95b49344efd6c7b76e44fb652bd7ae0b9f15",
+      "bytes": 3317
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/checkpoint6-before-historical-projection-6606/consolidate.py",
+      "sha256": "6892b85819eccb4d2f1721df03a09dc2b72d5178c37afab006ca370efcd5424b",
+      "bytes": 24216
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/consolidate.py",
+      "sha256": "e112f40613da1a532526a2a4c8425545d473f39c8ce62365c4eba4bf80bcf66a",
+      "bytes": 25146
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/historical-projection-guards-attempt1.log",
+      "sha256": "52a3bd4a08fad04237a688dd11c5f4b409022a6dea1a58fb61aaa63b2e2f72e2",
+      "bytes": 1946
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/historical-projection-guards-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/historical-projection-preparation-6606.json",
+      "sha256": "468e5b7cbc743b5ab6bb64680288f6720058f68f5f330322592b7852d3c7f3cd",
+      "bytes": 2950
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "sha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2",
+      "bytes": 7186
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/author/historical_projection.py",
+      "sha256": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0",
+      "bytes": 4251
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/independent-historical-mapping-guard-6606/independent-review.json",
+      "sha256": "1a417863e4f6fe0c33960f78f6a9ff85ee23cc2c68ef197ebccfdfb34c8a1613",
+      "bytes": 6887
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/independent-review.json",
+      "sha256": "7ae8737db0e572df85ed2bd94ec0061eff5b18d23a03bce3c1cdb36fd8069815",
+      "bytes": 3643
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/stable-independent-review-receipt.json",
+      "sha256": "b6f59adce3b44c68edc2268c89fe24b47411c1771cc4680daeeba9c71e7e2787",
+      "bytes": 4170
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json",
+      "sha256": "1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3",
+      "bytes": 1533647
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749",
+      "bytes": 9091
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+      "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "bytes": 15784
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/skills/nova/plugins/review/src/repository-review-profile.ts",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+      "bytes": 19954
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inventory-fragment-selected.json",
+      "sha256": "371e81ce2efb1d1461d88f6b60bae54b298376d93596566980b5d2f224dc1790",
+      "bytes": 1945819
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/runtime-case-dispositions-selected.json",
+      "sha256": "c2dc863a45b903b23b5541274ecea31d4df697386d5d2b2e2e9004b512d7a3cc",
+      "bytes": 467844
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY as ISOLATION_TEST_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -199,7 +200,7 @@ try {
   });
   assert.equal(discovered[0]?.provenance.trustScope, 'isolated_external');
   const snapshot = core.buildRegistry(discovered);
-  const activated = await core.activateRegistry(snapshot, new Set(['external.phase11:main']), isolation);
+  const activated = await core.activateRegistry(snapshot, new Set(['external.phase11:main']), isolation, ISOLATION_TEST_POLICY.isolationSession);
   const result = await activated.stages.get('external.phase11')!.execute(
     { real: true },
     context(installed.root),
@@ -213,7 +214,7 @@ try {
   const outside = path.join(temporary, 'outside.mjs');
   fs.writeFileSync(outside, 'export async function execute() { return {}; }');
   assert.throws(
-    () => core.invokeIsolated({
+    () => core.invokeIsolated({ sessionPolicy: ISOLATION_TEST_POLICY.isolationSession,
       ...isolation,
       packageRoot: installed.root,
       modulePath: outside,
@@ -251,7 +252,7 @@ try {
     }
   `);
   const controller = new AbortController();
-  const cancelled = core.invokeIsolated({
+  const cancelled = core.invokeIsolated({ sessionPolicy: ISOLATION_TEST_POLICY.isolationSession,
       ...isolation,
     packageRoot: cancellationRoot,
     modulePath: path.join(cancellationRoot, 'dist', 'main.mjs'),
@@ -267,7 +268,7 @@ try {
   const crashRoot = path.join(temporary, 'crash');
   writePackage(crashRoot, 'export async function execute() { process.kill(process.pid, "SIGKILL"); }');
   await assert.rejects(
-    core.invokeIsolated({
+    core.invokeIsolated({ sessionPolicy: ISOLATION_TEST_POLICY.isolationSession,
       ...isolation,
       packageRoot: crashRoot,
       modulePath: path.join(crashRoot, 'dist', 'main.mjs'),

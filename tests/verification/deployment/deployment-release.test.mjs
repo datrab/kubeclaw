@@ -13,12 +13,9 @@ function fixture(run) {
   const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
   const node = args => execFileSync(process.execPath, args, { cwd: root, encoding: 'utf8' });
   try {
-    for (const directory of ['charts', 'my-values', 'scripts']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true, verbatimSymlinks: true });
-    for (const name of ['swarm.schema.json', 'swarm-components.schema.json']) {
-      const schema = `skills/common/plugin-runtime/foundation/config/${name}`;
-      fs.mkdirSync(path.dirname(path.join(root, schema)), { recursive: true });
-      fs.copyFileSync(path.join(source, schema), path.join(root, schema));
-    }
+    for (const directory of ['charts', 'my-values', 'scripts', 'config', 'packaging']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true, verbatimSymlinks: true });
+    // Current generators load the real entry/validator implementation, not only two legacy schemas.
+    fs.cpSync(path.join(source,'skills/common/plugin-runtime/foundation'),path.join(root,'skills/common/plugin-runtime/foundation'),{recursive:true});
     fs.symlinkSync(path.join(source, 'node_modules'), path.join(root, 'node_modules'));
     const prismValuesFile = path.join(root, 'my-values/prism-values.yaml');
     const prismValues = yaml.load(fs.readFileSync(prismValuesFile, 'utf8'));
@@ -33,16 +30,19 @@ function fixture(run) {
     fs.writeFileSync(prismValuesFile, yaml.dump(prismValues));
     const bin = path.join(root, 'bin'); fs.mkdirSync(bin);
     fs.writeFileSync(path.join(bin, 'kubectl'), '#!/bin/sh\necho unexpected cluster access >&2\nexit 99\n', { mode: 0o755 });
-    git(['init', '-q']); git(['add', 'charts', 'my-values', 'skills/common/plugin-runtime/foundation/config']);
+    git(['init', '-q']); git(['add', 'charts', 'my-values', 'config', 'packaging', 'scripts', 'skills/common/plugin-runtime/foundation/config']);
     git(['-c', 'user.name=Deployment Test', '-c', 'user.email=deployment@example.invalid', 'commit', '-qm', 'Actual configuration fixture']);
     const commit = git(['rev-parse', 'HEAD']);
     fs.mkdirSync(path.join(root, 'releases'));
     const names = ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion', 'codex-ops', 'ops-mcp'];
     // Shape-valid identifiers exercise original Git/Helm/shell code only, never runtime evidence.
     const images = Object.fromEntries(names.map((name, index) => [name, `ghcr.io/datrab/kubeclaw-${name}@sha256:${index.toString(16).repeat(64)}`]));
+    // Assemble actual delivery bytes instead of fabricating the newer Buster receipt.
+    // Revision/images remain local fixture identities, not deployed-image evidence.
+    const busterDelivery=JSON.parse(execFileSync(process.execPath,[path.join(source,'scripts/build-buster-image-bundle.mjs'),path.join(root,'built-buster'),commit],{cwd:source,encoding:'utf8',maxBuffer:4*1024*1024})).metadata;
     for (const family of ['runtime', 'ops']) {
       const selection = Object.fromEntries(names.filter(name => (family === 'ops') === ['codex-ops', 'ops-mcp'].includes(name)).map(name => [name, images[name]]));
-      fs.writeFileSync(path.join(root, `releases/${family}-images.json`), JSON.stringify({ schemaVersion: 1, commit, sourceRunId: 123, sourceRunAttempt: 1, images: selection }));
+      fs.writeFileSync(path.join(root, `releases/${family}-images.json`), JSON.stringify({ schemaVersion: 1, commit, sourceRunId: 123, sourceRunAttempt: 1, images: selection, ...(family==='runtime'?{imageDeliveries:{'buster-runtime':busterDelivery}}:{}) }));
       node(['scripts/updates/materialize-release.mjs', `--family=${family}`]);
     }
     fs.writeFileSync(path.join(root, 'no-cluster.yaml'), 'apiVersion: v1\nkind: Config\nclusters:\n- name: unavailable\n  cluster:\n    server: http://127.0.0.1:1\ncontexts:\n- name: unavailable\n  context:\n    cluster: unavailable\ncurrent-context: unavailable\n');

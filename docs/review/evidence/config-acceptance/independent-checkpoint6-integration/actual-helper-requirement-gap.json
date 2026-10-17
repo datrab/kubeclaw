@@ -1,0 +1,49 @@
+{
+  "actualParentHelperControlsPassedDespiteRequirementLoss": 5,
+  "caseId": "QC-FOUNDATION-FLOCK-WAIT-VAL",
+  "mutatedRequirementList": [],
+  "adaptation": "Only exactmetadata virtual read/digest functions; all parent assertions and actualconsolidator block unchanged, no realfile/root writes",
+  "scope": "Documentation guard contradiction, not Core substantive review or F-MUT",
+  "parentSourceSha256": "8add0e711f2ea064802f02458d33f56e72390fe710807d86153a36d1c4a4ceb6",
+  "adaptedSha256": "b5e354254c9ba7b2f75f38d3080d674478c2a26355f8b8fb9735030b8af1fc46",
+  "rawParentHelperReport": {
+    "scope": "documentation consolidator supersession identity controls only",
+    "consolidatorSha256": "244c7aa444d06da8f955f39a1cc339e5bea88eb958915e03931b99c772416cdc",
+    "scriptSha256": "8add0e711f2ea064802f02458d33f56e72390fe710807d86153a36d1c4a4ceb6",
+    "activeReceipt": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json",
+    "activeReceiptSha256": "7d725699dd5fbd6cd707e904b317b5c5387e0c42c2f11928cc4d450f46c6163c",
+    "preservedReceiptSha256": "b0f15920b3fd279fd25868d8f885bc0dade6b52adaeae4a165d77c6bbc7e81a1",
+    "inputIdentityCount": 303,
+    "observations": [
+      {
+        "id": "ACTIVE-SUPERSESSION-WITH-HISTORY",
+        "result": "passed"
+      },
+      {
+        "id": "REJECT-OLD-CORRECTION-DRIFT",
+        "result": "passed",
+        "intendedRejection": "CORE_SUPPLEMENTAL_INPUT_DRIFT:docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-complete-owner-profiles.json"
+      },
+      {
+        "id": "REJECT-PRESERVED-INDEPENDENT-REPORT-DRIFT",
+        "result": "passed",
+        "intendedRejection": "CORE_BOUNDARY_SUPERSESSION_INPUT_DRIFT:docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/independent-material-review.json"
+      },
+      {
+        "id": "REJECT-NEW-BOUNDARY-INPUT-DRIFT",
+        "result": "passed",
+        "intendedRejection": "CORE_BOUNDARY_SUPERSESSION_INPUT_DRIFT:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/admission-method-fixtures.json"
+      },
+      {
+        "id": "RESTORED-PACKAGE-BASELINE",
+        "result": "passed"
+      }
+    ],
+    "globalC0": "not-accepted",
+    "limitations": [
+      "no root matrix generation while other authors mutate",
+      "injected digest disagreement checks the documentation guard, not a production semantic mutant",
+      "no independent reviewer confirmation or canonical field-case coverage manufactured"
+    ]
+  }
+}

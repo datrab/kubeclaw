@@ -1,0 +1,98 @@
+{
+  "currentProposedRoot": "pipeline-entry.v8",
+  "existingOriginalEightMovements": [
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+      "targetAuthorPath": "config/pipeline.config.json"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-control.config.json",
+      "sha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "targetAuthorPath": "config/components/prism-control.config.json",
+      "targetProfilePointer": "/profiles/standard/settings"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+      "sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "targetAuthorPath": "config/components/prism-studio.config.json",
+      "targetProfilePointer": "/profiles/standard/settings"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+      "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "targetAuthorPath": "config/components/prism-worker.config.json",
+      "targetProfilePointer": "/profiles/standard/settings"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-execution.config.json",
+      "sha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "targetAuthorPath": "config/components/prism-execution.config.json",
+      "targetProfilePointer": "/profiles/standard/settings"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "targetAuthorPath": "config/components/buster-engine.config.json",
+      "targetProfilePointer": "/profiles/standard/settings"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/worker-core.config.json",
+      "sha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+      "targetAuthorPath": "config/components/worker-core.config.json",
+      "targetProfilePointer": "/profiles/standard/settings"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b",
+      "targetAuthorPath": "config/components/buster-engine.config.json",
+      "targetProfilePointer": "/profiles/runtime/settings"
+    }
+  ],
+  "immutablePriorPhysicalClosure": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/c1-physical-author-tree-contract.json",
+    "sha256": "e0e7980703e31d8c60475437d0913ad163c9e356845d0305e7cd44d2092bcd35"
+  },
+  "soleCurrentTree": "stand/config/pipeline.config.json +same six components+sameexisting engine/plugin/Chart/recovery owners; no secondroot or new7thcomponent",
+  "currentInputCodec": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/file-set-stand.json",
+    "sha256": "36e4bddb6bcfa0e052b6717e288a0869b8465f12ffcc26845cdef957c0e5c8f6"
+  },
+  "actualCurrentSources": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/source-current-boundary.json",
+    "sha256": "fe7578d02c73a56d6c5849e20c3c4144ca16533d2afe9c13e6adebdac613e693"
+  },
+  "exactLocalChanges": [
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts +swarm.ts",
+      "required": "ONEv8decoder/selector, allowner/allprofile currentowner/context equality, nofollow/generation/schema/inputidentity before effect, twelve receiving arms, no currentv8reader exists"
+    },
+    {
+      "source": "scripts/updates/runtime-inputs.mjs +docker/Dockerfile.buster-runtime +docker/Dockerfile.prism-agent",
+      "required": "Capture root/sixowner/engine/plugin/Chart/recovery/schema/source/immutablecontext+recipe inputs and public\u2192authentic receipts in actualimage filters/build tree; original eight movements retained"
+    },
+    {
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl +charts/prism/templates/_swarm-bundle.tpl",
+      "required": "Single sameentry materializer replaces flat7file/profile switches, emits sameChart policies/typedSreceivers/receipts, neversecondwritablegatewayauthor"
+    },
+    {
+      "source": "charts/kubeclaw/templates/configmap-gateway.yaml +deployment.yaml",
+      "required": "One currentrole fullmanaged bootstrap, preservedSOURCE/PROVIDER/ID and conditionalAstra/keymodelaliases, complete raw native/parser/plugin/schema validation beforedoctor/effect; originalmutableauthdata separate; exactpostdoctorbytes sourcegeneration revalidation"
+    },
+    {
+      "source": "skills/buster/engine/runner/worker.ts +actualregistry/providers/native runtime source",
+      "required": "Actual originalservice/role/package/digest/source/grant/taskreceiving resolution for separate structuralBrowser/Security contexts; no implicitsamekey registrymultiplex or inventedinstalledinstance"
+    },
+    {
+      "source": "skills/prism/server/control-config.ts +skills/prism/control/product-decisions.ts +originalagent_job/launcher bridge/process chain",
+      "required": "Sourcefalseproduct projection toactualENV gate fromsameControlowner; exactoriginalJpolicy capture oncebeforeclaim, nativeclock/source/task/key/fence/SQLdeadline+grants retained, no policyspread/claimreset/ledger"
+    }
+  ],
+  "futureAuthenticActivation": [
+    "native fullrawOpenClaw schema+image/module/plugin/source identity",
+    "actualrole/service/browserCLI/SDK/model/agent roster/capacity/origin/TLS/grants",
+    "confidentialoriginalSecretrevision-retention/sourceissuer/provider/access(notresourceVersion/latest)",
+    "originalR/task budgets/deadline/cancellation/cleanup/effects, recovery/epochCAS/FD10-11,fixedEval"
+  ],
+  "implementedOrNativeApproved": false
+}

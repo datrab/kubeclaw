@@ -1,0 +1,25 @@
+{
+  "task": "Draft the case study using only supplied verified facts.",
+  "source": {
+    "runId": "run:fixture-source",
+    "journalHead": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "snapshotDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "sourceStageId": "source",
+    "sourceRevision": "cccccccccccccccccccccccccccccccccccccccc",
+    "artifacts": [
+      {
+        "artifactId": "source-fixture",
+        "namespace": "kubeclaw.implementation-agent",
+        "mediaType": "application/json",
+        "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "sizeBytes": 2,
+        "producer": {
+          "runId": "run:fixture-source",
+          "stageId": "source",
+          "attemptId": "attempt:fixture-nova",
+          "attemptNumber": 1
+        }
+      }
+    ]
+  }
+}

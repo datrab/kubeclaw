@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node",
+    "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 98.93,
+  "oracleChanged": false
+}

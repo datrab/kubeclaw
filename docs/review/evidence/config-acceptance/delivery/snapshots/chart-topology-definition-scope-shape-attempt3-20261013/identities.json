@@ -1,0 +1,16 @@
+{
+  "scope": "exact failed string-vs-object descriptor attempt; no fragment mutation. Existing generated sourceprofiles unchanged by next scope correction.",
+  "files": {
+    "chart-topology-storage-definition-6606af9-20261013-attempt3.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "chart-topology-storage-definition-6606af9-20261013-attempt3.stderr": "2ee088e7b531a93cc5e613c3eb57954b897da1902752f04b1b83f2a5518cb8da",
+    "define-chart-topology-storage-6606af9-20261013.py": "80eda2bfcc61a88a6928d04cf4d8b8bfadede7499b014d5497b9dc070f2bbbad"
+  },
+  "generatedProfileDigests": {
+    "chart-topology-storage-profiles-6606af9-20261013/prism-A.json": "a464f28b4ea08cfed529f1cb58f89dbd133f2630fc0168f6dabe5a26b5624984",
+    "chart-topology-storage-profiles-6606af9-20261013/kubeclaw-B.json": "a62edc8f0497153e74f0aec7517e7472f054fa5e1bb9afbc5ac29f39c51cd3d6",
+    "chart-topology-storage-profiles-6606af9-20261013/kubeclaw-buster-B.json": "b4c5dc06f7e3ae7e8c06c6a223ea3546c59dcae83bdec891fa57d93d7dcd44dc",
+    "chart-topology-storage-profiles-6606af9-20261013/kubeclaw-buster-A.json": "919f11657813f566b8bf586dd3ca54df61d9ad8c62dda796f52d52c025790715",
+    "chart-topology-storage-profiles-6606af9-20261013/kubeclaw-A.json": "f812fd1424eb8c8422ade28b3c6baec5c9f68d854b35b96700bd4e10b51ca98a",
+    "chart-topology-storage-profiles-6606af9-20261013/prism-B.json": "56702c1b1cd2dd156d0e6d094e9bd735ac7bf5e61332ad1d63570f804c688433"
+  }
+}

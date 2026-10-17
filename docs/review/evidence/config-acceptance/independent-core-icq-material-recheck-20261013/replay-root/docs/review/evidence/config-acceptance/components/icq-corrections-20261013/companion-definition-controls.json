@@ -1,0 +1,111 @@
+{
+  "results": [
+    {
+      "id": "registered-full-NovaRegisteredGate-A",
+      "passed": true
+    },
+    {
+      "id": "registered-full-NovaRegisteredGate-B",
+      "passed": true
+    },
+    {
+      "id": "registered-neg-NovaRegisteredGate-missing",
+      "passed": true
+    },
+    {
+      "id": "registered-neg-NovaRegisteredGate-zero",
+      "passed": true
+    },
+    {
+      "id": "registered-neg-NovaRegisteredGate-six",
+      "passed": true
+    },
+    {
+      "id": "registered-neg-NovaRegisteredGate-unknown",
+      "passed": true
+    },
+    {
+      "id": "registered-full-NovaRegisteredEvidence-A",
+      "passed": true
+    },
+    {
+      "id": "registered-full-NovaRegisteredEvidence-B",
+      "passed": true
+    },
+    {
+      "id": "registered-neg-NovaRegisteredEvidence-missing",
+      "passed": true
+    },
+    {
+      "id": "registered-neg-NovaRegisteredEvidence-zero",
+      "passed": true
+    },
+    {
+      "id": "registered-neg-NovaRegisteredEvidence-six",
+      "passed": true
+    },
+    {
+      "id": "registered-neg-NovaRegisteredEvidence-unknown",
+      "passed": true
+    },
+    {
+      "id": "standalone-full-source-members-BusterPreparedJob-A",
+      "passed": true
+    },
+    {
+      "id": "standalone-full-source-members-BusterPreparedJob-B",
+      "passed": true
+    },
+    {
+      "id": "standalone-full-source-members-NovaStandaloneGate-A",
+      "passed": true
+    },
+    {
+      "id": "standalone-full-source-members-NovaStandaloneGate-B",
+      "passed": true
+    },
+    {
+      "id": "retirement-complete-owner-A",
+      "passed": true
+    },
+    {
+      "id": "retirement-complete-owner-B",
+      "passed": true
+    },
+    {
+      "id": "public-native-fixture-complete-A",
+      "passed": true
+    },
+    {
+      "id": "public-native-fixture-complete-B",
+      "passed": true
+    },
+    {
+      "id": "exact-public-reader-async snapshot()",
+      "passed": true
+    },
+    {
+      "id": "exact-public-reader-async readExecutionGraphs()",
+      "passed": true
+    },
+    {
+      "id": "exact-public-reader-async interruptions()",
+      "passed": true
+    },
+    {
+      "id": "exact-public-reader-export class NativeAttemptJournal",
+      "passed": true
+    },
+    {
+      "id": "exact-public-reader-async snapshot()",
+      "passed": true
+    },
+    {
+      "id": "exact-public-reader-export async function publishJsonPair",
+      "passed": true
+    }
+  ],
+  "passed": 26,
+  "failed": 0,
+  "scope": "Author synthetic complete companion/source-schema controls. Registered current-schema + proposed lock only; parent target-only otherfields/deploymentauth not waived; no runtimeeffect."
+}

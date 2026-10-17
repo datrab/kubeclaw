@@ -1,0 +1,13 @@
+# Agent stage configuration — batch16, no C0 acceptance
+
+12 original schema rows source/currentreader/domain-refined:5 acceptedunusedbusinessagentRole fields,5 actualruntime targetlocators,1 optional extraqualityevaluator flag,1 versionedmanifestencoding contract.12 narrow source/schema/earlynegativeguard cases and72 futureNOTRUN;6 strictcomplete proposednewprofile schemas checked, not newruntimeimplementation.
+
+agentRole fields have no businesspackage reader; projectsummary allowskey/portableJSON only. Currentwholegraph/registry/config digests may bindunusedvalues—thisisnot proof role/model/runtime behavior. Active reader metadata explicitly null +sourceabsence evidence, no phantomreader. Newtarget removes/rejectsoldaliases andretains pinnedhistoricalcompatibility. Actualagent string suppliesresource.canonicalId→capturedRconfig.targets/grants; SDKruntimeDispatchProfile encodeswireformat, never model/backend/thinking selector. Realtarget roster/protocol/role/grants are genuineexternalinputs, fixturelabels not installedtargets.
+
+Buster flag!==false defaults true, conditionalagent guard; mandatoryproviderPlan/source/nativecoverage/decision proof alwaysrequired. False bypasses only additionalagentjudge after nativepassed; false cannottrim originalrequiredjudge/nativecoverage. Proposedrequiredboolean +conditionalagent schema is structuralonly, semanticoriginalrequirements/role/coverage still mandatory. Currentearlyguards were exercised with intentionallyincomplete task inputs andprotectivecontextinvoke trap0calls, NOT fullregisteredpositive/effects.
+
+Summary historicalabsentencoding vsimplementedconst delivery-manifest.utf16-v1 affectv2/v3 manifestdigest/outerUTF16artifact/independentfinalreviewsemantic+outerexpectation. No arbitraryformat/modelknob or ASCIIrenaming effect proof; genuine signedsource/Unicode/protocol/history fixture required.
+
+Initial strictAjv conditional-required propertyerror preserved exactscript/rawfailure; thenproperties declaresagent explicitly, no weakenedstrictness. Original5984casebodies unchanged,2272immutable refs resolve; allc0Closedfalse.23 candidates833combined/3809unreviewed/146reviewed-open.19 remainingconsumer schemas(remote14+pipelineevidence5),102 untouchedsupplemental+95 priorunaccepteddeclarations/allrefinedsemantic authority/grant/role/genuinefixture/module/metadata obligations remain.
+
+Committed6606 +precedingreceipts/actualchangedcase delta and12before-rows only; no whole60MiBcopy. Parenttypedfirstlogicalmodule/taskoperator/membership/metadataquota/view/legacy/crossreader protocol unapprovedOPEN. No production/tests/Core/parenttools/independentreport edits, commits, native/host/controller/API/model/provider actions.

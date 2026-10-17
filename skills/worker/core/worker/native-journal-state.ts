@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { sha256Digest, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
@@ -20,7 +21,9 @@ export interface NativeAttemptJournalLimits {
 interface BlobReference { readonly digest: string; readonly sizeBytes: number }
 type ProcessRecord = Omit<NativeWorkerProcessResult, 'stdout' | 'stderr'> & { stdout: BlobReference; stderr: BlobReference };
 export interface NativeAttemptJournalState {
-  readonly schemaVersion: 'native-attempt-journal.v1';
+  readonly schemaVersion: 'native-attempt-journal.v1' | 'native-attempt-journal.v2';
+  readonly workerCore?: WorkerCorePolicyCapture;
+  readonly routingDigest?: string;
   readonly identity: WorkerOwnershipIdentity;
   readonly envelopeDigest: string;
   readonly envelope: BlobReference;
@@ -47,8 +50,13 @@ function blobReference(value: unknown): void {
 }
 
 export function validateJournalState(value: unknown): asserts value is NativeAttemptJournalState {
-  exact(value, ['schemaVersion', 'identity', 'envelopeDigest', 'envelope', 'acceptedAt', 'reservationBytes', 'process', 'processCompletedAt', 'result']);
-  if (value.schemaVersion !== 'native-attempt-journal.v1' || typeof value.acceptedAt !== 'string'
+  const version = (value as NativeAttemptJournalState | null)?.schemaVersion;
+  exact(value, ['schemaVersion', 'identity', 'envelopeDigest', 'envelope', 'acceptedAt', 'reservationBytes', 'process', 'processCompletedAt', 'result', ...(version === 'native-attempt-journal.v2' ? ['workerCore', 'routingDigest'] : [])]);
+  if (version === 'native-attempt-journal.v2') {
+    readWorkerCorePolicyCapture(value.workerCore);
+    if (typeof value.routingDigest !== 'string' || !/^sha256:[a-f0-9]{64}$/u.test(value.routingDigest)) throw new Error('WORKER_NATIVE_JOURNAL_ROUTING_CONFLICT');
+  }
+  if ((value.schemaVersion !== 'native-attempt-journal.v1' && value.schemaVersion !== 'native-attempt-journal.v2') || typeof value.acceptedAt !== 'string'
     || !Number.isFinite(Date.parse(value.acceptedAt)) || !Number.isSafeInteger(value.reservationBytes) || Number(value.reservationBytes) < 1) {
     throw new Error('WORKER_NATIVE_JOURNAL_STATE_INVALID');
   }
@@ -57,12 +65,12 @@ export function validateJournalState(value: unknown): asserts value is NativeAtt
   if (value.envelopeDigest !== (value.envelope as BlobReference).digest) throw new Error('WORKER_NATIVE_JOURNAL_ENVELOPE_DIGEST_INVALID');
   if (value.result !== null) blobReference(value.result);
   if (value.process !== null) {
-    validateProcess(value.process);
+    validateProcess(value.process, version === 'native-attempt-journal.v2' ? readWorkerCorePolicyCapture(value.workerCore).settings.runtime.journal_diagnostic_units : nativeJournalMaximumDiagnosticUnits);
     if (typeof value.processCompletedAt !== 'string' || !Number.isFinite(Date.parse(value.processCompletedAt))) throw new Error('WORKER_NATIVE_JOURNAL_COMPLETION_TIME_INVALID');
   } else if (value.processCompletedAt !== null) throw new Error('WORKER_NATIVE_JOURNAL_COMPLETION_TIME_INVALID');
 }
 
-function validateProcess(value: unknown): void {
+function validateProcess(value: unknown, diagnosticUnits: number): void {
   exact(value, ['schemaVersion', 'stdout', 'stderr', 'exitCode', 'signal', 'fault', 'resources']);
   if (value.schemaVersion !== 'worker-native-process-result.v1') throw new Error('WORKER_NATIVE_JOURNAL_PROCESS_INVALID');
   blobReference(value.stdout); blobReference(value.stderr);
@@ -71,7 +79,7 @@ function validateProcess(value: unknown): void {
   if (value.exitCode !== null && (!Number.isInteger(value.exitCode) || Number(value.exitCode) < 0 || Number(value.exitCode) > 255)) throw new Error('WORKER_NATIVE_JOURNAL_EXIT_INVALID');
   if (value.exitCode !== 0 && value.fault === null) throw new Error('WORKER_NATIVE_JOURNAL_MISSING_PROCESS_FAILURE');
   for (const key of ['signal', 'fault']) {
-    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > nativeJournalMaximumDiagnosticUnits)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');
+    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > diagnosticUnits)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');
   }
 }
 

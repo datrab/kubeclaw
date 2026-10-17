@@ -1,0 +1,17 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs:100
+for(const row of roleIndex)for(const [name,mutate]of [['role',c=>c.association.role='buster'],['sourceSHA',c=>c.association.sourceInputs[0].sha256='0'.repeat(64)],['ownerprofile',c=>c.association.ownerProfileId='foreign'],['receivingprofile',c=>c.association.receivingProfileId='foreign'],['plugin',c=>c.installedPluginAllow.push('kubeclaw-agent-observer')],['SDK',c=>c.nativeRoleSource.pluginSdkSource='arbitrary label'],['secretrevision',c=>c.nativeRoleSource.litellmAlias.locator='resourceVersion:123'],['instance',c=>c.association.instanceId='foreign']]])check('closed generated role context semantic rejection '+row.receivingProfileId+'/'+name,()=>{const doc=structuredClone(roleDocs['generated-contexts/'+row.role+'-bootstrap-context.json']);mutate(doc.contexts[row.receivingProfileId]);const p=read(path.join(base,row.profileRef.path));p.readonlyBindings.bootstrapContextRef.sha256=contextSha(doc);return validate(p,doc,{ownerProfileId:row.ownerProfileId,ownerPath:'charts/kubeclaw/values.yaml'});},true);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+SyntaxError: Unexpected token ']'
+    at compileSourceTextModule (node:internal/modules/esm/utils:319:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)
+    at #translate (node:internal/modules/esm/loader:438:20)
+    at afterLoad (node:internal/modules/esm/loader:506:29)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)
+    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+    at afterResolve (node:internal/modules/esm/loader:611:52)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)
+    at node:internal/modules/esm/loader:636:32
+    at TracingChannel.tracePromise (node:diagnostics_channel:362:14)
+
+Node.js v24.21.0

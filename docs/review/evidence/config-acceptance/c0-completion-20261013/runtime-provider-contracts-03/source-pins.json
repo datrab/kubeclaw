@@ -1,0 +1,53 @@
+{
+  "paths": [
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+    },
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4"
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+    }
+  ],
+  "qualification": "Local source byte pins; not installed/runtime activation facts"
+}

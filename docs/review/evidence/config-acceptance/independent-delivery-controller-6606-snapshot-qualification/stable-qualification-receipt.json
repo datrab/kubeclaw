@@ -1,0 +1,110 @@
+{
+  "scope": "additive qualified snapshot integrity evidence, no old artifact replacement",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/README.md",
+      "sha256": "7fd230f63e4fc6f9a09dfa0acb01161ff33801814f74f9fc216cadbfb530b75b",
+      "bytes": 1529
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/check-integrity-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/check-integrity-attempt1.stdout",
+      "sha256": "f10539b07a0d5fd5c98c66a622b50d5b5e58b36ff59a721585642f6674cd8fe6",
+      "bytes": 123
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/check-integrity.py",
+      "sha256": "3cfd2a1805072e4806ba00ab4bd1c16440c62a2561db497bbf07dc9a57dda651",
+      "bytes": 5983
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/closeout.py",
+      "sha256": "f5518db39863edb86007a47a3a418330b0682928e4459bd7b7cdeb7c4fb51734",
+      "bytes": 7503
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/encoded-inputs/delivery-specification-obligations-20261013.json.gz",
+      "sha256": "58e513b1e9a53072c3694b26029337b849384b78134a15c038ba17b7017eb060",
+      "bytes": 52138
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/encoded-inputs/future-case-invocation-specifications-20261013.json.gz",
+      "sha256": "b4b8b7d2ea836ef52fdb30e18e92fe8e4e5f8b95ccef3b63d308a793f04f4e2d",
+      "bytes": 2370698
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/encoded-inputs/inventory-fragment.json.gz",
+      "sha256": "d755a49860ff242a39d436b5da8083b9a11b867a43a6106e07687b8f5f23effe",
+      "bytes": 659941
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/encoded-inputs/open-row-backlog.json.gz",
+      "sha256": "750d817d7220b92aa52025fc573bd6282ef6a22a0a1ed9c4814b574245d63910",
+      "bytes": 48654
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/encoded-inputs/proposed-cases.json.gz",
+      "sha256": "4646539fd6994d94f47478e68d65cb18b3e64a9f2991b06f2ba88e3f3b153ab1",
+      "bytes": 187769
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/end-snapshot-integrity.json",
+      "sha256": "d2c6cd063445bb834469a5bff9b428b54d10c8d7e97893c4ade5a69400a809ea",
+      "bytes": 288
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/independent-integrity-qualification.json",
+      "sha256": "40a1d36a7c5d901636588cadb4ef8445e0d99af2c5da347c9e555baf3bda44ae",
+      "bytes": 4951
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/integrity-observations.json",
+      "sha256": "977a6a95da2245f999560a9f95032b6da738cd91aa1966331c07f3085da403a8",
+      "bytes": 76461
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/metadata-inputs/controller-review-snapshot-integrity-diagnostic-6606.json",
+      "sha256": "a8c17ca8728b717a8f935c3320dc4432e7264388c505be8a3e9eae72228000e3",
+      "bytes": 38688
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/metadata-inputs/end-input-integrity.json",
+      "sha256": "6a46d43b3a38de5e75392b6175455e9c3df505d202331343120dd780f24f5b9e",
+      "bytes": 793
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/metadata-inputs/freeze.py",
+      "sha256": "0cb117d593bd77321a9285659446a735dd6d343805fea72cf40a1de689fe2ec8",
+      "bytes": 3374
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/metadata-inputs/independent-review.json",
+      "sha256": "5381ecdd17c9080cf5b7eccb6b0bc40d7a5b9b00c83916da14d1d128357ac476",
+      "bytes": 11598
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/metadata-inputs/input-freeze.json",
+      "sha256": "fc2849c99a0adf97e8a5b7cfd829322506347ec7b05518f8d58150b4182c5e16",
+      "bytes": 31412
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/metadata-inputs/selected-input-integrity.json",
+      "sha256": "efd83efaa5581a075be150220da47fbc46b9947996418d03d1cabfa6ebfd17d5",
+      "bytes": 804
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/metadata-inputs/stable-review-receipt.json",
+      "sha256": "652ab3c1c02a4412b3aee1cbf5f49bd50ca3d2e40b32f6305274f2549772170e",
+      "bytes": 8599
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606-snapshot-qualification/selected-scope-current-observations.json",
+      "sha256": "4727059dcf1b0216255a870e789d49ac981e11c76900ffea4e0acdc2412d8af1",
+      "bytes": 3937
+    }
+  ]
+}

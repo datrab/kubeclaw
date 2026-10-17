@@ -58,8 +58,7 @@ const REVISION_OPERATIONS = {
   ),
 } as const;
 
-function positiveInteger(value: unknown, fallback: number, label: string): number {
-  const resolved = value ?? fallback;
+function positiveInteger(resolved: unknown, label: string): number {
   if (!Number.isSafeInteger(resolved) || Number(resolved) <= 0) throw new Error(`${label} is invalid`);
   return Number(resolved);
 }
@@ -72,8 +71,8 @@ function activationConfig(context: AdapterActivationContext) {
   if (expectedHead !== undefined && typeof expectedHead !== 'string') throw new Error('expectedHead is invalid');
   return {
     root: fs.realpathSync(configured),
-    maxFileBytes: positiveInteger(context.config.maxFileBytes, 4 * 1024 * 1024, 'maxFileBytes'),
-    maxChangedPaths: positiveInteger(context.config.maxChangedPaths, 2048, 'maxChangedPaths'),
+    maxFileBytes: positiveInteger(context.config.maxFileBytes, 'maxFileBytes'),
+    maxChangedPaths: positiveInteger(context.config.maxChangedPaths, 'maxChangedPaths'),
     ...(expectedHead === undefined ? {} : { expectedHead }),
   };
 }

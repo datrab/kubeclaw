@@ -1,0 +1,22 @@
+[
+  {
+    "role": "buster",
+    "sourceCommit": "8c3cf250ca7e65ab335fa2085c333be10b3af553",
+    "indexedFiles": 14126,
+    "packages": 11,
+    "plugins": 24,
+    "exactSourceReadbacks": 4,
+    "actualDeliveredModuleImports": true,
+    "nativeActivation": false
+  },
+  {
+    "role": "nova",
+    "sourceCommit": "8c3cf250ca7e65ab335fa2085c333be10b3af553",
+    "indexedFiles": 1832,
+    "packages": 12,
+    "plugins": 32,
+    "exactSourceReadbacks": 4,
+    "actualDeliveredModuleImports": true,
+    "nativeActivation": false
+  }
+]

@@ -1,0 +1,498 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "launchBindingDigest",
+        "sessionDigest",
+        "envelopeDigest",
+        "claimDigest",
+        "sourceDigest",
+        "policyDigest",
+        "state",
+        "processIdentity",
+        "createdAt",
+        "lastSnapshotDigest"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "buster-provider-launch.v1"
+        },
+        "launchBindingDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "sessionDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "envelopeDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "claimDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "sourceDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "policyDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "state": {
+          "enum": [
+            "reserved-not-launched",
+            "launched",
+            "initialization-failed",
+            "load-cancelled",
+            "closed-confirmed",
+            "uncertain"
+          ]
+        },
+        "processIdentity": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "bootId",
+                "pid",
+                "startTicks"
+              ],
+              "properties": {
+                "bootId": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
+                  "minLength": 36,
+                  "maxLength": 36
+                },
+                "pid": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "startTicks": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+          "minLength": 24,
+          "maxLength": 24
+        },
+        "lastSnapshotDigest": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$",
+              "minLength": 71,
+              "maxLength": 71
+            }
+          ]
+        }
+      }
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "launchBindingDigest",
+        "sessionDigest",
+        "phase",
+        "sequence",
+        "observedAt",
+        "ownership",
+        "processIdentity",
+        "clockTicksPerSecond",
+        "metrics",
+        "disposal"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "buster-provider-measurement.v1"
+        },
+        "launchBindingDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "sessionDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "phase": {
+          "enum": [
+            "prepare",
+            "execute",
+            "cleanup"
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "observedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+          "minLength": 24,
+          "maxLength": 24
+        },
+        "ownership": {
+          "enum": [
+            "no-launch-proven",
+            "owned-live",
+            "owned-closed",
+            "uncertain"
+          ]
+        },
+        "processIdentity": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "bootId",
+                "pid",
+                "startTicks"
+              ],
+              "properties": {
+                "bootId": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
+                  "minLength": 36,
+                  "maxLength": 36
+                },
+                "pid": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "startTicks": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              }
+            }
+          ]
+        },
+        "clockTicksPerSecond": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          ]
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cpuTimeMs",
+            "maximumMemoryBytes",
+            "maximumProcesses"
+          ],
+          "properties": {
+            "cpuTimeMs": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "source",
+                    "coverage",
+                    "value"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "observed",
+                        "partial"
+                      ]
+                    },
+                    "source": {
+                      "enum": [
+                        "child-own-process",
+                        "procfs-owned-tree",
+                        "confirmed-no-launch"
+                      ]
+                    },
+                    "coverage": {
+                      "enum": [
+                        "own-process",
+                        "sampled-owned-tree",
+                        "complete-owned-contract",
+                        "not-launched"
+                      ]
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "source",
+                    "coverage",
+                    "reason"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "unavailable"
+                    },
+                    "source": {
+                      "enum": [
+                        "child-own-process",
+                        "procfs-owned-tree",
+                        "confirmed-disposal"
+                      ]
+                    },
+                    "coverage": {
+                      "const": "incomplete"
+                    },
+                    "reason": {
+                      "enum": [
+                        "entry-disappeared",
+                        "ownership-unproved",
+                        "IO-failed",
+                        "malformed-report",
+                        "missing-field",
+                        "clock-rate-unproved",
+                        "sample-incomplete",
+                        "load-state-lost"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "maximumMemoryBytes": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "source",
+                    "coverage",
+                    "value"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "observed",
+                        "partial"
+                      ]
+                    },
+                    "source": {
+                      "enum": [
+                        "child-own-process",
+                        "procfs-owned-tree",
+                        "confirmed-no-launch"
+                      ]
+                    },
+                    "coverage": {
+                      "enum": [
+                        "own-process",
+                        "sampled-owned-tree",
+                        "complete-owned-contract",
+                        "not-launched"
+                      ]
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "source",
+                    "coverage",
+                    "reason"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "unavailable"
+                    },
+                    "source": {
+                      "enum": [
+                        "child-own-process",
+                        "procfs-owned-tree",
+                        "confirmed-disposal"
+                      ]
+                    },
+                    "coverage": {
+                      "const": "incomplete"
+                    },
+                    "reason": {
+                      "enum": [
+                        "entry-disappeared",
+                        "ownership-unproved",
+                        "IO-failed",
+                        "malformed-report",
+                        "missing-field",
+                        "clock-rate-unproved",
+                        "sample-incomplete",
+                        "load-state-lost"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "maximumProcesses": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "source",
+                    "coverage",
+                    "value"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "observed",
+                        "partial"
+                      ]
+                    },
+                    "source": {
+                      "enum": [
+                        "child-own-process",
+                        "procfs-owned-tree",
+                        "confirmed-no-launch"
+                      ]
+                    },
+                    "coverage": {
+                      "enum": [
+                        "own-process",
+                        "sampled-owned-tree",
+                        "complete-owned-contract",
+                        "not-launched"
+                      ]
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "source",
+                    "coverage",
+                    "reason"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "unavailable"
+                    },
+                    "source": {
+                      "enum": [
+                        "child-own-process",
+                        "procfs-owned-tree",
+                        "confirmed-disposal"
+                      ]
+                    },
+                    "coverage": {
+                      "const": "incomplete"
+                    },
+                    "reason": {
+                      "enum": [
+                        "entry-disappeared",
+                        "ownership-unproved",
+                        "IO-failed",
+                        "malformed-report",
+                        "missing-field",
+                        "clock-rate-unproved",
+                        "sample-incomplete",
+                        "load-state-lost"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "disposal": {
+          "enum": [
+            "not-started",
+            "pending",
+            "confirmed",
+            "uncertain"
+          ]
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/receipt"
+    },
+    {
+      "$ref": "#/$defs/snapshot"
+    }
+  ]
+}

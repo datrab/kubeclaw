@@ -1,0 +1,12 @@
+✔ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (4849.41842ms)
+✔ actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives (13.719353ms)
+✔ HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed with restored positive (4.728522ms)
+✔ network error excerpt policy is selected centrally and rejects competing or invalid authors (0.827781ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5381.46331

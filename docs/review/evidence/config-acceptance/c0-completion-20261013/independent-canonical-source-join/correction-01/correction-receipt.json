@@ -1,0 +1,177 @@
+{
+  "historicalArtifacts": {
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-canonical-source-join/README.md": "0cacd36369b7f3749fd5b96c100aef7f89cdd94ea412ae250eaa75c3b3398a67",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-canonical-source-join/reconcile.py": "2cdae8843c02f1a58ba6da50d030debd12609162b2bcf96205dd0fecb07b580f",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-canonical-source-join/prioritized-gaps.json": "d2aba7a68728ae49a49125120676f8c9901a03dd194651248881bca90994a5cf",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-canonical-source-join/source-canonical-concordance.json": "19f182e1aac16037e4a2dac7666d9414762e02019681bb940e1ef4823247bfe1"
+  },
+  "oldCounts": {
+    "originalCandidatesReconciled": 358,
+    "withVerifiedCurrentCanonicalAssociations": 262,
+    "withoutProvedCanonicalAssociation": 96,
+    "settingAssociations": 548,
+    "distinctLinkedSettings": 305,
+    "reciprocalCaseAssociations": 2405,
+    "caseLinkMismatches": 0,
+    "canonicalOriginalRows": 2409,
+    "canonicalOriginalCases": 6845
+  },
+  "correctedCounts": {
+    "originalCandidatesReconciled": 358,
+    "withVerifiedCurrentCanonicalAssociations": 262,
+    "withoutProvedCanonicalAssociation": 96,
+    "settingAssociations": 507,
+    "distinctLinkedSettings": 281,
+    "reciprocalCaseAssociations": 2241,
+    "caseLinkMismatches": 0,
+    "canonicalOriginalRows": 2409,
+    "canonicalOriginalCases": 6845
+  },
+  "changedCandidateIds": [
+    "SRC-d0207096e9428f6e",
+    "SRC-4281f12995569fb2",
+    "SRC-c56220b4ec28ea31",
+    "SRC-856f42db485f0102",
+    "SRC-c9b2499675265554",
+    "SRC-192a8d773ebba4d6",
+    "SRC-60b5863ff1f3c54a"
+  ],
+  "removedAssociationCount": 41,
+  "originalCandidateIdsBodiesAndHashesUnchanged": 358,
+  "sourceWitnesses": {
+    "charts/prism/templates/workloads.yaml:13": {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 13,
+      "expression": "{{- range $name := list \"control\" \"studio\" \"worker\" }}",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    "charts/prism/templates/workloads.yaml:14": {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 14,
+      "expression": "{{- $image := index $.Values.images $name }}",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    "charts/prism/templates/workloads.yaml:22": {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 22,
+      "expression": "  replicas: {{ (index $.Values $name).replicas }}",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    "charts/prism/templates/workloads.yaml:78": {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 78,
+      "expression": "          image: {{ include \"prism.imageRef\" $image | quote }}",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    "charts/prism/templates/workloads.yaml:79": {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 79,
+      "expression": "          imagePullPolicy: {{ $image.pullPolicy }}",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    "charts/prism/templates/workloads.yaml:138": {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 138,
+      "expression": "          resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    "charts/prism/templates/_helpers.tpl:2": {
+      "path": "charts/prism/templates/_helpers.tpl",
+      "line": 2,
+      "expression": "{{- define \"prism.imageRef\" -}}",
+      "sha256": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49"
+    },
+    "charts/prism/templates/_helpers.tpl:3": {
+      "path": "charts/prism/templates/_helpers.tpl",
+      "line": 3,
+      "expression": "{{- $repository := required \"Prism image repository is required\" .repository -}}",
+      "sha256": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49"
+    },
+    "charts/prism/templates/_helpers.tpl:4": {
+      "path": "charts/prism/templates/_helpers.tpl",
+      "line": 4,
+      "expression": "{{- $digest := required \"Prism image digest is required\" .digest -}}",
+      "sha256": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49"
+    },
+    "charts/prism/templates/_helpers.tpl:8": {
+      "path": "charts/prism/templates/_helpers.tpl",
+      "line": 8,
+      "expression": "{{- printf \"%s@%s\" $repository $digest -}}",
+      "sha256": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49"
+    },
+    "charts/kubeclaw/templates/_swarm-config.tpl:269": {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 269,
+      "expression": "{{- if hasKey .Values \"busterNamespaceBroker\" -}}",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+    },
+    "charts/kubeclaw/templates/_swarm-config.tpl:270": {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 270,
+      "expression": "{{- range $key := list \"leaseApiGroup\" \"leaseApiVersion\" -}}",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+    },
+    "charts/kubeclaw/templates/_swarm-config.tpl:271": {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 271,
+      "expression": "{{- if hasKey $.Values.busterNamespaceBroker $key -}}{{- fail (printf \"retired busterNamespaceBroker.%s; use selected Buster component\" $key) -}}{{- end -}}",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+    },
+    "charts/kubeclaw/templates/_buster-native.tpl:4": {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "line": 4,
+      "expression": "{{- $native := $root.Values.busterNative -}}",
+      "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+    },
+    "charts/kubeclaw/templates/_buster-native.tpl:5": {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "line": 5,
+      "expression": "{{- if or (ne (int $root.Values.replicaCount) 1) (ne $native.namespace $root.Release.Namespace) (not $native.nodeName) (not (regexMatch \"^[a-f0-9]{64}$\" $native.policyDigest)) -}}",
+      "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+    },
+    "charts/prism/templates/backup.yaml:56": {
+      "path": "charts/prism/templates/backup.yaml",
+      "line": 56,
+      "expression": "                - { name: PRISM_BACKUP_IMAGE, value: {{ include \"prism.imageRef\" $.Values.images.control | quote }} }",
+      "sha256": "c7fdc0b9524672ae49179eb258f0144c09774a56b5eb74a31f1a597ff2e88e9e"
+    },
+    "charts/prism/templates/ingestion.yaml:20": {
+      "path": "charts/prism/templates/ingestion.yaml",
+      "line": 20,
+      "expression": "          image: {{ include \"prism.imageRef\" .Values.images.ingestion | quote }}",
+      "sha256": "73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98"
+    },
+    "charts/prism/templates/ingestion.yaml:21": {
+      "path": "charts/prism/templates/ingestion.yaml",
+      "line": 21,
+      "expression": "          imagePullPolicy: {{ .Values.images.ingestion.pullPolicy }}",
+      "sha256": "73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98"
+    },
+    "charts/prism/templates/jobs.yaml:27": {
+      "path": "charts/prism/templates/jobs.yaml",
+      "line": 27,
+      "expression": "          image: {{ include \"prism.imageRef\" .Values.images.control | quote }}",
+      "sha256": "9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c"
+    },
+    "charts/prism/templates/jobs.yaml:28": {
+      "path": "charts/prism/templates/jobs.yaml",
+      "line": 28,
+      "expression": "          imagePullPolicy: {{ .Values.images.control.pullPolicy }}",
+      "sha256": "9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c"
+    },
+    "charts/prism/templates/jobs.yaml:45": {
+      "path": "charts/prism/templates/jobs.yaml",
+      "line": 45,
+      "expression": "          image: {{ include \"prism.imageRef\" .Values.images.control | quote }}",
+      "sha256": "9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c"
+    },
+    "charts/prism/templates/jobs.yaml:46": {
+      "path": "charts/prism/templates/jobs.yaml",
+      "line": 46,
+      "expression": "          imagePullPolicy: {{ .Values.images.control.pullPolicy }}",
+      "sha256": "9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c"
+    }
+  },
+  "globalC0Accepted": false,
+  "implementationAuthorization": false
+}

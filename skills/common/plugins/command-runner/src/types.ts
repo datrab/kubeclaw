@@ -23,7 +23,15 @@ export interface CommandRunRequest {
   readonly limits?: CommandRunLimits;
 }
 
+export interface CommandProcessCleanupPolicy {
+  readonly cleanupPollIntervalMs: number;
+  readonly exitAcknowledgementMs: number;
+  readonly sandboxMinimumGraceMs: number;
+}
+
 export interface CommandRunnerOptions {
+  readonly processCleanup?: CommandProcessCleanupPolicy;
+  readonly monitoring?: Readonly<{maximumOutputRecords: number; sampleIntervalMs: number}>;
   readonly maxOutputBytes: number;
   readonly maxExecutionMs: number;
   readonly terminationGraceMs: number;

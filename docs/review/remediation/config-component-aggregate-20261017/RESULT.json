@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-17T00:40:32.579546+00:00",
+  "status": "COMPONENT_SOURCE_TEST_MODE_FIXED_510_ORIGINAL_CHECKS_PASS_FULL_AGGREGATE_NOT_ACCEPTED",
+  "sourceCommit": "9d3685c20f9146dcd5341a26409a02ba86cf54fc",
+  "remoteHead": "9d3685c20f9146dcd5341a26409a02ba86cf54fc",
+  "verified": true,
+  "evidence": "docs/review/remediation/config-component-aggregate-20261017",
+  "change": "Existing component npm entrypoint now explicitly selects NODE_ENV=test for source tests; no production identity guard, policy, fixture assertion, native gate or test roster changed. All seven import-failed and all three interrupted original suites completed separately with complete original assertions.",
+  "initialAggregate": {
+    "command": "npm run verify:config:components",
+    "testedParentHead": "614486d16621cee79c3d23270348609822728e25",
+    "status": "INTERRUPTED_NOT_PASS",
+    "executionSurfaceError": "OpenClaw dynamic tool call timed out after 600000ms while running tool exec.",
+    "exitCode": "NOT_COLLECTED",
+    "reportedTests": 152,
+    "passed": 141,
+    "failed": 8,
+    "cancelled": 3,
+    "skipped": 0,
+    "reportedDurationMs": 598100.030835,
+    "failureReasons": [
+      "Seven original Prism suites failed at module import because inherited NODE_ENV=production lacked authentic engine identity",
+      "Original Buster CLI proof requires actual UID1000/GID1000; current actual UID0/GID0 remains failure, no spoof/skip",
+      "Three remaining file suites interrupted by execution-surface600s limit; separately completed below"
+    ],
+    "log": "aggregate.txt"
+  },
+  "checks": {
+    "sevenOriginalImportFailedSuites": {
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "skills/prism/tests/swarm-input-limit.test.mts",
+        "skills/prism/tests/swarm-native-settings.test.mts",
+        "skills/prism/tests/swarm-resource-operation.test.mts",
+        "skills/prism/tests/swarm-resource-policy.test.mts",
+        "skills/prism/tests/swarm-result-journal.test.mts",
+        "skills/prism/tests/swarm-supervisor-config.test.mts",
+        "skills/prism/tests/swarm-supervisor-consumers.test.mts"
+      ],
+      "NODE_ENV": "test",
+      "exitCode": 0,
+      "elapsedSeconds": 318.68,
+      "passed": 152,
+      "total": 152,
+      "failed": 0,
+      "skipped": 0,
+      "log": "test-mode-regressions.txt"
+    },
+    "threeInterruptedOriginalSuites": {
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "tests/verification/reliability/config-component-bundle.test.mts",
+        "tests/verification/reliability/config-component-generation.test.mjs"
+      ],
+      "NODE_ENV": "test",
+      "exitCode": 0,
+      "elapsedSeconds": 48.47,
+      "passed": 358,
+      "total": 358,
+      "failed": 0,
+      "skipped": 0,
+      "requiredLeafDeletionControls": 461,
+      "log": "remaining-original.txt"
+    },
+    "strictSourceTypecheck": true,
+    "productionIdentityNegativeControls": "Actual unchanged production function rejects missing/malformed digest; explicit source test mode allows absent digest. No fabricated content identity supplied.",
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "originalResultsChanged": false
+    }
+  },
+  "qualification": "510 author-run original assertions in10 whole suites; NOT whole aggregate pass, independent/native proof, clean-tree identity or510 newly accepted original roster cases. Initial141 passes not summed into a new global PASS.",
+  "independentReview": "OPEN: fresh ALL_TOOLS native spawn/reviewer discovery empty; CONFIG subagents0; no new independent output. Unchanged same-surface reviewer EROFS not retried.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Continue genuine QB-R02 prepared producer/source/build/baseline and existing inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root actual boot/Nova receiving. Preserve complete original independent/history/native/archive/fullC0-C6 gates. Component aggregate needs adequate execution lifetime and genuine UID1000/GID1000 environment; do not rerun unchanged local green suites as new progress.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000 delegated writable cgroup, sufficient genuinely root-trusted writable archive storage, isolated migrated PostgreSQL. No identity/kernel/trust spoof.",
+  "writerLock": "SAME nonblocking writer lock; released at each bounded command exit; no historical followup dispatched",
+  "sourceHashes": {
+    "package.json": "c5e52a254dcb6359a9a4edc6d2ccd9383754c9dbab0607115b73dcecc788f95d"
+  }
+}

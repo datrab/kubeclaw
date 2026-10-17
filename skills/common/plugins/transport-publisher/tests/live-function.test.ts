@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_PUBLISHER_STORE_POLICY = {...DELIVERY_TEST_CORE_POLICY.transportPublisherStore,...DELIVERY_TEST_CORE_POLICY.transportPublisherFailure,...DELIVERY_TEST_CORE_POLICY.transportPublisherStructure,targetPayloadProfiles:{...DELIVERY_TEST_CORE_POLICY.transportPublisherPayload.targetPayloadProfiles,small:{maxPayloadBytes:128},maximum:{maxPayloadBytes:1_048_576}}};
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -121,25 +123,28 @@ const adapters = new core.AdapterRuntime({
   granted,
   activated,
   configs: new Map([
-    [publisherId, {
+    [publisherId, { ...TEST_PUBLISHER_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'deliveries'),
       targets: {
         audit: {
           endpoint: `${origin}/publish`,
           signingSecret: 'transport.signing',
-          maxPayloadBytes: 128,
+          payloadProfile: 'small',
         },
         rejected: {
           endpoint: `${origin}/rejected`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
         malformed: {
           endpoint: `${origin}/malformed`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
         unavailable: {
           endpoint: `${origin}/unavailable`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
       },
     }],
@@ -149,6 +154,7 @@ const adapters = new core.AdapterRuntime({
       },
     }],
     [networkId, {
+      ...DELIVERY_TEST_CORE_POLICY.networkHttp,
       allowedOrigins: [origin],
       allowedMethods: ['POST'],
       allowedHeaders: [
@@ -162,14 +168,14 @@ const adapters = new core.AdapterRuntime({
       timeoutMs: 1000,
     }],
   ]),
-  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000, DELIVERY_TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });
 
 const attempt = {
   runId: 'run:transport',
-  stageId: 'stage:transport',
+  stageId: 'transport',
   attemptId: 'attempt:transport',
   attemptNumber: 1,
 };
@@ -232,12 +238,15 @@ try {
     /TRANSPORT_RESOURCE_TYPE_INVALID/,
   );
 
+  const beforeCancellation = received.length;
   const cancelled = new AbortController();
   cancelled.abort();
   await assert.rejects(
     publish('audit', { message: {} }, { signal: cancelled.signal }),
-    /ADAPTER_CANCELLED/,
+    /^Error: EFFECT_RESOURCE_WAIT_CANCELLED$/,
   );
+
+  assert.equal(received.length, beforeCancellation, 'pre-aborted publication must not reach the receiver');
 
   const persisted = JSON.stringify(journal.entries());
   assert.doesNotMatch(persisted, new RegExp(signingKey), 'secret must never enter durable effect requests');
@@ -247,12 +256,13 @@ try {
   let directSends = 0;
   const direct = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_PUBLISHER_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'direct-deliveries'),
       targets: {
         retry: {
           endpoint: `${origin}/direct-retry`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
       },
     },
@@ -304,13 +314,14 @@ try {
   let capacitySends = 0;
   const capacity = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_PUBLISHER_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'capacity-deliveries'),
       maximumDeliveryRecords: 1,
       targets: {
         retry: {
           endpoint: `${origin}/capacity`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
       },
     },
@@ -343,12 +354,13 @@ try {
   let concurrentSends = 0;
   const concurrent = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_PUBLISHER_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'concurrent-deliveries'),
       targets: {
         retry: {
           endpoint: `${origin}/concurrent`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
       },
     },
@@ -388,13 +400,13 @@ try {
   let boundarySends = 0;
   const boundary = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_PUBLISHER_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'boundary-deliveries'),
       targets: {
         retry: {
           endpoint: `${origin}/boundary`,
           signingSecret: 'transport.signing',
-          maxPayloadBytes: 1_048_576,
+          payloadProfile: 'maximum',
         },
       },
     },

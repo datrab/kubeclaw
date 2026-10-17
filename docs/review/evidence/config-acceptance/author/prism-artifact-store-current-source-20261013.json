@@ -1,0 +1,34 @@
+{
+  "scope": "Actual public ContentAddressedArtifactStore local file writes only. No deployed store, target quota enforcement, admission binding, engine execution or runtime acceptance.",
+  "sourceSha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+  "observations": {
+    "first": {
+      "artifactId": "artifact:sha256:6e981fc3ebb1f7b37b10ccedf6f0a5718f9e538a413175da8b9ea0b2cadcb104",
+      "digest": "sha256:6e981fc3ebb1f7b37b10ccedf6f0a5718f9e538a413175da8b9ea0b2cadcb104",
+      "sizeBytes": 768
+    },
+    "second": {
+      "artifactId": "artifact:sha256:4831c7f78d158dc359634a7d71676131a5c1439b713d49ff610d9fe0d3b4e6c6",
+      "digest": "sha256:4831c7f78d158dc359634a7d71676131a5c1439b713d49ff610d9fe0d3b4e6c6",
+      "sizeBytes": 768
+    },
+    "repeated": {
+      "artifactId": "artifact:sha256:6e981fc3ebb1f7b37b10ccedf6f0a5718f9e538a413175da8b9ea0b2cadcb104",
+      "digest": "sha256:6e981fc3ebb1f7b37b10ccedf6f0a5718f9e538a413175da8b9ea0b2cadcb104",
+      "sizeBytes": 768
+    },
+    "paths": [
+      {
+        "relativePath": "48/4831c7f78d158dc359634a7d71676131a5c1439b713d49ff610d9fe0d3b4e6c6",
+        "sizeBytes": 768
+      },
+      {
+        "relativePath": "6e/6e981fc3ebb1f7b37b10ccedf6f0a5718f9e538a413175da8b9ea0b2cadcb104",
+        "sizeBytes": 768
+      }
+    ],
+    "totalFinalContentBytes": 1536,
+    "pendingFilesRemaining": 0
+  },
+  "limits": "Constructor takes only root. No claim that 1024 is a current authored quota or that this observation measures temporary/metadata capacity. Current source proves write-first duplicate temporary path; this test only observes final durable dedup result."
+}

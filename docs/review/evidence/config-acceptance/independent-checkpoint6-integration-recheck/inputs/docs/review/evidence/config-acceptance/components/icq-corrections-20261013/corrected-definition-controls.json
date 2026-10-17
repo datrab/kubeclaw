@@ -1,0 +1,103 @@
+{
+  "results": [
+    {
+      "id": "ICQ02-real-canonical-header-and-empty",
+      "passed": true
+    },
+    {
+      "id": "ICQ02-complete-near-boundary-positive",
+      "passed": true
+    },
+    {
+      "id": "ICQ02-adjacent-byte-negative",
+      "passed": true
+    },
+    {
+      "id": "ICQ01-authorized-root-correlated-positive",
+      "passed": true
+    },
+    {
+      "id": "ICQ01-historical-outside-root-negative",
+      "passed": true
+    },
+    {
+      "id": "ICQ04-exact-record-ack-cap",
+      "passed": true
+    },
+    {
+      "id": "ICQ05-exact-six-callers",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-structural-reservedReceipt",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-structural-unavailableSnapshot",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-structural-provenNoLaunchSnapshot",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-structural-observedStructuralSpecimen",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-unknown",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-NaN",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-negative",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-unsafe",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-missing",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-unavailable-value",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-enumerated-serialization-bound",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-admission-exact-method-authors",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-all-lock-coordinates-preserved",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-no-launch-complete-semantic-positive",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provenance-semantic-negative-fake-zero-launched",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provenance-semantic-negative-fake-no-launch-nonzero",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provenance-semantic-negative-PID-only-no-identity",
+      "passed": true
+    }
+  ],
+  "passed": 24,
+  "failed": 0,
+  "scope": "Author documentation/schema/source/fixture-integrity controls only. NOT independentreview/F-MUT/runtime or globalC0acceptance."
+}

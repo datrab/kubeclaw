@@ -1,0 +1,72 @@
+{
+  "updatedAt": "2026-10-16T18:07:29.456239+00:00",
+  "status": "SOURCE_TRANSPORT_VERIFIED_CENTRAL_ACTIVATION_OPEN",
+  "scope": "Explicit Quality provider-configuration.v2 union, task-only values, selected processing/declarations and immutable original package/profile binding; actual resolver/runner/loader/permission-child/provider consumers. No current root supplies the optional generation receiver map yet.",
+  "checks": {
+    "v2Focused": {
+      "passed": 22,
+      "failed": 0
+    },
+    "inputGuardRegressions": {
+      "passed": 9,
+      "failed": 0
+    },
+    "legacyResolverExamples": 10,
+    "legacyCoverageScript": true,
+    "legacySizeScript": true,
+    "typechecks": [
+      "contract",
+      "nova",
+      "buster",
+      "coverage",
+      "size"
+    ],
+    "independentSourceReview": "CLEAN_SOURCE_ONLY_NO_INDEPENDENT_EXECUTION",
+    "acceptedP2sCorrected": [
+      "effective mandatory Size evidence on restored plan/invocation/runner",
+      "direct v2 complete processing before input access",
+      "QB-R01 mandatory log eligibility all outcomes both providers",
+      "blocking Size active limit on original node restore before attempt effects"
+    ],
+    "preFixProof": "accepted-findings-red.txt: initial two regressions fail against separate exact reviewed pre-fix snapshot; production files never reset",
+    "deliveredRoleReadbacks": [
+      {
+        "role": "buster",
+        "sourceCommit": "8c3cf250ca7e65ab335fa2085c333be10b3af553",
+        "indexedFiles": 14126,
+        "packages": 11,
+        "plugins": 24,
+        "exactSourceReadbacks": 4,
+        "actualDeliveredModuleImports": true,
+        "nativeActivation": false
+      },
+      {
+        "role": "nova",
+        "sourceCommit": "8c3cf250ca7e65ab335fa2085c333be10b3af553",
+        "indexedFiles": 1832,
+        "packages": 12,
+        "plugins": 32,
+        "exactSourceReadbacks": 4,
+        "actualDeliveredModuleImports": true,
+        "nativeActivation": false
+      }
+    ],
+    "roleBundles": "Normal Nova and Buster role builder; exact emitted module bytes/digests and actual emitted-module imports. Fixture build metadata, not installed/image/native authority."
+  },
+  "qualification": {
+    "originalQualityFields": 24,
+    "originalQualityCases": 168,
+    "originalCasesAcceptedByThisBatch": 0,
+    "newPhysicalPolicyRoot": false,
+    "v10ActivationAllowed": false,
+    "nativeAcceptance": false,
+    "C0C6Complete": false
+  },
+  "remaining": [
+    "Coordinated whole-root/schema/all-owner/source/file-set selection through actual boot and sole generation/delivery, no private root or denied v10 activation",
+    "QB-R02 authenticated original inputStore sealed snapshot/producer/build/source/baseline receipts and original accounting; absent authentic receipts must fail activation",
+    "Other original field/case receiving residuals and full independent semantic/history/native acceptance",
+    "Native UID1000/Docker/delegated writable cgroup and root-trusted writable archive host unavailable as separately evidenced"
+  ],
+  "sourceCommit": "8c3cf250ca7e65ab335fa2085c333be10b3af553"
+}

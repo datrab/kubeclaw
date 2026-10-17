@@ -1,0 +1,951 @@
+{
+  "status": "Exact remaining source candidate set; completed contracts not semantic acceptance; coordinates unchanged",
+  "baselineDigest": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6",
+  "bySource": [
+    {
+      "source": "charts/kubeclaw/files/config/swarm.config.json",
+      "candidateIds": [
+        "SRC-15f4cafe131dc43f"
+      ],
+      "unresolvedCount": 1
+    },
+    {
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "candidateIds": [
+        "SRC-8720d3127023a1b1",
+        "SRC-1151cafaea71028a",
+        "SRC-0e454afe6feed12e",
+        "SRC-651bea5b67d63013",
+        "SRC-2e23beaf178a7927",
+        "SRC-b31582b49c0d80bb",
+        "SRC-fa45584a98c45d3f",
+        "SRC-f76d4ddd70b7c737",
+        "SRC-ec942754844edc3a",
+        "SRC-6c35b249fefb7900",
+        "SRC-b4c1e27a98059de1"
+      ],
+      "unresolvedCount": 11
+    },
+    {
+      "source": "charts/kubeclaw/templates/_buster-native.tpl",
+      "candidateIds": [
+        "SRC-60b5863ff1f3c54a",
+        "SRC-f0ca2e983c5d89e3",
+        "SRC-93707e36eb25018e",
+        "SRC-a541216fcef537a2",
+        "SRC-f8588e047fbcfaf6",
+        "SRC-5ef58e91acf26a34",
+        "SRC-fb98f92838b245c1"
+      ],
+      "unresolvedCount": 7
+    },
+    {
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "candidateIds": [
+        "SRC-ae3c2b0bb81275f6",
+        "SRC-eac5ec66c49e4c61",
+        "SRC-4531f56429cdcc26",
+        "SRC-fa5d875cf1fc1453",
+        "SRC-e95d781b7945c3ca",
+        "SRC-fd03cb740079506d",
+        "SRC-ea5d74692fd5fcdd",
+        "SRC-3b4dfcac94af3ad0",
+        "SRC-13c8327678d63641",
+        "SRC-c63f4f93fa7cdd5c",
+        "SRC-a9734a7cd38b3ac8",
+        "SRC-b56d3dbbda2be12a",
+        "SRC-e6907369daeea5f0",
+        "SRC-bd47d110c9c2cd08",
+        "SRC-a366c6559124018b",
+        "SRC-2ca0c163bfd57e6a",
+        "SRC-a33bbe84d92a0346",
+        "SRC-3b703d3eda783cd9",
+        "SRC-34575fbfcf7ce405",
+        "SRC-4281f12995569fb2"
+      ],
+      "unresolvedCount": 20
+    },
+    {
+      "source": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "candidateIds": [
+        "SRC-b894dbdf69636bc2",
+        "SRC-b901a1947bd904b7"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/kubeclaw/templates/archviewer.yaml",
+      "candidateIds": [
+        "SRC-022a87d32985df19",
+        "SRC-d2619fb8f9419187",
+        "SRC-e962db81df06caf6",
+        "SRC-c19a258a942aa8e3",
+        "SRC-beb4f291bc767284",
+        "SRC-c03703aaf63f4146",
+        "SRC-b5ae37b2598dfc67"
+      ],
+      "unresolvedCount": 7
+    },
+    {
+      "source": "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+      "candidateIds": [
+        "SRC-68080ef1ff0e6c71",
+        "SRC-0720842bfcd51168"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
+      "candidateIds": [
+        "SRC-4d5dc53173e0925b"
+      ],
+      "unresolvedCount": 1
+    },
+    {
+      "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "candidateIds": [
+        "SRC-358b149942be8de8",
+        "SRC-8276d5e9bebd9b0e",
+        "SRC-899c6550decd7829",
+        "SRC-2eff2e1f13d337ee",
+        "SRC-baa92ddaf5e0df7a",
+        "SRC-0ddf826ce39c0744",
+        "SRC-0e870bc1ee1f3e73",
+        "SRC-5891c2a4844a5e84",
+        "SRC-7d41f864f0fae325",
+        "SRC-f6b655d35e6d5252",
+        "SRC-609b97bc96f148d5",
+        "SRC-8657126aec54be67",
+        "SRC-e6ff68b0dd441486",
+        "SRC-99b45ac35968e69e",
+        "SRC-7997ec223487a03b",
+        "SRC-546f89fd88ae86ab",
+        "SRC-f30c51f9367277d4",
+        "SRC-2de6abedf76cb061",
+        "SRC-bccf05d3a8b551d6"
+      ],
+      "unresolvedCount": 19
+    },
+    {
+      "source": "charts/kubeclaw/templates/configmap-skills.yaml",
+      "candidateIds": [
+        "SRC-088b1869ffa46305",
+        "SRC-e95d9fa0836afe29"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "candidateIds": [
+        "SRC-e6bda8d7a7ad8049",
+        "SRC-c08822b7465b1cd9",
+        "SRC-90d371e27daff134",
+        "SRC-d145f7cb10d57db9"
+      ],
+      "unresolvedCount": 4
+    },
+    {
+      "source": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "candidateIds": [
+        "SRC-4c83335aa40e71ec",
+        "SRC-b632610caacc2ccc",
+        "SRC-54cc11a3a6557096",
+        "SRC-fb42a46ec49cebd4",
+        "SRC-4e689b0edf747666",
+        "SRC-4966cf4dc6e33239",
+        "SRC-2e4b4d469316023b",
+        "SRC-f2f4d9d329a7f86e",
+        "SRC-c947f4f8079cfe1a",
+        "SRC-91e76b0be42021f6",
+        "SRC-547e648425c947b8"
+      ],
+      "unresolvedCount": 11
+    },
+    {
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "candidateIds": [
+        "SRC-d9e4c71bccb02648",
+        "SRC-ef58a353b91d2fbb",
+        "SRC-98dfe623dc910246",
+        "SRC-ce2a46277a9308cf",
+        "SRC-7c96750ec6508ec3",
+        "SRC-6ebcc7cc622ae4aa",
+        "SRC-deef03cd82734229",
+        "SRC-99245371818e117f",
+        "SRC-5848db9c3a4e5aff",
+        "SRC-f2ca5e58950f0c67",
+        "SRC-63c3ab015d976358",
+        "SRC-604956c9177802d9",
+        "SRC-3f967097d421f3ce",
+        "SRC-5492b82d34fe2b01",
+        "SRC-cabccd1d8c0fc37c"
+      ],
+      "unresolvedCount": 15
+    },
+    {
+      "source": "charts/kubeclaw/templates/demo-ready-service.yaml",
+      "candidateIds": [
+        "SRC-106f245846f69452",
+        "SRC-9b2c776f442c14a0",
+        "SRC-2d501cff14f53787",
+        "SRC-ee2555acd8ecc846"
+      ],
+      "unresolvedCount": 4
+    },
+    {
+      "source": "charts/kubeclaw/templates/pvc.yaml",
+      "candidateIds": [
+        "SRC-e6142f939d54c545",
+        "SRC-153d0e1d6f157586"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/kubeclaw/templates/rbac.yaml",
+      "candidateIds": [
+        "SRC-581c36e0efa472c5",
+        "SRC-a226014eba4c849d",
+        "SRC-c9f18e6ad7622aee",
+        "SRC-7dd0dfa97a2a5361",
+        "SRC-7c5366d15546f65a",
+        "SRC-8dded0f8a638779d"
+      ],
+      "unresolvedCount": 6
+    },
+    {
+      "source": "charts/kubeclaw/templates/secret.yaml",
+      "candidateIds": [
+        "SRC-3ffcbdfb6f7da73c",
+        "SRC-82a36227e267f9cd",
+        "SRC-d1199c275c9f717f"
+      ],
+      "unresolvedCount": 3
+    },
+    {
+      "source": "charts/kubeclaw/templates/service-extra-nodeports.yaml",
+      "candidateIds": [
+        "SRC-70b75982645d1867",
+        "SRC-c8137aca810ff62a"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "candidateIds": [
+        "SRC-c4d47f62da003864",
+        "SRC-806b1511602a77b7",
+        "SRC-aef6d93c7aba06c4",
+        "SRC-dc738a39beb76ab8",
+        "SRC-db9d6a49527b7d4e",
+        "SRC-f2189412eedfd554",
+        "SRC-95edc6d7b83eaa1e",
+        "SRC-edb0b9baf433425e",
+        "SRC-a16a38d1b1f88844",
+        "SRC-2e75e7c775406d1a",
+        "SRC-c56126c89453dff2"
+      ],
+      "unresolvedCount": 11
+    },
+    {
+      "source": "charts/kubeclaw/templates/serviceaccount.yaml",
+      "candidateIds": [
+        "SRC-5f9ddf3532c43704",
+        "SRC-5c2f9d3ee43ec8fb"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/kubeclaw/values.yaml",
+      "candidateIds": [
+        "SRC-8444cce4182b20be"
+      ],
+      "unresolvedCount": 1
+    },
+    {
+      "source": "charts/ops-pod/templates/kubeconfig.yaml",
+      "candidateIds": [
+        "SRC-7c4c6ffb286652d9",
+        "SRC-4e56376a3147d0f0"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/ops-pod/templates/network.yaml",
+      "candidateIds": [
+        "SRC-34f1d43a2603ba64",
+        "SRC-c2ceafbe36110559",
+        "SRC-b5c33c239a3f84da",
+        "SRC-7f627304c3182a95",
+        "SRC-1ba29ab50f7e02e0",
+        "SRC-3fb547cb5eb45eee",
+        "SRC-b141c7661145bbfb"
+      ],
+      "unresolvedCount": 7
+    },
+    {
+      "source": "charts/ops-pod/templates/rbac.yaml",
+      "candidateIds": [
+        "SRC-21697197b83483b1",
+        "SRC-266f9ee52581c76d"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/ops-pod/templates/tailscale-storage.yaml",
+      "candidateIds": [
+        "SRC-45c18f0785cee423"
+      ],
+      "unresolvedCount": 1
+    },
+    {
+      "source": "charts/ops-pod/templates/workload.yaml",
+      "candidateIds": [
+        "SRC-69904e673e784e4c",
+        "SRC-65f8a9acf356aceb",
+        "SRC-8053b0c23491b214",
+        "SRC-9776051b9d49b47f",
+        "SRC-f67e7899bad3575f",
+        "SRC-280c9765149dcced",
+        "SRC-b4679744db1fe484",
+        "SRC-92db5ba2e7cddfef",
+        "SRC-fb48f6f5e00fdb81",
+        "SRC-1885e83d3f76b091",
+        "SRC-7da5dbcaa8be2710",
+        "SRC-81b313316a4b04a2",
+        "SRC-9036936df0643ada",
+        "SRC-d114e172addb9dac",
+        "SRC-62bd6ced5c15a00e",
+        "SRC-99d9389465e95b2c",
+        "SRC-1ff41ec8f4ba187d"
+      ],
+      "unresolvedCount": 17
+    },
+    {
+      "source": "charts/prism/templates/_product-decisions.tpl",
+      "candidateIds": [
+        "SRC-b6eecd6d74bd72d8"
+      ],
+      "unresolvedCount": 1
+    },
+    {
+      "source": "charts/prism/templates/_swarm-config.tpl",
+      "candidateIds": [
+        "SRC-9dd6ec29d7fb8552"
+      ],
+      "unresolvedCount": 1
+    },
+    {
+      "source": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "candidateIds": [
+        "SRC-7ea8f8235dbd60fd",
+        "SRC-57f67c1e31c9602b"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/prism/templates/backup-storage-check.yaml",
+      "candidateIds": [
+        "SRC-f12892d77dd23f4e",
+        "SRC-8e06b62ff9249688"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "charts/prism/templates/backup.yaml",
+      "candidateIds": [
+        "SRC-69439e688d0c00c8",
+        "SRC-21a6c0cdc0865ceb",
+        "SRC-af0dd348ffcbd3d5",
+        "SRC-c847e760629bb548",
+        "SRC-de716e96e9aa0829",
+        "SRC-6e01dce5178eb800",
+        "SRC-cfadc774b1b179b8",
+        "SRC-c56220b4ec28ea31",
+        "SRC-2310e7bc51e2bb94"
+      ],
+      "unresolvedCount": 9
+    },
+    {
+      "source": "charts/prism/templates/configmap-worker-trust.yaml",
+      "candidateIds": [
+        "SRC-47899f7dff8985ea",
+        "SRC-60b5286032daa883",
+        "SRC-10b93d6c7d1fdeed",
+        "SRC-e6bbd132507d33e1",
+        "SRC-bc6d7902cba6f0a9",
+        "SRC-a8eff87f55dc1535",
+        "SRC-ae042bfd054e3908",
+        "SRC-7650704121e82d78",
+        "SRC-69c19ec814a130dd"
+      ],
+      "unresolvedCount": 9
+    },
+    {
+      "source": "charts/prism/templates/ingestion.yaml",
+      "candidateIds": [
+        "SRC-daca28ec1898735a",
+        "SRC-715ab24f874c7f3d",
+        "SRC-856f42db485f0102",
+        "SRC-d0e0f3642fa1eb69",
+        "SRC-3bb5de68b990eeef",
+        "SRC-30dce6bcfff73707",
+        "SRC-4ea73f1582c54391",
+        "SRC-2fc11d26120ef2b0",
+        "SRC-fe7e58da49a94b54"
+      ],
+      "unresolvedCount": 9
+    },
+    {
+      "source": "charts/prism/templates/jobs.yaml",
+      "candidateIds": [
+        "SRC-0360d112d05ae51e",
+        "SRC-266ecb0b83e20add",
+        "SRC-c9b2499675265554",
+        "SRC-1d99e33649073a2d",
+        "SRC-192a8d773ebba4d6",
+        "SRC-9fe4a037d3eec9f2"
+      ],
+      "unresolvedCount": 6
+    },
+    {
+      "source": "charts/prism/templates/networkpolicy.yaml",
+      "candidateIds": [
+        "SRC-7696ed3c5560bde2",
+        "SRC-6adde4727fa062e1",
+        "SRC-3116002126382763",
+        "SRC-0302a3055b5a0076",
+        "SRC-3bcb337d34b9bbff",
+        "SRC-324c3be649dda221",
+        "SRC-426f397c6ddae974",
+        "SRC-1f21241aca52afed",
+        "SRC-396a2527480b0eee",
+        "SRC-e5ac90fa25f7a598",
+        "SRC-f0097ae21242f2fb",
+        "SRC-bced6ab39d1291f8",
+        "SRC-167070bc6cfeb3a5",
+        "SRC-4cb41bb7e156e475",
+        "SRC-a0881f84182fe364",
+        "SRC-3d14c0d13c189579",
+        "SRC-dc90dbfe1f2845ea",
+        "SRC-df4102f305302ba3"
+      ],
+      "unresolvedCount": 18
+    },
+    {
+      "source": "charts/prism/templates/postgresql.yaml",
+      "candidateIds": [
+        "SRC-185ed689c7af4173",
+        "SRC-0829e37958c9b5af",
+        "SRC-0d9b63fa115d1039",
+        "SRC-1f09355746262c5f",
+        "SRC-f5bfd45001b24656",
+        "SRC-9888125ab6884e29",
+        "SRC-a20a4292a00e0ac2"
+      ],
+      "unresolvedCount": 7
+    },
+    {
+      "source": "charts/prism/templates/services.yaml",
+      "candidateIds": [
+        "SRC-770931fc4cce221f",
+        "SRC-b8cd464f109f7b1f",
+        "SRC-fd2016acf26b660e",
+        "SRC-8711d1537f4bae32",
+        "SRC-6f34f12a22f0936b"
+      ],
+      "unresolvedCount": 5
+    },
+    {
+      "source": "charts/prism/templates/workloads.yaml",
+      "candidateIds": [
+        "SRC-d0207096e9428f6e",
+        "SRC-b499bd9d6e0c96f9",
+        "SRC-4cc5161d3c1135b5",
+        "SRC-61a34b698eb6c0ba",
+        "SRC-77d139d0c914f975",
+        "SRC-d8463fffaf86f4d5",
+        "SRC-a07d8875fd4a1cb8",
+        "SRC-6a63ef0194be3ef9",
+        "SRC-c2377b06eb763ea8",
+        "SRC-1b55a3e1ee1d1fd2",
+        "SRC-b13789ea3a017a85",
+        "SRC-26a9686365abe960",
+        "SRC-24af8635b20cbc86",
+        "SRC-6700eefd43e4dff9",
+        "SRC-ff3203dbf7f11afe",
+        "SRC-b1bd21e3a1c1ee3c",
+        "SRC-4c30d386ef699815",
+        "SRC-4c6b76f7a12d287c",
+        "SRC-f5efb3dafa1d8815",
+        "SRC-336010687eecb339",
+        "SRC-031d2d94167393f9",
+        "SRC-d5fada1a98f4c4af",
+        "SRC-d0c844cef43e11dc"
+      ],
+      "unresolvedCount": 23
+    },
+    {
+      "source": "charts/prism/values.schema.json",
+      "candidateIds": [
+        "SRC-798ca7ce75ef3ff9",
+        "SRC-f5742a25dee07f1d",
+        "SRC-84a61ea381a00ff6",
+        "SRC-a94186a55ce2431a"
+      ],
+      "unresolvedCount": 4
+    },
+    {
+      "source": "ops/pod/bootstrap.py",
+      "candidateIds": [
+        "SRC-8d3c21c65fe77b93",
+        "SRC-2f5d6cc9047fe270",
+        "SRC-4488055e9cc70c2c",
+        "SRC-9bf0604ff8342fdf"
+      ],
+      "unresolvedCount": 4
+    },
+    {
+      "source": "ops/pod/supervisor.py",
+      "candidateIds": [
+        "SRC-c901d70d7bda6bfe",
+        "SRC-0254fd2d9ccb3790",
+        "SRC-fbb057e7b4c04476",
+        "SRC-93cc0d70a2a379b7",
+        "SRC-b6fc03b8d7233b03"
+      ],
+      "unresolvedCount": 5
+    },
+    {
+      "source": "packaging/runtime/package-ownership.json",
+      "candidateIds": [
+        "SRC-3efcfd9c990a93d1"
+      ],
+      "unresolvedCount": 1
+    },
+    {
+      "source": "packaging/runtime/roles/buster.json",
+      "candidateIds": [
+        "SRC-8acd1d7696ea3d29",
+        "SRC-44976dc5d861a3aa"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "scripts/build-runtime-role-bundle.mjs",
+      "candidateIds": [
+        "SRC-6fe212a93f28130a",
+        "SRC-3abde277d38c821b",
+        "SRC-7728c74126dc754e",
+        "SRC-5d0288c984cae837",
+        "SRC-45123afadd1cf62a",
+        "SRC-76a49fb240f86750",
+        "SRC-5e2303ec300438a2",
+        "SRC-a5b03259b93e0a66",
+        "SRC-46edc75f4155c0fd"
+      ],
+      "unresolvedCount": 9
+    },
+    {
+      "source": "scripts/check-runtime-role-manifests.mjs",
+      "candidateIds": [
+        "SRC-b53a7be65008e8f5",
+        "SRC-f06effd8f6cbaf64",
+        "SRC-3bfe595a7377f244",
+        "SRC-e60a381ecc36b138",
+        "SRC-a357ba528e0df431",
+        "SRC-f46f464b912935ae",
+        "SRC-424e94b3eacfdd06",
+        "SRC-bfc49f684ab83ea1",
+        "SRC-d82f4aedbe1c99e6",
+        "SRC-3402b44e37bae07d",
+        "SRC-4caa26c257743c28"
+      ],
+      "unresolvedCount": 11
+    },
+    {
+      "source": "scripts/deploy-ops-pod.sh",
+      "candidateIds": [
+        "SRC-f421c09380c543cb",
+        "SRC-389cc37ea840bade"
+      ],
+      "unresolvedCount": 2
+    },
+    {
+      "source": "scripts/package-agent-skill-bundle.sh",
+      "candidateIds": [
+        "SRC-b7a630bce375e367",
+        "SRC-5d413666eaff59c5",
+        "SRC-20a867892c2eb688",
+        "SRC-2b3d4d4861ab2304",
+        "SRC-bfae3c11b4e8ae17"
+      ],
+      "unresolvedCount": 5
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "candidateIds": [
+        "SRC-629f4ce41bb89fee",
+        "SRC-9848c97c9319cd1d",
+        "SRC-be24b2094a6da316",
+        "SRC-26b849bed2e1ac82",
+        "SRC-3b38fdd30b9a8036",
+        "SRC-8845bb2071984c12",
+        "SRC-6a45c343c830ad4a",
+        "SRC-fabc811c00c0d5a8",
+        "SRC-4535ebc89579c7b7",
+        "SRC-b40d099b9dfb2dd4",
+        "SRC-526d02216524240a",
+        "SRC-e05b38090f34ff81",
+        "SRC-790ac7e299c2d55a",
+        "SRC-072db49d45d6ec00",
+        "SRC-e75cae6fdcc63e28",
+        "SRC-9cf8ad491c1f3a5c",
+        "SRC-545ecfc86f0702cf"
+      ],
+      "unresolvedCount": 17
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "candidateIds": [
+        "SRC-7d21714bd9c0c3c0",
+        "SRC-c9a3ee1856722184",
+        "SRC-5a86d88ea3024390",
+        "SRC-b694464d9ec1e726",
+        "SRC-e3e643f388dc0cb0",
+        "SRC-91910217b57b4275",
+        "SRC-caccd385c4e2c876"
+      ],
+      "unresolvedCount": 7
+    },
+    {
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "candidateIds": [
+        "SRC-b18d453192c636f1",
+        "SRC-61e79582dd58b5de",
+        "SRC-2277817f41b02170",
+        "SRC-5f059f14d9cf8e7b",
+        "SRC-37abb9b52cba9698",
+        "SRC-1704d79e49a8b060",
+        "SRC-369080fae9e19cd9",
+        "SRC-2f8da6752cb54f5b",
+        "SRC-e02ba762a0c275a4",
+        "SRC-94c57fcae240f9a7",
+        "SRC-bbedb31ad3136731",
+        "SRC-d712743f85c8d350"
+      ],
+      "unresolvedCount": 12
+    },
+    {
+      "source": "skills/prism/openclaw-plugin/index.mjs",
+      "candidateIds": [
+        "SRC-863fc05ab283fecf"
+      ],
+      "unresolvedCount": 1
+    },
+    {
+      "source": "tools/ops-mcp/src/config.mjs",
+      "candidateIds": [
+        "SRC-786648ac378228fd",
+        "SRC-061c9cf97e75317f",
+        "SRC-94f9666af771b2e1",
+        "SRC-c95ddd0ca33a199c"
+      ],
+      "unresolvedCount": 4
+    },
+    {
+      "source": "tools/ops-mcp/src/hubble.mjs",
+      "candidateIds": [
+        "SRC-9e42b69a4bc6f66d",
+        "SRC-46868d5cd65ceacf",
+        "SRC-73cc76294683d7ed",
+        "SRC-beb89d20a16d66b7",
+        "SRC-dcee475b9778453d",
+        "SRC-2e43bae9ab7d96e7",
+        "SRC-29ff57f8986c268d",
+        "SRC-18504729ecb37022",
+        "SRC-e9797278a068003a",
+        "SRC-1795c6619a69a1b5",
+        "SRC-ece2064f1dc63298"
+      ],
+      "unresolvedCount": 11
+    },
+    {
+      "source": "tools/ops-mcp/src/kubernetes.mjs",
+      "candidateIds": [
+        "SRC-1ea77d966fb2b3a8",
+        "SRC-833c7289b3e5cbd4",
+        "SRC-2d5d27664c70dd69",
+        "SRC-7184d91c2105fcc8",
+        "SRC-7ec867234095c231",
+        "SRC-d796606040b78d8e",
+        "SRC-5b183dad3f692afa",
+        "SRC-36ac31ec520644ff",
+        "SRC-214336925a85d221"
+      ],
+      "unresolvedCount": 9
+    }
+  ],
+  "coordinateUnresolved": [],
+  "additionalContractsRequired": [
+    "117 provider/34 sharedhandoff exactactive owner/schema/domain join +342 nativeCRD fieldpath/nativecase scope; parent completeclosed rootoperator composition/package/render/mount/constructor/proposedharness required",
+    "358 exact remaining source candidate IDs, plus unseen wholehelper/implicitprovider/default scopes",
+    "rootoperator/six-owner/schema-profile/stable-ID/fullfixture/native/file-package/source-generation authority joins stillunaccepted"
+  ],
+  "acceptance": null,
+  "previousRemainingDigest": "e6037f0e6f6ecb9f77cb1a65624ec26786b847668e84e19f8c3fa6147f09085e",
+  "completedBatchCandidateIds": [
+    "SRC-0170ef6123327eb2",
+    "SRC-02e0a0c2fa89f527",
+    "SRC-04f6d16621616972",
+    "SRC-059d32585853f09d",
+    "SRC-1d2833c11aa4fcb1",
+    "SRC-25b8b4da4916f552",
+    "SRC-39c5a681a07a489a",
+    "SRC-6b5c58f659e20314",
+    "SRC-70e52cb9471aa3d6",
+    "SRC-79264d86a0419bc9",
+    "SRC-7c09f54fdea3e155",
+    "SRC-8048abab80b60bf6",
+    "SRC-9061f77ea75461ff",
+    "SRC-96284bf48c52fd06",
+    "SRC-98ed32dcb6b926c9",
+    "SRC-9acb06ba0d90a1df",
+    "SRC-9bf3e3cd04e0d9af",
+    "SRC-a4fff807820f43f0",
+    "SRC-a5237171b5435400",
+    "SRC-ab501d4f368322c0",
+    "SRC-b02117acbc2fd4bb",
+    "SRC-b76723c0cd86582d",
+    "SRC-d77f4b2165edbc28",
+    "SRC-db022870573ca8d1",
+    "SRC-f0d3696dc9f8f363",
+    "SRC-f60fc7454f69ec16"
+  ],
+  "completedHelperContracts": [
+    "DLV-B24-98ED32DCB6B926C9",
+    "DLV-B24-A4FFF807820F43F0",
+    "DLV-B24-70E52CB9471AA3D6",
+    "DLV-B24-79264D86A0419BC9",
+    "DLV-B24-DB022870573CA8D1",
+    "DLV-B24-B76723C0CD86582D",
+    "DLV-B24-AB501D4F368322C0",
+    "DLV-B24-059D32585853F09D",
+    "DLV-B24-9061F77EA75461FF",
+    "DLV-B24-25B8B4DA4916F552",
+    "DLV-B24-04F6D16621616972",
+    "DLV-B24-96284BF48C52FD06",
+    "DLV-B24-D77F4B2165EDBC28",
+    "DLV-B24-1D2833C11AA4FCB1",
+    "DLV-B24-F60FC7454F69EC16",
+    "DLV-B24-6B5C58F659E20314",
+    "DLV-B24-0170EF6123327EB2",
+    "DLV-B24-9ACB06BA0D90A1DF",
+    "DLV-B24-9BF3E3CD04E0D9AF",
+    "DLV-B24-F0D3696DC9F8F363",
+    "DLV-B24-8048ABAB80B60BF6",
+    "DLV-B24-02E0A0C2FA89F527",
+    "DLV-B24-7C09F54FDEA3E155",
+    "DLV-B24-B02117ACBC2FD4BB",
+    "DLV-B24-A5237171B5435400",
+    "DLV-B24-39C5A681A07A489A"
+  ],
+  "completedCoordinateKeys": [
+    "my-values/buster-values.yaml#/busterNamespaceBroker/controller/allowedAccess/0/modes/0",
+    "my-values/buster-values.yaml#/busterNamespaceBroker/controller/allowedAccess/0/subject",
+    "my-values/buster-values.yaml#/busterNamespaceBroker/controller/allowedAccess/1/modes/0",
+    "my-values/buster-values.yaml#/busterNamespaceBroker/controller/allowedAccess/1/modes/1",
+    "my-values/buster-values.yaml#/busterNamespaceBroker/controller/allowedAccess/1/subject",
+    "my-values/buster-values.yaml#/extraContainers/0/env/0/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/0/valueFrom/secretKeyRef/key",
+    "my-values/buster-values.yaml#/extraContainers/0/env/0/valueFrom/secretKeyRef/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/1/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/1/valueFrom/secretKeyRef/key",
+    "my-values/buster-values.yaml#/extraContainers/0/env/1/valueFrom/secretKeyRef/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/2/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/2/value",
+    "my-values/buster-values.yaml#/extraContainers/0/env/3/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/3/value",
+    "my-values/buster-values.yaml#/extraContainers/0/env/4/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/4/value",
+    "my-values/buster-values.yaml#/extraContainers/0/env/5/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/5/value",
+    "my-values/buster-values.yaml#/extraContainers/0/env/6/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/6/value",
+    "my-values/buster-values.yaml#/extraContainers/0/env/7/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/7/value",
+    "my-values/buster-values.yaml#/extraContainers/0/env/8/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/8/value",
+    "my-values/buster-values.yaml#/extraContainers/0/env/9/name",
+    "my-values/buster-values.yaml#/extraContainers/0/env/9/value",
+    "my-values/buster-values.yaml#/extraContainers/0/image",
+    "my-values/buster-values.yaml#/extraContainers/0/imagePullPolicy",
+    "my-values/buster-values.yaml#/extraContainers/0/livenessProbe/failureThreshold",
+    "my-values/buster-values.yaml#/extraContainers/0/livenessProbe/httpGet/path",
+    "my-values/buster-values.yaml#/extraContainers/0/livenessProbe/httpGet/port",
+    "my-values/buster-values.yaml#/extraContainers/0/livenessProbe/httpGet/scheme",
+    "my-values/buster-values.yaml#/extraContainers/0/livenessProbe/initialDelaySeconds",
+    "my-values/buster-values.yaml#/extraContainers/0/livenessProbe/periodSeconds",
+    "my-values/buster-values.yaml#/extraContainers/0/livenessProbe/timeoutSeconds",
+    "my-values/buster-values.yaml#/extraContainers/0/name",
+    "my-values/buster-values.yaml#/extraContainers/0/ports/0/containerPort",
+    "my-values/buster-values.yaml#/extraContainers/0/ports/0/name",
+    "my-values/buster-values.yaml#/extraContainers/0/ports/0/protocol",
+    "my-values/buster-values.yaml#/extraContainers/0/readinessProbe/failureThreshold",
+    "my-values/buster-values.yaml#/extraContainers/0/readinessProbe/httpGet/path",
+    "my-values/buster-values.yaml#/extraContainers/0/readinessProbe/httpGet/port",
+    "my-values/buster-values.yaml#/extraContainers/0/readinessProbe/httpGet/scheme",
+    "my-values/buster-values.yaml#/extraContainers/0/readinessProbe/initialDelaySeconds",
+    "my-values/buster-values.yaml#/extraContainers/0/readinessProbe/periodSeconds",
+    "my-values/buster-values.yaml#/extraContainers/0/readinessProbe/timeoutSeconds",
+    "my-values/buster-values.yaml#/extraContainers/0/resources/limits/cpu",
+    "my-values/buster-values.yaml#/extraContainers/0/resources/limits/ephemeral-storage",
+    "my-values/buster-values.yaml#/extraContainers/0/resources/limits/memory",
+    "my-values/buster-values.yaml#/extraContainers/0/resources/requests/cpu",
+    "my-values/buster-values.yaml#/extraContainers/0/resources/requests/ephemeral-storage",
+    "my-values/buster-values.yaml#/extraContainers/0/resources/requests/memory",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/allowPrivilegeEscalation",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/appArmorProfile/type",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/capabilities/add/0",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/capabilities/add/1",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/capabilities/add/2",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/capabilities/add/3",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/capabilities/add/4",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/capabilities/drop/0",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/privileged",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/runAsGroup",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/runAsNonRoot",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/runAsUser",
+    "my-values/buster-values.yaml#/extraContainers/0/securityContext/seccompProfile/type",
+    "my-values/buster-values.yaml#/extraContainers/0/startupProbe/failureThreshold",
+    "my-values/buster-values.yaml#/extraContainers/0/startupProbe/httpGet/path",
+    "my-values/buster-values.yaml#/extraContainers/0/startupProbe/httpGet/port",
+    "my-values/buster-values.yaml#/extraContainers/0/startupProbe/httpGet/scheme",
+    "my-values/buster-values.yaml#/extraContainers/0/startupProbe/periodSeconds",
+    "my-values/buster-values.yaml#/extraContainers/0/startupProbe/timeoutSeconds",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/0/mountPath",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/0/name",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/1/mountPath",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/1/name",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/2/mountPath",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/2/name",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/2/readOnly",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/3/mountPath",
+    "my-values/buster-values.yaml#/extraContainers/0/volumeMounts/3/name",
+    "my-values/buster-values.yaml#/extraVolumes/0/name",
+    "my-values/buster-values.yaml#/extraVolumes/0/persistentVolumeClaim/claimName",
+    "my-values/buster-values.yaml#/extraVolumes/1/name",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/defaultMode",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/sources/0/serviceAccountToken/expirationSeconds",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/sources/0/serviceAccountToken/path",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/sources/1/configMap/items/0/key",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/sources/1/configMap/items/0/path",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/sources/1/configMap/name",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/sources/2/downwardAPI/items/0/fieldRef/apiVersion",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/sources/2/downwardAPI/items/0/fieldRef/fieldPath",
+    "my-values/buster-values.yaml#/extraVolumes/1/projected/sources/2/downwardAPI/items/0/path",
+    "my-values/buster-values.yaml#/extraVolumes/2/hostPath/path",
+    "my-values/buster-values.yaml#/extraVolumes/2/hostPath/type",
+    "my-values/buster-values.yaml#/extraVolumes/2/name",
+    "my-values/buster-values.yaml#/imagePullSecrets/0/name",
+    "my-values/buster-values.yaml#/service/extraPorts/0/name",
+    "my-values/buster-values.yaml#/service/extraPorts/0/port",
+    "my-values/buster-values.yaml#/service/extraPorts/0/targetPort",
+    "my-values/nova-values.yaml#/capabilityProviders/buster/agentRole",
+    "my-values/nova-values.yaml#/capabilityProviders/buster/capabilities/runtime.dispatch/adapter",
+    "my-values/nova-values.yaml#/capabilityProviders/buster/capabilities/runtime.dispatch/port",
+    "my-values/nova-values.yaml#/capabilityProviders/buster/capabilities/test.plan.execute/adapter",
+    "my-values/nova-values.yaml#/capabilityProviders/buster/capabilities/test.plan.execute/port",
+    "my-values/nova-values.yaml#/capabilityProviders/buster/capabilities/test.plan.execute/proxyPort",
+    "my-values/nova-values.yaml#/capabilityProviders/buster/capabilities/test.plan.execute/scheme",
+    "my-values/nova-values.yaml#/capabilityProviders/prism/agentRole",
+    "my-values/nova-values.yaml#/capabilityProviders/prism/capabilities/runtime.dispatch/adapter",
+    "my-values/nova-values.yaml#/capabilityProviders/prism/capabilities/runtime.dispatch/authentication",
+    "my-values/nova-values.yaml#/capabilityProviders/prism/capabilities/runtime.dispatch/port",
+    "my-values/nova-values.yaml#/capabilityProviders/prism/capabilities/runtime.dispatch/proxyPort",
+    "my-values/nova-values.yaml#/extraContainers/0/image",
+    "my-values/nova-values.yaml#/extraContainers/0/imagePullPolicy",
+    "my-values/nova-values.yaml#/extraContainers/0/livenessProbe/httpGet/path",
+    "my-values/nova-values.yaml#/extraContainers/0/livenessProbe/httpGet/port",
+    "my-values/nova-values.yaml#/extraContainers/0/livenessProbe/initialDelaySeconds",
+    "my-values/nova-values.yaml#/extraContainers/0/livenessProbe/periodSeconds",
+    "my-values/nova-values.yaml#/extraContainers/0/name",
+    "my-values/nova-values.yaml#/extraContainers/0/ports/0/containerPort",
+    "my-values/nova-values.yaml#/extraContainers/0/ports/0/name",
+    "my-values/nova-values.yaml#/extraContainers/0/ports/0/protocol",
+    "my-values/nova-values.yaml#/extraContainers/0/readinessProbe/httpGet/path",
+    "my-values/nova-values.yaml#/extraContainers/0/readinessProbe/httpGet/port",
+    "my-values/nova-values.yaml#/extraContainers/0/readinessProbe/periodSeconds",
+    "my-values/nova-values.yaml#/extraContainers/0/resources/limits/cpu",
+    "my-values/nova-values.yaml#/extraContainers/0/resources/limits/memory",
+    "my-values/nova-values.yaml#/extraContainers/0/resources/requests/cpu",
+    "my-values/nova-values.yaml#/extraContainers/0/resources/requests/memory",
+    "my-values/nova-values.yaml#/extraContainers/0/startupProbe/failureThreshold",
+    "my-values/nova-values.yaml#/extraContainers/0/startupProbe/httpGet/path",
+    "my-values/nova-values.yaml#/extraContainers/0/startupProbe/httpGet/port",
+    "my-values/nova-values.yaml#/extraContainers/0/startupProbe/periodSeconds",
+    "my-values/nova-values.yaml#/extraContainers/0/volumeMounts/0/mountPath",
+    "my-values/nova-values.yaml#/extraContainers/0/volumeMounts/0/name",
+    "my-values/nova-values.yaml#/extraContainers/0/volumeMounts/0/readOnly",
+    "my-values/nova-values.yaml#/extraContainers/0/volumeMounts/1/mountPath",
+    "my-values/nova-values.yaml#/extraContainers/0/volumeMounts/1/name",
+    "my-values/nova-values.yaml#/extraContainers/0/volumeMounts/1/readOnly",
+    "my-values/nova-values.yaml#/extraContainers/0/volumeMounts/1/subPath",
+    "my-values/nova-values.yaml#/extraEnv/0/name",
+    "my-values/nova-values.yaml#/extraEnv/0/valueFrom/secretKeyRef/key",
+    "my-values/nova-values.yaml#/extraEnv/0/valueFrom/secretKeyRef/name",
+    "my-values/nova-values.yaml#/extraEnv/1/name",
+    "my-values/nova-values.yaml#/extraEnv/1/valueFrom/secretKeyRef/key",
+    "my-values/nova-values.yaml#/extraEnv/1/valueFrom/secretKeyRef/name",
+    "my-values/nova-values.yaml#/extraEnv/2/name",
+    "my-values/nova-values.yaml#/extraEnv/2/valueFrom/secretKeyRef/key",
+    "my-values/nova-values.yaml#/extraEnv/2/valueFrom/secretKeyRef/name",
+    "my-values/nova-values.yaml#/extraEnv/3/name",
+    "my-values/nova-values.yaml#/extraEnv/3/value",
+    "my-values/nova-values.yaml#/imagePullSecrets/0/name",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/command/0",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/command/1",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/0/name",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/0/value",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/1/name",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/1/value",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/2/name",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/2/value",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/3/name",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/3/valueFrom/secretKeyRef/key",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/env/3/valueFrom/secretKeyRef/name",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/image",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/imagePullPolicy",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/livenessProbe/httpGet/path",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/livenessProbe/httpGet/port",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/livenessProbe/initialDelaySeconds",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/name",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/readinessProbe/httpGet/path",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/readinessProbe/httpGet/port",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/readinessProbe/initialDelaySeconds",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/resources/limits/cpu",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/resources/limits/memory",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/resources/requests/cpu",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/resources/requests/memory",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/securityContext/allowPrivilegeEscalation",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/securityContext/capabilities/drop/0",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/securityContext/readOnlyRootFilesystem",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/securityContext/runAsGroup",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/securityContext/runAsUser",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/volumeMounts/0/mountPath",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/volumeMounts/0/name",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/volumeMounts/1/mountPath",
+    "my-values/prism-agent-values.yaml#/extraContainers/0/volumeMounts/1/name",
+    "my-values/prism-agent-values.yaml#/extraEnv/0/name",
+    "my-values/prism-agent-values.yaml#/extraEnv/0/value",
+    "my-values/prism-agent-values.yaml#/extraEnv/1/name",
+    "my-values/prism-agent-values.yaml#/extraEnv/1/value",
+    "my-values/prism-agent-values.yaml#/imagePullSecrets/0/name",
+    "my-values/prism-values.yaml#/imagePullSecrets/0/name"
+  ],
+  "additionalEmitterTransfer": {
+    "members": 117,
+    "semanticAcceptance": null,
+    "fullDomainsPending": 88,
+    "profileSchemaOwnerExtension": "components additive18 plus parent/Runtime/Delivery34 scopedhandoffs"
+  }
+}

@@ -28,3 +28,42 @@ with the same key fails as an idempotency conflict.
 
 This package is an HTTP publication foundation. It does **not** claim Redis
 stream compatibility, retry scheduling, or parity with the legacy transport.
+
+
+Durable store config requires explicit `maximumDeliveryRecords` and
+`maximumDeliveryBytes` positive safe integers; no defaults/numeric strings.
+Nova selects these from Core `settings.transportPublisherStore` before registry validation,
+uses the captured activation config and retains it with the run. Raw Platform
+adapter entries keep deliveryRoot/targets but reject duplicate store policy.
+Direct callers supply both limits. Existing target payload, sender identity,
+receiver receipt, durable reservation and idempotency semantics are unchanged.
+This store-only migration does not claim target-policy or native acceptance.
+
+### Central target payload limits
+
+Core `settings.transportPublisherPayload.targetPayloadProfiles` owns payload byte limits.
+Each target must explicitly select `payloadProfile`; former per-target
+`maxPayloadBytes` authors and missing/null selections are rejected. The `standard`
+profile retains the former 262144-byte limit, separate from operator messaging.
+Nova projects the complete profiles before registry validation and retains both
+the selected values and target profile names in the original run snapshot.
+Resume/recovery uses those original values without reading current Core config;
+installation/endpoints still undergo the original pinned-configuration comparison.
+Legacy snapshots lacking the new required policy require their original runtime;
+there is no backfill or current-policy fallback.
+
+### Failure record excerpts
+
+Core `settings.transportPublisherFailure.failureExcerptCharacters` owns the
+failure-record excerpt length (1–2048 UTF-16 code units). The 2048 ceiling
+preserves the existing terminal reservation budget; the standard author
+preserves the former 2048-character behavior. Nova projects the selected value
+and retains it with the run; competing raw authors reject. Direct activations
+must supply it explicitly. Activation captures the limit; durable failure
+replay retains the original recorded excerpt and never resends the request.
+
+Core `settings.transportPublisherStructure.maxJsonDepth` owns message JSON depth (1–64).
+The standard selection preserves depth64, counting the message root as depth0.
+Nova projects the captured selection; direct adapter authors compete and reject.
+Missing/invalid values reject before invocation, and activation copies the limit.
+The 64 ceiling remains the supported recursion safety envelope, not a fallback.

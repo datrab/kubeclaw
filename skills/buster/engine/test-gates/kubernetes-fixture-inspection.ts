@@ -1,4 +1,4 @@
-import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+import type { BusterManifestPolicy } from '@kubeclaw/plugin-foundation/config/buster-cluster-invokers';
 import { boundedManifestDocuments } from './kubernetes-manifest.ts';
 import { flattenDocuments } from './kubernetes-fixture-manifest-files.ts';
 import { podSpecs, validatePodSecurity } from './kubernetes-fixture-pods.ts';

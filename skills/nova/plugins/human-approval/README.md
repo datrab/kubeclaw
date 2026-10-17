@@ -15,7 +15,7 @@ The package owns:
 - strict approval input and configuration validation
 - explicit `pending`, `approved`, and `rejected` guidance handling
 - operator-issuer authentication for terminal guidance
-- bounded expiry calculation with a 60-minute default
+- bounded expiry calculation with an explicitly selected central default (standard profile: 60 minutes)
 - canonical operator request construction
 - canonical durable signal-wait construction and adapter-response validation
 - canonical passed, blocked, and wait stage results
@@ -47,3 +47,10 @@ bound approval artifact. The wait's report digest binds the subject transitively
 changed source or plan revisions invalidate that authority. Source-less report
 approval is retained as report-only evidence and cannot authorize Blueprint/Forge.
 The generic human-approval registration and blocking-finding policy are unchanged.
+
+Approval timeout policy: `config/nova/core.config.json` selected
+`settings.humanApproval.defaultTimeoutMinutes` supplies omitted task
+`timeoutMinutes` before registration validation and actual invocation. Explicit
+task deadlines remain task data. The runtime snapshot retains the selected
+policy for recovery without reading current configuration. Direct plugin callers
+must supply a resolved timeout; no plugin-local or schema default remains.

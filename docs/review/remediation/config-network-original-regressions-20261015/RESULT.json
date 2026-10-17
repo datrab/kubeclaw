@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-15T19:25:43.460962+00:00",
+  "change": "Original effect identity/legacy native-locale replay and HMAC profile fixtures now explicitly select central standard HTTP byte profiles; exact original identities, original journal prefixes, authentication and wire/replay assertions preserved. No runtime guard changes.",
+  "settingsSourceWired": 91,
+  "initialVerification": {
+    "exitCode": 124,
+    "log": "docs/review/remediation/config-network-original-regressions-20261015/before.txt",
+    "failure": "RUNTIME_CONFIG_INVALID:targetByteProfiles; second test left HTTP listener open before cleanup. Exact orphan PID1007947 verified and stopped; no broad process kill."
+  },
+  "tests": {
+    "passed": 3,
+    "total": 3,
+    "skipped": 0
+  },
+  "verification": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=25000",
+        "tests/verification/reliability/effect-identity-version.test.mts",
+        "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "./node_modules/.bin/tsc",
+        "--noEmit",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2024",
+        "--lib",
+        "ESNext,DOM,DOM.Iterable",
+        "--strict",
+        "--types",
+        "node",
+        "--skipLibCheck",
+        "--allowImportingTsExtensions",
+        "--esModuleInterop",
+        "tests/verification/reliability/effect-identity-version.test.mts"
+      ],
+      "exitCode": 2,
+      "log": "docs/review/remediation/config-network-original-regressions-20261015/check-0.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-original-regressions-20261015/check-1.txt"
+    }
+  ],
+  "sourceHashes": {
+    "tests/verification/reliability/effect-identity-version.test.mts": "efe8096945ce4ca4e8f3481a6f5b4ef1fffe4fde3e09c9b2c58065694c2f51db",
+    "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs": "de850cd1ccb899fd183f5edbe0fb816a0db2af3bfe4df5bb4868321db3df73e5"
+  },
+  "independentAcceptance": "OPEN; original suite named independent is existing regression, NOT fresh non-author CONFIG acceptance. No active reviewers or native spawn tools.",
+  "parentRecovery": "Parent metadata failed/thread-claimed; no active CONFIG child or pending fresh review. Historical70492ecb superseded; no duplicate recovery. Direct bounded worker under shared nonblocking lock.",
+  "nextAction": "Fresh non-author review of payload/network changes; centralize remaining network request/response byte caps and timeout with explicit profile selection and retained snapshots.",
+  "writerLock": "shared nonblocking; released on process exit",
+  "finalVerification": [
+    {
+      "command": [
+        "./node_modules/.bin/tsc",
+        "--noEmit",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2024",
+        "--lib",
+        "ESNext,DOM,DOM.Iterable",
+        "--strict",
+        "--types",
+        "node",
+        "--skipLibCheck",
+        "--allowImportingTsExtensions",
+        "--esModuleInterop",
+        "tests/verification/reliability/effect-identity-version.test.mts"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-original-regressions-20261015/final-typecheck.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=25000",
+        "tests/verification/reliability/effect-identity-version.test.mts",
+        "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-original-regressions-20261015/final-tests.txt"
+    }
+  ],
+  "typeCorrection": "Original partial activation mocks explicitly cast through unknown; no production types/guards weakened. Initial TS2352 retained."
+}

@@ -1,0 +1,160 @@
+[
+  {
+    "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-FOUNDATION-FLOCK-WAIT-VAL",
+      "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+      "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+    ],
+    "reviewStatus": "specific-definition-findings-open",
+    "findingIds": [
+      "ICQ-03",
+      "ICQ-06"
+    ],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-ADMISSION-REASON-LIMITS-VAL",
+      "QC-ADMISSION-REASON-LIMITS-FORMAT",
+      "QC-ADMISSION-REASON-LIMITS-HISTORY"
+    ],
+    "reviewStatus": "specific-definition-findings-open",
+    "findingIds": [
+      "ICQ-03"
+    ],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-ADMISSION-METADATA-RESERVE-VAL",
+      "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+      "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+    ],
+    "reviewStatus": "specific-definition-findings-open",
+    "findingIds": [
+      "ICQ-02",
+      "ICQ-03",
+      "ICQ-06"
+    ],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+      "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+    ],
+    "reviewStatus": "specific-definition-findings-open",
+    "findingIds": [
+      "ICQ-04"
+    ],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+      "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+    ],
+    "reviewStatus": "bounded-source-definition-reviewed-no-new-counterexample;not-global-acceptance",
+    "findingIds": [],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+      "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+      "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+    ],
+    "reviewStatus": "bounded-source-definition-reviewed-no-new-counterexample;not-global-acceptance",
+    "findingIds": [],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+      "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+    ],
+    "reviewStatus": "specific-definition-findings-open",
+    "findingIds": [
+      "ICQ-01"
+    ],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+      "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+    ],
+    "reviewStatus": "bounded-source-definition-reviewed-no-new-counterexample;not-global-acceptance",
+    "findingIds": [],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [
+      "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+      "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+    ],
+    "reviewStatus": "specific-definition-findings-open",
+    "findingIds": [
+      "ICQ-06"
+    ],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [],
+    "reviewStatus": "bounded-source-definition-reviewed-no-new-counterexample;not-global-acceptance",
+    "findingIds": [],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [],
+    "reviewStatus": "external-author-definition-pending",
+    "findingIds": [],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [],
+    "reviewStatus": "external-author-definition-pending",
+    "findingIds": [],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [],
+    "reviewStatus": "external-author-definition-pending",
+    "findingIds": [],
+    "implementationCasesExecuted": false
+  },
+  {
+    "questionId": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+    "originalRequirementPreserved": true,
+    "activeCaseIds": [],
+    "reviewStatus": "external-author-definition-pending",
+    "findingIds": [],
+    "implementationCasesExecuted": false
+  }
+]

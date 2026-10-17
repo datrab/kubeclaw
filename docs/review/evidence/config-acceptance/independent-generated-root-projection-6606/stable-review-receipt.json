@@ -1,0 +1,645 @@
+{
+  "scope": "stable fresh independent actual-root conservation review; not C0 acceptance",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/README.md",
+      "sha256": "c18b9f9066000bd2570d679a1a45496294373843c70a4e0fe3f2b6515a73f0f1",
+      "bytes": 1638
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/check-conservation.py",
+      "sha256": "3d3fe0d8484acb9bc9e92da865c3d0ef49830f902a84c918f167a8b93152a18a",
+      "bytes": 4326
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/check-full-mutants-attempt1.py",
+      "sha256": "60213d44b9d37a0291cf1e2f31b14bd46b0996cc5db401635e8c59b427bb5ad8",
+      "bytes": 5525
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/check-full-mutants.py",
+      "sha256": "4eabfa0f0cb9ce8307b248150d1116ac2c30020f6327f6bc820bc007c5cccbe3",
+      "bytes": 5871
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/closeout.py",
+      "sha256": "3b697e696b36b36185e6d675abb3ce16bc57eee837bb5830244e8ea4df0c3efe",
+      "bytes": 12741
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/conservation-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/conservation-attempt1.stdout",
+      "sha256": "1acea5ffe30ffc68f87f4c736bff93ba10643e4cc2507950535b9c6dce08ac27",
+      "bytes": 636
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/conservation-observations.json",
+      "sha256": "41658f40bcdc03c0b281b55d201a572367c75ecabf837c1ba60515a3ecdf53e1",
+      "bytes": 942
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/controls-0-13.json",
+      "sha256": "30f965c002b8f98dcfc5c0361904cc44b89839a6c321f40099d41aa187ce72cb",
+      "bytes": 7141
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/controls-13-25.json",
+      "sha256": "fd70ad4c145f24d8947214db3411ac7a2d6df6b3df2f50749911d1f1eb2ee057",
+      "bytes": 5800
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/controls-25-27.json",
+      "sha256": "c7157d83535da01d325fa67499ee8bb48e0561e4da58942f3f13f2040d08e3db",
+      "bytes": 869
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-13row-omission.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-13row-omission.stdout",
+      "sha256": "b076d24c8ea841a91eec69102cb84ac2d6092971a6df12a70b2501cca38ac35b",
+      "bytes": 569
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-27case-omission.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-27case-omission.stdout",
+      "sha256": "8cbeb8cb1075c54df1120aff7ba523f1685169bbfb1d3874ed1680f288acbf2c",
+      "bytes": 569
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-alias-omission.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-alias-omission.stdout",
+      "sha256": "10a57c8c9b40f4050281c4691d31c9ac77ed7c46ab4541738c7078c24df6608f",
+      "bytes": 244
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-case-projection-priorstate-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-case-projection-priorstate-tamper.stdout",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-case-projection-requirement-loss.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-case-projection-requirement-loss.stdout",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-fragment-registration-omission.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-fragment-registration-omission.stdout",
+      "sha256": "333036f8cc0e210a11a9f61e1f4822c3f815866587d05d0a4b9c95e53a354b2a",
+      "bytes": 244
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-package-omission.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-package-omission.stdout",
+      "sha256": "945bb5cdd20b15f9f33f776b025c9680d9d2c148f2dd1abddca1a9b8cf315fde",
+      "bytes": 243
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-question-omission.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-question-omission.stdout",
+      "sha256": "10a57c8c9b40f4050281c4691d31c9ac77ed7c46ab4541738c7078c24df6608f",
+      "bytes": 244
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-required-source-omission.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-required-source-omission.stdout",
+      "sha256": "5a167818f45a1685a41d61578e43c036a037890a7fa1cabc664cdd644bc95e19",
+      "bytes": 249
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-row-projection-scope-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-row-projection-scope-tamper.stdout",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-row-source-field-coordinate-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-row-source-field-coordinate-tamper.stdout",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-row-source-provided-instanceScope-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/core-row-source-provided-instanceScope-tamper.stdout",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/end-input-integrity.json",
+      "sha256": "4a84c372eaece1ba17af1e596981eff920ff3693c8352fa6fae299f57ee0010d",
+      "bytes": 267
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/freeze.py",
+      "sha256": "dd65ac155eb8de61cf4254395a9516c4328849820079c7bc3e5e33a4bad8a10b",
+      "bytes": 2509
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/full-checker-controls-summary.json",
+      "sha256": "b900f620f5c6334fc88893b6cc34bf157ecedee878cac0960fa4b56bde83b9c7",
+      "bytes": 13761
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-mapping-omitted.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-mapping-omitted.stdout",
+      "sha256": "a68719ac3850d721c3f42a3285ad988272c70ce66aa1bf8850f3231ed7e5d796",
+      "bytes": 283
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-predecessor-canonical-promotion.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-predecessor-canonical-promotion.stdout",
+      "sha256": "2bac30d7c6f500ab54b32480ba66aa1720e0618352866b06741aca1b0d0493fa",
+      "bytes": 329
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-reverse-digest-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-reverse-digest-tamper.stdout",
+      "sha256": "1f5e683304ca2825e1ac072747f9d90c42b2d34f9af20fc1666e003aa5b6726f",
+      "bytes": 333
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-reverse-omitted.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-reverse-omitted.stdout",
+      "sha256": "1f5e683304ca2825e1ac072747f9d90c42b2d34f9af20fc1666e003aa5b6726f",
+      "bytes": 333
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-reverse-scope-promotion.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-reverse-scope-promotion.stdout",
+      "sha256": "1f5e683304ca2825e1ac072747f9d90c42b2d34f9af20fc1666e003aa5b6726f",
+      "bytes": 333
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-reverse-unknown-package.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-reverse-unknown-package.stdout",
+      "sha256": "83d7f8f138c8ebff035ee4806d432ae59c1945a65d6cf02550007f6bae777b43",
+      "bytes": 277
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-review-body-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/historical-review-body-tamper.stdout",
+      "sha256": "90725cbb2b5354a771245ed4767b2d9390a9af4a4517830fe6afbc840a0454cf",
+      "bytes": 325
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/independent-review.json",
+      "sha256": "0dbcaedff449efa22a13311ebc2c56c3e1b6c1150a06980135bd4f6bb70f748b",
+      "bytes": 9506
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/input-freeze.json",
+      "sha256": "39d3f90a15ed4830ac64f66d71cc6591338e5bf097e3f3445b0a6ae937c84d42",
+      "bytes": 20071
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/check-generated-projection-negatives-6606.py",
+      "sha256": "b3ee56b215dce12da8092dabea1f4fcdba0356036b6474de4b0181a15e1879a1",
+      "bytes": 3641
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/check-historical-projection-guards.py",
+      "sha256": "236e5034267e53e3de3f25e0c55415e1a51babbf7e04fba66ff5292e6207ff55",
+      "bytes": 4343
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "sha256": "b231a86202b71684ebcb14056f4abf63a753f21f266e65c7c8541006559c91ad",
+      "bytes": 19470
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/check-native-case-integration.py",
+      "sha256": "b7435c69cee3e10e9393b3db05d0a0d7a671ce34cb3e8e5883b2b9ef84ab41ca",
+      "bytes": 4013
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/consolidate-historical-core-6606-attempt3.log",
+      "sha256": "fe9773d2cd20893b797062d29c6b422fd846089ec4ee4d476ce7328e0af08063",
+      "bytes": 63
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/consolidate-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/consolidate.py",
+      "sha256": "7f537e66665abab02bfdc15a4fe76edb3bc203ff548d3f758eb403f8438ffac0",
+      "bytes": 27293
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/core-canonical-question-projection-preparation-6606.json",
+      "sha256": "2b33d595fac20b3a381271d4753d02273213b5a32ffd41e14b007976a9bd223a",
+      "bytes": 1918
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/full-controls-historical-core-6606-attempt3.log",
+      "sha256": "5196edd1496b867b9a8040ecd68b131a42ab26a80a942f4ef95ccb9b74f6c28d",
+      "bytes": 2659
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/full-controls-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/generated-root-historical-core-6606-freeze.json",
+      "sha256": "0c476582decbc4dd3674e2f298ab688cce2d3a20093fb2985b43e8525ba30272",
+      "bytes": 12351
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/historical-projection-historical-core-6606-attempt3.log",
+      "sha256": "52a3bd4a08fad04237a688dd11c5f4b409022a6dea1a58fb61aaa63b2e2f72e2",
+      "bytes": 1946
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/historical-projection-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "sha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2",
+      "bytes": 7186
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/historical_projection.py",
+      "sha256": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0",
+      "bytes": 4251
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/native-historical-core-6606-attempt3.log",
+      "sha256": "e232e91d5e5cf4901fde6e77ed433bcf9c03006f6c53f23ae3e726ec469416f3",
+      "bytes": 625
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/native-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/observation_references.py",
+      "sha256": "448c7931e5128deb7537a6d492ffed4a260fcfa19c8250f2a46cc49b914c422f",
+      "bytes": 3809
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/preconsolidation-historical-core-6606-identities.json",
+      "sha256": "0e845b3311653945bbf1ab22d3638002b498e768e8dfbcf534e32d4129f5b347",
+      "bytes": 6114
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/strict-historical-core-6606-attempt3.log.gz",
+      "sha256": "e565d427dccf160ec0cdb72f8cf28b4097b9fd9abc7a2734dd1b3515452dbaa9",
+      "bytes": 606403
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/strict-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/structural-historical-core-6606-attempt3.log",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/structural-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json",
+      "sha256": "f4b51f0a738a51ae622de8af2b0db69282c25eb27a97b251bf0f1ed8f6c5344a",
+      "bytes": 511406
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/question-canonical-field-case-links.json",
+      "sha256": "3cc4f63844170386a77647c8d43e3ff50f457351408931aa9b9320967fcf7ce2",
+      "bytes": 183926
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json",
+      "sha256": "03be1df591838cc150259c164bb0b940a5241bb4f9b72f93bd448910e9781b52",
+      "bytes": 855209
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/stable-independent-review-receipt.json",
+      "sha256": "b6f59adce3b44c68edc2268c89fe24b47411c1771cc4680daeeba9c71e7e2787",
+      "bytes": 4170
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json.gz",
+      "sha256": "8004cda86abcc33d3fc6d9b98a0f82860421fbcb13ac23ab96cf4c84666d109f",
+      "bytes": 55883
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/runtime/case-proposals.json.gz",
+      "sha256": "847aec8cf8be00a3b4e23f22ffde6f0e4c182625e895fdc4c73b5351aea4ad7c",
+      "bytes": 3124778
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/runtime/inventory-fragment.json.gz",
+      "sha256": "ef57659d57d207e80b2569797b3d215adb55f0afed6919f7a00d7cc6f043e931",
+      "bytes": 1243882
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json.gz",
+      "sha256": "c2920915e8a6d6401877ee390e573e2f780bf1f7126c98d28cc3d6e4e9390559",
+      "bytes": 95673
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/config-acceptance-matrix.json.gz",
+      "sha256": "129b1249aff2161d180b3956fe8c4b448b03e17a544dd58159282a28da83aaec",
+      "bytes": 4077834
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/config-definition-current.md",
+      "sha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950",
+      "bytes": 33961
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/config-semantic-inventory.json.gz",
+      "sha256": "432c329334ca21eb75165aee5b3bb7670097555c993e1f13ef888ce97a06e5b5",
+      "bytes": 2259804
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749",
+      "bytes": 9091
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/mutants-0-13-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/mutants-0-13-attempt1.stdout",
+      "sha256": "5ecfbde1fbfa9034de48e0aaa35a50cf595c44b138841af5f0ee1ff681570317",
+      "bytes": 6037
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/mutants-13-25-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/mutants-13-25-attempt1.stdout",
+      "sha256": "45b0c33852bbe2de8c1ca7337024418c5cfa0876cc74ecb24f7d98fa8d2a22e6",
+      "bytes": 4845
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/mutants-25-27-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/mutants-25-27-attempt1.stdout",
+      "sha256": "17f225bde278ebf748e2d0490ceb2547e96a9be0a6dc7452fc6c91ca971cd327",
+      "bytes": 636
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/native-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/native-attempt1.stdout",
+      "sha256": "e232e91d5e5cf4901fde6e77ed433bcf9c03006f6c53f23ae3e726ec469416f3",
+      "bytes": 625
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/native-body-scope-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/native-body-scope-tamper.stdout",
+      "sha256": "d79b4e7a422be00e011e7d88e6e5bf918b6df73c28a882c8347a84a446a4aaa9",
+      "bytes": 273
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/native-count-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/native-count-tamper.stdout",
+      "sha256": "dbdd12c7c98303464857dd8d3afd8a1194da688e709a535a00c8967e4ebf636c",
+      "bytes": 308
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/native-opened-inputs.json",
+      "sha256": "2435dbeebb775ed7f80a1368ee1ae4cba5b88f004023d20516bbc2eb1e86b1bd",
+      "bytes": 2905
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/opened-input-union.json",
+      "sha256": "7bee890d30cda1e96b1cc743d688831d47165f2eba5e65bdead366edf5f3784d",
+      "bytes": 417407
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/pure-observation-result-promotion.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/pure-observation-result-promotion.stdout",
+      "sha256": "ef6a28be6cdfbe447f1ae62611ca964b9f5b999d6cd18f307aec7ab89a53f340",
+      "bytes": 260
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/pure-observation-scope-promotion.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/pure-observation-scope-promotion.stdout",
+      "sha256": "ef6a28be6cdfbe447f1ae62611ca964b9f5b999d6cd18f307aec7ab89a53f340",
+      "bytes": 260
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/pure-package-omission.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/pure-package-omission.stdout",
+      "sha256": "e6bd6b2c8809fe908fc05c39a2fe41964da49fcfb67dd56b93820b1ca371be73",
+      "bytes": 252
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/pure-package-source-digest-tamper.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/pure-package-source-digest-tamper.stdout",
+      "sha256": "e232f7d434c6fb4e24c2c217bc0b20159d7bcdf267c17f8cb55012bfdb0c6753",
+      "bytes": 347
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/restored-native-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/restored-native-attempt1.stdout",
+      "sha256": "e232e91d5e5cf4901fde6e77ed433bcf9c03006f6c53f23ae3e726ec469416f3",
+      "bytes": 625
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/restored-native-opened-inputs.json",
+      "sha256": "2435dbeebb775ed7f80a1368ee1ae4cba5b88f004023d20516bbc2eb1e86b1bd",
+      "bytes": 2905
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/restored-structural-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/restored-structural-attempt1.stdout",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/restored-structural-opened-inputs.json",
+      "sha256": "cce17a3c671feef4f1d56a5191f0545bf319022b1b50c00031c68ba257f2ddf5",
+      "bytes": 129864
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/run-audited.py",
+      "sha256": "dea668b4c93973d0f0d979538d712899aff82345d66bfc2ae05e572ec27ddfc4",
+      "bytes": 1010
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/runtime-package-and-advertisement-omitted.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/runtime-package-and-advertisement-omitted.stdout",
+      "sha256": "fe78e2d95ff2310ff0445c3b2499812282588cd9b3813c6090c7bc3a66c02f0a",
+      "bytes": 595727
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/runtime-package-omitted.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/runtime-package-omitted.stdout",
+      "sha256": "6513c7c88f53fa0eaf71022b032c16f6ba8146584021b4980860f630cc4fc95f",
+      "bytes": 595795
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/strict-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/strict-attempt1.stdout",
+      "sha256": "5069675d8e5674dadc41ba9ef6e26964a106bfcc8126f413b14dfe310b6bba25",
+      "bytes": 11237248
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/strict-opened-inputs.json",
+      "sha256": "50ee231db32925d44162b03abc16c41f2a4acfcdc73239090a1f693aef94e812",
+      "bytes": 417160
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/structural-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/structural-attempt1.stdout",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/structural-opened-inputs.json",
+      "sha256": "cce17a3c671feef4f1d56a5191f0545bf319022b1b50c00031c68ba257f2ddf5",
+      "bytes": 129864
+    }
+  ]
+}

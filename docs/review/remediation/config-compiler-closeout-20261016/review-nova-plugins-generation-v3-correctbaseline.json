@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The supplied changes consistently replace local defaults with selected policy values and preserve the original standard limits. No concrete actionable defect or security regression was identified in the provided bundle and adjacent context. Review was limited to source inspection; shell inspection was unavailable, and no tests or historical acceptance checks were run.",
+  "overall_confidence": 0.83
+}

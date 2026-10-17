@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-16T20:06:32.302849+00:00",
+  "sourceCommit": "667b3ed14d25c3a81a9b1f0551c19da1cfdf5f9d",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-prism-corpus-ranking-20261016",
+  "implemented": "Three existing Prism Control search policies now authored in every component-v3 profile and consumed by actual boot/composition/HTTP/direct search: coupled hybrid inner candidate cap and outer candidate floor, oversampling multiplier, numeric RRF damping. All selected SQL parameters captured before asynchronous query. Explicit closed v3 schema with safe PostgreSQL integer/product bounds. Original component-v2 profiles/API and original SQL remain separate and do not refill from current selection. Same six-component/root authority, normal Prism/Buster topology and image delivery retained.",
+  "checks": {
+    "focusedAndOriginalTests": {
+      "passed": 44,
+      "total": 44,
+      "failed": 0,
+      "skipped": 0
+    },
+    "finalEmbeddedDatabaseEffectTests": {
+      "passed": 5,
+      "total": 5,
+      "qualification": "PGlite embedded PostgreSQL/pgvector, NOT external/native PostgreSQL acceptance; real SQL effects, former A equality, both branches, candidate cap/floor, multiplier changes preferred result and RRF changes score"
+    },
+    "normalPackagedPrismRoleBootABAndHttpQuery": {
+      "passed": 1,
+      "total": 1
+    },
+    "normalPrismAndBusterImageDelivery": {
+      "passed": 8,
+      "total": 8
+    },
+    "strictSourceAndRegressionTypecheck": true,
+    "normalPrismAndBusterGeneratorsAndChecks": true,
+    "exactFullRosterPreservation": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0
+    },
+    "exactControlSourceMatrix": {
+      "originalFields": 14,
+      "sourceJoins": 13,
+      "remainingRoleField": 1,
+      "negativeControlsRejected": 8
+    }
+  },
+  "initialFailures": "Original Control test fixture mutated standard although actual selected binding is spiffe; fixture now mutates exact original selected profile without altering assertions. First DB effect fixture assumed independent text/vector top1 always same; aligned equal embeddings to make genuine rank witness deterministic. Production behavior/oracles were not weakened.",
+  "independentReview": "OPEN: no native spawn/reviewer tool exposed, active/recent CONFIG subagents=0, no new independent output; unchanged same-surface app-server EROFS not retried. Author-run checks are not independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allSemanticObligationsAccepted": false
+  },
+  "qualitySealedInputStoreImplemented": false,
+  "qualityProductiveBootImplemented": false,
+  "qualityActivationAllowed": false,
+  "fullC0C6Complete": false,
+  "remaining": [
+    "QB-R02 genuine source/build/baseline original ownership/reservation/spent accounting, sealed snapshots and prepublication validity; BUDGET_SOURCE_RECEIPT_REQUIRED remains",
+    "Coordinated sole-root/all-profile/schema/file-set/actual Nova receiving and delivery without denied-v10 promotion",
+    "Other exact source residuals remain, including Control editor-role selection and remaining original semantic joins",
+    "Fresh independent source and original integrated/history/native/archive full C0-C6 acceptance"
+  ],
+  "externalInfrastructure": "UNCHANGED: owner Raven; isolated Linux Docker/UID1000/delegated writable cgroup plus sufficiently large genuinely root-trusted writable archive filesystem; resume when supplied.",
+  "writerLock": "same nonblocking shared lock, released at bounded command exit"
+}

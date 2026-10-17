@@ -1,0 +1,2139 @@
+{
+  "scope": "C0 whole typed owner schema + actual CURRENT swarm-entry.v2 loader validation in disposable generated view; NOT target v3 runtime/profile publication or F-EFFECT/native proof",
+  "command": "node --input-type=module with Ajv2020 strict current staged six C1 schemas and loadSwarmSettings({SWARM_CONFIG: disposable explicit path})",
+  "nodeVersion": "v24.21.0",
+  "priorAttempt": {
+    "result": "failed before checks",
+    "diagnostic": "ENOENT: fixture assembly used package root instead of config generation directory; corrected only local inspection path",
+    "checksStarted": 0
+  },
+  "ownerSchemaResults": {
+    "prism-control": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/prism-control.schema.json",
+      "sha256": "748ac508068e2602baec902389083a6bccbf222a5b311e77f9ad45e795239976",
+      "valid": true,
+      "errors": []
+    },
+    "prism-studio": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/prism-studio.schema.json",
+      "sha256": "a29a69c498a79e947f04ea89de8288637891a56b4e0cdbb287981b5ff02460d9",
+      "valid": true,
+      "errors": []
+    },
+    "prism-worker": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/prism-worker.schema.json",
+      "sha256": "30a6358ba072f61607adee564db0fffcfefc43726ecab984651a8941f7697848",
+      "valid": true,
+      "errors": []
+    },
+    "prism-execution": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/prism-execution.schema.json",
+      "sha256": "5ff02d02d1f7a215a5c0bd5380b2af68510c2d1ea9118bd243f337f745d79b25",
+      "valid": true,
+      "errors": []
+    },
+    "buster-engine": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/buster-engine.schema.json",
+      "sha256": "10bea5b470973809cfa5dfad1af204cdac3ce33290dc6e74a933d95a956c425f",
+      "valid": true,
+      "errors": []
+    },
+    "worker-core": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/worker-core.schema.json",
+      "sha256": "8bd4f48d6beadab9e3c011663dac18e3361f1d6eab0b3ffa3bd1bcb0af6eff3c",
+      "valid": true,
+      "errors": []
+    }
+  },
+  "declaredProfiles": 154,
+  "currentLoaderObservations": [
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-pipelinePreferenceSubject",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-pipelinePreferenceSubject",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-artifactRoot",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-artifactRoot",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-studioPublicUrl",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-studioPublicUrl",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-port",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-port",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-dispatchTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-dispatchTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-port",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-port",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-controlTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-controlTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-controlUrl",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-controlUrl",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.port",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.port",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumActiveRequests",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumActiveRequests",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumProbeRequests",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumProbeRequests",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumConnections",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumConnections",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.requestTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.requestTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.shutdownTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.shutdownTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumInputBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumInputBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.uid",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.uid",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.gid",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.gid",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipRecords",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipRecords",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOutputBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOutputBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumJournalBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumJournalBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.pollIntervalMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.pollIntervalMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.drainTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.drainTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.closeTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.closeTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.cpuTimeMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.cpuTimeMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.memoryBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.memoryBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.tasks",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.tasks",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-maximumResultBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-maximumResultBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.memoryBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.memoryBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.tasks",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.tasks",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.timeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.timeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.cleanupTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.cleanupTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumActivePreparations",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumActivePreparations",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumPendingAdmissions",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumPendingAdmissions",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumRequestBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumRequestBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumExtractedBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumExtractedBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumHeaderBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumHeaderBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumMetadataBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumMetadataBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumRecords",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumRecords",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOwnershipBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOwnershipBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumJournalBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumJournalBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumInputBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumInputBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOutputBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOutputBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumResultBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumResultBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.pollIntervalMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.pollIntervalMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.drainTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.drainTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.closeTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.closeTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.tarTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.tarTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveEntries",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveEntries",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumListingLineBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumListingLineBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumTarStderrBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumTarStderrBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceEntries",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceEntries",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.sourceEntryReservationBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.sourceEntryReservationBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOpenFiles",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOpenFiles",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumActiveJobs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumActiveJobs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumQueuedJobs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumQueuedJobs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumConcurrentAttempts",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumConcurrentAttempts",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumExecutionMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumExecutionMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumOutputBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumOutputBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.cleanupTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.cleanupTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumResultBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumResultBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.claimGraceMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.claimGraceMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.queueTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.queueTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.workerResultWrapperBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.workerResultWrapperBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumProtocolBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumProtocolBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.terminationGraceMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.terminationGraceMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.terminationTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.terminationTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.minimumHeapMiB",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.minimumHeapMiB",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.heapFraction",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.heapFraction",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumPendingCapabilities",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumPendingCapabilities",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.minimumOpenFiles",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.minimumOpenFiles",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.artifactFileDescriptorReserve",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.artifactFileDescriptorReserve",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumAggregateResultBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumAggregateResultBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumSourceBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumSourceBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCases",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCases",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumFindings",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumFindings",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCaseFindings",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCaseFindings",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.memoryBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.memoryBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumOpenFiles",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumOpenFiles",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumOpenFiles",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumOpenFiles",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumHeapMiB",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumHeapMiB",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.heapFraction",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.heapFraction",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.observation.resourceSampleIntervalMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.observation.resourceSampleIntervalMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.observation.processSampleIntervalMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.observation.processSampleIntervalMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumResults",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumResults",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumClosures",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumClosures",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumIngressBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumIngressBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumRecords",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumRecords",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.cleanupTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.cleanupTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.terminationGraceMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.terminationGraceMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.acknowledgementPollMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.acknowledgementPollMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.kubectlExecutable",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.kubectlExecutable",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.drainTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.drainTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.cancellationTimeoutMs",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.cancellationTimeoutMs",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.replayLimit",
+      "side": "A",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.replayLimit",
+      "side": "B",
+      "valid": true,
+      "frozen": true,
+      "selectedGenerationFiles": 7
+    }
+  ],
+  "errors": [],
+  "implementationResults": "not-run",
+  "inputs": {
+    "pairs": "b55319790a1a95d1d949a6ee45f9f81b812fc5fd88d8288679bc174bb0039710",
+    "entry": "b22f9551a02c16c77a1d1b1ef896d6421660ad2202906bf6b67cfa5b0a16aece",
+    "owners": {
+      "prism-control": "4466bab264eed6a5c6f424e7ab6376aabc94da5901e406a118be2de94cd87cab",
+      "prism-studio": "7d41762022058b15e3e76a211d42259e847405459f3b3a675443db1e86ee3417",
+      "prism-worker": "9a4ab3fe97b0ba1a9c89faaa5e32cde9ecd70495072634635093cf38058084dc",
+      "prism-execution": "8e1339d636eb960c0e34901c4aa16cfc144ea3602756658d8e54c5b025ac18c2",
+      "buster-engine": "86a854be0fed7462b465b61a1d40a1a1d3de0657e9dd6b1f2ce04dfa245fa0f6",
+      "worker-core": "551a665b4b1a750cb706f555bb426604e086cf5cd1c9d31f590977998c349a26"
+    },
+    "actualLoader": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+    "actualBundleLoader": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "originalBWholeProfile": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/B/prism-control.config.json",
+    "sha256": "6f76ce3cd6dc016b2266e795c266edc567d11b27d7e96f29b50d659b961bd012",
+    "pointer": "/profiles/local-A"
+  },
+  "soleCurrentOwner": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/components/prism-control.config.json",
+    "sha256": "39f8b5b09de78c5881e744dca468afc9ecef61cb73b6095a684a8bdd5731ddbc",
+    "pointer": "/profiles/local-product-off"
+  },
+  "sourceConsumer": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/control/product-decisions.ts",
+    "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+  },
+  "actualSourceGate": "loadProductConfig returns undefined unless original PRISM_PRODUCT_DECISIONS_ENABLED equals true; proposed sameowner false generates this original ENV gate from exact admitted owner, not hot/latest override",
+  "history": "Old ready-product-off rejected stand and missing-profile observation remain immutable; this new full sameowner completeprofile/entry closes only local definition co-selection",
+  "nativeExecuted": false
+}

@@ -1,0 +1,1914 @@
+{
+  "qualification": "finite existing v7 collector prefix plus service-specific source/schema/JSON serializer/public response shim controls only; no listener/store/native/source key/grant/credential/provider/network activation",
+  "node": "v24.21.0",
+  "nodeExecutable": "/usr/local/bin/node",
+  "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+  "scriptSha256": "48dd71769d45bc0a4d430d0d6397b77ce0f98a07f2de757998b73abb497f449b",
+  "inheritedPrefixSource": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/check-correction.mjs",
+    "sha256": "5b4d985620bdb662ef8f90e170fa7c7b201b0e5a3f23d008f8c13c2159712a67"
+  },
+  "observations": [
+    {
+      "name": "physical full reviewed v7 all-owner/all-profile source closure plus ten service relations",
+      "pass": true,
+      "detail": {
+        "profiles": 94,
+        "fullGeneration": "same reviewed120-member source set; current-root/current-Security semantics reused; not all398 substantive review"
+      }
+    },
+    {
+      "name": "one exact original Buster runtime binding, public not grant",
+      "pass": true,
+      "detail": {
+        "binding": {
+          "role": "buster",
+          "owner": "buster-engine",
+          "instanceId": "fixture.service.buster-runtime",
+          "profileId": "provider-network-A"
+        },
+        "selected": {
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64,
+              "attemptEvidenceBytes": 1,
+              "attemptEvidenceFiles": 1,
+              "attemptLogBytes": 1,
+              "completionPhaseAllowance": 8,
+              "storeLockWaitSeconds": 5,
+              "tarDiagnosticCodeUnits": 4096,
+              "resultInputReserveMultiplier": 4
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000,
+                  "lockWaitSeconds": 5
+                },
+                "admission": {
+                  "maximumIngressBytes": 16777216,
+                  "maximumRecords": 10000,
+                  "maximumBytes": 268435456,
+                  "maximumQuarantineRecords": 1000,
+                  "maximumQuarantineBytes": 67108864,
+                  "lockWaitSeconds": 5,
+                  "metadataReserveBytes": 4011,
+                  "reasonPrefixCodeUnits": 180,
+                  "reasonThresholdCodeUnits": 256
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              },
+              "capabilityProviders": {
+                "directCommand": {
+                  "runtimeReadRoots": [
+                    "/usr/local/bin",
+                    "/usr/local/lib/node_modules",
+                    "/usr/bin",
+                    "/bin",
+                    "/usr/lib",
+                    "/lib",
+                    "/lib64",
+                    "/etc/ssl",
+                    "/etc/alternatives",
+                    "/fixture/direct-read-marker"
+                  ],
+                  "maximumOutputBytes": 16777216,
+                  "maximumExecutionMs": 900000,
+                  "maximumProcesses": 128,
+                  "maximumMemoryBytes": 4294967296,
+                  "maximumCpuMillis": 900000,
+                  "terminationGraceMs": 2000,
+                  "allowSampledProcessLimit": true
+                },
+                "containerBuild": {
+                  "repositoryPrefix": "kubeclaw/pipeline",
+                  "allowedPlatforms": [
+                    "linux/amd64",
+                    "linux/arm64"
+                  ],
+                  "allowedBuildArguments": [
+                    "NODE_ENV"
+                  ],
+                  "maximumLogBytes": 8388608,
+                  "maximumExecutionMs": 900000,
+                  "maximumManifestBytes": 16777216
+                },
+                "networkHttp": {
+                  "registryHealth": true,
+                  "allowedOrigins": [
+                    "https://fixture.invalid",
+                    "https://alternate.fixture.invalid"
+                  ],
+                  "allowedHostSuffixes": [],
+                  "allowedPorts": [
+                    443
+                  ],
+                  "allowedMethods": [
+                    "GET",
+                    "HEAD",
+                    "POST",
+                    "PUT",
+                    "PATCH",
+                    "DELETE",
+                    "OPTIONS"
+                  ],
+                  "allowedRequestHeaders": [
+                    "accept",
+                    "content-type",
+                    "idempotency-key",
+                    "x-proof"
+                  ],
+                  "allowWebSocket": true,
+                  "maximumRequestBytes": 1048576,
+                  "maximumResponseBytes": 4096,
+                  "maximumExecutionMs": 1000
+                },
+                "browserAccess": {
+                  "allowedOrigins": [
+                    "http://127.0.0.1:18080"
+                  ]
+                },
+                "browserAxe": {
+                  "allowedBrowsers": [
+                    "chromium",
+                    "firefox",
+                    "webkit"
+                  ],
+                  "maximumCombinations": 32,
+                  "maximumConcurrency": 4,
+                  "maximumExecutionMs": 120000,
+                  "maximumResultBytes": 16777216,
+                  "maximumScreenshots": 16,
+                  "maximumScreenshotBytes": 8388608
+                },
+                "browserLighthouse": {
+                  "maximumRuns": 80,
+                  "maximumExecutionMs": 180000,
+                  "maximumResultBytes": 67108864
+                },
+                "browserVisual": {
+                  "allowedBrowsers": [
+                    "chromium",
+                    "firefox",
+                    "webkit"
+                  ],
+                  "maximumCombinations": 64,
+                  "maximumConcurrency": 4,
+                  "maximumExecutionMs": 120000,
+                  "maximumResultBytes": 134217728,
+                  "maximumScreenshotBytes": 16777216,
+                  "maximumMasksPerCombination": 32
+                },
+                "browserPlaywright": {
+                  "allowedTargetPorts": [
+                    18080
+                  ],
+                  "readOnlyRoots": [
+                    "/app",
+                    "/ms-playwright",
+                    "/usr",
+                    "/lib",
+                    "/lib64",
+                    "/etc/fonts",
+                    "/etc/hosts",
+                    "/etc/nsswitch.conf",
+                    "/etc/resolv.conf",
+                    "/etc/ssl",
+                    "/proc",
+                    "/sys",
+                    "/dev",
+                    "/fixture/browser-read-marker"
+                  ],
+                  "maximumWorkers": 4,
+                  "maximumExecutionMs": 900000,
+                  "maximumOutputBytes": 16777216,
+                  "maximumResultBytes": 67108864,
+                  "maximumArtifactBytes": 268435456,
+                  "maximumArtifactFiles": 256,
+                  "maximumProcesses": 128,
+                  "maximumMemoryBytes": 4294967296,
+                  "maximumCpuMillis": 900000,
+                  "terminationGraceMs": 5000
+                },
+                "securityScan": {
+                  "allowedRegistryPrefixes": [
+                    "fixture-registry.invalid/kubeclaw"
+                  ],
+                  "maximumExecutionMs": 900000,
+                  "maximumOutputBytes": 67108864,
+                  "cacheDirectory": "/home/builder/.cache/trivy",
+                  "databasePolicy": {
+                    "maximumVulnerabilityAgeMs": 172800000,
+                    "maximumJavaAgeMs": 604800000,
+                    "maximumDatabaseBytes": 8589934592
+                  }
+                }
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                },
+                "maximumSecretReferenceEntries": 32
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            },
+            "remotePlanService": {
+              "host": "0.0.0.0",
+              "port": 18891,
+              "recordLimits": {
+                "maximumRecords": 10000,
+                "maximumBytes": 1073741824,
+                "maximumRecordBytes": 67108864
+              },
+              "maximumResultBytes": 67108864,
+              "maximumResultStoreBytes": 1073741824,
+              "maximumResponseBytes": 67108864,
+              "shutdownTimeoutMs": 15000,
+              "allowedCapabilities": [
+                "command.execute",
+                "container.build",
+                "kubernetes.fixture",
+                "kubernetes.exposure",
+                "network.http",
+                "browser.axe",
+                "browser.lighthouse",
+                "browser.visual",
+                "browser.playwright",
+                "security.scan",
+                "kubernetes.runtime-security"
+              ]
+            }
+          },
+          "activation": {
+            "buster": "enabled",
+            "preparation": "enabled",
+            "capabilityProviders": "all-eight-explicit-local-policy-roles-unaccepted-installed-grants"
+          }
+        },
+        "rootRawSha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+        "ownerRawSha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+        "activationAllowed": false
+      }
+    },
+    {
+      "name": "second original preparation binding",
+      "pass": true,
+      "detail": {
+        "binding": {
+          "role": "buster",
+          "owner": "buster-engine",
+          "instanceId": "fixture.service.buster-preparation",
+          "profileId": "local-A"
+        },
+        "selected": {
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64,
+              "attemptEvidenceBytes": 1,
+              "attemptEvidenceFiles": 1,
+              "attemptLogBytes": 1,
+              "completionPhaseAllowance": 8,
+              "storeLockWaitSeconds": 5,
+              "tarDiagnosticCodeUnits": 4096,
+              "resultInputReserveMultiplier": 4
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000,
+                  "lockWaitSeconds": 5
+                },
+                "admission": {
+                  "maximumIngressBytes": 16777216,
+                  "maximumRecords": 10000,
+                  "maximumBytes": 268435456,
+                  "maximumQuarantineRecords": 1000,
+                  "maximumQuarantineBytes": 67108864,
+                  "lockWaitSeconds": 5,
+                  "metadataReserveBytes": 4011,
+                  "reasonPrefixCodeUnits": 180,
+                  "reasonThresholdCodeUnits": 256
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              },
+              "capabilityProviders": {
+                "directCommand": {
+                  "runtimeReadRoots": [
+                    "/usr/local/bin",
+                    "/usr/local/lib/node_modules",
+                    "/usr/bin",
+                    "/bin",
+                    "/usr/lib",
+                    "/lib",
+                    "/lib64",
+                    "/etc/ssl",
+                    "/etc/alternatives",
+                    "/fixture/direct-read-marker"
+                  ],
+                  "maximumOutputBytes": 16777216,
+                  "maximumExecutionMs": 900000,
+                  "maximumProcesses": 128,
+                  "maximumMemoryBytes": 4294967296,
+                  "maximumCpuMillis": 900000,
+                  "terminationGraceMs": 2000,
+                  "allowSampledProcessLimit": true
+                },
+                "containerBuild": {
+                  "repositoryPrefix": "kubeclaw/pipeline",
+                  "allowedPlatforms": [
+                    "linux/amd64",
+                    "linux/arm64"
+                  ],
+                  "allowedBuildArguments": [
+                    "NODE_ENV"
+                  ],
+                  "maximumLogBytes": 8388608,
+                  "maximumExecutionMs": 900000,
+                  "maximumManifestBytes": 16777216
+                },
+                "networkHttp": {
+                  "registryHealth": true,
+                  "allowedOrigins": [
+                    "http://127.0.0.1:18080"
+                  ],
+                  "allowedHostSuffixes": [
+                    ".svc.cluster.local",
+                    ".ts.net"
+                  ],
+                  "allowedPorts": [
+                    18080
+                  ],
+                  "allowedMethods": [
+                    "DELETE",
+                    "GET",
+                    "HEAD",
+                    "OPTIONS",
+                    "PATCH",
+                    "POST",
+                    "PUT"
+                  ],
+                  "allowedRequestHeaders": [
+                    "accept",
+                    "authorization",
+                    "content-type",
+                    "cookie",
+                    "x-api-key"
+                  ],
+                  "allowWebSocket": false,
+                  "maximumRequestBytes": 1048576,
+                  "maximumResponseBytes": 16777216,
+                  "maximumExecutionMs": 120000
+                },
+                "browserAccess": {
+                  "allowedOrigins": [
+                    "http://127.0.0.1:18080"
+                  ]
+                },
+                "browserAxe": {
+                  "allowedBrowsers": [
+                    "chromium",
+                    "firefox",
+                    "webkit"
+                  ],
+                  "maximumCombinations": 32,
+                  "maximumConcurrency": 4,
+                  "maximumExecutionMs": 120000,
+                  "maximumResultBytes": 16777216,
+                  "maximumScreenshots": 16,
+                  "maximumScreenshotBytes": 8388608
+                },
+                "browserLighthouse": {
+                  "maximumRuns": 80,
+                  "maximumExecutionMs": 180000,
+                  "maximumResultBytes": 67108864
+                },
+                "browserVisual": {
+                  "allowedBrowsers": [
+                    "chromium",
+                    "firefox",
+                    "webkit"
+                  ],
+                  "maximumCombinations": 64,
+                  "maximumConcurrency": 4,
+                  "maximumExecutionMs": 120000,
+                  "maximumResultBytes": 134217728,
+                  "maximumScreenshotBytes": 16777216,
+                  "maximumMasksPerCombination": 32
+                },
+                "browserPlaywright": {
+                  "allowedTargetPorts": [
+                    18080
+                  ],
+                  "readOnlyRoots": [
+                    "/app",
+                    "/ms-playwright",
+                    "/usr",
+                    "/lib",
+                    "/lib64",
+                    "/etc/fonts",
+                    "/etc/hosts",
+                    "/etc/nsswitch.conf",
+                    "/etc/resolv.conf",
+                    "/etc/ssl",
+                    "/proc",
+                    "/sys",
+                    "/dev",
+                    "/fixture/browser-read-marker"
+                  ],
+                  "maximumWorkers": 4,
+                  "maximumExecutionMs": 900000,
+                  "maximumOutputBytes": 16777216,
+                  "maximumResultBytes": 67108864,
+                  "maximumArtifactBytes": 268435456,
+                  "maximumArtifactFiles": 256,
+                  "maximumProcesses": 128,
+                  "maximumMemoryBytes": 4294967296,
+                  "maximumCpuMillis": 900000,
+                  "terminationGraceMs": 5000
+                },
+                "securityScan": {
+                  "allowedRegistryPrefixes": [
+                    "fixture-registry.invalid/kubeclaw"
+                  ],
+                  "maximumExecutionMs": 900000,
+                  "maximumOutputBytes": 67108864,
+                  "cacheDirectory": "/home/builder/.cache/trivy",
+                  "databasePolicy": {
+                    "maximumVulnerabilityAgeMs": 172800000,
+                    "maximumJavaAgeMs": 604800000,
+                    "maximumDatabaseBytes": 8589934592
+                  }
+                }
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                },
+                "maximumSecretReferenceEntries": 32
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            },
+            "remotePlanService": {
+              "host": "0.0.0.0",
+              "port": 18891,
+              "recordLimits": {
+                "maximumRecords": 10000,
+                "maximumBytes": 1073741824,
+                "maximumRecordBytes": 67108864
+              },
+              "maximumResultBytes": 67108864,
+              "maximumResultStoreBytes": 1073741824,
+              "maximumResponseBytes": 67108864,
+              "shutdownTimeoutMs": 15000,
+              "allowedCapabilities": [
+                "command.execute",
+                "container.build",
+                "kubernetes.fixture",
+                "kubernetes.exposure",
+                "network.http",
+                "browser.axe",
+                "browser.lighthouse",
+                "browser.visual",
+                "browser.playwright",
+                "security.scan",
+                "kubernetes.runtime-security"
+              ]
+            }
+          },
+          "activation": {
+            "buster": "enabled",
+            "preparation": "enabled",
+            "capabilityProviders": "all-eight-explicit-local-policy-roles-unaccepted-installed-grants"
+          }
+        },
+        "rootRawSha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+        "ownerRawSha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+        "activationAllowed": false
+      }
+    },
+    {
+      "name": "service caller foreign request rejects",
+      "pass": true,
+      "error": "FOREIGN_SERVICE_REQUEST"
+    },
+    {
+      "name": "composite root grant rejects",
+      "pass": true,
+      "error": "FOREIGN_COMPOSITE_SERVICE_CALLER"
+    },
+    {
+      "name": "foreignrole service rejects",
+      "pass": true,
+      "error": "FOREIGN_COMPOSITE_SERVICE_CALLER"
+    },
+    {
+      "name": "whole original causal service pair host/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": "0.0.0.0"
+      }
+    },
+    {
+      "name": "whole original causal service pair host/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-4740ae6347b0",
+        "fieldNode": "127.0.0.1"
+      }
+    },
+    {
+      "name": "whole original causal service pair port/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": 18891
+      }
+    },
+    {
+      "name": "whole original causal service pair port/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-f8d397a33fcb",
+        "fieldNode": 18892
+      }
+    },
+    {
+      "name": "whole original causal service pair recordLimits.maximumRecords/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": 10000
+      }
+    },
+    {
+      "name": "whole original causal service pair recordLimits.maximumRecords/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-648c6607853d",
+        "fieldNode": 5000
+      }
+    },
+    {
+      "name": "whole original causal service pair recordLimits.maximumBytes/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": 1073741824
+      }
+    },
+    {
+      "name": "whole original causal service pair recordLimits.maximumBytes/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-f3335aafd745",
+        "fieldNode": 536870912
+      }
+    },
+    {
+      "name": "whole original causal service pair recordLimits.maximumRecordBytes/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": 67108864
+      }
+    },
+    {
+      "name": "whole original causal service pair recordLimits.maximumRecordBytes/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-1092ebbb0c19",
+        "fieldNode": 33554432
+      }
+    },
+    {
+      "name": "whole original causal service pair maximumResultBytes/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": 67108864
+      }
+    },
+    {
+      "name": "whole original causal service pair maximumResultBytes/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-7523b42a07dc",
+        "fieldNode": 33554432
+      }
+    },
+    {
+      "name": "whole original causal service pair maximumResultStoreBytes/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": 1073741824
+      }
+    },
+    {
+      "name": "whole original causal service pair maximumResultStoreBytes/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-897a04fc6ee2",
+        "fieldNode": 536870912
+      }
+    },
+    {
+      "name": "whole original causal service pair maximumResponseBytes/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": 67108864
+      }
+    },
+    {
+      "name": "whole original causal service pair maximumResponseBytes/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-543bff474a49",
+        "fieldNode": 33554432
+      }
+    },
+    {
+      "name": "whole original causal service pair shutdownTimeoutMs/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": 15000
+      }
+    },
+    {
+      "name": "whole original causal service pair shutdownTimeoutMs/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-017eabfd0aa9",
+        "fieldNode": 10000
+      }
+    },
+    {
+      "name": "whole original causal service pair allowedCapabilities/A",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "local-A",
+        "fieldNode": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      }
+    },
+    {
+      "name": "whole original causal service pair allowedCapabilities/B",
+      "pass": true,
+      "detail": {
+        "wholeProfile": "s-fc64e2c51ca4",
+        "fieldNode": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames local-A",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-a11483f8a7b64ced",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-2046200c4587ce21",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-c5d03b0768617a2f",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-1b977533b3fb85b8",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-1d34eb571422b5cc",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-89df19445374a1bd",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-c6c6a0ac00af67fc",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-4a2b71e1a65662bd",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-7c54fc03d9fbce5e",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-384a4bc4a8eabb56",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-622d026aa858b089",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-dcc66494f2abd8f7",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-61f4652426398e77",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-4332bc8053894f53",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-ab6c3c9a11207cae",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-f67e8217e7b1ae16",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-5a3c5a98191826c8",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-97739e468086dbc1",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-2ad8277b22a2d1dd",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-51d27362f259b511",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-7a6a65927f129867",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-687de7ca84aef6f7",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-8755828b499fa2be",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-2ade35785f8a4570",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-e41f7b45cbaf3110",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-2386fd6854b381b0",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-b6430dab7abad331",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-22ea9e1109d1c758",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-f2bfdbd2f5c926cc",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-3fcd2e20e8f6a673",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-1cadcb6d42fbd896",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-24ae168bc0826351",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-ae0fa5513821151f",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-5840bb3016bd16ef",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-a6ef90e7a3f2b9d6",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-dbee72df867fc3d7",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-97958117476b6c86",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-3498a6a25c30d03f",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-4e989d6c79a912c7",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-ba3331347ca0f10e",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-ae974a82a7697b02",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-af3f1e55971f194f",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-af7bbaf7bf7a0c31",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-4e475918bb45e3b2",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-d8900a81dc2d9334",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-d3f101816519da62",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-39c2255630b57c6f",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-42bd7fef7538bcfc",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-a9138ed0cbb17003",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-53065d33d503920e",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-f2d7db00f54176fc",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-72ef2195fecc6b63",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-7416bb3c4c0e1890",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-0f5db76521280914",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-55f1711a7356bf22",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-d8806e38e9b347d6",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-7a684888a2a928e6",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-ab25056587262ee7",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-cfceede020f18eea",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-e8e774580bf8020a",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-b866b7756703227a",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-070e0920b3744575",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-b3705c5f51c5b926",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-bebf1354663e26be",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-17fc819431b60ffa",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-a8274d882bf9f1d2",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-ffb5b6de976e8ca4",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-3793be64b1eabf50",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-dc6a0c6da1f41b40",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-0ad84d217cc00c9e",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-c3c56365fac260b8",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-c562b552e52575e8",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-2c12ac5d6634b127",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames v-3add766f6af568cd",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames local-B",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-4740ae6347b0",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-f8d397a33fcb",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-648c6607853d",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-f3335aafd745",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-1092ebbb0c19",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-7523b42a07dc",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-897a04fc6ee2",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-543bff474a49",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 33554432,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-017eabfd0aa9",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames s-fc64e2c51ca4",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames reason-threshold-A",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames network-only",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames command-disabled",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames browser-disabled",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames network-only-health-disabled",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames provider-network-A",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames security-source-A",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "actual encoded full control+normal+error frames security-https-source-A",
+      "pass": true,
+      "detail": {
+        "maximumResponseBytes": 67108864,
+        "actualFixedFloor": 97
+      }
+    },
+    {
+      "name": "current positive tiny cap violates fallback frame domain exposed",
+      "pass": true,
+      "detail": {
+        "currentConstructorOnlyAcceptsPositive": 1,
+        "fallbackBytes": 48,
+        "notTargetAccepted": true
+      }
+    },
+    {
+      "name": "derived97-byte readiness control floor exact",
+      "pass": true
+    },
+    {
+      "name": "oversized complete normal/error frame maps to native bounded fallback",
+      "pass": true,
+      "detail": "no truncation or status-as-success waiver; original result endpoint retains distinct maximumResultBytes"
+    },
+    {
+      "name": "selected/unselected full-generation provider-network-A/missingrequired",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/provider-network-A/settings/remotePlanService\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/remotePlanService/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maximumResultBytes\"},\"message\":\"must have required property 'maximumResultBytes'\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation provider-network-A/equaloldalias",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/provider-network-A/settings\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/additionalProperties\",\"keyword\":\"additionalProperties\",\"params\":{\"additionalProperty\":\"runtimeService\"},\"message\":\"must NOT have additional properties\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation provider-network-A/tinyresponse",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/provider-network-A/settings/remotePlanService/maximumResponseBytes\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/remotePlanService/properties/maximumResponseBytes/minimum\",\"keyword\":\"minimum\",\"params\":{\"comparison\":\">=\",\"limit\":97},\"message\":\"must be >= 97\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation provider-network-A/timerSignedOverflow",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/provider-network-A/settings/remotePlanService/shutdownTimeoutMs\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/remotePlanService/properties/shutdownTimeoutMs/maximum\",\"keyword\":\"maximum\",\"params\":{\"comparison\":\"<=\",\"limit\":2147483647},\"message\":\"must be <= 2147483647\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation provider-network-A/recordrelation",
+      "pass": true,
+      "error": "ONE_PAYLOAD_EXCEEDS_WHOLE_RECORD_STORE:provider-network-A"
+    },
+    {
+      "name": "selected/unselected full-generation provider-network-A/resultrelation",
+      "pass": true,
+      "error": "ONE_RESULT_EXCEEDS_RETAINED_STORE:provider-network-A"
+    },
+    {
+      "name": "selected/unselected full-generation provider-network-A/unkcap",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/provider-network-A/settings/remotePlanService/allowedCapabilities/11\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/remotePlanService/properties/allowedCapabilities/items/enum\",\"keyword\":\"enum\",\"params\":{\"allowedValues\":[\"command.execute\",\"container.build\",\"kubernetes.fixture\",\"kubernetes.exposure\",\"network.http\",\"browser.axe\",\"browser.lighthouse\",\"browser.visual\",\"browser.playwright\",\"security.scan\",\"kubernetes.runtime-security\"]},\"message\":\"must be equal to one of the allowed values\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation local-B/missingrequired",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/local-B/settings/remotePlanService\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/remotePlanService/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maximumResultBytes\"},\"message\":\"must have required property 'maximumResultBytes'\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation local-B/equaloldalias",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/local-B/settings\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/additionalProperties\",\"keyword\":\"additionalProperties\",\"params\":{\"additionalProperty\":\"runtimeService\"},\"message\":\"must NOT have additional properties\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation local-B/tinyresponse",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/local-B/settings/remotePlanService/maximumResponseBytes\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/remotePlanService/properties/maximumResponseBytes/minimum\",\"keyword\":\"minimum\",\"params\":{\"comparison\":\">=\",\"limit\":97},\"message\":\"must be >= 97\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation local-B/timerSignedOverflow",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/local-B/settings/remotePlanService/shutdownTimeoutMs\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/remotePlanService/properties/shutdownTimeoutMs/maximum\",\"keyword\":\"maximum\",\"params\":{\"comparison\":\"<=\",\"limit\":2147483647},\"message\":\"must be <= 2147483647\"}]"
+    },
+    {
+      "name": "selected/unselected full-generation local-B/recordrelation",
+      "pass": true,
+      "error": "ONE_PAYLOAD_EXCEEDS_WHOLE_RECORD_STORE:local-B"
+    },
+    {
+      "name": "selected/unselected full-generation local-B/resultrelation",
+      "pass": true,
+      "error": "ONE_RESULT_EXCEEDS_RETAINED_STORE:local-B"
+    },
+    {
+      "name": "selected/unselected full-generation local-B/unkcap",
+      "pass": true,
+      "error": "SCHEMA:provider03/components/buster-engine.schema.json:[{\"instancePath\":\"/profiles/local-B/settings/remotePlanService/allowedCapabilities/11\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/remotePlanService/properties/allowedCapabilities/items/enum\",\"keyword\":\"enum\",\"params\":{\"allowedValues\":[\"command.execute\",\"container.build\",\"kubernetes.fixture\",\"kubernetes.exposure\",\"network.http\",\"browser.axe\",\"browser.lighthouse\",\"browser.visual\",\"browser.playwright\",\"security.scan\",\"kubernetes.runtime-security\"]},\"message\":\"must be equal to one of the allowed values\"}]"
+    },
+    {
+      "name": "pending+completed+terminal retained reservation equal ceiling positive",
+      "pass": true
+    },
+    {
+      "name": "one-byte insufficient retained capacity rejects without recycle",
+      "pass": true,
+      "error": "PENDING_COMPLETED_RETAINED_RESULT_CAPACITY"
+    },
+    {
+      "name": "overflow retained addition rejects",
+      "pass": true,
+      "error": "PENDING_COMPLETED_RETAINED_RESULT_CAPACITY"
+    },
+    {
+      "name": "whole payload+record wrapper+index counts, not naked job/result quota",
+      "pass": true,
+      "detail": {
+        "payloadBytes": 438,
+        "wholeBytes": 773,
+        "qualification": "actual serializer, source-shaped byte accounting only; does not validate real job/input or construct store"
+      }
+    },
+    {
+      "name": "current key-before-store defect exact source order exposed",
+      "pass": true,
+      "detail": "target proposed preflight validates original Ed25519 issuer/key before registry, providers or store construction; current source remains unimplemented"
+    },
+    {
+      "name": "tar legacy string unread vs actual fixed native forwarding exact",
+      "pass": true,
+      "detail": "proposed bind original installed /usr/bin/tar/image/executable/root receipt, forward exact to existing native prep chain or explicitly reject incompatible lane; no PATH/default substitution or invented tar policy knob"
+    },
+    {
+      "name": "shutdown currenttwo relative timer stages and proposed one originaldeadline distinction",
+      "pass": true,
+      "detail": "bounded Node signedtimer only; target absolute original cleanup receiver required, no now+budget/currentB reset and no new epoch ledger"
+    },
+    {
+      "name": "Buster productive platform registry members vs Core-only adapter fields",
+      "pass": true,
+      "detail": "three productive grouped members installationRoots/trustedBuiltinRoots/externalTrust (four exact leaves); adapters{} is not ResolverPolicy.reportAdapters; accepted unused Core remainder preserved as dormant Buster, not removed/ghost tuning"
+    },
+    {
+      "name": "native signed timer and buffer/string domains are per-consumer, not blanket signed policy ceiling",
+      "pass": true,
+      "detail": {
+        "definitionCheckerNodeBuffer": 9007199254740991,
+        "definitionCheckerNodeString": 536870888,
+        "installedImage": "separate original exact native receipt; no assertion checker Node equals deployed native ABI",
+        "sourceSafeInteger": "original record/result scalars retain safe integer; actual payload/store serialization+read allocation checked at admission; total retained pool quota may exceed single buffer, never blanket cap"
+      }
+    },
+    {
+      "name": "actual original registry/package/registration/capability intersection pure predicate",
+      "pass": true,
+      "detail": "public opaque digest fixture only, not installed package or authentic signed grant; exact native predicate reused"
+    },
+    {
+      "name": "actual source authority rejection snapshot",
+      "pass": true,
+      "error": "BUSTER_REMOTE_REGISTRY_SNAPSHOT_MISMATCH"
+    },
+    {
+      "name": "actual source authority rejection contractmissing",
+      "pass": true,
+      "error": "BUSTER_REMOTE_PROVIDER_MISSING:http-node"
+    },
+    {
+      "name": "actual source authority rejection registration",
+      "pass": true,
+      "error": "BUSTER_REMOTE_PROVIDER_IDENTITY_MISMATCH:http-node"
+    },
+    {
+      "name": "actual source authority rejection packageversion",
+      "pass": true,
+      "error": "BUSTER_REMOTE_PROVIDER_IDENTITY_MISMATCH:http-node"
+    },
+    {
+      "name": "actual source authority rejection packagecontent",
+      "pass": true,
+      "error": "BUSTER_REMOTE_PROVIDER_IDENTITY_MISMATCH:http-node"
+    },
+    {
+      "name": "actual source authority rejection foreigngrant",
+      "pass": true,
+      "error": "BUSTER_REMOTE_CAPABILITY_DENIED:http-node:container.build"
+    },
+    {
+      "name": "native service S ceiling denial distinct from registry declaration",
+      "pass": true,
+      "error": "BUSTER_REMOTE_CAPABILITY_DENIED:http-node:network.http"
+    },
+    {
+      "name": "RFC8785 actual serializer rejects malformed numeric/unicode no quota fallback",
+      "pass": true
+    }
+  ],
+  "failures": 0,
+  "productiveCasesExecuted": 0,
+  "globalC0Accepted": false
+}

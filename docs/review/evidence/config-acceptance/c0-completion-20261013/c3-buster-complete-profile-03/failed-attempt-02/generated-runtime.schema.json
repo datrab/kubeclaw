@@ -1,0 +1,2156 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "platformConfig",
+    "host",
+    "port",
+    "sourceAttestationPublicKeyEnvironmentVariable",
+    "trustedSourceAuthority",
+    "stateRoot",
+    "runtimeRoot",
+    "tarExecutable",
+    "recordLimits",
+    "maximumResultBytes",
+    "maximumResultStoreBytes",
+    "maximumResponseBytes",
+    "shutdownTimeoutMs",
+    "allowedCapabilities"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "buster-remote-plan-runtime.v2"
+    },
+    "platformConfig": {
+      "const": "./platform.json"
+    },
+    "host": {
+      "type": "string",
+      "minLength": 1
+    },
+    "port": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "trustedPeerSpiffeIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "sourceAttestationPublicKeyEnvironmentVariable": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "trustedSourceAuthority": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stateRoot": {
+      "const": "/var/lib/buster-v2/plan-jobs"
+    },
+    "runtimeRoot": {
+      "const": "/var/lib/buster-v2/runs"
+    },
+    "tarExecutable": {
+      "const": "/usr/bin/tar"
+    },
+    "recordLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumRecords",
+        "maximumBytes",
+        "maximumRecordBytes"
+      ],
+      "properties": {
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumRecordBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "maximumResultBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "maximumResultStoreBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "maximumResponseBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "shutdownTimeoutMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "allowedCapabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "directCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "executableCatalog",
+        "executableSearchPath",
+        "runtimeReadRoots",
+        "maximumOutputBytes",
+        "maximumExecutionMs",
+        "maximumProcesses",
+        "maximumMemoryBytes",
+        "maximumCpuMillis",
+        "terminationGraceMs",
+        "allowSampledProcessLimit"
+      ],
+      "properties": {
+        "executableCatalog": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node",
+            "npm",
+            "python3",
+            "tar",
+            "cp"
+          ],
+          "properties": {
+            "node": {
+              "type": "string",
+              "minLength": 1
+            },
+            "npm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "python3": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tar": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cp": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "executableSearchPath": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "runtimeReadRoots": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "maximumOutputBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumProcesses": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumMemoryBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumCpuMillis": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "terminationGraceMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "allowSampledProcessLimit": {
+          "type": "boolean"
+        }
+      }
+    },
+    "containerBuild": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "buildctlExecutable",
+        "buildkitHost",
+        "registryBaseUrl",
+        "registryReference",
+        "repositoryPrefix",
+        "allowedPlatforms",
+        "allowedBuildArguments",
+        "maximumLogBytes",
+        "maximumExecutionMs",
+        "maximumManifestBytes"
+      ],
+      "properties": {
+        "buildctlExecutable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "buildkitHost": {
+          "type": "string",
+          "minLength": 1
+        },
+        "registryBaseUrl": {
+          "type": "string",
+          "pattern": "^https?://[a-z0-9.-]+(:[0-9]+)?$"
+        },
+        "registryReference": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+(:[0-9]+)?$"
+        },
+        "repositoryPrefix": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowedPlatforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowedBuildArguments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "maximumLogBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumManifestBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "registryUsernameEnvironmentVariable": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "registryPasswordEnvironmentVariable": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "registryCaFile": {
+          "type": "string",
+          "pattern": "^/[^\\r\\n\\u0000]+$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "registryBaseUrl"
+            ],
+            "properties": {
+              "registryBaseUrl": {
+                "type": "string",
+                "pattern": "^https:"
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "registryUsernameEnvironmentVariable",
+              "registryPasswordEnvironmentVariable"
+            ],
+            "properties": {
+              "registryUsernameEnvironmentVariable": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9_]+$"
+              },
+              "registryPasswordEnvironmentVariable": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9_]+$"
+              }
+            }
+          },
+          "else": {
+            "type": "object",
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "registryUsernameEnvironmentVariable"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "registryUsernameEnvironmentVariable": {
+                      "type": "string",
+                      "pattern": "^[A-Z][A-Z0-9_]+$"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "registryPasswordEnvironmentVariable"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "registryPasswordEnvironmentVariable": {
+                      "type": "string",
+                      "pattern": "^[A-Z][A-Z0-9_]+$"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "registryCaFile"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "registryCaFile": {
+                      "type": "string",
+                      "pattern": "^/[^\\r\\n\\u0000]+$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "clusterBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "controllerNamespace"
+      ],
+      "properties": {
+        "controllerNamespace": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "networkHttp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedOrigins",
+        "allowedHostSuffixes",
+        "allowedPorts",
+        "allowedMethods",
+        "allowedRequestHeaders",
+        "allowWebSocket",
+        "maximumRequestBytes",
+        "maximumResponseBytes",
+        "maximumExecutionMs"
+      ],
+      "properties": {
+        "registryHealth": {
+          "const": true
+        },
+        "allowedOrigins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowedHostSuffixes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowedPorts": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "uniqueItems": true
+        },
+        "allowedMethods": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowedRequestHeaders": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowWebSocket": {
+          "type": "boolean"
+        },
+        "maximumRequestBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumResponseBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "browserAxe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedOrigins",
+        "allowedBrowsers",
+        "maximumCombinations",
+        "maximumConcurrency",
+        "maximumExecutionMs",
+        "maximumResultBytes",
+        "maximumScreenshots",
+        "maximumScreenshotBytes"
+      ],
+      "properties": {
+        "allowedOrigins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowedBrowsers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "maximumCombinations": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumConcurrency": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumResultBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumScreenshots": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumScreenshotBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "browserLighthouse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedOrigins",
+        "chromeExecutable",
+        "maximumRuns",
+        "maximumExecutionMs",
+        "maximumResultBytes"
+      ],
+      "properties": {
+        "allowedOrigins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "chromeExecutable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maximumRuns": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumResultBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "browserVisual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedOrigins",
+        "allowedBrowsers",
+        "maximumCombinations",
+        "maximumConcurrency",
+        "maximumExecutionMs",
+        "maximumResultBytes",
+        "maximumScreenshotBytes",
+        "maximumMasksPerCombination"
+      ],
+      "properties": {
+        "allowedOrigins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowedBrowsers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "maximumCombinations": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumConcurrency": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumResultBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumScreenshotBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumMasksPerCombination": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "browserPlaywright": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedOrigins",
+        "allowedTargetPorts",
+        "playwrightExecutable",
+        "sandboxExecutable",
+        "runtimeNodeModules",
+        "browsersPath",
+        "readOnlyRoots",
+        "maximumWorkers",
+        "maximumExecutionMs",
+        "maximumOutputBytes",
+        "maximumResultBytes",
+        "maximumArtifactBytes",
+        "maximumArtifactFiles",
+        "maximumProcesses",
+        "maximumMemoryBytes",
+        "maximumCpuMillis",
+        "terminationGraceMs",
+        "cgroupRoot",
+        "runAsUid",
+        "runAsGid"
+      ],
+      "properties": {
+        "allowedOrigins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowedTargetPorts": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "uniqueItems": true
+        },
+        "playwrightExecutable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sandboxExecutable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtimeNodeModules": {
+          "type": "string",
+          "minLength": 1
+        },
+        "browsersPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readOnlyRoots": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "maximumWorkers": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumOutputBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumResultBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumArtifactBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumArtifactFiles": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumProcesses": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumMemoryBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumCpuMillis": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "terminationGraceMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "cgroupRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runAsUid": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "runAsGid": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "securityScan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registry",
+        "trivyExecutable",
+        "allowedRegistryPrefixes",
+        "maximumExecutionMs",
+        "maximumOutputBytes",
+        "cacheDirectory",
+        "databasePolicy"
+      ],
+      "properties": {
+        "registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "registryBaseUrl",
+            "registryReference"
+          ],
+          "properties": {
+            "registryBaseUrl": {
+              "type": "string",
+              "pattern": "^https?://[a-z0-9.-]+(:[0-9]+)?$"
+            },
+            "registryReference": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+(:[0-9]+)?$"
+            },
+            "registryCaFile": {
+              "type": "string",
+              "pattern": "^/[^\\r\\n\\u0000]+$"
+            },
+            "registryUsernameEnvironmentVariable": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]+$"
+            },
+            "registryPasswordEnvironmentVariable": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]+$"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "type": "object",
+                "required": [
+                  "registryBaseUrl"
+                ],
+                "properties": {
+                  "registryBaseUrl": {
+                    "type": "string",
+                    "pattern": "^https:"
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "required": [
+                  "registryUsernameEnvironmentVariable",
+                  "registryPasswordEnvironmentVariable"
+                ],
+                "properties": {
+                  "registryUsernameEnvironmentVariable": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]+$"
+                  },
+                  "registryPasswordEnvironmentVariable": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]+$"
+                  }
+                }
+              },
+              "else": {
+                "type": "object",
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "registryUsernameEnvironmentVariable"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "registryUsernameEnvironmentVariable": {
+                          "type": "string",
+                          "pattern": "^[A-Z][A-Z0-9_]+$"
+                        }
+                      }
+                    },
+                    {
+                      "required": [
+                        "registryPasswordEnvironmentVariable"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "registryPasswordEnvironmentVariable": {
+                          "type": "string",
+                          "pattern": "^[A-Z][A-Z0-9_]+$"
+                        }
+                      }
+                    },
+                    {
+                      "required": [
+                        "registryCaFile"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "registryCaFile": {
+                          "type": "string",
+                          "pattern": "^/[^\\r\\n\\u0000]+$"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "trivyExecutable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowedRegistryPrefixes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "maximumExecutionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumOutputBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "cacheDirectory": {
+          "type": "string",
+          "minLength": 1
+        },
+        "databasePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumVulnerabilityAgeMs",
+            "maximumJavaAgeMs",
+            "maximumDatabaseBytes"
+          ],
+          "properties": {
+            "maximumVulnerabilityAgeMs": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maximumJavaAgeMs": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maximumDatabaseBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          }
+        }
+      }
+    },
+    "tokenEnvironmentVariable": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "registryPeer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registryBaseUrl",
+        "registryReference"
+      ],
+      "properties": {
+        "registryBaseUrl": {
+          "type": "string",
+          "pattern": "^https?://[a-z0-9.-]+(:[0-9]+)?$"
+        },
+        "registryReference": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+(:[0-9]+)?$"
+        },
+        "registryCaFile": {
+          "type": "string",
+          "pattern": "^/[^\\r\\n\\u0000]+$"
+        },
+        "registryUsernameEnvironmentVariable": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "registryPasswordEnvironmentVariable": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "registryBaseUrl"
+            ],
+            "properties": {
+              "registryBaseUrl": {
+                "type": "string",
+                "pattern": "^https:"
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "registryUsernameEnvironmentVariable",
+              "registryPasswordEnvironmentVariable"
+            ],
+            "properties": {
+              "registryUsernameEnvironmentVariable": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9_]+$"
+              },
+              "registryPasswordEnvironmentVariable": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9_]+$"
+              }
+            }
+          },
+          "else": {
+            "type": "object",
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "registryUsernameEnvironmentVariable"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "registryUsernameEnvironmentVariable": {
+                      "type": "string",
+                      "pattern": "^[A-Z][A-Z0-9_]+$"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "registryPasswordEnvironmentVariable"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "registryPasswordEnvironmentVariable": {
+                      "type": "string",
+                      "pattern": "^[A-Z][A-Z0-9_]+$"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "registryCaFile"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "registryCaFile": {
+                      "type": "string",
+                      "pattern": "^/[^\\r\\n\\u0000]+$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "tls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "keyPath",
+        "certificatePath"
+      ],
+      "properties": {
+        "keyPath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "certificatePath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000]+$"
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "required": [
+        "trustedPeerSpiffeIds"
+      ],
+      "not": {
+        "required": [
+          "tokenEnvironmentVariable"
+        ],
+        "properties": {
+          "tokenEnvironmentVariable": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          }
+        },
+        "type": "object"
+      },
+      "properties": {
+        "trustedPeerSpiffeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 32
+        }
+      },
+      "type": "object"
+    },
+    {
+      "required": [
+        "tokenEnvironmentVariable"
+      ],
+      "not": {
+        "required": [
+          "trustedPeerSpiffeIds"
+        ],
+        "properties": {
+          "trustedPeerSpiffeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 32
+          }
+        },
+        "type": "object"
+      },
+      "properties": {
+        "tokenEnvironmentVariable": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        }
+      },
+      "type": "object"
+    }
+  ],
+  "$id": "https://kubeclaw.invalid/proposed/c3-buster-complete-profile-02/generatedruntime",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "const": "command.execute"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "directCommand"
+        ],
+        "properties": {
+          "directCommand": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "executableCatalog",
+              "executableSearchPath",
+              "runtimeReadRoots",
+              "maximumOutputBytes",
+              "maximumExecutionMs",
+              "maximumProcesses",
+              "maximumMemoryBytes",
+              "maximumCpuMillis",
+              "terminationGraceMs",
+              "allowSampledProcessLimit"
+            ],
+            "properties": {
+              "executableCatalog": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "node",
+                  "npm",
+                  "python3",
+                  "tar",
+                  "cp"
+                ],
+                "properties": {
+                  "node": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "npm": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "python3": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tar": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "cp": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "executableSearchPath": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "runtimeReadRoots": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "maximumOutputBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumExecutionMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumProcesses": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumMemoryBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumCpuMillis": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "terminationGraceMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "allowSampledProcessLimit": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "directCommand": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "const": "container.build"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "containerBuild"
+        ],
+        "properties": {
+          "containerBuild": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "buildctlExecutable",
+              "buildkitHost",
+              "registryBaseUrl",
+              "registryReference",
+              "repositoryPrefix",
+              "allowedPlatforms",
+              "allowedBuildArguments",
+              "maximumLogBytes",
+              "maximumExecutionMs",
+              "maximumManifestBytes",
+              "registryUsernameEnvironmentVariable",
+              "registryPasswordEnvironmentVariable"
+            ],
+            "properties": {
+              "buildctlExecutable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "buildkitHost": {
+                "type": "string",
+                "minLength": 1
+              },
+              "registryBaseUrl": {
+                "type": "string",
+                "minLength": 1
+              },
+              "registryReference": {
+                "type": "string",
+                "minLength": 1
+              },
+              "repositoryPrefix": {
+                "type": "string",
+                "minLength": 1
+              },
+              "allowedPlatforms": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowedBuildArguments": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "maximumLogBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumExecutionMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumManifestBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "registryUsernameEnvironmentVariable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "registryPasswordEnvironmentVariable": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "containerBuild": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "const": "network.http"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "networkHttp"
+        ],
+        "properties": {
+          "networkHttp": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "allowedOrigins",
+              "allowedHostSuffixes",
+              "allowedPorts",
+              "allowedMethods",
+              "allowedRequestHeaders",
+              "allowWebSocket",
+              "maximumRequestBytes",
+              "maximumResponseBytes",
+              "maximumExecutionMs"
+            ],
+            "properties": {
+              "registryHealth": {
+                "const": true
+              },
+              "allowedOrigins": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowedHostSuffixes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowedPorts": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "uniqueItems": true
+              },
+              "allowedMethods": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowedRequestHeaders": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowWebSocket": {
+                "type": "boolean"
+              },
+              "maximumRequestBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumResponseBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumExecutionMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "networkHttp": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "const": "browser.axe"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "browserAxe"
+        ],
+        "properties": {
+          "browserAxe": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "allowedOrigins",
+              "allowedBrowsers",
+              "maximumCombinations",
+              "maximumConcurrency",
+              "maximumExecutionMs",
+              "maximumResultBytes",
+              "maximumScreenshots",
+              "maximumScreenshotBytes"
+            ],
+            "properties": {
+              "allowedOrigins": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowedBrowsers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "maximumCombinations": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumConcurrency": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumExecutionMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumResultBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumScreenshots": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumScreenshotBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "browserAxe": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "const": "browser.lighthouse"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "browserLighthouse"
+        ],
+        "properties": {
+          "browserLighthouse": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "allowedOrigins",
+              "chromeExecutable",
+              "maximumRuns",
+              "maximumExecutionMs",
+              "maximumResultBytes"
+            ],
+            "properties": {
+              "allowedOrigins": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "chromeExecutable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "maximumRuns": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumExecutionMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumResultBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "browserLighthouse": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "const": "browser.visual"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "browserVisual"
+        ],
+        "properties": {
+          "browserVisual": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "allowedOrigins",
+              "allowedBrowsers",
+              "maximumCombinations",
+              "maximumConcurrency",
+              "maximumExecutionMs",
+              "maximumResultBytes",
+              "maximumScreenshotBytes",
+              "maximumMasksPerCombination"
+            ],
+            "properties": {
+              "allowedOrigins": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowedBrowsers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "maximumCombinations": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumConcurrency": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumExecutionMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumResultBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumScreenshotBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumMasksPerCombination": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "browserVisual": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "const": "browser.playwright"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "browserPlaywright"
+        ],
+        "properties": {
+          "browserPlaywright": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "allowedOrigins",
+              "allowedTargetPorts",
+              "playwrightExecutable",
+              "sandboxExecutable",
+              "runtimeNodeModules",
+              "browsersPath",
+              "readOnlyRoots",
+              "maximumWorkers",
+              "maximumExecutionMs",
+              "maximumOutputBytes",
+              "maximumResultBytes",
+              "maximumArtifactBytes",
+              "maximumArtifactFiles",
+              "maximumProcesses",
+              "maximumMemoryBytes",
+              "maximumCpuMillis",
+              "terminationGraceMs",
+              "cgroupRoot",
+              "runAsUid",
+              "runAsGid"
+            ],
+            "properties": {
+              "allowedOrigins": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowedTargetPorts": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "uniqueItems": true
+              },
+              "playwrightExecutable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sandboxExecutable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "runtimeNodeModules": {
+                "type": "string",
+                "minLength": 1
+              },
+              "browsersPath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "readOnlyRoots": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "maximumWorkers": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumExecutionMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumOutputBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumResultBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumArtifactBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumArtifactFiles": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumProcesses": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumMemoryBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumCpuMillis": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "terminationGraceMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "cgroupRoot": {
+                "type": "string",
+                "minLength": 1
+              },
+              "runAsUid": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "runAsGid": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "browserPlaywright": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "const": "security.scan"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "securityScan"
+        ],
+        "properties": {
+          "securityScan": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "registry",
+              "trivyExecutable",
+              "allowedRegistryPrefixes",
+              "maximumExecutionMs",
+              "maximumOutputBytes",
+              "cacheDirectory",
+              "databasePolicy"
+            ],
+            "properties": {
+              "registry": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "registryBaseUrl",
+                  "registryReference",
+                  "registryUsernameEnvironmentVariable",
+                  "registryPasswordEnvironmentVariable"
+                ],
+                "properties": {
+                  "registryBaseUrl": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "registryReference": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "registryUsernameEnvironmentVariable": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "registryPasswordEnvironmentVariable": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "trivyExecutable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "allowedRegistryPrefixes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "maximumExecutionMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumOutputBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "cacheDirectory": {
+                "type": "string",
+                "minLength": 1
+              },
+              "databasePolicy": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "maximumVulnerabilityAgeMs",
+                  "maximumJavaAgeMs",
+                  "maximumDatabaseBytes"
+                ],
+                "properties": {
+                  "maximumVulnerabilityAgeMs": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "maximumJavaAgeMs": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "maximumDatabaseBytes": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                }
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "securityScan": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowedCapabilities": {
+            "contains": {
+              "enum": [
+                "kubernetes.fixture",
+                "kubernetes.exposure",
+                "kubernetes.runtime-security"
+              ]
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "allowedCapabilities"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "clusterBindings"
+        ],
+        "properties": {
+          "clusterBindings": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "controllerNamespace"
+            ],
+            "properties": {
+              "controllerNamespace": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "clusterBindings": false
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "anyOf": [
+          {
+            "properties": {
+              "allowedCapabilities": {
+                "contains": {
+                  "enum": [
+                    "container.build",
+                    "security.scan",
+                    "kubernetes.fixture"
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "allowedCapabilities"
+            ],
+            "type": "object"
+          },
+          {
+            "properties": {
+              "networkHttp": {
+                "properties": {
+                  "registryHealth": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "registryHealth"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "networkHttp"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "then": {
+        "required": [
+          "registryPeer"
+        ],
+        "properties": {
+          "registryPeer": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "registryBaseUrl",
+              "registryReference",
+              "registryUsernameEnvironmentVariable",
+              "registryPasswordEnvironmentVariable"
+            ],
+            "properties": {
+              "registryBaseUrl": {
+                "type": "string",
+                "minLength": 1
+              },
+              "registryReference": {
+                "type": "string",
+                "minLength": 1
+              },
+              "registryUsernameEnvironmentVariable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "registryPasswordEnvironmentVariable": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "registryPeer": false
+        },
+        "type": "object"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "command": "python3 docs/review/evidence/config-acceptance/author/check-matrix.py --structural",
+  "exitCode": 0,
+  "settings": 2409,
+  "cases": 6845,
+  "errorCount": 0,
+  "scope": "draft integrity only"
+}

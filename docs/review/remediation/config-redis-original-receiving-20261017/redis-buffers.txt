@@ -1,0 +1,11 @@
+✔ selected Redis budgets control both actual publishers and preserve captured A after source removal (20.532515ms)
+✔ selected Redis reply budgets reach actual socket decoder with restored positive and fragmented input (4.59011ms)
+✔ Redis missing invalid and competing limits reject before network connection (2.371431ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 724.585053

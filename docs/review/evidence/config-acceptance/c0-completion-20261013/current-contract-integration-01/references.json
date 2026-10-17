@@ -1,0 +1,58 @@
+{
+  "scope": "Normative proposed contract reference integration only; preserves original fields/cases and immutable reviewed proposal versions. Not global C0 or implementation acceptance.",
+  "authorProfileBase": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/entry-profile-contract.json",
+    "sha256": "324898891188e6ac833b76e1924ba663f67be0f47cf7c9a6d63b2ce9254fd8b4"
+  },
+  "consumedOwnerAndLifetimeAuthorityOverlay": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-03/active-contract-overlay.json",
+    "sha256": "0a86812b374ad9b95376790a1051143127807fcdbced3bc8fa932780a9822250"
+  },
+  "singleFinalReceiverGuardCorrection": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-04/README.md",
+    "sha256": "d3b22c62eb17270f051cd0f910dc49e6abb94740c5c7fdd673f9bb4a41dda034"
+  },
+  "reviewedDeliveryChain": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-delivery-module-contract-review-02/README.md",
+      "sha256": "bd7d0a66c1604915cd9498c3348cbb10c1aeb3f62e85a3c0f4773b8a78513b97"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-delivery-module-contract-review-03/README.md",
+      "sha256": "ef0ba39e60132c897245b5d55485b8cddeffb2b0f2dcf8db5c4ecd4fb64b04d6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-delivery-module-contract-review-04/README.md",
+      "sha256": "a30ce79c54d9176ae88cc24254da2e8bad4a70f7cce27868b9a53bde5ef56634"
+    }
+  ],
+  "entryFixtureBindingSupersession": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/entry-selections.json",
+    "sha256": "1ebac33ae079ef85c52ef58b5002bb9a1712facc6848e1ece46cf1010c5ddafe"
+  },
+  "caseFixtureReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/README.md",
+    "sha256": "bfd13f801a72aaed294439d3373ff665a4ebaab9d0018a368b6552b47b749cbd"
+  },
+  "reportBehaviorGrouping": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/report-resource-grouping-decision-01/decision.json",
+    "sha256": "fae4aa15f8f5e5a6611449725b2d12b758c7be4201e7c831bc3993ff5d4a8d5c"
+  },
+  "reportObserverPrecision": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/report-resource-grouping-decision-01/observer-precision.json",
+    "sha256": "ec0939086a59ffb299a8991268b64d570a2919cefed7b3e6c5310d93bae5683e"
+  },
+  "reportGroupingReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/grouping-addendum-02/README.md",
+    "sha256": "1b3f1bd4e7fd5d3ff23c44cb3788c54a235bc67e3cfe6898a6557c656fc3d637"
+  },
+  "semanticPrecedence": [
+    "Original physicalauthor paths/sourcebodies/caseIDs/requirements remain historical protected inputs.",
+    "One six-owner file layout/profile domain remains baseline; consumed-owner caller selection and exact lifetime/effect receiver deltas supersede conflicting prospective full-facade semantics by explicit delivery03/04 overlays.",
+    "Whole profiles/settings pairs02 remain exact; only active local fixture roottuple/callerprojection selection translates by03.",
+    "Two normative reportbehavior groups reuseoriginalIDs with preciseFD/AS/heap native attribution; scalar relation guards remain independentFVAL; allfuturecasesnotrun."
+  ],
+  "knownGlobalBlocks": "WholeC0 readiness review01 WCR01\u201308 plus pending policy02/materialreview; complete C3/provider/agent/fullfieldpartition/source/case/package work not accepted.",
+  "globalC0Accepted": false,
+  "implementationAuthorization": null
+}

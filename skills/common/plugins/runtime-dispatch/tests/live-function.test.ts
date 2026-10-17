@@ -1,3 +1,7 @@
+import { TEST_CORE_POLICY as DISPATCH_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_OPENCLAW_DISPATCH_POLICY=DISPATCH_TEST_CORE_POLICY.openClawDispatch;
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -12,16 +16,16 @@ import { registeredSessionIdentity } from '../src/openclaw-session.ts';
 import { activate as activateRemoteDispatch } from '../src/adapter.ts';
 
 assert.throws(() => activateRemoteDispatch({
-  config: { targets: { remote: {
+  config: { ...DISPATCH_TEST_CORE_POLICY.httpDispatch, targets: { remote: {
     endpoint: 'http://runtime.example.test/dispatch',
-    authentication: 'hmac', tokenSecret: 'runtime.remote',
+    byteProfile:'standard', authentication: 'hmac', tokenSecret: 'runtime.remote',
   } } },
 } as never), /RUNTIME_CONFIG_INVALID:plaintextHmac:remote/u,
 'HMAC credentials and signed payloads must not cross an external plaintext transport');
 assert.doesNotThrow(() => activateRemoteDispatch({
-  config: { targets: { local: {
+  config: { ...DISPATCH_TEST_CORE_POLICY.httpDispatch, targets: { local: {
     endpoint: 'http://127.0.0.1:8080/dispatch',
-    authentication: 'hmac', tokenSecret: 'runtime.local',
+    byteProfile:'standard', authentication: 'hmac', tokenSecret: 'runtime.local',
   } } },
 } as never), 'loopback HTTP remains available for local provider processes');
 
@@ -250,11 +254,14 @@ const adapters = new core.AdapterRuntime({
   activated,
   configs: new Map([
     ['kubeclaw.runtime-dispatch:runtime', {
+      payloadStructure: DISPATCH_TEST_CORE_POLICY.httpDispatch.payloadStructure,
+      targetByteProfiles:{fixture:{maxRequestBytes:1024,maxResponseBytes:1048576}},
       targets: {
-        reviewer: { endpoint: `${origin}/dispatch`, tokenSecret: 'runtime.agent', maxRequestBytes: 1024 },
+        reviewer: { endpoint: `${origin}/dispatch`, tokenSecret: 'runtime.agent', byteProfile:'fixture' },
       },
     }],
     ['kubeclaw.network-http:http', {
+      errorExcerptCharacters: DISPATCH_TEST_CORE_POLICY.networkHttp.errorExcerptCharacters,
       allowedOrigins: [origin],
       allowedMethods: ['POST'],
       allowedHeaders: ['authorization', 'content-type', 'idempotency-key', 'x-kubeclaw-signature'],
@@ -262,16 +269,16 @@ const adapters = new core.AdapterRuntime({
       maxResponseBytes: 2048,
       timeoutMs: 1000,
     }],
-    ['kubeclaw.repository-adapter:repository', {
+    ['kubeclaw.repository-adapter:repository', {...ARTIFACT_TEST_CORE_POLICY.repositoryRead,
       repositoryRoot: repository,
       maxFileBytes: 2048,
     }],
-    ['kubeclaw.artifact-store:artifact-store', {
+    ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY,
       artifactRoot: path.join(repository, '.swarm', 'runtime-dispatch-test', 'artifacts'),
     }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'runtime.agent': environmentName } }],
   ]),
-  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000, DISPATCH_TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });
@@ -357,7 +364,8 @@ try {
     granted: gatewayGranted,
     activated: gatewayActivated,
     configs: new Map([
-      ['kubeclaw.runtime-dispatch:openclaw', {
+      ['kubeclaw.runtime-dispatch:openclaw', { ...TEST_OPENCLAW_DISPATCH_POLICY,
+        targetTimingProfiles:{fixture:{...TEST_OPENCLAW_DISPATCH_POLICY.targetTimingProfiles.standard,pollMs:10,maxPollMs:20,maxPolls:2,sessionTimeoutMs:1000}},
         targets: {
           gateway: {
             endpoint: `${origin}/tools/invoke`,
@@ -370,15 +378,13 @@ try {
             thinking: 'high',
             cwd: gatewayCwd,
             repositoryRoot: repository,
-            pollMs: 10,
-            maxPollMs: 20,
-            maxPolls: 2,
-            sessionTimeoutMs: 1_000,
+            timingProfile: 'fixture',
             resultPathPrefix: '.swarm/runtime-dispatch-test/work/results',
           },
         },
       }],
       ['kubeclaw.network-http:http', {
+      errorExcerptCharacters: DISPATCH_TEST_CORE_POLICY.networkHttp.errorExcerptCharacters,
         allowedOrigins: [origin],
         allowedMethods: ['GET', 'POST'],
         allowedHeaders: ['authorization', 'content-type'],
@@ -386,11 +392,11 @@ try {
         maxResponseBytes: 16_384,
         timeoutMs: 1000,
       }],
-      ['kubeclaw.repository-adapter:repository', {
+      ['kubeclaw.repository-adapter:repository', {...ARTIFACT_TEST_CORE_POLICY.repositoryRead,
         repositoryRoot: repository,
         maxFileBytes: 16_384,
       }],
-      ['kubeclaw.artifact-store:artifact-store', {
+      ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY,
         artifactRoot: path.join(repository, '.swarm', 'runtime-dispatch-test', 'gateway-artifacts'),
       }],
       ['kubeclaw.secret-resolver:secrets', { environment: { 'runtime.agent': environmentName } }],
@@ -399,7 +405,7 @@ try {
       gatewayJournal,
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(), 300_000,
+      new core.MemoryResourceLockManager(), 300_000, DISPATCH_TEST_CORE_POLICY.resourceAcquisition,
     ),
     shutdownTimeoutMs: 1000,
     async emitDomainEvent() {},

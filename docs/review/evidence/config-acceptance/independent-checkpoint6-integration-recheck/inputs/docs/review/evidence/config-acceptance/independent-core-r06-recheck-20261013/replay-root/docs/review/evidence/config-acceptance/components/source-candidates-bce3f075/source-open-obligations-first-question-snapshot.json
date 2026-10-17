@@ -1,0 +1,635 @@
+{
+  "questions": [
+    {
+      "id": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "class": "operator-policy",
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 185,
+              "text": "async function acquireKernelLock("
+            },
+            {
+              "line": 189,
+              "text": "    \"/usr/bin/flock\","
+            },
+            {
+              "line": 192,
+              "text": "      \"--timeout\","
+            },
+            {
+              "line": 193,
+              "text": "      \"5\","
+            },
+            {
+              "line": 195,
+              "text": "      \"/bin/sh\","
+            },
+            {
+              "line": 244,
+              "text": "export async function withDurableStoreLock<T>("
+            },
+            {
+              "line": 265,
+              "text": "    );"
+            }
+          ]
+        }
+      ],
+      "reason": "Current real kernel lock acquisition timeout5seconds consumed by durable record/blob/attempt/admission/outbox stores; cannot be equated with Core native routing width or taskexecutiontimeout. Shared caller/component author and target wait-vs-originalclaim/IO closure relation unresolved.",
+      "proposedOwnerDisposition": "Shared foundation policy author unresolved; runtime agent verified no existing corresponding row",
+      "existingAliasIds": [],
+      "caseIds": [
+        "CMP-SOURCE-FOUNDATION-FLOCK-WAIT"
+      ],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "class": "operator-policy",
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 104,
+              "text": "const ADMISSION_METADATA_RESERVE = 1024;"
+            },
+            {
+              "line": 445,
+              "text": "  constructor(directory: string, limits: AdmissionStoreLimits) {"
+            },
+            {
+              "line": 448,
+              "text": "      limits.maximumBytes <= ADMISSION_METADATA_RESERVE"
+            },
+            {
+              "line": 504,
+              "text": "    if (Buffer.byteLength(canonicalJson(state)) > this.#limits.maximumBytes)"
+            },
+            {
+              "line": 541,
+              "text": "        this.#limits.maximumBytes - ADMISSION_METADATA_RESERVE"
+            }
+          ]
+        }
+      ],
+      "reason": "Current1024-byte metadata headroom controls actual admission/quarantine capacity; actual overflow canonical UTF8 representation and chosen diagnostic/attributed producer/run fields must be projected together. Constant1024 not established sufficient/fundamental by constructorpositive alone.",
+      "proposedOwnerDisposition": "Shared admission-storage owner/caller registration unresolved",
+      "existingAliasIds": [],
+      "caseIds": [
+        "CMP-SOURCE-ADMISSION-METADATA-RESERVE"
+      ],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "class": "uncovered-productive-reader",
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 111,
+              "text": "export async function readDurableState<T>("
+            },
+            {
+              "line": 114,
+              "text": "  maximumBytes?: number,"
+            },
+            {
+              "line": 117,
+              "text": "    if (maximumBytes === undefined) return JSON.parse(await fs.readFile(file, \"utf8\")) as T;"
+            },
+            {
+              "line": 366,
+              "text": "      const state = await readDurableState(this.#file, EMPTY_OUTBOX);"
+            },
+            {
+              "line": 394,
+              "text": "      const state = await readDurableState(this.#file, EMPTY_OUTBOX);"
+            },
+            {
+              "line": 406,
+              "text": "      const state = await readDurableState(this.#file, EMPTY_OUTBOX);"
+            },
+            {
+              "line": 432,
+              "text": "      const state = await readDurableState(this.#file, EMPTY_OUTBOX);"
+            }
+          ]
+        }
+      ],
+      "reason": "FileProducerOutbox four actual reads omit configured maximumBytes; genuinepending accepted32833-byte file despite1024 configured cap, explicitbounded read rejects. Existing selected caller quota is appropriate obligation, not new quota/default; approved repair must apply to every actualread without resetting history.",
+      "proposedOwnerDisposition": "Actual outbox owning caller/component registration required; do not invent Core quota author",
+      "existingAliasIds": [],
+      "caseIds": [
+        "CMP-SOURCE-OUTBOX-UNBOUNDED-READ"
+      ],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "class": "operator-policy",
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "lines": [
+            {
+              "line": 466,
+              "text": "  #reason(reason: string): string {"
+            },
+            {
+              "line": 467,
+              "text": "    return reason.length <= 256"
+            },
+            {
+              "line": 469,
+              "text": "      : `${reason.slice(0, 180)}:sha256:${createHash(\"sha256\").update(reason).digest(\"hex\")}`;"
+            },
+            {
+              "line": 480,
+              "text": "        ...attributed,"
+            },
+            {
+              "line": 481,
+              "text": "        itemId: `quarantine-overflow:${attributed.pipelineRunId}`,"
+            },
+            {
+              "line": 499,
+              "text": "      lastReason: this.#reason(reason),"
+            }
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+          "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+          "lines": [
+            {
+              "line": 88,
+              "text": "  replayObject(overflow, ['count', 'lastReceivedAt', 'lastReason', 'lastRawDigest', 'lastRawBytes'], 'admission-overflow');"
+            },
+            {
+              "line": 90,
+              "text": "  replayAssert(typeof overflow.lastReason === 'string' && /^sha256:[a-f0-9]{64}$/.test(overflow.lastRawDigest) && Number.isSafeInteger(overflow.lastRawBytes) && overflow.lastRawBytes >= 0, 'admission-overflow-digest');"
+            }
+          ]
+        }
+      ],
+      "reason": "Current reasonthreshold256UTF16 units and retainedprefix180+hash suffix are distinct actual formatter members. Replay onlychecks string, no matchingmaxlength. Their physical serializedbyte/reserve1024 relation is not proven; do not borrow Core diagnostic4096 or call256 a wire invariant.",
+      "proposedOwnerDisposition": "Shared foundation admission diagnosticpolicy/owner unresolved",
+      "existingAliasIds": [],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "class": "operator-policy",
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+          "sha256": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+          "lines": [
+            {
+              "line": 13,
+              "text": "): Promise<void> {"
+            },
+            {
+              "line": 51,
+              "text": "      else if (code !== 0) reject(new Error(`BUSTER_REMOTE_TAR_FAILED:${code}:${terminationSignal ?? ''}:${stderr.toString('utf8').slice(-4096)}`));"
+            }
+          ]
+        }
+      ],
+      "reason": "Actual failedtar process stderr decodedUTF8 then trailing4096UTF16 units copied to BUSTER_REMOTE_TAR_FAILED. Selected archive/header limits bound process I/O but do not author this diagnostic cap; same4096Core diagnosis value doesnot establish same contract.",
+      "proposedOwnerDisposition": "Propose same existing buster-engine owner preparation diagnostic field, exact domain/profile/effect cases still open",
+      "existingAliasIds": [],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "class": "task-domain-or-policy-question",
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+          "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+          "lines": [
+            {
+              "line": 108,
+              "text": "    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', 32, SECRET_NAME);"
+            },
+            {
+              "line": 109,
+              "text": "    if (secretReferences.some((name) => !settings.secretReferences.has(name))) {"
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+          "sha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad",
+          "lines": [
+            {
+              "line": 27,
+              "text": "export function stringArray(value: unknown, label: string, maximum: number, pattern?: RegExp): string[] {"
+            },
+            {
+              "line": 28,
+              "text": "    if (!Array.isArray(value) || value.length > maximum"
+            },
+            {
+              "line": 29,
+              "text": "        || value.some((item) => typeof item !== 'string' || item.length < 1 || item.length > 253"
+            }
+          ]
+        }
+      ],
+      "reason": "Current requested secretReferences maximum32 before selected allowlist authorization. Need actual published request/controller contract or justified operatorpolicy classification; raw boundedness alone does not establish32 fundamental. Secret values never collected.",
+      "proposedOwnerDisposition": "Buster fixture role; existing allowlist author distinct from requested countcap",
+      "existingAliasIds": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences"
+      ],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "class": "task-domain-or-policy-question",
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+          "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f",
+          "lines": [
+            {
+              "line": 4,
+              "text": "    const quantity = text(value, 'persistentVolumeClaim.storage', 64);"
+            },
+            {
+              "line": 18,
+              "text": "        : parsed[4] ? Number.parseInt(parsed[4].slice(1), 10) : 0;"
+            },
+            {
+              "line": 19,
+              "text": "    if (!Number.isSafeInteger(exponent) || Math.abs(exponent) > 63) {"
+            },
+            {
+              "line": 20,
+              "text": "        throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);"
+            },
+            {
+              "line": 26,
+              "text": "    if (numerator < 1n || numerator % denominator !== 0n) {"
+            }
+          ]
+        }
+      ],
+      "reason": "Current quantitytextmax64 and BigInt decimal exponent magnitude<=63 parser gate. Need exact actual Kubernetes quantity/control capability contract vs resource-cost policy classification; do not invent63 as universal Kubernetes maximum.",
+      "proposedOwnerDisposition": "Buster fixture request/storage capability role; underlying validator/consumer domain requires source review",
+      "existingAliasIds": [],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "class": "generated-observation-proof-gap",
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+          "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+          "lines": [
+            {
+              "line": 212,
+              "text": "    try { facts = processFacts(this.#child.pid ?? -1); }"
+            },
+            {
+              "line": 253,
+              "text": "      cpuTimeMs: Math.max(this.#resources.cpuTimeMs, Number(reported.cpuTimeMs ?? 0)),"
+            },
+            {
+              "line": 254,
+              "text": "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, Number(reported.maximumMemoryBytes ?? 0)),"
+            },
+            {
+              "line": 255,
+              "text": "      maximumProcesses: Math.max(this.#resources.maximumProcesses, Number(reported.maximumProcesses ?? 1)),"
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+          "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c",
+          "lines": [
+            {
+              "line": 104,
+              "text": "      const measured = state.instance?.resources() ?? { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 0 };"
+            },
+            {
+              "line": 105,
+              "text": "      return { cpuTimeMs: Math.ceil(measured.cpuTimeMs ?? 0),"
+            },
+            {
+              "line": 106,
+              "text": "        maximumMemoryBytes: Math.ceil(measured.maximumMemoryBytes ?? 0),"
+            },
+            {
+              "line": 107,
+              "text": "        maximumProcesses: Math.ceil(measured.maximumProcesses ?? 0) };"
+            }
+          ]
+        }
+      ],
+      "reason": "Current provider resources combine sampledactual counters and reportedmissing defaults0/1; operation missinginstance returns0 measurements. Determine actual no-launch/failedinitialize/sampling/close branches before saying these numbers are real measurements. Never authorize CONFIG to fill unavailable observation or claim completed requested-budget success.",
+      "proposedOwnerDisposition": "Actual Buster provider/runner resource observation contracts; not an operator to set fake measurements",
+      "existingAliasIds": [],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "class": "declared-unused-vs-real-consumer",
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/preparation-config.ts",
+          "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+          "lines": [
+            {
+              "line": 23,
+              "text": "  const launcher = '/usr/local/libexec/kubeclaw-native-worker-launcher';"
+            },
+            {
+              "line": 38,
+              "text": "    nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile), tarExecutable: '/usr/bin/tar' });"
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+          "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+          "lines": [
+            {
+              "line": 45,
+              "text": "        cgroupRoot: native.pool.cgroupRoot, tarExecutable: native.tarExecutable,"
+            },
+            {
+              "line": 46,
+              "text": "        trustedSourceAuthority: native.trustedSourceAuthority, sourceAttestationPublicKey: native.sourceAttestationPublicKey },"
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/preparation-command.ts",
+          "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+          "lines": [
+            {
+              "line": 44,
+              "text": "      BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES: String(settings.maximumInputBytes),"
+            },
+            {
+              "line": 45,
+              "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT: config.sourceRoot,"
+            },
+            {
+              "line": 48,
+              "text": "      BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY: config.sourceAttestationPublicKey,"
+            }
+          ]
+        }
+      ],
+      "reason": "Generated runtime.tarExecutable nonemptyvalidated butunused; nativepreparation config hardcodes/usr/bin/tar, transported through closedassignedENV to actual host/archive. No equal-value alias/current F-EFFECT under runtime.tarExecutable may be claimed. Canonical target must choose sole existing owner/path/provisioning and realtar A/B; current declarations preserved.",
+      "proposedOwnerDisposition": "Components realreader + delivery provisioning/declaredunused currentfield handoff",
+      "existingAliasIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-TAREXECUTABLE"
+      ],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "class": "parent-policy-or-contract-question",
+      "sourceEvidence": [
+        {
+          "path": "skills/prism/server/agent-routes.ts",
+          "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+          "lines": [
+            {
+              "line": 60,
+              "text": "  if (!input.projectId || input.designs?.length !== 3)"
+            }
+          ]
+        }
+      ],
+      "reason": "Productive designrounds guard exact3designs; no source invariant identified that makes3 untunable. Parent must trace generation/prompt/service/UI contract and decide policy vs versionedcontract without Buster authority.",
+      "proposedOwnerDisposition": "Parent Prism source handoff; no existing named parentID yet",
+      "existingAliasIds": [],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "class": "generated-binding-provenance",
+      "sourceEvidence": [
+        {
+          "path": "skills/prism/engine/worker-envelope.ts",
+          "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+          "lines": [
+            {
+              "line": 9,
+              "text": ""
+            },
+            {
+              "line": 10,
+              "text": "const engineContentDigest = prismEngineContentDigest()"
+            },
+            {
+              "line": 11,
+              "text": "  || sha256Digest({ engineId: \"prism-design-engine\", engineVersion: \"1.0.0\", development: true });"
+            }
+          ]
+        },
+        {
+          "path": "skills/prism/config/native-worker.ts",
+          "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+          "lines": [
+            {
+              "line": 7,
+              "text": "export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {"
+            },
+            {
+              "line": 8,
+              "text": "  const digest = environment.PRISM_ENGINE_CONTENT_DIGEST?.trim();"
+            },
+            {
+              "line": 9,
+              "text": "  if (environment.NODE_ENV === 'production' && !/^sha256:[a-f0-9]{64}$/u.test(digest ?? '')) {"
+            },
+            {
+              "line": 10,
+              "text": "    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');"
+            },
+            {
+              "line": 35,
+              "text": "  if (!/^sha256:[a-f0-9]{64}$/u.test(engineContentDigest ?? '')) throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');"
+            }
+          ]
+        }
+      ],
+      "reason": "Production requires syntax-validsha256 from OCI projection; development fallback hashes synthetic engineId/version/development object, not package bytes. Preserve dev-vs-production source distinction and authentic implementation binding beforedispatch; do not use fallback as code-tree proof.",
+      "proposedOwnerDisposition": "Parent Prism+delivery exactrole provenance handoff",
+      "existingAliasIds": [
+        "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION"
+      ],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "class": "generated-binding-owner-handoff",
+      "sourceEvidence": [
+        {
+          "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+          "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+          "lines": [
+            {
+              "line": 109,
+              "text": "    this.#environment = { PATH: process.env.PATH, KUBECONFIG: process.env.KUBECONFIG,"
+            },
+            {
+              "line": 110,
+              "text": "      KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,"
+            },
+            {
+              "line": 111,
+              "text": "      KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT };"
+            }
+          ]
+        }
+      ],
+      "reason": "RealTailscale child whitelist copies ambient PATH/KUBECONFIG/KUBERNETES_SERVICE_HOST/PORT, unlike selectedruntimeSecurity executableSearchPath. Exact Kubernetes/runtime credential/reference/host injection authority and captured generation must be traced; no equal-name currentsecret/path author invented.",
+      "proposedOwnerDisposition": "Delivery runtime credential/cluster physicalcontext handoff remains unresolved",
+      "existingAliasIds": [],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "class": "latent-public-API",
+      "sourceEvidence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+          "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+          "lines": [
+            {
+              "line": 32,
+              "text": "    positiveInteger(maximumBytes, \"DURABLE_BLOB_LIMIT_INVALID\");"
+            },
+            {
+              "line": 34,
+              "text": "    this.#maximumTotalBytes = maximumTotalBytes;"
+            },
+            {
+              "line": 46,
+              "text": "    if (this.#maximumTotalBytes === undefined) return this.#put(input);"
+            },
+            {
+              "line": 47,
+              "text": "    await ensureDirectoryDurable(this.#root);"
+            }
+          ]
+        },
+        {
+          "path": "skills/worker/core/worker/native-attempt-journal.ts",
+          "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+          "lines": [
+            {
+              "line": 35,
+              "text": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+            }
+          ]
+        }
+      ],
+      "reason": "Optional maximumTotalBytes undefined disables totalbudget/lock. Repository search identifies7 actual productive construction sites all pass explicit totalcap; test-onlylivefunction omits. Preserve directpublicAPI negative/positive removal/requiredprojection obligation, not claim an active unbounded Corejournal.",
+      "proposedOwnerDisposition": "Generic foundation API contract; existing each actualcaller quota remains soleauthor",
+      "existingAliasIds": [],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    },
+    {
+      "id": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "class": "delivery-physical-source-handoff",
+      "sourceEvidence": [
+        {
+          "path": "skills/worker/core/worker/native-pool-policy.ts",
+          "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+          "lines": [
+            {
+              "line": 24,
+              "text": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 65536) {"
+            },
+            {
+              "line": 34,
+              "text": "  if (value?.schemaVersion !== 1 || value.role !== role || typeof value.nodeName !== 'string' || !value.nodeName"
+            },
+            {
+              "line": 35,
+              "text": "    || typeof value.policyDigest !== 'string' || !/^[a-f0-9]{64}$/u.test(value.policyDigest)) throw new Error('WORKER_NATIVE_POOL_POLICY_INVALID');"
+            }
+          ]
+        },
+        {
+          "path": "scripts/prepare-native-worker-pools.mjs",
+          "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+          "lines": [
+            {
+              "line": 14,
+              "text": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size > 65536) throw new Error('NATIVE_SETUP_POLICY_NOT_TRUSTED');"
+            },
+            {
+              "line": 27,
+              "text": "  if (pool.memoryBytes % 4096 || pool.cpuPeriodMicroseconds < 1000 || pool.cpuPeriodMicroseconds > 1000000"
+            },
+            {
+              "line": 28,
+              "text": "    || pool.cpuQuotaMicroseconds < 1000) throw new Error('NATIVE_SETUP_LIMIT_INVALID');"
+            },
+            {
+              "line": 74,
+              "text": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size > 4096) throw new Error('NATIVE_SETUP_RUNTIME_IDENTITY_NOT_TRUSTED');"
+            }
+          ]
+        }
+      ],
+      "reason": "Wholehost policy input cap65536 distinctfrom Core rolepool doc cap; runtimeidentitycap4096 samephysicalfile aliases soleCore cap. ActualCPU scheduler period/range/pagealignment have physicalhostconstraints, not universal Coreconstant. Runtimepool policyDigest/nodeName validation still syntactic; no recomputation/placement proof magically closed.",
+      "proposedOwnerDisposition": "Delivery11 explicitcurrentprovisioning contracts + existing genuine Core pool provenance gap",
+      "existingAliasIds": [
+        "DLV-NATIVE-SETUP-POLICY-DOCUMENT-BYTES",
+        "DLV-NATIVE-SETUP-RUNTIME-IDENTITY-BYTES",
+        "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION",
+        "CMP-WCORE-POOL-PROVENANCE"
+      ],
+      "caseIds": [],
+      "status": "explicit unresolved definition/ownership/case obligation; no author acceptance",
+      "requiredResolution": "Independently resolve exact producer/consumer/sole-author and supported target relation; preserve actual current source/domain and old evidence. Do not invent maximum/profile/observation."
+    }
+  ],
+  "scope": "Exact source closure questions/handoffs, no invented limits or new author",
+  "acceptance": "Not global C0/runtime acceptance"
+}

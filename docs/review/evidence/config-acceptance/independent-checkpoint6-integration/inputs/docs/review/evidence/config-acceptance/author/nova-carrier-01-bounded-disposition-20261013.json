@@ -1,0 +1,38 @@
+{
+  "id": "NOVA-CARRIER-01-BOUNDED-DISPOSITION-20261013",
+  "scope": "Only the named written ordering correction and coherent source-constraint wording; not completion of the module carrier, canonical field coverage or runtime acceptance",
+  "findingDisposition": {
+    "id": "NOVA-CARRIER-01",
+    "status": "verified-written-order-correction",
+    "basis": "Mandatory original-first step1 applies EVERYinvocation before anycurrentB select/parse/validation orpackageactivation. Original authenticatedrunlocator/storeauthority independentofB; retainedA+dependencyclosure used without B. Missing/conflictinghistoricalclosure rejects/reconciles. Only genuinelyunstartedgroup preparesB; synchronized recheck originalwins before onecompleteappend."
+  },
+  "verifiedInputIdentities": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/independent-review.json",
+      "sha256": "c276cfedf6a33dd9a73feb3d02aa8b602484676eb4a3b4a055a9156c6ba2e2ba"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-recheck-20261013/independent-recheck.json",
+      "sha256": "71c4615d7a9e1080fa40133377bd2377847166aa8ed99d72fc9e5b8364fe94b1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-carrier-01-correction-20261013.json",
+      "sha256": "c4c6005d340b320b584876af6fbd27a3bb9d2b44a74537893eafc402a5b82722"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "4d740674cf8ac876b8cc7cdf0c7566da2d7b26976ccfe31615b4c6defd95846f"
+    }
+  ],
+  "globalC0Accepted": false,
+  "rowOrRuntimeAcceptanceInferred": false,
+  "futureTargetCasesRun": 0,
+  "remainingOpen": [
+    "ExactstrictSDKschema,eventversionedcodec/graphsnapshot evolution and task/operator partition",
+    "Complete M/J/R/S/H fieldmaps/originalauthority/grant/secret/role/code/manifest closure and accounting compatibility",
+    "Exactmetadata/store/referencepayload/physicalcapacity contract and legacy authenticatedevidence",
+    "Concrete executable cross-reader parallel/crash/skip/Eval/cleanup/administrativecases and completeprofiles/commands",
+    "Parallel async validation-failure/interveningoriginal timing must be specified/exercised in those futurecases; bounded logicalvalidcandidate recheck is not that executionproof",
+    "Fresh wholeC0review/acceptance"
+  ]
+}

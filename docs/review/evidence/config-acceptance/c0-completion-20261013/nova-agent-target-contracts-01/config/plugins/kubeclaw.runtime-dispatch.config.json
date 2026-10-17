@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "pipeline-registration-policy.v1",
+  "packageId": "kubeclaw.runtime-dispatch",
+  "registrationId": "kubeclaw.runtime-dispatch:openclaw",
+  "instanceId": "fixture.runtime-dispatch",
+  "profiles": {
+    "A": {
+      "processing": {
+        "targets": {
+          "case-target-a": {
+            "endpoint": "http://127.0.0.1:18080/tools/invoke",
+            "tokenSecret": "case.gateway.token",
+            "runtime": "subagent",
+            "agentId": "codex",
+            "agentRole": "fixture-runtime-role",
+            "model": "synthetic-provider/model-a",
+            "thinking": "high",
+            "collectorMode": false,
+            "spawnIntervalMs": 1500,
+            "tokenizerEncoding": "o200k_base",
+            "maxPromptBytes": 900000,
+            "maxInputTokens": 120000,
+            "maxOutputTokens": 6000,
+            "maxContextTokens": 128000,
+            "cwd": "/fixture/repository",
+            "repositoryRoot": "/fixture/repository",
+            "workspaceRoot": "/fixture/worktrees",
+            "pollMs": 1000,
+            "maxPollMs": 15000,
+            "maxPolls": 1800,
+            "sessionTimeoutMs": 1800000,
+            "resultPathPrefix": "results/fixture"
+          },
+          "case-target-b": {
+            "endpoint": "http://127.0.0.1:18080/tools/invoke",
+            "tokenSecret": "case.gateway.token",
+            "runtime": "subagent",
+            "agentId": "codex",
+            "agentRole": "fixture-runtime-role",
+            "model": "synthetic-provider/model-a",
+            "thinking": "high",
+            "collectorMode": false,
+            "spawnIntervalMs": 1500,
+            "tokenizerEncoding": "o200k_base",
+            "maxPromptBytes": 900000,
+            "maxInputTokens": 120000,
+            "maxOutputTokens": 6000,
+            "maxContextTokens": 128000,
+            "cwd": "/fixture/repository",
+            "repositoryRoot": "/fixture/repository",
+            "workspaceRoot": "/fixture/worktrees",
+            "pollMs": 1000,
+            "maxPollMs": 15000,
+            "maxPolls": 1800,
+            "sessionTimeoutMs": 1800000,
+            "resultPathPrefix": "results/fixture"
+          },
+          "prism": {
+            "endpoint": "http://127.0.0.1:18080/tools/invoke",
+            "tokenSecret": "case.gateway.token",
+            "runtime": "subagent",
+            "agentId": "codex",
+            "agentRole": "fixture-runtime-role",
+            "model": "synthetic-provider/model-a",
+            "thinking": "high",
+            "collectorMode": false,
+            "spawnIntervalMs": 1500,
+            "tokenizerEncoding": "o200k_base",
+            "maxPromptBytes": 900000,
+            "maxInputTokens": 120000,
+            "maxOutputTokens": 6000,
+            "maxContextTokens": 128000,
+            "cwd": "/fixture/repository",
+            "repositoryRoot": "/fixture/repository",
+            "workspaceRoot": "/fixture/worktrees",
+            "pollMs": 1000,
+            "maxPollMs": 15000,
+            "maxPolls": 1800,
+            "sessionTimeoutMs": 1800000,
+            "resultPathPrefix": "results/fixture"
+          }
+        }
+      }
+    }
+  }
+}

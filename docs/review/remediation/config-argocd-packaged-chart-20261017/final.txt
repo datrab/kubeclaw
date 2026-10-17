@@ -1,0 +1,12 @@
+✔ Prism database and migration prerequisites precede its Argo migration hook and all application deployments (138.053425ms)
+✔ all standalone data claims and PostgreSQL-generated claims retain data on Argo prune/delete (214.373127ms)
+✔ an external database selection does not create a phantom migration hook or PostgreSQL data claim (65.625945ms)
+✔ every standalone claim has a same-wave consumer, including backup storage before its first schedule (143.24173ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1146.212416

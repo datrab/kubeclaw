@@ -1,0 +1,198 @@
+from pathlib import Path
+import json,hashlib,copy,struct
+R=Path('/home/node/.openclaw/workspace/kubeclaw-config-c0');B=R/'docs/review/evidence/config-acceptance/c0-completion-20261013';O=B/'same-entry-role-browser-binding-01';E=B/'same-entry-engine-binding-01';C=B/'same-entry-engine-binding-02';W=B/'browser-provider-contracts-01';G=B/'gateway-openclaw-profile-02'
+inputs={};cache={}
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def load(p):
+ p=Path(p);p=p if p.is_absolute() else R/p;inputs[str(p)]=sha(p)
+ if str(p) not in cache:cache[str(p)]=json.loads(p.read_text())
+ return copy.deepcopy(cache[str(p)])
+def write(n,x):
+ p=O/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,indent=2,ensure_ascii=False)+'\n');return p
+
+def cp(p,n):
+ p=Path(p);p=p if p.is_absolute() else R/p;inputs[str(p)]=sha(p);f=O/n;f.parent.mkdir(parents=True,exist_ok=True);f.write_bytes(p.read_bytes());return f
+
+def ref(p,ptr=None):
+ p=Path(p);x={'path':str(p),'sha256':sha(p)}
+ if ptr is not None:x['pointer']=ptr
+ return x
+
+def at(x,ptr):
+ for k in ptr.strip('/').split('/') if ptr else []:x=x[int(k)] if isinstance(x,list) else x[k.replace('~1','/').replace('~0','~')]
+ return x
+
+def digest(x):return hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+for folder in ['stand','schemas']:
+ for p in (E/folder).rglob('*'):
+  if p.is_file():cp(p,str(p.relative_to(E)))
+for p in (W/'schemas').glob('*.json'):cp(p,'schemas/browser/'+p.name)
+for p in G.glob('*.schema.json'):cp(p,'schemas/gateway/'+p.name)
+for p in (G/'duration-source').rglob('*'):
+ if p.is_file():cp(p,'schemas/gateway/duration-source/'+str(p.relative_to(G/'duration-source')))
+for p in ['axe','lighthouse','playwright','visual']:cp(W/f'stand/config/plugins/kubeclaw.{p}.config.json',f'stand/config/plugins/kubeclaw.{p}.config.json')
+offSource=B/'components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/B/prism-control.config.json';control=load(E/'stand/config/components/prism-control.config.json');control['profiles']['local-product-off']=load(offSource)['profiles']['local-A'];write('stand/config/components/prism-control.config.json',control)
+root=load(E/'stand/config/pipeline.config.json');oldB=load(E/'stand/config/components/buster-engine.config.json');browserB=load(W/'stand/config/components/buster-engine.config.json');buster=copy.deepcopy(oldB);buster['profiles']['browser-source-A']=browserB['profiles']['browser-source-A'];write('stand/config/components/buster-engine.config.json',buster)
+browserService='fixture.service.buster-browser-runtime';root['schemaVersion']='pipeline-entry.v8';root['bindings'] += [{'role':'buster','owner':n,'instanceId':browserService,'profileId':'browser-source-A' if n=='buster-engine' else 'local-A'} for n in ['buster-engine','worker-core']]
+browserTuples=[t for t in load(W/'stand/config/pipeline.config.json')['pluginSelections'] if t['packageId'] in ['kubeclaw.'+p for p in ['axe','lighthouse','playwright','visual']]]
+for t in browserTuples:t['serviceInstanceId']=browserService
+root['pluginSelections']+=browserTuples
+arm=load(G/'same-entry-root-and-sole-author-contract.json')['proposedNextClosedDeploymentSelectionArm'];root['deploymentSelections'].append(arm)
+rs=load(E/'schemas/pipeline-entry.schema.json');rs['properties']['schemaVersion']={'const':'pipeline-entry.v8'};rs['properties']['bindings']['minItems']=13;rs['properties']['bindings']['maxItems']=13
+for k in ['packageId','registrationId','ownerPath','instanceId']:
+ target=rs['properties']['pluginSelections']['items']['properties'][k]
+ if 'enum' in target:
+  target['enum'] += [t[k] for t in browserTuples if t[k] not in target['enum']]
+rs['properties']['deploymentSelections']['items']={'oneOf':[rs['properties']['deploymentSelections']['items'],load(G/'gateway-service-selection.proposed.schema.json')]}
+write('schemas/pipeline-entry.schema.json',rs);write('stand/config/pipeline.config.json',root)
+# One existing Chart author, all declared five Controller profiles gain explicit full gateway settings.
+oldChart=load(E/'stand/charts/kubeclaw/values.yaml');gatewayOwner=load(G/'existing-chart-owner-proposal.json');chart={'schemaVersion':'kubeclaw-role-chart-owner.v2','profiles':{}};contexts={'contexts':{},'nativeFullSchema':load(G/'managed-bootstrap-context.json')['nativeFullSchema']};recipes={};chartConservation=[]
+gatewayContexts=load(G/'managed-bootstrap-context.json')['contexts'];sourceRecipes=load(G/'readonly-context-source-recipes.json')['recipes']
+declaredProfileSourcePlans={'local-A':'A','local-B':'B','Ready-port-contrast':'A','ready-product-off':'A','role-off':'A'}
+assert set(declaredProfileSourcePlans)==set(oldChart['profiles']), 'UNDECLARED_PROFILE_SOURCE_RECIPE_NO_DEFAULT_FILL'
+for pid,prior in oldChart['profiles'].items():
+ side=declaredProfileSourcePlans[pid];gp=copy.deepcopy(gatewayOwner['profiles']['local-'+side]);current=copy.deepcopy(prior);current['schemaVersion']='combined-role-profile.v2';current['instanceId']=gp['instanceId'];current['settings'].update(gp['settings']);current['readonlyBindings'].update(gp['readonlyBindings']);chart['profiles'][pid]=current
+ context=copy.deepcopy(gatewayContexts[side]);recipe=copy.deepcopy(sourceRecipes[side]);rid='captured-chart-'+pid
+ context['association'].update(ownerProfileId=pid,receivingProfileId=pid,sourceRecipeId=rid);contexts['contexts'][pid]=context;recipes[rid]=recipe
+ chartConservation.append({'profileId':pid,'originalControllerProfile':ref(E/'stand/charts/kubeclaw/values.yaml','/profiles/'+pid),'controllerSubsetRetained':True,'explicitManagedPolicyInput':ref(G/'existing-chart-owner-proposal.json','/profiles/local-'+side),'explicitReadonlyRecipeInput':ref(G/'readonly-context-source-recipes.json','/recipes/'+side),'ownGeneratedContextPointer':'/contexts/'+pid,'recipeId':rid,'relation':'Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted.'})
+contextPath=write('stand/managed-bootstrap-context.json',contexts)
+for pid,p in chart['profiles'].items():p['readonlyBindings']['bootstrapContextRef']={'path':'managed-bootstrap-context.json','pointer':'/contexts/'+pid,'sha256':sha(contextPath)}
+write('stand/charts/kubeclaw/values.yaml',chart);write('gateway-context-source-recipes.json',{'recipes':recipes,'profiles':chartConservation,'supportedRoles':['buster'],'otherKnownChartRoleBranches':{'nova':'No Buster/Prism role plugin; explicit independent full source recipe required before declaration, denied here','prism':'Actual kubeclaw-prism branch requires exact real source/role/host/token/roster tuple; no B-context inference, denied here'},'unknownRoles':'deny'})
+cs=load(E/'schemas/controller-owner.schema.json');cpSchema=cs['properties']['profiles']['additionalProperties'];gpSchema=load(G/'existing-chart-owner.schema.json')['properties']['profiles']['additionalProperties'];cpSchema['properties']['schemaVersion']={'const':'combined-role-profile.v2'};cpSchema['properties']['instanceId']=gpSchema['properties']['instanceId'];cpSchema['required'].append('instanceId')
+for k in ['settings','readonlyBindings']:
+ targets=cpSchema['properties'][k].get('oneOf',[cpSchema['properties'][k]])
+ for target in targets:target['properties'].update(gpSchema['properties'][k]['properties']);target['required']+=gpSchema['properties'][k]['required']
+for clause in cpSchema['allOf']:
+ for branch in ['then','else']:
+  if branch in clause and 'readonlyBindings' in clause[branch].get('properties',{}):
+   target=clause[branch]['properties']['readonlyBindings'];target['properties'].update(gpSchema['properties']['readonlyBindings']['properties']);target['required']+=gpSchema['properties']['readonlyBindings']['required']
+cs['properties']['schemaVersion']={'const':'kubeclaw-role-chart-owner.v2'};write('schemas/controller-owner.schema.json',cs)
+ctxSchema=load(G/'managed-bootstrap-context.schema.json');arms=ctxSchema['properties']['contexts']['additionalProperties']['anyOf']
+for a in arms:a['properties']['association']['properties']['sourceRecipeId']={'enum':list(recipes)}
+write('schemas/gateway/managed-bootstrap-context.schema.json',ctxSchema)
+# Actual source-based same-entry eight arms plus four Browser arms, not Browser's obsolete three inherited arms.
+receiver=load(E/'schemas/provider-configuration.v2.schema.json');receiver['oneOf']+=load(W/'schemas/provider-configuration.v2.schema.json')['oneOf'][3:]
+for a in receiver['oneOf']:a['properties']['selectedPolicy']['properties']['binding']['properties']['readerVersion']={'const':'pipeline-entry.v8/provider-configuration.v2'}
+write('schemas/provider-configuration.v2.schema.json',receiver)
+for name in ['prism-agent-service-policy.schema.json','generation-receipt.schema.json']:
+ s=load(E/'schemas'/name)
+ if name.startswith('prism'):s['properties']['rootVersion']={'const':'pipeline-entry.v8'}
+ else:
+  s['properties']['schemaVersion']={'const':'same-entry-generation-receipt.v3'};s['properties']['selectedRootVersion']={'const':'pipeline-entry.v8'};s['properties']['selections']['properties']['pluginSelections']=rs['properties']['pluginSelections'];s['properties']['selections']['properties']['deploymentSelections']=rs['properties']['deploymentSelections'];s['properties']['inputMembers']['items']['properties']['relativePath']['pattern']='^(?:config|charts|my-values|schemas|source-current|managed-bootstrap-context.json)[A-Za-z0-9._/-]*$'
+ write('schemas/'+name,s)
+# Capture actual new caller/native/source bytes only, never import producer/provider code or run Browser's writer collector.
+sourcePaths=set()
+for f in load(W/'source-pins.json')['files']:sourcePaths.add(f['path'])
+for p in ['charts/kubeclaw/templates/configmap-gateway.yaml','charts/kubeclaw/templates/deployment.yaml','charts/kubeclaw/values.yaml','my-values/buster-values.yaml','skills/common/plugin-runtime/foundation/registry/digest.ts','skills/nova/core/test-gates/resolver.ts','skills/buster/engine/production.ts','skills/buster/engine/runner/worker.ts','skills/prism/control/product-decisions.ts','skills/prism/server/control-config.ts','skills/prism/server/control-server.ts']:
+ if (R/p).is_file():sourcePaths.add(p)
+for x in sorted(sourcePaths):
+ p=Path(x) if x.startswith('/') else R/x
+ if p.is_file() and p.is_relative_to(R) and not p.is_relative_to(B):cp(p,'stand/source-current/'+str(p.relative_to(R)))
+write('source-current-boundary.json',{'sources':[ref(p) for p in (O/'stand/source-current').rglob('*') if p.is_file()],'currentCodeReadsV8':False,'runtimeMigration':'Existing worker/provider registry lookup is single-contract-key. Distinct original runtime, Security runtime and Browser runtime are future independently admitted source/native service contracts; tuples do not implement multiplex/installed instances. No MODULE hot policy/duplicate author.'})
+# Full current roots preserve each family's own profile/source coordinates, not path-only substitution.
+entryIndex=[]
+def extend(old):
+ n=copy.deepcopy(root)
+ for k in ['features','tuning','profile','overrides']:n[k]=copy.deepcopy(old[k])
+ for i,t in enumerate(old['pluginSelections']):
+  candidates=[(j,u) for j,u in enumerate(n['pluginSelections']) if u['packageId']==t['packageId'] and u['registrationId']==t['registrationId']]
+  if candidates:
+   j,u=candidates[0];n['pluginSelections'][j]={**t,'serviceInstanceId':u['serviceInstanceId']}
+ for t in old.get('bindings',[]):
+  if t['owner'] in ['buster-engine','worker-core'] and t['profileId'] in ['browser-source-A','security-source-A','security-https-source-A']:
+   service=browserService if t['profileId']=='browser-source-A' else 'fixture.service.buster-security-runtime'
+   for u in n['bindings']:
+    if u['owner']==t['owner'] and u['instanceId']==service:u['profileId']=t['profileId']
+ for d in old.get('deploymentSelections',[]):
+  if d['consumer']=='namespace-controller':
+   n['deploymentSelections'][0]=copy.deepcopy(d)
+   if d['profileId']=='ready-product-off':
+    for t in n['bindings']:
+     if t['owner']=='prism-control' and t['instanceId']==d['controlComponentInstanceId']:t['profileId']='local-product-off'
+ n['infrastructureSelections']=copy.deepcopy(old['infrastructureSelections']);return n
+for family,index in [('Security',load(E/'security-current-entry-closures.json')['entries']),('Provider',load(E/'provider-current-entry-contexts.json')),('Prism',load(E/'prism-full-entry-pairs.json')),('Browser',load(W/'generated-view-index.json'))]:
+ for i,row in enumerate(index):
+  prior=Path(row['entryPath']) if family=='Security' else Path(row['currentEntry']['path']) if family=='Provider' else Path(row['entry']['path']) if family=='Prism' else W/row['rootPath'];n=extend(load(prior));file=write('entries/'+family+'/'+str(i)+'.json',n);entryIndex.append({'family':family,'index':i,'historicalRoot':ref(prior),'currentRoot':ref(file),'familyContext':row})
+for pid in chart['profiles']:
+ n=extend(root);n['deploymentSelections'][0]['profileId']=pid;n['deploymentSelections'][1]['profileId']=pid
+ if pid=='ready-product-off':
+  for t in n['bindings']:
+   if t['owner']=='prism-control' and t['instanceId']==n['deploymentSelections'][0]['controlComponentInstanceId']:t['profileId']='local-product-off'
+ f=write('entries/Chart/'+pid+'.json',n);entryIndex.append({'family':'Chart','index':pid,'currentRoot':ref(f),'exactGeneratedContext':ref(contextPath,'/contexts/'+pid),'ownRecipeId':'captured-chart-'+pid})
+write('current-entry-contexts.json',entryIndex)
+write('product-off-local-closure.json',{'originalBWholeProfile':ref(offSource,'/profiles/local-A'),'soleCurrentOwner':ref(O/'stand/config/components/prism-control.config.json','/profiles/local-product-off'),'sourceConsumer':ref(R/'skills/prism/control/product-decisions.ts'),'actualSourceGate':'loadProductConfig returns undefined unless original PRISM_PRODUCT_DECISIONS_ENABLED equals true; proposed sameowner false generates this original ENV gate from exact admitted owner, not hot/latest override','history':'Old ready-product-off rejected stand and missing-profile observation remain immutable; this new full sameowner completeprofile/entry closes only local definition co-selection','nativeExecuted':False})
+# Resolve actual typed fields and every case edge against one physically current 12-arm schema.
+fields=[];members=[];cases=[]
+def schemaRef(oldRef, browser=False):
+ p=Path(oldRef['path']);p=p if p.is_absolute() else R/p;ptr=oldRef['pointer'];dest=None
+ if p==E/'schemas/provider-configuration.v2.schema.json':dest=O/'schemas/provider-configuration.v2.schema.json'
+ elif p==W/'schemas/provider-configuration.v2.schema.json':
+  dest=O/'schemas/provider-configuration.v2.schema.json';parts=ptr.split('/');parts[2]=str(int(parts[2])+5);ptr='/'.join(parts)
+ elif p.is_relative_to(E/'schemas'):dest=O/'schemas'/p.relative_to(E/'schemas')
+ elif p.is_relative_to(W/'schemas'):dest=O/'schemas/browser'/p.relative_to(W/'schemas')
+ else:dest=p
+ node=at(load(dest),ptr);expected=oldRef.get('exactNode');assert expected is None or node==expected,(p,ptr)
+ return {**ref(dest,ptr),'exactNode':node}
+for f in load(E/'current-field-concordance.json'):
+ fields.append({'family':f['family'],'id':f['id'],'originalFieldContext':f['originalFieldContext'],'ownerNode':schemaRef(f['samePhysicalPolicyNode']),'receivingNodes':[schemaRef(x) for x in f['currentReceivingSchemaBindings']],'currentRootSchema':ref(O/'schemas/pipeline-entry.schema.json'),'entryFamily':f['family'],'originalContext':ref(E/'current-field-concordance.json','/'+str(len(fields)))})
+for i,f in enumerate(load(W/'field-definitions.json')['rows']):fields.append({'family':'Browser','id':f['id'],'originalFieldContext':ref(W/'field-definitions.json','/rows/'+str(i)),'ownerNode':schemaRef(f['targetSchemaBinding']),'receivingNodes':[schemaRef(f['receivingSchemaBinding'])],'currentRootSchema':ref(O/'schemas/pipeline-entry.schema.json'),'originalCases':f['originalGroupMember']['originalCaseIds'],'entryFamily':'Browser'})
+by={f['id']:f for f in fields}
+for i,m in enumerate(load(E/'current-case-member-concordance.json')):members.append({'family':m['family'],'caseId':m['caseId'],'settingId':m['settingId'],'originalRef':ref(E/'current-case-member-concordance.json','/'+str(i)),'ownerNode':by[m['settingId']]['ownerNode'],'receivingNodes':by[m['settingId']]['receivingNodes'],'rootSchema':ref(O/'schemas/pipeline-entry.schema.json')})
+for i,c in enumerate(load(W/'case-definitions.json')['cases']):
+ for j,m in enumerate(c['perMemberFieldContracts']):members.append({'family':'Browser','caseId':c['id'],'settingId':m['settingId'],'originalRef':ref(W/'case-definitions.json',f'/cases/{i}/perMemberFieldContracts/{j}'),'ownerNode':by[m['settingId']]['ownerNode'],'receivingNodes':by[m['settingId']]['receivingNodes'],'rootSchema':ref(O/'schemas/pipeline-entry.schema.json')})
+for c in load(E/'current-original-case-contexts.json'):cases.append({'family':c['family'],'id':c['id'],'originalCanonicalCaseRef':c['originalCanonicalCaseRef'],'nativeRef':c['retainedNativeCaseRef'],'currentRootSchema':ref(O/'schemas/pipeline-entry.schema.json')})
+for i,c in enumerate(load(W/'case-definitions.json')['cases']):cases.append({'family':'Browser','id':c['id'],'originalCanonicalCaseRef':ref(W/'case-definitions.json',f'/cases/{i}/originalCanonicalCase'),'nativeRef':ref(W/'case-definitions.json',f'/cases/{i}/retainedNativeCase'),'currentRootSchema':ref(O/'schemas/pipeline-entry.schema.json')})
+write('current-field-node-concordance.json',fields);write('current-case-member-concordance.json',members);write('current-case-contexts.json',cases)
+# Exact Gateway author/runtime data receiving refs, conditional unused/Astra omissions unchanged.
+gwfields=[]
+for i,f in enumerate(load(G/'original70-field-contracts.json')['fields']):
+ row={'id':f['id'],'originalContract':ref(G/'original70-field-contracts.json','/fields/'+str(i)),'currentRootSchema':ref(O/'schemas/pipeline-entry.schema.json'),'profiles':{}}
+ for side in ['A','B']:
+  pid='local-'+side;projection=f['authorProjection'][side];recv=f['receivingProjection'][side]
+  if not recv.get('pointer'):row['profiles'][pid]={'disposition':recv['disposition'],'currentReader':'no ghost receiver; same original conditional/unused obligation'};continue
+  node=at(chart,projection['pointer']);assert node==recv['exactTypedNode'];row['profiles'][pid]={'author':{**ref(O/'stand/charts/kubeclaw/values.yaml',projection['pointer']),'exactNode':node},'receivingPointer':recv['pointer'],'exactNode':node,'ownContext':{**ref(contextPath,'/contexts/'+pid)}}
+ gwfields.append(row)
+write('gateway-field-concordance.json',gwfields);write('gateway-case-rejoin.json',[{'id':c['id'],'originalBody':ref(G/'original-case-contracts.json','/cases/'+str(i)+'/originalBody'),'currentRootSchema':ref(O/'schemas/pipeline-entry.schema.json'),'currentOwner':ref(O/'stand/charts/kubeclaw/values.yaml'),'currentContext':ref(contextPath)} for i,c in enumerate(load(G/'original-case-contracts.json')['cases'])])
+write('chart-controller-conservation.json',chartConservation)
+# Freeze only selected exact inputs, no giant old-universe archive.
+deps=['same-entry-engine-binding-01','same-entry-engine-binding-02','independent-same-entry-engine-binding-review-02','browser-provider-contracts-01','independent-browser-provider-contract-review-01','gateway-openclaw-profile-02','independent-gateway-openclaw-profile-review-02']
+write('dependency-generation.json',{'currentVersion':'pipeline-entry.v8','solePhysicalRoot':'config/pipeline.config.json','normativeDependencies':[ref(B/d/'manifest.json') if (B/d/'manifest.json').exists() else ref(B/d/('REPORT.md' if (B/d/'REPORT.md').exists() else 'README.md')) for d in deps],'GatewayBrowserAdoptedOnlyHere':'Bounded frozen dependencies, not native/implementation/global acceptance; prior v7 remains immutable history after any acceptance of proposed v8','activationAllowed':False})
+
+shaType={'type':'string','pattern':'^[a-f0-9]{64}$'};sProps={'schemaVersion':{'const':'gateway-service-policy.v1'},'rootVersion':{'const':'pipeline-entry.v8'},'rootRawSha256':shaType,'inputGenerationSha256':shaType,'selection':rs['properties']['deploymentSelections']['items']['oneOf'][1],'ownerRawSha256':shaType,'ownerSchemaSha256':shaType,'contextRawSha256':shaType,'profileSha256':shaType,'policy':load(G/'gateway-profile.schema.json'),'authentication':{'enum':['public-unsealed','original-delivery-authenticated']}}
+write('schemas/gateway-service-policy.schema.json',{'$schema':'https://json-schema.org/draft/2020-12/schema','type':'object','additionalProperties':False,'required':list(sProps),'properties':sProps,'readOnly':True,'$comment':'SameChart selected immutable read-only S receiving policy, not another author or authentic native config/issuer; real exactnativeBootstrap/parser/source/image/grant/Secretrevision/doctor/mount receipts mandatory'})
+
+# Generated immutable recipe receipt enters the same input codec, never another settings author.
+cp(O/'gateway-context-source-recipes.json','stand/source-current/generated/gateway-context-source-recipes.json')
+# Same exact length-framed, no-follow image input codec. Outputs excluded.
+inputMembers=[]
+for folder in ['stand','schemas']:
+ for f in sorted((O/folder).rglob('*')):
+  if f.is_file():inputMembers.append({'relativePath':str(f.relative_to(O/'stand')) if folder=='stand' else str(f.relative_to(O)),'sha256':sha(f),'byteLength':f.stat().st_size,'transportClass':'captured-schema-input' if folder=='schemas' else 'captured-source-input' if f.is_relative_to(O/'stand/source-current') else 'image-baked-author-input','source':'public captured definition input; authentic issuer/image/source receipts absent'})
+inputMembers.sort(key=lambda x:x['relativePath'].encode());parts=[b'kubeclaw.same-entry.input.v1\0']
+for m in inputMembers:
+ pb=m['relativePath'].encode();parts += [struct.pack('>I',len(pb)),pb,struct.pack('>Q',m['byteLength']),bytes.fromhex(m['sha256'])]
+generation=hashlib.sha256(b''.join(parts)).hexdigest();raw=sha(O/'stand/config/pipeline.config.json');write('file-set-stand.json',{'rootRawSha256':raw,'inputGenerationSha256':generation,'codec':'kubeclaw.same-entry.input.v1 NUL + sorted UTF8 paths/u32BEpathbytes/u64BErawlength/32rawSHA','inputMembers':inputMembers})
+
+outputIndex=[]
+for row in entryIndex:
+ if row['family']!='Browser':continue
+ g=row['familyContext'];v=load(W/g['path']);t=load(row['currentRoot']['path'])['pluginSelections'];t=next(x for x in t if x['packageId']=='kubeclaw.'+g['provider']);bind=v['selectedPolicy']['binding'];bind.update(readerVersion='pipeline-entry.v8/provider-configuration.v2',rootDigest='sha256:'+row['currentRoot']['sha256'],serviceInstanceId=browserService,componentInstanceId=browserService,componentOwnerDigest='sha256:'+sha(O/'stand/config/components/buster-engine.config.json'));f=write('outputs/browser/'+str(row['index'])+'.json',v);outputIndex.append({'family':'Browser','currentRoot':row['currentRoot'],'view':ref(f),'originalView':ref(W/g['path']),'originalTask':ref(W/g['taskPath']),'registrationId':bind['registrationId']})
+for i,g in enumerate(load(E/'current-provider-view-index.json')):
+ v=load(g['path']);bind=v.get('selectedPolicy',{}).get('binding');
+ if bind:
+  bind.update(readerVersion='pipeline-entry.v8/provider-configuration.v2',rootDigest='sha256:'+raw)
+  if 'componentOwnerDigest' in bind:bind['componentOwnerDigest']='sha256:'+sha(O/'stand/config/components/buster-engine.config.json')
+ f=write('outputs/providers/'+str(i)+'.json',v);outputIndex.append({'family':'prior8','view':ref(f),'originalView':ref(g['path']),'registrationId':bind.get('registrationId') if bind else None})
+serviceOutputs=[]
+for receiverName in ['control-agent-jobs','prism-agent-bridge']:
+ v=load(E/'outputs/prism'/f'{receiverName}.policy.json');v.update(rootVersion='pipeline-entry.v8',rootRawSha256=raw,inputGenerationSha256=generation);f=write('outputs/prism/'+receiverName+'.policy.json',v);serviceOutputs.append({'logicalPath':'prism-agent/'+f.name,'sha256':sha(f),'byteLength':f.stat().st_size,'schemaSha256':sha(O/'schemas/prism-agent-service-policy.schema.json'),'sourceProjectionSha256':digest({'selection':v['selection'],'profile':v['policy']}),'transportReceiptRef':'PUBLIC_DEFINITION_NOT_AUTHENTIC_TRANSPORT'})
+for pid,p in chart['profiles'].items():
+ gp=load(G/'profiles/A.json');gp.update(profileId=pid,role=p['role'],instanceId=p['instanceId'],managedOpenClaw=copy.deepcopy(p['settings']['gatewayOpenClaw']),readonlyBindings={k:p['readonlyBindings'][k] for k in gp['readonlyBindings']});gp['managedOpenClaw']['memory']['search']['remote']['baseUrl']=p['settings']['litellm']['endpoint'];f=write('outputs/gateway/'+pid+'.profile.json',gp);outputIndex.append({'family':'Gateway','view':ref(f),'currentOwner':ref(O/'stand/charts/kubeclaw/values.yaml','/profiles/'+pid),'context':ref(contextPath,'/contexts/'+pid),'currentRoot':next(x['currentRoot'] for x in entryIndex if x['family']=='Chart' and x['index']==pid),'authentication':'PUBLIC_UNSEALED_NOT_ACTIVATION'})
+
+selectedGateway=next(t for t in root['deploymentSelections'] if t['consumer']=='openclaw-gateway');pid=selectedGateway['profileId'];profileData=load(O/'outputs/gateway'/f'{pid}.profile.json');sView={'schemaVersion':'gateway-service-policy.v1','rootVersion':'pipeline-entry.v8','rootRawSha256':raw,'inputGenerationSha256':generation,'selection':selectedGateway,'ownerRawSha256':sha(O/'stand/charts/kubeclaw/values.yaml'),'ownerSchemaSha256':sha(O/'schemas/controller-owner.schema.json'),'contextRawSha256':sha(contextPath),'profileSha256':digest(chart['profiles'][pid]),'policy':profileData,'authentication':'public-unsealed'};file=write('outputs/gateway/selected-service.policy.json',sView);serviceOutputs.append({'logicalPath':'openclaw-gateway/'+file.name,'sha256':sha(file),'byteLength':file.stat().st_size,'schemaSha256':sha(O/'schemas/gateway-service-policy.schema.json'),'sourceProjectionSha256':digest({'selection':selectedGateway,'profile':chart['profiles'][pid]}),'transportReceiptRef':'PUBLIC_DEFINITION_NOT_AUTHENTIC_TRANSPORT'})
+
+write('current-receiving-view-index.json',outputIndex)
+
+receipt=load(E/'generation-receipt-stand.json');receipt.update(schemaVersion='same-entry-generation-receipt.v3',selectedRootVersion='pipeline-entry.v8',rootRawSha256=raw,inputGenerationSha256=generation,inputMembers=inputMembers);receipt['selections']['pluginSelections']=root['pluginSelections'];receipt['selections']['deploymentSelections']=root['deploymentSelections'];receipt['outputMembers']=serviceOutputs;receipt['activationGates'].append('Browser/Gateway exact native/package/service/role/source/credential revision-retention/image/parser/output receipts; current sources do not decode v8');write('generation-receipt-stand.json',receipt)
+# Inputs end-pinned after material generation. No final native outputs/claims minted.
+assert all(sha(p)==h for p,h in inputs.items());write('input-identities.json',[{'path':p,'sha256':h,'endSha256':sha(p)} for p,h in sorted(inputs.items())]);print(json.dumps({'fields':len(fields),'members':len(members),'cases':len(cases),'GatewayFields':len(gwfields),'entries':len(entryIndex),'inputMembers':len(inputMembers),'sourceInputs':len(inputs),'rootRawSha256':raw,'inputGenerationSha256':generation}))

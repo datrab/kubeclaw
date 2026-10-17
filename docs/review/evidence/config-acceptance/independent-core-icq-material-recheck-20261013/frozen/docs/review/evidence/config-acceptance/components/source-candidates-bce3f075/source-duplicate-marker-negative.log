@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py", line 4, in <module>
+    check('Unique exact discovery marker IDs',[c['id'] for c in d['candidates']]==list(dict.fromkeys(c['id'] for c in d['candidates'])))
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py", line 3, in check
+    def check(name,condition):assert condition,name;checks.append(name)
+                              ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Unique exact discovery marker IDs

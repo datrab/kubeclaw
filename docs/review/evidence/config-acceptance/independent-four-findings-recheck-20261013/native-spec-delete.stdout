@@ -1,0 +1,12 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6845,
+  "errorCount": 3,
+  "errors": [
+    "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: advertised case counts drift",
+    "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: original specification/requirement loss",
+    "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: missing/duplicate native mapping"
+  ]
+}

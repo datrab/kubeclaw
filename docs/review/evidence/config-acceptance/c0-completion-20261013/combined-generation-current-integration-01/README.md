@@ -1,0 +1,9 @@
+# Current combined-generation reference integration01
+
+Parent-authored actual root metadata integration, fresh independent root-reference review required. The boundedly reviewed proposed v7 generation (Engine01+normative02) is linked by the same `currentCombinedDefinitionGeneration` object in the actual inventory and matrix. Exactly168 original field IDs/1008 case IDs are enumerated;156 Provider/Security current field contexts and Prism12 fields retain physical current-root/schema/member joins. This does not implement CONFIG or accept whole C0.
+
+`adoption-contract.json` is the stable noncircular metadata contract; `root-integration-receipt.json` separately records before/after raw root hashes. Removing ONLY the new property yields each entire previous parsed object exactly, including old metadata, rows/cases/requirements/lifecycles/gates/authorization. No property was silently replaced. Original currentProviderFieldAdoption source/domain/activation proof remains; its older root identity is historical within the explicitly enumerated scope, not a competing normative v5 root.
+
+Gateway and Browser bounded definitions are named as root-join-pending, not silently merged. Browser5074 is author-only evidence because its collector mutates frozen inputs. Native/image/source/grant/task/clock/store/lease/credential/FX receipts remain required. Extra Security runtime is structural future migration, not installed or routed current code. Original unfulfilled effect requirements and all future not-run states remain unchanged.
+
+This metadata links exact reviewed artifact bytes; source facts and original bodies are not inferred from counts. Existing structural checker evidence is separate and not semantic acceptance. Fresh independent review must verify actual new root bytes, references/scope/supersession and previous full-object conservation. No production/schema/existing-test/native/API/credential/Eval/deploy/merge action or C1-C6 authorization.

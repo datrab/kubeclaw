@@ -1,0 +1,519 @@
+{
+  "qualification": "Specific independent schema/serialization replay only; no provider execute, native constructor/invoke, adapter activation, server, network, Eval, credentials or production changes",
+  "node": "v24.21.0",
+  "observations": [
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "api-flow",
+      "outcome": "onPass",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "api-flow",
+      "outcome": "onFail",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "api-flow",
+      "outcome": "onError",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "http",
+      "outcome": "onPass",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "http",
+      "outcome": "onFail",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "http",
+      "outcome": "onError",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "openapi",
+      "outcome": "onPass",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "openapi",
+      "outcome": "onFail",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "baseline-evidence-erasure",
+      "pkg": "openapi",
+      "outcome": "onError",
+      "accepted": true,
+      "errors": null
+    },
+    {
+      "check": "current-root-zero-schema-before-provider",
+      "input": {
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 0
+      },
+      "accepted": false,
+      "errors": [
+        {
+          "instancePath": "/requestTimeoutMs",
+          "schemaPath": "#/properties/requestTimeoutMs/minimum",
+          "keyword": "minimum",
+          "params": {
+            "comparison": ">=",
+            "limit": 1
+          },
+          "message": "must be >= 1"
+        }
+      ]
+    },
+    {
+      "check": "legitimate-task-step-deadline",
+      "value": 50,
+      "currentAccepted": true,
+      "targetAccepted": false,
+      "targetErrors": [
+        {
+          "instancePath": "/steps/0",
+          "schemaPath": "#/$defs/step/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "timeoutMs"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-0b11b3282059d1db",
+      "side": "A",
+      "profile": "field-allowedOrigins-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-db4ff06654e4c996",
+      "side": "A",
+      "profile": "field-allowedOrigins-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-0b11b3282059d1db",
+      "side": "B",
+      "profile": "field-allowedOrigins-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid",
+          "https://alternate.fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-db4ff06654e4c996",
+      "side": "B",
+      "profile": "field-allowedOrigins-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid",
+          "https://alternate.fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-8510aae902279dfa",
+      "side": "A",
+      "profile": "field-allowedMethods-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-8e9540f20d6b3e93",
+      "side": "A",
+      "profile": "field-allowedMethods-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-8510aae902279dfa",
+      "side": "B",
+      "profile": "field-allowedMethods-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-8e9540f20d6b3e93",
+      "side": "B",
+      "profile": "field-allowedMethods-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-bdbb356d7dbdb05b",
+      "side": "A",
+      "profile": "field-allowedHeaders-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-129d37457d0a92b8",
+      "side": "A",
+      "profile": "field-allowedHeaders-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-bdbb356d7dbdb05b",
+      "side": "B",
+      "profile": "field-allowedHeaders-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key",
+          "x-proof"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-129d37457d0a92b8",
+      "side": "B",
+      "profile": "field-allowedHeaders-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key",
+          "x-proof"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-3e41afae2fdc5889",
+      "side": "A",
+      "profile": "field-maxRequestBytes-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-3e41afae2fdc5889",
+      "side": "B",
+      "profile": "field-maxRequestBytes-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 524288,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-a21fee46884b7194",
+      "side": "A",
+      "profile": "field-maxResponseBytes-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-a21fee46884b7194",
+      "side": "B",
+      "profile": "field-maxResponseBytes-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 524288,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-e8382fb0497a39a3",
+      "side": "A",
+      "profile": "field-timeoutMs-A",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    {
+      "check": "Nova-full-per-field-profile",
+      "id": "RT-e8382fb0497a39a3",
+      "side": "B",
+      "profile": "field-timeoutMs-B",
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 15000
+      }
+    },
+    {
+      "check": "Nova-wire-bytes-pure",
+      "actualJSONStringifyBytes": 524289,
+      "deliveredResponseDefinitionBytes": 524289,
+      "responseBusinessObject": {
+        "business": "C0-local"
+      },
+      "activationOrRequestExecuted": false
+    }
+  ]
+}

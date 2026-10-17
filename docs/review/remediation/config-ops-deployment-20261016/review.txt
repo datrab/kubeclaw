@@ -1,0 +1,3 @@
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.87)
+No actionable regressions or concrete security defects were identified in the supplied change bundle. The policy capture is shared by discovery and credential setup, release and image checks remain intact, and fixture changes retain the existing assertions. This is a source review only; tests were not run, and no native deployment or paid model evaluation was verified.

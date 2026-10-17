@@ -1,0 +1,557 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "rootRelativePath",
+    "rootRawSha256",
+    "inputGenerationSha256",
+    "hashCodec",
+    "inputMembers",
+    "outputMembers",
+    "selectedRootVersion",
+    "selections",
+    "authentication",
+    "issuerReceiptRef",
+    "imageSourceReceiptRef",
+    "projectorReaderReceiptRef",
+    "activationGates"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "same-entry-generation-receipt.v3"
+    },
+    "rootRelativePath": {
+      "const": "config/pipeline.config.json"
+    },
+    "rootRawSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "inputGenerationSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "hashCodec": {
+      "const": "same-entry-input-generation.v1"
+    },
+    "inputMembers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "relativePath",
+          "sha256",
+          "byteLength",
+          "transportClass",
+          "source"
+        ],
+        "properties": {
+          "relativePath": {
+            "type": "string",
+            "pattern": "^(?:config|charts|my-values|schemas|source-current|managed-bootstrap-context.json)[A-Za-z0-9._/-]*$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "byteLength": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "transportClass": {
+            "enum": [
+              "image-baked-author-input",
+              "captured-schema-input",
+              "captured-source-input"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "outputMembers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalPath",
+          "sha256",
+          "byteLength",
+          "schemaSha256",
+          "sourceProjectionSha256",
+          "transportReceiptRef"
+        ],
+        "properties": {
+          "logicalPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "byteLength": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "schemaSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "sourceProjectionSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "transportReceiptRef": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "selectedRootVersion": {
+      "const": "pipeline-entry.v8"
+    },
+    "selections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deploymentSelections",
+        "infrastructureSelections",
+        "pluginSelections",
+        "engineSelections"
+      ],
+      "properties": {
+        "deploymentSelections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "role",
+                  "deploymentInstanceId",
+                  "ownerPath",
+                  "profileId",
+                  "consumer",
+                  "serviceInstanceId",
+                  "busterComponentInstanceId",
+                  "controlComponentInstanceId"
+                ],
+                "properties": {
+                  "role": {
+                    "const": "buster"
+                  },
+                  "deploymentInstanceId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "ownerPath": {
+                    "const": "charts/kubeclaw/values.yaml"
+                  },
+                  "profileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "consumer": {
+                    "const": "namespace-controller"
+                  },
+                  "serviceInstanceId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "busterComponentInstanceId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "controlComponentInstanceId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  }
+                }
+              },
+              {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "role",
+                  "deploymentInstanceId",
+                  "ownerPath",
+                  "profileId",
+                  "consumer",
+                  "serviceInstanceId"
+                ],
+                "properties": {
+                  "role": {
+                    "enum": [
+                      "nova",
+                      "buster",
+                      "prism"
+                    ]
+                  },
+                  "deploymentInstanceId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  },
+                  "ownerPath": {
+                    "const": "charts/kubeclaw/values.yaml"
+                  },
+                  "profileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "consumer": {
+                    "const": "openclaw-gateway"
+                  },
+                  "serviceInstanceId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "infrastructureSelections": {
+          "$ref": "#/$defs/infrastructureSelections"
+        },
+        "pluginSelections": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "packageId",
+              "registrationId",
+              "instanceId",
+              "ownerPath",
+              "profileId",
+              "serviceInstanceId"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "adapter",
+                  "test-provider"
+                ]
+              },
+              "packageId": {
+                "enum": [
+                  "kubeclaw.api-flow",
+                  "kubeclaw.http",
+                  "kubeclaw.openapi",
+                  "kubeclaw.network-http",
+                  "kubeclaw.security-providers",
+                  "kubeclaw.axe",
+                  "kubeclaw.lighthouse",
+                  "kubeclaw.playwright",
+                  "kubeclaw.visual"
+                ]
+              },
+              "registrationId": {
+                "enum": [
+                  "kubeclaw.api-flow:flow",
+                  "kubeclaw.http:request",
+                  "kubeclaw.openapi:operations",
+                  "kubeclaw.network-http:http",
+                  "kubeclaw.security-providers:headers",
+                  "kubeclaw.security-providers:dependency-trivy",
+                  "kubeclaw.security-providers:image-trivy",
+                  "kubeclaw.security-providers:kubernetes-policy",
+                  "kubeclaw.security-providers:kubernetes-runtime",
+                  "kubeclaw.axe:axe",
+                  "kubeclaw.lighthouse:lighthouse",
+                  "kubeclaw.playwright:playwright",
+                  "kubeclaw.visual:visual"
+                ]
+              },
+              "instanceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+              },
+              "ownerPath": {
+                "enum": [
+                  "plugins/kubeclaw.api-flow.config.json",
+                  "plugins/kubeclaw.http.config.json",
+                  "plugins/kubeclaw.openapi.config.json",
+                  "plugins/kubeclaw.network-http.config.json",
+                  "plugins/kubeclaw.security-providers.config.json",
+                  "plugins/kubeclaw.axe.config.json",
+                  "plugins/kubeclaw.lighthouse.config.json",
+                  "plugins/kubeclaw.playwright.config.json",
+                  "plugins/kubeclaw.visual.config.json"
+                ]
+              },
+              "profileId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+              },
+              "serviceInstanceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+              }
+            }
+          }
+        },
+        "engineSelections": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "role",
+              "engineId",
+              "engineInstanceId",
+              "serviceInstanceId",
+              "consumer",
+              "ownerPath",
+              "profileId",
+              "controlComponentInstanceId"
+            ],
+            "properties": {
+              "kind": {
+                "const": "service-launcher"
+              },
+              "role": {
+                "const": "prism-agent"
+              },
+              "engineId": {
+                "const": "prism-openclaw-launcher"
+              },
+              "consumer": {
+                "const": "prism-agent-bridge"
+              },
+              "ownerPath": {
+                "const": "engines/prism-agent.config.json"
+              },
+              "engineInstanceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+              },
+              "serviceInstanceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+              },
+              "profileId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+              },
+              "controlComponentInstanceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "authentication": {
+      "enum": [
+        "public-unsealed",
+        "original-delivery-authenticated"
+      ]
+    },
+    "issuerReceiptRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "imageSourceReceiptRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectorReaderReceiptRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "activationGates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "deploymentSelections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "deploymentInstanceId",
+          "ownerPath",
+          "profileId",
+          "consumer",
+          "serviceInstanceId",
+          "busterComponentInstanceId",
+          "controlComponentInstanceId"
+        ],
+        "properties": {
+          "role": {
+            "const": "buster"
+          },
+          "deploymentInstanceId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "ownerPath": {
+            "const": "charts/kubeclaw/values.yaml"
+          },
+          "profileId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "consumer": {
+            "const": "namespace-controller"
+          },
+          "serviceInstanceId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "busterComponentInstanceId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "controlComponentInstanceId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          }
+        }
+      }
+    },
+    "infrastructureSelections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "deploymentInstanceId",
+          "ownerPath",
+          "profileId"
+        ],
+        "properties": {
+          "role": {
+            "const": "postgresql-recovery"
+          },
+          "deploymentInstanceId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "ownerPath": {
+            "const": "my-values/infra/postgresql-recovery.yaml"
+          },
+          "profileId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          }
+        }
+      }
+    },
+    "pluginSelections": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "packageId",
+          "registrationId",
+          "instanceId",
+          "ownerPath",
+          "profileId",
+          "serviceInstanceId"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "adapter",
+              "test-provider"
+            ]
+          },
+          "packageId": {
+            "enum": [
+              "kubeclaw.api-flow",
+              "kubeclaw.http",
+              "kubeclaw.openapi",
+              "kubeclaw.network-http"
+            ]
+          },
+          "registrationId": {
+            "enum": [
+              "kubeclaw.api-flow:flow",
+              "kubeclaw.http:request",
+              "kubeclaw.openapi:operations",
+              "kubeclaw.network-http:http"
+            ]
+          },
+          "instanceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+          },
+          "ownerPath": {
+            "enum": [
+              "plugins/kubeclaw.api-flow.config.json",
+              "plugins/kubeclaw.http.config.json",
+              "plugins/kubeclaw.openapi.config.json",
+              "plugins/kubeclaw.network-http.config.json"
+            ]
+          },
+          "profileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+          },
+          "serviceInstanceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+          }
+        }
+      }
+    }
+  }
+}

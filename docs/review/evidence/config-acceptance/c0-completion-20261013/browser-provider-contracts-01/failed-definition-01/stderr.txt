@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "browser-provider-contracts-01/define.py", line 171, in <module>
+    if field.startswith('#/'):f['currentSupportedDomain']=pointed(source['path'],field[1:])
+  File "browser-provider-contracts-01/define.py", line 166, in pointed
+    for part in pointer.lstrip('/').split('/')if pointer else []:n=n[part.replace('~1','/').replace('~0','~')]
+TypeError: list indices must be integers or slices, not str

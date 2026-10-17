@@ -1,0 +1,58 @@
+{
+  "verdict": "CRPR-01 CLOSED / VERIFIED",
+  "scope": "fresh bounded receiving-reference material correction only",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "63ce6ca9aa083551359250ed3d91cb9bab1844f5c9fe2a5a5baa9c40b36874c7",
+      "bytes": 290
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "ed3fc81791d78b5feeffffd5daae6c443fd8285d4a5ad287387005a2f117c9b5",
+      "bytes": 6506
+    },
+    {
+      "path": "commands-and-exits.json",
+      "sha256": "c0c085144ed500880c86450bae53da2a69ca3496cb6e2952b6d997a9d00e65ae",
+      "bytes": 1683
+    },
+    {
+      "path": "end-identities.json",
+      "sha256": "a6c9ddfd168bc9ef4d6c853a544fca8bc5e3741d89974b3cbec87ebd8ea3b4bc",
+      "bytes": 37496
+    },
+    {
+      "path": "independent-conservation.json",
+      "sha256": "7139e5c5446bf279f528e6dca7282d823b3d1abb6a33484adf5c55a94c32227a",
+      "bytes": 12711
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "89dfbe89579fd7644d8347e1f7f637e1a5ba423fc83c660043e32a3cc98ac97c",
+      "bytes": 38351
+    },
+    {
+      "path": "replay-corrected.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "replay-corrected.stdout.json",
+      "sha256": "9367374afe207e2fa45d79096e17de8251bfc4eda03c15a2e5fa401d3d37b390",
+      "bytes": 58383
+    },
+    {
+      "path": "replay-prior.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "replay-prior.stdout.json",
+      "sha256": "ae50bfd5c08a02b4be1e1c1a034efc8ee45d9ba175c9728295b3788531b2e3f5",
+      "bytes": 44928
+    }
+  ],
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

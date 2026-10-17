@@ -1,0 +1,21 @@
+✔ actual Nova startup selects A/B artifact UTF8 cap, snapshots A and resumes A without current B (3458.808615ms)
+✔ central artifact limits required and relationally valid; raw duplicate authors reject even equal or null before activation (5.297157ms)
+✔ actual artifact consumer enforces independently selected record count, metadata bytes and blob-store bytes with restored positives (285.064848ms)
+✔ original durable store roots survive B relocation without effects at B; grants still bind (3788.673968ms)
+✔ actual Nova state/wait A/B entry policies reach both real adapters and retained A resumes without B (7809.972713ms)
+✔ selected state and wait entry bytes, records and store capacities enforce actual boundaries and restore positives (475.745687ms)
+✔ all six central leaves are mandatory; malformed, missing and raw duplicate authors reject without defaults (6.081266ms)
+✔ original durable store roots survive B relocation without effects at B; grants still bind (2631.022781ms)
+✔ actual Nova telemetry A/B record cap, redaction and retained A resume without B use selected snapshot (3068.514349ms)
+✔ selected actual telemetry byte/count/store limits enforce exact UTF8 boundaries and restored positives (152.778523ms)
+✔ all central telemetry leaves required; malformed direct/central values and duplicate authors reject (7.515703ms)
+✔ selected telemetry structural budgets enforce exact boundaries, capture and restored positives (86.154968ms)
+✔ original durable store roots survive B relocation without effects at B; grants still bind (3802.795481ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11881.70429

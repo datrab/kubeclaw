@@ -1,0 +1,48 @@
+{
+  "scope": "Corrected written-order logical definition witnesses on actual FileJournal; NOT current Nova implementation, targetSDK schema, authenticgrants, F-MUT/runtime or wholeC0acceptance",
+  "results": [
+    {
+      "id": "retainedA-missingB-originalfirst",
+      "passed": true,
+      "Breads": 0,
+      "originalChecks": 1,
+      "retainedStateUnchanged": true
+    },
+    {
+      "id": "retainedA-malformedB-originalfirst",
+      "passed": true,
+      "Breads": 0,
+      "originalChecks": 1,
+      "retainedStateUnchanged": true
+    },
+    {
+      "id": "retainedA-incompatibleB-originalfirst",
+      "passed": true,
+      "Breads": 0,
+      "originalChecks": 1,
+      "retainedStateUnchanged": true
+    },
+    {
+      "id": "explicit-original-task-conflict-before-B",
+      "passed": true
+    },
+    {
+      "id": "genuinely-unstarted-validB-onecompleteappend-innersequence",
+      "passed": true
+    },
+    {
+      "id": "original-intervening-before-acceptance-wins-no-Bappend",
+      "passed": true
+    },
+    {
+      "id": "historical-select-first-order-counterexample-retained",
+      "passed": true
+    }
+  ],
+  "passed": 7,
+  "limitations": [
+    "runtime authority/closure verification interfaces are explicitly logicalmodel fixtures, not real targetproducer/readers",
+    "parallel async validation failure/race details and complete cross-reader cases remain OPEN",
+    "unchanged original seven actual journal controls retained by source/hash, not rerun without materialsourcechange"
+  ]
+}

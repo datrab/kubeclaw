@@ -1,0 +1,119 @@
+{
+  "status": "current-source-trace only, target universal module/grant/cleanup contract INCOMPLETE",
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceIdentities": [
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+    },
+    {
+      "path": "skills/nova/core/execution/graph.ts",
+      "sha256": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af"
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "sha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780"
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "b4d9b29911643d08fc6ef439b88dec4ef3e6a4f355ea591ff3f6db9e3f152d1b"
+    }
+  ],
+  "numberedSourceLog": "docs/review/evidence/config-acceptance/author/nova-current-binding-seam-source-read-20261013.log",
+  "sourceRecords": [
+    {
+      "id": "NOVA-SOURCE-RUNTIME-ACTIVATION-ORDER",
+      "current": "runNewPipeline and recover/resume call prepareRuntime before their run mutation lock and before snapshot/package equality checks. prepareRuntime calls activateRegistry after package/grant/config validation. No engine/provider effects from activation were reproduced.",
+      "sources": [
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-runtime.ts"
+      ],
+      "targetObligation": "Validate retained original foundations/delivery/code compatibility BEFORE activating an incompatible recovery runtime; author target cannot claim every current binding is absent."
+    },
+    {
+      "id": "NOVA-SOURCE-RUN-SNAPSHOT-FOUNDATION",
+      "current": "writeRunSnapshots atomically no-replace publishes run-snapshot.json schema run-snapshot.v4 (temporary file, fsync, link, directory fsync); includes whole graph and registry, SDK dispatch/review codec fields. frozenRegistryRecord stores configuration/providers/grants/adapters/observers, package provenance, enabled registrations and selected providers.",
+      "sources": [
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-snapshots.ts"
+      ],
+      "targetObligation": "Reuse retained run snapshot/foundation. SDK dispatch/review profiles remain codec identities, never business operator profile selectors. No second editable system index."
+    },
+    {
+      "id": "NOVA-SOURCE-GRAPH-CONFIG-IS-PINNED",
+      "current": "ExecutionGraph.snapshot preserves complete StageDefinition nodes including config/execution/input and edges. v3 uses portableJson UTF16 ordering; v2 historical locale ordering remains. verifyPinnedGraph recomputes exact same-version graph digest.",
+      "sources": [
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/graph.ts",
+        "skills/common/plugin-runtime/sdk/src/values.ts"
+      ],
+      "targetObligation": "Dynamic next-module operator tuning must not silently mutate a pinned graph or conflate task/graph fields with owner policy. Exact target membership/selection/carrier/compatibility and legacy handling remain to define."
+    },
+    {
+      "id": "NOVA-SOURCE-RECOVERY-CONFIG-EQUALITY",
+      "current": "verifyPinnedPackages checks dependencyIdentityVersion, registry.configuration equality, package set/version/content digests. Explicit recorded administrative package upgrades have their own equality/identity rules. It does not prove all PlatformConfig fields (e.g. storageRoot/shutdown/effectLockTTL) are stored in configuration.",
+      "sources": [
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts"
+      ],
+      "targetObligation": "Original generation lookup must precede mutable current activation; exact complete dependency/capability/secret-reference/config closure and original cleanup refs still required. Do not suppress legitimate explicit historical administrative rules."
+    },
+    {
+      "id": "NOVA-SOURCE-FIRST-STAGE-NOT-MODULE-BINDING",
+      "current": "pipeline-loop execute records stage.started with stageType, optional agentRole/administrativeOverride, flushes then calls executor. It is per stage/attempt, not an existing typed module-generation acceptance. Implementation/lint/review/test stages share a logical compiler module but first-module identity cannot be guessed from stage-name prefixes alone.",
+      "sources": [
+        "skills/nova/project/compiler.ts",
+        "skills/nova/core/execution/pipeline-loop.ts"
+      ],
+      "targetObligation": "D20 first business module binds one complete generation before first work; all later retries/repair/rechecks/cleanup retain that original. Need explicit immutable compiler membership and durable carrier tied to original graph, not a latest lookup at every stage."
+    },
+    {
+      "id": "NOVA-SOURCE-MODULE-COMPILER-BUDGET",
+      "current": "moduleStages generates implementation/lint/optional review/test stages; task configurations and execution repair budgets/timeouts enter the graph. Existing budget checks count used attempts; administrativeOverride is distinct.",
+      "sources": [
+        "skills/nova/project/compiler.ts",
+        "skills/nova/core/execution/pipeline-loop.ts"
+      ],
+      "targetObligation": "Publishing generationB cannot create administrative overrides, reset consumed counters, change original intent or regrant permissions. For unstarted modules, compatibility with retained graph/capabilities must be concrete, not blanket M scope."
+    },
+    {
+      "id": "NOVA-SOURCE-DIGEST-CONVENTIONS",
+      "current": "WorkerCore contract canonicalJson uses RFC8785-style UTF16 ordering and rejects invalid unicode/nonfinite/nonJSON; SDK legacy canonicalJson uses localeCompare, while portableJson uses UTF16. Existing snapshot codec version determines encoding.",
+      "sources": [
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "contracts/pipeline-worker-core/v1/src/digest.ts"
+      ],
+      "targetObligation": "Use exact named encoding per captured serializer; never rewrite old artifact hashes or use locale-dependent encoding as unversioned new binding."
+    }
+  ],
+  "decisionRefs": [
+    "D20",
+    "D21",
+    "D22"
+  ],
+  "limits": "No productive source/test edits or runtime/API/image/native effects. No fresh independent wholeC0 acceptance. No universal binding IDs supplied as closed contracts."
+}

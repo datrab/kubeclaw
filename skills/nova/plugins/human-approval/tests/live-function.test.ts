@@ -1,3 +1,8 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+import { TEST_CORE_POLICY as STATE_WAIT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_WAIT_STORE_POLICY = STATE_WAIT_TEST_CORE_POLICY.waitStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -85,7 +90,7 @@ function grantedRegistry() {
   });
 }
 
-async function run(id, guidance) {
+async function run(id, guidance, taskTimeout = 5, selectedTimeout = TEST_CORE_POLICY.humanApproval.defaultTimeoutMinutes) {
   const granted = grantedRegistry();
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const effectsPath = path.join(temporary, `${id}-effects.jsonl`);
@@ -93,17 +98,18 @@ async function run(id, guidance) {
     granted,
     activated,
     configs: new Map([
-      ['kubeclaw.operator-messaging:operator', {
+      ['kubeclaw.operator-messaging:operator', { ...TEST_OPERATOR_STORE_POLICY, ...TEST_CORE_POLICY.operatorMessagingPayload, ...TEST_CORE_POLICY.operatorMessagingFailure,
         deliveryRoot: path.join(temporary, `${id}-deliveries`),
         targets: {
           'release-operators': {
             endpoint,
+            payloadProfile: 'standard',
             tokenSecret: 'approval-webhook-token',
           },
         },
       }],
-      ['kubeclaw.wait-store:waits', { root: waitRoot }],
-      ['kubeclaw.network-http:http', {
+      ['kubeclaw.wait-store:waits', { ...TEST_WAIT_STORE_POLICY, root: waitRoot }],
+      ['kubeclaw.network-http:http', { ...TEST_CORE_POLICY.networkHttp,
         allowedOrigins: [origin],
         allowedMethods: ['POST'],
         allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'],
@@ -113,10 +119,10 @@ async function run(id, guidance) {
       }],
     ]),
     effects: new core.EffectCoordinator(
-      new core.FileEffectJournal(effectsPath),
+      new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY),
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(), 300_000,
+      new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition,
     ),
     shutdownTimeoutMs: 1_000,
     async emitDomainEvent() {},
@@ -124,7 +130,7 @@ async function run(id, guidance) {
   await adapters.start();
   const journalPath = path.join(temporary, `${id}-events.jsonl`);
   try {
-    const runner = new core.PipelineRunner({
+    const runner = new core.PipelineRunner({approvalTimeoutMinutes: selectedTimeout, stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: `pipeline:${id}`,
@@ -136,7 +142,7 @@ async function run(id, guidance) {
           config: {
             target: 'release-operators',
             issuerId: 'operator:release',
-            timeoutMinutes: 5,
+            ...(taskTimeout === null ? {} : {timeoutMinutes: taskTimeout}),
           },
           input: { summary: 'Approve the production release.' },
           execution: { maxAttempts: 2, maxRemediationCycles: 0, timeoutMs: 10_000 },
@@ -145,7 +151,7 @@ async function run(id, guidance) {
       registry: granted,
       activated,
       adapters,
-      journal: new core.FileJournal(journalPath),
+      journal: new core.FileJournal(journalPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs),
       ...(guidance === undefined
         ? {}
         : { resumeGuidance: new Map([['approval', guidance]]) }),
@@ -228,6 +234,18 @@ try {
   assert.equal(denied.status, 'blocked');
   assert.equal(received.length, 1);
   assert.equal(storedWaits().length, 1);
+  // Real installed stage -> durable wait -> signed HTTP publication uses the
+  // selected default when the task omits it, while explicit task data wins.
+  for (const [id, task, selected, expected] of [['default-a', null, 2, 2], ['default-b', null, 7, 7], ['explicit-over-default', 3, 7, 3]]) {
+    const before = Date.now();
+    const result = await run(id, {decision: 'pending'}, task, selected);
+    assert.equal(result.status, 'waiting');
+    const expiry = Date.parse(result.stage.wait.expiresAt);
+    assert(expiry >= before + expected * 60000);
+    assert(expiry <= Date.now() + expected * 60000);
+    assert.equal(received.at(-1).body.expiresAt, result.stage.wait.expiresAt);
+    assert.equal(storedWaits().at(-1).wait.expiresAt, result.stage.wait.expiresAt);
+  }
 } finally {
   await new Promise((resolve) => server.close(resolve));
   if (previousSecret === undefined) delete process.env[secretEnvironmentName];

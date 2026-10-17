@@ -1,0 +1,666 @@
+{
+  "status": "author correction proposal, independently unreviewed; no executed tests/new acceptance IDs",
+  "testIdentityRule": "No future harness digest invented; pin actual implemented source/tests/tools/image/chart/root/profile/store/claim receipts at execution. Existing case bodies and original requirement IDs retained, additive oracle detail cannot replace original obligations.",
+  "oracles": [
+    {
+      "finding": "DMC-01",
+      "ids": [
+        "CMP-C1-VAL-prism-studio",
+        "CMP-C1-VAL-prism-control",
+        "CMP-C1-VAL-prism-worker"
+      ],
+      "prior": "Valid full six-owner generation A and authentic Studio caller receipt; no Studio-consumer tuples for unrelated owners",
+      "inputs": "A with Studio binding only for Studio caller; equal A reordered root.bindings; duplicate Studio tuple; missing Studio tuple; unrelated Buster profile invalid",
+      "action": "Boot packaged Studio at actual studio.ts/loadStudioConfig and Worker via createWorkerServer/createManagedWorkerServer with mandatory captured limits",
+      "oracle": "Studio accepts without unrelated tuples; reorder preserves selected settings/content identity; duplicate/missing consumed tuple rejects before listen; invalid unrelated declared profile still rejects full-generation validation; no zero-argument worker reread path remains",
+      "observer": "Real loader trace records selected owner IDs + open file paths; listener/worker admission trace empty on negatives; compare immutable selection tuple/profile identities, not array indexes"
+    },
+    {
+      "finding": "DMC-02",
+      "ids": [
+        "CMP-C1-DELIVERY",
+        "DLV-CASE-GENERATION-MOUNT",
+        "DLV-CASE-ROLE-PACKAGING-CLOSURE",
+        "DLV-CASE-RELEASE-DRIFT-ALIASES"
+      ],
+      "prior": "Built consuming images and both real Chart renders from same A receipt",
+      "inputs": "Config-only B profile/binding change; stale A image+B Chart receipt; image component leaf or intermediate ancestor replaced with symlink; projected expected receipt ..data rotates/escapes",
+      "action": "Use actual runtime-inputs predicates/workflows/role archive/Docker context; inspect shipped image without host CONFIG injection, render both Charts and start packaged boot verifier",
+      "oracle": "B change alters consuming image/package and both Chart receipt identities; A/B mismatch rejects before settings use; physical image tree has seven expected regular files/root uid/no022/exact SHA; symlink leaf/ancestor rejects; only bounded receipt transport projection resolution permitted; existing pod/init security contexts not weakened",
+      "observer": "Actual package/image file/mode/hash receipts, rendered volumes prove no system ConfigMap mount, both boot caller traces and file-open/no-listen proof"
+    },
+    {
+      "finding": "DMC-03",
+      "ids": [
+        "CMP-C1-DELIVERY",
+        "CMP-C1-VAL-buster-engine",
+        "CMP-C1-MUT"
+      ],
+      "prior": "Root parent A holds lifetime lock and publishes valid pipeline-startup.json; child not admitted",
+      "inputs": "Publish deployment B before child spawn; tamper handoff digest/bootId/selection/schema receipt; restart child under same parent; attempt second writer",
+      "action": "Run actual preparation-supervisor spawn/setpriv and remote-plan-cli handoff read plus versioned fd3 startup association",
+      "oracle": "Child stays A with same parentBootId/digest and inherited Buster profile; fd3 normal requests rejected until exact association; tamper/missing receipt/wrong uid/mode rejects before admission; restart remains A; second writer cannot replace live handoff",
+      "observer": "Root file fsync/ownership observations, child opened physical A path/digest, parent association record and absence of provider/preparation admission on negatives"
+    },
+    {
+      "finding": "DMC-04",
+      "ids": [
+        "C5-COMPLETE-LEASE-LOSS",
+        "C5-COMPLETE-CONCURRENT-PUBLISH",
+        "C5-COMPLETE-JOURNAL-ACCOUNTING",
+        "C5-COMPLETE-POST-BIND-CRASH"
+      ],
+      "prior": "Valid mutation ResourceLock.v2 epoch N; async closure/reservation preparation started; another already-bound path also tested",
+      "inputs": "Pause after async preparation, expire/revoke/renewal-fail N before synchronous acceptance; pause before already-bound activation; newer real lock epoch; expiry after durable append before projection",
+      "action": "Exercise actual withRunMutationLock/withCurrentGuardSync/events.transact and StageExecutor final projection/dispatch-intent fence",
+      "oracle": "No accepted binding/view/attempt/effect after lost authority for unbound or already-bound path; no metadataMutex/event-journal inversion; final callback contains no await; append already committed before later expiry stays durable but no activation; orphan receipt remains accounted until reconciled once",
+      "observer": "Actual lock owner/fencingToken/expiry, events.jsonl records, real adapter invocation log, reservation retained-byte/inode accounting before and after reconciliation"
+    },
+    {
+      "finding": "DMC-05",
+      "ids": [
+        "C5-COMPLETE-CLEANUP-REFERENCE",
+        "C5-COMPLETE-FIXED-EVAL",
+        "CMP-C5-BIND"
+      ],
+      "prior": "Original preparation group bound A with effect/source/reservation receipts; separate declared cleanup group unbound; publish valid M-compatible B",
+      "inputs": "Live-modules versus fixed-eval; retry started cleanup B; attempted same-group repair switch; changed original effects/grants/budget authority",
+      "action": "Resolve explicit membership/dependency and actual preparation cleanup association before cleanup journal admission",
+      "oracle": "Same-group repair stays A; separate first cleanup may bind B only eligible fields; started cleanup/retry stays B; fixed-eval binds both A; changed original effect/receipt/grants/consumption rejects; serialized capacity includes binding refs",
+      "observer": "Original membership group IDs/edge, fsynced cleanup bind and predecessor receipts, claims and budget usage compared unchanged"
+    },
+    {
+      "finding": "DMC-06",
+      "ids": [
+        "C5-COMPLETE-ORIGINAL-FIRST",
+        "C5-COMPLETE-LEGACY",
+        "C5-COMPLETE-POST-DISPATCH-CRASH",
+        "C5-COMPLETE-R-S-H-INCOMPATIBLE"
+      ],
+      "prior": "Stored accepted/running/terminal A v3 or authentic archived v2 job; service now configured incompatible registry/provider/runtime root B",
+      "inputs": "Matching replay request; same-key different requestDigest; archived A missing; incoming staged B but store race winner A; cancel/evidence/result during B boot",
+      "action": "Actual submit/header callback/store lookup+acceptBound; bootstrap recover, queue/drain/execute, cancel/evidence/result use BoundStoredJob original closure",
+      "oracle": "Matching replay looks up A before current authority and launches only stored A input/provider/options; different request conflicts independently of B; missing A blocks without Latest/delete/false failed-success rewrite; queue holds winning record; evidence/root/result and cancellation original ownership remain A; new requests alone validate B",
+      "observer": "Trace lookup/archive/current-validator ordering at each named seam; persisted strict version/field set/binding digest; provider dispatch receipts/settings/grants; original stored request/result digests and evidence physical root"
+    }
+  ],
+  "originalCasePins": [
+    {
+      "caseId": "CMP-C1-VAL-prism-studio",
+      "originalBodySha256": "35bd6ad514a3bf44c18f441a3a65ce9321d84391a52761c475a90b9b983651c0",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "D17",
+        "D20",
+        "D21",
+        "D22",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "F5a"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "CMP-C1-VAL-prism-control",
+      "originalBodySha256": "6c7d2bfd56d8aac18ee862b2d39973596d06d97f8f1699db7e249bad09cb412d",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "D17",
+        "D20",
+        "D21",
+        "D22",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "F5a"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "CMP-C1-VAL-prism-worker",
+      "originalBodySha256": "74a6114be1769aaae3788ca5c888c62ccf6037528f4b3a61aed419027d4dfaa1",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "D17",
+        "D20",
+        "D21",
+        "D22",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "F5a"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "CMP-C1-DELIVERY",
+      "originalBodySha256": "c528d3b4ccd987351246d05d0871f53dcfe0ead42cc5870167a8db49efd30445",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "D17",
+        "D20",
+        "D21",
+        "D22",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "F5a"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "DLV-CASE-GENERATION-MOUNT",
+      "originalBodySha256": "88de80d0d441b76cb1cb31c7deeefa6830244df8c703a9f28c68adc9708c521f",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-DELIVERY",
+        "F-EFFECT",
+        "F-VAL"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "DLV-CASE-ROLE-PACKAGING-CLOSURE",
+      "originalBodySha256": "235e77cb15f6b0e5428c1eb5b734a015742ed842ca7835dcd4b2316fd7448a78",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-DELIVERY",
+        "F-EFFECT",
+        "F-VAL"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "DLV-CASE-RELEASE-DRIFT-ALIASES",
+      "originalBodySha256": "812e672955e2eb5efafab60461dd3b0d97c2173c2703deb445ef7bc64f962de6",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-DELIVERY",
+        "F-EFFECT",
+        "F-VAL"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "CMP-C1-VAL-buster-engine",
+      "originalBodySha256": "9ced61bb89741b1957325776981fe386778671f79286af24c7f3baf53f293447",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "D17",
+        "D20",
+        "D21",
+        "D22",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "F5a"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "CMP-C1-MUT",
+      "originalBodySha256": "57eed350de3cff11f3c7baa8a07f0b1bbb4ad39bc739b804f2571d8f82d32725",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "D17",
+        "D20",
+        "D21",
+        "D22",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "F5a"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-LEASE-LOSS",
+      "originalBodySha256": "1d2c0ade510c195e5429cadb9af2ca4df4568f2f6f3420b32c7169a82b1316a8",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-CONCURRENT-PUBLISH",
+      "originalBodySha256": "71d98f643d87fd515d28ac88f12ced5bcbc7ccf2952b8d892bda6fabffb8669d",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-JOURNAL-ACCOUNTING",
+      "originalBodySha256": "2850b7ec07fd4d23aee666c30d50a2aff259fed5876b403b08ffeea659d92298",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-POST-BIND-CRASH",
+      "originalBodySha256": "babf3d3b02357f64928c59530df3c2ab6ed93741901db619baaa85371488ce38",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-CLEANUP-REFERENCE",
+      "originalBodySha256": "671389afb526782978e8a587288ad45aadbe169ccdab8a541f6a93f5f522bf9b",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-FIXED-EVAL",
+      "originalBodySha256": "e23b04c2e8e4bca742e725b8e99b3757ab12113af648d484c20765173829899d",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "CMP-C5-BIND",
+      "originalBodySha256": "8589040011d61f682243410de6caeb671cb902816e706a0171e5c9b3178874a4",
+      "source": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalRequirements": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "D17",
+        "D20",
+        "D21",
+        "D22",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "F5a"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-ORIGINAL-FIRST",
+      "originalBodySha256": "b55dbef7d656cfa8e633338764f1ba666adf91907e61f65d8a567f678f39bf00",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-LEGACY",
+      "originalBodySha256": "836b7ee873ae3a2a1f28abd4af497c665eda26293944ebae5546dbd21df7b767",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-POST-DISPATCH-CRASH",
+      "originalBodySha256": "314fde943f78b02bb058cc8f13e0b16a632ef721ed2fd4657f32491d3e0f8818",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    },
+    {
+      "caseId": "C5-COMPLETE-R-S-H-INCOMPATIBLE",
+      "originalBodySha256": "1fe939ff5712979c1251bd4c135d850baf585bce540c6a91016d432659e89daa",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "originalRequirements": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "originalResult": "not-run",
+      "additionalOracleOnly": true
+    }
+  ],
+  "all13OriginalCleanupCases": [
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-BEFORE-BIND",
+      "originalBodySha256": "d92a50f9d8ef7bef48ffe03645b96cd9303ae375bc9fbc64dafab6a0615ebae4",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Before separate cleanup binding, live-modules may choose valid B; no effect before durable acceptance.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-AFTER-BIND",
+      "originalBodySha256": "47a146f00359970fdc13f61c3b310821191db176e34a7b013c046d8fbcfe6365",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Accepted cleanup B survives crash before dispatch; recover B without current read.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-PARALLEL-PUBLISH",
+      "originalBodySha256": "6fe11d0533d57b9dd6753df354a0c80ce63d1314a82b2adff28f1f48e222b304",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Concurrent A/B publication and cleanup admission yield one whole binding, never mixed refs.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-INVALID-PUBLISH",
+      "originalBodySha256": "4fc0167045c59881173aebd0a6f561a55b382e4f2061c20f24765e2225263972",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Invalid/incompatible B cannot bind or fall back; original preparation receipts untouched.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-STARTED-RECOVERY",
+      "originalBodySha256": "fcd2eedb1545c638f04eb06f122d5af2d5e49a669811ec00b79f54ab2a746451",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Started cleanup retains own accepted generation and original predecessor identity.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-QUIESCENT-RETRY",
+      "originalBodySha256": "cb30831b9cc484d2d4bfedf80ce0de528a30f756d41a101cea8ecb0b138d8442",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "New technical claim on quiescent retry retains accepted cleanup projection, grants and consumed budget.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-UNCERTAIN-RETRY",
+      "originalBodySha256": "00b92cfc07d5b04226282e9086f0b7badcc409ba0f3962c9bfb544545b77b2a9",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Uncertain original cleanup effect reconciles before retry; no new generation or reset.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-RECEIPT-EFFECT",
+      "originalBodySha256": "1da69e663ebe7ec0c21c0205ddad202c786965e95b5056c2b3b0a79d671c9071",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Effect and predecessor/result receipts remain bound to original source/effect, not current A/B.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-PROJECTION",
+      "originalBodySha256": "5332b972d3c60893b6da9dd96c7b34144a36c9682471c65f28c8811c799592c2",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Original captured association settings remain original; selected cleanup M projection separate and exact.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-FIXED-EVAL",
+      "originalBodySha256": "7a6d44faf512092b25f8a0eb9c2160e683e80e2746ec6666b3745908ee5ef145",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Separate unbound cleanup must use fixed A even after B publication.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-SUCCESS-RELEASE",
+      "originalBodySha256": "b48cc39e543feac557e167e1c562975fb6edb3202975c70214533627e9c2d22b",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Successful cleanup releases reservation exactly once after actual quiescence and retained receipt.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-RELEASE-REPLAY",
+      "originalBodySha256": "c1cde8a465f626f6c14ac44f3c42c7b1bc4ea424c4297cdf217bb05b2ed92d6d",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Replay does not duplicate release or overwrite original result/predecessor binding.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    },
+    {
+      "caseId": "CMP-C5-PREPARATION-CLEANUP-HISTORY-CAPACITY",
+      "originalBodySha256": "4a67d51bfb03da52d114cab72c877cfc58323c30de82a2e5b61366434f05b165",
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "additionalFirstBindVsRecoveryOracle": "Original and selected binding metadata all counted; capacity rejects without truncating history.",
+      "observer": "Actual preparation cleanup membership/binding journal, original effect/source/reservation/grant/budget receipts and real cleanup ownership state; future implementation not run"
+    }
+  ],
+  "implementationAuthorization": null,
+  "runtimeExecuted": false
+}

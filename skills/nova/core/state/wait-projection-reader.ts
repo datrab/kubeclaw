@@ -32,8 +32,8 @@ function pinnedContext(snapshot: RunSnapshot, source: RetainedWaitSource, owner:
   if (!selected || !config) return fail();
   if (selected.length !== 1 || selected[0]!.provider.package.package.pluginId !== 'kubeclaw.wait-store'
     || selected[0]!.provider.registrationId !== 'waits' || config.root !== owner.waitRoot) fail();
-  const maximumEntryBytes = Number(config.maxEntryBytes ?? 1048576);
-  if (!Number.isSafeInteger(maximumEntryBytes) || maximumEntryBytes < 1) fail();
+  const maximumEntryBytes = Number(config.maxEntryBytes);
+  if (typeof config.maxEntryBytes !== 'number' || !Number.isSafeInteger(maximumEntryBytes) || maximumEntryBytes < 1) fail();
   return { provider: selected[0]!.provider, maximumEntryBytes };
 }
 

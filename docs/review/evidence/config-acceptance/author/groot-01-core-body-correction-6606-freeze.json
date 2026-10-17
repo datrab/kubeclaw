@@ -1,0 +1,73 @@
+{
+  "status": "GROOT-01 author correction frozen; fresh independent actual-checker material recheck pending",
+  "originalIndependentReport": {
+    "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/independent-review.json",
+    "sha256": "0dbcaedff449efa22a13311ebc2c56c3e1b6c1150a06980135bd4f6bb70f748b"
+  },
+  "preservedPreviousFiles": "docs/review/evidence/config-acceptance/author/before-groot-01-core-body-conservation-6606/",
+  "currentFrozenFiles": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "sha256": "ad7f91e5530e9dc302274713ffa14d49728bbcc2b918cd476d9eb972df4a797d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-generated-projection-negatives-6606.py",
+      "sha256": "1d38b9701d38c818092f18833aa38ea9609f3198d4e548f96cca3fc0a7f8b2ad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/generated-projection-groot-01-controls-6606-attempt1.log",
+      "sha256": "42d1db395f1090d88dc00be444d6744dd555825f95896309c22fa11f2421593b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/generated-projection-groot-01-controls-6606-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/structural-groot-01-6606-attempt1.log",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/structural-groot-01-6606-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/strict-groot-01-6606-attempt1.log",
+      "sha256": "5069675d8e5674dadc41ba9ef6e26964a106bfcc8126f413b14dfe310b6bba25"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/strict-groot-01-6606-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "unchangedRootFiles": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "b1af942080285f5c7d97c50f2b30bc14a1a0850ffb77908cb73fb3f8c9f6b36c",
+      "bytes": 37736297
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "623462221f87371c23e0a0b8857a1c8563cd7dc6e1e76f457221b0ba63894a21",
+      "bytes": 99612476
+    },
+    {
+      "path": "docs/review/remediation/config-definition-current.md",
+      "sha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950",
+      "bytes": 33961
+    }
+  ],
+  "correction": "Exact13 normalized Core row objects; all source-provided properties of27 cases with required-key presence/deep equality, normalized aliases/phase and no review promotion. Requirements never dropped/waived.",
+  "results": {
+    "fullCheckerNegatives": 16,
+    "restoredPositiveChecks": 2,
+    "controlExit": 0,
+    "structuralExit": 0,
+    "structuralErrors": 0,
+    "strictExit": 1,
+    "strictOpenObligations": 102679,
+    "rootByteDrift": 0
+  },
+  "globalC0Accepted": false,
+  "implementationAuthorization": null,
+  "limits": "Original generated-root freeze retains old code/log identity stand; new currentFrozenFiles explicitly supersede only checker/control files. No source/row/case body, semantic status, result, field/native/whole acceptance changed."
+}

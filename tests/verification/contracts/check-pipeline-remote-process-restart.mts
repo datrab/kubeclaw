@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { execFileSync, spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
@@ -162,7 +163,7 @@ export function provider() { return { async execute(invocation, context) {
 
   const port = await freePort();
   const platform = path.join(temporary, 'platform.json');
-  fs.writeFileSync(platform, JSON.stringify({ schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [installRoot],
+  fs.writeFileSync(platform, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [installRoot],
     trustedBuiltinRoots: [installRoot], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: './platform-state',
     shutdownTimeoutMs: 5_000, orchestratorIssuerId: 'phase7-restart', administrativeDecisionIssuers: [] }));
