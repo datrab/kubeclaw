@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T01:15:01.679928+00:00",
+  "updatedAt": "2026-10-17T01:20:38.868839+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "EXACT_17_SECRET_OBSERVER_POLICY_SOURCE_LANES_COMPOSED_RECEIVING_OPEN",
+  "status": "EXACT_42_DISPATCH_SOURCE_JOINS_7_EXISTING_PROFILES_35_RECEIVING_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Complete genuine QB-R02 original source/build/baseline producer association, inputStore ownership/reservations/accounting/sealed original bytes/publication, and coordinated sole-root boot/Nova receiving. Exact62 platform,24 notification and17 plugin policy central-receiving residuals remain OPEN; remaining2 section candidates/10 unresolved semantic groups require actual joins. Preserve seven unused preview field obligations, BUDGET_SOURCE_RECEIPT_REQUIRED, denied-v10, full2409/6845/50 independent/history/native/archive/C0-C6 gates.",
+  "nextAction": "Continue coherent exact Core54 original field/source/consumer reconciliation (remaining1 section candidate/10 unresolved semantic groups), and genuine QB-R02 original source/build/baseline producer association, inputStore ownership/reservation/accounting/sealed bytes/publication plus coordinated sole-root boot/Nova receiving. Keep explicit62 platform,24 notification,17 plugin policy and35 dispatch central-receiving residuals OPEN; seven unused preview obligations, BUDGET_SOURCE_RECEIPT_REQUIRED, denied-v10, full2409/6845/50 independent/history/native/archive/C0-C6 gates unchanged.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -25593,6 +25593,40 @@
       "originalCasesNewlyAccepted": 0
     },
     "independentReview": "OPEN; no native spawn/reviewer tool exposed, CONFIG reviewers0; unchanged helper EROFS not retried; author controls only",
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "externalOwner": "Raven",
+    "resumeCondition": "UNCHANGED: isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficient genuinely root-trusted writable archive filesystem and migrated isolated real PostgreSQL database.",
+    "writerLock": "SAME shared nonblocking; released at bounded command exit",
+    "noHistoricalFollowup": true
+  },
+  "dispatchSourceMatrix20261017": {
+    "at": "2026-10-17T01:20:38.868839+00:00",
+    "status": "EXACT_42_DISPATCH_SOURCE_JOINS_7_EXISTING_PROFILES_35_RECEIVING_OPEN",
+    "matrixCommit": "ff0fb88927357f90bc690acc4415b71dc1ff9749",
+    "matrixRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-dispatch-source-matrix-20261017",
+    "productionSourceChanged": false,
+    "originalFields": 42,
+    "existingCentralSelectedProfileSourceJoins": 7,
+    "suppliedTargetResiduals": 29,
+    "fixedCapacityResiduals": 5,
+    "sharedSDKPathnameLiteralResiduals": 1,
+    "centralReceivingResiduals": 35,
+    "checks": {
+      "passed": 66,
+      "total": 66,
+      "originalRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "originalCasesNewlyAccepted": 0,
+      "composedIdentitiesPreserved": true
+    },
+    "independentReview": "OPEN; no native spawn/reviewer exposed, CONFIG reviewers0; unchanged helper EROFS not retried; author controls only",
     "fullC0C6Complete": false,
     "qualityActivationAllowed": false,
     "sealedInputStoreImplemented": false,
