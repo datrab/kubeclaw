@@ -7,9 +7,9 @@ import {getReviewPolicyProfile} from '../../../skills/nova/plugins/review/src/re
 import {parseReviewPolicy} from '../../../skills/nova/plugins/review/src/review-policy-parser.ts';
 import {isResolvedReviewPolicy,isVerifiedReviewPolicy,REVIEW_POLICY_SOURCE_KINDS} from '../../../skills/nova/plugins/review/src/review-policy-resolver.ts';
 import {validateReferencedSchema} from '../../../skills/common/plugin-runtime/foundation/registry/schema.ts';
-import {projectOwnedReviewPolicy} from '../../../docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-07-review-policy-profiles/projection-contract.mjs';
+import {projectOwnedReviewPolicy} from '../../fixtures/review-policy-author-definition/projection-contract.mjs';
 
-const base='docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-07-review-policy-profiles/';
+const base='tests/fixtures/review-policy-author-definition/';
 const authors=JSON.parse(fs.readFileSync(base+'owned-policy-author-controls.json','utf8'));
 const schema=validateReferencedSchema(fs.readFileSync(base+'owned-policy-author.schema.json','utf8'),'approved-review-author');
 

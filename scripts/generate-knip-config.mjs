@@ -93,7 +93,13 @@ const workspaces = {
   '.': {
     // The live Kubernetes fixture invokes this host executable via execFileSync;
     // it is not a JavaScript module import.
-    ignoreUnresolved: ['^/usr/local/bin/kubectl$'],
+    ignoreUnresolved: [
+      '^/usr/local/bin/kubectl$',
+      '^/usr/bin/systemd-notify$',
+      // Real image-only modules live under sealed role-package prefixes.
+      '^/app/skills/packages/plugin-foundation/config/(?:pipeline-boot\\.mjs|swarm\\.ts|pipeline-composition\\.ts)$',
+      '^/app/prism/skills/packages/plugin-foundation/config/pipeline-boot\\.mjs$',
+    ],
     entry: [
       'scripts/**/*.{mjs,cjs}',
       'charts/kubeclaw/files/config/eslint*.mjs',
@@ -140,7 +146,11 @@ const workspaces = {
     project: ['**/*.{ts,mjs}'],
   },
   'skills/buster/engine': {
-    entry: ['src/index.ts', 'test-gates/provider-child.mjs', 'test-gates/report-adapter-child.mjs'],
+    // Installed native executable, not an importable source module.
+    ignoreUnresolved: ['^/usr/local/libexec/kubeclaw-buster-lifetime-guardian$'],
+    // These subprocess entrypoints are spawned by pathname, not imported.
+    entry: ['src/index.ts', 'native-parent.ts', 'test-gates/preparation-supervisor.ts',
+      'test-gates/preparation-historical-host.ts', 'test-gates/provider-child.mjs', 'test-gates/report-adapter-child.mjs'],
     project: ['**/*.{ts,mjs}'],
   },
   'skills/common/plugin-runtime/sdk': {
@@ -149,9 +159,13 @@ const workspaces = {
   },
   'skills/prism': {
     entry: [...packageEntrypoints(readJson('skills/prism/package.json')),
-      'server/{control,worker,studio}.ts', 'server/agent-bridge.mjs',
+      'server/{control,worker,studio,ingestion-entry}.ts', 'server/agent-bridge.mjs', 'server/agent-bridge-entry.mjs',
       'tests/**/*.{ts,mts,mjs}', 'integration/*.mts', 'studio/*.test.tsx', 'studio/main.tsx'],
     project: ['**/*.{ts,tsx,mts,mjs}'],
+  },
+  'ops/pod': {
+    entry: ['test/*.test.mjs'],
+    project: ['test/**/*.mjs'],
   },
   'tools/ops-mcp': {
     entry: ['src/server.mjs', 'test/*.test.mjs'],
@@ -180,6 +194,9 @@ const config = {
     'cc',
     'eslint',
     'gofmt',
+    'getcap',
+    'rg',
+    'setpriv',
     'flock',
     'systemd-analyze',
     'uv',
@@ -197,6 +214,8 @@ const config = {
     '**/generated/**',
     '**/node_modules/**',
     'Projects/**',
+    // Frozen source captures are evidence, not executable workspace modules.
+    'docs/review/**',
     'contracts/telemetry/v1/{bundle-types,telemetry-types}.ts',
   ],
   ignoreDependencies: [

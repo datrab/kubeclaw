@@ -240,16 +240,19 @@
     "config:buster:check": "node scripts/generate-buster-chart-config.mjs --check"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.5",
+    "@playwright/test": "1.62.1",
     "@types/js-yaml": "^4.0.9",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "eslint": "10.7.0",
     "json-schema-to-typescript": "^15.0.4",
     "knip": "6.27.0",
+    "ms": "2.1.3",
+    "playwright-core": "1.62.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.64.0",
-    "yaml": "2.9.0",
-    "@playwright/test": "1.62.1"
+    "yaml": "2.9.0"
   },
   "overrides": {
     "fast-uri": "3.1.5",

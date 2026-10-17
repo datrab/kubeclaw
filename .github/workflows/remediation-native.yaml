@@ -33,11 +33,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci --ignore-scripts
+      - run: npm ci --include=dev --ignore-scripts
       - name: Install the separately locked packages included in the repository graph
         run: |
-          npm ci --prefix tools/ops-mcp --ignore-scripts
-          npm ci --prefix spikes/prism/puck-adapter --ignore-scripts
+          npm ci --prefix ops/pod --include=dev --ignore-scripts
+          npm ci --prefix tools/ops-mcp --include=dev --ignore-scripts
+          npm ci --prefix spikes/prism/puck-adapter --include=dev --ignore-scripts
       - run: npm run knip:check
       - run: npm run typecheck:integration
 
