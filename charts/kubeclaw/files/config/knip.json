@@ -42,7 +42,11 @@
   "workspaces": {
     ".": {
       "ignoreUnresolved": [
-        "^/usr/local/bin/kubectl$"
+        "^/usr/local/bin/kubectl$",
+        "^/usr/bin/systemd-notify$"
+      ],
+      "ignoreDependencies": [
+        "eslint"
       ],
       "entry": [
         "scripts/**/*.{mjs,cjs}",
@@ -794,6 +798,9 @@
       ]
     },
     "tools/ops-mcp": {
+      "ignoreDependencies": [
+        "hono"
+      ],
       "entry": [
         "src/server.mjs",
         "test/*.test.mjs"
