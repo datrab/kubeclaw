@@ -86,3 +86,16 @@ export function copyPublicationAssets(siteRoot, outputRoot, assets) {
     fs.copyFileSync(path.join(siteRoot, relative), target);
   }
 }
+
+// Routes describe the HTML evidence artifact, not a claimed deployment host.
+// This reuses the existing strict positive selector and rejects Markdown links
+// or unclassified pages instead of discovering a broader publication authority.
+export function publicationManifest(siteRoot, classification) {
+  const pages = publicationPages(siteRoot, classification).map(file => {
+    const sourcePath = `docs/site/${path.relative(siteRoot, file).split(path.sep).join('/')}`;
+    const route = `/${sourcePath.slice('docs/site/'.length, -3)}.html`;
+    return { sourcePath, route, canonicalUrl: route };
+  });
+  if (!pages.length) throw new Error('Publication manifest must contain reader pages');
+  return { schemaVersion: 'kubeclaw-publication-manifest.v1', pages };
+}

@@ -11,7 +11,7 @@ import { pluginSourceClosure, pluginInvocationFacts, pluginCapabilityRoutes } fr
 import { dependencySchemaFacts } from './plugin-schema-dependencies.mjs';
 import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.mjs';
 import { markdownInlineLinks, stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
-import { publicationAssets, copyPublicationAssets, publicationPages } from './lib/docs-publication-assets.mjs';
+import { publicationAssets, copyPublicationAssets, publicationPages, publicationManifest } from './lib/docs-publication-assets.mjs';
 import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -709,7 +709,9 @@ function capabilityPage() {
   ].join('\n')}\n`;
 }
 
+const publicationManifestPath = path.join(root, 'docs/config/documentation-publication-manifest.json');
 const generated = new Map([
+  [publicationManifestPath, `${JSON.stringify(publicationManifest(siteRoot, readJson(path.join(root, 'docs/config/documentation-tree-classification.json'))), null, 2)}\n`],
   [path.join(catalogueRoot, 'README.md'), catalogueIndex()],
   [path.join(siteRoot, 'reference', 'capabilities.md'), capabilityPage()],
   ...plugins.map((plugin) => [path.join(catalogueRoot, `${plugin.manifest.id}.md`), pluginPage(plugin)]),
@@ -1022,6 +1024,7 @@ function build() {
   const report = {
     schemaVersion: 'kubeclaw-docs-publication.v1',
     revision,
+    sourceManifestSha256: crypto.createHash('sha256').update(fs.readFileSync(publicationManifestPath)).digest('hex'),
     pageCount: pages.length,
     assetPaths: assets,
     pluginCount: plugins.length,

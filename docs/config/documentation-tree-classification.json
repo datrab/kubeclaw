@@ -3267,6 +3267,14 @@
       "introducedAfterBaseline": true
     },
     {
+      "path": "docs/config/documentation-publication-manifest.json",
+      "class": "internal-documentation-input",
+      "purpose": "Generated positive publication authority from explicit canonical classifications; owner scripts/docs-publication.mjs.",
+      "originalPath": "docs/config/documentation-publication-manifest.json",
+      "expectedPath": "docs/config/documentation-publication-manifest.json",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/config/documentation-tree-baseline.json",
       "class": "internal-documentation-input",
       "purpose": "documentation configuration authority",

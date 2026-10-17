@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { publicationAssets, copyPublicationAssets, publicationPages } from '../lib/docs-publication-assets.mjs';
+import { publicationAssets, copyPublicationAssets, publicationPages, publicationManifest } from '../lib/docs-publication-assets.mjs';
 
 function classification(...paths) {
   return { schemaVersion: 'kubeclaw-documentation-tree-classification.v1', files: paths.map(name => ({
@@ -94,4 +94,25 @@ test('invalid classification cannot broaden the publication boundary', t => {
   const registry = classification('README.md');
   registry.files[0].expectedPath = 'docs/site/other.md';
   assert.throws(() => publicationPages(site, registry), /no canonical/u);
+});
+
+test('positive manifest preserves registered exact HTML paths and refuses unapproved input', t => {
+  const { site, write } = fixture(t);
+  write('README.md', '# Reader\n');
+  write('use/task.md', '# Task\n');
+  const registry = classification('README.md', 'use/task.md');
+  const manifest = publicationManifest(site, registry);
+  assert.deepEqual(manifest, { schemaVersion: 'kubeclaw-publication-manifest.v1', pages: [
+    {sourcePath: 'docs/site/README.md', route: '/README.html', canonicalUrl: '/README.html'},
+    {sourcePath: 'docs/site/use/task.md', route: '/use/task.html', canonicalUrl: '/use/task.html'},
+  ] });
+  write('unapproved.md', '# Internal\n');
+  assert.throws(() => publicationManifest(site, registry), /no publication allowance/u);
+});
+
+test('positive manifest cannot launder a registered Markdown symlink', t => {
+  const { root, site } = fixture(t);
+  fs.writeFileSync(path.join(root, 'outside.md'), '# Outside\n');
+  fs.symlinkSync(path.join(root, 'outside.md'), path.join(site, 'README.md'));
+  assert.throws(() => publicationManifest(site, classification('README.md')), /must not be a symlink/u);
 });
