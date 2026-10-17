@@ -302,9 +302,17 @@ assert.match(
 );
 assert.match(
   prismStudioDockerfile,
-  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts[\s\S]*source=skills\/prism\/tests\/fixtures\/studio-service\.mts,target=\/app\/prism\/skills\/prism\/tests\/fixtures\/studio-service\.mts[\s\S]*source=skills\/prism\/tests\/studio-canonical-image\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts[\s\S]*PRISM_STUDIO_IMAGE_PROOF=\/opt\/prism-studio-proof node --test --test-concurrency=1 \/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts \/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts/,
+  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/opt\/prism-studio-tests\/studio-service\.test\.mts[\s\S]*source=skills\/prism\/tests\/fixtures\/studio-service\.mts,target=\/opt\/prism-studio-tests\/fixtures\/studio-service\.mts[\s\S]*source=skills\/prism\/tests\/studio-canonical-image\.mts,target=\/opt\/prism-studio-tests\/studio-canonical-image\.mts[\s\S]*PRISM_STUDIO_IMAGE_PROOF=\/opt\/prism-studio-proof node --test --test-concurrency=1 \/opt\/prism-studio-tests\/studio-service\.test\.mts \/opt\/prism-studio-tests\/studio-canonical-image\.mts/,
   'the final Studio image must run original HTTP cases and canonical profile as its runtime user',
 );
+// Both build-time and candidate-time proofs must leave the receipt-bound role
+// untouched. Adding even a test file under /app/prism invalidates its manifest.
+assert.doesNotMatch(read('scripts/check-built-runtime-image.sh'), /:\/app\/prism\/skills\/prism\/tests\//u,
+  'candidate proof bind mounts must stay outside the sealed runtime package');
+for (const testFile of ['studio-service.test.mts', 'studio-canonical-image.mts', 'fixtures/studio-service.mts']) {
+  assert.ok(read('scripts/check-built-runtime-image.sh').includes(`:/opt/prism-studio-tests/${testFile}:ro`),
+    `candidate proof must mount original ${testFile} read-only outside the sealed role`);
+}
 assert.ok(isImageInput('scripts/build-studio-image-proof.mjs'), 'Studio proof-only source changes must rebuild the image');
 assert.match(prismStudioDockerfile, /node scripts\/build-studio-image-proof\.mjs \/build \/image/, 'Studio HTTP proof must use real build-published generations');
 assert.match(read('scripts/build-studio-image-proof.mjs'), /await materializePipelineGeneration\(/, 'Studio HTTP proof must use the genuine generation publisher');

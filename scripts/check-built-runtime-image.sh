@@ -51,10 +51,10 @@ PROFILE
     if [[ "$role" == prism-studio ]]; then
       docker run --rm --network none --entrypoint node \
         -e PRISM_STUDIO_IMAGE_PROOF=/opt/prism-studio-proof \
-        -v "$PWD/skills/prism/tests/studio-service.test.mts:/app/prism/skills/prism/tests/studio-service.test.mts:ro" \
-        -v "$PWD/skills/prism/tests/studio-canonical-image.mts:/app/prism/skills/prism/tests/studio-canonical-image.mts:ro" \
-        -v "$PWD/skills/prism/tests/fixtures/studio-service.mts:/app/prism/skills/prism/tests/fixtures/studio-service.mts:ro" \
-        "$image" --test --test-concurrency=1 /app/prism/skills/prism/tests/studio-service.test.mts /app/prism/skills/prism/tests/studio-canonical-image.mts
+        -v "$PWD/skills/prism/tests/studio-service.test.mts:/opt/prism-studio-tests/studio-service.test.mts:ro" \
+        -v "$PWD/skills/prism/tests/studio-canonical-image.mts:/opt/prism-studio-tests/studio-canonical-image.mts:ro" \
+        -v "$PWD/skills/prism/tests/fixtures/studio-service.mts:/opt/prism-studio-tests/fixtures/studio-service.mts:ro" \
+        "$image" --test --test-concurrency=1 /opt/prism-studio-tests/studio-service.test.mts /opt/prism-studio-tests/studio-canonical-image.mts
     fi
     ;;
   namespace-controller|archviewer)
