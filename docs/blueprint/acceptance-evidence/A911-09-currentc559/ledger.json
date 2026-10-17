@@ -1,6 +1,6 @@
 {
   "schemaVersion": "kubeclaw-ap09-evidence.v2",
-  "bundle_scope": "Individual A911-09 ONLY, not final all261/all89 ledger; provisional FAIL pending fresh current role decisions.",
+  "bundle_scope": "Individual A911-09 complete terminal PASS decision with five exact applicable requirement facets; NOT the final all261/all89 ledger.",
   "reviewed_revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
   "fixture_sha256": "bb5114fd19697495854dcb58f36cd9ee579fe3c146293f2895152bbb94797552",
   "publication": {
@@ -3034,6 +3034,126 @@
       "sha256": "4889b32155120360ed87a4e4f391757b21729c0f2177a1184cd4d18651a72e22",
       "evidence_class": "reviewer",
       "status": "captured"
+    },
+    {
+      "id": "final-379",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html-reconciliation-producer.mjs",
+      "bytes": 3179,
+      "sha256": "286c9936e6e08baa9979d3593718db056b3ad3ed54dc352d34299579eea4287a",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "final-380",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html-reconciliation.json",
+      "bytes": 30772,
+      "sha256": "e11bd56c77968338f40325a6bb7bde18c6f716f4abc784a07226980de61c0c52",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "final-381",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/raw-evidence-whitespace-findings.json",
+      "bytes": 2392,
+      "sha256": "4efaeccd9d3882578ab20aeecaa624575db855ef96c6d8bb93087e504c19d0cd",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "final-382",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-process.json",
+      "bytes": 1297,
+      "sha256": "96eea50840449315c2fb57d08c08a7aa220bede2ea3bc3ad56694d8ed4305da5",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-383",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-prompt.md",
+      "bytes": 877673,
+      "sha256": "7615951b454dc0a0817d7c0ed48c824bf27d71198947f9a613ffb9357bdb83c0",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "current-quality-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-review.json",
+      "bytes": 1815,
+      "sha256": "c3bbe074c5e48ddf26157c48bcb145f07dde3d67dfe9db79d6d5d5c545a95dd7",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-385",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-review.log",
+      "bytes": 3918,
+      "sha256": "d6326156c17657ad097cb6eda6d58a1b9238df82b77115298ca5a85cc0fdd5bc",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-386",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-process.json",
+      "bytes": 1294,
+      "sha256": "a5433364d2cf28a2cada6c2520f77436206a78c95e84386501e4ea7bcaa2aaa2",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-387",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-prompt.md",
+      "bytes": 877639,
+      "sha256": "be3b65d4af1f90fbf8407e4eb921347b829e2d7e0c78292900ceace5f3208c91",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "current-reader-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-review.json",
+      "bytes": 1426,
+      "sha256": "c0b5e13b7739b0c0198fdb232603856d1c1e3d333f5394de6457b703b9b4cf0b",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-389",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-review.log",
+      "bytes": 3140,
+      "sha256": "165ae74fa2b714d8e8f2623a1a867b42262b4c582aad8bb7984110acc219eba1",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-390",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-process.json",
+      "bytes": 1294,
+      "sha256": "39af323349ef79c3525ce6e79a618ab5075d44d8b1f667cbb08e068c3aeddd52",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-391",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-prompt.md",
+      "bytes": 877584,
+      "sha256": "3eba169ef396f9344c6273f2c17f8ea63e1f8147c1e399298a7b37488fcc05ae",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "current-source-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-review.json",
+      "bytes": 1305,
+      "sha256": "1d2a6fb3e2502e6963b0b9c5059bc900bab909a82154b7069e9d0bbc47e5037b",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-393",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-review.log",
+      "bytes": 2898,
+      "sha256": "a7445954b6c414fa6f5b899465701661e680506e0718ff76350aec1d9c132bea",
+      "evidence_class": "reviewer",
+      "status": "captured"
     }
   ],
   "requirements": [
@@ -3043,9 +3163,9 @@
       "owner": "documentation architecture",
       "canonical_target": "docs/site/reference/documentation-governance.md",
       "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
-      "verdict": "FAIL",
+      "verdict": "PASS",
       "reader_question": "Trennung generierter Fakten und redaktioneller Erklärungen — identify the owning input and the safe update/review route.",
-      "finding": "Direct separation of generated facts/authored explanation.  Current owner correction, actual generation, production HTML and custody are supplied. Pending fresh role decisions; this record does not accept the complete requirement beyond its A911-09 facet.",
+      "finding": "Generated facts and authored explanations use separate source inputs, files and owners; the SDK authored owner is now distinct and propagated through genuine governance and actual publication.",
       "source_evidence": [
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
@@ -3073,9 +3193,9 @@
       "owner": "documentation automation",
       "canonical_target": "docs/site/extend/documentation-maintenance.md",
       "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
-      "verdict": "FAIL",
+      "verdict": "PASS",
       "reader_question": "Eine Quelle der Wahrheit je mechanischem Fakt — identify the owning input and the safe update/review route.",
-      "finding": "Direct prohibition of duplicate mechanical fact authorities.  Current owner correction, actual generation, production HTML and custody are supplied. Pending fresh role decisions; this record does not accept the complete requirement beyond its A911-09 facet.",
+      "finding": "Ownership facts derive from page metadata; the generated map is not a second manually maintained inventory. Sources and current generated output agree at the exact reviewed revision.",
       "source_evidence": [
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
@@ -3103,9 +3223,9 @@
       "owner": "documentation automation",
       "canonical_target": "docs/site/extend/plugin-catalogue/README.md",
       "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
-      "verdict": "FAIL",
+      "verdict": "PASS",
       "reader_question": "Generatoren überschreiben keine Erklärungen — identify the owning input and the safe update/review route.",
-      "finding": "Direct preservation of separately authored explanation.  Current owner correction, actual generation, production HTML and custody are supplied. Pending fresh role decisions; this record does not accept the complete requirement beyond its A911-09 facet.",
+      "finding": "Governance writes only its map, reference generation selects the generated SDK file, and publication consumes separately maintained guidance. Retained original preservation cases and current source-impact verification support this exact facet.",
       "source_evidence": [
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
@@ -3133,9 +3253,9 @@
       "owner": "documentation automation",
       "canonical_target": "docs/site/extend/documentation-maintenance.md",
       "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
-      "verdict": "FAIL",
+      "verdict": "PASS",
       "reader_question": "Owner und Reviewpflicht bei Codeänderungen — identify the owning input and the safe update/review route.",
-      "finding": "Only the exact distinct-owner/review-routing facet.  Current owner correction, actual generation, production HTML and custody are supplied. Pending fresh role decisions; this record does not accept the complete requirement beyond its A911-09 facet.",
+      "finding": "SDK maintainers (plugin-foundation) own the authored explanation and product-claim review, while documentation automation owns generated exports; source metadata, derived map and actual published asset agree.",
       "source_evidence": [
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
@@ -3163,9 +3283,9 @@
       "owner": "documentation automation",
       "canonical_target": "docs/site/extend/documentation-maintenance.md",
       "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
-      "verdict": "FAIL",
+      "verdict": "PASS",
       "reader_question": "Pflegeanleitung für Dokumentationsagenten — identify the owning input and the safe update/review route.",
-      "finding": "Only the maintenance instruction that identifies the separate input authorities.  Current owner correction, actual generation, production HTML and custody are supplied. Pending fresh role decisions; this record does not accept the complete requirement beyond its A911-09 facet.",
+      "finding": "The English maintenance procedure identifies source ownership, prerequisites, generator/check selection, stop conditions, partial-write recovery and independent review obligations.",
       "source_evidence": [
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
         "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
@@ -3262,48 +3382,55 @@
         }
       ],
       "reviewer_ids": [
-        "codex:01a1494a-ff4f-70e2-881c-a0a681f1abc8",
-        "codex:01a1494a-ff4f-7a73-8233-15505ae9db99",
-        "codex:01a1494a-ff18-7fd0-b4f2-4f06fd89ac03"
+        "codex:01a14956-5694-7bd3-aefd-7fdf75f41828",
+        "codex:01a14956-5667-7452-b5d0-9359ca09692e",
+        "codex:01a14956-5663-7752-8d5e-a44f39715ef2"
       ],
-      "verdict": "FAIL",
-      "reason": "The historical3354 decision remains FAIL. Both concrete corrections now have current actual evidence and independent scoped reviews, but fresh current Source/Reader/Quality terminal decisions are not yet recorded. No author self-acceptance."
+      "verdict": "PASS",
+      "reason": "Three distinct fresh read-only reviewers independently returned PASS on the current exact A911-09 facets after the SDK authored-owner correction. Complete current production/HTML and explicit unchanged-input evidence support the individual mapping, PRIMARY, negative proof and limits. Their actual reports and identities are stored here before any acceptance registration. This does not accept whole requirement families, other gates, browser/deployment/whole-site links/whole-SDK completeness or final261/89 closure."
     }
   ],
   "reviewers": [
     {
-      "id": "codex:01a1494a-ff4f-70e2-881c-a0a681f1abc8",
+      "id": "codex:01a14956-5694-7bd3-aefd-7fdf75f41828",
       "role": "source",
-      "assignment": "Historical distinct independent source full-scope A911-09 decision at3354. Preserved unchanged, not relabeled as a current revision verdict. Fresh affected-role reviews are next.",
-      "revision": "3354d2d1e641e8332326d0a1641f459b2d494c62",
-      "fresh_context": true,
-      "initial_read_only": true,
-      "verdict": "FAIL",
-      "report_artifact_id": "a382"
-    },
-    {
-      "id": "codex:01a1494a-ff4f-7a73-8233-15505ae9db99",
-      "role": "reader",
-      "assignment": "Historical distinct independent reader full-scope A911-09 decision at3354. Preserved unchanged, not relabeled as a current revision verdict. Fresh affected-role reviews are next.",
-      "revision": "3354d2d1e641e8332326d0a1641f459b2d494c62",
+      "assignment": "ASSIGNED DISTINCT ROLE SOURCE: Verify source authority, generated/authored boundaries and distinct owners, no manual duplicate inventory, genuine preservation and individually applicable source facts.",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
       "fresh_context": true,
       "initial_read_only": true,
       "verdict": "PASS",
-      "report_artifact_id": "a381"
+      "report_artifact_id": "current-source-review",
+      "executionEvidence": "Distinct new Codex CLI threads, configured read-only review engine; no role target executions.",
+      "model": "gpt-6.1-sol"
     },
     {
-      "id": "codex:01a1494a-ff18-7fd0-b4f2-4f06fd89ac03",
-      "role": "quality",
-      "assignment": "Historical distinct independent quality full-scope A911-09 decision at3354. Preserved unchanged, not relabeled as a current revision verdict. Fresh affected-role reviews are next.",
-      "revision": "3354d2d1e641e8332326d0a1641f459b2d494c62",
+      "id": "codex:01a14956-5667-7452-b5d0-9359ca09692e",
+      "role": "reader",
+      "assignment": "ASSIGNED DISTINCT ROLE READER: Task without solution hint: identify the owner/input/check path for changing an explanation without copying generated facts. Assess actual published pages and downloadable owner assets, safe stop and verification boundaries.",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
       "fresh_context": true,
       "initial_read_only": true,
-      "verdict": "FAIL",
-      "report_artifact_id": "a380"
+      "verdict": "PASS",
+      "report_artifact_id": "current-reader-review",
+      "executionEvidence": "Distinct new Codex CLI threads, configured read-only review engine; no role target executions.",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "id": "codex:01a14956-5663-7752-8d5e-a44f39715ef2",
+      "role": "quality",
+      "assignment": "ASSIGNED DISTINCT ROLE QUALITY: Verify full criterion, English/source evidence/individual mapping, actual current publication custody, negative proof, mandatory record fields/evidence-only persistence, and genuine role separation. No proxy-count acceptance or blanket unrelated dependency.",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "fresh_context": true,
+      "initial_read_only": true,
+      "verdict": "PASS",
+      "report_artifact_id": "current-quality-review",
+      "executionEvidence": "Distinct new Codex CLI threads, configured read-only review engine; no role target executions.",
+      "model": "gpt-6.1-sol"
     }
   ],
   "participants": [],
   "fixture_results": [],
   "execution_scenario_results": [],
-  "formalAcceptance": false
+  "formalAcceptance": false,
+  "registryDisposition": "Pending canonical acceptance-registry reconciliation under existing no-canonical-write freeze; do not increment formal accepted count from this isolated dossier alone."
 }

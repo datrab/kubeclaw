@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/evidence-stage/docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/kubernetes-fixture.md",
+    "exitCode": 3,
+    "stdout": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/evidence-stage/docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/kubernetes-fixture.md:125: new blank line at EOF.\n",
+    "stderr": ""
+  },
+  {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/evidence-stage/docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-error-codes.md",
+    "exitCode": 3,
+    "stdout": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/evidence-stage/docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-error-codes.md:1194: new blank line at EOF.\n",
+    "stderr": ""
+  },
+  {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/evidence-stage/docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/platform-surfaces-generated.md",
+    "exitCode": 3,
+    "stdout": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/evidence-stage/docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/platform-surfaces-generated.md:1130: new blank line at EOF.\n",
+    "stderr": ""
+  }
+]
