@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "a2557d8d48280b94574b87bc32b84ab101869f13",
+  "verifiedRemoteHead": "a2557d8d48280b94574b87bc32b84ab101869f13",
+  "matches": true,
+  "testedSourceFiles": {
+    "docs/review/remediation/config-final-reconciliation-20261016/reconcile-ops-chart.py": "b5a55ac6564ef4da2b854845f197735951b5f39e902ad4b6001cbd640f23f9ad",
+    "docs/review/remediation/config-final-reconciliation-20261016/ops-chart-successors.json": "d2ea798817657f0967621095c7b48714cf1031c1e8b9534d3f35948e66f657af",
+    "docs/review/remediation/config-final-reconciliation-20261016/ops-chart-controls.json": "2b0b2c21eed1d5cd46de9cb91711e3ca607115109b4fdf9fd813ee4e3151ced4",
+    "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py": "734a74c162dad14231d495bac6f103b147b802c7c7b208423aa98767b142df28",
+    "docs/review/remediation/config-final-reconciliation-20261016/semantic-successors.json": "0c368017e8a4ac4491616a6cc736e92ea6fc88d0e04d5c8bf680ec74c85d8338"
+  }
+}
