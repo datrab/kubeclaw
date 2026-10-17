@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 155,
+  "pageCount": 166,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -277,6 +277,38 @@
       ]
     },
     {
+      "page": "docs/site/extend/documentation-maintenance.md",
+      "route": "/extend/documentation-maintenance/",
+      "contentKind": "authored",
+      "status": "source-described maintainer workflow; each change needs its own check and reader results",
+      "audience": "developer, documentation maintainer, documentation agent",
+      "owner": "documentation",
+      "appliesTo": "authored reader pages, source-derived documentation, and their ownership and publication inputs",
+      "lastVerified": "implementation behavior checked on 2026-10-15; no generation, check, mutation test, or reader exercise asserted",
+      "sourceDependencies": [
+        "scripts/docs-governance.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/check-configuration-cli-drift.mjs",
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-tree-boundary.mjs",
+        "scripts/docs-parity-transition.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/documentation-tree-baseline.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/extend/effectful-plugin.md",
       "route": "/extend/effectful-plugin/",
       "contentKind": "authored",
@@ -383,6 +415,32 @@
         "skills/nova/plugins/lint/src/stage.ts",
         "skills/nova/plugins/lint/src/adapter.ts",
         "skills/nova/plugins/lint/src/engine/policy-version.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/platform/README.md",
+      "route": "/extend/platform/",
+      "contentKind": "authored",
+      "status": "source-backed change router; environment and unsupported paths stated below",
+      "audience": "platform developers, component maintainers, contract and UI authors",
+      "owner": "developer experience maintainers; each component owner retains implementation authority",
+      "appliesTo": "Nova, Worker, Foundation, SDK, capability/event, integration, UI, deployment and durable-data changes; Buster and Prism details remain in their own guides",
+      "lastVerified": "2026-10-15; named current source bytes and script definitions inspected, not executed",
+      "sourceDependencies": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1782,6 +1840,51 @@
       ]
     },
     {
+      "page": "docs/site/reference/configuration.md",
+      "route": "/reference/configuration/",
+      "contentKind": "authored",
+      "status": "bounded reference; discovery limitations stated below",
+      "audience": "operator, project author, plugin author, maintainer",
+      "owner": "documentation; consumer semantics belong to the named component",
+      "appliesTo": "the consumer families and source boundaries listed on this page",
+      "lastVerified": "2026-10-15; source behavior checked from current files; no validation or deployment run",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/nova/project/cli.ts",
+        "skills/prism/server/control-config.ts",
+        "scripts/docs-configuration-inventory.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/contracts.md",
+      "route": "/reference/contracts/",
+      "contentKind": "authored",
+      "status": "bounded reference; discovery and recovery limits stated below",
+      "audience": "operator, developer, plugin author, maintainer",
+      "owner": "documentation; named contract and store components own behavior",
+      "appliesTo": "the eight named contract families and actual selected reader boundaries below",
+      "lastVerified": "2026-10-15; current source behavior checked; no migration, backup or recovery executed",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "contracts/prism/v1/src/index.ts",
+        "contracts/delivery-manifest/v3/src/index.ts",
+        "skills/common/plugin-runtime/foundation/observability/record-retirement.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/documentation-governance.md",
       "route": "/reference/documentation-governance/",
       "contentKind": "authored",
@@ -1789,7 +1892,7 @@
       "audience": "documentation contributor, maintainer, reviewer",
       "owner": "documentation",
       "appliesTo": "all reader-facing files below docs/site",
-      "lastVerified": "2026-09-17",
+      "lastVerified": "source-bound maintenance revision; publication and reader results remain separate",
       "sourceDependencies": [
         "scripts/docs-governance.mjs",
         "scripts/docs-publication.mjs",
@@ -1803,9 +1906,36 @@
       ]
     },
     {
+      "page": "docs/site/reference/documentation-site.md",
+      "route": "/reference/documentation-site/",
+      "contentKind": "authored",
+      "status": "source-described publication workflow; rendered-site behavior requires separate verification",
+      "audience": "operator, plugin author, developer, documentation maintainer",
+      "owner": "documentation",
+      "appliesTo": "repository reader pages under docs/site and the Markdown publication staging command",
+      "lastVerified": "implementation behavior checked on 2026-10-15; no build, browser, search, or accessibility execution asserted",
+      "sourceDependencies": [
+        "scripts/docs-publication.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/endpoints.md",
       "route": "/reference/endpoints/",
-      "contentKind": "authored",
+      "contentKind": "generated",
       "status": "generated reference",
       "audience": "operator, security operator, developer",
       "owner": "the source component listed for each route or connection",
@@ -1843,6 +1973,53 @@
         "npm run docs:inventory:config:check",
         "npm run docs:generate:check",
         "npm run docs:drift:config:mutations",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/errors.md",
+      "route": "/reference/errors/",
+      "contentKind": "authored",
+      "status": "bounded reference; discovery limitations stated below",
+      "audience": "operator, developer, plugin author, maintainer",
+      "owner": "documentation; named components own diagnostic and delivery semantics",
+      "appliesTo": "the named diagnostic representations, families and current source boundaries below",
+      "lastVerified": "2026-10-15; current source behavior checked; no live diagnostic or recovery executed",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/registry/errors.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/phase-deadline.ts",
+        "skills/prism/server/worker-service.ts",
+        "scripts/generate-buster-error-reference.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/events.md",
+      "route": "/reference/events/",
+      "contentKind": "authored",
+      "status": "bounded reference; discovery limitations stated below",
+      "audience": "operator, developer, plugin author, maintainer",
+      "owner": "documentation; named components own diagnostic and delivery semantics",
+      "appliesTo": "the named event, delivery, projection and retained-contract boundaries below",
+      "lastVerified": "2026-10-15; current source behavior checked; no live diagnostic or recovery executed",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "contracts/agent-observability/v1/src/constants.ts"
+      ],
+      "checks": [
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1923,6 +2100,29 @@
         "npm run docs:inventory:config:check",
         "npm run docs:generate:check",
         "npm run docs:drift:config:mutations",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/images-and-digests.md",
+      "route": "/reference/images-and-digests/",
+      "contentKind": "authored",
+      "status": "bounded reference; source and running-state limits stated below",
+      "audience": "release maintainer, platform operator, developer",
+      "owner": "documentation; release owners select artifacts and workload owners verify deployment",
+      "appliesTo": "ten runtime and two Ops image slots, three separate role bundles, and named release/deployment readers",
+      "lastVerified": "2026-10-15; current source and local selection files checked; no registry, build, deployment or container observed",
+      "sourceDependencies": [
+        "versions.json",
+        ".github/workflows/build-images.yaml",
+        ".github/workflows/build-ops-mcp.yaml",
+        "scripts/updates/deployment-release.mjs",
+        "scripts/updates/oci-image-identity.mjs",
+        "scripts/updates/code-release.mjs"
+      ],
+      "checks": [
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2137,7 +2337,7 @@
     {
       "page": "docs/site/reference/plugin-configuration.md",
       "route": "/reference/plugin-configuration/",
-      "contentKind": "authored",
+      "contentKind": "generated",
       "status": "generated reference",
       "audience": "operator, plugin maintainer, developer",
       "owner": "configuration source owners listed for each schema",
@@ -2176,6 +2376,90 @@
         "npm run docs:inventory:config:check",
         "npm run docs:generate:check",
         "npm run docs:drift:config:mutations",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/roles-and-package-ownership.md",
+      "route": "/reference/roles-and-package-ownership/",
+      "contentKind": "authored",
+      "status": "current source reference",
+      "audience": "operator, package maintainer, plugin author, developer",
+      "owner": "runtime packaging, Nova, Buster, Prism, and Worker Core maintainers",
+      "appliesTo": "pipeline-runtime-role.v1, pipeline-runtime-bundle.v1, pipeline-platform.v2, buster-remote-plan-runtime.v1, and current Prism native workers",
+      "lastVerified": "2026-10-14 at source revision `eb51092b825c9501c53e486517ae3739411f60b3`; source and reader-reference facts only",
+      "sourceDependencies": [
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/values.yaml",
+        "packaging/runtime/external-capabilities.json",
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
+        "scripts/build-runtime-role-bundle.mjs",
+        "scripts/check-runtime-role-manifests.mjs",
+        "skills/buster/engine/remote-plan-cli.ts",
+        "skills/buster/engine/test-gates/production.ts",
+        "skills/buster/engine/test-gates/remote-plan-http.ts",
+        "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/legacy-import-cli.ts",
+        "skills/nova/project/recovery.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/engine/index.ts",
+        "skills/prism/engine/worker-binding.ts",
+        "skills/prism/runtime.ts",
+        "skills/prism/server/internal-auth.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/worker-config.ts",
+        "skills/prism/server/worker.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-pool-policy.ts",
+        "skills/worker/core/worker/native-result.ts",
+        "skills/worker/core/worker/native-runtime-identity.ts",
+        "skills/worker/core/worker/native-supervisor-authority.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "skills/worker/core/worker/native-worker-process.ts",
+        "skills/worker/core/worker/trust.ts",
+        "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+        "tests/verification/contracts/check-prism-runtime-role.mts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/schemas.md",
+      "route": "/reference/schemas/",
+      "contentKind": "authored",
+      "status": "bounded reference; discovery limitations stated below",
+      "audience": "operator, project author, plugin author, maintainer",
+      "owner": "documentation; consumer semantics belong to the named component",
+      "appliesTo": "the named schema, registration, embedded and executable authorities catalogued below",
+      "lastVerified": "2026-10-15; source behavior checked from current files; no validation or deployment run",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "scripts/docs-configuration-inventory.mjs",
+        "contracts/pipeline-worker-core/v1/schemas",
+        "charts/prism/values.schema.json",
+        "skills/nova/project/compiler.ts"
+      ],
+      "checks": [
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2253,6 +2537,9 @@
       ],
       "checks": [
         "npm run docs:sdk:check",
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2323,6 +2610,30 @@
         "charts/prism/templates/services.yaml",
         "charts/ops-pod/templates/workload.yaml",
         "scripts/docs-kubernetes-core-receiver-contracts.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/stores-and-retention.md",
+      "route": "/reference/stores-and-retention/",
+      "contentKind": "authored",
+      "status": "bounded reference; discovery and recovery limits stated below",
+      "audience": "operator, developer, plugin author, maintainer",
+      "owner": "documentation; named contract and store components own behavior",
+      "appliesTo": "the named store/path/deployment selections and explicit retention/recovery limits below",
+      "lastVerified": "2026-10-15; current source behavior checked; no migration, backup or recovery executed",
+      "sourceDependencies": [
+        "skills/nova/core/execution/run-root.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/prism/storage/artifacts.ts",
+        "charts/prism/files/prism-backup.sh",
+        "docs/site/use/recovery.md"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2858,7 +3169,7 @@
       "audience": "Prism developer, platform engineer, operator, and incident responder",
       "owner": "Prism maintainers",
       "appliesTo": "prism.design-document.v1, the current Prism services, and the Prism PostgreSQL schema",
-      "lastVerified": "source, schema, migration, chart, and test inspection on 2026-09-19",
+      "lastVerified": "source, schema, migration, chart, and test inspection on 2026-09-19; backup source changes reconciled on 2026-10-17 (source inspection, not a live restore)",
       "sourceDependencies": [
         "contracts/prism/v1",
         "skills/prism",
@@ -2879,7 +3190,7 @@
       "audience": "architecture reader, Prism developer, operator, incident responder",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, native Worker, Ingestion service, Agent Bridge, and pipeline adapter",
-      "lastVerified": "source, deployment, and test inspection on 2026-09-19",
+      "lastVerified": "source, deployment, and test inspection on 2026-09-19; Prism Agent values changes reconciled on 2026-10-17 (source inspection, not a live readiness test)",
       "sourceDependencies": [
         "skills/prism",
         "contracts/prism/v1",
@@ -3252,7 +3563,7 @@
       "audience": "Prism operator, designer, incident responder, platform maintainer",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage",
-      "lastVerified": "2026-10-12 local sample source and focused checks against `ad73a0df62607ea9634304c3e9518826450a6a25`; historical checks keep their original execution revisions; no live journey result",
+      "lastVerified": "2026-10-17 source-only reconciliation against `164d2042d818021d71f267fe4f33d119e0f1d646`; local sample source and focused checks remain historical at `ad73a0df62607ea9634304c3e9518826450a6a25`; no new browser, deployment, or live journey result",
       "sourceDependencies": [
         "skills/prism",
         "skills/nova/plugins/prism-design",
