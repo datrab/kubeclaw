@@ -1,0 +1,31 @@
+✔ selected Git failure policy controls actual child stderr, captures A and restores positive (29.479013ms)
+✔ Git policy missing/invalid/competing authors reject before child execution (1.261622ms)
+✖ installed Git retained original run redispatch keeps A after current policy removal (2827.963143ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3668.441664
+
+✖ failing tests:
+
+test at tests/verification/reliability/nova-git-failure-policy.test.mjs:34:1
+✖ installed Git retained original run redispatch keeps A after current policy removal (2827.963143ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /GIT_REPOSITORY_ROOT_DENIED/. Input:
+  
+  'EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:d3a8b303467534e1b82ca942353e10c90cceb5278ed069cfaad0833e35a1ae3e:GIT_PATH_DENIED:/tmp/git-retained-policy-kmSDW1/repository'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-git-failure-policy.test.mjs:77:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:d3a8b303467534e1b82ca942353e10c90cceb5278ed069cfaad0833e35a1ae3e:GIT_PATH_DENIED:/tmp/git-retained-policy-kmSDW1/repository',
+    expected: /GIT_REPOSITORY_ROOT_DENIED/,
+    operator: 'match',
+    diff: 'simple'
+  }
