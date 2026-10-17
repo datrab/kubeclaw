@@ -7,6 +7,8 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { load, loadAll, dump } from 'js-yaml';
 import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
+import { buildBusterImageBundle } from '../../../scripts/build-buster-image-bundle.mjs';
+import { resolveAgentObserverConfig } from '../../../skills/common/plugins/openclaw-agent-observer/src/config.ts';
 
 function sourceRootFromArgs() {
   const index = process.argv.indexOf('--source-root');
@@ -376,9 +378,14 @@ assert.match(
 );
 assert.match(
   gatewayConfig,
-  /"kubeclaw-agent-observer"[\s\S]*"config"\s*:\s*\{[\s\S]*"enabled"[\s\S]*"maxEventBytes"[\s\S]*"maxQueuePerStream"[\s\S]*"hookTimeoutMs"/,
-  'the host-native observer must receive its required runtime configuration',
+  /"kubeclaw-agent-observer"[\s\S]*"config"\s*:\s*\{\{ required "Central agentObserverPolicy is required" \.Values\.agentObserverPolicy \| toJson \}\}/,
+  'the host-native observer must receive its required runtime configuration from the central author',
 );
+const observerPolicy = load(values).agentObserverPolicy;
+for (const key of ['enabled', 'maxEventBytes', 'maxQueuePerStream', 'hookTimeoutMs']) {
+  assert.ok(Object.hasOwn(observerPolicy, key), `the central observer author must retain original required field ${key}`);
+}
+resolveAgentObserverConfig(observerPolicy, {});
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
 const busterRuntimePortBlock = busterValues.match(
   /extraContainers:[\s\S]*?\n    ports:\s*\n(?<ports>[\s\S]*?)\n    startupProbe:/u,
@@ -899,10 +906,10 @@ assert.doesNotMatch(busterRuntimeEntrypoint, /chown -R builder:builder "\$plan_s
   'legacy state must not be reopened by recursive service ownership');
 assert.match(
   busterRuntimeEntrypoint,
-  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/buster\/engine\/native-parent\.ts/,
+  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/packages\/buster-engine\/native-parent\.ts/,
   'the token branch must enter the actual native parent',
 );
-assert.match(busterRuntimeEntrypoint, /BUSTER_TRUSTED_PEER_SPIFFE_ID="\$trusted_peer_spiffe_id" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/buster\/engine\/native-parent\.ts/);
+assert.match(busterRuntimeEntrypoint, /BUSTER_TRUSTED_PEER_SPIFFE_ID="\$trusted_peer_spiffe_id" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/packages\/buster-engine\/native-parent\.ts/);
 assert.match(read('skills/buster/engine/native-parent.ts'), /runBusterPreparationSupervisor/);
 const preparationSupervisor = read('skills/buster/engine/test-gates/preparation-supervisor.ts');
 assert.match(preparationSupervisor, /serveUnprivilegedBuster/);
@@ -997,30 +1004,42 @@ if (helm.error?.code !== 'ENOENT') {
   } finally { fs.rmSync(nativeFixtureRoot, { recursive: true, force: true }); }
   const busterRuntimeIndex = load(read('my-values/buster-values.yaml')).extraContainers.findIndex(item => item.name === 'buster-v2-runtime');
   assert(busterRuntimeIndex >= 0);
-  const busterHelm = spawnSync(
-    'helm',
-    [
-      'template',
-      'agent-buster',
-      path.join(sourceRoot, 'charts/kubeclaw'),
-      '--namespace',
-      'kubeclaw',
-      '--values',
-      path.join(sourceRoot, 'my-values/buster-values.yaml'),
-      '--set-string', `busterNative.nodeName=${nativeBinding.nodeName}`,
-      '--set-string', 'busterNative.namespace=kubeclaw',
-      '--set-string', `busterNative.policyDigest=${nativeBinding.policyDigest}`,
-      // Shape-valid render fixture only; no built-image or deployment evidence.
-      '--set-string', `extraContainers[${busterRuntimeIndex}].image=ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`,
-      '--set-string',
-      'runtimeInfrastructure.registry.endpoint=https://registry.example.test',
-      '--set-string',
-      'runtimeInfrastructure.registry.transport=https',
-      '--set-string',
-      'runtimeInfrastructure.registry.authSecretName=registry-contract-test',
-    ],
-    { cwd: sourceRoot, encoding: 'utf8' },
-  );
+  const receiptRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'deployment-buster-receipt-'));
+  let busterHelm;
+  try {
+    const revision = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: sourceRoot, encoding: 'utf8' });
+    assert.equal(revision.status, 0, revision.stderr);
+    const built = await buildBusterImageBundle({ repository: sourceRoot,
+      output: path.join(receiptRoot, 'image'), revision: revision.stdout.trim(),
+      builtAt: new Date().toISOString() });
+    const receiptFile = path.join(receiptRoot, 'receipt.yaml');
+    fs.writeFileSync(receiptFile, dump({ pipelineDelivery: { buster: built.metadata } }));
+    busterHelm = spawnSync(
+      'helm',
+      [
+        'template',
+        'agent-buster',
+        path.join(sourceRoot, 'charts/kubeclaw'),
+        '--namespace',
+        'kubeclaw',
+        '--values',
+        path.join(sourceRoot, 'my-values/buster-values.yaml'),
+        '--values', receiptFile,
+        '--set-string', `busterNative.nodeName=${nativeBinding.nodeName}`,
+        '--set-string', 'busterNative.namespace=kubeclaw',
+        '--set-string', `busterNative.policyDigest=${nativeBinding.policyDigest}`,
+        // Shape-valid render fixture only; no built-image or deployment evidence.
+        '--set-string', `extraContainers[${busterRuntimeIndex}].image=ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`,
+        '--set-string',
+        'runtimeInfrastructure.registry.endpoint=https://registry.example.test',
+        '--set-string',
+        'runtimeInfrastructure.registry.transport=https',
+        '--set-string',
+        'runtimeInfrastructure.registry.authSecretName=registry-contract-test',
+      ],
+      { cwd: sourceRoot, encoding: 'utf8' },
+    );
+  } finally { fs.rmSync(receiptRoot, { recursive: true, force: true }); }
   assert.equal(
     busterHelm.status,
     0,
@@ -1032,6 +1051,17 @@ if (helm.error?.code !== 'ENOENT') {
     'Buster must render its isolated v2 suite worker',
   );
   assertManagedModels(busterHelm.stdout);
+  const busterGatewayConfig = loadAll(busterHelm.stdout).find(object =>
+    object?.kind === 'ConfigMap' && object.data?.['openclaw.json']);
+  assert.ok(busterGatewayConfig, 'the actual Buster gateway config must be rendered');
+  const renderedObserver = JSON.parse(busterGatewayConfig.data['openclaw.json'])
+    .plugins.entries['kubeclaw-agent-observer'];
+  assert.equal(renderedObserver.enabled, true);
+  assert.deepEqual(renderedObserver.config, observerPolicy,
+    'the actual Buster observer must receive every central field without local defaults');
+  assert.deepEqual(resolveAgentObserverConfig(renderedObserver.config, {}),
+    resolveAgentObserverConfig(observerPolicy, {}),
+    'the actual observer receiver must preserve the authored operating profile');
   assert.match(
     busterHelm.stdout,
     /containerPort:\s*18891/,
