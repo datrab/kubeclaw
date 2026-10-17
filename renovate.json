@@ -438,6 +438,28 @@
         "/^versions\\.json$/"
       ],
       "matchStrings": [
+        "\"OPS_NPM_UNDICI_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "undici",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_CACHE_SEMANTICS_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "http-cache-semantics",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
         "\"redisProduction\": \\{\\s*\"chartVersion\": \"(?<currentValue>[^\"\\n]+)\""
       ],
       "depNameTemplate": "registry-1.docker.io/bitnamicharts/redis",

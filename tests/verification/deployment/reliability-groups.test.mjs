@@ -15,3 +15,11 @@ test('CI groups cover every reliability test exactly once, including newly added
   assert.throws(() => selectTests(files.filter(file => file !== nativeTests[0]), 'core'), /missing/);
   assert.throws(() => selectTests(files, 'core', 0, 4), /Invalid shard/);
 });
+
+test('real-root filesystem and fixed-UID originals run only in the native authority scope', () => {
+  const files = fs.readdirSync('tests/verification/reliability').filter(file => /\.test\.(mts|mjs)$/.test(file));
+  for (const name of ["buster-historical-import.test.mts", "original-boot-admission.test.mts", "original-boot-metadata.test.mts", "original-initial-state.test.mts", "original-native-host.test.mjs", "pipeline-boot.test.mjs", "pipeline-role-readback.test.mjs"]) {
+    assert.ok(selectTests(files, 'native').includes(name), `Missing real-root prerequisite: ${name}`);
+    for (let shard = 1; shard <= 4; shard++) assert.ok(!selectTests(files, 'core', shard, 4).includes(name));
+  }
+});

@@ -3,7 +3,17 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
+// These originals require genuine root-owned files or fixed-UID transitions.
+// Keep their original assertions in the disposable, accounted native CI scope.
 export const nativeTests = [
+  'buster-historical-import.test.mts',
+  'original-boot-admission.test.mts',
+  'original-boot-metadata.test.mts',
+  'original-initial-state.test.mts',
+  'original-native-host.test.mjs',
+  'pipeline-boot.test.mjs',
+  'pipeline-role-readback.test.mjs',
+
   'prism-native-startup.test.mts', 'worker-native-contract.test.mts',
   'worker-native-launcher.test.mts', 'worker-native-observation.test.mts',
   'worker-observation-durability.test.mts',
