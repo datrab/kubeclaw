@@ -29,7 +29,14 @@ test('actual Buster chart binds both authored admission profiles and rejects ret
   values.runtimeInfrastructure={registry:{endpoint:'https://registry.example.test',transport:'https',authSecretName:'registry-test'}};
   const container=values.extraContainers.find(item=>item.name==='buster-v2-runtime');container.image='ghcr.io/datrab/kubeclaw-buster-runtime@sha256:'+'a'.repeat(64);
   const file=path.join(root,'values.yaml'),checksums=[];let retained;
-  const render=()=>{fs.writeFileSync(file,yaml.dump(values));return spawnSync('helm',['template','agent-buster',chart,'--namespace','kubeclaw','-f',file],{encoding:'utf8',maxBuffer:16*1024*1024});};
+  const packaged=path.join(root,'packaged');fs.mkdirSync(packaged);
+  const render=()=>{fs.writeFileSync(file,yaml.dump(values));
+   for(const name of fs.readdirSync(packaged))fs.rmSync(path.join(packaged,name));
+   execFileSync('helm',['package',chart,'--destination',packaged],{stdio:'pipe'});
+   const archives=fs.readdirSync(packaged).filter(name=>name.endsWith('.tgz'));assert.equal(archives.length,1);
+   const archive=path.join(packaged,archives[0]);
+   assert.deepEqual(JSON.parse(execFileSync('tar',['-xOf',archive,'kubeclaw/files/pipeline/buster-topology.json'],{encoding:'utf8'})),busterChartProjection(author));
+   return spawnSync('helm',['template','agent-buster',archive,'--namespace','kubeclaw','-f',file],{encoding:'utf8',maxBuffer:16*1024*1024});};
   const profiles=[{maximumActiveJobs:2,maximumQueuedJobs:8,maximumConcurrentAttempts:64},
    {maximumActiveJobs:1,maximumQueuedJobs:3,maximumConcurrentAttempts:4}];
   for(const admission of profiles){

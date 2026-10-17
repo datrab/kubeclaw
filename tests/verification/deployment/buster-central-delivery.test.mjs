@@ -13,14 +13,17 @@ import {collectReceipts} from '../../../scripts/updates/release-images.mjs';
 import {validateBusterImageDelivery} from '../../../scripts/updates/buster-image-delivery.mjs';
 import {isImageInput} from '../../../scripts/updates/runtime-inputs.mjs';
 
-const repository=process.cwd(),revision='a'.repeat(40);
+const repository=process.cwd(),revision=execFileSync('git',['rev-parse','--verify','HEAD'],{encoding:'utf8'}).trim();
+const builtAt=new Date().toISOString();
 let root,result,boot;
-test.before(async()=>{root=fs.mkdtempSync(path.join(os.tmpdir(),'buster-central-delivery-'));result=await buildBusterImageBundle({repository,output:path.join(root,'image'),revision,builtAt:'2026-10-15T00:00:00Z'});boot=await import(pathToFileURL(path.join(result.packageRoot,'skills/packages/plugin-foundation/config/pipeline-boot.mjs')).href);});
+test.before(async()=>{root=fs.mkdtempSync(path.join(os.tmpdir(),'buster-central-delivery-'));result=await buildBusterImageBundle({repository,output:path.join(root,'image'),revision,builtAt});boot=await import(pathToFileURL(path.join(result.packageRoot,'skills/packages/plugin-foundation/config/pipeline-boot.mjs')).href);});
 test.after(()=>fs.rmSync(root,{recursive:true,force:true}));
 const sealedWrite=(file,bytes)=>{fs.chmodSync(file,0o644);fs.writeFileSync(file,bytes);fs.chmodSync(file,0o444);};
 const capture=()=>boot.capturePipelineBootReceipts(result.deliveryRoot,result.systemRoot,'buster-preparation',result.packageRoot,'/app/skills');
 
 test('actual emitted role verifies exact installed files, both selections and native parent/child handoff',async()=>{
+ const manifest=JSON.parse(fs.readFileSync(path.join(result.packageRoot,'manifest.json'),'utf8'));
+ assert.equal(manifest.commit,revision);assert.equal(manifest.builtAt,builtAt);assert.equal(result.metadata.revision,revision);
  const current=capture(),handoff=boot.captureBusterParentStartupHandoff(current);
  assert.equal(handoff.childSelection.callerId,'buster-runtime');assert.equal(handoff.childSelection.serviceInstanceId,current.selectionReceipt.serviceInstanceId);
  const engine=await import(pathToFileURL(path.join(result.packageRoot,'skills/packages/buster-engine/src/index.ts')).href);assert.equal(typeof engine.BusterRemotePlanRuntime,'function');
@@ -46,7 +49,12 @@ test('real full kubeclaw chart uses exact transported parent receipt and no old 
  const chart=path.join(root,'chart');fs.cpSync('charts/kubeclaw',chart,{recursive:true,dereference:true});
  // Generate from the actual selected input, never pair new receipts with a stale checked-in projection.
  fs.writeFileSync(path.join(chart,'files/pipeline/buster-topology.json'),JSON.stringify(busterChartProjection(path.join(repository,'config'))));
- const render=(name='agent-buster',namespace='kubeclaw')=>{fs.writeFileSync(file,yaml.dump(values));return yaml.loadAll(execFileSync('helm',['template',name,chart,'--namespace',namespace,'-f',file],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));};
+ const packaged=path.join(root,'packaged');fs.mkdirSync(packaged);
+ execFileSync('helm',['package',chart,'--destination',packaged],{stdio:'pipe'});
+ const archives=fs.readdirSync(packaged).filter(name=>name.endsWith('.tgz'));assert.equal(archives.length,1);
+ const archive=path.join(packaged,archives[0]);
+ assert.deepEqual(JSON.parse(execFileSync('tar',['-xOf',archive,'kubeclaw/files/pipeline/buster-topology.json'],{encoding:'utf8'})),busterChartProjection(path.join(repository,'config')));
+ const render=(name='agent-buster',namespace='kubeclaw')=>{fs.writeFileSync(file,yaml.dump(values));return yaml.loadAll(execFileSync('helm',['template',name,archive,'--namespace',namespace,'-f',file],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));};
  const documents=render(),pod=documents.find(item=>item?.kind==='Deployment'&&item.metadata.name==='agent-buster').spec.template.spec;
  const container=pod.containers.find(item=>item.name==='buster-v2-runtime');assert(!(container.env??[]).some(item=>item.name==='SWARM_CONFIG'));
  const mount=container.volumeMounts.find(item=>item.mountPath==='/run/pipeline-delivery');assert(mount?.readOnly);assert(!mount.subPath);

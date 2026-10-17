@@ -40,9 +40,15 @@ test('central readiness A/B and malformed policies follow actual image/chart gen
   values.kubeclaw.runtimeInfrastructure={registry:{endpoint:'https://registry.example.test',transport:'https',authSecretName:'registry-test'}};
   values.kubeclaw.extraContainers.find(item=>item.name==='buster-v2-runtime').image='ghcr.io/datrab/kubeclaw-buster-runtime@sha256:'+'a'.repeat(64);
   const digests={kubeclaw:[],prism:[]};
+  const packaged=path.join(root,'packaged');fs.mkdirSync(packaged);
   const render=(name,projection)=>{
    const file=path.join(root,`${name}-values.yaml`);fs.writeFileSync(file,yaml.dump(values[name]));
-   return spawnSync('helm',['template',projection.deployment.releaseName,charts[name],'--namespace',projection.deployment.namespace,'-f',file],{encoding:'utf8',maxBuffer:16*1024*1024});
+   const destination=path.join(packaged,name);fs.rmSync(destination,{recursive:true,force:true});fs.mkdirSync(destination);
+   execFileSync('helm',['package',charts[name],'--destination',destination],{stdio:'pipe'});
+   const archives=fs.readdirSync(destination).filter(file=>file.endsWith('.tgz'));assert.equal(archives.length,1);
+   const archive=path.join(destination,archives[0]),filename=name==='kubeclaw'?'buster-topology.json':'prism-topology.json';
+   assert.deepEqual(JSON.parse(execFileSync('tar',['-xOf',archive,`${name}/files/pipeline/${filename}`],{encoding:'utf8'})),projection);
+   return spawnSync('helm',['template',projection.deployment.releaseName,archive,'--namespace',projection.deployment.namespace,'-f',file],{encoding:'utf8',maxBuffer:16*1024*1024});
   };
   let retained;
   for(const [index,policy] of [{maximumExecutionMs:300,maximumOutputBytes:64},{maximumExecutionMs:2500,maximumOutputBytes:1024}].entries()) {
