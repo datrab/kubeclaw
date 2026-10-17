@@ -124,7 +124,9 @@ export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, 
   }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks'), runtime.corePolicy), platform.effectLockTtlMs, runtime.corePolicy.resourceAcquisition);
   return new AdapterRuntime({ granted: runtime.granted, activated: runtime.activated, configs: objectMap(runtime.adapterConfigurations), effects,
     resolveRetainedWait: source => {
-      const waitRoot = platform.adapters?.['kubeclaw.wait-store:waits']?.root;
+      // Adapter activation and original-evidence validation must use the SAME
+      // restored configuration, not a relocated current Platform B store.
+      const waitRoot = runtime.adapterConfigurations['kubeclaw.wait-store:waits']?.root;
       if (typeof waitRoot !== 'string') throw new Error('WAIT_RETAINED_CORE_EVIDENCE_INVALID');
       return resolveRetainedCoreWait(source, { storageRoot: platform.storageRoot, waitRoot,
         orchestratorIssuerId: platform.orchestratorIssuerId });

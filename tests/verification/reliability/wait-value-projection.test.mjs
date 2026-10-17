@@ -351,3 +351,28 @@ test('the existing operator projection receipt replays after Wait projection usi
   assert.deepEqual(fs.readFileSync(recordFile(f.deliveryRoot)), delivery);
   assert.equal(f.received.length, 1);
 });
+
+
+test('original projected Wait resolves through actual Core adapter despite a relocated current B wait root', { timeout: 60000 }, async t => {
+  const f = await fixture(t);
+  assert.equal((await resumePipelineV2(f.platform, f.definition, f.runId, f.signal)).status, 'succeeded');
+  await retireWaitValue(waitScope(f));
+  const originalBytes = fs.readFileSync(recordFile(f.waitRoot));
+  const snapshotBytes = fs.readFileSync(path.join(f.run, 'run-snapshot.json'));
+  const prepared = await prepareRuntime(f.platform, f.definition);
+  const current = structuredClone(f.platform);
+  const bRoot = path.join(f.root, 'unused-current-B-waits');
+  current.adapters['kubeclaw.wait-store:waits'].root = bRoot;
+  const root = path.join(f.root, 'original-wait-reader-after-B');
+  const runtime = createAdapterRuntime(current, root, prepared,
+    new FileJournal(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs));
+  await runtime.start();
+  try {
+    const result = await runtime.invoke('signal.wait', f.waitRequest.attempt, 'read:original-after-B',
+      { operation: 'read', resource: f.waitRequest.resource, payload: {} }, new AbortController().signal);
+    assert.deepEqual(result.waits, [f.wait]);
+    assert.deepEqual(fs.readFileSync(recordFile(f.waitRoot)), originalBytes);
+    assert.deepEqual(fs.readFileSync(path.join(f.run, 'run-snapshot.json')), snapshotBytes);
+    assert.equal(fs.existsSync(bRoot), false);
+  } finally { await runtime.shutdown(); }
+});
