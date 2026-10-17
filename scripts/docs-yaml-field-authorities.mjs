@@ -485,8 +485,8 @@ for (const [pathName, digest] of [['my-values/infra/native-worker-pools-ax41.yam
 }
 
 const opsRelease = 'releases/values/ops.yaml';
-file(opsRelease, '3b3aed1c7bfecd96dbc107bd373815adf72e962012f837497c25d259276f2964');
-for (const [fieldPath, subject] of [['$.codexImage', 'Codex Ops container'], ['$.mcpImage', 'Ops MCP container']]) special(opsRelease, fieldPath, { purpose: `Selects the immutable release image for the ${subject}.`, acceptedValues: 'A complete OCI image reference ending in `@sha256:` and 64 lowercase hexadecimal characters.', emptyBehavior: 'An empty value fails the ops chart image guard and cannot be deployed.', impact: `Changes the exact executable bytes for the ${subject}; explicit command-line overrides win after this file.`, failure: 'A tag-only or malformed reference fails Helm rendering. An unavailable digest causes ImagePullBackOff.' });
+file(opsRelease, '66f3d7e3e1023f4c8bd165250630ebab991c61ad2ce4feb546ba64e8851d1991');
+for (const [fieldPath, subject] of [['$.codexImage', 'Codex Ops container'], ['$.mcpImage', 'Ops MCP container']]) special(opsRelease, fieldPath, { purpose: `Selects the immutable release image for the ${subject}.`, acceptedValues: 'A complete OCI image reference ending in `@sha256:` and 64 lowercase hexadecimal characters.', emptyBehavior: 'An empty value fails the ops chart image guard and cannot be deployed.', impact: `Selects the exact image bytes for the ${subject}. Later Helm arguments merge after this file, but deployment-release.mjs rejects an override that differs from the selected release receipt.`, failure: 'A tag-only or malformed reference fails Helm rendering. Deployment validation rejects a different selected-release image; an unavailable accepted digest causes ImagePullBackOff.' });
 
 const directPostgresql = 'my-values/infra/postgresql-values.yaml';
 file(directPostgresql, 'b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994', charts.postgresqlDirect);
