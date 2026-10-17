@@ -1,0 +1,20 @@
+✔ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (6995.121312ms)
+✔ actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives (8.304463ms)
+✔ HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed with restored positive (3.548221ms)
+✔ network error excerpt policy is selected centrally and rejects competing or invalid authors (1.122679ms)
+✔ central network caps enforce actual UTF-8 boundaries and timeout; original run survives missing current author (6569.185739ms)
+✔ network limit policies reject absent, invalid and competing authors and capture activation values (3.036048ms)
+✔ selected HTTP structure caps reach request and response traversal and capture activation values (3.166712ms)
+✔ installed HTTP structure selection survives changed B and removed current author on original resume (3182.960433ms)
+✔ original HTTP binding privately owns nested sets and rejects mixed or foreign receiving (1.086518ms)
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (8125.038115ms)
+✔ real Nova v3 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (9202.621364ms)
+✔ publisher original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (1.618042ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18129.50302

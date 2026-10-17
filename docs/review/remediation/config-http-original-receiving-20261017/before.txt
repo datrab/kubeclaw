@@ -1,0 +1,30 @@
+✖ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (4179.276972ms)
+✔ actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives (15.667502ms)
+✔ HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed with restored positive (6.087706ms)
+✔ network error excerpt policy is selected centrally and rejects competing or invalid authors (1.362925ms)
+✔ central network caps enforce actual UTF-8 boundaries and timeout; original run survives missing current author (5579.515515ms)
+✔ network limit policies reject absent, invalid and competing authors and capture activation values (4.380723ms)
+✔ selected HTTP structure caps reach request and response traversal and capture activation values (4.326531ms)
+✔ installed HTTP structure selection survives changed B and removed current author on original resume (3377.159398ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13892.87068
+
+✖ failing tests:
+
+test at tests/verification/reliability/nova-http-policy.test.mjs:33:1
+✖ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (4179.276972ms)
+  Error: RECOVERY_RUNTIME_CONFIGURATION_MISMATCH
+      at verifyPinnedPackages (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-snapshots.ts:39:120)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts:97:5
+      at withRunMutationLock (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/run-mutation.ts:18:26)
+      at resumePipeline (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts:95:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-http-policy.test.mjs:40:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

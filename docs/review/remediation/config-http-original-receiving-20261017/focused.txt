@@ -1,0 +1,34 @@
+✖ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (5940.508129ms)
+✔ actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives (9.375801ms)
+✔ HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed with restored positive (4.606688ms)
+✔ network error excerpt policy is selected centrally and rejects competing or invalid authors (1.348345ms)
+✔ central network caps enforce actual UTF-8 boundaries and timeout; original run survives missing current author (5573.244523ms)
+✔ network limit policies reject absent, invalid and competing authors and capture activation values (2.931615ms)
+✔ selected HTTP structure caps reach request and response traversal and capture activation values (2.850783ms)
+✔ installed HTTP structure selection survives changed B and removed current author on original resume (3292.42326ms)
+✔ original HTTP binding privately owns nested sets and rejects mixed or foreign receiving (1.001806ms)
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (8666.725749ms)
+✔ real Nova v3 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (7888.071693ms)
+✔ publisher original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (1.266503ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17380.378973
+
+✖ failing tests:
+
+test at tests/verification/reliability/nova-http-policy.test.mjs:33:1
+✖ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (5940.508129ms)
+  Error: RECOVERY_RUN_TERMINAL:http:A:run.succeeded
+      at assertRecoverableRun (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts:55:64)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts:70:156
+      at withRunMutationLock (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/run-mutation.ts:18:26)
+      at recoverPipeline (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts:67:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/nova-http-policy.test.mjs:44:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
