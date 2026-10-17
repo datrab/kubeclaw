@@ -1,0 +1,8 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-worker-installed-process-20261017/source-receiving-controls.mjs:31
+      assert.equal(settings.supervisor.closeTimeoutMs, close);
+                                       ^
+
+TypeError: Cannot read properties of undefined (reading 'closeTimeoutMs')
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-worker-installed-process-20261017/source-receiving-controls.mjs:31:40
+
+Node.js v24.21.0
